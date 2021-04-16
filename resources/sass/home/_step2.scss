@@ -1,0 +1,12 @@
+.e-wanted-postions{
+    &__heading{
+        @include title;
+    }
+    &__list{
+        display: flex;
+        flex-wrap: wrap;
+    }
+    &__item{
+        list-style: none;
+    }
+}

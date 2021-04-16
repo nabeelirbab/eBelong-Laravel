@@ -1,0 +1,78 @@
+@import './variables';
+
+
+@mixin  d-desktop {
+    @media only screen and (min-width: 769px) { @content }
+}
+
+@mixin  d-mobile {
+    @media only screen and (max-width: 768px) { @content }
+}
+@mixin header-h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.3;
+    color: $black;
+    @include d-mobile{
+        font-size: 1.5rem;
+    }
+}
+@mixin header-h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    line-height: 2;
+    color: $black;
+}
+@mixin title {
+    font-size: 1.3rem;
+    font-weight: 500;
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.5;
+    color: $black-secondary;
+}
+@mixin subtitle {
+    font-size: 0.9rem;
+    font-weight: 400;
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.5;
+    color: $black-secondary;
+    opacity: 0.6;
+}
+@mixin rootcolor16 {
+    font-size: 16px;
+    font-weight: 500;
+    font-family: 'Poppins', sans-serif;
+    color: 9013F3;
+}
+@mixin font20 {
+    font-size: 20px;
+    font-weight: 500;
+    font-family: 'Poppins', sans-serif;
+    color: #707070;
+}
+@mixin font22 {
+    font-size: 22px;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    color: $black;
+    opacity: 0.25;
+}
+@mixin font56 {
+    font-size: 56px;
+    font-weight: 500;
+    font-family: 'Poppins', sans-serif;
+    color: $black;
+}
+@mixin stripe-text {
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    color: $white;
+}
+@mixin font-button {
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+}

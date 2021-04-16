@@ -1,0 +1,85 @@
+<template>
+<div>
+<div class="trusted_partner">
+  <div class="trusted_partner__items container d-flex flex-wrap justify-content-between align-items-center">
+
+    <div class="py-2 py-md-4 bannerjob__item">Trusted Partner</div>
+    <div class="py-2 py-md-4"><img :src="`${baseUrl}/images/home/trusted_by_1.svg`"/></div>
+    <div class="py-2 py-md-4"><img :src="`${baseUrl}/images/home/trusted_by_2.svg`"/></div>
+    <div class="py-2 py-md-4"><img :src="`${baseUrl}/images/home/trusted_by_3.svg`"/></div>
+    <div class="py-2 py-md-4"><img :src="`${baseUrl}/images/home/trusted_by_4.svg`"/></div>
+    <div class="py-2 py-md-4"><img :src="`${baseUrl}/images/home/trusted_by_5.svg`"/></div>
+
+
+  </div>
+</div>
+  <div v-isvisible.scroll="{animate:'pulse'}" class="container">
+    <div class="e-freelancer mb-5">
+      <div class="e-freelancer__header text-center">Our Super Star Talent</div>
+      <div class="e-freelancer__content">
+        <splide :options="options">
+          <splide-slide
+           
+            class="e-freelancer__item"
+            v-for="item in items"
+            :key="item.id"
+          >
+            <div  v-on:click="() => onClick(item.slug)" class="e-freelancer__item-image c-pointer">
+              <img :src="item.imagePath" :alt="item.first_name" />
+            </div>
+            <div class="e-freelancer__item-title" >
+              {{ item.first_name }} {{ item.last_name }}
+            </div>
+            <div class="e-freelancer__item-skill text-center">
+              {{ item.tagline }}
+            </div>
+            <div class="e-freelancer__item-rating my-2 mb-4">
+               <span class="wt-stars"><span :style="{'width': item.rating_width+'%'}"></span></span>
+            </div>
+            <div class="e-freelancer__item-price">
+              <span> ${{ item.hourly_rate }}/hr </span>
+            </div>
+          </splide-slide>
+                  </splide>
+      </div>
+    </div>
+  </div>
+</div>
+</template>
+<script>
+import index from '../../components/pageBuilder/edit----------/app/index.vue';
+export default {
+  components: { index },
+  name: "Slider",
+  props: ["items"],
+
+  methods: {
+    onClick(name) {
+      window.location.replace(`${this.url}${name}`);
+    },
+  },
+  data() {
+    return {
+      baseUrl:window.APP_URL,
+      url: window.APP_URL + "/profile/",
+      options: {
+        rewind: true,
+        pagination: false,
+        perPage: 4,
+        gap: "20px",
+        breakpoints: {
+          768: {
+            perPage: 1,
+            padding: {
+              right: "5rem",
+            },
+          },
+          400: {
+            perPage: 1,
+          },
+        },
+      },
+    };
+  },
+};
+</script>

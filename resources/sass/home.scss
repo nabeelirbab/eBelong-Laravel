@@ -1,0 +1,164 @@
+
+// Fonts
+// @import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+// @import 'variables';
+
+// Bootstrap
+// @import '~bootstrap/scss/bootstrap';
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+@import './variables';
+@import './mixins';
+@import 'splide-default.min.css';
+@import './inputs/button';
+@import './inputs/input';
+
+
+@import './home/freelance';
+@import './home/postskill';
+@import './home/postjob';
+
+@import './home/step1';
+@import './home/step2';
+@import './home/step3';
+@import './home/step4';
+@import './home/banner.content';
+@import './home/banner.job';
+.c-pointer{
+    cursor:pointer;
+}
+.wt-logininfo .wt-btn{
+    background: #ff5851;
+}
+.wt-loginarea .wt-loginbtn{
+    color: #fff !important;
+    font-weight: bold;
+}
+
+@include d-mobile{
+    .wt-fwidgettitle{
+        padding-top: 30px;
+    }
+    body.wt-login .wt-loginarea{
+        display: flex !important;
+        align-items: center;
+        margin: 4px !important;
+        .wt-loginbtn{
+            // margin:0px !important;
+        }
+    }
+    .wt-navigationarea{
+        background: #fff !important;
+    }
+    .wt-navigationarea .wt-logo{
+        top:10px;
+        left:80px !important;
+    }
+    .lnr-menu:before{
+        color: white;
+    }
+    .wt-loginarea .wt-loginbtn{
+        color: var(--terthemecolor) !important;
+    }
+    .wt-nav button{
+        background: var(--terthemecolor) !important;
+    }
+    .wt-rightarea{
+        height: 100px;
+    }
+    .wt-rightarea .wt-nav{
+        position: absolute;
+        left: 15px;
+        bottom: 18px;
+    }
+    .wt-headereleven .wt-navigationarea{
+        padding: 0 15px 0 0 !important;
+        height: 100px;
+    
+    }
+    .wt-headereleven{
+        padding: 0 !important;
+        margin-bottom: -121px !important;
+    }
+    .wt-username{
+        display: none;
+    }  
+    .wt-banner{
+        margin-top: 55px !important;
+    } 
+    body.wt-login .wt-loginarea {
+        display: block;
+        margin: 20px 2px;
+        position: absolute;
+        right: 0;
+        bottom: 10px;
+    }
+    .wt-loginformhold{
+        left: 0;
+        margin: 0 auto;
+        position: fixed !important;
+        top: 66px !important;
+    }
+    .wt-navigationarea .wt-logo{
+        position: relative;
+        left: 40px;
+    }
+    .navbar-nav{
+        background: #fff;
+        li{
+            border-bottom: 1px solid #ddd;
+            margin: 5px 0 !important;
+            &:last-child{
+                border-bottom: 0;
+            }
+        }
+    }
+    .wt-userlogedin{
+        bottom: -20px;
+        &::before{
+            content: none !important;
+        }
+    }
+    .wt-navigation{
+        position: absolute;
+        top: 30px;
+        .navbar-nav{
+            width: 200px;
+        }
+    }
+}
+@include d-desktop{
+    .wt-wrapper{
+        overflow: unset !important ;
+    }
+    .wt-navigationarea{
+        padding: 0 !important;
+    }
+
+}
+.e-banner{
+    background: #F5F5F5;
+    padding: 3rem 0;
+}
+.wt-home-slider{
+    left: 0 !important;
+}
+.wt-footertwo{
+    padding-top: 40px !important;
+    background: #23053B;
+    &::after,&::before{
+        content: none !important;
+    }
+}
+.wt-banner{
+    background-image:url('../images/home/Freelancer.png'), url('../images/home_banner.png') ;
+    background-repeat: no-repeat;
+    background-position: bottom 10px right 20px,top right;
+    padding-bottom: 15px;
+    @include d-desktop{
+        background-size: 30%,70%;
+    }
+    
+}
+

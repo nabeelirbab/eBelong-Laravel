@@ -1,0 +1,26 @@
+/*
+Theme Name: Worketic
+Theme URI: http://amentotech.com/projects/worketic
+Author: Amentotech
+Author URI:  https://themeforest.net/user/amentotech/portfolio
+Version: 1.0.0
+You can add your custom styling here
+*/
+.filter_icon {
+    display: none;
+}
+@media only screen and (max-width: 767px) {
+.filter_icon {
+    display: inline-block;
+	font-size: 22px;
+    float: right;
+    margin-right: 15px;
+	background: #62BE8F;
+}
+.filter_icon i {
+    font-size: 28px;
+    padding: 0 15px;
+}
+.filter-page{display:none;}
+
+}

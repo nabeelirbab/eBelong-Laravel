@@ -1,0 +1,9 @@
+.e-account-details{
+    &__title{
+        @include title;
+    }
+  
+    &__subtitle{
+        @include subtitle;
+    }
+}

@@ -1,0 +1,61 @@
+<?php
+
+namespace App\Console;
+
+use Illuminate\Console\Scheduling\Schedule;
+use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use App\Helper;
+use App\WorkDiary;
+
+class Kernel extends ConsoleKernel
+{
+    /**
+     * The Artisan commands provided by your application.
+     *
+     * @var array
+     */
+    protected $commands = [
+        Commands\pymentStatusChange::class,
+    ];
+
+    /**
+     * Define the application's command schedule.
+     *
+     * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
+     * @return void
+     */
+    protected function schedule(Schedule $schedule)
+    {
+       $schedule->command('payment:statuschange')->hourly();
+
+       $schedule->call( 
+           function () {
+                \Log::info("Updating Payouts");
+               Helper::updatePayouts();
+           }
+       )->everyMinute();
+       
+       $schedule->call(  
+            function () {
+                \Log::info("WorkDiary Added on Monday 11:59");
+                WorkDiary::submitFreelancerBill();
+            })->weekly()->mondays()->at('11:59');
+            
+            /* function () {
+                \Log::info("WorkDiary Added on Monday 11:59");
+                WorkDiary::submitFreelancerBill();
+            })->everyMinute();  */
+    }
+
+    /**
+     * Register the commands for the application.
+     *
+     * @return void
+     */
+    protected function commands()
+    {
+        $this->load(__DIR__ . '/Commands');
+
+        require base_path('routes/console.php');
+    }
+}

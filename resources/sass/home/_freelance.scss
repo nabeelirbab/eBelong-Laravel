@@ -1,0 +1,62 @@
+.trusted_partner{
+    background: #F5F5F5;
+    clear: both;
+
+    &__items{
+        
+        @include d-mobile{
+            display: grid !important;
+            grid-template-columns: auto auto;
+            div:nth-child(even){
+                text-align: right;
+            }   
+        }
+    }
+}
+.e-freelancer{
+    clear: both;
+    &__header{
+      @include header-h2;
+      padding-top: 1rem;
+    }
+    &__content{
+        padding-top: 1rem;
+        margin-left: 1rem;
+    }
+    &__item{
+        box-shadow: 0px 0px 5px rgb(0 0 0 / 8%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 1rem;
+        margin-bottom: 1rem;
+        margin-top: 1rem;
+        justify-content: space-between;
+        &-image{
+            img{
+            width: 140px;
+            height: 140px;
+            border-radius: 100%;
+            -webkit-border-radius: 100%;
+            -moz-border-radius: 100%;
+            -ms-border-radius: 100%;
+            -o-border-radius: 100%;
+            }
+        }
+        &-title{
+            @include title;
+            padding: 0.4rem 0;
+        }
+        &-skill{
+            @include subtitle;
+            padding-bottom: 0.4rem;
+
+        }
+        &-price{
+            background: #3A0B5F;
+            @include stripe-text;
+            align-self: flex-start;
+            padding: 0.2rem 1rem;
+        }
+    }
+}

@@ -1,0 +1,7 @@
+.e-postskill{
+    &__header{
+        @include header-h2;
+        padding: 2rem 0;
+        text-align: center;
+    }
+}

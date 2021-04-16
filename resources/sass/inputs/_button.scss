@@ -1,0 +1,18 @@
+.e-button{
+    padding: 0.8rem 4rem;
+    @include font-button;
+    border-radius: 2px;
+    &-primary{
+        background: $button-primary;
+        color: $white;
+        box-shadow: 0px 5px 22px rgba(144, 19, 243, 0.27);
+    }
+    &-small{
+        @include font-button;
+        padding: 0rem 1.3rem;
+        font-size: 12px;
+    }
+    &-light{
+        border: 2px solid $button-primary;
+    }
+}

@@ -1,0 +1,62 @@
+.banner{
+    padding-top: 300px;
+    @include d-mobile {
+        padding-top: 80px;
+    }
+    &-content{
+        padding-bottom: 100px;
+        @include d-mobile{
+    background: white;
+    padding: 15px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+}
+        &__title{
+            @include font56;
+            @include d-mobile {
+                line-height: 1.2;
+                font-size: 38px;
+            }
+
+        }
+        &__subtitle{
+            @include subtitle;
+            font-size: 20px;
+        }
+        &__search{
+            &--input{
+                width: 50%;
+                
+                @include d-mobile {
+                    width: 88%;
+                }
+            }
+            .form-control {
+                border-radius: 5px 0 0 5px;
+                -webkit-border-radius: 5px 0 0 5px;
+                -moz-border-radius: 5px 0 0 5px;
+                -ms-border-radius: 5px 0 0 5px;
+                -o-border-radius: 5px 0 0 5px;
+                border-right: 0;
+            }
+            button {
+                border-radius: 0 5px 5px 0;
+                    -webkit-border-radius: 0 5px 5px 0;
+                    -moz-border-radius: 0 5px 5px 0;
+                    -ms-border-radius: 0 5px 5px 0;
+                    -o-border-radius: 0 5px 5px 0;
+                    @include d-mobile {
+                    padding: 0;
+                    width: 40px;
+                }
+            }
+        }
+        &__items{
+            @include rootcolor16;
+        }
+    }
+    
+}
