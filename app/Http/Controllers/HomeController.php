@@ -16,12 +16,13 @@ use App\User;
 use App\Review;
 use Illuminate\Support\Facades\Schema;
 use DB;
+
 class HomeController extends Controller
 {
   
     public function theme5()
     {
-        $categories = Category::latest()->get()->take(8);
+        $categories = Category::all();
         $all_skills = Skill::all();
         
 		$i = 0;

@@ -15,34 +15,123 @@ use App\Job;
 use App\User;
 use App\Review;
 use Illuminate\Support\Facades\Schema;
+use DB;
+
 
 class HomeController extends Controller
 {
   
     public function theme5()
     {
-        $categories = Category::latest()->get()->take(8);
-        $jobs = Job::latest()->get()->all();
-     
-        $search =  User::getSearchResult(
-                    'freelancer',
-                    [],
-                    [],
-                    [],
-                    [],
-                    [],
-                    [],
-                    [],
-                    []
-                );
-        $freelancers = count($search['users']) > 0 ? $search['users'] : '';
+        $categories = Category::all();
+        $all_skills = Skill::all();
+        
+		$i = 0;
+		foreach($categories as $cat){
+			$categorycount = DB::table('catables')
+				->select('catables.id as catableid')
+				->join('jobs', 'jobs.id', '=', 'catables.catable_id')
+				->where(array('category_id'=>$cat->id,'catable_type'=>"App\Job"))
+				->where('jobs.status','posted')
+				->where('jobs.expiry_date','>',date('Y-m-d'))				
+				->get();
+			if(count($categorycount) == 0){ 
+				unset($categories[$i]);
+			}
+			$i++;
+		}
+		
+        $jobs = Job::latest()->where('status','posted')->get()->all();
+        if(!empty($jobs))
+        {
+            foreach ($jobs as $key => $job) {
+                $location = Location::where('id', '=', $job['location_id'])->first();
+                $jobs[$key]['location_name'] = $location['title'];
+                $employeer = User::where('id', '=', $job['user_id'])->first();
+                $jobs[$key]['employeers_name'] = $employeer['first_name']." ".$employeer['last_name'];
+                $jobs[$key]['employee_slug'] = $employeer['slug'];
+            }
+        }    
+        // $search =  User::getSearchResult(
+        //             'freelancer',
+        //             [],
+        //             [],
+        //             [],
+        //             [],
+        //             [],
+        //             [],
+        //             [],
+        //             []
+        //         );
+        // $freelancers = count($search['users']) > 0 ? $search['users'] : '';
+
+       /*$freelancers = Review::join('profiles', 'profiles.user_id', '=', 'receiver_id')->join('users', 'users.id', '=', 'receiver_id')->selectRaw('AVG(avg_rating) average, receiver_id as id,users.slug,users.first_name,users.last_name,profiles.avater,profiles.tagline,profiles.hourly_rate,users.location_id as userlocation')->groupBy( 'receiver_id' )
+	   >whereNotNull('users.location_id')
+	   ->where('profiles.hourly_rate','<>','')
+	   ->orderBy('average', 'DESC')->get()->toArray(); */
+	   
+	   $freelancers = DB::table('users')
+			->join('profiles', 'profiles.user_id', '=', 'users.id')
+			->selectRaw('users.id as id,users.slug, users.first_name, users.last_name, profiles.avater, profiles.tagline, profiles.hourly_rate, users.location_id as userlocation')
+			->where('users.is_featured',1)
+			->orderBy('users.id', 'DESC')->get()->toArray();
+			
+        if(!empty($freelancers))
+        {
+            foreach ($freelancers as $key => $freelancer) 
+            {
+                // $skills = Skill::join('skill_user', 'skill_user.skill_id', '=', 'id')->selectRaw('skills.title,skills.slug')->get()->toArray();
+
+                $skills = Skill::getFreelancerSkill($freelancer->id);
+                $feedbacks = \App\Review::select('feedback')->where('receiver_id', $freelancer->id)->count();
+                $avg_rating = \App\Review::where('receiver_id', $freelancer->id)->sum('avg_rating');
+                $rating  = $avg_rating != 0 ? round($avg_rating/\App\Review::count()) : 0;
+                $reviews = \App\Review::where('receiver_id', $freelancer->id)->get();
+                $freelancers[$key]->rating_width  = $reviews->sum('avg_rating') != 0 ? (($reviews->sum('avg_rating')/$feedbacks)/5)*100 : 0;
+                $freelancers[$key]->average_rating_count = round(!empty($feedbacks) ? $reviews->sum('avg_rating')/$feedbacks : 0);
+                $freelancers[$key]->imagePath = asset(!empty($freelancer->avater) ? '/uploads/users/' . $freelancer->id . '/' . $freelancer->avater : '/images/user.jpg');
+                if(!empty($skills))
+                {
+                    foreach ($skills as $key1 => $skill) {
+                        $skill_name = Skill::where('id', '=', $skill)->first();
+                        $skills_user[] = array(
+                            'title' => $skill_name['title'],
+                            'slug'  => $skill_name['slug']
+                        ); 
+                    }
+                    $freelancers[$key]->skills = $skills_user;
+                    $skills = [];   
+                }
+                else
+                {
+               
+                    $freelancers[$key]->skills = [];       
+                }
+                
+                if(!empty($freelancer->userlocation))
+                {
+                    $location = Location::where('id', '=',(int) $freelancer->userlocation)->first();
+                    if(!empty($location))
+                        $freelancers[$key]->location_name = $location['title'];
+                    else
+                        $freelancers[$key]->location_name = "";
+                }
+                else
+                {
+                    $freelancers[$key]->location_name = "";
+                }
+            }
+           
+        }
+        
         return View::make(
             'homeV5',
             compact(
                 'categories',
                 'jobs',
-                'freelancers'
-               
+                'freelancers',
+                'user',
+                'all_skills'
             )
         ); 
     } 

@@ -10,7 +10,6 @@
     "require": {
         "php": "^7.1.3",
         "barryvdh/laravel-dompdf": "^0.8.4",
-        "ben182/laravel-auto-translate": "^0.6.0",
         "chumper/zipper": "^1.0",
         "davejamesmiller/laravel-breadcrumbs": "5.x",
         "doctrine/dbal": "^2.9",
