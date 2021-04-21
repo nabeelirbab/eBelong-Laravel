@@ -51,28 +51,50 @@ class LoginController extends Controller
      */
     protected function authenticated(Request $request, $user)
     {
+        // echo '<pre>';
+        // print_r($user);
+        // exit;
+
         if (Schema::hasTable('users')) {
-            if (!empty($user->verification_code)) {
-                Session::flash('error', trans('lang.verification_code_not_verified'));
+            $user_id = Auth::user()->id;
+            $user_role_type = User::getUserRoleType($user_id);
+            if (empty($user_role_type)) {
+                Session::flash('error', trans('Unfortunately you have been logged out due to in-sufficient role privileges for you account, For Further details contact to administrator'));
                 Auth::logout();
                 return Redirect::to('/');
-            } else {
-                $user_id = Auth::user()->id;
-                $user_role_type = User::getUserRoleType($user_id);
-                if (empty($user_role_type)) {
-                    Session::flash('error', trans('Unfortunately you have been logged out due to in-sufficient role privileges for you account, For Further details contact to administrator'));
-                    Auth::logout();
-                    return Redirect::to('/');
-                }
-                $user_role = $user_role_type->role_type;
-                if ($user_role === 'freelancer') {
-                    return Redirect::to('freelancer/dashboard');
-                } elseif ($user_role === 'employer') {
-                    return Redirect::to('employer/dashboard');
-                } else {
-                    return Redirect::to(url()->previous());
-                }
             }
+            $user_role = $user_role_type->role_type;
+            if ($user_role === 'freelancer') {
+                return Redirect::to('freelancer/dashboard');
+            } elseif ($user_role === 'employer') {
+                return Redirect::to('employer/dashboard');
+            } else {
+                return Redirect::to(url()->previous());
+            }
+            // if (!empty($user->verification_code)) {
+            //     // echo '<pre>';
+            //     // print_r($user->verification_code);
+            //     // exit;
+            //     Session::flash('error', trans('lang.verification_code_not_verified'));
+            //     Auth::logout();
+            //     return Redirect::to('/');
+            // } else {
+            //     $user_id = Auth::user()->id;
+            //     $user_role_type = User::getUserRoleType($user_id);
+            //     if (empty($user_role_type)) {
+            //         Session::flash('error', trans('Unfortunately you have been logged out due to in-sufficient role privileges for you account, For Further details contact to administrator'));
+            //         Auth::logout();
+            //         return Redirect::to('/');
+            //     }
+            //     $user_role = $user_role_type->role_type;
+            //     if ($user_role === 'freelancer') {
+            //         return Redirect::to('freelancer/dashboard');
+            //     } elseif ($user_role === 'employer') {
+            //         return Redirect::to('employer/dashboard');
+            //     } else {
+            //         return Redirect::to(url()->previous());
+            //     }
+            // }
         }
     }
 
