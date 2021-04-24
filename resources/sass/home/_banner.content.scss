@@ -4,7 +4,6 @@
         padding-top: 80px;
     }
     &-content{
-        padding-bottom: 100px;
         @include d-mobile{
     background: white;
     padding: 15px;
@@ -15,7 +14,7 @@
     -o-border-radius: 5px;
 }
         &__title{
-            @include font56;
+            @include font45;
             @include d-mobile {
                 line-height: 1.2;
                 font-size: 38px;
@@ -28,7 +27,7 @@
         }
         &__search{
             &--input{
-                width: 50%;
+                width: 35%;
                 
                 @include d-mobile {
                     width: 88%;
