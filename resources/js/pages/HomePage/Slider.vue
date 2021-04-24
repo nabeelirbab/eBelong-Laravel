@@ -3,7 +3,7 @@
 <div class="trusted_partner">
   <div class="trusted_partner__items container d-flex flex-wrap justify-content-between align-items-center">
 
-    <div class="py-2 py-md-4 bannerjob__item">Trusted Partner</div>
+    <div class="py-2 py-md-4 bannerjob__item">Trusted by:</div>
     <div class="py-2 py-md-4"><img :src="`${baseUrl}/images/home/trusted_by_1.svg`"/></div>
     <div class="py-2 py-md-4"><img :src="`${baseUrl}/images/home/trusted_by_2.svg`"/></div>
     <div class="py-2 py-md-4"><img :src="`${baseUrl}/images/home/trusted_by_3.svg`"/></div>
@@ -14,8 +14,8 @@
   </div>
 </div>
   <div v-isvisible.scroll="{animate:'pulse'}" class="container">
-    <div class="e-freelancer mb-5">
-      <div class="e-freelancer__header text-center">Our Super Star Talent</div>
+    <div class="e-freelancer mt-5 mb-5">
+      <div class="e-freelancer__header">Our Super Star Talent</div>
       <div class="e-freelancer__content">
         <splide :options="options">
           <splide-slide
@@ -42,6 +42,11 @@
           </splide-slide>
                   </splide>
       </div>
+      <div class="text-center mt-5">
+      <button ref="submit" class="e-button e-button-whitebackground">
+                See all
+            </button>
+      </div>      
     </div>
   </div>
 </div>

@@ -36,6 +36,19 @@
     font-weight: bold;
 }
 
+.splide__arrow--prev{
+    left: -5em !important;
+}
+
+.splide__arrow--next{
+    right: -5em !important;
+}
+
+.splide__arrow{
+    background: #ffffff;
+    font-size: 20px;
+}
+
 @include d-mobile{
     .wt-fwidgettitle{
         padding-top: 30px;
@@ -154,8 +167,8 @@
 .wt-banner{
     background-image:url('../images/home/Freelancer.png'), url('../images/home_banner.png') ;
     background-repeat: no-repeat;
-    background-position: bottom 10px right 20px,top right;
-    padding-bottom: 15px;
+    background-position: bottom 0px right 100px,bottom right;
+    padding-bottom: 70px;
     @include d-desktop{
         background-size: 30%,70%;
     }

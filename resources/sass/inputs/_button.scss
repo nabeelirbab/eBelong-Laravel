@@ -15,4 +15,9 @@
     &-light{
         border: 2px solid $button-primary;
     }
+    &-whitebackground{
+        border: 2px solid $button-primary;
+        background-color: $white;
+        color: $button-primary;
+    }
 }
