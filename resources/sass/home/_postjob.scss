@@ -1,9 +1,110 @@
 .e-postjob{
     background: #F5F5F5;
+    &__container {
+        padding: 30px 0px 50px 0px;
+    }
     &__header{
+        &__title{
+            display: inline-block;
+        }
+        &__image{
+            display: inline-block;
+            margin-left: 20px;
+            img {
+                width: 80%;
+            }
+        }
+
+        font-size: 1.8rem;
         @include header-h2;
     }
     &__content{
         @include subtitle;
+        font-size: 0.78rem;
+    }
+    &__right {
+        position: absolute;
+        right: 0px;
+        bottom: 0px;
+        img {
+            width: 300px;
+            height: 300px;
+        }
+    }
+    .fb {
+        background-color: #3B5998;
+        color: white;
+        padding: 0.8rem 0rem;
+        font-size: 0.8rem;
+        font-family: "Poppins", sans-serif;
+        font-weight: 600;
+        border-radius: 2px;
+        width: 100%;
+        box-shadow: 0 0 40px rgba(0,0,0,.08);
+        margin: 0.8rem 0rem;
+    }
+    .google {
+        background-color: white;
+        color: #A7A8AE;
+        padding: 0.8rem 0rem;
+        font-size: 0.8rem;
+        font-family: "Poppins", sans-serif;
+        font-weight: 600;
+        border-radius: 2px;
+        width: 100%;
+        box-shadow: 0 0 40px rgba(0,0,0,.08);
+        margin: 0.8rem 0rem;
+    }
+    .fa-google:before {
+        content: "\f1a0";
+        font-size: 1rem;
+        background: conic-gradient(from -45deg, #ea4335 110deg, #4285f4 90deg 180deg, #34a853 180deg 270deg, #fbbc05 270deg) 73% 55%/150% 150% no-repeat;
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        -webkit-text-fill-color: transparent;
+    }
+    .fa-facebook:before {
+        content: "\f09a";
+        font-size: 1rem;
+    }
+    .or-area {
+        font-family: sans-serif;
+        // margin-bottom: 0.8rem;
+        color: #A7A8AE;
+        text-align: center;
+        font-size: 16px;
+        max-width: 600px;
+        position: relative;
+    }
+    .or-area::before {
+        content: "";
+        display: block;
+        width: 130px;
+        height: 2px;
+        background: #A7A8AE;
+        left: 20%;
+        top: 50%;
+        border-radius: 40px;
+        position: absolute;
+        @include d-mobile{
+            left: 10%;
+            width: 100px;
+        }
+    }
+    .or-area::after {
+        content: "";
+        display: block;
+        width: 130px;
+        height: 2px;
+        background: #A7A8AE;
+        right: 20%;
+        top: 50%;
+        position: absolute;
+        border-radius: 40px;
+        @include d-mobile{
+            right: 10%;
+            width: 100px;
+        }
     }
 }

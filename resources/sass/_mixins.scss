@@ -46,6 +46,13 @@
     font-family: 'Poppins', sans-serif;
     color: 9013F3;
 }
+@mixin font16 {
+    font-size: 16px;
+    font-weight: 500;
+    font-family: 'Poppins', sans-serif;
+    color: $black;
+    opacity: 0.25;
+}
 @mixin font20 {
     font-size: 20px;
     font-weight: 500;

@@ -150,7 +150,31 @@
     &::after,&::before{
         content: none !important;
     }
+    .e-button {
+        padding: 0.8rem 7rem;
+        border-radius: 4px;
+        font-size: 0.8rem;
+    }
+    .wt-footercol2 {
+        margin-top: 5px;
+        margin-bottom: 20px;
+    }
+    .other-links{
+        
+        .other-link{
+            display: inline;
+            a {
+                color: white;
+                margin-right: 10px;
+                font-size: 0.8rem;
+                &:hover{
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
 }
+
 .wt-banner{
     background-image:url('../images/home/Freelancer.png'), url('../images/home_banner.png') ;
     background-repeat: no-repeat;
