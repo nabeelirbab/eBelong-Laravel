@@ -1,16 +1,19 @@
 <template>
   <div  class="bannerjob py-5 d-md-block">
   <div class="container">
-    <h2 v-animate-onscroll.repeat="'animated flash'" class="text-center bannerjob__title pb-4 pt-4">How Ebelong works</h2>
+    <h2 v-animate-onscroll.repeat="'animated flash'" class="text-center bannerjob__title pb-4">How eBelong works</h2>
     <div
       class="bannerjob__content d-md-flex justify-content-between"
     >
       <div>
-        <ul class="bannerjob__items" style="background:#F5F5F5;position: relative; left: -10px">
-          <li v-for="(item,i) in items" :class="{'bannerjob__item-selected' : i===selected}" v-on:click="()=>selected=i" :key='i' class="bannerjob__item pb-4">{{item}}</li>
+        <ul class="bannerjob__items number" style="background:#F5F5F5;position: relative; left: -10px">
+          <li v-for="(item,i) in items" :class="{'bannerjob__item-selected' : i===selected}" @click="selected = i" :key='i' class="bannerjob__item pb-4"> {{item}} </li>
         </ul>
       </div>
-      <div><img class="bannerjob__image" style="width:300px" :src="`${APP_URL}/images/home/layer_${selected+1}.svg`"/></div>
+      <div>
+        <img class="bannerjob__image" style="width:300px" :src="`${APP_URL}/images/home/layer_${selected+1}.svg`"/>
+        <div class="bannerjob__image__text">Provide a little info and we’ll connect you with one of eBelong's CTOs.</div>
+      </div>
       <div style="position: absolute; bottom: -20px;left:20px">
         <button v-on:click="onClick()" class="e-button e-button-primary">Let's Get Started</button>
       </div>
@@ -30,10 +33,10 @@ export default {
       return {
           APP_URL:window.APP_URL,
           items:[
-              '01   Tell Us Who You Need',
-              '02   Meet Your Talent',
-              '03   Get Work Done',
-              '04   Make secure payment'
+              'Tell Us Who You Need',
+              'Meet Your Talent',
+              'Get Work Done',
+              'Make secure payment'
           ],
           selected:0
       }
@@ -53,3 +56,34 @@ export default {
   }
 };
 </script>
+<style scoped>
+ul.number {
+	list-style-type: none;
+	counter-reset: li;
+}
+
+ul.number li:before {
+  counter-increment: li;
+  content: counter(li, decimal-leading-zero);
+	/* color: red; */
+	margin-right: 1rem;
+}
+ul.number li.bannerjob__item-selected::after{
+
+  content: "";
+  position: absolute;
+  width: 40%;
+  height: 6px;
+  border-radius: 2px;
+  margin-left: 1.5rem;
+  margin-top: 0.7rem;
+  background: linear-gradient( 
+  90deg
+  ,#9013F3 41.07%,#D413F3 76.05%);
+}
+@media screen and (max-width: 768px) {
+  ul.number li.bannerjob__item-selected::after{
+    width: 20%;
+  }
+}
+</style>

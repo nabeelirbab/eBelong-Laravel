@@ -712,7 +712,7 @@ li.wt-rss a { background:#ff6600; }
 }
 .wt-description {
 	width: 100%;
-	float: left;
+	/* float: left; */
 }
 .wt-bglight { background:#f7f7f7; }
 .wt-bgwhite { background:#fff; overflow: hidden;}
@@ -4812,7 +4812,7 @@ body.wt-login .wt-userlogedin{display: block;}
 .wt-footerlogohold .wt-logo{margin: 0; margin-bottom:20px; }
 .wt-footerlogohold > .wt-description > p{
 	color: #ccc;
-	font-size: 16px;
+	font-size: 12px;
 	margin: 0 0 26px;
 	line-height: 26px;
 }
@@ -10378,12 +10378,12 @@ a:focus{text-decoration: none !important;}
 	margin: 0;
 }
 /* Footer Style */
-.wt-footertwo{
+/* .wt-footertwo{
 	z-index:1;
 	padding-right: 40px;
 	position: relative;
 	padding-top: 260px;
-}
+} */
 .wt-innerbgcolor.wt-footertwo:before{
 	background-image: url(../images/frame2.png);
 }

@@ -5,6 +5,16 @@
             width: 320px;
             margin: 1rem;
         }
+        &__text{
+            @include d-mobile{
+                width: 320px;
+                margin: 0rem 1rem;
+            }
+            font-size: 12px;
+            width: 300px;
+            line-height: 1.1;
+            margin-top: 15px;
+        }
     }
     &__content{
         border-left: 2px solid #CFCFCF;
@@ -24,15 +34,18 @@
     }
     &__title{
         @include header-h2;
+        text-transform: none;
+        font-size: 1.5rem;
     }    
     &__item{
         list-style: none;
-        @include font22;
+        @include font16;
         cursor: pointer;
         &-selected{
             color:#9013F3;
             opacity: 1;
         }
+        
     }
     &__bullets{
         position: absolute;
@@ -63,5 +76,9 @@
             border: 2px solid #9013F3;
             background: #9013F3;
         }
+    }
+    .e-button {
+        padding: 0.8rem 2rem;
+        font-size: 14px;
     }
 }
