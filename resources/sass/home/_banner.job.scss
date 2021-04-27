@@ -40,6 +40,9 @@
     &__item{
         list-style: none;
         @include font16;
+        @include d-mobile{
+            width: 100%;
+        }
         cursor: pointer;
         &-selected{
             color:#9013F3;

@@ -3,7 +3,7 @@
 <div class="trusted_partner">
   <div class="trusted_partner__items container d-flex flex-wrap justify-content-between align-items-center">
 
-    <div class="py-2 py-md-4 bannerjob__item">Trusted by:</div>
+    <div class="py-2 py-md-4 bannerjob__item text-center">Trusted by:</div><br/>
     <div class="py-2 py-md-4"><img :src="`${baseUrl}/images/home/trusted_by_1.svg`"/></div>
     <div class="py-2 py-md-4"><img :src="`${baseUrl}/images/home/trusted_by_2.svg`"/></div>
     <div class="py-2 py-md-4"><img :src="`${baseUrl}/images/home/trusted_by_3.svg`"/></div>
