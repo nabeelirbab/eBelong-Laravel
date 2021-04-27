@@ -985,7 +985,7 @@ li.wt-rss a { background:#ff6600; }
 }
 .wt-navigation > ul{
 	width: 100%;
-	float: left;
+	float: right;
 	list-style: none;
 	text-align: center;
 	line-height: inherit;

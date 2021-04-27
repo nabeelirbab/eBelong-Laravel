@@ -5,8 +5,10 @@
     &__items{
         
         @include d-mobile{
-            display: grid !important;
+            display: flex !important;
+            justify-content: space-around !important;
             grid-template-columns: auto auto;
+            padding: 25px 15px !important;
             div:nth-child(even){
                 text-align: right;
             }   
@@ -19,6 +21,9 @@
       @include header-h2;
       padding-top: 1rem;
       padding-bottom: 1rem;
+      @include d-mobile{
+          text-align: center;
+      }
     }
     &__content{
         padding-top: 1rem;
