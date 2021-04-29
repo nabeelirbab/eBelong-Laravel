@@ -46,7 +46,6 @@
         padding-top: 30px;
     }
     body.wt-login .wt-loginarea{
-        display: none !important;
         align-items: center;
         margin: 4px !important;
         .wt-loginbtn{
@@ -60,15 +59,22 @@
         }
     }
     .wt-navigationarea .wt-logo{
-        top:10px;
+        top:5px;
         position: relative;
-        left: 40px;
+        left: 22px;
+    }
+    .desktop-logo{
+      display: none;
+    }
+    .navbar-toggler{
+        padding: 0px !important;
+        font-size: 1.500rem !important;
     }
     .lnr-menu:before{
         color: white;
     }
     .wt-loginarea .wt-loginbtn{
-        color: var(--terthemecolor) !important;
+        color: white !important;
     }
     .wt-nav button{
         background: transparent !important;
@@ -100,8 +106,8 @@
         display: block;
         margin: 20px 2px;
         position: absolute;
-        right: 0;
-        bottom: 10px;
+        top: 9px;
+        right: 28px;
     }
     .wt-loginformhold{
         left: 0;
@@ -147,6 +153,9 @@
     
     .splide__arrow--next{
         right: -5em !important;
+    }
+    .mobile-logo{
+       display: none;
     }
 
 }
