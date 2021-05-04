@@ -214,7 +214,7 @@ class Helper extends Model
     public static function getBannerImage($image, $path = '')
     {
         if (empty($image) && isset($_GET['type']) && $_GET['type'] == 'freelancer') {
-            $banner =  'images/frbanner-1920x400.jpg';
+            // $banner =  'images/frbanner-1920x400.jpg';
         } elseif (empty($image) && isset($_GET['type']) && $_GET['type'] == 'employer') {
             $banner =  'images/e-1110x300.jpg';
         } elseif (empty($image) && isset($_GET['type']) && ($_GET['type'] == 'job' || $_GET['type'] == 'service')) {
@@ -224,7 +224,7 @@ class Helper extends Model
         } else {
             $banner = $path . '/' . $image;
         }
-        return $banner;
+        // return $banner;
     }
 
     /**

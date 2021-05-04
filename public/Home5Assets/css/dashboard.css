@@ -1366,7 +1366,7 @@ table.wt-tablecategories tbody tr td figure img{
 	padding: 0 20px;
 }
 .wt-dashboradsaveitem .wt-userlistinghold + .wt-userlistinghold{margin-top: 20px;}
-.wt-saveitem-breadcrumb li .wt-dashboraddoller i{color: #00cc8d;}
+.wt-saveitem-breadcrumb li .wt-dashboraddoller i{color: #9013F3;}
 .wt-saveitem-breadcrumb li .wt-clicksavefolder i{color: #3498db;}
 .wt-saveitem-breadcrumb li .wt-dashboradclock i{color: #ff5851;}
 .wt-dashboradsavebg{background: #fcfcfc;}
@@ -2781,7 +2781,7 @@ li.collapsed .wt-msgbtns .wt-msgbtn i.lnr-chevron-up:before{content: "\e874";}
 }
 .wt-titlemessages .wt-userlogedin:before{display: none;}
 .wt-titlemessages .wt-username h3 i{
-	color: #00cc8d;
+	color: #9013F3;
 	font-size: 14px;
 }
 .wt-messages-holder .wt-userlogedin .wt-username{padding: 7px 0;}

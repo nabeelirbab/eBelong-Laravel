@@ -341,7 +341,7 @@ address { font-style: italic; }
     opacity: 0;
     width: 20px;
     height: 20px;
-    color: #00cc8d;
+    color: #9013F3;
     font-size: 10px;
     content: '\f00c';
     line-height: 20px;
@@ -383,7 +383,7 @@ address { font-style: italic; }
 	content: '\f14a';
 	font-size: 16px;
 }
-.wt-checkbox input[type=checkbox]:checked + label:before{border-color: #00cc8d;}
+.wt-checkbox input[type=checkbox]:checked + label:before{border-color: #9013F3;}
 /* Theme Global Elements */
 .wt-haslayout {
 	width:100%;
@@ -1850,7 +1850,6 @@ body.wt-login .wt-userlogedin{display: block;}
 	height: 100%;
 	content: '';
 	position: absolute;
-	background: rgba(50,50,50,0.40);
 }
 .wt-innerbannercontent{
 	float: left;
@@ -2107,7 +2106,7 @@ body.wt-login .wt-userlogedin{display: block;}
 .wt-articlesingle-content .wt-description ul li:before{
 	left: 0;
 	top: 7px;
-	color: #00cc8d;
+	color: #9013F3;
 	font-size:16px;
 	content: '\f00c';
 	margin: -7px 0 0px;
@@ -3186,6 +3185,7 @@ body.wt-login .wt-userlogedin{display: block;}
 	text-align: center;
 	border-left: 1px solid #ddd;
 	border-radius: 0 5px 5px 0;
+	background: #9013F3 !important;
 }
 .wt-searchgbtn:hover,
 .wt-searchgbtn:focus{color: #fff;}
@@ -3202,7 +3202,7 @@ body.wt-login .wt-userlogedin{display: block;}
 	vertical-align: baseline;
 }
 .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar{
-	background:#3498db !important;
+	background:#9013F3 !important;
 }
 .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar{width: 4px;}
 .mCSB_scrollTools .mCSB_draggerRail{
@@ -3372,7 +3372,7 @@ body.wt-login .wt-userlogedin{display: block;}
 	white-space: nowrap;
 	text-overflow: ellipsis;
 }
-.wt-contenthead .wt-title a i{color: #00cc8d}
+.wt-contenthead .wt-title a i{color: #9013F3}
 .wt-userlisting-breadcrumb{
 	float: left;
 	width: 100%;
@@ -3485,7 +3485,7 @@ body.wt-login .wt-userlogedin{display: block;}
 .wt-viewjobholder ul li a i,
 .wt-viewjobholder ul li span i{font-size: 13px;width: 30px;}
 .wt-clicklike{color: #767676;}
-.wt-viewjobdollar{color: #00cc8d;}
+.wt-viewjobdollar{color: #9013F3;}
 .wt-viewjobfolder{color: #3498db;}
 .wt-viewjobclock{color: #ff5851;}
 .wt-viewjobtag{color: #cf649a;}
@@ -3613,7 +3613,7 @@ body.wt-login .wt-userlogedin{display: block;}
 }
 .wt-projectliststyle li span i{
 	width: 30px;
-	color: #00cc8d;
+	color: #9013F3;
 	font-size: 16px;
 }
 .wt-skillsrequired{
@@ -3816,7 +3816,7 @@ body.wt-login .wt-userlogedin{display: block;}
 	margin: 0 0 9px;
 	font: 400 14px/16px 'Poppins', Arial, Helvetica, sans-serif;
 }
-.wt-companysinfo .wt-title a i {color: #00cc8d;}
+.wt-companysinfo .wt-title a i {color: #9013F3;}
 .wt-companysinfo .wt-title h2 {
     margin: 0;
     font-weight: 400;
@@ -4318,7 +4318,7 @@ body.wt-login .wt-userlogedin{display: block;}
 	margin: 0 0 14px;
 	line-height: 20px;
 }
-.wt-userprofile .wt-title h3 i{color: #00cc8d;}
+.wt-userprofile .wt-title h3 i{color: #9013F3;}
 .wt-userprofile .wt-title span{
 	display: block;
 	font-size: 14px;
@@ -7212,7 +7212,7 @@ body.lang-fr .wt-dashboardsave .wt-proposalsr .wt-proposalsrcontent .wt-title{wi
     padding: 10px 0 0 0;
     font-size: 17px;
     font-weight: 600;
-    color: #00cc8d;
+    color: #9013F3;
 }
 body.lang-ja .wt-dropdown > span em{width: 61%;}
 body.lang-ja .wt-loginfooterinfo a{width: 100%;}
@@ -7492,7 +7492,7 @@ body.lang-ja .wt-loginfooterinfo a + a:before {
 }
 .wt-detailslisting li span:before{
 	left: 0;
-	color: #00cc8d;
+	color: #9013F3;
 	content: '\f00c';
 	position: absolute;
 	font-family: 'FontAwesome';
@@ -7683,7 +7683,7 @@ body.lang-ja .wt-loginfooterinfo a + a:before {
 	margin: 0 0 6px;
 	font: 400 14px/14px 'Poppins', Arial, Helvetica, sans-serif;
 }
-.wt-freelancers-content .dc-title a i{color: #00cc8d;}
+.wt-freelancers-content .dc-title a i{color: #9013F3;}
 .wt-freelancers-content .dc-title{float: left;width: 100%;}
 .wt-freelancers-content .dc-title h3{
 	font-size:16px;
@@ -8432,7 +8432,7 @@ body.lang-ja .wt-loginfooterinfo a + a:before {
 	margin: 0 0 6px;
 	font: 400 14px/14px 'Poppins', Arial, Helvetica, sans-serif;
 }
-.wt-freelancers-content .dc-title a i{color: #00cc8d;}
+.wt-freelancers-content .dc-title a i{color: #9013F3;}
 .wt-freelancers-content .dc-title{float: left;width: 100%;}
 .wt-freelancers-content .dc-title h3{
 	font-size:16px;
