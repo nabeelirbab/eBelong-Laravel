@@ -867,7 +867,7 @@ return [
     'details' => 'Details',
     'job_proposal' => 'Job Proposal',
     'employers' => 'Employers',
-    'freelancers' => 'Freelancers',
+    'freelancers' => 'Find Talented Freelancers',
     'add_experience' => '+ Add Experience',
     'add_your_exp' => 'Add Your Experience',
     'date_note' => '* Leave ending date empty if its your current job',

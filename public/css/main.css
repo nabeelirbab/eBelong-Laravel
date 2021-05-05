@@ -731,6 +731,14 @@ li.wt-rss a { background:#ff6600; }
 	line-height:16px;
 	position:relative;
 }
+.wt-hourlyrate{
+	background: #3A0B5F;
+    border-radius: 5px;
+    color: #ffffff;
+    padding: 10px 25px;
+	font-size: 16px;
+    font-weight: bold;
+}
 .wt-stars{width: 90px;}
 .wt-stars span:after,
 .wt-stars:before {
@@ -802,6 +810,12 @@ li.wt-rss a { background:#ff6600; }
 .wt-formtheme{
 	width:100%;
 	float:left;
+	
+}
+.wt-formbackground {
+	background: #FFFFFF;
+    box-shadow: 0px 4px 36px rgb(0 0 0 / 12%);
+    border-radius: 5px;
 }
 .wt-formtheme fieldset{
 	border:0;
@@ -826,7 +840,7 @@ li.wt-rss a { background:#ff6600; }
 	z-index:1;
 	position:relative;
 }
-.wt-innerbgcolor{background:#f7f7f7;}
+.wt-innerbgcolor{background:#ffffff;}
 /* For Mobile Nav use this code in Responsive.css desired Query */
 /*
 .navbar-toggle{display: block;}
@@ -898,7 +912,7 @@ li.wt-rss a { background:#ff6600; }
 	margin: 21px 0 0;
 	list-style: none;
 	text-align: center;
-	display:inline-block;
+	display:none;
 	vertical-align:middle;
 	text-transform: capitalize;
 	font:400 18px/18px 'Poppins', Arial, Helvetica, sans-serif;
@@ -1816,8 +1830,7 @@ body.wt-login .wt-userlogedin{display: block;}
 /* Artcle Style */
 /* Artcle Banner Style */
 .wt-innerbannerholder{
-	background-color: #9013F3;
-	height: 300px;
+	height: 150px;
 	/* background-image: url(../images/bannerimg/aboutus.jpg) !important; */
 	background-size: cover;
     background-repeat: no-repeat;
@@ -1861,11 +1874,11 @@ body.wt-login .wt-userlogedin{display: block;}
 }
 .wt-title h2{
 	display: block;
-	font-size: 50px;
-	font-weight: 700;
+	font-size: 41px;
+	font-weight: 500;
 	line-height: 45px;
 }
-.wt-innerbannercontent .wt-title h2{color: #fff;}
+.wt-innerbannercontent .wt-title h2{color: #2B2B2B;}
 .wt-articletabshold{
 	float: left;
 	width: 100%;
@@ -2480,12 +2493,12 @@ body.wt-login .wt-userlogedin{display: block;}
 	float: left;
 	margin: 5px;
 	padding: 0 18px;
-	color: #767676;
+	color: #9013F3;
 	font-size: 14px;
 	line-height: 38px;
 	text-align: center;
-	border-radius: 20px;
-	border: 1px solid #ddd;
+	border-radius: 5px;
+    border: 0.6px solid #9013F3;
 }
 .wt-widgettag a:hover{color: #fff;}
 .wt-classicaricle-header,
@@ -3247,6 +3260,7 @@ body.wt-login .wt-userlogedin{display: block;}
     margin: 0 0 16px;
 }
 .wt-userlistingtitle{
+	display: none;
 	float: left;
 	width: 100%;
 	margin-bottom:30px;
@@ -3327,6 +3341,7 @@ body.wt-login .wt-userlogedin{display: block;}
 	float: left;
 	width: 100%;
 	padding: 30px;
+	box-shadow: 0px 4px 38px rgb(0 0 0 / 12%);
 	background:#fff;
 	border-radius: 4px;
 }
@@ -3339,9 +3354,9 @@ body.wt-login .wt-userlogedin{display: block;}
 	width: auto;
 	float: left;
 	border-radius: 4px;
-	max-height: 100px;
-	max-width: 100px;
-	margin: 0 30px 30px 0;
+	max-height: 62px;
+    max-width: 62px;
+    margin: 0 10px 30px 0;
 }
 .wt-userlistingimg img{
 	width: 100%;
@@ -3356,21 +3371,22 @@ body.wt-login .wt-userlogedin{display: block;}
 }
 .wt-contenthead .wt-title > a{
 	display: block;
-	color:#323232;
-	margin: 0 0 9px;
-	font:400 14px/16px 'Poppins', Arial, Helvetica, sans-serif;
+	color:#474747;
+	margin: 0 0 15px;
+	font:400 23px/16px 'Poppins', Arial, Helvetica, sans-serif;
 }
 .wt-contenthead .wt-title h2{
 	margin: 0;
 	font-weight: 400;
 	margin: 0 0 16px;
+	display: none;
 	font-size: 18px;
 	line-height: 22px;
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
 }
-.wt-contenthead .wt-title a i{color: #9013F3}
+.wt-contenthead .wt-title a i{color: #9013F3; display: none}
 .wt-userlisting-breadcrumb{
 	float: left;
 	width: 100%;
@@ -3396,11 +3412,12 @@ body.wt-login .wt-userlogedin{display: block;}
 .wt-userlistinghold .wt-description p{
 	font-size: 14px;
 	line-height: 24px;
+	display: none;
 }
 .wt-userlistinghold .wt-widgettag{width: auto;margin:-3px; }
 .wt-userlistinghold .wt-widgettag a{
 	margin: 3px;
-	font-size: 12px;
+	font-size: 13px;
 	line-height: 28px;
 }
 .wt-starsvtwo{
@@ -3416,7 +3433,7 @@ body.wt-login .wt-userlogedin{display: block;}
 .wt-starsvtwo i.fill{color: #fecb02;}
 .wt-starcontent{
 	clear: both;
-	display: block;
+	display: none !important;
 	color: #323232;
 	margin: 8px 0 0;
 	font-size: 20px;
@@ -6987,6 +7004,7 @@ span.wt-stars span:after{
 	float: none;
 	margin: 0 auto;
 	display: block;
+	margin-top: 20px;
 }
 .wt-userlistinghold .wt-userlistingcontent .wt-rightarea{padding: 4px 0;}
 .wt-profilecounter .wt-description p{
