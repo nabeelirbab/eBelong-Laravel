@@ -3431,7 +3431,7 @@ body.wt-login .wt-userlogedin{display: block;}
 }
 .wt-starcontent em{
 	font-style: normal;
-	color: #55acee;
+	color: #9013F3;
 	display: block;
 	font-size: 13px;
 }
@@ -6143,7 +6143,7 @@ select.is-invalid {border-color: #dc3545;}
 .wt-effectiveholder .wt-widgetcontent .wt-formsearch .wt-checkboxholder{margin: 0;}
 .wt-starcontent em {
     font-style: normal;
-    color: #55acee;
+    color: #9013F3;;
     display: block;
     font-size: 13px;
 }
