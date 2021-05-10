@@ -144,13 +144,20 @@
                                                     @if (!empty($freelancer->location))
                                                             <li><span><i class="fas fa-map-marker-alt"></i> {{{ !empty($freelancer->location->title) ? $freelancer->location->title : '' }}}</span></li>
                                                         @endif
-                                                        @if (!empty($freelancer->profile->hourly_rate))
-                                                            <li><span><i class="far fa-money-bill-alt"></i>
+                                                        <!-- @if (!empty($freelancer->profile->hourly_rate))
+                                                            <li><span><i class="fas fa-th"></i>
                                                                  React Developer
-                                                                <!-- {{ (!empty($symbol['symbol'])) ? $symbol['symbol'] : '$' }}{{{ $freelancer->profile->hourly_rate }}} {{ trans('lang.per_hour') }}</span> -->
+                                                                {{ (!empty($symbol['symbol'])) ? $symbol['symbol'] : '$' }}{{{ $freelancer->profile->hourly_rate }}} {{ trans('lang.per_hour') }}</span>
                                                             </li>
+                                                        @endif -->
+                                                        @if (!empty($freelancer->skills))
+                                                        <div class="wt-tag wt-widgettag">
+                                                    @foreach($freelancer->skills as $skill)
+                                                        <a href="{{{url('search-results?type=job&skills%5B%5D='.$skill->slug)}}}">{{{ $skill->title }}}</a>
+                                                        <img src="/uploads/logos/{{{ $skill->logo }}}" alt="">
+                                                       @endforeach
+                                                        </div>
                                                         @endif
-                                                       
                                                         @if (in_array($freelancer->id, $save_freelancer))
                                                             <!-- <li class="wt-btndisbaled">
                                                                 <a href="javascrip:void(0);" class="wt-clicksave wt-clicksave">
