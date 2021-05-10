@@ -711,7 +711,7 @@ return [
     'link_crashed' => 'Link Might Crashed or Not Working!',
     'crashed_note' => 'Sorry, the page you are looking for might be crashed or not existed, you can go back to',
     'no_permission' => 'No Permission',
-    'start_search' => 'Start Your Search',
+    'start_search' => 'Search View',
     'search_company' => 'Search Company',
     'location' => 'Location',
     'search_loc' => 'Search Location',

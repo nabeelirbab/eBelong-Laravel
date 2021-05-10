@@ -374,6 +374,7 @@ address { font-style: italic; }
 	width: 14px;
 	height: 14px;
 	border-radius: 0;
+	left: 274px
 }
 .wt-checkbox input[type=checkbox] + label:after{
 	width:auto;
@@ -381,6 +382,7 @@ address { font-style: italic; }
 	line-height: 15px;
 	content: '\f14a';
 	font-size: 16px;
+	left: 274px
 }
 .wt-checkbox input[type=checkbox]:checked + label:before{border-color: #9013F3;}
 /* Theme Global Elements */
@@ -2401,9 +2403,7 @@ body.wt-login .wt-userlogedin{display: block;}
 	border-radius: 4px;
 }
 .wt-widgettitle{
-	margin-bottom:30px;
 	padding-bottom:17px;
-	border-bottom: 1px solid #ddd;
 }
 .wt-widgettitle h2{
 	margin: 0;
@@ -3205,6 +3205,7 @@ body.wt-login .wt-userlogedin{display: block;}
 .wt-formsearch fieldset .wt-checkboxholder .wt-checkbox label{
 	font-size: 14px;
 	color: #767676;
+	padding: 0px;
 }
 .wt-formsearch fieldset .wt-checkboxholder{max-height: 150px;}
 .wt-formsearch fieldset .wt-checkboxholder .wt-checkbox label img{
@@ -3408,7 +3409,7 @@ body.wt-login .wt-userlogedin{display: block;}
 	font-size: 13px;
 	line-height: inherit;
 }
-.wt-userlisting-breadcrumb li + li{border-left: 1px solid #ddd;}
+.wt-userlisting-breadcrumb li + li{border-left: 0px solid #ddd;}
 .wt-userlistinghold .wt-description p{
 	font-size: 14px;
 	line-height: 24px;
@@ -3419,6 +3420,10 @@ body.wt-login .wt-userlogedin{display: block;}
 	margin: 3px;
 	font-size: 13px;
 	line-height: 28px;
+}
+
+.rating-area{
+   display: flex ;
 }
 .wt-starsvtwo{
 	display: block;
@@ -3433,9 +3438,8 @@ body.wt-login .wt-userlogedin{display: block;}
 .wt-starsvtwo i.fill{color: #fecb02;}
 .wt-starcontent{
 	clear: both;
-	display: none !important;
 	color: #323232;
-	margin: 8px 0 0;
+	margin: 16px 0 0;
 	font-size: 20px;
 	text-align: center;
 }
@@ -8998,3 +9002,10 @@ a:focus{text-decoration: none !important;}
     position: absolute;
 }
 .wt-article-tag a:last-child:after{display:none}
+
+.mCSB_scrollTools .mCSB_draggerContainer{display: none;}
+
+.mCSB_scrollTools{ display: none; opacity: 0 !important;}
+
+
+.mCSB_inside>.mCSB_container{ margin-right: 0 !important;}
