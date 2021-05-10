@@ -9009,3 +9009,10 @@ a:focus{text-decoration: none !important;}
 
 
 .mCSB_inside>.mCSB_container{ margin-right: 0 !important;}
+
+
+.fa-th:before , .fa-list:before{
+	font-size: 20px;
+	padding-right: 10px;
+    cursor: pointer;
+}

@@ -1,18 +1,13 @@
 <aside id="wt-sidebar" class="wt-sidebar wt-usersidebar">
     {!! Form::open(['url' => url('search-results'), 'method' => 'get', 'class' => 'wt-formtheme wt-formsearch wt-formbackground']) !!}
         <input type="hidden" value="{{$type}}" name="type">
-        <div class="wt-widget wt-effectiveholder wt-startsearch">
+        <div class="wt-widget wt-effectiveholder wt-startsearch" style="padding-bottom: 0px; margin: 0px; ">
             <div class="wt-widgettitle">
                 <h2>{{ trans('lang.start_search') }}</h2>
             </div>
             <div class="wt-widgetcontent">
-                <div class="wt-formtheme wt-formsearch">
-                    <fieldset>
-                        <div class="form-group">
-                            <input type="text" name="s" class="form-control" placeholder="{{ trans('lang.ph_search_freelancer') }}" value="{{$keyword}}">
-                        </div>
-                    </fieldset>
-                </div>
+                 <span><i class="fas fa-th"></i></span>
+                <span><i class="fas fa-list"></i></span>
             </div>
         </div>
        
