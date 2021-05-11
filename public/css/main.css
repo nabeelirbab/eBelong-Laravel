@@ -9065,16 +9065,8 @@ a:focus{text-decoration: none !important;}
 
 }
 
-.wt-footertwo {
-    z-index: 1;
-    /* padding-right: 40px; */
-    position: relative;
-    padding-top: 260px;
-}
-
-.wt-footertwo {
-    padding-top: 40px !important;
-    background: #23053B;
+.fa-filter:before{
+	font-size: 18px;
 }
 
 
