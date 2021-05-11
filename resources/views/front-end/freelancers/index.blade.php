@@ -188,9 +188,9 @@
                                                                 {{ (!empty($symbol['symbol'])) ? $symbol['symbol'] : '$' }}{{{ $freelancer->profile->hourly_rate }}} {{ trans('lang.per_hour') }}</span>
                                                         @endif
                                                     <div class="rating-area">
-                                                    <span class="wt-starcontent">
+                                                    <!-- <span class="wt-starcontent">
                                                         {{{ round($average_rating_count,2) }}}
-                                                    </span>
+                                                    </span> -->
                                                     <span class="wt-stars"><span style="width: {{ $stars }}%;"></span></span> 
                                                     </div>
                                                 </div>

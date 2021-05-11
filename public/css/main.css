@@ -9064,3 +9064,42 @@ a:focus{text-decoration: none !important;}
 }
 
 }
+
+.wt-footertwo {
+    z-index: 1;
+    /* padding-right: 40px; */
+    position: relative;
+    padding-top: 260px;
+}
+
+.wt-footertwo {
+    padding-top: 40px !important;
+    background: #23053B;
+}
+
+
+@media (max-width: 767px) {
+.wt-userlisting .wt-userlistingcontent .wt-rightarea {
+    margin-top: 30px !important;
+}
+
+.rating-area {
+    margin-top: 16px;
+}
+
+.wt-formbannervtwo{
+	padding: 20px;
+    position: absolute;
+    top: 260px;
+	left: 0px
+}
+
+.wt-headervtwo .wt-formbannervtwo .wt-formoptions .wt-radioholder{
+	width: 100%;
+}
+
+.wt-headervtwo .wt-navigationarea .wt-logo{
+	float : left !important;
+}
+
+}
