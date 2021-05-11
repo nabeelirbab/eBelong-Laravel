@@ -10,3 +10,18 @@
         list-style: none;
     }
 }
+.multiselect__option--highlight{
+    background: #9013F3 !important;
+}
+.multiselect__option--highlight:after {
+    background: #9013F3 !important;
+}
+.multiselect__tag-icon:after {
+    color: #9013F3 !important;
+}
+.multiselect__tag-icon:hover {
+    background: #9013F3 !important;
+}
+.multiselect__tag-icon:hover:after {
+    color: #fff !important;
+}

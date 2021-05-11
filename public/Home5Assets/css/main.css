@@ -5024,6 +5024,12 @@ body.wt-login .wt-userlogedin{display: block;}
 	-webkit-transform: translateZ(0);
 	-ms-transform: translateZ(0);
 	transform: translateZ(0);
+	    background: #9013F3;
+		background: -moz-linear-gradient(left, #9013F3 10%, rgba(255, 88, 81, 0) 42%);
+		background: -webkit-linear-gradient(left, #9013F3 10%, rgba(255, 88, 81, 0) 42%);
+		background: -o-linear-gradient(left, #9013F3 10%, rgba(255, 88, 81, 0) 42%);
+		background: -ms-linear-gradient(left, #9013F3 10%, rgba(255, 88, 81, 0) 42%);
+		background: linear-gradient(to right, #9013F3 10%, rgba(255, 88, 81, 0) 42%);
 }
 .loader:before {
 	width: 50%;
@@ -5033,6 +5039,7 @@ body.wt-login .wt-userlogedin{display: block;}
 	top: 0;
 	left: 0;
 	content: '';
+	background: #9013F3;
 }
 .loader:after {
 	background: #fff;
