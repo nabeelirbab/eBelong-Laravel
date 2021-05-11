@@ -144,18 +144,25 @@
                                                     @if (!empty($freelancer->location))
                                                             <li><span><i class="fas fa-map-marker-alt"></i> {{{ !empty($freelancer->location->title) ? $freelancer->location->title : '' }}}</span></li>
                                                         @endif
-                                                        <!-- @if (!empty($freelancer->profile->hourly_rate))
-                                                            <li><span><i class="fas fa-th"></i>
+                                                        @if (!empty($freelancer->skills))
+                                                        @foreach($freelancer->skills as $i =>  $skill)
+                                                        @if($i==0)
+                                                        <img style="width: 16px" src="/uploads/logos/{{{ $skill->logo }}}" alt="">
+                                                        <a style="color: #2B2B2B" href="{{{url('search-results?type=job&skills%5B%5D='.$skill->slug)}}}">{{{ $skill->title }}}</a>
+                                                        
+                                                        @endif
+                                                    @endforeach
+                                                            <!-- <li><span><i class="fas fa-th"></i>
                                                                  React Developer
                                                                 {{ (!empty($symbol['symbol'])) ? $symbol['symbol'] : '$' }}{{{ $freelancer->profile->hourly_rate }}} {{ trans('lang.per_hour') }}</span>
-                                                            </li>
-                                                        @endif -->
+                                                            </li> -->
+                                                        @endif
                                                         @if (!empty($freelancer->skills))
                                                         <div class="wt-tag wt-widgettag">
-                                                    @foreach($freelancer->skills as $skill)
+                                                    <!-- @foreach($freelancer->skills as $skill)
                                                         <a href="{{{url('search-results?type=job&skills%5B%5D='.$skill->slug)}}}">{{{ $skill->title }}}</a>
                                                         <img src="/uploads/logos/{{{ $skill->logo }}}" alt="">
-                                                       @endforeach
+                                                       @endforeach -->
                                                         </div>
                                                         @endif
                                                         @if (in_array($freelancer->id, $save_freelancer))
@@ -196,8 +203,7 @@
                                             @if (!empty($freelancer->skills))
                                                 <div class="wt-tag wt-widgettag">
                                                     @foreach($freelancer->skills as $skill)
-                                                        <a href="{{{url('search-results?type=job&skills%5B%5D='.$skill->slug)}}}">{{{ $skill->title }}}</a>
-                                                        <img src="/uploads/logos/{{{ $skill->logo }}}" alt="">
+                                                        <a  href="{{{url('search-results?type=job&skills%5B%5D='.$skill->slug)}}}">{{{ $skill->title }}}</a>
                                                     @endforeach
                                                 </div>
                                             @endif
