@@ -8979,6 +8979,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -49202,9 +49207,12 @@ var render = function() {
             "trusted_partner__items container d-flex flex-wrap justify-content-between align-items-center"
         },
         [
-          _c("div", { staticClass: "py-2 py-md-4 bannerjob__item" }, [
-            _vm._v("Trusted Partner")
-          ]),
+          _c(
+            "div",
+            { staticClass: "py-2 py-md-4 bannerjob__item text-center" },
+            [_vm._v("Trusted by:")]
+          ),
+          _c("br"),
           _vm._v(" "),
           _c("div", { staticClass: "py-2 py-md-4" }, [
             _c("img", {
@@ -49254,8 +49262,8 @@ var render = function() {
         staticClass: "container"
       },
       [
-        _c("div", { staticClass: "e-freelancer mb-5" }, [
-          _c("div", { staticClass: "e-freelancer__header text-center" }, [
+        _c("div", { staticClass: "e-freelancer mt-5 mb-5" }, [
+          _c("div", { staticClass: "e-freelancer__header" }, [
             _vm._v("Our Super Star Talent")
           ]),
           _vm._v(" "),
@@ -49334,7 +49342,18 @@ var render = function() {
               )
             ],
             1
-          )
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "text-center mt-5" }, [
+            _c(
+              "button",
+              {
+                ref: "submit",
+                staticClass: "e-button e-button-whitebackground"
+              },
+              [_vm._v("\n                See all\n            ")]
+            )
+          ])
         ])
       ]
     )

@@ -26,7 +26,7 @@ a:active,
 .wt-bannerholderthree .wt-bannercontent .wt-title h1 em,
 .wt-bannerholderthree .wt-bannercontent .wt-videoholder .wt-videoshow a i
 
-{ color: #ff5851; }
+{ color: #9013F3; }
 /* Theme Background Color */
 .wt-btn:hover,
 .wt-dropdowarrow,
@@ -68,7 +68,7 @@ a:active,
 .wt-reasonbtn,
 .wt-headervfour .wt-nav .navbar-toggler,
 .wt-categories-nav .navbar-toggler
-{ background:#ff5851; }
+{ background:#9013F3; }
 /* Theme Border Color */
 input:focus,
 .select select:focus,
@@ -84,15 +84,15 @@ input:focus,
 .wt-pagination ul li.wt-active a,
 .wt-usernav > ul,
 .wt-pagination ul li span
-{ border-color: #ff5851; }
+{ border-color: #9013F3; }
 /* RGBA Background Color */
 .loader{
-	background: #ff5851;
-	background: -moz-linear-gradient(left, #ff5851 10%, rgba(255, 88, 81, 0) 42%);
-	background: -webkit-linear-gradient(left, #ff5851 10%, rgba(255, 88, 81, 0) 42%);
-	background: -o-linear-gradient(left, #ff5851 10%, rgba(255, 88, 81, 0) 42%);
-	background: -ms-linear-gradient(left, #ff5851 10%, rgba(255, 88, 81, 0) 42%);
-	background: linear-gradient(to right, #ff5851 10%, rgba(255, 88, 81, 0) 42%);
+	background: #9013F3;
+	background: -moz-linear-gradient(left, #9013F3 10%, rgba(255, 88, 81, 0) 42%);
+	background: -webkit-linear-gradient(left, #9013F3 10%, rgba(255, 88, 81, 0) 42%);
+	background: -o-linear-gradient(left, #9013F3 10%, rgba(255, 88, 81, 0) 42%);
+	background: -ms-linear-gradient(left, #9013F3 10%, rgba(255, 88, 81, 0) 42%);
+	background: linear-gradient(to right, #9013F3 10%, rgba(255, 88, 81, 0) 42%);
 }
 /* Secondary Theme Colors */
 .form-group-label label span,

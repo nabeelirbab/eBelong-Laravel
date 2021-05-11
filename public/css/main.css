@@ -3341,15 +3341,19 @@ body.wt-login .wt-userlogedin{display: block;}
 .wt-userlistinghold{
 	float: left;
 	width: 100%;
-	padding: 30px;
-	box-shadow: 0px 4px 38px rgb(0 0 0 / 12%);
+	padding: 20px;
+	/* box-shadow: 0px 4px 38px rgb(0 0 0 / 12%); */
+	box-shadow: 0px 4px 13px rgb(0 0 0 / 15%);
+	-webkit-box-shadow: 0px 4px 13px 0 rgba(0,0,0,0.15);
 	background:#fff;
 	border-radius: 4px;
 }
 .wt-userlistinghold + .wt-userlistinghold{margin: 30px 0 0;}
 .wt-userlistinghold:hover{
-		-webkit-box-shadow: 10px 10px 20px 0 rgba(0,0,0,0.25);
-	box-shadow: 10px 10px 20px 0 rgba(0,0,0,0.25);
+	/* -webkit-box-shadow: 10px 10px 20px 0 rgba(0,0,0,0.25); */
+	/* box-shadow: 10px 10px 20px 0 rgba(0,0,0,0.25); */
+	box-shadow: 0px 4px 15px 0 rgb(0 0 0 / 20%);
+	-webkit-box-shadow: 0px 4px 15px 0 rgba(0,0,0,0.20);
 }
 .wt-userlistingimg{
 	width: auto;
@@ -3366,15 +3370,24 @@ body.wt-login .wt-userlogedin{display: block;}
 }
 .wt-userlistingcontent{overflow: hidden;}
 .wt-contenthead{
-	float: left;
+	/* float: left;
 	width: auto;
-	max-width: 420px;
+	max-width: 420px; */
 }
 .wt-contenthead .wt-title > a{
 	display: block;
 	color:#474747;
-	margin: 0 0 15px;
+	margin: 0 0 6px;
 	font:400 23px/16px 'Poppins', Arial, Helvetica, sans-serif;
+}
+.wt-locationarea {
+    font: 400 13px 'Poppins', Arial, Helvetica, sans-serif;
+}
+.wt-viewjobheart {
+	float: right;
+	border: 0.1px solid #707070;
+    border-radius: 40px;
+    padding: 2px 6px;
 }
 .wt-contenthead .wt-title h2{
 	margin: 0;
@@ -3411,15 +3424,33 @@ body.wt-login .wt-userlogedin{display: block;}
 }
 .wt-userlisting-breadcrumb li + li{border-left: 0px solid #ddd;}
 .wt-userlistinghold .wt-description p{
-	font-size: 14px;
 	line-height: 24px;
-	display: none;
+	margin: 20px 0px;
+	font: 400 14px 'Poppins', Arial, Helvetica, sans-serif;
 }
 .wt-userlistinghold .wt-widgettag{width: auto;margin:-3px; }
 .wt-userlistinghold .wt-widgettag a{
 	margin: 3px;
 	font-size: 13px;
 	line-height: 28px;
+}
+.findjobbutton.e-button-primary {
+    background: #9013F3;
+    color: #fff;
+	box-shadow: 2px 5px 6px rgb(144 19 243 / 16%);
+}
+.findjobbutton.e-button {
+    padding: 0.6rem 4rem;
+    font-size: 1rem;
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    border-radius: 4px;
+	float: right;
+}
+@media only screen and (max-width: 512px) {
+	.findjobbutton.e-button {
+		width: 100%;
+	}
 }
 
 .rating-area{
@@ -3454,7 +3485,7 @@ body.wt-login .wt-userlogedin{display: block;}
 	display: block;
 	font-size: 13px;
 }
-.wt-featured{background: #fffdf3;position: relative;overflow: hidden;}
+.wt-featured{background: #ffffff;position: relative;overflow: hidden;}
 .wt-featuredtag.wt-featuredtagcolor1{border-top-color: #e67e22;}
 .wt-featuredtag.wt-featuredtagcolor2{border-top-color: #2ecc71;}
 .wt-featuredtag.wt-featuredtagcolor3{border-top-color: #ff5851;}
@@ -3504,7 +3535,9 @@ body.wt-login .wt-userlogedin{display: block;}
 .wt-viewjobholder ul li a i,
 .wt-viewjobholder ul li span i{font-size: 13px;width: 30px;}
 .wt-clicklike{color: #767676;}
-.wt-viewjobdollar{color: #9013F3;}
+/* .wt-viewjobdollar{color: #9013F3;} */
+.wt-viewjobdollar{color: #3A0B5F;}
+.wt-viewjobhour{color: #3A0B5F;font-weight: 600;font-size: 16px;float: right;padding: 3px;}
 .wt-viewjobfolder{color: #3498db;}
 .wt-viewjobclock{color: #ff5851;}
 .wt-viewjobtag{color: #cf649a;}
