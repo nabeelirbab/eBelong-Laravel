@@ -283,7 +283,7 @@ address { font-style: italic; }
 .wt-checkbox label {
 	cursor:pointer;
 	display:block;
-	padding:0 0 0 20px;
+	padding:0 0 0 0px;
 }
 .wt-radio input[type=radio],
 .wt-checkbox input[type=checkbox] { display:none; }
@@ -307,7 +307,7 @@ address { font-style: italic; }
 	font-size: 14px;
 	font-weight: 500;
 	line-height: 20px;
-	padding: 0 0 0 30px;
+	padding: 0 0 0 0px;
 	text-transform: capitalize;
 }
 .wt-checkbox input[type=checkbox] + label{line-height: 14px;}
@@ -1464,17 +1464,17 @@ body.wt-login .wt-userlogedin{display: block;}
 }
 .wt-formoptions{
 	top: 0;
-	right: 0;
+	left: 562px;
 	position: absolute;
 }
 .wt-dropdown{
-	width: 225px;
+	width: 492px;
 	float: left;
 	border-left: 1px solid #ddd;
 }
 .wt-dropdown > span{
 	color: #999;
-	width: 225px;
+	width: 495px;
     float: right;
 	font-size:18px;
 	cursor: pointer;
@@ -1820,7 +1820,7 @@ body.wt-login .wt-userlogedin{display: block;}
 	box-shadow: 0 0 10px 0 rgba(0,0,0,0.20);
 	border-radius: 4px;
 }
-.wt-formbannervtwo fieldset .form-group .form-control{height: 50px;border:1px solid #ddd;font-size: 14px;}
+.wt-formbannervtwo fieldset .form-group .form-control{height: 50px; width: 1105px; border:1px solid #ddd;font-size: 14px;}
 .wt-formbannervtwo .wt-dropdown > span{line-height: 48px;font-size: 14px;}
 .wt-formbannervtwo .wt-dropdown > span i,
 .wt-formbannervtwo .wt-dropdown > span em{line-height: 48px;font-size: 14px;padding: 0;height:auto;vertical-align: top;}
@@ -7610,6 +7610,7 @@ body.lang-ja .wt-loginfooterinfo a + a:before {
 }
 .wt-viewjobholder ul li span i{float: left;}
 .wt-headervtwo .wt-formbannervtwo .wt-formoptions .wt-radioholder{
+	width: 492px;
 	    -webkit-box-shadow: 0 10px 15px 0 rgba(0,0,0,0.10);
     box-shadow: 0 10px 15px 0 rgba(0,0,0,0.10);
 }
@@ -9005,7 +9006,7 @@ a:focus{text-decoration: none !important;}
 
 .mCSB_scrollTools .mCSB_draggerContainer{display: none;}
 
-.mCSB_scrollTools{ display: none; opacity: 0 !important;}
+.mCSB_scrollTools{ display: none !important; opacity: 0 !important;}
 
 
 .mCSB_inside>.mCSB_container{ margin-right: 0 !important;}
@@ -9015,4 +9016,18 @@ a:focus{text-decoration: none !important;}
 	font-size: 20px;
 	padding-right: 10px;
     cursor: pointer;
+}
+
+@media (max-width: 1536px) {
+.wt-formbannervtwo {
+    display: block !important;
+	position: absolute;
+    top: 208px;
+    left: 54px;
+}
+
+.wt-respsonsive-search {
+    display: none !important;
+}
+
 }
