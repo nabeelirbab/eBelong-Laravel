@@ -12,7 +12,7 @@ You can add your custom styling here
 @media only screen and (max-width: 767px) {
 .filter_icon {
     display: inline-block;
-	font-size: 22px;
+	font-size: 18px;
     float: right;
     margin-right: 15px;
 	background: #9013F3;
