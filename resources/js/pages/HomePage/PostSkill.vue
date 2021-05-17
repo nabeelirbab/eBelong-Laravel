@@ -8,7 +8,7 @@
         <notifications group="success_message" position="top right" />
         <div class="e-postskill__content">
         <step-1 :categories="items.categories" :selectedCategories="selectedCategories" :step="step" @updateData="updateData" v-if="step==1"></step-1>
-        <step-2 :skills="items.skills" :selectedSkills="selectedSkills" :wantedPositions="wantedPositions"  :step="step" v-if="step==2" @updateData="updateData"></step-2>
+        <step-2 :skills="items.skills" :selectedSkills="selectedSkills" :wantedPositions="wantedPositions" :selectedCategories="selectedCategories" :step="step" v-if="step==1" @updateData="updateData"></step-2>
         <step-3 :range_data="range_data" :step="step" v-if="step==3" @updateData="updateData"></step-3>
         <step-4 :range_data="range_data" :selectedCategories="selectedCategories" :selectedSkills="selectedSkills" :wantedPositions="wantedPositions"  :accountDetails="accountDetails" :step="step" v-if="step==4" @updateData="updateData"></step-4>
         </div>

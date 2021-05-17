@@ -7,6 +7,7 @@
             <div class="e-account-details__subtitle pb-3">
                 Thank you for being so patient, Lets finish it off now
             </div>
+            
         </div>
         <form v-on:submit="onSubmit" class="e-account-details__content">
             <div>

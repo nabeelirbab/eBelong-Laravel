@@ -46,12 +46,12 @@
       <div v-if="show_error" class="text-danger py-3">
           Please select categories
       </div>
-      <button
+      <!-- <button
         v-on:click="onSubmit"
         class="e-button e-button-primary"
       >
         Continue
-      </button>
+      </button> -->
     </div>
   </div>
 </template>

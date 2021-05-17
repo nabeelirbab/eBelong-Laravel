@@ -10,7 +10,7 @@
             Help us in finding the perfect match for your work
           </div>
         </div>
-        <div><img :src="`${APP_URL}/images/home/step_3.svg`" /></div>
+        <div><img :src="`${APP_URL}/images/home/step_2.svg`" /></div>
       </div>
     </div>
 
