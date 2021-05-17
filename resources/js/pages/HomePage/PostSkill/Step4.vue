@@ -77,6 +77,8 @@ export default {
                 selectedSkills:JSON.stringify(this.selectedSkills),
                 ...this.range_data
             }
+            // this.$emit('updateData', 'step', 5);
+            
             axios.post(window.APP_URL + '/postskill',submitData).then(res=>{
                 if(res.data.status){
          
