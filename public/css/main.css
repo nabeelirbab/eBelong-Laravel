@@ -3451,6 +3451,10 @@ body.wt-login .wt-userlogedin{display: block;}
 	.findjobbutton.e-button {
 		width: 100%;
 	}
+
+	.wt-widget{
+		padding: 25px;
+	}
 }
 
 .rating-area{
