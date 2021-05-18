@@ -94,7 +94,7 @@
                 employers:[],
                 jobs:[],
                 query:'',
-                types:'job',
+                types:'',
                 selected_type:'',
                 no_record:this.no_record_message,
                 is_show: false,
