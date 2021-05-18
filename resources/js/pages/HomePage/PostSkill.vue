@@ -77,7 +77,7 @@ export default {
 		  return {
               baseUrl:window.APP_URL,
               ...initalData,
-              show_modal:true,
+              show_modal:false,
 		  };
    },
    mounted(){
