@@ -1,5 +1,5 @@
 .e-project-type{
-    margin-bottom: -52px;
+    // margin-bottom: -52px;
     &__title{
         @include title;
     }
@@ -8,17 +8,21 @@
     }
     &__subtitle{
         @include subtitle;
+        margin-bottom: 10px;
     }
     &__list{
         display: flex;
         flex-wrap: wrap;
-        padding-top: 1rem;
+        // padding-top: 1rem;
         
         &--item{
             box-shadow:  0px 0px 23px rgba(0, 0, 0, 0.1);
             padding: 0.2rem 1rem;
             margin-right: 1rem;
             margin-bottom: 1rem;
+            @media only screen and (max-width: 768px) {
+                margin-top: 1rem;
+            }
             cursor: pointer;
             list-style-type: none;
             &__active{
@@ -26,5 +30,17 @@
                 
             }
         }
+    }
+    &__footer {
+        margin: 16px 0px;
+        border-bottom: 1px solid #dadada;
+        max-width: 600px;
+        
+        // @media only screen and (max-width: 991px) {
+        //     width: 87%;
+        // }
+        // @media only screen and (max-width: 992px) {
+        //     width: 64.5%;
+        // }
     }
 }

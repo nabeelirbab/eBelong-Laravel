@@ -42,10 +42,10 @@
         </multiselect>
       </div>
     </div>
-    <div v-if="step === 1" class="e-project-type__footer mt-5">
-      <div v-if="show_error" class="text-danger py-3">
+    <div v-if="step === 1" class="e-project-type__footer">
+      <!-- <div v-if="show_error" class="text-danger py-3">
           Please select categories
-      </div>
+      </div> -->
       <!-- <button
         v-on:click="onSubmit"
         class="e-button e-button-primary"
@@ -55,6 +55,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import Multiselect from "vue-multiselect";
 Vue.component("multiselect", Multiselect);
@@ -102,6 +103,7 @@ export default {
   },
 };
 </script>
+
 <style lang="scss">
 
     .multiselect{

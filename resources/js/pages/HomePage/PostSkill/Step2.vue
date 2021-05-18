@@ -1,16 +1,16 @@
 <template>
   <div class="e-wanted-postions">
-    <!-- <div class="e-project-type__header">
+    <div class="e-project-type__header">
       <div class="d-flex justify-content-between flex-column flex-md-row">
         <div class="order-md-1 order-1">
-        <div class="e-project-type__title">Tell us about your project type</div>
+        <!-- <div class="e-project-type__title">Tell us about your project type</div> -->
         <div class="e-project-type__subtitle">
           Select your skills from the list below
         </div>
         </div>
-        <div class="order-md-2 text-center"><img :src="`${APP_URL}/images/home/step_2.svg`"/></div>
+        <!-- <div class="order-md-2 text-center"><img :src="`${APP_URL}/images/home/step_2.svg`"/></div> -->
       </div>
-    </div> -->
+    </div>
     <div class="e-project-type__content">
       <ul class="e-project-type__list">
         <li
