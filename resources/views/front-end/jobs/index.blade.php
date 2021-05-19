@@ -54,7 +54,7 @@
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 col-xl-8 float-left">
                             <!-- ==================== List View========================= -->
-                            <!-- <div class="wt-userlistingholder wt-haslayout">
+                            <div class="wt-userlistingholder wt-haslayout" id="list-layout">
                                 @if (!empty($keyword))
                                     <div class="wt-userlistingtitle">
                                         <span>{{ trans('lang.01') }} {{$jobs->count()}} of {{$Jobs_total_records}} results for <em>"{{{$keyword}}}"</em></span>
@@ -223,10 +223,10 @@
                                         @include('errors.no-record')
                                     @endif
                                 @endif
-                            </div> -->
+                            </div>
                             <!-- ==================== List View End ========================= -->
                             <!-- ==================== Grid View ========================= -->
-                            <div class="wt-userlistingholder wt-haslayout jobs_list_view">
+                            <div class="wt-userlistingholder wt-haslayout jobs_list_view" id="grid-layout">
                                 
                                 @if (!empty($keyword))
                                     <div class="wt-userlistingtitle">

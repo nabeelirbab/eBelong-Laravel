@@ -9184,6 +9184,18 @@ a:focus{text-decoration: none !important;}
 	margin-top: 0px; 
 }
 
+#grid-layout {
+	display: block;
+}
+
+#list-layout {
+	display: none;
+}
+
+#icon-grid {
+	color: #9013F3;
+}
+
 /* end Grid layout user list */
 
 @media (max-width: 1536px) {
