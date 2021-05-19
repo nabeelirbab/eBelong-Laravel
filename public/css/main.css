@@ -386,6 +386,12 @@ address { font-style: italic; }
 }
 .wt-checkbox input[type=checkbox]:checked + label:before{border-color: #9013F3;}
 /* Theme Global Elements */
+.jobs_list_view .jobs_list_view_margin {
+	margin-bottom: 30px;
+}
+.jobs_list_view .jobs_list_view_margin .findjobbutton.e-button {
+    width: 100%;
+}
 .wt-haslayout {
 	width:100%;
 	float:left;
@@ -3377,7 +3383,7 @@ body.wt-login .wt-userlogedin{display: block;}
 .wt-contenthead .wt-title > a{
 	display: block;
 	color:#474747;
-	margin: 0 0 6px;
+	margin: 2px 0 6px 0;
 	font:400 23px/16px 'Poppins', Arial, Helvetica, sans-serif;
 }
 .wt-locationarea {
@@ -3446,6 +3452,7 @@ body.wt-login .wt-userlogedin{display: block;}
     font-weight: 600;
     border-radius: 4px;
 	float: right;
+	text-align: center;
 }
 @media only screen and (max-width: 512px) {
 	.findjobbutton.e-button {

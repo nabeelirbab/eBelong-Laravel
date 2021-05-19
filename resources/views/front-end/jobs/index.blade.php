@@ -53,7 +53,8 @@
                             @endif
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 col-xl-8 float-left">
-                            <div class="wt-userlistingholder wt-haslayout">
+                            <!-- ==================== List View========================= -->
+                            <!-- <div class="wt-userlistingholder wt-haslayout">
                                 @if (!empty($keyword))
                                     <div class="wt-userlistingtitle">
                                         <span>{{ trans('lang.01') }} {{$jobs->count()}} of {{$Jobs_total_records}} results for <em>"{{{$keyword}}}"</em></span>
@@ -74,7 +75,6 @@
                                                 @endphp
                                                 <div class="wt-userlistinghold wt-userlistingholdvtwo {{$featured_class}}">
                                                     @if ($job->is_featured == 'true')
-                                                        <!-- <span class="wt-featuredtag"><img src="images/featured.png" alt="{{{ trans('ph.is_featured') }}}" data-tipso="Plus Member" class="template-content tipso_style"></span> -->
                                                     @endif
                                                     <div class="wt-userlistingcontent">
                                                         <div class="wt-contenthead">
@@ -106,7 +106,6 @@
                                                                                 <span class="wt-viewjobheart" style=pointer-events:none;>
                                                                                     <a href="javascrip:void(0);" class="wt-clicklike" id="job-{{$job->id}}" @click.prevent="add_wishlist('job-{{$job->id}}', {{$job->id}}, 'saved_jobs', '{{trans("lang.saved")}}')" v-cloak>
                                                                                         <i class="fa fa-heart"></i>
-                                                                                        <!-- <span class="save_text">{{ trans('lang.click_to_save') }}</span> -->
                                                                                     </a>
                                                                                 </span>
                                                                             @endif
@@ -117,7 +116,6 @@
                                                                     <div class="row">
                                                                         <div class="col-lg-11 col-md-11 col-sm-12">
                                                                             <div class="wt-description">
-                                                                                <!-- <p>{{ str_limit(html_entity_decode($description), 200) }}</p> -->
                                                                                 <p>Looking for Remote Task Manager.The required candidate must possess excellent English skills both
                                                                                     Spoken and Written, moreover the desired person should have: Good Communication Skills. Knowledge ...</p>
 
@@ -129,30 +127,17 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-lg-12 col-md-12 col-sm-12">
-                                                                    <!-- @if (!empty($freelancer->skills))
-                                                                        <div class="wt-tag wt-widgettag">
-                                                                            @foreach($freelancer->skills as $skill)
-                                                                                <a href="{{{url('search-results?type=job&skills%5B%5D='.$skill->slug)}}}">{{{ $skill->title }}}</a>
-                                                                                <img src="/uploads/logos/{{{ $skill->logo }}}" alt="">
-                                                                            @endforeach
-                                                                        </div>
-                                                                    @endif -->
+                                                                    
                                                                     <div class="wt-tag wt-widgettag">
-                                                                        <a href="http://127.0.0.1:8000/search-results?type=job&amp;skills%5B%5D=animation">Animation</a> 
-                                                                        <img src="/uploads/logos/" alt=""> 
-                                                                        <a href="http://127.0.0.1:8000/search-results?type=job&amp;skills%5B%5D=adobe-premier-pro">Adobe Premier Pro</a>
-                                                                        <img src="/uploads/logos/" alt=""> 
-                                                                        <a href="http://127.0.0.1:8000/search-results?type=job&amp;skills%5B%5D=adobe-photoshop">Adobe Photoshop</a> 
-                                                                        <img src="/uploads/logos/" alt=""> 
-                                                                        <a href="http://127.0.0.1:8000/search-results?type=job&amp;skills%5B%5D=adobe-illustrator">Adobe Illustrator</a> 
-                                                                        <img src="/uploads/logos/" alt="">
+                                                                        @foreach ($job->skills as $skill )
+                                                                            <a href="{{{url('search-results?type=job&skills%5B%5D='.$skill->slug)}}}">{{$skill->title}}</a>
+                                                                        @endforeach
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-lg-12 col-md-12 col-sm-12">
                                                                     <div class="row">
                                                                             <div class="col-lg-11 col-md-11 col-sm-12">
                                                                                 <a href="{{url('job/'.$job->slug)}}" class="findjobbutton e-button e-button-primary my-3">{{{ trans('lang.view_job') }}}</a>
-                                                                                <!-- <a href="{{url('job/'.$job->slug)}}" class="wt-btn">{{{ trans('lang.view_job') }}}</a> -->
                                                                             </div>
                                                                             <div class="col-lg-1 col-md-1 col-sm-12">
 
@@ -165,25 +150,9 @@
                                                             </div>
                                                             
                                                             
-                                                            <div class="wt-tag wt-widgettag">
-                                                                @foreach ($job->skills as $skill )
-                                                                    <a href="{{{url('search-results?type=job&skills%5B%5D='.$skill->slug)}}}">{{$skill->title}}</a>
-                                                                @endforeach
-                                                            </div>
+    
                                                         </div>
-                                                        <!-- <div class="wt-viewjobholder">
-                                                            <ul>
-                                                                
-                                                                @if (!empty($job->location->title))
-                                                                    <li><span><img src="{{{asset(Helper::getLocationFlag($job->location->flag))}}}" alt="{{{ trans('lang.location') }}}"> {{{ $job->location->title }}}</span></li>
-                                                                @endif
-                                                                <li><span><i class="far fa-folder wt-viewjobfolder"></i>{{{ trans('lang.type') }}} {{{$project_type}}}</span></li>
-                                                                <li><span><i class="far fa-clock wt-viewjobclock"></i>{{{ Helper::getJobDurationList($job->duration)}}}</span></li>
-                                                                <li><span><i class="fa fa-tag wt-viewjobtag"></i>{{{ trans('lang.job_id') }}} {{{$job->code}}}</span></li>
-                                                                
-                                                                <li class="wt-btnarea"><a href="{{url('job/'.$job->slug)}}" class="wt-btn">{{{ trans('lang.view_job') }}}</a></li>
-                                                            </ul>
-                                                        </div> -->
+                                                        
                                                     </div>
                                                 </div>
                                             @endif
@@ -199,7 +168,6 @@
                                             @endphp
                                             <div class="wt-userlistinghold wt-userlistingholdvtwo {{$featured_class}}">
                                                 @if ($job->is_featured == 'true')
-                                                    <!-- <span class="wt-featuredtag"><img src="images/featured.png" alt="{{{ trans('ph.is_featured') }}}" data-tipso="Plus Member" class="template-content tipso_style"></span> -->
                                                 @endif
                                                 <div class="wt-userlistingcontent">
                                                     <div class="wt-contenthead">
@@ -255,7 +223,190 @@
                                         @include('errors.no-record')
                                     @endif
                                 @endif
+                            </div> -->
+                            <!-- ==================== List View End ========================= -->
+                            <!-- ==================== Grid View ========================= -->
+                            <div class="wt-userlistingholder wt-haslayout jobs_list_view">
+                                
+                                @if (!empty($keyword))
+                                    <div class="wt-userlistingtitle">
+                                        <span>{{ trans('lang.01') }} {{$jobs->count()}} of {{$Jobs_total_records}} results for <em>"{{{$keyword}}}"</em></span>
+                                    </div>
+                                @endif
+                                <div class="row">
+                                @if (!empty($jobs) && $jobs->count() > 0)
+                                    @foreach ($jobs as $job)
+                                        @if (\Schema::hasColumn('jobs', 'expiry_date') && !empty($job->expiry_date))
+                                            @php $expiry = Carbon\Carbon::parse($job->expiry_date); @endphp
+                                            @if (Carbon\Carbon::now()->lessThan($expiry))
+                                                @php
+                                                    $job = \App\Job::find($job->id);
+                                                    //$description = strip_tags(stripslashes($job->description));
+                                                    $description = strip_tags(stripslashes($job->description));
+                                                    $featured_class = $job->is_featured == 'true' ? 'wt-featured' : '';
+                                                    $user = Auth::user() ? \App\User::find(Auth::user()->id) : '';
+                                                    $project_type  = Helper::getProjectTypeList($job->project_type);
+                                                @endphp
+                                                
+                                                <div class="col-lg-6 col-md-6 col-sm-6 jobs_list_view_margin">
+                                                <div class="wt-userlistinghold wt-userlistingholdvtwo {{$featured_class}}">
+                                                    @if ($job->is_featured == 'true')
+                                                    @endif
+                                                    <div class="wt-userlistingcontent">
+                                                        <div class="wt-contenthead">
+                                                            <div class="row">
+                                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                    <div class="row">
+                                                                        <div class="col-lg-6 col-md-6 col-sm-6 col-7">
+                                                                            <div class="wt-title">
+                                                                                @if (!empty($job->employer->slug))
+                                                                                    <a href="{{ url('profile/'.$job->employer->slug) }}"><i class="fa fa-check-circle"></i> {{{ Helper::getUserName($job->employer->id) }}}</a>
+                                                                                @endif
+                                                                                <h2><a href="{{ url('job/'.$job->slug) }}">{{{$job->title}}}</a></h2>
+                                                                                @if (!empty($job->location->title))
+                                                                                    <span class="wt-locationarea"><img src="{{{asset(Helper::getLocationFlag($job->location->flag))}}}" alt="{{{ trans('lang.location') }}}"> {{{ $job->location->title }}}</span>
+                                                                                @endif
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-lg-6 col-md-6 col-sm-6 col-5">
+                                                                            @if (!empty($job->project_level))
+                                                                            @if ($job->project_type == "hourly")
+                                                                                <span class="wt-viewjobhour"><i class="fa fa-dollar-sign wt-viewjobdollar"></i>{{{$job->price}}}/hr</span>
+                                                                                @else 
+                                                                                <span class="wt-viewjobhour"><i class="fa fa-dollar-sign wt-viewjobdollar"></i>{{{$job->price}}}</span>
+                                                                                @endif
+                                                                            @endif
+                                                                            @if (!empty($user->profile->saved_jobs) && in_array($job->id, unserialize($user->profile->saved_jobs)))
+                                                                                <span class="wt-viewjobheart" style=pointer-events:none;><a href="javascript:void(0);" class="wt-clicklike wt-clicksave"><i class="fa fa-heart"></i> {{trans("lang.saved")}}</a></span>
+                                                                            @else
+                                                                                <span class="wt-viewjobheart" style=pointer-events:none;>
+                                                                                    <a href="javascrip:void(0);" class="wt-clicklike" id="job-{{$job->id}}" @click.prevent="add_wishlist('job-{{$job->id}}', {{$job->id}}, 'saved_jobs', '{{trans("lang.saved")}}')" v-cloak>
+                                                                                        <i class="fa fa-heart"></i>
+                                                                                    </a>
+                                                                                </span>
+                                                                            @endif
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                    <div class="row">
+                                                                        <div class="col-lg-11 col-md-11 col-sm-12">
+                                                                            <div class="wt-description">
+                                                                                <p>Looking for Remote Task Manager.The required candidate must possess excellent English skills both
+                                                                                    Spoken and Written, moreover the desired person should have: Good Communication Skills. Knowledge ...</p>
+
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-lg-1 col-md-1 col-sm-12">
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                    <!-- <div class="wt-tag wt-widgettag">
+                                                                        <a href="http://127.0.0.1:8000/search-results?type=job&amp;skills%5B%5D=animation">Animation</a> 
+                                                                        <img src="/uploads/logos/" alt=""> 
+                                                                        <a href="http://127.0.0.1:8000/search-results?type=job&amp;skills%5B%5D=adobe-premier-pro">Adobe Premier Pro</a>
+                                                                        <img src="/uploads/logos/" alt=""> 
+                                                                        <a href="http://127.0.0.1:8000/search-results?type=job&amp;skills%5B%5D=adobe-photoshop">Adobe Photoshop</a> 
+                                                                        <img src="/uploads/logos/" alt=""> 
+                                                                        <a href="http://127.0.0.1:8000/search-results?type=job&amp;skills%5B%5D=adobe-illustrator">Adobe Illustrator</a> 
+                                                                        <img src="/uploads/logos/" alt="">
+                                                                    </div> -->
+                                                                    <div class="wt-tag wt-widgettag">
+                                                                        @foreach ($job->skills as $skill )
+                                                                            <a href="{{{url('search-results?type=job&skills%5B%5D='.$skill->slug)}}}">{{$skill->title}}</a>
+                                                                        @endforeach
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                    <div class="row">
+                                                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                                <a href="{{url('job/'.$job->slug)}}" class="findjobbutton e-button e-button-primary my-3">{{{ trans('lang.view_job') }}}</a>
+                                                                            </div>
+                                                                        </div>
+                                                                    
+                                                                </div>
+                                                                
+                                                                
+                                                            </div>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                </div>
+                                                </div>
+                                            @endif
+                                        @else 
+                                            @php
+                                            
+                                                $job = \App\Job::find($job->id);
+                                                $description = strip_tags(stripslashes($job->description));
+                                                $featured_class = $job->is_featured == 'true' ? 'wt-featured' : '';
+                                                $user = Auth::user() ? \App\User::find(Auth::user()->id) : '';
+                                                $project_type  = Helper::getProjectTypeList($job->project_type);
+
+                                            @endphp
+                                            <div class="wt-userlistinghold wt-userlistingholdvtwo {{$featured_class}}">
+                                                @if ($job->is_featured == 'true')
+                                                @endif
+                                                <div class="wt-userlistingcontent">
+                                                    <div class="wt-contenthead">
+                                                        <div class="wt-title">
+                                                            <a href="{{ url('profile/'.$job->employer->slug) }}"><i class="fa fa-check-circle"></i> {{{ Helper::getUserName($job->employer->id) }}}</a>
+                                                            <h2><a href="{{ url('job/'.$job->slug) }}">{{{$job->title}}}</a></h2>
+                                                        </div>
+                                                        <div class="wt-description">
+                                                          
+                                                            <p>{{ str_limit($description, 200) }}</p>
+                                                        </div>
+                                                        <div class="wt-tag wt-widgettag">
+                                                            @foreach ($job->skills as $skill )
+                                                                <a href="{{{url('search-results?type=job&skills%5B%5D='.$skill->slug)}}}">{{$skill->title}}</a>
+                                                            @endforeach
+                                                        </div>
+                                                    </div>
+                                                    <div class="wt-viewjobholder">
+                                                        <ul>
+                                                            @if (!empty($job->project_level))
+                                                                <li><span><i class="fa fa-dollar-sign wt-viewjobdollar"></i>{{{ $job->price }}}</span></li>
+                                                            @endif
+                                                            @if (!empty($job->location->title))
+                                                                <li><span><img src="{{{asset(Helper::getLocationFlag($job->location->flag))}}}" alt="{{{ trans('lang.location') }}}"> {{{ $job->location->title }}}</span></li>
+                                                            @endif
+                                                            <li><span><i class="far fa-folder wt-viewjobfolder"></i>{{{ trans('lang.type') }}} {{{$project_type}}}</span></li>
+                                                            <li><span><i class="far fa-clock wt-viewjobclock"></i>{{{ Helper::getJobDurationList($job->duration)}}}</span></li>
+                                                            <li><span><i class="fa fa-tag wt-viewjobtag"></i>{{{ trans('lang.job_id') }}} {{{$job->code}}}</span></li>
+                                                            @if (!empty($user->profile->saved_jobs) && in_array($job->id, unserialize($user->profile->saved_jobs)))
+                                                                <li style=pointer-events:none;><a href="javascript:void(0);" class="wt-clicklike wt-clicksave"><i class="fa fa-heart"></i> {{trans("lang.saved")}}</a></li>
+                                                            @else
+                                                                <li>
+                                                                    <a href="javascrip:void(0);" class="wt-clicklike" id="job-{{$job->id}}" @click.prevent="add_wishlist('job-{{$job->id}}', {{$job->id}}, 'saved_jobs', '{{trans("lang.saved")}}')" v-cloak>
+                                                                        <i class="fa fa-heart"></i>
+                                                                        <span class="save_text">{{ trans('lang.click_to_save') }}</span>
+                                                                    </a>
+                                                                </li>
+                                                            @endif
+                                                            <li class="wt-btnarea"><a href="{{url('job/'.$job->slug)}}" class="wt-btn">{{{ trans('lang.view_job') }}}</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    @endforeach
+                                    @if ( method_exists($jobs,'links') )
+                                        {{ $jobs->links('pagination.custom') }}
+                                    @endif
+                                @else
+                                    @if (file_exists(resource_path('views/extend/errors/no-record.blade.php'))) 
+                                        @include('extend.errors.no-record')
+                                    @else 
+                                        @include('errors.no-record')
+                                    @endif
+                                @endif
+                                </div>
                             </div>
+                            <!-- ==================== Grid View End ========================= -->
+
                         </div>
                     </div>
                 </div>
