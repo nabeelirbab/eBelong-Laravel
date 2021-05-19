@@ -221,6 +221,150 @@
                                 @endif
                             </div>
                         </div>
+                        <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 col-xl-8 float-left">
+                            <div class="wt-userlistingholder wt-userlisting wt-haslayout">
+                                <div class="wt-userlistingtitle">
+                                    @if (!empty($users))
+                                        <span>{{ trans('lang.01') }} {{$users->count()}} of {{\App\User::role('freelancer')->count()}} results @if (!empty($keyword)) for <em>"{{{$keyword}}}"</em> @endif</span>
+                                    @endif
+                                </div>
+                                @if (!empty($users))
+                                    @foreach ($users as $key => $freelancer)
+                                        @php
+                                            $user_image = !empty($freelancer->profile->avater) ?
+                                                            '/uploads/users/'.$freelancer->id.'/'.$freelancer->profile->avater :
+                                                            'images/user.jpg';
+                                            $flag = !empty($freelancer->location->flag) ? Helper::getLocationFlag($freelancer->location->flag) :
+                                                    '/images/img-01.png';
+                                            $feedbacks = \App\Review::select('feedback')->where('receiver_id', $freelancer->id)->count();
+                                            $avg_rating = App\Review::where('receiver_id', $freelancer->id)->sum('avg_rating');
+                                            $rating  = $avg_rating != 0 ? round($avg_rating/\App\Review::count()) : 0;
+                                            $reviews = \App\Review::where('receiver_id', $freelancer->id)->get();
+                                            $stars  = $reviews->sum('avg_rating') != 0 ? (($reviews->sum('avg_rating')/$feedbacks)/5)*100 : 0;
+                                            $average_rating_count = !empty($feedbacks) ? $reviews->sum('avg_rating')/$feedbacks : 0;
+                                            $verified_user = \App\User::select('user_verified')->where('id', $freelancer->id)->pluck('user_verified')->first();
+                                            $save_freelancer = !empty(auth()->user()->profile->saved_freelancer) ? unserialize(auth()->user()->profile->saved_freelancer) : array();
+                                            $badge = Helper::getUserBadge($freelancer->id);
+                                            if (!empty($enable_package) && $enable_package === 'true') {
+                                                $feature_class = (!empty($badge) && $freelancer->expiry_date >= $current_date) ? 'wt-featured' : 'wt-exp';
+                                                $badge_color = !empty($badge) ? $badge->color : '';
+                                                $badge_img  = !empty($badge) ? $badge->image : '';
+                                            } else {
+                                                $feature_class = 'wt-exp';
+                                                $badge_color = '';
+                                                $badge_img    = '';
+                                            }
+                                        @endphp
+                                        <div class="wt-userlistinghold grid {{ $feature_class }}">
+                                            <div class="wt-top">
+                                            @if(!empty($enable_package) && $enable_package === 'true')
+                                                @if ($freelancer->expiry_date >= $current_date && !empty($freelancer->badge_id))
+                                                    <span class="wt-featuredtag" style="border-top: 40px solid {{ $badge_color }};">
+                                                        @if (!empty($badge_img))
+                                                            <img src="{{{ asset(Helper::getBadgeImage($badge_img)) }}}" alt="{{ trans('lang.is_featured') }}" data-tipso="Plus Member" class="template-content tipso_style">
+                                                        @else
+                                                            <i class="wt-expired fas fa-bold"></i>
+                                                        @endif
+                                                    </span>
+                                                @endif
+                                            @endif
+                                            <figure class="wt-userlistingimg">
+                                                <img src="{{{ asset(Helper::getImageWithSize('uploads/users/'.$freelancer->id, $freelancer->profile->avater, 'listing')) }}}" alt="{{ trans('lang.img') }}">
+                                            </figure>
+                                            <div class="wt-userlistingcontent">
+                                                <div class="wt-contenthead">
+                                                    <div class="wt-title">
+                                                        <a href="{{{ url('profile/'.$freelancer->slug) }}}">
+                                                            @if ($verified_user == 1)
+                                                                <i class="fa fa-check-circle"></i>
+                                                            @endif
+                                                            {{{ Helper::getUserName($freelancer->id) }}}
+                                                        </a>
+                                                        @if (!empty($freelancer->profile->tagline))
+                                                            <h2><a href="{{{ url('profile/'.$freelancer->slug) }}}">{{{ $freelancer->profile->tagline }}}</a></h2>
+                                                        @endif
+                                                    </div>
+                                                    <ul class="wt-userlisting-breadcrumb">
+                                                    @if (!empty($freelancer->skills))
+                                                        @foreach($freelancer->skills as $i =>  $skill)
+                                                        @if($i==0)
+                                                        <img style="width: 16px" src="/uploads/logos/{{{ $skill->logo }}}" alt="">
+                                                        <a style="color: #2B2B2B" href="{{{url('search-results?type=job&skills%5B%5D='.$skill->slug)}}}">{{{ $skill->title }}}</a>
+                                                        
+                                                        @endif
+                                                    @endforeach
+                                                        @if (!empty($freelancer->location))
+                                                        <div>
+                                                            <li><span><i class="fas fa-map-marker-alt"></i> {{{ !empty($freelancer->location->title) ? $freelancer->location->title : '' }}}</span></li>
+                                                        </div>
+                                                        @endif
+                                                        
+                                                            <!-- <li><span><i class="fas fa-th"></i>
+                                                                 React Developer
+                                                                {{ (!empty($symbol['symbol'])) ? $symbol['symbol'] : '$' }}{{{ $freelancer->profile->hourly_rate }}} {{ trans('lang.per_hour') }}</span>
+                                                            </li> -->
+                                                        @endif
+                                                        @if (!empty($freelancer->skills))
+                                                        <div class="wt-tag wt-widgettag">
+                                                    <!-- @foreach($freelancer->skills as $skill)
+                                                        <a href="{{{url('search-results?type=job&skills%5B%5D='.$skill->slug)}}}">{{{ $skill->title }}}</a>
+                                                        <img src="/uploads/logos/{{{ $skill->logo }}}" alt="">
+                                                       @endforeach -->
+                                                        </div>
+                                                        @endif
+                                                        @if (in_array($freelancer->id, $save_freelancer))
+                                                            <!-- <li class="wt-btndisbaled">
+                                                                <a href="javascrip:void(0);" class="wt-clicksave wt-clicksave">
+                                                                    <i class="fa fa-heart"></i>
+                                                                    {{ trans('lang.saved') }}
+                                                                </a>
+                                                            </li> -->
+                                                        @else
+                                                            <!-- <li v-cloak>
+                                                                <a href="javascrip:void(0);" class="wt-clicklike" id="freelancer-{{$freelancer->id}}" @click.prevent="add_wishlist('freelancer-{{$freelancer->id}}', {{$freelancer->id}}, 'saved_freelancer', '{{trans("lang.saved")}}')">
+                                                                    <i class="fa fa-heart"></i>
+                                                                    <span class="save_text">{{ trans('lang.click_to_save') }}</span>
+                                                                </a>
+                                                            </li> -->
+                                                        @endif
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                    
+                                            @if (!empty($freelancer->skills))
+                                                <div class="wt-tag wt-widgettag">
+                                                    @foreach($freelancer->skills as $skill)
+                                                        <a  href="{{{url('search-results?type=job&skills%5B%5D='.$skill->slug)}}}">{{{ $skill->title }}}</a>
+                                                    @endforeach
+                                                </div>
+                                            @endif
+                                        </div>
+                                            <div class="wt-bottom">
+                                            @if (!empty($freelancer->profile->hourly_rate))
+                                                            <span class="wt-hourlyrate">
+                                                                {{ (!empty($symbol['symbol'])) ? $symbol['symbol'] : '$' }}{{{ $freelancer->profile->hourly_rate }}} {{ trans('lang.per_hour') }}</span>
+                                                        @endif
+                                                        <div class="rating-area">
+                                                    <!-- <span class="wt-starcontent">
+                                                        {{{ round($average_rating_count,2) }}}
+                                                    </span> -->
+                                                    <span class="wt-stars"><span style="width: {{ $stars }}%;"></span></span> 
+                                                    </div>
+                                        </div>       
+                                        </div>
+                                    @endforeach
+                                    @if ( method_exists($users,'links') )
+                                        {{ $users->links('pagination.custom') }}
+                                    @endif
+                                @else
+                                    @if (file_exists(resource_path('views/extend/errors/no-record.blade.php'))) 
+                                        @include('extend.errors.no-record')
+                                    @else 
+                                        @include('errors.no-record')
+                                    @endif
+                                @endif
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
