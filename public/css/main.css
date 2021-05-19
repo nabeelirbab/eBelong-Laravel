@@ -9099,10 +9099,7 @@ a:focus{text-decoration: none !important;}
 }
 .wt-article-tag a:last-child:after{display:none}
 
-.mCSB_scrollTools .mCSB_draggerContainer{display: none;}
-
-.mCSB_scrollTools{ display: none !important; opacity: 0 !important;}
-
+.mCSB_scrollTools .mCSB_draggerContainer{opacity: 0;}
 
 .mCSB_inside>.mCSB_container{ margin-right: 0 !important;}
 

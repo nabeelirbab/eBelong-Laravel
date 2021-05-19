@@ -12,7 +12,7 @@
                     <div class="col-xs-12 col-sm-12 col-md-8 push-md-2 col-lg-6 push-lg-3">
                         <div class="wt-innerbannercontent">
                             <div class="wt-title">
-                                <h2>{{ trans('lang.jobs') }}</h2>
+                                <h2>Jobs</h2>
                             </div>
                             @if (!empty($show_breadcrumbs) && $show_breadcrumbs === 'true')
                                 @if (count($breadcrumbs))
