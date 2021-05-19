@@ -22,7 +22,7 @@
                   placeholder="Email address"
                 />
                   <button v-on:click="onClick" class="e-button e-button-primary my-3">Continue</button>
-                  <div class="row">
+                  <!-- <div class="row">
                     <div class="col-sm-12 col-md-12 col-lg-12 ">
                       <div class="or-area">or</div>
                     </div>
@@ -39,7 +39,7 @@
                       </a>
                     </div>
                     
-                  </div>
+                  </div> -->
               </div>
             </div>
           </div>
