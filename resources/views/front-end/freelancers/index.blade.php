@@ -79,7 +79,7 @@
                             @endif
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 col-xl-8 float-left">
-                            <div class="wt-userlistingholder wt-userlisting wt-haslayout">
+                            <div class="wt-userlistingholder wt-userlisting wt-haslayout" id="list-layout">
                                 <div class="wt-userlistingtitle">
                                     @if (!empty($users))
                                         <span>{{ trans('lang.01') }} {{$users->count()}} of {{\App\User::role('freelancer')->count()}} results @if (!empty($keyword)) for <em>"{{{$keyword}}}"</em> @endif</span>
@@ -222,7 +222,7 @@
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 col-xl-8 float-left">
-                            <div class="wt-userlistingholder wt-userlisting wt-haslayout">
+                            <div class="wt-userlistingholder wt-userlisting wt-haslayout" id="grid-layout">
                                 <div class="wt-userlistingtitle">
                                     @if (!empty($users))
                                         <span>{{ trans('lang.01') }} {{$users->count()}} of {{\App\User::role('freelancer')->count()}} results @if (!empty($keyword)) for <em>"{{{$keyword}}}"</em> @endif</span>

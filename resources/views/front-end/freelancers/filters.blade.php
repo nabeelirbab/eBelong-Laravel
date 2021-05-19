@@ -6,8 +6,8 @@
                 <h2>{{ trans('lang.start_search') }}</h2>
             </div>
             <div class="wt-widgetcontent">
-                 <span><i class="fas fa-th"></i></span>
-                <span><i class="fas fa-list"></i></span>
+                 <span onclick="myGridFunction()"><i id="icon-grid" class="fas fa-th"></i></span>
+                <span  onclick="myListFunction()"><i id="icon-list" class="fas fa-list"></i></span>
             </div>
         </div>
        
@@ -190,3 +190,19 @@
         </div>
     {!! form::close(); !!}
 </aside>
+
+<script>
+function myListFunction() {
+    document.getElementById("grid-layout").style.display = "none";
+    document.getElementById("list-layout").style.display = "block";
+    document.getElementById("icon-grid").style.color = "#767676";
+    document.getElementById("icon-list").style.color = "#9013F3";
+}
+
+function myGridFunction() {
+    document.getElementById("list-layout").style.display = "none";
+    document.getElementById("grid-layout").style.display = "block";
+    document.getElementById("icon-grid").style.color = "#9013F3";
+    document.getElementById("icon-list").style.color = "#767676";
+}
+</script>
