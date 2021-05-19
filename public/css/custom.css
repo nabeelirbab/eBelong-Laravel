@@ -16,7 +16,20 @@ You can add your custom styling here
     float: right;
     margin-right: 15px;
 	background: #9013F3;
+    border-color: #9013F3;
     margin-bottom: 20px;
+}
+.btn-success:not(:disabled):not(.disabled):active{
+    background: #9013F3;
+    border-color: #9013F3;  
+}
+.filter_icon:hover , .filter_icon:active{
+	background: #9013F3;
+    border-color: #9013F3;
+}
+.filter_icon:focus {
+	background: #9013F3;
+    border-color: #9013F3;
 }
 .filter_icon i {
     font-size: 28px;

@@ -3451,6 +3451,10 @@ body.wt-login .wt-userlogedin{display: block;}
 	.findjobbutton.e-button {
 		width: 100%;
 	}
+
+	.wt-widget{
+		padding: 25px;
+	}
 }
 
 .rating-area{
@@ -9095,10 +9099,7 @@ a:focus{text-decoration: none !important;}
 }
 .wt-article-tag a:last-child:after{display:none}
 
-.mCSB_scrollTools .mCSB_draggerContainer{display: none;}
-
-.mCSB_scrollTools{ display: none !important; opacity: 0 !important;}
-
+.mCSB_scrollTools .mCSB_draggerContainer{opacity: 0;}
 
 .mCSB_inside>.mCSB_container{ margin-right: 0 !important;}
 
@@ -9108,6 +9109,75 @@ a:focus{text-decoration: none !important;}
 	padding-right: 10px;
     cursor: pointer;
 }
+
+
+/* start Grid layout user list */
+
+.wt-userlistinghold.grid{
+	width : 31% ;
+	margin-right: 2%;
+    margin-bottom: 1%; 
+	display: flex; 
+	flex-direction: column; 
+	padding: 20px 0px 0px 0px;
+	min-height: 408px;
+	justify-content: space-between;
+	
+}
+
+.wt-userlistinghold.grid .wt-top{
+	flex-direction: column;
+    display: flex;
+    align-items: center;
+}
+
+
+.wt-userlistinghold.grid .wt-title{
+	text-align: center;
+	margin-bottom: 10px;
+}
+
+.wt-userlistinghold.grid .wt-userlisting-breadcrumb {
+	text-align: center;
+}
+
+.wt-userlistinghold.grid .wt-userlisting-breadcrumb li span{
+	margin-top: 10px;
+}
+
+.wt-userlistinghold.grid .wt-tag.wt-widgettag {
+	display: flex;
+	flex-direction: column;
+}
+
+.wt-userlistinghold.grid .wt-userlistingimg img{
+	border-radius: 100%;
+}
+
+.wt-userlistinghold.grid .wt-bottom {
+	display: flex;
+	margin-top: 20px;
+	justify-content: space-between;
+	align-items: center;
+
+}
+
+.wt-userlistinghold.grid .wt-hourlyrate{
+	border-radius: 0px;
+	padding: 10px 20px;
+}
+
+.wt-userlistinghold.grid .rating-area{
+	padding: 10px;
+}
+
+.wt-userlistinghold.grid + .wt-userlistinghold.grid{
+	margin-right: 2%;
+    margin-bottom: 2%;
+	margin-top: 0px; 
+}
+
+/* end Grid layout user list */
 
 @media (max-width: 1536px) {
 .wt-formbannervtwo {
