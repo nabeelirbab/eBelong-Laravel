@@ -7,12 +7,17 @@
             font-size: 1.5rem;
         }
         &_description{
+            font-size: 1.3rem;
+            font-weight: 500;
+            font-family: "Poppins", sans-serif;
+            color: #474747;
+        }
+        &_description1{
             font-size: 1rem;
             font-weight: 500;
         }
         span {
             color: #9013F3;
-            font-weight: 600;
         }
     }
 }

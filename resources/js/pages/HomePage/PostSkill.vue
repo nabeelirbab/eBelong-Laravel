@@ -2,9 +2,9 @@
     <div class="container">
         <div class="e-postskill">
             <div class="e-postskill__header">
-                <div class="e-postskill__header_title">Need help staffing your project team? </div>
-                <div class="e-postskill__header_description"> Share your requirement with our <span>CTO</span>, <span>Product Manager</span>, <span>CMO</span> to speed up the hiring process. </div>
-                <div class="e-postskill__header_description"> <span>30</span> days of project work completely <span>FREE</span></div>
+                <div class="e-postskill__header_title">Speed up your hiring process </div>
+                <div class="e-postskill__header_description"> Share your requirements with our CTO instantly </div>
+                <div class="e-postskill__header_description1"> <span>-- Get 100 hours of FREE project work --</span></div>
             </div>
             <notifications group="success_message" position="top right" />
             <div class="e-postskill__content">
