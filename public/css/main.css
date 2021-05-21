@@ -374,7 +374,7 @@ address { font-style: italic; }
 	width: 14px;
 	height: 14px;
 	border-radius: 0;
-	left: 274px
+	left: 260px
 }
 .wt-checkbox input[type=checkbox] + label:after{
 	width:auto;
@@ -382,7 +382,7 @@ address { font-style: italic; }
 	line-height: 15px;
 	content: '\f14a';
 	font-size: 16px;
-	left: 274px
+	left: 260px
 }
 .wt-checkbox input[type=checkbox]:checked + label:before{border-color: #9013F3;}
 /* Theme Global Elements */
@@ -9106,7 +9106,9 @@ a:focus{text-decoration: none !important;}
 }
 .wt-article-tag a:last-child:after{display:none}
 
-.mCSB_scrollTools .mCSB_draggerContainer{opacity: 0;}
+.wt-sidebarwrapper .mCustomScrollBox {
+	overflow: inherit;
+}
 
 .mCSB_inside>.mCSB_container{ margin-right: 0 !important;}
 
@@ -9199,11 +9201,17 @@ a:focus{text-decoration: none !important;}
 /* end Grid layout user list */
 
 @media (max-width: 1536px) {
+
+.search-main{
+	position: absolute; 
+	left: 50%;
+}
 .wt-formbannervtwo {
     display: block !important;
-	position: absolute;
     top: 208px;
-    left: 54px;
+	position: relative;
+	left: -50%;
+	margin: 13px 0 0px 0px;
 }
 
 .wt-respsonsive-search {
@@ -9226,6 +9234,10 @@ a:focus{text-decoration: none !important;}
     margin-top: 16px;
 }
 
+.search-main{
+	position: initial;
+}
+
 .wt-formbannervtwo{
 	padding: 20px;
     position: absolute;
@@ -9239,6 +9251,18 @@ a:focus{text-decoration: none !important;}
 
 .wt-headervtwo .wt-navigationarea .wt-logo{
 	float : left !important;
+}
+
+#list-layout{
+	display: block !important;
+}
+
+#grid-layout{
+	display: none !important;
+}
+
+.wt-startsearch{
+	display: none;
 }
 
 }

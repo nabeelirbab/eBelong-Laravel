@@ -1,4 +1,5 @@
 <template>
+    <div class="search-main">
     <form class="wt-formtheme wt-formbanner wt-formbannertwo" id="main-search-form" v-if="this.widget_type == 'home'">
         <fieldset>
             <div class="wt-dropdown"  @click="toggleDropdown">
@@ -81,6 +82,7 @@
             </div>
         </fieldset>
     </form>
+    </div>
 </template>
 <script>
  export default{
