@@ -14,31 +14,54 @@
             <step-4 :range_data="range_data" :selectedCategories="selectedCategories" :selectedSkills="selectedSkills" :wantedPositions="wantedPositions"  :accountDetails="accountDetails" :step="step" v-if="step==4" @updateData="updateData"></step-4>
             </div>
         </div>
+        
         <div class="e-postskill-modal" v-if="show_modal">
-            <transition name="modal">
-                <div class="modal-mask">
-                    <div class="modal-wrapper" @click="show_modal = false">
-                        <div class="modal-container">
-                            <div class="modal-title">
-                                <h6>Based on your requirements you shared, one of your Interim CTO 
-                                    will reach out to you shortly to help you with your project</h6>
-                            </div>
-                        <div class="modal-body">
-                            <img :src="`${baseUrl}/images/Interim-CTO.png`"/>
-                        </div>
+          <div class="modal-background">
+            <div class="custom-modal-container">
+              <div class="modal-title">
+                <h6>Based on your requirements you shared, one of your Interim CTO 
+                    will reach out to you shortly to help you with your project
+                  </h6>
+              </div>
 
-                        <div class="modal-footer">
-                            <slot name="footer">
-                                <button class="e-button e-button-primary" @click="show_modal = false">
-                                OK
-                                </button>
-                            </slot>
-                        </div>
-                        </div>
-                    </div>
+              <div class="mob-slider">
+                <carousel :autoplay="true" :nav="false" :items="1">
+                  <img :src="`${baseUrl}/images/ebelong-Interim-CTO.png`"/>
+                  <img :src="`${baseUrl}/images/eBelong-Product-Lead.jpeg`"/>
+                  <img :src="`${baseUrl}/images/ebelong-chief-marketing.jpg`"/>
+                </carousel>
+              </div>
+
+              <div class="desktop-images">
+                <div class="row">
+                  <div class="col-lg-4">
+                    <img :src="`${baseUrl}/images/ebelong-Interim-CTO.png`"/>
+                  </div>
+                  <div class="col-lg-4">
+                    <img :src="`${baseUrl}/images/eBelong-Product-Lead.jpeg`"/>
+                  </div>
+                  <div class="col-lg-4">
+                    <img :src="`${baseUrl}/images/ebelong-chief-marketing.jpg`"/>
+                  </div>
                 </div>
-            </transition>
+              </div>
+
+              <div class="modal-footer">
+                <button class="e-button e-button-primary" @click="show_modal = false">
+                  OK
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
+        <vue-instagram token="IGQVJVX083Qmhvdl9VUzZANWFVJcGplTlFYc1VNVm9KcWNYSC16eDE5Tlc5a3ZAtMlJqQjFZARXZAGaDhMeHozLWlyeXphN1FLZAWFXTHdjenB0ckthZAHFOUjZAxU0hjd3dseWNjVV9DRHNnd21FRUcyeTV4NgZDZD" :count="6" mediaType="image">
+          <template slot="feeds" slot-scope="props">
+            <li class="fancy-list"> {{ props.feed.link }} </li>
+          </template>
+          <template slot="error" slot-scope="props">
+            <div class="fancy-alert"> {{ props.error.error_message }} </div>
+          </template>
+        </vue-instagram>
     </div>
     
 </template>
@@ -48,6 +71,9 @@ import Step1 from './PostSkill/Step1.vue';
 import Step2 from './PostSkill/Step2.vue';
 import Step3 from './PostSkill/Step3.vue';
 import Step4 from './PostSkill/Step4.vue';
+import Vue from 'vue';
+import VueInstagram from 'vue-instagram';
+import carousel from 'vue-owl-carousel2'
 // import sourceimage from '../../../../public/404-img.jpg';
 const initalData = {
              step:1,
@@ -71,14 +97,16 @@ export default {
       Step1,
       Step2,
       Step3,
-      Step4
+      Step4,
+      VueInstagram,
+      carousel
   },
    props:['items'],
    data() {
 		  return {
               baseUrl:window.APP_URL,
               ...initalData,
-              show_modal:false,
+              show_modal:true,
 		  };
    },
    mounted(){
@@ -109,7 +137,99 @@ export default {
 }
 </script>
 <style scoped>
-.modal-mask {
+.e-postskill-modal {
+  position: fixed;
+  z-index: 9998;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: table;
+  transition: opacity 0.3s ease;
+}
+.e-postskill-modal .modal-background {
+    position: relative;
+    width: 100%;
+    padding-top: 60px;
+}
+.e-postskill-modal .custom-modal-container { 
+  width: 85%;
+  text-align: center;
+  margin: 0px auto;
+  background-color: white;
+  padding: 20px;
+  right: 0;
+  left: 0;
+  position: absolute;
+  
+}
+.e-postskill-modal .modal-footer {
+    padding-top: .75rem;
+}
+.e-postskill-modal .mob-slider {
+    margin: 1rem 0px;
+}
+.e-postskill-modal .desktop-images {
+    margin: 1rem 0px;
+}
+.e-postskill-modal .mob-slider {
+  display: none;
+}
+.e-postskill-modal .desktop-images {
+  display: block;
+}
+.e-postskill-modal .desktop-images img {
+  box-shadow: 0px 0px 12px 5px rgba(0,0,0,0.21);
+  -webkit-box-shadow: 0px 0px 12px 5px rgba(0,0,0,0.21);
+  -moz-box-shadow: 0px 0px 12px 5px rgba(0,0,0,0.21);
+}
+.e-postskill-modal .mob-slider {
+  box-shadow: 0px 0px 12px 5px rgba(0,0,0,0.21);
+  -webkit-box-shadow: 0px 0px 12px 5px rgba(0,0,0,0.21);
+  -moz-box-shadow: 0px 0px 12px 5px rgba(0,0,0,0.21);
+}
+.e-postskill-modal .modal-title h6 {
+    color: #474747;
+    font-family: "Poppins", sans-serif;
+    text-transform: unset;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+@media only screen and (max-width: 768px) {
+  .e-postskill-modal .custom-modal-container {
+    width: 75%;
+    right: 0;
+    left: 0;
+    position: absolute;
+  }
+  .e-postskill-modal .mob-slider {
+    margin: 1rem 0px;
+  }
+  .e-postskill-modal .mob-slider {
+    display: block;
+  }
+  .e-postskill-modal .desktop-images {
+    display: none;
+  }
+  .e-postskill-modal .modal-background {
+    padding-top: 100px;
+  }
+  .e-postskill-modal .modal-title h6 {
+    font-size: 0.8rem;
+}
+}
+@media only screen and (max-width: 512px) {
+  .e-postskill-modal .custom-modal-container {
+    width: 90%;
+    right: 0;
+    left: 0;
+  }
+}
+
+/* .modal-mask {
   position: fixed;
   z-index: 9998;
   top: 0;
@@ -127,7 +247,7 @@ export default {
 }
 
 .modal-container {
-  width: 35%;
+  width: 85%;
   margin: 0px auto;
   padding: 20px 30px;
   background-color: #fff;
@@ -138,10 +258,22 @@ export default {
 }
 @media only screen and (max-width: 768px) {
   .modal-container {
-    width: 85%;
+  width: 85%;
   }
-}
+} */
 
+/* .modal-container .mob-slider {
+    display: none;
+  }
+@media only screen and (max-width: 768px) {
+  .modal-container .desktop-images {
+    display: none;
+  }
+  .modal-container .mob-slider {
+    display: block;
+  }
+} */
+/* 
 .modal-header h3 {
   margin-top: 0;
   color: #42b983;
@@ -149,10 +281,11 @@ export default {
 .modal-title h6 {
     color: #474747;
     text-transform: unset;
-}
+        text-align: center;
+} */
 
-.modal-body {
-  /* margin: 20px 0; */
+/* .modal-body {
+  margin: 20px 0;
 }
 .modal-body img {
     width: 100%;
@@ -160,7 +293,7 @@ export default {
 
 .modal-default-button {
   float: right;
-}
+} */
 
 /*
  * The following styles are auto-applied to elements with
@@ -171,7 +304,7 @@ export default {
  * these styles.
  */
 
-.modal-enter {
+/* .modal-enter {
   opacity: 0;
 }
 
@@ -183,6 +316,6 @@ export default {
 .modal-leave-active .modal-container {
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
-}
+} */
 
 </style>
