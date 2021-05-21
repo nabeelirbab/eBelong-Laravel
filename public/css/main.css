@@ -9106,7 +9106,9 @@ a:focus{text-decoration: none !important;}
 }
 .wt-article-tag a:last-child:after{display:none}
 
-.mCSB_scrollTools .mCSB_draggerContainer{opacity: 0;}
+.wt-sidebarwrapper .mCustomScrollBox {
+	overflow: inherit;
+}
 
 .mCSB_inside>.mCSB_container{ margin-right: 0 !important;}
 
@@ -9249,6 +9251,18 @@ a:focus{text-decoration: none !important;}
 
 .wt-headervtwo .wt-navigationarea .wt-logo{
 	float : left !important;
+}
+
+#list-layout{
+	display: block !important;
+}
+
+#grid-layout{
+	display: none !important;
+}
+
+.wt-startsearch{
+	display: none;
 }
 
 }
