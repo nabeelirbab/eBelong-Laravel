@@ -14,13 +14,13 @@
     <div class="e-project-type__content">
       <ul class="e-project-type__list">
         <li
-          v-on:click="() => onClick(skill.id)"
+          v-on:click="() => onClick(skill.title)"
           v-for="(skill, index) in skills"
           v-if="skill.is_featured"
           :key="index"
           class="e-project-type__list--item"
          :class="{
-            'e-project-type__list--item__active': selectedSkills.includes(skill.id),
+            'e-project-type__list--item__active': selectedSkills.includes(skill.title),
           }"
         >
           <img :src="`/uploads/logos/${skill.logo}`" style="width:15px"/>

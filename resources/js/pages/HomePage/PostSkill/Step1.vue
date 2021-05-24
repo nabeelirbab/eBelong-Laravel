@@ -20,7 +20,7 @@
           :key="index"
           class="e-project-type__list--item"
           :class="{
-            'e-project-type__list--item__active': selectedCategories.includes(category.id),
+            'e-project-type__list--item__active': selectedCategories.includes(category.title),
           }"
         >
           {{ category.title }}
