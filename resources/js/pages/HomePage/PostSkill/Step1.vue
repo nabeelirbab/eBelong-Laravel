@@ -14,7 +14,7 @@
     <div class="e-project-type__content">
       <ul class="e-project-type__list">
         <li
-          v-on:click="() => onClick(category.id)"
+          v-on:click="() => onClick(category.title)"
           v-if="index < 9"
           v-for="(category, index) in categories"
           :key="index"
