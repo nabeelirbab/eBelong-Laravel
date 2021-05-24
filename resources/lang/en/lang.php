@@ -668,7 +668,7 @@ return [
     'img' => 'image',
     'latest_jobs' => 'Latest Jobs',
     'view_saved_items' => 'View Saved Items',
-    'invoices' => 'Invocies',
+    'invoices' => 'Invoices',
     'purchase_date' => 'Purchase Date',
     'cancelled_jobs' => 'Cancelled Jobs',
     'dispute' => 'Dispute',

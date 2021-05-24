@@ -354,9 +354,8 @@ and (max-device-width : 480px) {
 							<p>Freelancing talent partner</p>
 						</div>
 						<div>
-						<button class="e-button e-button-primary">Hire Now</button>
-						<button class="e-button e-button-primary my-3">Get Work</button>
-
+						<button onclick="location.href='/search-results?type=freelancer'" class="e-button e-button-primary">Hire Now</button>
+						<button onclick="location.href='/search-results?type=job'" class="e-button e-button-primary my-3">Get Work</a></button>
 						</div>
 					</div>
 				</div>
