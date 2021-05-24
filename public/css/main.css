@@ -2960,7 +2960,7 @@ body.wt-login .wt-userlogedin{display: block;}
 	line-height: 18px;
 }
 .wt-radioboxholder .wt-radio + .wt-radio{margin: 18px 0 0;}
-.wt-radioboxholder .wt-radio input[type=radio] + label{color: #323232;}
+.wt-radioboxholder .wt-radio input[type=radio] + label{padding-left: 23px; color: #323232;}
 .wt-othersearch{margin: 20px 0 0;}
 .wt-checkboxholder{
 	float: left;

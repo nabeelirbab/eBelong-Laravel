@@ -3341,6 +3341,7 @@ table.wt-carttablevtwo tbody tr:nth-child(6) td{padding: 20px 20px 0px;}
     color: #323232;
     font-size: 13px;
     line-height: 14px;
+	overflow: hidden;
 }
 .wt-uploadingbar em{
 	z-index: 1;
