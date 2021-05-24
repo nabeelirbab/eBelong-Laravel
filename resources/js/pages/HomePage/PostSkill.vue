@@ -106,7 +106,7 @@ export default {
 		  return {
               baseUrl:window.APP_URL,
               ...initalData,
-              show_modal:true,
+              show_modal:false,
 		  };
    },
    mounted(){
@@ -215,7 +215,7 @@ export default {
     display: none;
   }
   .e-postskill-modal .modal-background {
-    padding-top: 100px;
+    padding-top: 50px;
   }
   .e-postskill-modal .modal-title h6 {
     font-size: 0.8rem;
