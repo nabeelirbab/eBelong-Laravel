@@ -2851,8 +2851,8 @@ body.wt-login .wt-userlogedin{display: block;}
 }
 .wt-joinsteps li.wt-done-next a{
 	color: #fff;
-	background:#00cc8d;
-	border-color:#00cc8d;
+	background:#9013F3;
+	border-color:#9013F3;
 }
 /* Register Form Style */
 .wt-formregister .wt-registerformgroup{
@@ -3655,6 +3655,7 @@ body.wt-login .wt-userlogedin{display: block;}
 	font-size: 16px;
 	line-height: 26px;
 	margin: 0 0 26px;
+	overflow-wrap: break-word;
 }
 .wt-projectliststyle{
 	float: left;
@@ -3829,12 +3830,12 @@ body.wt-login .wt-userlogedin{display: block;}
 	padding: 30px;
 	text-align: center;
 	border-top:1px solid #f2f2f2;
+	margin-top:20px;
 }
 .wt-clicksavearea span{
-	display: block;
 	font-size: 13px;
-	line-height: 15px;
-	margin-bottom:20px;
+    line-height: 15px;
+    margin-bottom:20px;
 }
 .wt-clicksavebtn{
 	color: #767676;

@@ -2676,7 +2676,7 @@ li.collapsed .wt-msgbtns .wt-msgbtn i.lnr-chevron-up:before{content: "\e874";}
 .wt-earningsholder{margin-top:30px; }
 .wt-earningsholder .wt-dashboardboxcontent .wt-emptydata-holder{padding: 0;}
 .wt-earningsholder table.wt-tablecategories tbody tr td{padding: 15px 20px;}
-.wt-hiredfreelancer .wt-userlistinghold .wt-proposaldetails{max-width: 150px;}
+.wt-hiredfreelancer .wt-userlistinghold .wt-proposaldetails{max-width: 500px;}
 .wt-hiredfreelancer .wt-titlewithsearch .wt-formsearch{
 	float: left;
 	width: auto;

@@ -71,8 +71,8 @@
                                         <ul class="wt-joinsteps">
                                             <li class="wt-active"><a href="javascrip:void(0);">{{{ trans('lang.01') }}}</a></li>
                                             <li><a href="javascrip:void(0);">{{{ trans('lang.02') }}}</a></li>
-                                            <li><a href="javascrip:void(0);">{{{ trans('lang.03') }}}</a></li>
-                                            <li><a href="javascrip:void(0);">{{{ trans('lang.04') }}}</a></li>
+                                            <!-- <li><a href="javascrip:void(0);">{{{ trans('lang.03') }}}</a></li>
+                                            <li><a href="javascrip:void(0);">{{{ trans('lang.04') }}}</a></li> -->
                                         </ul>
                                         <div id="step-1" class="form-group form-group-half">
                                             <input type="text" name="first_name" class="form-control" placeholder="{{{ trans('lang.ph_first_name') }}}" v-bind:class="{ 'is-invalid': form_step1.is_first_name_error }" v-model="first_name">
@@ -112,8 +112,8 @@
                                         <ul class="wt-joinsteps">
                                             <li class="wt-done-next"><a href="javascrip:void(0);"><i class="fa fa-check"></i></a></li>
                                             <li class="wt-active"><a href="javascrip:void(0);">{{{ trans('lang.02') }}}</a></li>
-                                            <li><a href="javascrip:void(0);">{{{ trans('lang.03') }}}</a></li>
-                                            <li><a href="javascrip:void(0);">{{{ trans('lang.04') }}}</a></li>
+                                            <!-- <li><a href="javascrip:void(0);">{{{ trans('lang.03') }}}</a></li>
+                                            <li><a href="javascrip:void(0);">{{{ trans('lang.04') }}}</a></li> -->
                                         </ul>
                                         @if (!empty($locations))
                                             <div class="form-group">
