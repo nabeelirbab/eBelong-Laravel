@@ -62,8 +62,8 @@
 								</div>
 								<!-- =================== Please remove its a dummy data for design =========================== -->
 								<ul class="wt-fwidgetcontent">
-									<li><a href="http://127.0.0.1:8000/page/about-us">FAQs</a></li>
-									<li><a href="http://127.0.0.1:8000/page/about-us">Contact Us</a></li>
+									<li><a href="">FAQs</a></li>
+									<li><a href="">Contact Us</a></li>
 								</ul>
 								<!-- ============== uncomment the lines and Change according to the requirment================== -->
 								<!-- @if(!empty($footer['menu_pages_1']))
@@ -84,8 +84,8 @@
 			<div class="row wt-footercol2">
 				<div class="col-lg-6 col-md-6 col-sm-12">
 					<div class="other-links">
-						<div class="other-link"><a href="http://127.0.0.1:8000/page/about-us">Terms & Conditions</a></div>
-						<div class="other-link"><a href="http://127.0.0.1:8000/page/about-us">Privacy Policy</a></div>
+						<div class="other-link"><a href="">Terms & Conditions</a></div>
+						<div class="other-link"><a href="/page/privacy-policy">Privacy Policy</a></div>
 					</div>
 				</div>
 				<div class="col-lg-6 col-md-6 col-sm-12">
