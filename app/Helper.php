@@ -3328,6 +3328,24 @@ class Helper extends Model
         return $json;
     }
 
+    public static function getSessionUserRole() {
+
+        $user_role = 'guest';
+        if(Auth::user()) {
+            $id = Auth::user()->id;
+
+            $user_role_id = DB::table('model_has_roles')
+            ->where('model_id', $id)
+            ->value('role_id');
+    
+            $user_role = DB::table('roles')
+            ->where('id', $user_role_id)
+            ->value('role_type');
+        }
+
+        return $user_role;
+    }
+
     /**
      * Get Seeder Data
      *
