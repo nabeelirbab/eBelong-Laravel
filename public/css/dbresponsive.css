@@ -42,7 +42,7 @@
 	.wt-userlistingvtwo .wt-userlistingcontent .wt-rightarea{width: 100%;}
 	.wt-canceljobholder .wt-userlistinghold .wt-rightarea .wt-btnarea{padding: 0 0 30px;}
 	.wt-jobdetailscontent .wt-userlistinghold .wt-rightarea{width: auto;}
-	.wt-jobdetailscontent .wt-userlistingvtwo .wt-contenthead{max-width: 380px;}
+	.wt-jobdetailscontent .wt-userlistingvtwo .wt-contenthead{max-width: 500px;}
 	.la-alljob-holder .wt-userlistingvtwo .wt-userlistingcontent .wt-rightarea{width: auto;}
 	.la-manage-jobs-holder .wt-userlistingvtwo .wt-userlistingcontent .wt-rightarea{width: auto;}
 	.wt-section-create{transform: translateX(100%);}
@@ -52,10 +52,10 @@
 }
 @media (max-width:1600px){ 
 	.wt-jobdetailscontent .wt-userlistinghold .wt-rightarea{
-		width: 100%;
-		float: left;
-		margin-top: 0;
-	}
+		width: auto;
+	    float: right;
+	    margin-top: 0;
+	 }
 	.wt-wrapper .wt-sidebarwrapper{padding-top:152px; }
 	.wt-btnmenutoggle{top: 170px;}
 }
