@@ -43,9 +43,10 @@
                   </splide>
       </div>
       <div class="text-center mt-5">
-      <button ref="submit" class="e-button e-button-whitebackground">
+      <!-- <button ref="submit" class="e-button e-button-whitebackground">
                 See all
-            </button>
+      </button> -->
+      <a class="e-button e-button-whitebackground" v-bind:href="'https://dev.ebelong.com/search-results?type=freelancer'">See all</a>
       </div>      
     </div>
   </div>
