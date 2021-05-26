@@ -67,8 +67,8 @@ body{background: #f7f7f7;}
 	text-align: center;
 }
 .wt-btnmenutoggle{
-	z-index: 1;
-	top:95px;
+	z-index: 1000;
+	top:200px;
 	left: 100%;
 	width: 40px;
 	height: 40px;
@@ -2961,10 +2961,11 @@ table.wt-carttable > thead:first-child > tr:first-child > th{
 	border:0;
 	width: 25%;
 	padding: 6px 20px;
+	padding-left: 32px;
 }
 table.wt-carttable tbody td > em{
 	display: block;
-	text-align: center;
+	margin-left: 36px;
 }
 table.wt-carttable tbody td img{
 	width: 116px;

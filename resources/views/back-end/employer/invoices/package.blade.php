@@ -13,10 +13,6 @@
                                 <thead>
                                     <tr>
                                         <th>
-                                            <span class="wt-checkbox">
-                                                <input id="wt-name" type="checkbox" name="head">
-                                                <label for="wt-name"></label>
-                                            </span>
                                         </th>
                                         <th>{{ trans('lang.invoice_id') }}</th>
                                         <th>{{ trans('lang.purchase_date') }}</th>

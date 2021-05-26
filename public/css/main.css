@@ -374,7 +374,7 @@ address { font-style: italic; }
 	width: 14px;
 	height: 14px;
 	border-radius: 0;
-	left: 260px
+	left: 0px
 }
 .wt-checkbox input[type=checkbox] + label:after{
 	width:auto;
@@ -382,7 +382,7 @@ address { font-style: italic; }
 	line-height: 15px;
 	content: '\f14a';
 	font-size: 16px;
-	left: 260px
+	left: 0px
 }
 .wt-checkbox input[type=checkbox]:checked + label:before{border-color: #9013F3;}
 /* Theme Global Elements */
