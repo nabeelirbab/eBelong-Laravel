@@ -1,7 +1,7 @@
 <aside id="wt-sidebar" class="wt-sidebar">
     {!! Form::open(['url' => url('search-results'), 'method' => 'get', 'class' => 'wt-formtheme wt-formsearch wt-formbackground']) !!}
         <input type="hidden" value="{{$type}}" name="type">
-        <div class="wt-widget wt-effectiveholder wt-startsearch" style="padding-bottom: 0px; margin: 0px; ">
+        <!-- <div class="wt-widget wt-effectiveholder wt-startsearch" style="padding-bottom: 0px; margin: 0px; ">
             <div class="wt-widgettitle">
                 <h2>{{ trans('lang.start_search') }}</h2>
             </div>
@@ -9,7 +9,7 @@
                  <span><i class="fas fa-th"></i></span>
                 <span><i class="fas fa-list"></i></span>
             </div>
-        </div>
+        </div> -->
         <div class="wt-widget wt-effectiveholder">
             <div class="wt-widgettitle">
                 <h2>{{ trans('lang.cats') }}</h2>

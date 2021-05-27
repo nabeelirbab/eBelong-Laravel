@@ -84,7 +84,7 @@
 			<div class="row wt-footercol2">
 				<div class="col-lg-6 col-md-6 col-sm-12">
 					<div class="other-links">
-						<div class="other-link"><a href="">Terms & Conditions</a></div>
+						<div class="other-link"><a href="/page/terms-and-condition">Terms & Conditions</a></div>
 						<div class="other-link"><a href="/page/privacy-policy">Privacy Policy</a></div>
 					</div>
 				</div>
