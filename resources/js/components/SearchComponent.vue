@@ -1,6 +1,5 @@
 <template>
-    <div class="search-main">
-    <form class="wt-formtheme wt-formbanner wt-formbannertwo" id="main-search-form" v-if="this.widget_type == 'home'">
+    <form class="wt-formtheme wt-formbanner wt-formbannertwo" v-if="this.widget_type == 'home'">
         <fieldset>
             <div class="wt-dropdown"  @click="toggleDropdown">
                 <span>{{trans('lang.in')}} <em class="selected-search-type">{{selected_type}} </em><i class="lnr lnr-chevron-down"></i></span>
@@ -73,7 +72,7 @@
                             <!-- <label :for="'wt-'+filter.value">{{filter.title}}</label> -->
                         </span>
                     </div>
-                    <a href="#" class="wt-searchbtn abcdef" v-on:click.prevent="submitSearchForm(types)"><i class="lnr lnr-magnifier"></i><span>{{trans('lang.search_now')}}</span></a>
+                    <a href="#" class="wt-searchbtn abcdef" v-on:click.prevent="submitSearchForm(types)"><i class="lnr lnr-magnifier"></i></a>
                 </div>
             </div>
             <div class="wt-btn-remove-holder">
@@ -82,7 +81,6 @@
             </div>
         </fieldset>
     </form>
-    </div>
 </template>
 <script>
  export default{
