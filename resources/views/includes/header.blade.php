@@ -135,7 +135,7 @@
                                 @if (!empty($logo) || Schema::hasTable('site_managements'))
                                     <strong class="wt-logo"><a href="{{{ url('/') }}}"><img src="{{{ asset($logo) }}}" alt="{{{ trans('Logo') }}}"></a></strong>
                                 @endif
-                                @if (!empty(Route::getCurrentRoute()) && Route::getCurrentRoute()->uri() != '/' && Route::getCurrentRoute()->uri() != 'home')
+                                <!-- @if (!empty(Route::getCurrentRoute()) && Route::getCurrentRoute()->uri() != '/' && Route::getCurrentRoute()->uri() != 'home')
                                     <search-form
                                     :placeholder="'{{ trans('lang.looking_for') }}'"
                                     :freelancer_placeholder="'{{ trans('lang.search_filter_list.freelancer') }}'"
@@ -145,7 +145,7 @@
                                     :no_record_message="'{{ trans('lang.no_record') }}'"
                                     >
                                     </search-form>
-                                @endif
+                                @endif -->
                                 <div class="wt-rightarea"> 
                                     @if (file_exists(resource_path('views/extend/includes/menu.blade.php'))) 
                                         @include('extend.includes.menu')
@@ -254,7 +254,7 @@
                             @if (!empty($logo) || Schema::hasTable('site_managements'))
                                 <strong class="wt-logo"><a href="{{{ url('/') }}}"><img src="{{{ asset($logo) }}}" alt="{{{ trans('Logo') }}}"></a></strong>
                             @endif
-                            @if (!empty(Route::getCurrentRoute()) && Route::getCurrentRoute()->uri() != '/' && Route::getCurrentRoute()->uri() != 'home')
+                            <!-- @if (!empty(Route::getCurrentRoute()) && Route::getCurrentRoute()->uri() != '/' && Route::getCurrentRoute()->uri() != 'home')
                                 <search-form
                                 :placeholder="'{{ trans('lang.looking_for') }}'"
                                 :freelancer_placeholder="'{{ trans('lang.search_filter_list.freelancer') }}'"
@@ -264,7 +264,7 @@
                                 :no_record_message="'{{ trans('lang.no_record') }}'"
                                 >
                                 </search-form>
-                            @endif
+                            @endif -->
                             <div class="wt-rightarea">
                                  @if (file_exists(resource_path('views/extend/includes/menu.blade.php'))) 
 									@include('extend.includes.menu')

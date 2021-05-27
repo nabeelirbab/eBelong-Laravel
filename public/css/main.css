@@ -9201,19 +9201,19 @@ a:focus{text-decoration: none !important;}
 
 /* end Grid layout user list */
 
-@media (max-width: 1536px) {
-
-.search-main{
-	position: absolute; 
-	left: 50%;
+.search-form{
+	display: flex;
+	justify-content: center;
 }
 .wt-formbannervtwo {
-    display: block !important;
-    top: 208px;
-	position: relative;
-	left: -50%;
-	margin: 13px 0 0px 0px;
+	display: block !important;
+    /* position: relative;
+    left: 15.5%; */
+    margin-top: -120px;
 }
+
+@media (max-width: 1536px) {
+
 
 .wt-respsonsive-search {
     display: none !important;
