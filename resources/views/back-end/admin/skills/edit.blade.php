@@ -32,20 +32,44 @@
                                         </span>
                                     @endif
                                 </div>
-                                <div class="form-group">
-                                    <label for="imageInput">Skill Logo</label>
-                                    <input name="skill_logo" type="file" id="imageInput" value="">
+                                <label for="imageInput"><strong>Skill Logo</strong></label>
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        @if($skills['logo'])
+                                        <div class="col-md-4">
+                                            <img src="/uploads/logos/{{ $skills['logo'] }}" alt="" style="width:100px">
+                                        </div>
+                                        @endif
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <input name="skill_logo" type="file" id="imageInput" value="">
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+                                <br>
                                 <div class="form-group">
-                                    <label for="is_featured">Featured Skill</label>
+                                    <label for="is_featured"><strong>Featured Skill</strong></label>
                                     <div class="col-md-12">
                                         <div class="row">
+                                        @if($skills['is_featured'] == 1)
+                                            <label class="col-md-6">
+                                                <input type="radio" id="enable" name="is_featured" value="1" checked> Enabled
+                                            </label>
+                                        @else
                                             <label class="col-md-6">
                                                 <input type="radio" id="enable" name="is_featured" value="1"> Enabled
                                             </label>
+                                        @endif
+                                        @if($skills['is_featured'] == 0)
+                                            <label class="col-md-6">
+                                                <input type="radio" id="disable" name="is_featured" value="0" checked> Disabled
+                                            </label>
+                                        @else
                                             <label class="col-md-6">
                                                 <input type="radio" id="disable" name="is_featured" value="0"> Disabled
                                             </label>
+                                        @endif
                                         </div>
                                     </div>
                                 </div>
