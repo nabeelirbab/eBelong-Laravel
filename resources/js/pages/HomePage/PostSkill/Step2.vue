@@ -34,8 +34,8 @@
         :multiple="true" 
         :tagging="true" 
         v-model="value"
-        @select="(e)=>onClick(e.id)" 
-        @remove="(e)=>onClick(e.id)" 
+        @select="(e)=>onClick(e.title)" 
+        @remove="(e)=>onClick(e.title)" 
 
         track-by="id" label="title"
         :options="filterSkills">
