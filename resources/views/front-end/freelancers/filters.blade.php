@@ -6,8 +6,9 @@
                 <h2>{{ trans('lang.start_search') }}</h2>
             </div>
             <div class="wt-widgetcontent">
-                 <span onclick="myGridFunction()"><i id="icon-grid" class="fas fa-th"></i></span>
                 <span  onclick="myListFunction()"><i id="icon-list" class="fas fa-list"></i></span>
+                <span onclick="myGridFunction()"><i id="icon-grid" class="fas fa-th"></i></span>
+                
             </div>
         </div>
        

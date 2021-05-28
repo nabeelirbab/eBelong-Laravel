@@ -9037,16 +9037,16 @@ a:focus{text-decoration: none !important;}
 	margin: 30px 0 30px 17px;
 }
 /* .wt-headereleven .wt-loginarea > .wt-btn{background: var(--terthemecolor); } */
-.wt-headereleven .wt-loginarea > .wt-btn{background: #9013F3; }
+.wt-headereleven .wt-loginarea > .wt-btn{background: #3A0B5F; }
 .wt-headereleven .wt-navigation > ul > li{margin: 30px 0;}
 .wt-headereleven .wt-navigation > ul > li > a {
 	padding: 10px 17px;
 	color: #fff;
 	margin: 0
 }
-.wt-headereleven .wt-navigation > ul > li:hover > a{color: #fff; }
+.wt-headereleven .wt-navigation > ul > li:hover > a{color: #3A0B5F; }
 .wt-headereleven .wt-navigationarea .wt-navigation > ul > li > a:after{
-	background: var(--secthemecolor);
+	background: #3A0B5F !important;
 }
 .wt-headereleven .wt-navigation ul li .sub-menu{
 	border: 0;

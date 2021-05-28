@@ -19,9 +19,9 @@
           <div class="modal-background">
             <div class="custom-modal-container">
               <div class="modal-title">
-                <h6>Based on your requirements you shared, one of your Interim CTO 
-                    will reach out to you shortly to help you with your project
-                  </h6>
+                <h6>Awesome, difficult part is over <span class="displayFormName">{{this.$cookies.get("storedUserName")}}</span>, Next step is to connect you with our team of experts who will help you through out your project, before Free of cost.
+                </h6>
+                <h6 class="modal-title-2">Stay tuned, someone will reach you shortly!</h6>
               </div>
 
               <div class="mob-slider">
@@ -71,7 +71,10 @@ import Step1 from './PostSkill/Step1.vue';
 import Step2 from './PostSkill/Step2.vue';
 import Step3 from './PostSkill/Step3.vue';
 import Step4 from './PostSkill/Step4.vue';
-import Vue from 'vue';
+import Vue from 'vue'
+import VueCookies from 'vue-cookies'
+Vue.use(VueCookies)
+
 import VueInstagram from 'vue-instagram';
 import carousel from 'vue-owl-carousel2'
 // import sourceimage from '../../../../public/404-img.jpg';
@@ -89,6 +92,7 @@ const initalData = {
              },
              range_data:{},
              wantedPositions:null,
+             
 		  };
 
 export default {
@@ -107,6 +111,7 @@ export default {
               baseUrl:window.APP_URL,
               ...initalData,
               show_modal:false,
+              // cookieValue: 
 		  };
    },
    mounted(){
@@ -136,6 +141,7 @@ export default {
    }
 }
 </script>
+
 <style scoped>
 .e-postskill-modal {
   position: fixed;
@@ -194,8 +200,13 @@ export default {
     font-family: "Poppins", sans-serif;
     text-transform: unset;
     text-align: center;
-    font-size: 1rem;
-    font-weight: 600;
+    font-size: 15px;
+    font-weight: 500;
+}
+.e-postskill-modal .modal-title h6 .displayFormName {
+    color: #3A0B5F;
+    font-weight: 700;
+    text-transform: capitalize;
 }
 
 @media only screen and (max-width: 768px) {
