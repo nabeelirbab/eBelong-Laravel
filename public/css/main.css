@@ -2973,6 +2973,7 @@ body.wt-login .wt-userlogedin{display: block;}
 	color: #323232;
 	font-size: 14px;
 	line-height: 14px;
+	padding-left: 22px;
 }
 .wt-checkboxholder .wt-checkbox input[type=checkbox] + label a{color: #55acee;}
 .wt-joinformc{
@@ -3211,7 +3212,7 @@ body.wt-login .wt-userlogedin{display: block;}
 .wt-formsearch fieldset .wt-checkboxholder .wt-checkbox label{
 	font-size: 14px;
 	color: #767676;
-	padding: 0px;
+	padding-left: 22px;
 }
 .wt-formsearch fieldset .wt-checkboxholder{max-height: 150px;}
 .wt-formsearch fieldset .wt-checkboxholder .wt-checkbox label img{
@@ -9236,14 +9237,14 @@ a:focus{text-decoration: none !important;}
 }
 
 .search-main{
-	position: initial;
+	/* position: initial; */
 }
 
 .wt-formbannervtwo{
 	padding: 20px;
-    position: absolute;
+    /* position: absolute;
     top: 260px;
-	left: 0px
+	left: 0px */
 }
 
 .wt-headervtwo .wt-formbannervtwo .wt-formoptions .wt-radioholder{
@@ -9264,6 +9265,10 @@ a:focus{text-decoration: none !important;}
 
 .wt-startsearch{
 	display: none;
+}
+
+.wt-main-section{
+	padding: 0px;
 }
 
 }
