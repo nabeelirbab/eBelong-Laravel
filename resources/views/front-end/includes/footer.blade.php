@@ -55,15 +55,15 @@
 								</ul>
 							</div>
 						</div>
-						<div class="col-sm-12 col-md-4 col-lg-4">
+						<div style="display : none" class="col-sm-12 col-md-4 col-lg-4">
 							<div class="wt-footercol">
 								<div class="wt-fwidgettitle">
 									<h3>Help</h3>
 								</div>
 								<!-- =================== Please remove its a dummy data for design =========================== -->
 								<ul class="wt-fwidgetcontent">
-									<li><a href="">FAQs</a></li>
-									<li><a href="">Contact Us</a></li>
+									<li style="display : none"><a href="">FAQs</a></li>
+									<li style="display : none"><a href="">Contact Us</a></li>
 								</ul>
 								<!-- ============== uncomment the lines and Change according to the requirment================== -->
 								<!-- @if(!empty($footer['menu_pages_1']))
