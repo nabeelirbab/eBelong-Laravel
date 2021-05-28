@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Http\Request;
 use App\User;
 use App\Language;
+use App\FindMatchRequest;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\EmailVerificationMailable;
 use Illuminate\Support\Facades\Validator;
@@ -531,6 +532,27 @@ class PublicController extends Controller
                 'selected_skills' => $request['selectedSkills']
             ]
         );
+
+        $findmatchRequest = new FindMatchRequest;
+        $findmatchRequest->email= $request['email'];
+        $findmatchRequest->phone_number= $request['phone_number'];
+        $findmatchRequest->full_name= $request['full_name'];
+        $findmatchRequest->positions= $request['positions'];
+        $findmatchRequest->collaborative= $request['collaborative'];
+        $findmatchRequest->agile_approach= $request['agile_approach'];
+        $findmatchRequest->creative= $request['creative'];
+        $findmatchRequest->follower= $request['follower'];
+        $findmatchRequest->initiator= $request['initiator'];
+        $findmatchRequest->instructions_follower= $request['instructions_follower'];
+        $findmatchRequest->product_focus= $request['product_focus'];
+        $findmatchRequest->project_focused= $request['project_focused'];
+        $findmatchRequest->silent_shy= $request['silent_shy'];
+        $findmatchRequest->structed_methodical= $request['structed_methodical'];
+        $findmatchRequest->vocal_blunt= $request['vocal_blunt'];
+        $findmatchRequest->waterfall_approach= $request['waterfall_approach'];
+        $findmatchRequest->selected_categories= $request['selectedCategories'];
+        $findmatchRequest->selected_skills= $request['selectedSkills'];
+        $findmatchRequest->save();
 
         $data = [
             'email' => $request['email'],

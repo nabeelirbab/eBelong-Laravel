@@ -158,6 +158,35 @@
   }
 }
 
+.e-postskill__header_title {
+  font-size: 1.5rem;
+}
+
+.e-postskill__header_description {
+  font-size: 1.3rem;
+  font-weight: 500;
+  font-family: "Poppins", sans-serif;
+  color: #474747;
+  opacity: 0.6;
+  margin: 10px 0px;
+}
+
+.e-postskill__header_description1 {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.e-postskill__header span {
+  color: #9013F3;
+}
+
+.e-postskill .multiselect__tags {
+  border: 1px solid rgba(232, 232, 232, 0.14) !important;
+  box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.08) !important;
+  border-radius: 4px 0px 0px 4px !important;
+  -webkit-border-radius: 4px 0px 0px 4px !important;
+}
+
 .e-postjob {
   background: #F5F5F5;
 }
@@ -322,12 +351,12 @@
   line-height: 1.5;
   color: #474747;
   opacity: 0.6;
+  margin-bottom: 10px;
 }
 
 .e-project-type__list {
   display: flex;
   flex-wrap: wrap;
-  padding-top: 1rem;
 }
 
 .e-project-type__list--item {
@@ -339,8 +368,20 @@
   list-style-type: none;
 }
 
+@media only screen and (max-width: 768px) {
+  .e-project-type__list--item {
+    margin-top: 1rem;
+  }
+}
+
 .e-project-type__list--item__active {
   border: 1px solid #9013f3;
+}
+
+.e-project-type__footer {
+  margin: 16px 0px;
+  border-bottom: 1px solid #dadada;
+  max-width: 600px;
 }
 
 .e-wanted-postions__heading {
@@ -891,24 +932,137 @@
   text-decoration: underline;
 }
 
-.wt-banner {
-  background-image: url(/images/Freelancer.png?b35646706ff218480d18a20d3394a61f), url(/images/home_banner.png?d3ca735d78656ccc5f471540730b6c12);
-  background-repeat: no-repeat;
-  background-position: bottom 0px right 100px, bottom right;
-  padding-bottom: 70px;
+.wt-headereleven {
+  padding-left: 40px;
+  /* margin-bottom: -146px;  */
+  /* background-color: orange; */
+  position: absolute !important;
+  width: 100%;
 }
 
-@media only screen and (min-width: 769px) {
-  .wt-banner {
-    background-size: 30%, 70%;
+.wt-contentwrapper .custome-home-banner {
+  background: linear-gradient(90deg, #9013f3 0%, #d413f3 83%);
+}
+
+.wt-contentwrapper .banner-content__search--input {
+  width: 100%;
+}
+
+.wt-contentwrapper .home-banner-img1 {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  max-width: 450px;
+}
+
+.wt-contentwrapper .banner {
+  padding: 200px 0px 70px;
+}
+
+.wt-contentwrapper .newHeaderClass {
+  position: fixed !important;
+  background: linear-gradient(90deg, #9013f3 0%, #d413f3 83%);
+}
+
+.wt-contentwrapper .banner-content__title {
+  line-height: 1;
+  color: #000000;
+}
+
+.wt-contentwrapper .banner-content__subtitle {
+  color: #ffffff;
+  opacity: 1;
+}
+
+.wt-contentwrapper .banner-content__items {
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.wt-contentwrapper .custom-desktop {
+  display: block;
+}
+
+.wt-contentwrapper .custom-mobile {
+  display: none;
+}
+
+.wt-contentwrapper .e-freelancer a.e-button-whitebackground:hover {
+  border: 2px solid #9013F3;
+  background-color: #9013F3;
+  color: #fff;
+}
+
+.wt-contentwrapper .e-freelancer a.e-button-whitebackground:active {
+  border: 2px solid #9013F3;
+  background-color: #9013F3;
+  color: #fff;
+}
+
+@media only screen and (max-width: 786px) {
+  .newHeaderClass {
+    background: none;
+  }
+
+  .banner-content__subtitle {
+    padding-bottom: 1rem !important;
+    font-size: 16px;
+  }
+
+  .wt-contentwrapper .banner {
+    padding: 125px 0px 24px;
+  }
+
+  .wt-contentwrapper .banner-content {
+    margin-top: unset;
+    background: unset;
+  }
+
+  .wt-contentwrapper .banner-content__title {
+    font-size: 24px;
+  }
+
+  .wt-contentwrapper .banner-content__search--input {
+    width: 75%;
+  }
+
+  .banner-content__search button {
+    padding: 0;
+    width: 25%;
   }
 }
 
-@media only screen and (max-width: 768px) {
-  .wt-banner {
-    background-position: top 69px right 61px, top right;
-    background-size: 318px, 576px, auto;
-    padding-bottom: 35px;
+@media only screen and (max-width: 785px) {
+  .wt-contentwrapper .custom-desktop {
+    display: none;
+  }
+
+  .wt-contentwrapper .custom-mobile {
+    display: block;
+  }
+
+  .wt-contentwrapper .home-banner-img1 {
+    position: unset;
+    bottom: unset;
+    right: unset;
+    width: 100%;
+    max-width: 450px;
+    padding-top: 80px;
+  }
+
+  .wt-contentwrapper .banner {
+    padding-top: 20px;
+  }
+
+  .wt-contentwrapper .banner-content__subtitle {
+    color: #878787;
+    opacity: 1;
+  }
+
+  .wt-contentwrapper .banner-content__items {
+    color: #9013F3;
   }
 }
 
