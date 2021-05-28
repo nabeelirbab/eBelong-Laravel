@@ -91,8 +91,7 @@
                                      
 
                                   <!--<div class="wt-btnarea"><a id="send_proposal" href="javascript:void(0);" class="wt-btn">{{{ trans('lang.send_propsal') }}}</a></div> -->
-                                    @php  $user = Auth::user();  @endphp; 
-                                            
+                                    @php  $user = Auth::user();  @endphp
                                             @if( !empty($user))                                             
                                             <div class="wt-btnarea"><a href="javascript:void(0);" @click.prevent="check_auth('{{{ url('job/proposal/'.$job->slug) }}}')" class="wt-btn">{{{ trans('lang.send_propsal') }}}</a></div> 
                                            @else 

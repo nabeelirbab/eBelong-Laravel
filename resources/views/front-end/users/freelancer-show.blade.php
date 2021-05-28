@@ -147,7 +147,7 @@
                                                 $no_attachments = empty($attachments) ? 'la-service-info' : '';
                                                 $total_orders = Helper::getServiceCount($service->id, 'hired');
                                             @endphp
-                                            <div class="col-12 col-sm-12 col-md-6 col-lg-4 float-left">
+                                            <div class="col-12 col-sm-12 col-md-6 col-lg-4 float-left" style="margin-bottom: 20px">
                                                 <div class="wt-freelancers-info {{$no_attachments}}">
                                                     @if (!empty($attachments))
                                                         @php $enable_slider = count($attachments) > 1 ? 'wt-freelancerslider owl-carousel' : ' '; @endphp

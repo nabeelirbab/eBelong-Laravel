@@ -34,7 +34,7 @@
                                                 <fieldset>
                                                     <div class="wt-checkboxholder">
                                                         <span class="wt-radio">
-                                                            <input id="payrols-{{$payrol['id']}}" type="radio" name="payout_settings[type]" value="{{$payrol['id']}}" v-on:change="changePayout('{{$payrol['id']}}')" {{$checked}}>
+                                                            <input id="payrols-{{$payrol['id']}}" type="radio" name="payout_settings[type]" value="{{$payrol['id']}}" v-on:change="changePayout('{{$payrol['id']}}')" {{$checked}} required>
                                                             <label for="payrols-{{$payrol['id']}}">
                                                                 <figure class="wt-userlistingimg">
                                                                     <img src="{{$payrol['img_url']}}" alt="{{$payrol['title']}}">
@@ -54,7 +54,7 @@
                                                             @foreach( $payrol['fields'] as $key => $field )
                                                                 @php $db_value	= !empty($payout_settings[$key]) ? $payout_settings[$key] : ""; @endphp
                                                             <div class="form-group form-group-half toolip-wrapo">
-                                                                <input type="{{$field['type']}}" name="payout_settings[{{$key}}]" id="{{$key}}-payrols" class="form-control" placeholder="{{$field['placeholder']}}" value="{{$db_value}}">
+                                                                <input type="{{$field['type']}}" name="payout_settings[{{$key}}]" id="{{$key}}-payrols" class="form-control" placeholder="{{$field['placeholder']}}" value="{{$db_value}}" required>
                                                             </div>
                                                             @endforeach
                                                         @endif
