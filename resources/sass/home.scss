@@ -208,6 +208,8 @@
 
 .wt-contentwrapper .custome-home-banner {
     background: linear-gradient(90deg, rgba(144,19,243,1) 0%, rgba(212,19,243,1) 83%);
+    // animation: gradient 15s ease infinite;
+    // background-size: 400% 400%;
 }
 .wt-contentwrapper .banner-content__search--input {
     width: 100%;
@@ -228,7 +230,7 @@
 }
 .wt-contentwrapper .banner-content__title {
     line-height: 1;
-    color: #000000;
+    color: #ffffff;
 }
 .wt-contentwrapper .banner-content__subtitle {
     color: #ffffff;
@@ -310,3 +312,54 @@
     }
 }
 
+.bannerjob__item {
+    cursor: unset;
+}
+.banner-content__search .e-button-primary {
+    background: #3A0B5F;
+}
+
+.wt-headereleven .wt-logo {
+    margin: 15px 0;
+}
+.wt-headereleven .wt-logo.wt-logo-header.mobile-logo img {
+    width: 180px;
+}
+
+@media only screen and (max-width: 768px) {
+    .wt-headereleven .wt-userlogedin {
+        margin: unset !important;
+        bottom: -17px;
+        float: right;
+        padding: unset;
+        // display: none;
+        cursor: pointer;
+        position: relative;
+        padding-right: 0;
+    }
+    .wt-headereleven .wt-userlogedin .wt-userimg {
+        float: left;
+        margin-right: 20px;
+    }
+    .wt-navigation .navbar-nav {
+        margin-top: 5px;
+    }
+    .wt-headereleven .wt-logo {
+        margin: 10px 0 !important;
+    }
+    .wt-header .wt-navigation > ul > li > a {
+        color: #767676 !important;
+    }
+}
+
+// @keyframes gradient {
+// 	0% {
+// 		background-position: 0% 50%;
+// 	}
+// 	50% {
+// 		background-position: 100% 50%;
+// 	}
+// 	100% {
+// 		background-position: 0% 50%;
+// 	}
+// }

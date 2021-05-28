@@ -3385,16 +3385,33 @@ body.wt-login .wt-userlogedin{display: block;}
 	display: block;
 	color:#474747;
 	margin: 2px 0 6px 0;
-	font:400 23px/16px 'Poppins', Arial, Helvetica, sans-serif;
+	font:400 18px 'Poppins', Arial, Helvetica, sans-serif;
 }
-.wt-locationarea {
-    font: 400 13px 'Poppins', Arial, Helvetica, sans-serif;
+.wt-title-name-location .wt-locationarea {
+    font: 400 15px 'Poppins', Arial, Helvetica, sans-serif;
+	margin-right: 5px;
 }
+.wt-title-name-location .wt-employername a {
+	color: #767676;
+}
+.wt-job-post-title h2 {
+    font-size: 20px;
+    font-weight: 400;
+}
+#grid-layout .wt-job-post-title h2 {
+    font-size: 16px;
+    font-weight: 400;
+    margin-top: 10px;
+}
+
 .wt-viewjobheart {
 	float: right;
 	border: 0.1px solid #707070;
     border-radius: 40px;
     padding: 2px 6px;
+}
+.wt-viewjobheart .wt-clicklike:hover{
+    color: #9013F3;
 }
 .wt-contenthead .wt-title h2{
 	margin: 0;
@@ -3403,8 +3420,20 @@ body.wt-login .wt-userlogedin{display: block;}
 	display: none;
 	font-size: 18px;
 	line-height: 22px;
+	/* white-space: nowrap; */
+	white-space: unset;
+	text-overflow: ellipsis;
+}
+.wt-contenthead .wt-job-post-title h2{
+	margin: 0;
+	font-weight: 400;
+	margin: 0 0 16px;
+	display: block;
+	font-size: 18px;
+	line-height: 22px;
 	overflow: hidden;
-	white-space: nowrap;
+	/* white-space: nowrap; */
+	white-space: unset;
 	text-overflow: ellipsis;
 }
 .wt-contenthead .wt-title a i{color: #9013F3; display: none}
@@ -3553,7 +3582,14 @@ body.wt-login .wt-userlogedin{display: block;}
 .wt-viewjobfolder{color: #3498db;}
 .wt-viewjobclock{color: #ff5851;}
 .wt-viewjobtag{color: #cf649a;}
-.wt-userlistingholdvtwo{min-height: 281px;position: relative;}
+.wt-userlistingholdvtwo{
+	/* min-height: 281px; */
+	min-height: unset;
+	position: relative;
+}
+#grid-layout .wt-userlistingholdvtwo{
+	height: 100%;
+}
 .wt-amountbox{
 	width: 100%;
 	float: left;
@@ -9189,14 +9225,14 @@ a:focus{text-decoration: none !important;}
 }
 
 #grid-layout {
-	display: block;
-}
-
-#list-layout {
 	display: none;
 }
 
-#icon-grid {
+#list-layout {
+	display: block;
+}
+
+#icon-list {
 	color: #9013F3;
 }
 

@@ -94,13 +94,15 @@
                                                                     <div class="row">
                                                                         <div class="col-lg-6 col-md-6 col-sm-6 col-7">
                                                                             <div class="wt-title">
-                                                                                @if (!empty($job->employer->slug))
-                                                                                    <a href="{{ url('profile/'.$job->employer->slug) }}"><i class="fa fa-check-circle"></i> {{{ Helper::getUserName($job->employer->id) }}}</a>
-                                                                                @endif
-                                                                                <h2><a href="{{ url('job/'.$job->slug) }}">{{{$job->title}}}</a></h2>
-                                                                                @if (!empty($job->location->title))
-                                                                                    <span class="wt-locationarea"><img src="{{{asset(Helper::getLocationFlag($job->location->flag))}}}" alt="{{{ trans('lang.location') }}}"> {{{ $job->location->title }}}</span>
-                                                                                @endif
+                                                                                <div class="wt-title-name-location">
+                                                                                    @if (!empty($job->location->title))
+                                                                                        <!-- <span class="wt-locationarea"><img src="{{{asset(Helper::getLocationFlag($job->location->flag))}}}" alt="{{{ trans('lang.location') }}}"> {{{ $job->location->title }}}</span> -->
+                                                                                        <span class="wt-locationarea"><img src="{{{asset(Helper::getLocationFlag($job->location->flag))}}}" alt="{{{ trans('lang.location') }}}"></span>
+                                                                                    @endif
+                                                                                    @if (!empty($job->employer->slug))
+                                                                                        <span class="wt-employername"><a href="{{ url('profile/'.$job->employer->slug) }}"><i class="fa fa-check-circle"></i> {{{ Helper::getUserName($job->employer->id) }}}</a></span>
+                                                                                    @endif
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-lg-6 col-md-6 col-sm-6 col-5">
@@ -112,14 +114,23 @@
                                                                                 @endif
                                                                             @endif
                                                                             @if (!empty($user->profile->saved_jobs) && in_array($job->id, unserialize($user->profile->saved_jobs)))
-                                                                                <span class="wt-viewjobheart" style=pointer-events:none;><a href="javascript:void(0);" class="wt-clicklike wt-clicksave"><i class="fa fa-heart"></i> {{trans("lang.saved")}}</a></span>
+                                                                                <span class="wt-viewjobheart"><a href="javascript:void(0);" class="wt-clicklike wt-clicksave"><i class="fa fa-heart"></i> {{trans("lang.saved")}}</a></span>
                                                                             @else
-                                                                                <span class="wt-viewjobheart" style=pointer-events:none;>
+                                                                                <span class="wt-viewjobheart">
                                                                                     <a href="javascrip:void(0);" class="wt-clicklike" id="job-{{$job->id}}" @click.prevent="add_wishlist('job-{{$job->id}}', {{$job->id}}, 'saved_jobs', '{{trans("lang.saved")}}')" v-cloak>
                                                                                         <i class="fa fa-heart"></i>
                                                                                     </a>
                                                                                 </span>
                                                                             @endif
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                    <div class="row">
+                                                                        <div class="col-lg-11 col-md-11 col-sm-12">
+                                                                            <div class="wt-job-post-title">
+                                                                                <h2><a href="{{ url('job/'.$job->slug) }}">{{{$job->title}}}</a></h2>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -147,23 +158,16 @@
                                                                 </div>
                                                                 <div class="col-lg-12 col-md-12 col-sm-12">
                                                                     <div class="row">
-                                                                            <div class="col-lg-11 col-md-11 col-sm-12">
-                                                                                <a href="{{url('job/'.$job->slug)}}" class="findjobbutton e-button e-button-primary my-3">{{{ trans('lang.view_job') }}}</a>
-                                                                            </div>
-                                                                            <div class="col-lg-1 col-md-1 col-sm-12">
-
-                                                                            </div>
+                                                                        <div class="col-lg-11 col-md-11 col-sm-12">
+                                                                            <a href="{{url('job/'.$job->slug)}}" class="findjobbutton e-button e-button-primary">{{{ trans('lang.view_job') }}}</a>
                                                                         </div>
-                                                                    
+                                                                        <div class="col-lg-1 col-md-1 col-sm-12">
+
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
-                                                                
-                                                                
                                                             </div>
-                                                            
-                                                            
-    
                                                         </div>
-                                                        
                                                     </div>
                                                 </div>
                                             @endif
@@ -270,13 +274,15 @@
                                                                     <div class="row">
                                                                         <div class="col-lg-6 col-md-6 col-sm-6 col-7">
                                                                             <div class="wt-title">
-                                                                                @if (!empty($job->employer->slug))
-                                                                                    <a href="{{ url('profile/'.$job->employer->slug) }}"><i class="fa fa-check-circle"></i> {{{ Helper::getUserName($job->employer->id) }}}</a>
-                                                                                @endif
-                                                                                <h2><a href="{{ url('job/'.$job->slug) }}">{{{$job->title}}}</a></h2>
-                                                                                @if (!empty($job->location->title))
-                                                                                    <span class="wt-locationarea"><img src="{{{asset(Helper::getLocationFlag($job->location->flag))}}}" alt="{{{ trans('lang.location') }}}"> {{{ $job->location->title }}}</span>
-                                                                                @endif
+                                                                                <div class="wt-title-name-location">
+                                                                                    @if (!empty($job->location->title))
+                                                                                        <!-- <span class="wt-locationarea"><img src="{{{asset(Helper::getLocationFlag($job->location->flag))}}}" alt="{{{ trans('lang.location') }}}"> {{{ $job->location->title }}}</span> -->
+                                                                                        <span class="wt-locationarea"><img src="{{{asset(Helper::getLocationFlag($job->location->flag))}}}" alt="{{{ trans('lang.location') }}}"></span>
+                                                                                    @endif
+                                                                                    @if (!empty($job->employer->slug))
+                                                                                        <span class="wt-employername"><a href="{{ url('profile/'.$job->employer->slug) }}"><i class="fa fa-check-circle"></i> {{{ Helper::getUserName($job->employer->id) }}}</a></span>
+                                                                                    @endif
+                                                                                </div>                                                                                
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-lg-6 col-md-6 col-sm-6 col-5">
@@ -288,14 +294,23 @@
                                                                                 @endif
                                                                             @endif
                                                                             @if (!empty($user->profile->saved_jobs) && in_array($job->id, unserialize($user->profile->saved_jobs)))
-                                                                                <span class="wt-viewjobheart" style=pointer-events:none;><a href="javascript:void(0);" class="wt-clicklike wt-clicksave"><i class="fa fa-heart"></i> {{trans("lang.saved")}}</a></span>
+                                                                                <span class="wt-viewjobheart"><a href="javascript:void(0);" class="wt-clicklike wt-clicksave"><i class="fa fa-heart"></i> {{trans("lang.saved")}}</a></span>
                                                                             @else
-                                                                                <span class="wt-viewjobheart" style=pointer-events:none;>
+                                                                                <span class="wt-viewjobheart">
                                                                                     <a href="javascrip:void(0);" class="wt-clicklike" id="job-{{$job->id}}" @click.prevent="add_wishlist('job-{{$job->id}}', {{$job->id}}, 'saved_jobs', '{{trans("lang.saved")}}')" v-cloak>
                                                                                         <i class="fa fa-heart"></i>
                                                                                     </a>
                                                                                 </span>
                                                                             @endif
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                    <div class="row">
+                                                                        <div class="col-lg-11 col-md-11 col-sm-12">
+                                                                            <div class="wt-job-post-title">
+                                                                                <h2><a href="{{ url('job/'.$job->slug) }}">{{{$job->title}}}</a></h2>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
