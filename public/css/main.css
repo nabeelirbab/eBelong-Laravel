@@ -360,7 +360,7 @@ address { font-style: italic; }
 	width: 6px;
 	height: 6px;
 	content: '';
-	background:#00cc8d;
+	background:#9013F3;
 	border-radius: 50px;
 }
 .wt-radio input[type=radio] + label:before{
@@ -3019,7 +3019,7 @@ body.wt-login .wt-userlogedin{display: block;}
 	font-size: 14px;
 	line-height: 29px;
 }
-.wt-registerformfooter span a{color: #55acee;}
+.wt-registerformfooter span a{color: #9013F3;}
 /* Privacy Policy Style */
 .wt-effectivecontent{
 	float: left;
