@@ -307,7 +307,7 @@ address { font-style: italic; }
 	font-size: 14px;
 	font-weight: 500;
 	line-height: 20px;
-	padding: 0 0 0 0px;
+	padding: 0 0 0 30px;
 	text-transform: capitalize;
 }
 .wt-checkbox input[type=checkbox] + label{line-height: 14px;}
@@ -2716,7 +2716,7 @@ body.wt-login .wt-userlogedin{display: block;}
 .wt-likeunlike a{line-height: inherit;font-size: 14px;padding: 0 7px;}
 .wt-like,
 .wt-like:hover,
-.wt-like:focus{color:#00cc8d}
+.wt-like:focus{color:#9013F3}
 .wt-unlike,
 .wt-unlike:hover,
 .wt-unlike:focus{color: #ff5851}
@@ -4150,7 +4150,7 @@ body.wt-login .wt-userlogedin{display: block;}
 .alert-danger em,
 .alert-danger span{color: #a94442;}
 .wt-alertbtn.danger{background:#d9534f;}
-.wt-alertbtn.success{background:#00cc8d;}
+.wt-alertbtn.success{background:#9013F3;}
 .wt-proposalamount-holder{
 	float: left;
 	width: 100%;
@@ -4535,7 +4535,7 @@ body.wt-login .wt-userlogedin{display: block;}
 	transition:none;
 	position:relative;
 	border-radius:4px;
-	background: #00cc8d;
+	background: #9013F3;
 }
 .wt-skillbar:before{
 	top: 0;

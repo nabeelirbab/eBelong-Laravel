@@ -839,7 +839,7 @@
 @media (max-width:375px){
 	body.lang-es .wt-userlogedin .wt-usernav{right: -10px;}
 	.tg-qrcodeimg{margin: 0 0 10px;}
-	.tg-qrcodedetail{width: 100%;}
+	.tg-qrcodedetail{width: 100%; margin-left: 20px;}
 	.wt-companysinfo .wt-postarticlemeta li{
 		border: 0;
 		float: left;
