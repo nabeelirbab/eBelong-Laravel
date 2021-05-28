@@ -7829,7 +7829,7 @@ body.lang-ja .wt-loginfooterinfo a + a:before {
 .wt-freelancers-details{
 	float: left;
 	width: 100%;
-	padding: 20px;
+	padding: 40px 20px 20px;
 	background: #fff;
 	border-radius: 0 0 4px 4px;
 	border: 1px solid #ddd;
@@ -9155,6 +9155,10 @@ a:focus{text-decoration: none !important;}
 	font-size: 20px;
 	padding-right: 10px;
     cursor: pointer;
+}
+
+.no-js .owl-carousel, .owl-carousel.owl-loaded{
+	display : none !important;
 }
 
 
