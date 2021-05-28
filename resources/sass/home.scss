@@ -39,6 +39,9 @@
     color: #fff !important;
     font-weight: bold;
 }
+.wt-loginarea .wt-loginbtn:hover{
+	color: #3A0B5F !important;
+}
 
 .splide__arrow{
     background: #ffffff;
@@ -324,7 +327,7 @@
 }
 
 .wt-headereleven .wt-logo {
-    margin: 15px 0;
+    margin: 22px 0 !important;
 }
 .wt-headereleven .wt-logo.wt-logo-header.mobile-logo img {
     width: 180px;
@@ -358,7 +361,19 @@
 
 @media only screen and (max-width: 512px)  {
     .wt-headereleven .wt-logo.wt-logo-header.mobile-logo img {
-        width: 145px;
+        width: 184px;
+    }
+
+    body.wt-login .wt-loginarea {
+        display: grid !important;
+    }
+    .wt-headereleven .wt-loginoption {
+        order: 2;
+        text-align: center;
+        margin-top: 1px;
+    }
+    .wt-headereleven .wt-loginarea .wt-loginbtn {
+        margin-right: unset !important;
     }
 }
 

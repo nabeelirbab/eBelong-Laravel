@@ -118,12 +118,14 @@
 							<div class="row">
 								<div class="pl-0 col-xs-12 col-sm-12 col-md-12 col-lg-12">
 									<strong class="wt-logo wt-logo-header desktop-logo" >
-										<a href="{{{ url('/') }}}"><!--<img src="{{{ asset($logo) }}}" alt="{{{ trans('Logo') }}}" style="height:30px;">--></a>
-										<img src="{{ asset('uploads/settings/general/ebelong-logo-header.png') }}" alt="{{{ trans('Logo') }}}"  style="width:184px;">
+										<a href="{{{ url('/') }}}"><!--<img src="{{{ asset($logo) }}}" alt="{{{ trans('Logo') }}}" style="height:30px;">-->
+											<img src="{{ asset('uploads/settings/general/ebelong-logo-header.png') }}" alt="{{{ trans('Logo') }}}"  style="width:184px;">
+										</a>
 									</strong>
 									<strong class="wt-logo wt-logo-header mobile-logo" >
-										<a href="{{{ url('/') }}}"><!--<img src="{{{ asset($logo) }}}" alt="{{{ trans('Logo') }}}" style="height:30px;">--></a>
-										<img src="{{ asset('uploads/settings/general/ebelong-mobile-logo.png') }}" alt="{{{ trans('Logo') }}}">
+										<a href="{{{ url('/') }}}"><!--<img src="{{{ asset($logo) }}}" alt="{{{ trans('Logo') }}}" style="height:30px;">-->
+											<img src="{{ asset('uploads/settings/general/ebelong-mobile-logo.png') }}" alt="{{{ trans('Logo') }}}">
+										</a>
 									</strong>
 									<div class="wt-rightarea">
 										<nav id="wt-nav" class="wt-nav navbar-expand-lg">

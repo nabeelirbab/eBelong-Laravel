@@ -331,7 +331,7 @@ address { font-style: italic; }
 	background: #fff;
 	line-height: 18px;
 	border-radius: 4px;
-	border: 1px solid #bbb;
+	/* border: 1px solid #bbb; */
 }
 .wt-radio input[type=radio] + label:after,
 .wt-checkbox input[type=checkbox] + label:after{
@@ -427,8 +427,8 @@ address { font-style: italic; }
 input[type=submit],
 .wt-btn[type=submit]{border: 0 !important;}
 .wt-btn:hover{
-		-webkit-box-shadow: 10px 10px 25px 0 rgba(0,0,0,0.25);
-	box-shadow: 10px 10px 25px 0 rgba(0,0,0,0.25);
+	box-shadow: 0px 4px 13px rgb(0 0 0 / 15%);
+    -webkit-box-shadow: 0px 4px 13px 0 rgb(0 0 0 / 15%);
 }
 
 .go-wt-btn:hover{
@@ -989,7 +989,7 @@ li.wt-rss a { background:#ff6600; }
 	line-height: 18px;
 }
 /* Header Style */
-.wt-logo{float: left;margin: 25px 0;}
+.wt-logo{float: left;margin: 13px 0;}
 .wt-header {
 	padding: 0;
 	z-index: 10;
@@ -1167,6 +1167,9 @@ li.wt-rss a { background:#ff6600; }
 	border-radius: 50px;
 }
 .wt-loginarea .wt-loginbtn{color:#9013F3;margin-right:20px; }
+.wt-loginarea .wt-loginbtn:hover{
+	color: #3A0B5F !important;
+}
 .wt-loginarea > .wt-btn{
 	padding: 0 15px;
 	line-height: 36px;
@@ -2949,6 +2952,10 @@ body.wt-login .wt-userlogedin{display: block;}
     font-size: 14px;
 	line-height: 23px;
 }
+.wt-termsconditions .wt-checkboxholder .wt-checkbox input[type=checkbox] + label span:hover{
+	color: #9013F3;
+    text-decoration: underline;
+}
 .wt-radioboxholder{
 	float: left;
 	width: 50%;
@@ -3427,7 +3434,7 @@ body.wt-login .wt-userlogedin{display: block;}
 .wt-contenthead .wt-job-post-title h2{
 	margin: 0;
 	font-weight: 400;
-	margin: 0 0 16px;
+	margin: 10px 0 16px;
 	display: block;
 	font-size: 18px;
 	line-height: 22px;
@@ -6298,7 +6305,7 @@ select.is-invalid {border-color: #dc3545;}
 .la-empinfo-holder .wt-companysdetails{margin:0;}
 .la-empinfo-holder .wt-companysdetails:hover{box-shadow:none;}
 .wt-formregister .wt-btnarea .wt-btn + .wt-btn,
-.wt-checkboxholder .wt-btn + .wt-btn{margin-left: 26px; }
+/* .wt-checkboxholder .wt-btn + .wt-btn{margin-left: 26px; } */
 .wt-effectiveholder .wt-widgetcontent .wt-formsearch .wt-checkboxholder{margin: 0;}
 .wt-starcontent em {
     font-style: normal;
@@ -7754,10 +7761,17 @@ body.lang-ja .wt-loginfooterinfo a + a:before {
 	    -webkit-box-shadow: 0 10px 15px 0 rgba(0,0,0,0.10);
     box-shadow: 0 10px 15px 0 rgba(0,0,0,0.10);
 }
+@media only screen and (max-width: 720px)  {
+	.wt-headervtwo .wt-navigationarea .wt-logo {
+		margin: 20px 0px 0px -17px  !important;
+		width: unset !important;
+		/* margin-left: !important; */
+	}
+}
 .wt-freelancers-holder{
 	float: left;
 	width: 100%;
-	margin:-30px 0 0; 
+	/* margin:-30px 0 0;  */
 }
 .wt-freelancers-holder > div{margin-top: 30px;}
 .wt-freelancers-info{

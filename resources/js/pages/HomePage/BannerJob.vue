@@ -16,6 +16,7 @@
       </div>
       <div style="position: absolute; bottom: -20px;left:20px">
         <button v-on:click="onClick()" class="e-button e-button-primary">Let's Get Started</button>
+        <!-- <button v-on:click="goto('art1')" class="e-button e-button-primary">Let's Get Started</button> -->
       </div>
       <div class="bannerjob__bullets d-none d-md-flex" style="position: absolute; bottom: -10px; left: 0; right: 0">
         <ul class="">
@@ -48,6 +49,7 @@ export default {
       el.scrollIntoView()
       
     }
+    
   },
   mounted:function(){
       setInterval(()=>{
