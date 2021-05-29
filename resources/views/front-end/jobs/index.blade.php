@@ -4,6 +4,9 @@
 @section('title'){{ $job_list_meta_title }} @stop
 @section('description', $job_list_meta_desc)
 @section('content')
+@php
+    $show_job_banner = 'true'
+@endphp
     @if ($show_job_banner == 'true')
         @php $breadcrumbs = Breadcrumbs::generate('searchResults'); @endphp
         <div class="wt-haslayout wt-innerbannerholder" style="background-image:url({{{ asset(Helper::getBannerImage($job_inner_banner, 'uploads/settings/general')) }}})">
