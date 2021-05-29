@@ -7,6 +7,9 @@
 @section('title'){{ $f_list_meta_title }} @stop
 @section('description', $f_list_meta_desc)
 @section('content')
+@php
+    $show_f_banner = 'true'
+@endphp
     @if ($show_f_banner == 'true')
         @php $breadcrumbs = Breadcrumbs::generate('searchResults'); @endphp
         <div class="wt-haslayout wt-innerbannerholder" style="background-image:url({{{ asset(Helper::getBannerImage($f_inner_banner, 'uploads/settings/general')) }}})">

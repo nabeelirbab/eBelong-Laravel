@@ -7,6 +7,9 @@
 @section('title'){{ $service_list_meta_title }} @stop
 @section('description', $service_list_meta_desc)
 @section('content')
+@php
+    $show_service_banner = 'true'
+@endphp
     @if ($show_service_banner == 'true')
         @php $breadcrumbs = Breadcrumbs::generate('searchResults'); @endphp
         <div class="wt-haslayout wt-innerbannerholder" style="background-image:url({{{ asset(Helper::getBannerImage($service_inner_banner, 'uploads/settings/general')) }}})">
