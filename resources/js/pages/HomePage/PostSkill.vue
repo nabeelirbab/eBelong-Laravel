@@ -19,7 +19,7 @@
           <div class="modal-background">
             <div class="custom-modal-container">
               <div class="modal-title">
-                <h6>Awesome, difficult part is over <span class="displayFormName">{{this.$cookies.get("storedUserName")}}</span>, Next step is to connect you with our team of experts who will help you through out your project, before Free of cost.
+                <h6>Awesome, difficult part is over <span class="displayFormName">{{this.$cookies.get("storedUserName")}}</span>, Next step is to connect you with our team of experts who will help you through out your project, Free of cost.
                 </h6>
                 <h6 class="modal-title-2">Stay tuned, someone will reach you shortly!</h6>
               </div>

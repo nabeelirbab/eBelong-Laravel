@@ -214,9 +214,11 @@
 }
 
 .wt-contentwrapper .custome-home-banner {
-    background: linear-gradient(90deg, rgba(144,19,243,1) 0%, rgba(212,19,243,1) 83%);
-    // animation: gradient 15s ease infinite;
-    // background-size: 400% 400%;
+    // background: linear-gradient(90deg, rgba(144,19,243,1) 0%, rgba(212,19,243,1) 83%);
+    
+    background: linear-gradient(-45deg, #9013f3, #d413f3, #d413f3, #9013f3, #d413f3);
+    animation: gradient 15s ease infinite;
+    background-size: 500% 500%;
 }
 .wt-contentwrapper .banner-content__search--input {
     width: 100%;
@@ -226,14 +228,17 @@
     bottom: 0;
     right: 0;
     width: 100%;
-    max-width: 450px;
+    // max-width: 450px;
 }
 .wt-contentwrapper .banner {
     padding: 200px 0px 70px;
 }
 .wt-contentwrapper .newHeaderClass {
     position: fixed !important;;
-    background: linear-gradient(90deg, rgba(144,19,243,1) 0%, rgba(212,19,243,1) 83%);
+    // background: linear-gradient(90deg, rgba(144,19,243,1) 0%, rgba(212,19,243,1) 83%);
+    background: linear-gradient(-45deg, #9013f3, #d413f3, #d413f3, #9013f3, #d413f3);
+    animation: gradient 15s ease infinite;
+    background-size: 500% 500%;
 }
 .wt-contentwrapper .banner-content__title {
     line-height: 1;
@@ -304,7 +309,7 @@
         bottom: unset;
         right: unset;
         width: 100%;
-        max-width: 450px;
+        // max-width: 450px;
         padding-top: 80px;
     }
     .wt-contentwrapper .banner {
@@ -330,7 +335,7 @@
     margin: 22px 0 !important;
 }
 .wt-headereleven .wt-logo.wt-logo-header.mobile-logo img {
-    width: 180px;
+    width: 184px;
 }
 
 @media only screen and (max-width: 768px) {
@@ -362,6 +367,7 @@
 @media only screen and (max-width: 512px)  {
     .wt-headereleven .wt-logo.wt-logo-header.mobile-logo img {
         width: 184px;
+        margin-left: -17px;
     }
 
     body.wt-login .wt-loginarea {
@@ -377,15 +383,19 @@
     }
 }
 
+.wt-contentwrapper .banner-content .e-project-type__list--item {
+    background: #ffffff;
+}
 
-// @keyframes gradient {
-// 	0% {
-// 		background-position: 0% 50%;
-// 	}
-// 	50% {
-// 		background-position: 100% 50%;
-// 	}
-// 	100% {
-// 		background-position: 0% 50%;
-// 	}
-// }
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
