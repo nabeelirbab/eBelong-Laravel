@@ -328,7 +328,7 @@
 							<div class="col-lg-6 col-md-6 col-sm-6">
 								<div class="section-main-wrapper10">
 									<div class="wt-banner">
-										<div data-vue='{}' data-component="BannerContent" id="e-banner-content"></div>
+										<div data-vue='<?php echo json_encode(array('categories'=> $categories,'skills'=>$all_skills)) ?>' data-component="BannerContent" id="e-banner-content"></div>
 									</div>
 								</div>
 							</div>
@@ -354,7 +354,7 @@
 								<div class="col-sm-12">
 									<div class="section-main-wrapper10">
 										<div class="wt-banner">
-											<div data-vue='{}' data-component="BannerContent" id="e-banner-content"></div>
+											<div data-vue='<?php echo json_encode(array('categories'=> $categories,'skills'=>$all_skills)) ?>' data-component="BannerContent" id="e-banner-content"></div>
 										</div>
 									</div>
 								</div>
@@ -367,6 +367,7 @@
 				<div data-component="Slider" data-vue='<?php echo json_encode($freelancers);?>' id="e-freelancer"></div>
 				<div data-component="BannerJob" data-vue='{}'  id="e-banner-job" ></div>
 				<div data-component="PostSkill" data-vue='<?php echo json_encode(array('categories'=> $categories,'skills'=>$all_skills)) ?>' id="e-postskill"></div>
+
 				@auth
 					<div data-component="PostJob" data-vue='<?php echo json_encode($user);?>'  id="e-postjob"></div>
 				@endauth
