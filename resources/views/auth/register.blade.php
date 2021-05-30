@@ -206,7 +206,7 @@
                                             <span class="wt-checkbox">
                                                 <input id="termsconditions" type="checkbox" name="termsconditions" checked="">
                                                 <!-- <label for="termsconditions"><span>{{{ $term_note }}}</span></label> -->
-                                                <label for="termsconditions"><a href="https://dev.ebelong.com/page/terms-and-condition" target="_blank"><span>I agree with Terms & Conditions</span></a></label>
+                                                <label for="termsconditions"><a href="/page/terms-and-condition" target="_blank"><span>I agree with Terms & Conditions</span></a></label>
                                                 <span class="help-block" v-if="form_step2.termsconditions_error">
                                                     <strong style="color: red;" v-cloak>{{trans('lang.register_termsconditions_error')}}</strong>
                                                 </span>
