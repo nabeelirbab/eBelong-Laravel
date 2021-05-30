@@ -46,7 +46,7 @@
       <!-- <button ref="submit" class="e-button e-button-whitebackground">
                 See all
       </button> -->
-      <a class="e-button e-button-whitebackground" v-bind:href="'https://dev.ebelong.com/search-results?type=freelancer'">See all</a>
+      <a class="e-button e-button-whitebackground" v-bind:href="'/search-results?type=freelancer'">See all</a>
       </div>      
     </div>
   </div>
