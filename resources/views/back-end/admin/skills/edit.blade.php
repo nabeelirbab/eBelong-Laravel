@@ -52,24 +52,12 @@
                                     <label for="is_featured"><strong>Featured Skill</strong></label>
                                     <div class="col-md-12">
                                         <div class="row">
-                                        @if($skills['is_featured'] == 1)
                                             <label class="col-md-6">
-                                                <input type="radio" id="enable" name="is_featured" value="1" checked> Enabled
+                                                <input type="radio" id="enable" name="is_featured" value="1" {{ $skills['is_featured'] == 1 ? "checked" : '' }}> Enabled
                                             </label>
-                                        @else
                                             <label class="col-md-6">
-                                                <input type="radio" id="enable" name="is_featured" value="1"> Enabled
+                                                <input type="radio" id="disable" name="is_featured" value="0" {{ $skills['is_featured'] == 0 || $skills['is_featured'] == '' ? "checked" : '' }}> Disabled
                                             </label>
-                                        @endif
-                                        @if($skills['is_featured'] == 0)
-                                            <label class="col-md-6">
-                                                <input type="radio" id="disable" name="is_featured" value="0" checked> Disabled
-                                            </label>
-                                        @else
-                                            <label class="col-md-6">
-                                                <input type="radio" id="disable" name="is_featured" value="0"> Disabled
-                                            </label>
-                                        @endif
                                         </div>
                                     </div>
                                 </div>
