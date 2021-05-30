@@ -375,7 +375,7 @@ address { font-style: italic; }
 	height: 14px;
 	border-radius: 0;
 	left: 0px;
-	border: 1px solid #999 !important;
+	border: 1px solid #999;
 }
 .wt-checkbox input[type=checkbox] + label:after{
 	width:auto;
