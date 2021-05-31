@@ -141,8 +141,7 @@
                                                                     <div class="row">
                                                                         <div class="col-lg-11 col-md-11 col-sm-12">
                                                                             <div class="wt-description">
-                                                                                <p>Looking for Remote Task Manager.The required candidate must possess excellent English skills both
-                                                                                    Spoken and Written, moreover the desired person should have: Good Communication Skills. Knowledge ...</p>
+                                                                                <p>{{ str_limit($description, 200) }}</p>
 
                                                                             </div>
                                                                         </div>
@@ -321,9 +320,7 @@
                                                                     <div class="row">
                                                                         <div class="col-lg-11 col-md-11 col-sm-12">
                                                                             <div class="wt-description">
-                                                                                <p>Looking for Remote Task Manager.The required candidate must possess excellent English skills both
-                                                                                    Spoken and Written, moreover the desired person should have: Good Communication Skills. Knowledge ...</p>
-
+                                                                                <p>{{ str_limit($description, 200) }}</p>
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-lg-1 col-md-1 col-sm-12">

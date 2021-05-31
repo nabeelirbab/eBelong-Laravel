@@ -3495,6 +3495,11 @@ body.wt-login .wt-userlogedin{display: block;}
     border-radius: 4px;
 	float: right;
 	text-align: center;
+	margin-top: 10px;
+}
+.side-bar-employer {
+	box-shadow: 0px 4px 15px 0 rgb(0 0 0 / 20%);
+    -webkit-box-shadow: 0px 4px 15px 0 rgb(0 0 0 / 20%);
 }
 @media only screen and (max-width: 512px) {
 	.findjobbutton.e-button {
