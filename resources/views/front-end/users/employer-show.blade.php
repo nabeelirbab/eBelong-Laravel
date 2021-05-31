@@ -43,7 +43,7 @@
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-5 col-xl-4 float-left">
                         <aside id="wt-sidebar" class="wt-sidebar">
-                            <div class="wt-proposalsr wt-proposalsrvtwo">
+                            <div class="wt-proposalsr wt-proposalsrvtwo side-bar-employer ">
                                 <div class="wt-widgetcontent wt-companysinfo">
                                     <figure><img src="{{{ asset($avatar) }}}" alt="{{ trans('lang.img') }}"></figure>
                                     <div class="wt-title">
@@ -82,80 +82,80 @@
                                         </a>
                                     </div>
                                 @endif
-                            </div>
-                            <div class="wt-widget">
-                                <div class="wt-widgettitle">
-                                    <h2>{{ trans('lang.company_followers') }}</h2>
+                                <div class="wt-widget">
+                                    <div class="wt-widgettitle">
+                                        <h2>{{ trans('lang.company_followers') }}</h2>
+                                    </div>
+                                    <div class="wt-widgetcontent wt-comfollowers wt-verticalscrollbar">
+                                        @if ($followers->count() > 0)
+                                            <ul>
+                                                @foreach ($followers as $follower)
+                                                    @php
+                                                        $profile = \App\Profile::all()->where('user_id', $follower->follower)->first();
+                                                        $role_id = Helper::getRoleByUserID($follower->follower);
+                                                    @endphp
+                                                    @if (Helper::getRoleName($role_id) !== 'admin' && $follower->follower <> $user->id)
+                                                        <li>
+                                                            <a href="{{{url('profile/'.$profile->user->slug)}}}">
+                                                                <span><img src="{{{asset(Helper::getProfileImage($follower->follower))}}}" alt="Follower"></span>
+                                                                <span>{{{Helper::getUserName($follower->follower)}}}</span>
+                                                            </a>
+                                                        </li>
+                                                    @endif
+                                                @endforeach
+                                            </ul>
+                                        @else
+                                            <p class="la-no-follower">{{ trans('lang.no_followers') }}</p>
+                                        @endif
+                                    </div>
                                 </div>
-                                <div class="wt-widgetcontent wt-comfollowers wt-verticalscrollbar">
-                                    @if ($followers->count() > 0)
-                                        <ul>
-                                            @foreach ($followers as $follower)
-                                                @php
-                                                    $profile = \App\Profile::all()->where('user_id', $follower->follower)->first();
-                                                    $role_id = Helper::getRoleByUserID($follower->follower);
-                                                @endphp
-                                                @if (Helper::getRoleName($role_id) !== 'admin' && $follower->follower <> $user->id)
-                                                    <li>
-                                                        <a href="{{{url('profile/'.$profile->user->slug)}}}">
-                                                            <span><img src="{{{asset(Helper::getProfileImage($follower->follower))}}}" alt="Follower"></span>
-                                                            <span>{{{Helper::getUserName($follower->follower)}}}</span>
-                                                        </a>
-                                                    </li>
-                                                @endif
-                                            @endforeach
+                                <div class="wt-widget wt-sharejob">
+                                    <div class="wt-widgettitle">
+                                        <h2>{{ trans('lang.share_company') }}</h2>
+                                    </div>
+                                    <div class="wt-widgetcontent">
+                                        <ul class="wt-socialiconssimple">
+                                            <li class="wt-facebook">
+                                                <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(Request::fullUrl()) }}" class="social-share">
+                                                <i class="fa fa fa-facebook-f"></i>{{ trans('lang.share_fb') }}</a>
+                                            </li>
+                                            <li class="wt-twitter">
+                                                <a href="https://twitter.com/intent/tweet?url={{ urlencode(Request::fullUrl()) }}" class="social-share">
+                                                <i class="fa fab fa-twitter"></i>{{ trans('lang.share_twitter') }}</a>
+                                            </li>
+                                            <li class="wt-pinterest">
+                                                <a href="//pinterest.com/pin/create/button/?url={{ urlencode(Request::fullUrl()) }}"
+                                                onclick="window.open(this.href, \'post-share\',\'left=50,top=50,width=600,height=350,toolbar=0\'); return false;">
+                                                <i class="fa fab fa-pinterest-p"></i>{{ trans('lang.share_pinterest') }}</a>
+                                            </li>
+                                            <li class="wt-googleplus">
+                                                <a href="https://plus.google.com/share?url={{ urlencode(Request::fullUrl()) }}" class="social-share">
+                                                <i class="fa fab fa-google-plus-g"></i>{{ trans('lang.share_google') }}</a>
+                                            </li>
                                         </ul>
-                                    @else
-                                        <p class="la-no-follower">{{ trans('lang.no_followers') }}</p>
-                                    @endif
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="wt-widget wt-sharejob">
-                                <div class="wt-widgettitle">
-                                    <h2>{{ trans('lang.share_company') }}</h2>
-                                </div>
-                                <div class="wt-widgetcontent">
-                                    <ul class="wt-socialiconssimple">
-                                        <li class="wt-facebook">
-                                            <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(Request::fullUrl()) }}" class="social-share">
-                                            <i class="fa fa fa-facebook-f"></i>{{ trans('lang.share_fb') }}</a>
-                                        </li>
-                                        <li class="wt-twitter">
-                                            <a href="https://twitter.com/intent/tweet?url={{ urlencode(Request::fullUrl()) }}" class="social-share">
-                                            <i class="fa fab fa-twitter"></i>{{ trans('lang.share_twitter') }}</a>
-                                        </li>
-                                        <li class="wt-pinterest">
-                                            <a href="//pinterest.com/pin/create/button/?url={{ urlencode(Request::fullUrl()) }}"
-                                            onclick="window.open(this.href, \'post-share\',\'left=50,top=50,width=600,height=350,toolbar=0\'); return false;">
-                                            <i class="fa fab fa-pinterest-p"></i>{{ trans('lang.share_pinterest') }}</a>
-                                        </li>
-                                        <li class="wt-googleplus">
-                                            <a href="https://plus.google.com/share?url={{ urlencode(Request::fullUrl()) }}" class="social-share">
-                                            <i class="fa fab fa-google-plus-g"></i>{{ trans('lang.share_google') }}</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="wt-widget wt-reportjob">
-                                <div class="wt-widgettitle">
-                                    <h2>{{ trans('lang.report_employer') }}</h2>
-                                </div>
-                                <div class="wt-widgetcontent">
-                                    {!! Form::open(['url' => '', 'class' =>'wt-formtheme wt-formreport', 'id' => 'submit-report',  '@submit.prevent'=>'submitReport("'.$user->id.'","employer-report")']) !!}
-                                        <fieldset>
-                                            <div class="form-group">
-                                                <span class="wt-select">
-                                                    {!! Form::select('reason', \Illuminate\Support\Arr::pluck($reasons, 'title'), null ,array('class' => '', 'placeholder' => trans('lang.select_reason'), 'v-model' => 'report.reason')) !!}
-                                                </span>
-                                            </div>
-                                            <div class="form-group">
-                                                {!! Form::textarea( 'description', null, ['class' =>'form-control', 'placeholder' => trans('lang.ph_desc'), 'v-model' => 'report.description'] ) !!}
-                                            </div>
-                                            <div class="form-group wt-btnarea">
-                                                {!! Form::submit(trans('lang.btn_submit'), ['class' => 'wt-btn']) !!}
-                                            </div>
-                                        </fieldset>
-                                    {!! form::close(); !!}
+                                <div class="wt-widget wt-reportjob">
+                                    <div class="wt-widgettitle">
+                                        <h2>{{ trans('lang.report_employer') }}</h2>
+                                    </div>
+                                    <div class="wt-widgetcontent">
+                                        {!! Form::open(['url' => '', 'class' =>'wt-formtheme wt-formreport', 'id' => 'submit-report',  '@submit.prevent'=>'submitReport("'.$user->id.'","employer-report")']) !!}
+                                            <fieldset>
+                                                <div class="form-group">
+                                                    <span class="wt-select">
+                                                        {!! Form::select('reason', \Illuminate\Support\Arr::pluck($reasons, 'title'), null ,array('class' => '', 'placeholder' => trans('lang.select_reason'), 'v-model' => 'report.reason')) !!}
+                                                    </span>
+                                                </div>
+                                                <div class="form-group">
+                                                    {!! Form::textarea( 'description', null, ['class' =>'form-control', 'placeholder' => trans('lang.ph_desc'), 'v-model' => 'report.description'] ) !!}
+                                                </div>
+                                                <div class="form-group wt-btnarea">
+                                                    {!! Form::submit(trans('lang.btn_submit'), ['class' => 'wt-btn']) !!}
+                                                </div>
+                                            </fieldset>
+                                        {!! form::close(); !!}
+                                    </div>
                                 </div>
                             </div>
                         </aside>
@@ -184,25 +184,55 @@
                                         @endif
                                         <div class="wt-userlistingcontent">
                                             <div class="wt-contenthead">
-                                                <div class="wt-title">
-                                                    <a href="{{{ url('profile/'.$job->employer->slug) }}}">
-                                                        @if ($job->employer->user_verified === 1)
-                                                            <i class="fa fa-check-circle"></i>
-                                                        @endif
-                                                        {{{$job->employer->first_name.' '.$job->employer->last_name}}}
-                                                    </a>
-                                                    <h2>{{{$job->title}}}</h2>
+                                                <div class="row">
+                                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                                        <div class="wt-title">
+                                                            <a href="{{{ url('profile/'.$job->employer->slug) }}}">
+                                                                @if ($job->employer->user_verified === 1)
+                                                                    <i class="fa fa-check-circle"></i>
+                                                                @endif
+                                                                {{{$job->employer->first_name.' '.$job->employer->last_name}}}
+                                                            </a>
+                                                            <h2>{{{$job->title}}}</h2>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                                        <span class="wt-viewjobhour">
+                                                            <i class="fa fa-dollar-sign wt-viewjobdollar">
+                                                                <!-- {{ !empty($symbol) ? $symbol['symbol'] : '$' }}-->
+                                                            </i>
+                                                            {{{$job->price}}}
+                                                        </span>
+                                                        <span class="wt-viewjobheart">
+                                                            <a href="javascrip:void(0);" class="wt-clicklike" id="job-{{$job->id}}" @click.prevent="add_wishlist('job-{{$job->id}}', {{$job->id}}, 'saved_jobs', '{{trans("lang.saved")}}')" v-cloak>
+                                                                <i class="fa fa-heart"></i>
+                                                                <!-- <span class="save_text">Click to Save</span> -->
+                                                            </a>
+                                                        </span>
+                                                    </div>
                                                 </div>
-                                                <div class="wt-description">
-                                                    <p>@php echo htmlspecialchars_decode(stripslashes(str_limit($description, 200))); @endphp</p>
+                                                <div class="row">
+                                                    <div class="col-lg-11 col-md-11 col-sm-12">
+                                                        <div class="wt-description">
+                                                            <p>@php echo htmlspecialchars_decode(stripslashes(str_limit($description, 200))); @endphp</p>
+                                                        </div>
+                                                        <div class="wt-tag wt-widgettag">
+                                                            @foreach ($job->skills as $skill )
+                                                                <a href="{{{url('search-results?type=job&skills%5B%5D='.$skill->slug)}}}">{{$skill->title}}</a>
+                                                            @endforeach
+                                                        </div>
+                                                        
+                                                    </div>
                                                 </div>
-                                                <div class="wt-tag wt-widgettag">
-                                                    @foreach ($job->skills as $skill )
-                                                        <a href="{{{url('search-results?type=job&skills%5B%5D='.$skill->slug)}}}">{{$skill->title}}</a>
-                                                    @endforeach
+                                                <div class="row">
+                                                    <div class="col-lg-11 col-md-11 col-sm-12">
+                                                        <a href="{{url('job/'.$job->slug)}}" class="findjobbutton e-button e-button-primary">{{{ trans('lang.view_job') }}}</a>
+                                                    </div>
                                                 </div>
+                                                
                                             </div>
-                                            <div class="wt-viewjobholder">
+
+                                            <!-- <div class="wt-viewjobholder">
                                                 <ul>
                                                     <li><span><i class="wt-viewjobdollar">{{ !empty($symbol) ? $symbol['symbol'] : '$' }}</i>{{{$job->price}}}</span></li>
                                                     @if (!empty($job->location->title))
@@ -226,7 +256,7 @@
                                                     @endif
                                                     <li class="wt-btnarea"><a href="{{url('job/'.$job->slug)}}" class="wt-btn">{{{ trans('lang.view_job') }}}</a></li>
                                                 </ul>
-                                            </div>
+                                            </div> -->
                                         </div>
                                     </div>
                                 @endforeach
