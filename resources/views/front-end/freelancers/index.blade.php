@@ -104,7 +104,7 @@
                                         @php
                                             $user_image = !empty($freelancer->profile->avater) ?
                                                             '/uploads/users/'.$freelancer->id.'/'.$freelancer->profile->avater :
-                                                            'images/user.jpg';
+                                                            '';
                                             $flag = !empty($freelancer->location->flag) ? Helper::getLocationFlag($freelancer->location->flag) :
                                                     '/images/img-01.png';
                                             $feedbacks = \App\Review::select('feedback')->where('receiver_id', $freelancer->id)->count();
