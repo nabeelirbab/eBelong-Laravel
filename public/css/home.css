@@ -698,12 +698,20 @@
 }
 
 .wt-logininfo .wt-btn {
-  background: #ff5851;
+  background: #9013F3;
+}
+
+.wt-logininfo .wt-btn:hover {
+  background: #9013F3;
 }
 
 .wt-loginarea .wt-loginbtn {
   color: #fff !important;
   font-weight: bold;
+}
+
+.wt-loginarea .wt-loginbtn:hover {
+  color: #3A0B5F !important;
 }
 
 .splide__arrow {
@@ -941,7 +949,10 @@
 }
 
 .wt-contentwrapper .custome-home-banner {
-  background: linear-gradient(90deg, #9013f3 0%, #d413f3 83%);
+  background: linear-gradient(-45deg, #9013f3, #d413f3, #d413f3, #9013f3, #d413f3);
+  -webkit-animation: gradient 15s ease infinite;
+          animation: gradient 15s ease infinite;
+  background-size: 500% 500%;
 }
 
 .wt-contentwrapper .banner-content__search--input {
@@ -953,7 +964,6 @@
   bottom: 0;
   right: 0;
   width: 100%;
-  max-width: 450px;
 }
 
 .wt-contentwrapper .banner {
@@ -962,12 +972,15 @@
 
 .wt-contentwrapper .newHeaderClass {
   position: fixed !important;
-  background: linear-gradient(90deg, #9013f3 0%, #d413f3 83%);
+  background: linear-gradient(-45deg, #9013f3, #d413f3, #d413f3, #9013f3, #d413f3);
+  -webkit-animation: gradient 15s ease infinite;
+          animation: gradient 15s ease infinite;
+  background-size: 500% 500%;
 }
 
 .wt-contentwrapper .banner-content__title {
   line-height: 1;
-  color: #000000;
+  color: #ffffff;
 }
 
 .wt-contentwrapper .banner-content__subtitle {
@@ -1022,6 +1035,7 @@
 
   .wt-contentwrapper .banner-content__title {
     font-size: 24px;
+    color: #000000;
   }
 
   .wt-contentwrapper .banner-content__search--input {
@@ -1048,7 +1062,6 @@
     bottom: unset;
     right: unset;
     width: 100%;
-    max-width: 450px;
     padding-top: 80px;
   }
 
@@ -1064,5 +1077,160 @@
   .wt-contentwrapper .banner-content__items {
     color: #9013F3;
   }
+}
+
+.bannerjob__item {
+  cursor: default;
+}
+
+.banner-content__search .e-button-primary {
+  background: #3A0B5F;
+}
+
+.wt-headereleven .wt-logo {
+  margin: 22px 0 !important;
+}
+
+.wt-headereleven .wt-logo.wt-logo-header.mobile-logo img {
+  width: 184px;
+}
+
+@media only screen and (max-width: 768px) {
+  .wt-headereleven .wt-userlogedin {
+    margin: unset !important;
+    bottom: -17px;
+    float: right;
+    padding: unset;
+    cursor: pointer;
+    position: relative;
+    padding-right: 0;
+  }
+
+  .wt-headereleven .wt-userlogedin .wt-userimg {
+    float: left;
+    margin-right: 20px;
+  }
+
+  .wt-navigation .navbar-nav {
+    margin-top: 5px;
+  }
+
+  .wt-headereleven .wt-logo {
+    margin: 10px 0 !important;
+  }
+
+  .wt-header .wt-navigation > ul > li > a {
+    color: #767676 !important;
+  }
+}
+
+@media only screen and (max-width: 512px) {
+  .wt-headereleven .wt-logo.wt-logo-header.mobile-logo img {
+    width: 184px;
+    margin-left: -17px;
+  }
+
+  body.wt-login .wt-loginarea {
+    display: grid !important;
+  }
+
+  .wt-headereleven .wt-loginoption {
+    order: 2;
+    text-align: center;
+    margin-top: 1px;
+  }
+
+  .wt-headereleven .wt-loginarea .wt-loginbtn {
+    margin-right: unset !important;
+  }
+}
+
+.wt-contentwrapper .banner-content .e-project-type__list--item {
+  background: #ffffff;
+}
+
+@-webkit-keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.custome-home-banner .carousel-control.left {
+  background-image: unset !important;
+}
+
+.custome-home-banner .carousel-control {
+  width: 5% !important;
+}
+
+.custome-home-banner .carousel-control.right {
+  background-image: unset !important;
+}
+
+.banner1 .banner1-button.e-button-primary {
+  background: #3A0B5F;
+  padding: 10px 25px;
+  line-height: 36px;
+  font-size: 16px;
+  margin-bottom: 55px;
+}
+
+.banner1 .home-banner-img2 {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  max-width: 475px;
+}
+
+.custom-mobile .carousel-indicators li {
+  border: 1px solid #c4c4c4 !important;
+}
+
+.custom-mobile .carousel-indicators .active {
+  background-color: unset;
+  background: linear-gradient(90deg, #9013f3 0%, #d413f3 83%);
+}
+
+@media only screen and (max-width: 785px) {
+  .wt-contentwrapper .home-banner-img2 {
+    position: unset;
+    bottom: unset;
+    right: unset;
+    width: 100%;
+    width: 100%;
+    max-width: 285px;
+    padding-top: 80px;
+  }
+}
+
+.custom-mobile .banner1-button.e-button-primary {
+  background: #3A0B5F;
+  padding: 10px 20px;
+  line-height: 36px;
+  font-size: 15px;
+  margin-bottom: 20px;
 }
 
