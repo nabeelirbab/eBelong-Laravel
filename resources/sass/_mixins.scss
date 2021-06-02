@@ -9,7 +9,7 @@
     @media only screen and (max-width: 768px) { @content }
 }
 @mixin header-h2 {
-    font-size: 2rem;
+    font-size: 22px;
     font-weight: 600;
     font-family: 'Poppins', sans-serif;
     line-height: 1.3;
@@ -26,14 +26,14 @@
     color: $black;
 }
 @mixin title {
-    font-size: 1.3rem;
+    font-size: 18px;
     font-weight: 500;
     font-family: 'Poppins', sans-serif;
     line-height: 1.5;
     color: $black-secondary;
 }
 @mixin subtitle {
-    font-size: 0.9rem;
+    font-size: 12px;
     font-weight: 400;
     font-family: 'Poppins', sans-serif;
     line-height: 1.5;
