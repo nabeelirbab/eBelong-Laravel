@@ -1,6 +1,7 @@
 <template>
     <div class="banner animate__animated animate__lightSpeedInRight  "  v-animate-onscroll="'animate__animated animate__lightSpeedInRight'">
-        <div class="container">        
+        <!-- <div class="container">   -->
+        <div class="">        
             <div class="banner-content">
                 <div class="banner-content__title pb-3">
                     Hire Freelance Talent
