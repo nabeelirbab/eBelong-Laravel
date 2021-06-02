@@ -21,7 +21,7 @@
                     <li
                         v-on:click="()=>onClick(item.slug)"
                         v-for="(item,index) in items.skills"
-                        v-if="item.is_featured"
+                        v-if="index < 10 && item.is_featured"
                         :key="index"
                         class="e-project-type__list--item"
                     >

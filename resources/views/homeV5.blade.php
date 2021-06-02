@@ -29,9 +29,6 @@
 		{{-- <!-- <link href="http://amentotech.com/projects/worketic/css/linearicons.css" rel="stylesheet"> --> --}}	<link href="{{ asset('worketic/css/main.css') }}" rel="stylesheet">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 		
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 		
 		<style>
 			.wt-latestjobs > ul > li.deactivate{
@@ -335,12 +332,13 @@
 						</div>
 					</div>
 				</header>
+				
 				<div class="custom-desktop custome-home-banner">
-					<div id="myCarousel" class="carousel slide" data-ride="carousel">
+					<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
 						<!-- Wrapper for slides -->
 						<div class="carousel-inner">
-							<div class="item active">
-								<div class="container">
+							<div class="carousel-item active">
+								<div class="container banner1">
 									<div class="row">
 										<div class="col-lg-6 col-md-6 col-sm-6">
 											<div class="section-main-wrapper10">
@@ -350,61 +348,59 @@
 											</div>
 										</div>
 										<div class="col-lg-6 col-md-6 col-sm-6">
-											<img class="home-banner-img1" src="{{ asset('uploads/settings/general/FreelancerNew.png') }}" alt="banner here"> 
+											<img class="home-banner-img2" src="{{ asset('uploads/settings/general/FreelancerNew-1.png') }}" alt="banner here"> 
 										</div>
 									</div>
 								</div>
 							</div>
 
-							<div class="item">
-								<div class="container banner1">
+							<div class="carousel-item">
+								<div class="container banner2">
 									<div class="row">
 										<div class="col-lg-6 col-md-6 col-sm-6">
 											<div class="section-main-wrapper10">
 												<div class="wt-banner">
-													<div data-vue='<?php echo json_encode(array('categories'=> $categories,'skills'=>$all_skills)) ?>' data-component="BannerContent1" id="e-banner-content1"></div>
+												<div data-vue='<?php echo json_encode(array('categories'=> $categories,'skills'=>$all_skills)) ?>' data-component="BannerContent1" id="e-banner-content"></div>
 												</div>
 											</div>
 										</div>
 										<div class="col-lg-6 col-md-6 col-sm-6">
-											<img class="home-banner-img2" src="{{ asset('uploads/settings/general/FreelancerNew-2.png') }}" alt="banner here"> 
+											<img class="home-banner-img1" src="{{ asset('uploads/settings/general/FreelancerNew-2.png') }}" alt="banner here"> 
 										</div>
 									</div>
 								</div>
 							</div>
 							
-							<!-- <div class="item">
-								
-							</div> -->
 						</div> 
 
 						<!-- Left and right controls -->
-						<a class="left carousel-control" href="#myCarousel" data-slide="prev">
-							<span class="glyphicon glyphicon-chevron-left"></span>
+						<a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+							<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 							<span class="sr-only">Previous</span>
 						</a>
-						<a class="right carousel-control" href="#myCarousel" data-slide="next">
-							<span class="glyphicon glyphicon-chevron-right"></span>
+						<a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+							<span class="carousel-control-next-icon" aria-hidden="true"></span>
 							<span class="sr-only">Next</span>
 						</a>
 					</div>
 				</div>
 				<div class="custom-mobile">
-					<div id="myCarousel" class="carousel slide" data-ride="carousel">
+					<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
 						<!-- Indicators -->
 						<ol class="carousel-indicators">
-							<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-							<li data-target="#myCarousel" data-slide-to="1"></li>
+							<li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+							<li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+							
 						</ol>
 
 						<!-- Wrapper for slides -->
 						<div class="carousel-inner">
-							<div class="item active">
+							<div class="carousel-item active">
 								<div class="custome-home-banner">
 									<div class="container">
 										<div class="row">
 											<div class="col-sm-12">
-												<img class="home-banner-img1" src="{{ asset('uploads/settings/general/FreelancerNew.png') }}" alt="banner here"> 
+												<img class="home-banner-img2" src="{{ asset('uploads/settings/general/FreelancerNew-1.png') }}" alt="banner here"> 
 											</div>
 										</div>
 									</div>
@@ -424,12 +420,12 @@
 								</div>
 							</div>
 
-							<div class="item">
+							<div class="carousel-item">
 								<div class="custome-home-banner">
 									<div class="container">
 										<div class="row">
 											<div class="col-sm-12">
-												<img class="home-banner-img2" src="{{ asset('uploads/settings/general/FreelancerNew-2.png') }}" alt="banner here"> 
+												<img class="home-banner-img1" src="{{ asset('uploads/settings/general/FreelancerNew-2.png') }}" alt="banner here"> 
 											</div>
 										</div>
 									</div>
@@ -440,7 +436,7 @@
 											<div class="col-sm-12">
 												<div class="section-main-wrapper10">
 													<div class="wt-banner">
-														<div data-vue='<?php echo json_encode(array('categories'=> $categories,'skills'=>$all_skills)) ?>' data-component="BannerContent1" id="e-banner-content1"></div>
+														<div data-vue='<?php echo json_encode(array('categories'=> $categories,'skills'=>$all_skills)) ?>' data-component="BannerContent1" id="e-banner-content"></div>
 													</div>
 												</div>
 											</div>
@@ -452,11 +448,12 @@
 					</div>
 				</div>
 				<!-- <img class="home-banner-img" src="{{ asset('uploads/settings/general/home_banner.png') }}" alt="banner here">  -->
-				
 				<div data-component="Slider" data-vue='<?php echo json_encode($freelancers);?>' id="e-freelancer"></div>
 				<div data-component="BannerJob" data-vue='{}'  id="e-banner-job" ></div>
 				<div data-component="PostSkill" data-vue='<?php echo json_encode(array('categories'=> $categories,'skills'=>$all_skills)) ?>' id="e-postskill"></div>
-
+				
+				
+				
 				@auth
 					<div data-component="PostJob" data-vue='<?php echo json_encode($user);?>'  id="e-postjob"></div>
 				@endauth
@@ -491,7 +488,6 @@
 					
 				</style>
 				<footer id="wt-footer" class="wt-footerholder wt-footertwo wt-haslayout">
-				<!-- <div class="wt-footer-bg" style="background-image:url()"></div -->
 					<div class="container">
 						<div class="row">
 							<div class="col-lg-6 col-md-6 col-sm-12">
@@ -631,8 +627,6 @@
 		</script>
 		<script src="{{ asset('worketic/js/jquery.dd.min.js') }}"></script>
 		
-		</script>
-		
 		<script>
 			footer_element = $('main').hasClass('wt-innerbgcolor');
 			if(footer_element) {
@@ -694,10 +688,10 @@
 
 		<!-- Your Chat Plugin code -->
 		<div class="fb-customerchat"
-		attribution=install_email
-		page_id="143435542479695"
-		theme_color="#7646FF">
+			attribution=install_email
+			page_id="143435542479695"
+			theme_color="#7646FF">
 		</div>
-		</div>
+		<!-- </div> -->
 	</body>
 </html>

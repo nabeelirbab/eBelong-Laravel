@@ -15,7 +15,7 @@
         <div class="bannerjob__image__text">Provide a little info and we’ll connect you with one of eBelong's CTOs.</div>
       </div>
       <div style="position: absolute; bottom: -20px;left:20px">
-        <button v-on:click="onClick()" class="e-button e-button-primary">Let's Get Started</button>
+        <button @click="scrollfunction" class="e-button e-button-primary">Let's Get Started</button>
         <!-- <button v-on:click="goto('art1')" class="e-button e-button-primary">Let's Get Started</button> -->
       </div>
       <div class="bannerjob__bullets d-none d-md-flex" style="position: absolute; bottom: -10px; left: 0; right: 0">
@@ -43,11 +43,15 @@ export default {
       }
   },
   methods:{
-    onClick(){
-      let el = window.postskill;
-      // Get the bounding rectangle so we can get the element position position
-      el.scrollIntoView()
+    // onClick(){
+    //   let el = window.postskill;
+    //   // Get the bounding rectangle so we can get the element position position
+    //   el.scrollIntoView()
       
+    // },
+    scrollfunction() {
+      const element = document.getElementById('scroll-id');
+      element.scrollIntoView({ behavior: 'smooth' });
     }
     
   },

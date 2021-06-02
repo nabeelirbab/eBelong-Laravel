@@ -8,7 +8,7 @@
 
                 </div>
                 <div class="banner-content__subtitle pb-5">Share your requirements with our CTO instantly</div>
-                <button class="banner1-button e-button e-button-primary">Let's Get Started</button>
+                <button @click="scrollfunction" class="banner1-button e-button e-button-primary">Let's Get Started</button>
                 <!-- <div class="banner-content__search d-flex pb-3"  >
                     <vue-bootstrap-typeahead
                         :data="skills"
@@ -54,7 +54,11 @@ export default {
       onClick(slug){
          if(!slug) slug = this.skills.find(obj=>obj.name === this.query).slug;
          window.location.replace(`${this.url}?type=freelancer&s=&skills[]=${slug}`);
-      }
+      },
+      scrollfunction() {
+      const element = document.getElementById('scroll-id');
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
   },
   mounted: function(){
       axios.post(APP_URL + '/search/get-searchable-data',{
