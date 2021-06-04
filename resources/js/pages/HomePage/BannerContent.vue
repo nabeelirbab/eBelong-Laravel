@@ -20,8 +20,8 @@
                 <ul class="e-project-type__list">
                     <li
                         v-on:click="()=>onClick(item.slug)"
-                        v-for="(item,index) in items.skills"
-                        v-if="index < 10 && item.is_featured"
+                        v-for="(item,index) in featuredItems"
+                        :load="log(item)"
                         :key="index"
                         class="e-project-type__list--item"
                     >
@@ -62,12 +62,22 @@ export default {
       onClick(slug){
          if(!slug) slug = this.skills.find(obj=>obj.name === this.query).slug;
          window.location.replace(`${this.url}?type=freelancer&s=&skills[]=${slug}`);
-      }
+      },
+      log(item) {
+      console.log("featured items ", item)
+    }
   },
   mounted: function(){
       axios.post(APP_URL + '/search/get-searchable-data',{
              type:'freelancer'
       }).then(response=>this.skills = response.data.searchables)
+  },
+  computed: {
+      featuredItems() {
+          const featured = this.items.skills.filter(skill => skill.is_featured == 1)
+
+          return featured.slice(0, 7)
+      }
   }
   
 };
