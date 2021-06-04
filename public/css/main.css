@@ -1348,11 +1348,13 @@ body.wt-login .wt-userlogedin{display: block;}
 	font-weight:400;
 	margin: 0 0 5px;
 	line-height:16px;
+	color: white;
 }
 .wt-username span{
 	display:block;
 	font-size:13px;
 	line-height:15px;
+	color: white;
 }
 .wt-usernav{
 	right:0;
