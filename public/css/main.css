@@ -1244,6 +1244,26 @@ body.wt-login .wt-loginarea .wt-btn {
 	padding: 0 15px;
 	line-height: 36px;
 }
+@media only screen and (max-width: 375px) { 
+	.wt-loginarea > .wt-btn{
+		padding: 0 5px !important;
+	}
+}
+@media only screen and (max-width: 768px) {
+	.wt-navigation .navbar-nav {
+		width: 150px;
+		float: right;
+		background: white;
+		border: 1px solid #ddd;
+	}
+	.wt-header .wt-navigation {
+		margin-top: 10px;
+	}
+	.wt-header .wt-navigation > ul > li > a {
+		color: #767676 !important;
+	}
+}
+
 .wt-loginoption{
 	position: relative;
 	display: inline-block;
@@ -1348,11 +1368,13 @@ body.wt-login .wt-userlogedin{display: block;}
 	font-weight:400;
 	margin: 0 0 5px;
 	line-height:16px;
+	color: white;
 }
 .wt-username span{
 	display:block;
 	font-size:13px;
 	line-height:15px;
+	color: white;
 }
 .wt-usernav{
 	right:0;
