@@ -145,7 +145,7 @@ export default {
 <style scoped>
 .e-postskill-modal {
   position: fixed;
-  z-index: 9998;
+  z-index: 21474836455;
   top: 0;
   left: 0;
   width: 100%;
