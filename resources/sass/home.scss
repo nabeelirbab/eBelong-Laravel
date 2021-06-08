@@ -97,7 +97,7 @@
     .wt-headereleven .wt-navigationarea{
         padding: 0 15px 0 0 !important;
         height: 65px;
-    
+        margin: 15px 0px;
     }
 
     .wt-headereleven{
@@ -483,3 +483,9 @@
 .custom-mobile  .carousel-indicators {
     z-index: 8;
 }
+
+
+.wt-footertwo .wt-footercol2 {
+	margin-top: 20px;
+	margin-bottom: 20px;
+  }

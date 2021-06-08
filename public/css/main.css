@@ -1561,7 +1561,7 @@ body.wt-login .wt-userlogedin{display: block;}
 	border:0;
 	height: 60px;
 	font-size: 18px;
-	padding: 10px 300px 10px 30px
+	padding: 10px 565px 10px 30px
 }
 .wt-formoptions{
 	top: 0;
@@ -1914,8 +1914,55 @@ body.wt-login .wt-userlogedin{display: block;}
 .wt-headervtwo .wt-navigationarea .wt-logo{border-right: 1px solid #ddd;padding-right:30px; }
 .wt-formbannervtwo{
 	width: auto;
-	margin: 13px 0 13px 30px;
+	margin: unset;
 }
+@media only screen and (max-width: 1024px) {
+	.wt-formbannervtwo {
+		width: 100% !important;
+		
+		padding-right: 15px !important;
+		padding-left: 15px !important;
+		margin-right: auto !important;
+		margin-left: auto !important;
+		max-width: 955px !important;
+	}
+	.wt-formoptions {
+		top: unset !important;
+		left: unset !important;
+		position: unset !important;
+	}
+	.wt-formbanner fieldset .form-group .form-control {
+		padding: 10px 30px 10px 30px !important;
+	}
+	.wt-navigationarea {	
+		margin: 12px 0px !important;
+	}
+}
+@media only screen and (max-width: 768px) {
+	.wt-formbannervtwo {
+		width: 100% !important;
+		
+		padding-right: 15px !important;
+		padding-left: 15px !important;
+		margin-right: auto !important;
+		margin-left: auto !important;
+		max-width: 720px !important;
+	}
+	.wt-formoptions {
+		top: unset !important;
+		left: unset !important;
+		position: unset !important;
+	}
+	.wt-formbanner fieldset .form-group .form-control {
+		padding: 10px 30px 10px 30px !important;
+	}
+	.wt-navigationarea {	
+		margin: 12px 0px !important;
+	}
+	
+}
+
+
 .wt-formbannervtwo fieldset .form-group{
 		-webkit-box-shadow: 0 0 10px 0 rgba(0,0,0,0.20);
 	box-shadow: 0 0 10px 0 rgba(0,0,0,0.20);
@@ -1929,6 +1976,12 @@ body.wt-login .wt-userlogedin{display: block;}
 	width: 50px;
 	line-height: 50px;
 }
+@media only screen and (max-width: 568px) { 
+	.wt-formbannervtwo .wt-searchbtn {
+		width: 15%;
+	}
+}
+
 .wt-formbannervtwo .wt-radioholder .wt-radio input[type=radio] + label{font-size: 14px;}
 /* Artcle Style */
 /* Artcle Banner Style */
@@ -4999,7 +5052,7 @@ body.wt-login .wt-userlogedin{display: block;}
   }
   
   .wt-footertwo .wt-footercol2 {
-	margin-top: 5px;
+	margin-top: 20px;
 	margin-bottom: 20px;
   }
   
