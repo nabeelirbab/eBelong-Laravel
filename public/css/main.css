@@ -7956,6 +7956,9 @@ body.lang-ja .wt-loginfooterinfo a + a:before {
 	position: relative;
 	background: #323232;
 	border-radius: 4px 4px 0 0;
+	border: 1px solid #ddd;
+    border-bottom: 0px;
+    overflow: hidden;
 }
 .wt-freelancers img{
 	width: 100%;
@@ -8082,7 +8085,8 @@ body.lang-ja .wt-loginfooterinfo a + a:before {
 .wt-freelancers-rating ul li span i{margin-right:5px; }
 .la-categorty-top-mt{margin: 0;}
 .la-service-info .wt-freelancers-details{
-	border-radius: unset;
+	/* border-radius: unset; */
+	border-radius: 0 0 4px 4px;
 	border: 1px solid #ddd;
 	padding: 40px 20px 20px;
     border-top: 0;
@@ -8710,6 +8714,9 @@ body.lang-ja .wt-loginfooterinfo a + a:before {
 	position: relative;
 	background: #323232;
 	border-radius: 4px 4px 0 0;
+	border: 1px solid #ddd;
+    border-bottom: 0px;
+    overflow: hidden;
 }
 .wt-freelancers img{
 	width: 100%;
