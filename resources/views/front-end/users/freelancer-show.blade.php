@@ -158,6 +158,12 @@
                                                                 </figure>
                                                             @endforeach
                                                         </div>
+                                                    @else
+                                                    <div class="wt-freelancers">
+                                                        <figure class="item">
+                                                            <a href="javascript:void(0)"><img src="{{ asset('uploads/settings/general/imgae-not-availabe.png') }}" alt="img description" class="item"></a>
+                                                        </figure>
+                                                    </div>
                                                     @endif
                                                     @if ($service->is_featured == 'true')
                                                         <span class="wt-featuredtagvtwo">{{ trans('lang.featured') }}</span>

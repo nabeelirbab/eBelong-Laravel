@@ -7566,7 +7566,7 @@ body.lang-ja .wt-loginfooterinfo a + a:before {
 .wt-search-slider-nav .wt-prev:hover,
 .wt-search-slider-nav .wt-next:hover{
 	color: #fff;
-	background: #000;
+	background: #9013F3;
 }
 .wt-search-slider-nav .wt-prev span:before,
 .wt-search-slider-nav .wt-next span:before{transition: none;}
@@ -7959,9 +7959,11 @@ body.lang-ja .wt-loginfooterinfo a + a:before {
 }
 .wt-freelancers img{
 	width: 100%;
-	opacity: 0.80;
+	opacity: 1;
 	display: block;
 	border-radius: 4px 4px 0 0;
+	height: 225px;
+	object-fit: cover;
 }
 .wt-video-icon{
 	top: 50%;
@@ -8080,9 +8082,10 @@ body.lang-ja .wt-loginfooterinfo a + a:before {
 .wt-freelancers-rating ul li span i{margin-right:5px; }
 .la-categorty-top-mt{margin: 0;}
 .la-service-info .wt-freelancers-details{
-	border-radius: 4px;
+	border-radius: unset;
 	border: 1px solid #ddd;
 	padding: 40px 20px 20px;
+    border-top: 0;
 }
 .wt-categoriescontentholder .wt-tableservice .modal-body .wt-formtheme .form-group{margin-top:10px;}
 .la-order-status h4{
@@ -8146,7 +8149,9 @@ body.lang-ja .wt-loginfooterinfo a + a:before {
 }
 .la-langselect .wt-location .wt-settingscontent .wt-userform .chosen-container-multi{z-index: 9;}
 .la-service-info .wt-freelancers-details{padding: 20px;}
-.la-service-info .wt-featuredtagvtwo + div{padding:40px 20px 20px;}
+/* .la-service-info .wt-featuredtagvtwo + div{padding:40px 20px 20px;} */
+.la-service-info .wt-featuredtagvtwo + div{padding:20px;}
+
 .la-no-follower{margin: 0;}
 .wt-service-details{margin: 0;}
 .wt-servicesingle .wt-freelancers-info{margin: 0 0 23px;}
@@ -8708,9 +8713,10 @@ body.lang-ja .wt-loginfooterinfo a + a:before {
 }
 .wt-freelancers img{
 	width: 100%;
-	opacity: 0.80;
+	opacity: 1;
 	display: block;
 	border-radius: 4px 4px 0 0;
+	height: 225px;
 }
 .wt-video-icon{
 	top: 50%;
@@ -8763,9 +8769,10 @@ body.lang-ja .wt-loginfooterinfo a + a:before {
 	color: #323232;
 	margin: 0 0 6px;
 	font: 400 14px/14px 'Poppins', Arial, Helvetica, sans-serif;
+	padding: 0px 1px;
 }
 .wt-freelancers-content .dc-title a i{color: #9013F3;}
-.wt-freelancers-content .dc-title{float: left;width: 100%;}
+.wt-freelancers-content .dc-title{float: left;width: 100%; height: 100px;}
 .wt-freelancers-content .dc-title h3{
 	font-size:16px;
 	margin: 0 0 6px;
@@ -9332,7 +9339,7 @@ a:focus{text-decoration: none !important;}
 }
 
 .no-js .owl-carousel, .owl-carousel.owl-loaded{
-	display : none !important;
+	display : block !important;
 }
 
 
