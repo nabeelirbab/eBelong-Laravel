@@ -519,7 +519,7 @@ class User extends Authenticatable
                 $users = $users->orderBy('created_at', 'DESC');
             }
             //DB::enableQueryLog();
-            $users = $users->paginate(8)->setPath('');
+            $users = $users->paginate(20)->setPath('');
             //dd(DB::getQueryLog());
         }
         foreach ($filters as $key => $filter) {
