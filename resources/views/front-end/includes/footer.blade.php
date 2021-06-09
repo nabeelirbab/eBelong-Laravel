@@ -27,7 +27,7 @@
 				</div>
 				<div class="col-lg-6 col-md-6 col-sm-12">
 					<div class="row">
-						<div class="col-sm-12 col-md-4 col-lg-4">
+						<div class="col-6 col-sm-6 col-md-4 col-lg-4">
 							<div class="wt-footercol">
 								<div class="wt-fwidgettitle">
 									<h3>Company</h3>
@@ -44,7 +44,7 @@
 								@endif
 							</div>
 						</div>
-						<div class="col-sm-12 col-md-4 col-lg-4">
+						<div class="col-6 col-sm-6 col-md-4 col-lg-4">
 							<div class="wt-footercol wt-widgetexplore">
 								<div class="wt-fwidgettitle">
 									<h3>Explore More</h3> </div>
