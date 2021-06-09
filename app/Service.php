@@ -381,7 +381,7 @@ class Service extends Model
             $response_time = ResponseTime::select('id')->whereIn('slug', $search_response_time)->get()->pluck('id')->toArray();
             $services->whereIn('response_time_id', $response_time);
         }
-        $services = $services->orderByRaw("is_featured DESC, updated_at DESC")->paginate(7)->setPath('');
+        $services = $services->orderByRaw("is_featured DESC, updated_at DESC")->paginate(20)->setPath('');
         foreach ($filters as $key => $filter) {
             $pagination = $services->appends(
                 array(

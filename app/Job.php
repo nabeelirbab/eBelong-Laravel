@@ -756,7 +756,7 @@ class Job extends Model
             $jobs = $jobs->where('status', '!=', 'completed');
         }
         $jobs = $jobs->where('expiry_date', '>', date('Y-m-d'));
-        $jobs = $jobs->orderByRaw("id DESC")->paginate(7)->setPath('');
+        $jobs = $jobs->orderByRaw("id DESC")->paginate(20)->setPath('');
 		
         foreach ($filters as $key => $filter) {
             $pagination = $jobs->appends(
