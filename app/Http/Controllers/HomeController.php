@@ -71,7 +71,7 @@ class HomeController extends Controller
 	   
 	   $freelancers = DB::table('users')
 			->join('profiles', 'profiles.user_id', '=', 'users.id')
-			->selectRaw('users.id as id,users.slug, users.first_name, users.last_name, profiles.avater, profiles.tagline, profiles.hourly_rate, users.location_id as userlocation')
+			->selectRaw('users.id as id,users.slug, users.first_name, users.is_certified, users.last_name, profiles.avater, profiles.tagline, profiles.hourly_rate, users.location_id as userlocation')
 			->where('users.is_featured',1)
 			->orderBy('users.id', 'DESC')->get()->toArray();
 			
