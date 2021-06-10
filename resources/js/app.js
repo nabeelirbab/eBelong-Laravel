@@ -2962,6 +2962,27 @@ if (document.getElementById("profile_settings")) {
                     self.loading = false;
                 });
             },
+            changeCertifiedStatus: function (id) {
+                this.loading = true;
+                var status = document.getElementById(id+'-is_certified').value;
+                var self = this;
+                axios.post(APP_URL + '/admin/update-user-is-certified-status', {
+                    status: status,
+                    id: id,
+                })
+                .then(function (response) {
+                    if (response.data.type == 'success') {
+                        self.showMessage(response.data.message);
+                        self.loading = false;
+                    }else {
+                        self.loading = false;
+                        self.showError(response.data.message);
+                    }
+                })
+                .catch(function (error) {
+                    self.loading = false;
+                });
+            },
             deleteUser: function (id) {
                 var self = this;
                 this.$swal({

@@ -69,6 +69,15 @@ Route::post('/sendemail/send', 'SendMailController@send'); */
 
 // Route::post('bill/workdiary/create', 'WorkDiaryController@create');
 
+Route::get('linkedin', function () {
+    return view('loginlinkedin');
+});
+
+Route::get('/redirect', 'SocialAuthLinkedinController@redirect');
+Route::get('/callback', 'SocialAuthLinkedinController@callback');
+
+Route::get('/home', 'HomeController@index')->name('home');
+
 
 Route::get('articles/{category?}', 'ArticleController@articlesList')->name('articlesList');
 Route::get('article/{slug}', 'ArticleController@showArticle')->name('showArticle');
@@ -289,6 +298,8 @@ Route::group(
         ]);
         Route::post('/admin/login-notification-updated','UserController@updateNotificationData');
 		Route::post('/admin/update-user-is-featured-status','UserController@updateIsFeaturedStatus');
+        Route::post('/admin/update-user-is-certified-status','UserController@updateIsCertifiedStatus');
+
     }
 );
 

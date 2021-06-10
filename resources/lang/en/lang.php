@@ -1210,6 +1210,7 @@ return [
     'invited_at' => 'Invitation Date',
     'invitation_status' => 'Invitation Status',
 	'is_featured'=> 'Is Featured',
+    'is_certified'=> 'Is Certified',
     'location' => 'Location',
     'city' => 'City',
     'state' => 'State',

@@ -2503,6 +2503,17 @@ class UserController extends Controller
         $json['message'] = 'featured status change successfully.';
 		return $json;
 	}
+
+    public function updateIsCertifiedStatus(Request $request){
+		$userid = $request->post('id');
+		$status = $request->post('status');
+		
+		DB::table('users')->where('id',$userid)->update(array('is_certified'=>$status));
+		$json = array();
+		$json['type'] = 'success';
+        $json['message'] = 'certified status change successfully.';
+		return $json;
+	}
 	
 	// For load employee / freelancer profile page in admin.
 	public function userProfileUpdate($id){

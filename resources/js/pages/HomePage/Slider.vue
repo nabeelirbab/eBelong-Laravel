@@ -13,7 +13,7 @@
 
   </div>
 </div>
-  <div v-isvisible.scroll="{animate:'pulse'}" class="container">
+  <div v-isvisible.scroll="" class="container">
     <div class="e-freelancer mt-5 mb-5">
       <div class="e-freelancer__header">Our Super Star Talent</div>
       <div class="e-freelancer__content">
@@ -24,6 +24,9 @@
             v-for="item in items"
             :key="item.id"
           >
+            
+              <img style="margin-left: 180px;height: 40px;" :src="`${baseUrl}/images/certified/Certified_Icon.png`"/>
+
             <div  v-on:click="() => onClick(item.slug)" class="e-freelancer__item-image c-pointer">
               <img :src="item.imagePath" :alt="item.first_name" />
             </div>

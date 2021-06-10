@@ -144,16 +144,28 @@
                                             <div class="wt-userlistingcontent">
                                                 <div class="wt-contenthead">
                                                     <div class="wt-title">
+                                                    @if($freelancer->is_certified == 1)
+                                                        <a href="{{{ url('profile/'.$freelancer->slug) }}}">
+                                                            @if ($verified_user == 1)
+                                                                <i class="fa fa-check-circle"></i>
+                                                            @endif
+                                                            {{{ Helper::getUserName($freelancer->id) }}} <img style="margin-left: 5px;height: 30px;margin-top: -8px;" src="/images/certified/Certified_Icon.png"/>
+                                                        </a>
+                                                    @else 
                                                         <a href="{{{ url('profile/'.$freelancer->slug) }}}">
                                                             @if ($verified_user == 1)
                                                                 <i class="fa fa-check-circle"></i>
                                                             @endif
                                                             {{{ Helper::getUserName($freelancer->id) }}}
                                                         </a>
+                                                    @endif
+
+
                                                         @if (!empty($freelancer->profile->tagline))
                                                             <h2><a href="{{{ url('profile/'.$freelancer->slug) }}}">{{{ $freelancer->profile->tagline }}}</a></h2>
                                                         @endif
                                                     </div>
+
                                                     <ul class="wt-userlisting-breadcrumb">
                                                     @if (!empty($freelancer->location))
                                                             <li><span><i class="fas fa-map-marker-alt"></i> {{{ !empty($freelancer->location->title) ? $freelancer->location->title : '' }}}</span></li>

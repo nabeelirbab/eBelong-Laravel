@@ -34,6 +34,8 @@
                                         <th>{{{ trans('lang.invited_at') }}}</th>
                                         <th>{{{ trans('lang.invitation_status') }}}</th>
 										<th>{{{ trans('lang.is_featured') }}}</th>
+                                        <th>{{{ trans('lang.is_certified') }}}</th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -59,6 +61,12 @@
 													<select id="{{$user->id}}-is_featured" v-on:change.prevent='changeFeaturedStatus({{$user->id}})'>
 														<option value="0" {{ $user->is_featured == 0 ? "selected":"" }}>No</option>
 														<option value="1" {{ $user->is_featured == 1 ? "selected":"" }}>Yes</option>
+													</select>
+												</td>
+                                                <td>
+													<select id="{{$user->id}}-is_certified" v-on:change.prevent='changeCertifiedStatus({{$user->id}})'>
+														<option value="0" {{ $user->is_certified == 0 ? "selected":"" }}>No</option>
+														<option value="1" {{ $user->is_certified == 1 ? "selected":"" }}>Yes</option>
 													</select>
 												</td>
                                                 <td>
