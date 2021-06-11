@@ -342,6 +342,7 @@ class RestAPIController extends Controller
      */
     public function userLogin(Request $request)
     {
+
         $json = array();
         $credentials = $request->only('email', 'password');
         if (auth()->attempt($credentials)) {
@@ -355,6 +356,7 @@ class RestAPIController extends Controller
             $json['profile']['pmeta']['full_name'] = Helper::getUserName(auth()->user()->id);
             $json['profile']['umeta']['profile_id'] = auth()->user()->profile->id;
             $json['profile']['umeta']['id'] = auth()->user()->id;
+            $json['profile']['umeta']['user_token'] = auth()->user()->remember_token;
             $json['profile']['umeta']['user_login'] = $request['email'];
             $json['profile']['umeta']['user_pass'] = $request['password'];
             $json['profile']['umeta']['user_email'] = $request['email'];
