@@ -748,6 +748,235 @@ li.wt-rss a { background:#ff6600; }
 	font-size: 16px;
     font-weight: bold;
 }
+.find-talent-freelancers .wt-hourlyrate{
+	background: #3A0B5F;
+    border-radius: 0px;
+    color: #ffffff;
+    padding: 12px 0px;
+    width: 100%;
+    font-size: 16px;
+    font-weight: bold;
+    display: block;
+    text-align: center;
+	position: relative;
+    margin-top: 13px;
+}
+#list-layout .find-talent-freelancers .wt-description {
+	padding-left: 20px;
+}
+#grid-layout .find-talent-freelancers .wt-description {
+	padding-left: 10px;
+	padding-right: 10px;
+
+}
+#grid-layout .forgridview {
+    padding-left: 0px;
+}
+.freelancerspage.wt-userlistinghold .find-talent-freelancers .wt-description p {
+	margin: unset !important;
+	font: 400 13px 'Poppins', Arial, Helvetica, sans-serif !important;
+}
+
+
+#list-layout .find-talent-freelancers .find-talent {
+    padding: 10px 20px 0px 20px;
+}
+#grid-layout .find-talent-freelancers .find-talent {
+	padding: 10px 10px 0px 10px;
+}
+#grid-layout .find-talent-info {
+    text-align: center;
+}
+.wt-startsearch {
+    background-color: #9013F3 !important;
+	border-radius: 0px !important;
+}
+
+.wt-startsearch .wt-widgettitle h2 {
+    color: #ffffff;
+}
+
+.find-talent-freelancers .find-talent a.certified-badge {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+}
+
+.find-talent-freelancers .find-talent-info .wt-title {
+	float: unset;
+    width: unset;
+	margin: 2px 0px 0px 0px;
+}
+.find-talent-freelancers .find-talent-info .wt-title a {
+	color: #474747;
+	font-size: 18px;
+}
+#grid-layout .find-talent-freelancers .find-talent-info .wt-title a {
+	color: #474747;
+	font-size: 16px;
+}
+.find-talent-freelancers .find-talent-info .wt-title a i{
+	color: #9013F3
+}
+.find-talent-freelancers .find-talent-info .wt-talent-skill {
+	margin: 2px 0px 0px 0px;
+}
+.find-talent-freelancers .find-talent-info .wt-talent-skill a {
+	color: #9C9C9C;
+	font-size: 16px;
+}
+#grid-layout .find-talent-freelancers .find-talent-info .wt-talent-skill a {
+	color: #9C9C9C;
+	font-size: 14px;
+}
+.find-talent-freelancers .find-talent-info .wt-talent-location {
+	margin: 2px 0px 0px 0px;
+}
+.find-talent-freelancers .find-talent-info .wt-talent-location .wt-locationarea {
+	color: #9C9C9C;
+	font-size: 13px;
+}
+#grid-layout .find-talent-freelancers .find-talent-info .wt-talent-location .wt-locationarea {
+	color: #9C9C9C;
+	font-size: 12px;
+}
+.find-talent-freelancers .samemargin {
+	margin: 10px 0px;
+}
+.find-talent-freelancers .ratingstarformobile {
+	display: none;
+}
+#grid-layout .find-talent-freelancers .wt-hourlyrate {
+	width: 40%;
+	display: inline-block;
+	padding: 8px 0px;
+    font-size: 14px;
+	/* float: left;
+	margin-top: 10px; */
+}
+#grid-layout .find-talent-freelancers .ratingstarformobile {
+	display: inline;
+	float: right;
+	padding: 8px 0px 8px 0px;
+	/* width: 50%; */
+	margin-top: 10px;
+	
+}
+#grid-layout .find-talent-freelancers .wt-starcontent{
+	clear: both;
+	color: #9C9C9C;
+	margin: 0px 10px 0px 0px;;
+	font-size: 13px;
+	text-align: center;
+	float: left;
+}
+#list-layout .forhidingpadingleft {
+	padding-left: 0px;
+}
+@media only screen and (max-width: 1199px){
+	.freelancerspage .find-talent-freelancers .wt-widgettag {
+		text-align: left !important;
+		display: unset !important;
+		justify-content: unset !important;
+		align-items: unset !important;
+		float: none !important;
+		flex-wrap: wrap !important;
+	}
+	.freelancerspage .find-talent-freelancers .wt-description {
+		text-align: left !important;
+	}
+}
+@media only screen and (max-width: 768px){
+	.find-talent-freelancers .find-talent {
+		padding: 10px 20px 0px 20px;
+	}
+	.find-talent-freelancers .removepaddingright.samemargin {
+		padding-right: 15px;
+	}
+	.freelancerspage .find-talent-freelancers .wt-description {
+		padding-right: 20px;
+	}
+	.find-talent-freelancers .wt-userlistingimg {
+		width: auto !important;
+		float: unset !important;
+		border-radius: 4px !important;
+		max-height: 40% !important;
+		max-width: 40% !important;
+		margin: 0 auto 20px !important;
+	}
+	.find-talent-freelancers .removepaddingleft {
+		padding-left: 15px !important;
+	}
+	.find-talent-freelancers .find-talent-info {
+		text-align: center;
+	}
+	.find-talent-freelancers .wt-userlistingimg img {
+		border-radius: 100% !important;
+	}
+	.find-talent-freelancers .find-talent-info .wt-title a{
+		font-size: 22px !important;
+	}
+	.find-talent-freelancers .find-talent-info .wt-talent-skill a {
+		font-size: 20px !important;
+	}
+	.find-talent-freelancers .find-talent-info .wt-talent-location .wt-locationarea {
+		font-size: 16px !important;
+	}
+	#list-layout .find-talent-freelancers .wt-hourlyrate {
+		width: 40%;
+		display: inline-block;
+		padding: 14px 0px;
+		/* float: left;
+		margin-top: 10px; */
+	}
+	#grid-layout .find-talent-freelancers .wt-hourlyrate {
+		width: 40%;
+		display: inline-block;
+		padding: 14px 0px;
+		/* float: left;
+		margin-top: 10px; */
+	}
+	.find-talent-freelancers .ratingstarfordesktop {
+		display: none;
+	}
+	.find-talent-freelancers .ratingstarformobile {
+		display: inline;
+		float: right;
+		padding: 14px 20px 14px 0px;
+		/* width: 50%; */
+		margin-top: 10px;
+		
+	}
+	.find-talent-freelancers .wt-starcontent{
+		clear: both;
+		color: #9C9C9C;
+		margin: 0px 10px 0px 0px;;
+		font-size: 16px;
+		text-align: center;
+		float: left;
+	}
+	
+	.find-talent-freelancers .find-talent-freelancers .wt-stars span:after,
+	.find-talent-freelancers .find-talent-freelancers .wt-stars:before {
+		top: 3px;
+	}
+}
+@media only screen and (max-width: 768px){
+	#list-layout .forhidingpadingleft {
+		padding-left: 15px !important;
+	}
+	#list-layout {
+		display: block;
+	}
+	#grid-layout {
+		display: none;
+	}
+	.wt-startsearch{
+		display: none;
+	}
+}
+
+
 .wt-stars{width: 90px;}
 .wt-stars span:after,
 .wt-stars:before {
@@ -760,6 +989,22 @@ li.wt-rss a { background:#ff6600; }
 	font-family: 'FontAwesome';
 	color: rgba(218, 218, 218, .8);
 	content: '\f005 \f005 \f005 \f005 \f005';
+}
+.wt-stars span:after,
+.wt-stars:before {
+	top: 0;
+	left: 0;
+	font-size: 16px;
+	line-height: 16px;
+	position: absolute;
+	letter-spacing: 4px;
+	font-family: 'FontAwesome';
+	color: rgba(218, 218, 218, .8);
+	content: '\f005 \f005 \f005 \f005 \f005';
+}
+.find-talent-freelancers .find-talent .wt-stars span:after,
+.find-talent-freelancers .find-talent .wt-stars:before {
+    top: 3px;
 }
 .wt-stars span {
 	width:100%;
@@ -1113,6 +1358,11 @@ li.wt-rss a { background:#ff6600; }
 }
 body.wt-login .wt-loginarea .wt-btn {
 	background: #3A0B5F;
+}
+@media only screen and (max-width: 1199px){
+	.find-talent-freelancers .wt-userlistingimg {
+		margin: unset;
+	}
 }
 
 @media only screen and (min-width: 1025px){
@@ -1924,7 +2174,7 @@ body.wt-login .wt-userlogedin{display: block;}
 		padding-left: 15px !important;
 		margin-right: auto !important;
 		margin-left: auto !important;
-		max-width: 955px !important;
+		max-width: 960px !important;
 	}
 	.wt-formoptions {
 		top: unset !important;
@@ -3511,6 +3761,22 @@ body.wt-login .wt-userlogedin{display: block;}
 	background:#fff;
 	border-radius: 4px;
 }
+.freelancerspage.wt-userlistinghold{
+	float: unset;
+    width: 100%;
+    padding: unset;
+    /* box-shadow: 0px 4px 38px rgb(0 0 0 / 12%); */
+    box-shadow: 0px 4px 13px rgb(0 0 0 / 15%);
+    -webkit-box-shadow: 0px 4px 13px 0 rgb(0 0 0 / 15%);
+    background: #fff;
+    border-radius: unset;
+}
+#list-layout .freelancerspage.wt-userlistinghold{
+	margin-bottom: 15px;
+}
+#grid-layout .freelancerspage.wt-userlistinghold{
+	margin-bottom: 15px;
+}
 .wt-userlistinghold + .wt-userlistinghold{margin: 30px 0 0;}
 .wt-userlistinghold:hover{
 	/* -webkit-box-shadow: 10px 10px 20px 0 rgba(0,0,0,0.25); */
@@ -3526,10 +3792,44 @@ body.wt-login .wt-userlogedin{display: block;}
     max-width: 62px;
     margin: 0 10px 30px 0;
 }
+.find-talent-freelancers .wt-userlistingimg{
+	width: auto;
+	float: unset;
+	/* border-radius: 4px; */
+	max-height: 100%;
+    max-width: 100%;
+    margin: unset;
+}
+#grid-layout .find-talent-freelancers .wt-userlistingimg{
+	width: auto ;
+    float: unset ;
+    /* border-radius: 4px ; */
+    /* max-height: 40% ; */
+    max-width: 40% ;
+    margin: 0 auto;
+}
+
 .wt-userlistingimg img{
 	width: 100%;
 	display: block;
 	border-radius: 4px;
+}
+.find-talent-freelancers .wt-userlistingimg img {
+    width: 100%;
+    display: block;
+    border-radius: 100%;
+}
+.find-talent-freelancers .removepadding {
+	padding-right: unset;
+    padding-left: unset;
+}
+.find-talent-freelancers .removepaddingright {
+	padding-right: unset;
+    
+}
+.find-talent-freelancers .removepaddingleft {
+	padding-left: unset;
+    
 }
 .wt-userlistingcontent{overflow: hidden;}
 .wt-contenthead{
@@ -3620,11 +3920,33 @@ body.wt-login .wt-userlogedin{display: block;}
 	margin: 20px 0px;
 	font: 400 14px 'Poppins', Arial, Helvetica, sans-serif;
 }
-.wt-userlistinghold .wt-widgettag{width: auto;margin:-3px; }
+.freelancerspage.wt-userlistinghold .find-talent .wt-description p{
+	line-height: 18px;
+    margin: unset;
+	font: 400 13px 'Poppins', Arial, Helvetica, sans-serif;
+	color: #9C9C9C;
+}
+.wt-userlistinghold .wt-widgettag{
+	width: auto;
+	/* margin:-3px; */
+}
 .wt-userlistinghold .wt-widgettag a{
 	margin: 3px;
 	font-size: 13px;
 	line-height: 28px;
+}
+
+#grid-layout .freelancerspage.wt-userlistinghold .find-talent .wt-widgettag a {
+    margin: 3px 3px 3px 0px;
+    font-size: 12px;
+    line-height: 25px;
+    /* width: 100%; */
+	padding: 0px 10px;
+}
+#list-layout .freelancerspage.wt-userlistinghold .find-talent .wt-widgettag a{
+	margin: 3px 3px 3px 0px;
+	font-size: 13px;
+	line-height: 25px;
 }
 .findjobbutton.e-button-primary {
     background: #9013F3;
@@ -3675,6 +3997,14 @@ body.wt-login .wt-userlogedin{display: block;}
 	margin: 16px 0 0;
 	font-size: 20px;
 	text-align: center;
+}
+.find-talent-freelancers .find-talent .wt-starcontent{
+	clear: both;
+	color: #9C9C9C;
+	margin: 0px 10px 0px 0px;;
+	font-size: 16px;
+	text-align: center;
+	float: left;
 }
 .wt-starcontent sub{
 	bottom: 0;
@@ -7066,14 +7396,25 @@ select.is-invalid {border-color: #dc3545;}
 .la-jobalerts-holder .wt-jobalerts{margin: 0;}
 .la-jobalerts-holder .wt-jobalerts .alert:last-child{margin-bottom: 30px;}
 .wt-dashboardboxcontent .wt-freelancerholder .wt-emptydata-holder{padding: 0;}
-.wt-stars:before{
+#list-layout .wt-stars:before{
 	content: '\f006 \f006 \f006 \f006 \f006';
 	font-size: 16px;
 	color: #fdd003;
 }
-span.wt-stars span:after{
+#grid-layout .wt-stars:before{
+	content: '\f006 \f006 \f006 \f006 \f006';
+	font-size: 13px;
+	color: #fdd003;
+	top: 3px
+}
+#list-layout span.wt-stars span:after{
 	content: '\f005 \f005 \f005 \f005 \f005';
 	font-size: 16px;
+}
+#grid-layout span.wt-stars span:after{
+	content: '\f005 \f005 \f005 \f005 \f005';
+	font-size: 13px;
+	top: 3px;
 }
 .slide-leave-active,
 .slide-enter-active {
@@ -9426,7 +9767,10 @@ a:focus{text-decoration: none !important;}
 }
 
 #icon-list {
-	color: #9013F3;
+	color: #ffffff;
+}
+#icon-grid {
+	color: #ffffff8a;
 }
 
 /* end Grid layout user list */
@@ -9460,6 +9804,7 @@ a:focus{text-decoration: none !important;}
 .wt-userlisting .wt-userlistingcontent .wt-rightarea {
     margin-top: 30px !important;
 }
+
 
 .rating-area {
     margin-top: 16px;
@@ -9502,6 +9847,7 @@ a:focus{text-decoration: none !important;}
 
 .wt-userdetails {
 	width: 100%;
+}
 }
 
 @keyframes gradient {
