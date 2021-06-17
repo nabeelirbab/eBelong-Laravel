@@ -796,10 +796,15 @@ li.wt-rss a { background:#ff6600; }
     color: #ffffff;
 }
 
-.find-talent-freelancers .find-talent a.certified-badge {
+#list-layout .find-talent-freelancers .find-talent a.certified-badge {
     position: absolute;
     top: 20px;
     right: 35px;
+}
+#grid-layout .find-talent-freelancers .find-talent a.certified-badge {
+	position: absolute;
+    top: 20px;
+    right: 25px;
 }
 
 .find-talent-freelancers .find-talent-info .wt-title {
@@ -3805,8 +3810,8 @@ body.wt-login .wt-userlogedin{display: block;}
     float: unset ;
     /* border-radius: 4px ; */
     /* max-height: 40% ; */
-    max-width: 40% ;
-    margin: 0 auto;
+    max-width: 1000% ;
+    margin: unset;
 }
 
 .wt-userlistingimg img{
@@ -3815,9 +3820,13 @@ body.wt-login .wt-userlogedin{display: block;}
 	border-radius: 4px;
 }
 .find-talent-freelancers .wt-userlistingimg img {
-    width: 100%;
+    /* width: 100%; */
     display: block;
     border-radius: 100%;
+	width: 100px;
+    height: 100px;
+    background-size: cover;
+	margin: 0 auto;
 }
 .find-talent-freelancers .removepadding {
 	padding-right: unset;

@@ -512,7 +512,7 @@ body{background: #f7f7f7;}
 .wt-memessage .wt-description p{border-radius: 10px 10px 0 10px;}
 .wt-offerermessage .wt-description p a,
 .wt-memessage .wt-description p a{
-	color: #55acee;
+	color: #9013F3;
 	text-decoration: none;
 }
 .wt-offerermessage .wt-description time,
@@ -1106,7 +1106,7 @@ body{background: #f7f7f7;}
 	line-height: 20px;
 }
 .wt-projecttitle h3 span{
-	color:#55acee;
+	color:#9013F3;
 	font-size: 13px;
 	display: block;
 	line-height: inherit;
@@ -1414,7 +1414,7 @@ table.wt-tablecategories tbody tr td figure img{
     margin: 0 0 9px;
     font-size: 18px;
 }
-.wt-followcompomy-breadcrumb li a {color: #55acee;}
+.wt-followcompomy-breadcrumb li a {color: #9013F3;}
 .wt-followcomhead .wt-title a {
     margin: 8px 0 7px;
 }
@@ -2460,7 +2460,7 @@ li.collapsed .wt-msgbtns .wt-msgbtn i.lnr-chevron-up:before{content: "\e874";}
 	margin: 0 0 4px;
 }
 .wt-proposalitem .wt-rightarea .wt-hireduserstatus span{
-	color: #55acee;
+	color: #9013F3;
 	font-size: 13px;
 	margin: 0;
 }
@@ -2577,7 +2577,7 @@ li.collapsed .wt-msgbtns .wt-msgbtn i.lnr-chevron-up:before{content: "\e874";}
 }
 .wt-addnew h2{display: inline-block;}
 .wt-addnew a{
-	color: #55acee;
+	color: #9013F3;
     float: right;
     display: inline-block;
 }
@@ -2595,7 +2595,7 @@ li.collapsed .wt-msgbtns .wt-msgbtn i.lnr-chevron-up:before{content: "\e874";}
     line-height: 18px;
 }
 .wt-insightdetails .wt-title a{
-	color: #55acee;
+	color: #9013F3;
 	display: block;
 	font-size: 14px;
 	line-height: 14px;
@@ -2775,22 +2775,22 @@ li.collapsed .wt-msgbtns .wt-msgbtn i.lnr-chevron-up:before{content: "\e874";}
 .wt-messages-holder .wt-userlogedin .wt-username{padding: 7px 0;}
 .wt-titlemessages .wt-back{
 	float: left;
-	color: #55acee;
+	color: #9013F3;
 	font-size: 18px;
 	margin-right:20px;
 	line-height: 50px;
 }
 .wt-titlemessages .wt-viewprofile{padding: 7px 0;}
 a.wt-back:focus,
-a.wt-back:hover{color: #55acee;}
+a.wt-back:hover{color: #9013F3;}
 .wt-viewmore{
-	color: #55acee;
+	color: #9013F3;
 	float: right;
 	display: inline-block;
 }
 .wt-viewprofile{
 	float: right;
-	color: #55acee;
+	color: #9013F3;
 	font-size: 14px;
 	line-height: 36px;
 }

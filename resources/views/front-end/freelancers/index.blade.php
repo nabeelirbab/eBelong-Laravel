@@ -479,7 +479,7 @@ $show_f_banner = 'true'
                                                     </div>
                                                     @if($freelancer->is_certified == 1)
                                                     <a href="{{{ url('profile/'.$freelancer->slug) }}}" class="certified-badge">
-                                                        <img style="max-width: 45px;" src="/images/certified/Certified_Icon.png" />
+                                                        <img src="/images/certified/Certified_Icon.png" />
                                                     </a>
                                                     @endif
                                                 </div>
