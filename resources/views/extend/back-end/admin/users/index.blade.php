@@ -51,8 +51,8 @@
                                             <!--@sortablelink('state',trans('lang.state'))-->
                                         </th>
                                         <th>
-                                            {{{ trans('lang.created_at') }}}
-                                            <!--@sortablelink('created_at',trans('lang.created_at'))-->
+                                            {{{ trans('lang.joining_date') }}}
+                                            <!--@sortablelink('joining_date',trans('lang.joining_date'))-->
                                         </th>
                                         <th>
                                             {{{ trans('lang.updated_at') }}}

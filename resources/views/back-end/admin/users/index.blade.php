@@ -29,8 +29,7 @@
                                         <th>{{{ trans('lang.user_name') }}}</th>
                                         <th>{{{ trans('lang.ph_email') }}}</th>
                                         <th>{{{ trans('lang.role') }}}</th>
-                                        <th>{{{ trans('lang.created_at') }}}</th>
-                                        <th>{{{ trans('lang.updated_at') }}}</th>
+                                        <th>{{{ trans('lang.joining_date') }}}</th>
                                         <th>{{{ trans('lang.invited_at') }}}</th>
                                         <th>{{{ trans('lang.invitation_status') }}}</th>
 										<th>{{{ trans('lang.is_featured') }}}</th>
@@ -45,11 +44,19 @@
                                             <tr class="del-user-{{ $user->id }}">
                                                 <td>{{{ ucwords(\App\Helper::getUserName($user->id)) }}}</td>
                                                 <td>{{{ $user->email }}}</td>
-                                                <td>{{ $user->getRoleNames()->first() }}</td>
-                                                
-                                                <td>{{ $user->created_at }}</td>
-                                                <td>{{ $user->updated_at }}</td>
-                                                <td>{{ $user->invited_at }}</td>
+                                                <td>{{{ ucfirst($user->getRoleNames()->first()) }}}</td>
+                                                <?php $default = "0000-00-00 00:00:00"; ?>                                               
+                                                <td><?= date('d/m/Y', strtotime($user->created_at)) ?></td>
+                                                <td>
+                                                <?php
+                                                if($user->invited_at > $default)
+                                                    echo $user->invited_at;
+                                                else
+                                                    echo'-';
+
+                                                ?>
+
+                                                </td>
                                                 <td>
                                                     @if($user->invitation_status==1)
                                                         {{ 'Invited' }}

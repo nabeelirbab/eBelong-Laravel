@@ -1207,6 +1207,7 @@ return [
     
     'created_at' => 'Created Date',
     'updated_at' => 'Updated Date',
+    'joining_date' => 'Joining Date',
     'invited_at' => 'Invitation Date',
     'invitation_status' => 'Invitation Status',
 	'is_featured'=> 'Is Featured',
