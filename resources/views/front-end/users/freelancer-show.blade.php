@@ -63,6 +63,7 @@
                         <div class="col-12 col-sm-12 col-md-12 col-lg-9 float-left">
                             <div class="row">
                                 <div class="wt-proposalhead wt-userdetails">
+                                    {{ $profile}}
                                     @if (!empty($profile->tagline))
                                         <h2>{{{ $profile->tagline }}}</h2>
                                     @endif
