@@ -133,7 +133,7 @@ $show_f_banner = 'true'
                                         </span>
                                         @endif
                                         @endif
-                                        <div class="row find-talent-freelancers">
+                                        <div class="row find-talent-freelancers" onclick="location.href='{{{url('profile/'.$freelancer->slug)}}}';" style="cursor: pointer;" >
                                             <div class="col-lg-12 col-md-12 col-sm-12">
                                                 <div class="find-talent">
                                                     <div class="row samemargin">
@@ -183,7 +183,12 @@ $show_f_banner = 'true'
                                                     <div class="row ">
                                                         <div class="col-lg-12 col-md-12 col-sm-12 samemargin ratingstarfordesktop">
                                                             <span class="wt-starcontent">
-                                                                {{{ round($average_rating_count,2) }}}
+                                                            @if($average_rating_count == 0)
+                                                                no rated
+                                                            @else
+                                                            {{{ round($average_rating_count,2) }}}
+                                                            @endif
+                                                                
                                                             </span>
                                                             <span class="wt-stars">
                                                                 <span style="width: {{ $stars }}%;">
@@ -195,16 +200,23 @@ $show_f_banner = 'true'
                                                         <div class="col-lg-12 col-md-12 col-sm-12 samemargin">
                                                             @if (!empty($freelancer->skills))
                                                             <div class="wt-tag wt-widgettag">
+                                                                <?php $count = 0; ?>
                                                                 @foreach($freelancer->skills as $skill)
-                                                                <a href="{{{url('search-results?type=job&skills%5B%5D='.$skill->slug)}}}">{{{ $skill->title }}}</a>
+                                                                    <?php if($count == 4) break; ?>
+                                                                        <a href="{{{url('search-results?type=job&skills%5B%5D='.$skill->slug)}}}">{{{ $skill->title }}}</a>
+                                                                    <?php $count++; ?>
                                                                 @endforeach
+
+                                                                @if($freelancer->skills->count() > 3)
+                                                                    <a class="wt-showall" href="{{{url('profile/'.$freelancer->slug)}}}">Show All</a>
+                                                                @endif
                                                             </div>
                                                             @endif
                                                         </div>
                                                     </div>
                                                     @if($freelancer->is_certified == 1)
                                                     <a href="{{{ url('profile/'.$freelancer->slug) }}}" class="certified-badge">
-                                                        <img src="/images/certified/Certified_Icon.png" />
+                                                        <img src="/images/certified/Certified_Icon.svg" />
                                                     </a>
                                                     @endif
                                                 </div>
@@ -235,7 +247,11 @@ $show_f_banner = 'true'
                                                             @endif
                                                             <span class="ratingstarformobile">
                                                                 <span class="wt-starcontent">
-                                                                    {{{ round($average_rating_count,2) }}}
+                                                                @if($average_rating_count == 0)
+                                                                    no rated
+                                                                @else
+                                                                {{{ round($average_rating_count,2) }}}
+                                                                @endif
                                                                 </span>
                                                                 <span class="wt-stars">
                                                                     <span style="width: {{ $stars }}%;">
@@ -408,7 +424,7 @@ $show_f_banner = 'true'
                                         </span>
                                         @endif
                                         @endif
-                                        <div class="row find-talent-freelancers">
+                                        <div class="row find-talent-freelancers" onclick="location.href='{{{url('profile/'.$freelancer->slug)}}}';" style="cursor: pointer;" >
                                             <div class="col-lg-12 col-md-12 col-sm-12">
                                                 <div class="find-talent">
                                                     <div class="row samemargin">
@@ -417,7 +433,7 @@ $show_f_banner = 'true'
                                                                 <img src="{{{ asset(Helper::getImageWithSize('uploads/users/'.$freelancer->id, $freelancer->profile->avater, 'listing')) }}}" alt="{{ trans('lang.img') }}">
                                                             </figure>
                                                         </div>
-                                                        <div class="col-lg-12 col-md-12 col-sm-12 samemargin">
+                                                        <div class="col-lg-12 col-md-12 col-sm-12 samemargin removepadding">
                                                             <div class="find-talent-info">
                                                                 <div class="wt-title">
                                                                     <a href="{{{ url('profile/'.$freelancer->slug) }}}">
@@ -470,16 +486,23 @@ $show_f_banner = 'true'
                                                         <div class="col-lg-12 col-md-12 col-sm-12 samemargin">
                                                             @if (!empty($freelancer->skills))
                                                             <div class="wt-tag wt-widgettag">
+                                                                <?php $count = 0; ?>
                                                                 @foreach($freelancer->skills as $skill)
-                                                                <a href="{{{url('search-results?type=job&skills%5B%5D='.$skill->slug)}}}">{{{ $skill->title }}}</a>
+                                                                    <?php if($count == 2) break; ?>
+                                                                        <a href="{{{url('search-results?type=job&skills%5B%5D='.$skill->slug)}}}">{{{ $skill->title }}}</a>
+                                                                    <?php $count++; ?>
                                                                 @endforeach
+
+                                                                @if($freelancer->skills->count() > 1)
+                                                                    <a class="wt-showall" href="{{{url('profile/'.$freelancer->slug)}}}">Show All</a>
+                                                                @endif
                                                             </div>
                                                             @endif
                                                         </div>
                                                     </div>
                                                     @if($freelancer->is_certified == 1)
                                                     <a href="{{{ url('profile/'.$freelancer->slug) }}}" class="certified-badge">
-                                                        <img src="/images/certified/Certified_Icon.png" />
+                                                        <img src="/images/certified/Certified_Icon.svg" />
                                                     </a>
                                                     @endif
                                                 </div>
@@ -510,7 +533,11 @@ $show_f_banner = 'true'
                                                             @endif
                                                             <span class="ratingstarformobile">
                                                                 <span class="wt-starcontent">
-                                                                    {{{ round($average_rating_count,2) }}}
+                                                                @if($average_rating_count == 0)
+                                                                    no rated
+                                                                @else
+                                                                {{{ round($average_rating_count,2) }}}
+                                                                @endif
                                                                 </span>
                                                                 <span class="wt-stars">
                                                                     <span style="width: {{ $stars }}%;">
