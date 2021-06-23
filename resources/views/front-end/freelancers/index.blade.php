@@ -184,7 +184,7 @@ $show_f_banner = 'true'
                                                         <div class="col-lg-12 col-md-12 col-sm-12 samemargin ratingstarfordesktop">
                                                             <span class="wt-starcontent">
                                                             @if($average_rating_count == 0)
-                                                                no rated
+                                                                Yet to be rated!
                                                             @else
                                                             {{{ round($average_rating_count,2) }}}
                                                             @endif
@@ -248,7 +248,7 @@ $show_f_banner = 'true'
                                                             <span class="ratingstarformobile">
                                                                 <span class="wt-starcontent">
                                                                 @if($average_rating_count == 0)
-                                                                    no rated
+                                                                    Yet to be rated!
                                                                 @else
                                                                 {{{ round($average_rating_count,2) }}}
                                                                 @endif
@@ -534,7 +534,7 @@ $show_f_banner = 'true'
                                                             <span class="ratingstarformobile">
                                                                 <span class="wt-starcontent">
                                                                 @if($average_rating_count == 0)
-                                                                    no rated
+                                                                    Yet to be rated!
                                                                 @else
                                                                 {{{ round($average_rating_count,2) }}}
                                                                 @endif
@@ -690,9 +690,79 @@ $show_f_banner = 'true'
             </div>
         </div>
     </div>
+    <!-- Button trigger modal -->
+    <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#talentModalCenter">
+    Launch demo modal
+    </button> -->
+
+    <!-- Modal -->
+    <div class="modal fade" id="talentModalCenter" tabindex="-1" role="dialog" aria-labelledby="talentModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <!-- <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5> -->
+                <button type="button" id="closebutton" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="talent-popup-t1">Having hard time finding the right resource for your project?</div>
+                <div class="talent-popup-t2">Click <button type="button" id="moveonhome" class="btn btn-primary">here</button> to speed up this process</div>
+            </div>
+            <!-- <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="cancelbutton" data-dismiss="modal">Close</button>
+                <button type="button" id="moveonhome" class="btn btn-primary">Need Assistance</button>
+            </div> -->
+            </div>
+        </div>
+    </div>
 </div>
 @push('scripts')
-<script src="{{ asset('js/owl.carousel.min.js') }}"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function() {
+        setTimeout(function() {
+            $('#talentModalCenter').modal('show');
+        }, 20000);
+    });
+
+    window.onload = function() {
+        
+        // alert(base_url)
+        document.getElementById("talentModalCenter").onclick = function fun() {
+            setTimeout(function() {
+                $('#talentModalCenter').modal('show');
+            }, 20000);  
+        }
+        document.getElementById("closebutton").onclick = function fun() {
+            setTimeout(function() {
+                $('#talentModalCenter').modal('show');
+            }, 20000);  
+        }
+        document.getElementById("cancelbutton").onclick = function fun() {
+            setTimeout(function() {
+                $('#talentModalCenter').modal('show');
+            }, 20000);  
+        }
+        
+    }
+
+</script>
+<script>
+    var base_url = window.location.origin;
+    window.onload = function() {
+        document.getElementById("moveonhome").onclick = function movfunc() {
+            window.location.href=`${base_url}/#speed-up-process`;
+        }
+    }
+</script>
+<!-- <script>
+    $(document).ready(function(){
+        $("#talentModalCenter").modal('show');
+    });
+</script> -->
+<!-- <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
 <script>
     if (APP_DIRECTION == 'rtl') {
         var direction = true;
@@ -727,6 +797,7 @@ $show_f_banner = 'true'
             }
         }
     });
-</script>
+</script> -->
+
 @endpush
 @endsection
