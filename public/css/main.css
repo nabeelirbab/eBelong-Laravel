@@ -915,6 +915,36 @@ li.wt-rss a { background:#ff6600; }
 #grid-layout.jobs_list_view{
     padding-left: 15px;
 }
+#talentModalCenter .modal-header {
+    border-bottom: unset;
+}
+#talentModalCenter .talent-popup-t1 {
+    font-size: 20px;
+    color: #000000;
+    margin-bottom: 20px;
+}
+#talentModalCenter .talent-popup-t2 {
+    font-size: 16px;
+}
+#talentModalCenter .talent-popup-t2 a {
+	color: #23053B;
+    text-decoration: underline;
+}
+.talent-popup-t2 .btn-primary {
+    background-color: unset;
+    color: #23053B;;
+    border: unset;
+    padding: unset;
+    font-size: 16px;
+    text-decoration: underline;
+}
+#talentModalCenter .close:not(:disabled):not(.disabled):hover, #talentModalCenter .close:not(:disabled):not(.disabled):focus {
+    /* opacity: 0.75; */
+	color: #23053B;
+}
+#talentModalCenter .modal-body {
+	padding: 0rem 1rem 1rem 1rem; 
+}
 @media only screen and (max-width: 1199px){
 	.freelancerspage .find-talent-freelancers .wt-widgettag {
 		text-align: left !important;

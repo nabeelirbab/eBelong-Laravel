@@ -201,6 +201,8 @@
 												</ul>
 											</div>
 										</nav>
+										
+
 										{{--<div class="wt-loginarea">
 											<div class="wt-loginoption wt-loginoptionvtwo">
 												<a href="javascript:void(0);" id="wt-loginbtn" class="wt-btn">Sign In</a>
@@ -492,6 +494,7 @@
 					
 					
 				</style>
+				
 				<footer id="wt-footer" class="wt-footerholder wt-footertwo wt-haslayout">
 					<div class="container">
 						<div class="row">
@@ -606,6 +609,7 @@
 		
 		<script src="{{ asset('worketic/js/tinymce/tinymce.min.js') }}"></script>
 		<script src="{{ asset('worketic/js/vendor/jquery-library.js') }}"></script>	
+		
 		<script>
 			var home = document.createElement('script');
 			home.src="{{ asset('js/home.js') }}";
@@ -613,6 +617,37 @@
 			home.onreadystatechange = home.onload = function(){
 				jQuery(".preloader-outer").fadeOut();
 			}
+		</script>
+		
+		<script type="text/javascript">
+		window.addEventListener('load', function () {
+		// alert("It's loaded!")
+		var base_url = window.location.origin;
+				// alert(base_url)
+				var currentURL = $(location).attr('href');
+  				if(currentURL === `${base_url}/#speed-up-process`) {
+					
+					setTimeout(function() {
+						$('html,body').animate({
+						scrollTop: $("#scroll-id").offset().top},
+						'slow');
+            		}, 1000);
+				  }
+		})
+
+			// $(document).ready(function() {
+			// 	var base_url = window.location.origin;
+			// 	// alert(base_url)
+			// 	var currentURL = $(location).attr('href');
+  			// 	if(currentURL === `${base_url}/#scroll-id`) {
+			// 		setTimeout(function() {
+			// 			$('html,body').animate({
+			// 			scrollTop: $("#scroll-id").offset().top},
+			// 			'slow');
+            // 		}, 2000);
+			// 	  }
+			// });
+			
 		</script>
 		<!-- <script src="{{ asset('js/home.js') }}"></script> -->
 		<!-- <script src="{{ asset('js/app.js') }}"></script> -->
