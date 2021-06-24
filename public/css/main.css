@@ -945,7 +945,17 @@ li.wt-rss a { background:#ff6600; }
 #talentModalCenter .modal-body {
 	padding: 0rem 1rem 1rem 1rem; 
 }
+.profile-certified-badge {
+	position: absolute;
+    top: 0px;
+    right: 315px;
+}
 @media only screen and (max-width: 1199px){
+	.profile-certified-badge {
+		position: absolute;
+		top: 0px;
+		right: 30px;
+	}
 	.freelancerspage .find-talent-freelancers .wt-widgettag {
 		text-align: left !important;
 		display: unset !important;
@@ -967,6 +977,11 @@ li.wt-rss a { background:#ff6600; }
 
 
 @media only screen and (max-width: 768px){
+	.profile-certified-badge {
+		position: absolute;
+		top: -130px;
+		right: 0px;
+	}
 	.find-talent-freelancers .find-talent {
 		padding: 10px 20px 0px 20px;
 	}

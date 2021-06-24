@@ -63,6 +63,11 @@
                         <div class="col-12 col-sm-12 col-md-12 col-lg-9 float-left">
                             <div class="row">
                                 <div class="wt-proposalhead wt-userdetails">
+                                    @if ($profile->is_certified == 1)
+                                    <div class="profile-certified-badge">
+                                        <img src="/images/certified/Certified_Icon.svg" />
+                                    </div>
+                                    @endif
                                     @if (!empty($profile->tagline))
                                         <h2>{{{ $profile->tagline }}}</h2>
                                     @endif
@@ -98,6 +103,7 @@
                                             <p>{{{ $profile->description }}}</p>
                                         </div>
                                     @endif
+                                    
                                 </div>
                                 <div id="wt-statistics" class="wt-statistics wt-profilecounter">
                                     <div class="wt-statisticcontent wt-countercolor1">
