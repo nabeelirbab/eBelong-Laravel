@@ -938,6 +938,23 @@ li.wt-rss a { background:#ff6600; }
     font-size: 16px;
     text-decoration: underline;
 }
+.talent-popup-t2 .btn-primary:focus {
+	box-shadow: unset;
+}
+
+.talent-popup-t2 .btn-primary:not(:disabled):not(.disabled):active:focus {
+	box-shadow: unset;
+	color: #9013F3;
+    background-color: unset;
+    border-color: unset;
+}
+.talent-popup-t2 .btn-primary:not(:disabled):not(.disabled):active {
+	box-shadow: unset;
+	color: #9013F3;
+    background-color: unset;
+    border-color: unset;
+}
+
 #talentModalCenter .close:not(:disabled):not(.disabled):hover, #talentModalCenter .close:not(:disabled):not(.disabled):focus {
     /* opacity: 0.75; */
 	color: #23053B;
