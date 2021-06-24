@@ -696,12 +696,12 @@ $show_f_banner = 'true'
     </button> -->
 
     <!-- Modal -->
-    <div class="modal fade" id="talentModalCenter" tabindex="-1" role="dialog" aria-labelledby="talentModalCenterTitle" aria-hidden="true">
+    <div class="modal fade" onclick="closefunction()" id="talentModalCenter" tabindex="-1" role="dialog" aria-labelledby="talentModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
             <div class="modal-header">
                 <!-- <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5> -->
-                <button type="button" id="closebutton" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" onclick="closefunction()" id="closebutton" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -727,29 +727,26 @@ $show_f_banner = 'true'
         }, 20000);
     });
 
-    window.onload = function() {
-        
-        // alert(base_url)
-        document.getElementById("talentModalCenter").onclick = function fun() {
-            setTimeout(function() {
+    function closefunction() {
+        setTimeout(function() {
                 $('#talentModalCenter').modal('show');
-            }, 20000);  
-        }
-        document.getElementById("closebutton").onclick = function fun() {
-            setTimeout(function() {
-                $('#talentModalCenter').modal('show');
-            }, 20000);  
-        }
-        document.getElementById("cancelbutton").onclick = function fun() {
-            setTimeout(function() {
-                $('#talentModalCenter').modal('show');
-            }, 20000);  
-        }
-        
+            }, 20000); 
     }
 
 </script>
-<script>
+<!-- <script type="text/javascript">
+    window.onload = function() {
+        // alert(base_url)
+        document.getElementById("talentModalCenter").onclick = function talentfun() {
+            console.log("talentModalCenter");
+            setTimeout(function() {
+                $('#talentModalCenter').modal('show');
+            }, 1000);  
+        }
+    }
+    
+</script> -->
+<script type="text/javascript">
     var base_url = window.location.origin;
     window.onload = function() {
         document.getElementById("moveonhome").onclick = function movfunc() {

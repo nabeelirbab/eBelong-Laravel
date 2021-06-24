@@ -63,6 +63,11 @@
                         <div class="col-12 col-sm-12 col-md-12 col-lg-9 float-left">
                             <div class="row">
                                 <div class="wt-proposalhead wt-userdetails">
+                                    @if ($profile->is_certified == 1)
+                                    <div class="profile-certified-badge">
+                                        <img src="/images/certified/Certified_Icon.svg" />
+                                    </div>
+                                    @endif
                                     @if (!empty($profile->tagline))
                                         <h2>{{{ $profile->tagline }}}</h2>
                                     @endif
@@ -98,6 +103,7 @@
                                             <p>{{{ $profile->description }}}</p>
                                         </div>
                                     @endif
+                                    
                                 </div>
                                 <div id="wt-statistics" class="wt-statistics wt-profilecounter">
                                     <div class="wt-statisticcontent wt-countercolor1">
@@ -207,56 +213,20 @@
                 <div id="wt-twocolumns" class="wt-twocolumns wt-haslayout">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-7 col-xl-8 float-left">
                         <div class="wt-usersingle">
-                            <div class="wt-clientfeedback la-no-record">
-                                <div class="wt-usertitle wt-titlewithselect">
-                                    <h2>{{ trans('lang.client_feedback') }}</h2>
-                                </div>
-                                @if (!empty($reviews) && $reviews->count() > 0)
-                                    @foreach ($reviews as $key => $review)
-                                        @php
-                                            $user = App\User::find($review->user_id);
-                                            $stars  = $review->avg_rating != 0 ? $review->avg_rating/5*100 : 0;
-                                        @endphp
-                                        @if ($review->project_type == 'job')
-                                            @php $job = \App\Job::where('id', $review->job_id)->first(); @endphp
-                                            @if (!empty($job->employer) && $job->employer->count() > 0)
-                                                <div class="wt-userlistinghold wt-userlistingsingle">
-                                                    <figure class="wt-userlistingimg">
-                                                        <img src="{{ asset(Helper::getProfileImage($review->user_id)) }}" alt="{{{ trans('Employer') }}}">
-                                                    </figure>
-                                                    <div class="wt-userlistingcontent">
-                                                        <div class="wt-contenthead">
-                                                            <div class="wt-title">
-                                                                <a href="{{{ url('profile/'.$job->employer->slug) }}}">@if ($user->user_verified === 1)<i class="fa fa-check-circle"></i>@endif {{{ Helper::getUserName($review->user_id) }}}</a>
-                                                                <h3>{{{ $job->title }}}</h3>
-                                                            </div>
-                                                            <ul class="wt-userlisting-breadcrumb">
-                                                                <li><span><i class="fa fa-dollar-sign"></i><i class="fa fa-dollar-sign"></i> {{{ \App\Helper::getProjectLevel($job->project_level) }}}</span></li>
-                                                                @if (!empty($job->location) && $job->location->count() > 0)
-                                                                    <li>
-                                                                        <span>
-                                                                            <img src="{{{asset(App\Helper::getLocationFlag($job->location->flag))}}}" alt="{{{ trans('lang.flag_img') }}}"> {{{ $job->location->title }}}
-                                                                        </span>
-                                                                    </li>
-                                                                @endif
-                                                                <li><span><i class="far fa-calendar"></i> {{ Carbon\Carbon::parse($job->created_at)->format('M Y') }} - {{ Carbon\Carbon::parse($job->updated_at)->format('M Y') }}</span></li>
-                                                                <li>
-                                                                    <span class="wt-stars"><span style="width: {{ $stars }}%;"></span></span>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                    <div class="wt-description">
-                                                        @if (!empty($review->feedback))
-                                                            <p>“ {{{ $review->feedback }}} ”</p>
-                                                        @endif
-                                                    </div>
-                                                </div>
-                                            @endif
-                                        @else
-                                            @if (Helper::getAccessType() == 'both' || Helper::getAccessType() == 'services')
-                                                @php $service = \App\Service::where('id', $review->service_id)->first(); @endphp    
-                                                @if (!empty($service))
+                            @if (!empty($reviews) && $reviews->count() > 0)
+                                <div class="wt-clientfeedback la-no-record">
+                                    <div class="wt-usertitle wt-titlewithselect">
+                                        <h2>{{ trans('lang.client_feedback') }}</h2>
+                                    </div>
+                                    @if (!empty($reviews) && $reviews->count() > 0)
+                                        @foreach ($reviews as $key => $review)
+                                            @php
+                                                $user = App\User::find($review->user_id);
+                                                $stars  = $review->avg_rating != 0 ? $review->avg_rating/5*100 : 0;
+                                            @endphp
+                                            @if ($review->project_type == 'job')
+                                                @php $job = \App\Job::where('id', $review->job_id)->first(); @endphp
+                                                @if (!empty($job->employer) && $job->employer->count() > 0)
                                                     <div class="wt-userlistinghold wt-userlistingsingle">
                                                         <figure class="wt-userlistingimg">
                                                             <img src="{{ asset(Helper::getProfileImage($review->user_id)) }}" alt="{{{ trans('Employer') }}}">
@@ -264,21 +234,22 @@
                                                         <div class="wt-userlistingcontent">
                                                             <div class="wt-contenthead">
                                                                 <div class="wt-title">
-                                                                    <a href="{{{ url('profile/'.$user->slug) }}}">@if ($user->user_verified == 1)<i class="fa fa-check-circle"></i>@endif {{{ Helper::getUserName($review->user_id) }}}</a>
-                                                                    <h3>{{{ $service->title }}}</h3>
+                                                                    <a href="{{{ url('profile/'.$job->employer->slug) }}}">@if ($user->user_verified === 1)<i class="fa fa-check-circle"></i>@endif {{{ Helper::getUserName($review->user_id) }}}</a>
+                                                                    <h3>{{{ $job->title }}}</h3>
                                                                 </div>
                                                                 <ul class="wt-userlisting-breadcrumb">
-                                                                    @if (!empty($service->location))
+                                                                    <li><span><i class="fa fa-dollar-sign"></i><i class="fa fa-dollar-sign"></i> {{{ \App\Helper::getProjectLevel($job->project_level) }}}</span></li>
+                                                                    @if (!empty($job->location) && $job->location->count() > 0)
                                                                         <li>
                                                                             <span>
-                                                                                <img src="{{{asset(Helper::getLocationFlag($service->location->flag))}}}" alt="{{{ trans('lang.flag_img') }}}"> {{{ $service->location->title }}}
+                                                                                <img src="{{{asset(App\Helper::getLocationFlag($job->location->flag))}}}" alt="{{{ trans('lang.flag_img') }}}"> {{{ $job->location->title }}}
                                                                             </span>
                                                                         </li>
                                                                     @endif
-                                                                    <li><span><i class="far fa-calendar"></i> {{ Carbon\Carbon::parse($service->created_at)->format('M Y') }} - {{ Carbon\Carbon::parse($service->updated_at)->format('M Y') }}</span></li>
+                                                                    <li><span><i class="far fa-calendar"></i> {{ Carbon\Carbon::parse($job->created_at)->format('M Y') }} - {{ Carbon\Carbon::parse($job->updated_at)->format('M Y') }}</span></li>
                                                                     <li>
                                                                         <span class="wt-stars"><span style="width: {{ $stars }}%;"></span></span>
-                                                                    </li> 
+                                                                    </li>
                                                                 </ul>
                                                             </div>
                                                         </div>
@@ -289,19 +260,56 @@
                                                         </div>
                                                     </div>
                                                 @endif
+                                            @else
+                                                @if (Helper::getAccessType() == 'both' || Helper::getAccessType() == 'services')
+                                                    @php $service = \App\Service::where('id', $review->service_id)->first(); @endphp    
+                                                    @if (!empty($service))
+                                                        <div class="wt-userlistinghold wt-userlistingsingle">
+                                                            <figure class="wt-userlistingimg">
+                                                                <img src="{{ asset(Helper::getProfileImage($review->user_id)) }}" alt="{{{ trans('Employer') }}}">
+                                                            </figure>
+                                                            <div class="wt-userlistingcontent">
+                                                                <div class="wt-contenthead">
+                                                                    <div class="wt-title">
+                                                                        <a href="{{{ url('profile/'.$user->slug) }}}">@if ($user->user_verified == 1)<i class="fa fa-check-circle"></i>@endif {{{ Helper::getUserName($review->user_id) }}}</a>
+                                                                        <h3>{{{ $service->title }}}</h3>
+                                                                    </div>
+                                                                    <ul class="wt-userlisting-breadcrumb">
+                                                                        @if (!empty($service->location))
+                                                                            <li>
+                                                                                <span>
+                                                                                    <img src="{{{asset(Helper::getLocationFlag($service->location->flag))}}}" alt="{{{ trans('lang.flag_img') }}}"> {{{ $service->location->title }}}
+                                                                                </span>
+                                                                            </li>
+                                                                        @endif
+                                                                        <li><span><i class="far fa-calendar"></i> {{ Carbon\Carbon::parse($service->created_at)->format('M Y') }} - {{ Carbon\Carbon::parse($service->updated_at)->format('M Y') }}</span></li>
+                                                                        <li>
+                                                                            <span class="wt-stars"><span style="width: {{ $stars }}%;"></span></span>
+                                                                        </li> 
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <div class="wt-description">
+                                                                @if (!empty($review->feedback))
+                                                                    <p>“ {{{ $review->feedback }}} ”</p>
+                                                                @endif
+                                                            </div>
+                                                        </div>
+                                                    @endif
+                                                @endif
                                             @endif
-                                        @endif
-                                    @endforeach
-                                @else
-                                    <div class="wt-userprofile">
-                                        @if (file_exists(resource_path('views/extend/errors/no-record.blade.php'))) 
-                                            @include('extend.errors.no-record')
-                                        @else 
-                                            @include('errors.no-record')
-                                        @endif
-                                    </div>
-                                @endif
-                            </div>
+                                        @endforeach
+                                    @else
+                                        <div class="wt-userprofile">
+                                            @if (file_exists(resource_path('views/extend/errors/no-record.blade.php'))) 
+                                                @include('extend.errors.no-record')
+                                            @else 
+                                                @include('errors.no-record')
+                                            @endif
+                                        </div>
+                                    @endif
+                                </div>
+                            @endif
                             <div class="wt-craftedprojects">
                                 <div class="wt-usertitle">
                                     <h2>{{{ trans('lang.crafted_projects') }}}</h2>
