@@ -631,7 +631,7 @@
 						$('html,body').animate({
 						scrollTop: $("#scroll-id").offset().top},
 						'slow');
-            		}, 1000);
+            		}, 300);
 				  }
 		})
 

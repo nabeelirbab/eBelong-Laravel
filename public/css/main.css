@@ -921,14 +921,49 @@ li.wt-rss a { background:#ff6600; }
 #talentModalCenter .talent-popup-t1 {
     font-size: 20px;
     color: #000000;
-    margin-bottom: 20px;
+	padding: 5px 0px;
+	font-weight: 600;
 }
 #talentModalCenter .talent-popup-t2 {
-    font-size: 16px;
+    font-size: 14px;
+    margin: 20px 0px;
+    font-weight: 400;
+    color: rgba(21, 25, 32, 0.5);
 }
 #talentModalCenter .talent-popup-t2 a {
 	color: #23053B;
     text-decoration: underline;
+}
+#talentModalCenter .talent-popup-buttons {
+	width: 100%;
+	display: flex;
+}
+#talentModalCenter .talent-popup-buttons button {
+	width: 50%;
+}
+#talentModalCenter .talent-popup-buttons button:first-child {
+	margin-right: 5px;
+}
+#talentModalCenter .talent-popup-buttons #cancelbutton {
+    background-color: #fff;
+    color: #151920;
+    border: 1px solid #E5E5E5;
+	padding: 0.475rem 0.75rem;
+    border-radius: 8px;
+}
+#talentModalCenter .talent-popup-buttons #cancelbutton:hover {
+    background-color: #E5E5E5;
+}
+#talentModalCenter .talent-popup-buttons #moveonhome {
+    background-color: #9013F3;
+    color: #ffffff;
+    border: 1px solid #9013F3;
+	padding: 0.475rem 0.75rem;
+    border-radius: 8px;
+}
+#talentModalCenter .talent-popup-buttons #moveonhome:hover {
+    background-color: #3A0B5F;
+	border: 1px solid #3A0B5F;
 }
 .talent-popup-t2 .btn-primary {
     background-color: unset;
@@ -960,7 +995,13 @@ li.wt-rss a { background:#ff6600; }
 	color: #23053B;
 }
 #talentModalCenter .modal-body {
-	padding: 0rem 1rem 1rem 1rem; 
+	padding: 20px; 
+}
+
+#talentModalCenter .modal-content {
+    border: unset;
+    border-radius: 16px;
+	background-color: #ffffff;
 }
 .profile-certified-badge {
 	position: absolute;
