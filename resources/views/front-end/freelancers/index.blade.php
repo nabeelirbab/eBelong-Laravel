@@ -699,15 +699,21 @@ $show_f_banner = 'true'
     <div class="modal fade" onclick="closefunction()" id="talentModalCenter" tabindex="-1" role="dialog" aria-labelledby="talentModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-            <div class="modal-header">
-                <!-- <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5> -->
+            <!-- <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
                 <button type="button" onclick="closefunction()" id="closebutton" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
+                    <span aria-hidden="true">&times;</span>
                 </button>
-            </div>
+            </div> -->
             <div class="modal-body">
-                <div class="talent-popup-t1">Having hard time finding the right resource for your project?</div>
-                <div class="talent-popup-t2">Click <button type="button" id="moveonhome" class="btn btn-primary">here</button> to speed up this process</div>
+                <div class="talent-popup-t1">Find the right resource</div>
+                <!-- <div class="talent-popup-t2">Click <button type="button" id="moveonhome" class="btn btn-primary">here</button> to speed up this process</div> -->
+                <div class="talent-popup-t2">Having hard time finding the right resource for your project ? Want to speed up the process ?</div>
+                <div class="talent-popup-buttons">
+                    <button type="button" onclick="closefunction()" class="btn btn-secondary" id="cancelbutton" data-dismiss="modal">Cancel</button>
+                    <button type="button" id="moveonhome" class="btn btn-primary">Show me how</button>
+                </div>
+                
             </div>
             <!-- <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" id="cancelbutton" data-dismiss="modal">Close</button>
