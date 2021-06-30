@@ -310,23 +310,25 @@
                                     @endif
                                 </div>
                             @endif
-                            <div class="wt-craftedprojects">
-                                <div class="wt-usertitle">
-                                    <h2>{{{ trans('lang.crafted_projects') }}}</h2>
-                                </div>
-                                @if (!empty($projects))
-                                    <crafted_project :no_of_post="3" :project="'{{  json_encode($projects) }}'" :freelancer_id="'{{$profile->user_id}}'" :img="'{{ trans('lang.img') }}'"></crafted_project>
-                                @else
-                                    <div class="wt-userprofile">
-                                        @if (file_exists(resource_path('views/extend/errors/no-record.blade.php'))) 
-                                            @include('extend.errors.no-record')
-                                        @else 
-                                            @include('errors.no-record')
-                                        @endif
+                            @if (!empty($projects))
+                                <div class="wt-craftedprojects">
+                                    <div class="wt-usertitle">
+                                        <h2>{{{ trans('lang.crafted_projects') }}}</h2>
                                     </div>
-                                @endif
-                            </div>
-                            @if (!empty($videos))
+                                    @if (!empty($projects))
+                                        <crafted_project :no_of_post="3" :project="'{{  json_encode($projects) }}'" :freelancer_id="'{{$profile->user_id}}'" :img="'{{ trans('lang.img') }}'"></crafted_project>
+                                    @else
+                                        <div class="wt-userprofile">
+                                            @if (file_exists(resource_path('views/extend/errors/no-record.blade.php'))) 
+                                                @include('extend.errors.no-record')
+                                            @else 
+                                                @include('errors.no-record')
+                                            @endif
+                                        </div>
+                                    @endif
+                                </div>
+                            @endif
+                            @if (!($videos))
                                 <div class="wt-videos">
                                     <div class="wt-usertitle">
                                         <h2>{{{ trans('lang.videos') }}}</h2>
@@ -362,40 +364,44 @@
                                     </div>
                                 </div>
                             @endif
-                            <div class="wt-experience">
-                                <div class="wt-usertitle">
-                                    <h2>{{{ trans('lang.experience') }}}</h2>
+                            @if (!empty($experiences))
+                                <div class="wt-experience">
+                                    <div class="wt-usertitle">
+                                        <h2>{{{ trans('lang.experience') }}}</h2>
+                                    </div>
+                                    @if (!empty($experiences))
+                                        <div class="wt-experiencelisting-hold">
+                                            <experience :freelancer_id="'{{$profile->user_id}}'" :no_of_post="2"></experience>
+                                        </div>
+                                    @else
+                                        <div class="wt-userprofile">
+                                            @if (file_exists(resource_path('views/extend/errors/no-record.blade.php'))) 
+                                                @include('extend.errors.no-record')
+                                            @else 
+                                                @include('errors.no-record')
+                                            @endif
+                                        </div>
+                                    @endif
                                 </div>
-                                @if (!empty($experiences))
-                                    <div class="wt-experiencelisting-hold">
-                                        <experience :freelancer_id="'{{$profile->user_id}}'" :no_of_post="2"></experience>
+                            @endif
+                            @if (!empty($education))
+                                <div class="wt-experience wt-education">
+                                    <div class="wt-usertitle">
+                                        <h2>{{{ trans('lang.education') }}}</h2>
                                     </div>
-                                @else
-                                    <div class="wt-userprofile">
-                                        @if (file_exists(resource_path('views/extend/errors/no-record.blade.php'))) 
-                                            @include('extend.errors.no-record')
-                                        @else 
-                                            @include('errors.no-record')
-                                        @endif
-                                    </div>
-                                @endif
-                            </div>
-                            <div class="wt-experience wt-education">
-                                <div class="wt-usertitle">
-                                    <h2>{{{ trans('lang.education') }}}</h2>
+                                    @if (!empty($education))
+                                        <education :freelancer_id="'{{$profile->user_id}}'" :no_of_post="1"></education>
+                                    @else
+                                        <div class="wt-userprofile">
+                                            @if (file_exists(resource_path('views/extend/errors/no-record.blade.php'))) 
+                                                @include('extend.errors.no-record')
+                                            @else 
+                                                @include('errors.no-record')
+                                            @endif
+                                        </div>
+                                    @endif
                                 </div>
-                                @if (!empty($education))
-                                    <education :freelancer_id="'{{$profile->user_id}}'" :no_of_post="1"></education>
-                                @else
-                                    <div class="wt-userprofile">
-                                        @if (file_exists(resource_path('views/extend/errors/no-record.blade.php'))) 
-                                            @include('extend.errors.no-record')
-                                        @else 
-                                            @include('errors.no-record')
-                                        @endif
-                                    </div>
-                                @endif
-                            </div>
+                            @endif
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-5 col-xl-4 float-left">

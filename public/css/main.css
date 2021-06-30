@@ -1649,9 +1649,14 @@ body.wt-login .wt-loginarea .wt-btn {
 	border-radius: 50px;
 }
 .wt-userimg img{
-	width: 100%;
+	/* width: 100%; */
 	display: block;
 	border-radius: 50px;
+	height: 75px;
+    width: 75px;
+    object-fit: cover;
+	max-width: 100%;
+    max-height: 100%;
 }
 .wt-loginarea .wt-loginbtn{color:#ffffff;margin-right:20px; }
 .wt-loginarea .wt-loginbtn:hover{
@@ -1778,6 +1783,8 @@ body.wt-login .wt-userlogedin{display: block;}
 .wt-userlogedin .wt-userimg{
 	float:left;
 	margin-right:10px;
+	height: 75px;
+    width: 75px;
 }
 .wt-username{overflow:hidden;}
 .wt-username h3{
@@ -4336,7 +4343,8 @@ body.wt-login .wt-userlogedin{display: block;}
 }
 .wt-proposalhead{
 	float: left;
-	width: auto;
+	/* width: auto; */
+	width: 70%;
 	max-width: 800px;
 }
 .wt-proposalhead h2{
@@ -5122,7 +5130,8 @@ body.wt-login .wt-userlogedin{display: block;}
 .wt-userdetails.wt-displaynone{display: block;}
 .wt-userdetails.wt-displaynone .wt-description:after{display: none;}
 .wt-profilecounter{
-	width: auto;
+	/* width: auto; */
+	width: 40%;
 	float: right;
 	max-width: 270px;
 	min-height: 481px;
@@ -5322,13 +5331,16 @@ body.wt-login .wt-userlogedin{display: block;}
 	margin: 0;
 	width: 100%;
 	border-radius: 4px;
-	background: #323232;
+	/* background: #323232; */
+	height: 150px;
 }
 .wt-project figure img{
 	width: 100%;
 	opacity: 0.80;
 	display: block;
 	border-radius: 4px;
+	object-fit: contain;
+    height: 100%;
 }
 .wt-project:hover figure img{opacity: 0.40;}
 .wt-projectcontent{
@@ -6098,9 +6110,11 @@ body.wt-login .wt-userlogedin{display: block;}
 }
 .wt-chatpopup img {
     width: 100%;
-    height: auto;
+    /* height: auto; */
+    height: 100%;
     display: block;
     border-radius: 50%;
+	object-fit: cover;
 }
 .wt-chatbox {
     right: 0;
