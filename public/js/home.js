@@ -8168,6 +8168,9 @@ __webpack_require__.r(__webpack_exports__);
         return obj.name === _this.query;
       }).slug;
       window.location.replace("".concat(this.url, "?type=freelancer&s=&skills[]=").concat(slug));
+    },
+    log: function log(item) {
+      console.log("featured items ", item);
     }
   },
   mounted: function mounted() {
@@ -8178,6 +8181,14 @@ __webpack_require__.r(__webpack_exports__);
     }).then(function (response) {
       return _this2.skills = response.data.searchables;
     });
+  },
+  computed: {
+    featuredItems: function featuredItems() {
+      var featured = this.items.skills.filter(function (skill) {
+        return skill.is_featured == 1;
+      });
+      return featured.slice(0, 7);
+    }
   }
 });
 
@@ -8251,6 +8262,12 @@ __webpack_require__.r(__webpack_exports__);
         return obj.name === _this.query;
       }).slug;
       window.location.replace("".concat(this.url, "?type=freelancer&s=&skills[]=").concat(slug));
+    },
+    scrollfunction: function scrollfunction() {
+      var element = document.getElementById('scroll-id');
+      element.scrollIntoView({
+        behavior: 'smooth'
+      });
     }
   },
   mounted: function mounted() {
@@ -8314,10 +8331,16 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    onClick: function onClick() {
-      var el = window.postskill; // Get the bounding rectangle so we can get the element position position
-
-      el.scrollIntoView();
+    // onClick(){
+    //   let el = window.postskill;
+    //   // Get the bounding rectangle so we can get the element position position
+    //   el.scrollIntoView()
+    // },
+    scrollfunction: function scrollfunction() {
+      var element = document.getElementById('scroll-id');
+      element.scrollIntoView({
+        behavior: 'smooth'
+      });
     }
   },
   mounted: function mounted() {
@@ -9142,6 +9165,11 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_cookies__WEBPACK_IMPORTED_MOD
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_pageBuilder_edit_app_index_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/pageBuilder/edit----------/app/index.vue */ "./resources/js/components/pageBuilder/edit----------/app/index.vue");
+//
+//
+//
+//
+//
 //
 //
 //
@@ -13746,7 +13774,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.e-postskill-modal[data-v-42b14df9] {\n  position: fixed;\n  z-index: 9998;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  background-color: rgba(0, 0, 0, 0.5);\n  display: table;\n  transition: opacity 0.3s ease;\n}\n.e-postskill-modal .modal-background[data-v-42b14df9] {\n    position: relative;\n    width: 100%;\n    padding-top: 60px;\n}\n.e-postskill-modal .custom-modal-container[data-v-42b14df9] { \n  width: 85%;\n  text-align: center;\n  margin: 0px auto;\n  background-color: white;\n  padding: 20px;\n  right: 0;\n  left: 0;\n  position: absolute;\n}\n.e-postskill-modal .modal-footer[data-v-42b14df9] {\n    padding-top: .75rem;\n}\n.e-postskill-modal .mob-slider[data-v-42b14df9] {\n    margin: 1rem 0px;\n}\n.e-postskill-modal .desktop-images[data-v-42b14df9] {\n    margin: 1rem 0px;\n}\n.e-postskill-modal .mob-slider[data-v-42b14df9] {\n  display: none;\n}\n.e-postskill-modal .desktop-images[data-v-42b14df9] {\n  display: block;\n}\n.e-postskill-modal .desktop-images img[data-v-42b14df9] {\n  box-shadow: 0px 0px 12px 5px rgba(0,0,0,0.21);\n  -webkit-box-shadow: 0px 0px 12px 5px rgba(0,0,0,0.21);\n  -moz-box-shadow: 0px 0px 12px 5px rgba(0,0,0,0.21);\n}\n.e-postskill-modal .mob-slider[data-v-42b14df9] {\n  box-shadow: 0px 0px 12px 5px rgba(0,0,0,0.21);\n  -webkit-box-shadow: 0px 0px 12px 5px rgba(0,0,0,0.21);\n  -moz-box-shadow: 0px 0px 12px 5px rgba(0,0,0,0.21);\n}\n.e-postskill-modal .modal-title h6[data-v-42b14df9] {\n    color: #474747;\n    font-family: \"Poppins\", sans-serif;\n    text-transform: unset;\n    text-align: center;\n    font-size: 15px;\n    font-weight: 500;\n}\n.e-postskill-modal .modal-title h6 .displayFormName[data-v-42b14df9] {\n    color: #3A0B5F;\n    font-weight: 700;\n    text-transform: capitalize;\n}\n@media only screen and (max-width: 768px) {\n.e-postskill-modal .custom-modal-container[data-v-42b14df9] {\n    width: 75%;\n    right: 0;\n    left: 0;\n    position: absolute;\n}\n.e-postskill-modal .mob-slider[data-v-42b14df9] {\n    margin: 1rem 0px;\n}\n.e-postskill-modal .mob-slider[data-v-42b14df9] {\n    display: block;\n}\n.e-postskill-modal .desktop-images[data-v-42b14df9] {\n    display: none;\n}\n.e-postskill-modal .modal-background[data-v-42b14df9] {\n    padding-top: 50px;\n}\n.e-postskill-modal .modal-title h6[data-v-42b14df9] {\n    font-size: 0.8rem;\n}\n}\n@media only screen and (max-width: 512px) {\n.e-postskill-modal .custom-modal-container[data-v-42b14df9] {\n    width: 90%;\n    right: 0;\n    left: 0;\n}\n}\n\n/* .modal-mask {\n  position: fixed;\n  z-index: 9998;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  background-color: rgba(0, 0, 0, 0.5);\n  display: table;\n  transition: opacity 0.3s ease;\n}\n\n.modal-wrapper {\n  display: table-cell;\n  vertical-align: middle;\n}\n\n.modal-container {\n  width: 85%;\n  margin: 0px auto;\n  padding: 20px 30px;\n  background-color: #fff;\n  border-radius: 2px;\n  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);\n  transition: all 0.3s ease;\n  font-family: Helvetica, Arial, sans-serif;\n}\n@media only screen and (max-width: 768px) {\n  .modal-container {\n  width: 85%;\n  }\n} */\n\n/* .modal-container .mob-slider {\n    display: none;\n  }\n@media only screen and (max-width: 768px) {\n  .modal-container .desktop-images {\n    display: none;\n  }\n  .modal-container .mob-slider {\n    display: block;\n  }\n} */\n/* \n.modal-header h3 {\n  margin-top: 0;\n  color: #42b983;\n}\n.modal-title h6 {\n    color: #474747;\n    text-transform: unset;\n        text-align: center;\n} */\n\n/* .modal-body {\n  margin: 20px 0;\n}\n.modal-body img {\n    width: 100%;\n}\n\n.modal-default-button {\n  float: right;\n} */\n\n/*\n * The following styles are auto-applied to elements with\n * transition=\"modal\" when their visibility is toggled\n * by Vue.js.\n *\n * You can easily play with the modal transition by editing\n * these styles.\n */\n\n/* .modal-enter {\n  opacity: 0;\n}\n\n.modal-leave-active {\n  opacity: 0;\n}\n\n.modal-enter .modal-container,\n.modal-leave-active .modal-container {\n  -webkit-transform: scale(1.1);\n  transform: scale(1.1);\n} */\n\n", ""]);
+exports.push([module.i, "\n.e-postskill-modal[data-v-42b14df9] {\n  position: fixed;\n  z-index: 21474836455;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  background-color: rgba(0, 0, 0, 0.5);\n  display: table;\n  transition: opacity 0.3s ease;\n}\n.e-postskill-modal .modal-background[data-v-42b14df9] {\n    position: relative;\n    width: 100%;\n    padding-top: 60px;\n}\n.e-postskill-modal .custom-modal-container[data-v-42b14df9] { \n  width: 85%;\n  text-align: center;\n  margin: 0px auto;\n  background-color: white;\n  padding: 20px;\n  right: 0;\n  left: 0;\n  position: absolute;\n}\n.e-postskill-modal .modal-footer[data-v-42b14df9] {\n    padding-top: .75rem;\n}\n.e-postskill-modal .mob-slider[data-v-42b14df9] {\n    margin: 1rem 0px;\n}\n.e-postskill-modal .desktop-images[data-v-42b14df9] {\n    margin: 1rem 0px;\n}\n.e-postskill-modal .mob-slider[data-v-42b14df9] {\n  display: none;\n}\n.e-postskill-modal .desktop-images[data-v-42b14df9] {\n  display: block;\n}\n.e-postskill-modal .desktop-images img[data-v-42b14df9] {\n  box-shadow: 0px 0px 12px 5px rgba(0,0,0,0.21);\n  -webkit-box-shadow: 0px 0px 12px 5px rgba(0,0,0,0.21);\n  -moz-box-shadow: 0px 0px 12px 5px rgba(0,0,0,0.21);\n}\n.e-postskill-modal .mob-slider[data-v-42b14df9] {\n  box-shadow: 0px 0px 12px 5px rgba(0,0,0,0.21);\n  -webkit-box-shadow: 0px 0px 12px 5px rgba(0,0,0,0.21);\n  -moz-box-shadow: 0px 0px 12px 5px rgba(0,0,0,0.21);\n}\n.e-postskill-modal .modal-title h6[data-v-42b14df9] {\n    color: #474747;\n    font-family: \"Poppins\", sans-serif;\n    text-transform: unset;\n    text-align: center;\n    font-size: 15px;\n    font-weight: 500;\n}\n.e-postskill-modal .modal-title h6 .displayFormName[data-v-42b14df9] {\n    color: #3A0B5F;\n    font-weight: 700;\n    text-transform: capitalize;\n}\n@media only screen and (max-width: 768px) {\n.e-postskill-modal .custom-modal-container[data-v-42b14df9] {\n    width: 75%;\n    right: 0;\n    left: 0;\n    position: absolute;\n}\n.e-postskill-modal .mob-slider[data-v-42b14df9] {\n    margin: 1rem 0px;\n}\n.e-postskill-modal .mob-slider[data-v-42b14df9] {\n    display: block;\n}\n.e-postskill-modal .desktop-images[data-v-42b14df9] {\n    display: none;\n}\n.e-postskill-modal .modal-background[data-v-42b14df9] {\n    padding-top: 50px;\n}\n.e-postskill-modal .modal-title h6[data-v-42b14df9] {\n    font-size: 0.8rem;\n}\n}\n@media only screen and (max-width: 512px) {\n.e-postskill-modal .custom-modal-container[data-v-42b14df9] {\n    width: 90%;\n    right: 0;\n    left: 0;\n}\n}\n\n/* .modal-mask {\n  position: fixed;\n  z-index: 9998;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  background-color: rgba(0, 0, 0, 0.5);\n  display: table;\n  transition: opacity 0.3s ease;\n}\n\n.modal-wrapper {\n  display: table-cell;\n  vertical-align: middle;\n}\n\n.modal-container {\n  width: 85%;\n  margin: 0px auto;\n  padding: 20px 30px;\n  background-color: #fff;\n  border-radius: 2px;\n  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);\n  transition: all 0.3s ease;\n  font-family: Helvetica, Arial, sans-serif;\n}\n@media only screen and (max-width: 768px) {\n  .modal-container {\n  width: 85%;\n  }\n} */\n\n/* .modal-container .mob-slider {\n    display: none;\n  }\n@media only screen and (max-width: 768px) {\n  .modal-container .desktop-images {\n    display: none;\n  }\n  .modal-container .mob-slider {\n    display: block;\n  }\n} */\n/* \n.modal-header h3 {\n  margin-top: 0;\n  color: #42b983;\n}\n.modal-title h6 {\n    color: #474747;\n    text-transform: unset;\n        text-align: center;\n} */\n\n/* .modal-body {\n  margin: 20px 0;\n}\n.modal-body img {\n    width: 100%;\n}\n\n.modal-default-button {\n  float: right;\n} */\n\n/*\n * The following styles are auto-applied to elements with\n * transition=\"modal\" when their visibility is toggled\n * by Vue.js.\n *\n * You can easily play with the modal transition by editing\n * these styles.\n */\n\n/* .modal-enter {\n  opacity: 0;\n}\n\n.modal-leave-active {\n  opacity: 0;\n}\n\n.modal-enter .modal-container,\n.modal-leave-active .modal-container {\n  -webkit-transform: scale(1.1);\n  transform: scale(1.1);\n} */\n\n", ""]);
 
 // exports
 
@@ -48570,32 +48598,31 @@ var render = function() {
             _c(
               "ul",
               { staticClass: "e-project-type__list" },
-              _vm._l(_vm.items.skills, function(item, index) {
-                return item.is_featured
-                  ? _c(
-                      "li",
-                      {
-                        key: index,
-                        staticClass: "e-project-type__list--item",
-                        on: {
-                          click: function() {
-                            return _vm.onClick(item.slug)
-                          }
-                        }
-                      },
-                      [
-                        _c("img", {
-                          staticStyle: { width: "15px" },
-                          attrs: { src: "/uploads/logos/" + item.logo }
-                        }),
-                        _vm._v(
-                          "\n                " +
-                            _vm._s(item.title) +
-                            "\n                "
-                        )
-                      ]
+              _vm._l(_vm.featuredItems, function(item, index) {
+                return _c(
+                  "li",
+                  {
+                    key: index,
+                    staticClass: "e-project-type__list--item",
+                    attrs: { load: _vm.log(item) },
+                    on: {
+                      click: function() {
+                        return _vm.onClick(item.slug)
+                      }
+                    }
+                  },
+                  [
+                    _c("img", {
+                      staticStyle: { width: "15px" },
+                      attrs: { src: "/uploads/logos/" + item.logo }
+                    }),
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(item.title) +
+                        "\n                "
                     )
-                  : _vm._e()
+                  ]
+                )
               }),
               0
             )
@@ -48642,35 +48669,35 @@ var render = function() {
       ],
       staticClass: "banner animate__animated animate__lightSpeedInRight  "
     },
-    [_vm._m(0), _vm._v(" "), _c("div", { staticClass: "banner-slider" })]
+    [
+      _c("div", {}, [
+        _c("div", { staticClass: "banner-content" }, [
+          _c("div", { staticClass: "banner-content__title pb-3" }, [
+            _vm._v(
+              "\n                Speed up your hiring process\n\n            "
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "banner-content__subtitle pb-5" }, [
+            _vm._v("Share your requirements with our CTO instantly")
+          ]),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "banner1-button e-button e-button-primary",
+              on: { click: _vm.scrollfunction }
+            },
+            [_vm._v("Let's Get Started")]
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "banner-slider" })
+    ]
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", {}, [
-      _c("div", { staticClass: "banner-content" }, [
-        _c("div", { staticClass: "banner-content__title pb-3" }, [
-          _vm._v(
-            "\n                Speed up your hiring process\n\n            "
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "banner-content__subtitle pb-5" }, [
-          _vm._v("Share your requirements with our CTO instantly")
-        ]),
-        _vm._v(" "),
-        _c(
-          "button",
-          { staticClass: "banner1-button e-button e-button-primary" },
-          [_vm._v("Let's Get Started")]
-        )
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -48780,11 +48807,7 @@ var render = function() {
                 "button",
                 {
                   staticClass: "e-button e-button-primary",
-                  on: {
-                    click: function($event) {
-                      return _vm.onClick()
-                    }
-                  }
+                  on: { click: _vm.scrollfunction }
                 },
                 [_vm._v("Let's Get Started")]
               )
@@ -48878,7 +48901,7 @@ var render = function() {
                     _vm._v(" "),
                     _c("div", { staticClass: "e-postjob__content" }, [
                       _vm._v(
-                        "\n                You can always start your hunt for the right freelancer by just posting your job and start receiving proposals from our top talent. You can then shortlist and select the most suitable Freelancer for your job\n          "
+                        "\n                  You can always start your hunt for the right freelancer by just posting your job and start receiving proposals from our top talent. You can then shortlist and select the most suitable Freelancer for your job\n            "
                       )
                     ]),
                     _vm._v(" "),
@@ -49010,7 +49033,7 @@ var render = function() {
     [
       _c(
         "div",
-        { staticClass: "e-postskill" },
+        { staticClass: "e-postskill", attrs: { id: "scroll-id" } },
         [
           _vm._m(0),
           _vm._v(" "),
@@ -49394,7 +49417,7 @@ var render = function() {
         "ul",
         { staticClass: "e-project-type__list" },
         _vm._l(_vm.skills, function(skill, index) {
-          return skill.is_featured
+          return skill.is_featured == 1
             ? _c(
                 "li",
                 {
@@ -49866,8 +49889,6 @@ var render = function() {
           {
             name: "isvisible",
             rawName: "v-isvisible.scroll",
-            value: { animate: "pulse" },
-            expression: "{animate:'pulse'}",
             modifiers: { scroll: true }
           }
         ],
@@ -49891,6 +49912,22 @@ var render = function() {
                     "splide-slide",
                     { key: item.id, staticClass: "e-freelancer__item" },
                     [
+                      item.is_certified == 1
+                        ? _c("img", {
+                            staticStyle: {
+                              position: "absolute",
+                              top: "10px",
+                              right: "8px",
+                              "max-width": "50px"
+                            },
+                            attrs: {
+                              src:
+                                _vm.baseUrl +
+                                "/images/certified/Certified_Icon.png"
+                            }
+                          })
+                        : _vm._e(),
+                      _vm._v(" "),
                       _c(
                         "div",
                         {

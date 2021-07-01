@@ -65,7 +65,7 @@
 }
 
 .e-freelancer__header {
-  font-size: 2rem;
+  font-size: 22px;
   font-weight: 600;
   font-family: "Poppins", sans-serif;
   line-height: 1.3;
@@ -114,7 +114,7 @@
 }
 
 .e-freelancer__item-title {
-  font-size: 1.3rem;
+  font-size: 18px;
   font-weight: 500;
   font-family: "Poppins", sans-serif;
   line-height: 1.5;
@@ -123,7 +123,7 @@
 }
 
 .e-freelancer__item-skill {
-  font-size: 0.9rem;
+  font-size: 12px;
   font-weight: 400;
   font-family: "Poppins", sans-serif;
   line-height: 1.5;
@@ -143,7 +143,7 @@
 }
 
 .e-postskill__header {
-  font-size: 2rem;
+  font-size: 22px;
   font-weight: 600;
   font-family: "Poppins", sans-serif;
   line-height: 1.3;
@@ -159,11 +159,11 @@
 }
 
 .e-postskill__header_title {
-  font-size: 1.5rem;
+  font-size: 22px;
 }
 
 .e-postskill__header_description {
-  font-size: 1.3rem;
+  font-size: 22px;
   font-weight: 500;
   font-family: "Poppins", sans-serif;
   color: #474747;
@@ -172,7 +172,7 @@
 }
 
 .e-postskill__header_description1 {
-  font-size: 1rem;
+  font-size: 18px;
   font-weight: 500;
 }
 
@@ -197,7 +197,7 @@
 
 .e-postjob__header {
   font-size: 1.8rem;
-  font-size: 2rem;
+  font-size: 22px;
   font-weight: 600;
   font-family: "Poppins", sans-serif;
   line-height: 1.3;
@@ -224,7 +224,7 @@
 }
 
 .e-postjob__content {
-  font-size: 0.9rem;
+  font-size: 12px;
   font-weight: 400;
   font-family: "Poppins", sans-serif;
   line-height: 1.5;
@@ -333,7 +333,7 @@
 }
 
 .e-project-type__title {
-  font-size: 1.3rem;
+  font-size: 18px;
   font-weight: 500;
   font-family: "Poppins", sans-serif;
   line-height: 1.5;
@@ -345,7 +345,7 @@
 }
 
 .e-project-type__subtitle {
-  font-size: 0.9rem;
+  font-size: 12px;
   font-weight: 400;
   font-family: "Poppins", sans-serif;
   line-height: 1.5;
@@ -385,7 +385,7 @@
 }
 
 .e-wanted-postions__heading {
-  font-size: 1.3rem;
+  font-size: 18px;
   font-weight: 500;
   font-family: "Poppins", sans-serif;
   line-height: 1.5;
@@ -422,7 +422,7 @@
 }
 
 .e-skills-percentage__title {
-  font-size: 1.3rem;
+  font-size: 18px;
   font-weight: 500;
   font-family: "Poppins", sans-serif;
   line-height: 1.5;
@@ -430,7 +430,7 @@
 }
 
 .e-skills-percentage__subtitle {
-  font-size: 0.9rem;
+  font-size: 12px;
   font-weight: 400;
   font-family: "Poppins", sans-serif;
   line-height: 1.5;
@@ -484,7 +484,7 @@
 }
 
 .e-account-details__title {
-  font-size: 1.3rem;
+  font-size: 18px;
   font-weight: 500;
   font-family: "Poppins", sans-serif;
   line-height: 1.5;
@@ -492,7 +492,7 @@
 }
 
 .e-account-details__subtitle {
-  font-size: 0.9rem;
+  font-size: 12px;
   font-weight: 400;
   font-family: "Poppins", sans-serif;
   line-height: 1.5;
@@ -538,7 +538,7 @@
 }
 
 .banner-content__subtitle {
-  font-size: 0.9rem;
+  font-size: 12px;
   font-weight: 400;
   font-family: "Poppins", sans-serif;
   line-height: 1.5;
@@ -621,13 +621,12 @@
 }
 
 .bannerjob__title {
-  font-size: 2rem;
+  font-size: 22px;
   font-weight: 600;
   font-family: "Poppins", sans-serif;
   line-height: 1.3;
   color: #292D34;
   text-transform: none;
-  font-size: 1.5rem;
 }
 
 @media only screen and (max-width: 768px) {
@@ -796,7 +795,8 @@
 @media only screen and (max-width: 768px) {
   .wt-headereleven .wt-navigationarea {
     padding: 0 15px 0 0 !important;
-    height: 100px;
+    height: 65px;
+    margin: 15px 0px;
   }
 }
 
@@ -894,6 +894,25 @@
   .mobile-logo {
     display: none;
   }
+}
+
+.wt-contentwrapper .wt-userlogedin .wt-userimg {
+  float: left;
+  margin-right: 10px;
+  height: 75px;
+  width: 75px;
+}
+
+.wt-contentwrapper .wt-userimg img {
+  /* width: 100%; */
+  display: block;
+  border-radius: 50px;
+  height: 75px;
+  width: 75px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  max-width: 100%;
+  max-height: 100%;
 }
 
 .e-banner {
@@ -1122,14 +1141,25 @@
   .wt-header .wt-navigation > ul > li > a {
     color: #767676 !important;
   }
-}
 
-@media only screen and (max-width: 512px) {
-  .wt-headereleven .wt-logo.wt-logo-header.mobile-logo img {
-    width: 184px;
-    margin-left: -17px;
+  .e-postskill__header_title {
+    font-size: 18px;
   }
 
+  .e-postskill__header_description {
+    font-size: 18px;
+  }
+
+  .e-postskill__header_description1 {
+    font-size: 16px;
+  }
+
+  .e-postjob__content {
+    font-size: 12px;
+  }
+}
+
+@media only screen and (max-width: 359px) {
   body.wt-login .wt-loginarea {
     display: grid !important;
   }
@@ -1138,6 +1168,13 @@
     order: 2;
     text-align: center;
     margin-top: 1px;
+  }
+}
+
+@media only screen and (max-width: 512px) {
+  .wt-headereleven .wt-logo.wt-logo-header.mobile-logo img {
+    width: 184px;
+    margin-left: -17px;
   }
 
   .wt-headereleven .wt-loginarea .wt-loginbtn {
@@ -1177,24 +1214,37 @@
   }
 }
 
-.custome-home-banner .carousel-control.left {
-  background-image: unset !important;
-}
-
-.custome-home-banner .carousel-control {
+.custome-home-banner .carousel-control-prev,
+.carousel-control-next {
   width: 5% !important;
 }
 
-.custome-home-banner .carousel-control.right {
-  background-image: unset !important;
-}
-
-.banner1 .banner1-button.e-button-primary {
+.banner2 .banner1-button.e-button-primary {
   background: #3A0B5F;
   padding: 10px 25px;
   line-height: 36px;
   font-size: 16px;
-  margin-bottom: 55px;
+  margin-bottom: 68px;
+}
+
+@media only screen and (max-width: 1024px) {
+  .wt-contentwrapper .banner-content__search .e-button {
+    padding: 0.7rem 2rem;
+  }
+}
+
+@media only screen and (max-width: 1199px) {
+  .banner2 .banner1-button.e-button-primary {
+    margin-bottom: 47.5px;
+  }
+
+  .wt-contentwrapper .banner-content__title {
+    font-size: 35px;
+  }
+
+  .wt-contentwrapper .custom-desktop .e-project-type__list li:last-child {
+    display: none;
+  }
 }
 
 .banner1 .home-banner-img2 {
@@ -1209,12 +1259,28 @@
   border: 1px solid #c4c4c4 !important;
 }
 
+.custom-mobile .carousel-indicators li::marker {
+  font-size: 0;
+}
+
 .custom-mobile .carousel-indicators .active {
   background-color: unset;
   background: linear-gradient(90deg, #9013f3 0%, #d413f3 83%);
 }
 
 @media only screen and (max-width: 785px) {
+  .wt-contentwrapper .home-banner-img2 {
+    position: unset;
+    bottom: unset;
+    right: unset;
+    width: 100%;
+    width: 100%;
+    max-width: 572px;
+    padding-top: 80px;
+  }
+}
+
+@media only screen and (max-width: 512px) {
   .wt-contentwrapper .home-banner-img2 {
     position: unset;
     bottom: unset;
@@ -1231,6 +1297,15 @@
   padding: 10px 20px;
   line-height: 36px;
   font-size: 15px;
+  margin-bottom: 20px;
+}
+
+.custom-mobile .carousel-indicators {
+  z-index: 8;
+}
+
+.wt-footertwo .wt-footercol2 {
+  margin-top: 20px;
   margin-bottom: 20px;
 }
 

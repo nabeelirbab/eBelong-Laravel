@@ -679,9 +679,9 @@ li.wt-rss a { background:#ff6600; }
 .wt-socialiconssimple li.wt-reddit a i{color:#ff5700;}
 .wt-socialiconssimple li.wt-bloggerb a i{color:#f57d00;}
 .wt-socialiconssimple li.wt-clone a i{color:#878787;}
-.wt-socialiconfooter li.wt-facebook:hover a i{ color: #3b5999; }
+.wt-socialiconfooter li.wt-facebook:hover a i{ color: #9013F3; }
 .wt-socialiconfooter li.wt-twitter:hover a i{ color: #9013F3; }
-.wt-socialiconfooter li.wt-linkedin:hover a i{ color: #0077B5; }
+.wt-socialiconfooter li.wt-linkedin:hover a i{ color: #9013F3; }
 .wt-socialiconfooter li.wt-skype:hover a i{ color: #00aff0; }
 .wt-socialiconfooter li.wt-dropbox:hover a i{ color: #007ee5; }
 .wt-socialiconfooter li.wt-vimeo:hover a i{ color: #1ab7ea; }
@@ -697,7 +697,7 @@ li.wt-rss a { background:#ff6600; }
 .wt-socialiconfooter li.wt-soundcloud:hover a i{ color: #ff3300; }
 .wt-socialiconfooter li.wt-whatsapp:hover a i{ color: #25d366; }
 .wt-socialiconfooter li.wt-wechat:hover a i{ color: #09b83e; }
-.wt-socialiconfooter li.wt-instagram:hover a i{ color: #e4405f; }
+.wt-socialiconfooter li.wt-instagram:hover a i{ color: #9013F3; }
 .wt-socialiconfooter li.wt-dribbble:hover a i{ color: #ea4c89; }
 .wt-socialiconfooter li.wt-flickr:hover a i{ color: #ff0084; }
 .wt-socialiconfooter li.wt-rss:hover a i{ color: #ff6600; }
@@ -5070,14 +5070,14 @@ body.wt-login .wt-userlogedin{display: block;}
 	max-width: 540px;
 	padding: 0 30px 0 15px;
 }
-.wt-userdetails .wt-userlisting-breadcrumb{margin-bottom:30px; }
+.wt-userdetails .wt-userlisting-breadcrumb{margin-bottom:unset; }
 .wt-userdetails .wt-userlisting-breadcrumb .wt-clicksave{font-size: 16px;}
 .wt-userdetails .wt-description p{
 	font-size: 16px;
 	margin: 0 0 26px;
 	line-height: 26px;
 }
-.wt-userdetails .wt-description{position: relative;}
+.wt-userdetails .wt-description{position: relative;top: 30px;}
 .wt-userdetails .wt-description:after{
 	left: 0;
 	bottom: 0;
@@ -5085,7 +5085,8 @@ body.wt-login .wt-userlogedin{display: block;}
 	content: '';
 	position: absolute;
 	background: url(../images/bg-img.png);
-	height: 99px;
+	/* height: 99px; */
+	height: 60px;
 	background-size: cover;
 	background-repeat: no-repeat;
 }
