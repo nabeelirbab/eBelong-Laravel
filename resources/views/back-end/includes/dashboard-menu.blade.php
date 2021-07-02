@@ -173,6 +173,12 @@
                             </a>
                         </li>
                         <li>
+                            <a href="{{{ url(route('showUserProfile', ['slug' => Auth::user()->slug])) }}}">
+                                <i class="ti-user"></i>
+                                <span>My Profile</span>
+                            </a>
+                        </li>
+                        <li>
                             <a href="{{{ route('message') }}}">
                                 <i class="ti-envelope"></i>
                                 <span>{{ trans('lang.msg_center') }}</span>
