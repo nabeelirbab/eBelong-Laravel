@@ -890,6 +890,9 @@ class RestAPIController extends Controller
                 foreach ($jobs as $key => $job) {
                     $saved_jobs = !empty($user->profile->saved_jobs) ?
                         unserialize($user->profile->saved_jobs) : array();
+
+
+                        
                     $json[$key]['favorit'] = in_array($job->id, $saved_jobs) ? 'yes' : '';
                     $json[$key]['job_id'] = !empty($job->id) ? $job->id : '';
                     $json[$key]['status'] = !empty($job->status) ? $job->status : '';
@@ -935,6 +938,28 @@ class RestAPIController extends Controller
             return Response::json($json, 203);
         }
         return $json;
+    }
+
+    /**
+     * Get All jobs API
+     *
+     * @param \Illuminate\Http\Request $request request attributes
+     *
+     * @access public
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getAllJobs(Request $request) {
+
+       $getJobs = DB::table('jobs')
+        ->join('job_skill','job_skill.job_id','=','jobs.id')
+        ->select('jobs.*','job_skill.skill_id')
+        ->get();
+
+        $jsonEcodedJobs = json_encode($getJobs);
+
+        return $jsonEcodedJobs;
+
     }
 
     /**
@@ -1527,20 +1552,30 @@ class RestAPIController extends Controller
      */
     public function sendResetLinkEmail(Request $request)
     {
+        
         $server = Helper::worketicIsDemoSiteAjax();
         if (!empty($server)) {
             $json['type']    = 'error';
             $json['message'] = $server->getData()->message;
             return Response::json($json, 203);
         }
+        
         $random_number = Helper::generateRandomCode(10);
         $verification_code = strtoupper($random_number);
         $json = array();
         $email_settings = SiteManagement::getMetaValue('settings');
-        if (!empty($email_settings) && !empty($email_settings[0]['email'])) {
-            config(['mail.username' => $email_settings[0]['email']]);
+        // print_r($email_settings);
+        // exit();
+        if (!empty($email_settings) && !empty($request['email'])) {
+            config(['mail.username' => $request['email']]);
         }
-        if (!empty($email_settings) && !empty($email_settings[0]['email'])) {
+
+        // print_r($email_settings);
+        // print_r($email_settings);
+        // exit();
+
+        if (!empty($email_settings) && !empty($request['email'])) {
+            
             $email_params = array();
             $template = DB::table('email_types')->select('id')->where('email_type', 'lost_password')->get()->first();
             $user = User::where('email', $request['email'])->first();
