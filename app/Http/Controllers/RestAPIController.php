@@ -345,8 +345,32 @@ class RestAPIController extends Controller
 
         $json = array();
         $credentials = $request->only('email', 'password');
+
+
+        
+
         if (auth()->attempt($credentials)) {
             $json['type'] = 'success';
+
+            $slug = DB::table('users')->select('slug')
+            ->where('id', '=', auth()->user()->id)
+            ->get();
+
+            $user_slug = @json_decode(json_encode($slug), true);
+
+
+            $skills = DB::table('skill_user')->select('skill_id')
+            ->where('user_id', '=', auth()->user()->id)
+            ->get();
+
+            $user_skills = @json_decode(json_encode($skills), true);
+
+            $skills_ids = null;
+
+            foreach ($user_skills as $skills) {
+                $skills_ids[] = $skills['skill_id'];
+            }
+
             $json['profile']['pmeta']['user_type'] = auth()->user()->getRoleNames()[0];
             $json['profile']['pmeta']['profile_img'] = url(Helper::getProfileImage(auth()->user()->id));
             $json['profile']['pmeta']['banner_img'] = url(Helper::getProfileBanner(auth()->user()->id));
@@ -354,6 +378,8 @@ class RestAPIController extends Controller
             $json['profile']['pmeta']['_gender'] = auth()->user()->profile->gender;
             $json['profile']['pmeta']['_is_verified'] = auth()->user()->user_verified == 1 ? 'yes' : 'no';
             $json['profile']['pmeta']['full_name'] = Helper::getUserName(auth()->user()->id);
+            $json['profile']['pmeta']['skill_id'] = $skills_ids;
+            $json['profile']['pmeta']['slug'] = $user_slug[0]['slug'];
             $json['profile']['umeta']['profile_id'] = auth()->user()->profile->id;
             $json['profile']['umeta']['id'] = auth()->user()->id;
             $json['profile']['umeta']['user_token'] = auth()->user()->remember_token;
