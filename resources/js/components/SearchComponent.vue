@@ -6,7 +6,8 @@
             </div>
             <div class="wt-radioholder" v-bind:style='{"display" : (isActive? "block" : "none" )}'>
                 <span class="wt-radio" v-for="(filter, index) in filters" :key="index">
-                    <input :id="'wt-'+filter.value" type="radio" name="searchtype" :value="filter.value" v-model="types"  v-on:change="getSearchableData(types), emptyField(types)" >
+                    <!-- <input :id="'wt-'+filter.value" type="radio" name="searchtype" :value="filter.value" v-model="types"  v-on:change="getSearchableData(types), emptyField(types)" > -->
+                    <input :id="'wt-'+filter.value" type="radio" name="type" :value="filter.value" v-model="types"  v-on:change="getSearchableData(types), emptyField(types)" >
                     <label :for="'wt-'+filter.value">{{filter.title}}</label>
                 </span>
             </div>
@@ -68,7 +69,9 @@
                     </div>
                     <div class="wt-radioholder" v-bind:style='{"display" : (isActive? "block" : "none" )}'>
                         <span class="wt-radio" v-for="(filter, index) in filters" :key="index">
-                            <input :id="filter.value" type="radio" name="searchtype" :value="filter.value" v-model="types"  v-on:change="getSearchableData(types), emptyField(types), changeFilter()">
+                            <!-- <input :id="filter.value" type="radio" name="searchtype" :value="filter.value" v-model="types"  v-on:change="getSearchableData(types), emptyField(types), changeFilter()"> -->
+                            <input :id="filter.value" type="radio" name="type" :value="filter.value" v-model="types"  v-on:change="getSearchableData(types), emptyField(types), changeFilter()">
+                            
                             <!-- <label :for="'wt-'+filter.value">{{filter.title}}</label> -->
                         </span>
                     </div>
@@ -94,7 +97,7 @@
                 employers:[],
                 jobs:[],
                 query:'',
-                types:'freelancer',
+                types:'job',
                 selected_type:'',
                 no_record:this.no_record_message,
                 is_show: false,
@@ -136,6 +139,7 @@
                 this.type_change = true;
             },
             getSearchableData: function(type, newQuery){
+                console.log("hahahahah", type )
                 this.displayFiltersName(type);
                 let self = this;
                 axios.post(APP_URL + '/search/get-searchable-data',{
@@ -155,10 +159,12 @@
                 });
             },
             emptyField:function(types){
+                console.log("empty filed", types)
                 this.$refs.searchfield.inputValue = '';
                 this.isActive = false;
             },
             watchSearchResults:function(types){
+                 console.log("watchSearchResults", types)
                 if(jQuery('.wt-radioholder').css('display') == 'block') {
                     jQuery('.wt-radioholder').css("display", "none");
                 }
@@ -171,6 +177,7 @@
                     this.is_show = true;
                 } else {
                     let keyword = this.query;
+                    console.log("query", keyword)
                     var urlParams = new URLSearchParams(window.location.search);
                     if (urlParams.get('type') && this.type_change == false) {
                         var type = urlParams.get('type');
@@ -245,7 +252,8 @@
                     else {
                         window.location.replace(APP_URL+'/profile/'+slug);
                     }
-                } else {
+                } 
+                else {
                     window.location.replace(APP_URL+'/search-results?type='+type);
                 }
 
@@ -257,7 +265,10 @@
         mounted: function () {
             var urlParams = new URLSearchParams(window.location.search);
             if (urlParams.get('type')) {
+
                 var type = urlParams.get('type');
+                console.log("mounted type", type)
+                this.types = type;
                 this.displayFiltersName(type);
             }
             jQuery(".search-field").keydown(function(){
@@ -276,48 +287,122 @@
             });
 
             $('form input').keydown(function (e) {
-                if (e.keyCode == 13) {
-                    e.preventDefault();
-                                   
-                   var types = $(".selected-search-type").text();
-                   console.log("here");
-                                      
-                   // let keyword = this.query
-                    if( document.getElementById('hidden_field'))
+
+                if( document.getElementById('hidden_field'))
+                    {  
                         var slug = document.getElementById('hidden_field').value;
-                    else
-                        var slug = "";
-
-                    if( types == 'Find Talent '){
-                        types = 'freelancer'; 
-                        if(slug == "") 
-                            window.location.replace(APP_URL+'/search-results?type='+types);   
-                        else
-                            window.location.replace(APP_URL+'/search-results?type='+types+'&s=&skills[]='+slug);
-                    }else {
-                        types = 'job';
-                        if( document.getElementById('url_type'))
-                            var url_type = document.getElementById('url_type').value;
-                        else
-                            var url_type = "";
-
-                        if(url_type == 1)
-                        {
-                            console.log(slug);
-                            window.location.replace(APP_URL+'/job/'+slug);
+                        console.log("here slug", slug);
+                        if (e.keyCode == 13 && slug !== "") {
+                            e.preventDefault();
+                            var types = $(".selected-search-type").text();
+                            console.log("here type", types);
+                            if( types == 'Talent '){
+                                console.log("yes i am in talent")
+                                types = 'freelancer'; 
+                                if(slug == "") 
+                                    window.location.replace(APP_URL+'/search-results?type='+types);   
+                                else
+                                    window.location.replace(APP_URL+'/search-results?type='+types+'&s=&skills[]='+slug);
+                            }
+                            else if( types == 'Work ') {
+                                types = 'job';
+                                if(slug == "") 
+                                    window.location.replace(APP_URL+'/search-results?type='+types);   
+                                else 
+                                {
+                                    let url_type = document.getElementById('url_type').value;
+                                    console.log("job url type ", url_type)
+                                    if(url_type == 1)
+                                    window.location.replace(APP_URL+'/job/'+slug);
+                                    else if(url_type == 2)
+                                        window.location.replace(APP_URL+'/search-results?type=job&s=&skills[]='+slug);
+                                    else
+                                        window.location.replace(APP_URL+'/search-results?type=job&s=&category[]='+slug);
+                                }
+                            }
+                            else if (types == 'Services '){
+                                types = 'service';
+                                if(slug == "") 
+                                    window.location.replace(APP_URL+'/search-results?type='+types);   
+                                else
+                                    window.location.replace(APP_URL+'/service/'+slug);
+                            } 
+                            return false;
                         }
-                        else if(url_type == 2)
-                            window.location.replace(APP_URL+'/search-results?type=job&s=&skills[]='+slug);
-                        else if(url_type == "" && slug == "")
-                        {
-                            window.location.replace(APP_URL+'/search-results?type=job');
-                        }
-                        else
-                            window.location.replace(APP_URL+'/search-results?type=job&s=&category[]='+slug);
+                    }
+
+
+                
+            //     if (e.keyCode == 13) {
+            //         e.preventDefault();
+            //         var types = $(".selected-search-type").text();
+            //         console.log("here type", types);
+                                      
+            //        // let keyword = this.query
+            //         if( document.getElementById('hidden_field'))
+            //             {var slug = document.getElementById('hidden_field').value;
+            //             console.log("here type", slug);}
+            //         else
+            //             var slug = "";
+
+            //         if( types == 'Talent '){
+            //             console.log("yes i am in talent")
+            //             types = 'freelancer'; 
+            //             if(slug == "") 
+            //                 window.location.replace(APP_URL+'/search-results?type='+types);   
+            //             else
+            //                 window.location.replace(APP_URL+'/search-results?type='+types+'&s=&skills[]='+slug);
+            //         }
+            //         else if( types == 'Work ') {
+            //             types = 'job';
+            //             if(slug == "") 
+            //                 window.location.replace(APP_URL+'/search-results?type='+types);   
+            //             else {
+            //                 let url_type = document.getElementById('url_type').value;
+            //                 console.log("job url type ", url_type)
+            //                 if(url_type == 1)
+            //                 window.location.replace(APP_URL+'/job/'+slug);
+            //                 else if(url_type == 2)
+            //                     window.location.replace(APP_URL+'/search-results?type=job&s=&skills[]='+slug);
+            //                 else
+            //                     window.location.replace(APP_URL+'/search-results?type=job&s=&category[]='+slug);
+            //             }
+                        
+                        
+                            
+            //                 ///old lines
+            //             // if( document.getElementById('url_type'))
+            //             //     {var url_type = document.getElementById('url_type').value;
+            //             //         console.log("yes i am in job", url_type )
+            //             //     }
+            //             // else
+            //             //     var url_type = "";
+            //             //     console.log("yes i am in job else", url_type )
+            //             // if(url_type == 1)
+            //             // {
+            //             //     console.log(slug);
+            //             //     window.location.replace(APP_URL+'/job/'+slug);
+            //             // }
+            //             // else if(url_type == 2)
+            //             //     window.location.replace(APP_URL+'/search-results?type=job&s=&skills[]='+slug);
+            //             // else if(url_type == "" && slug == "")
+            //             // {
+            //             //     window.location.replace(APP_URL+'/search-results?type=job');
+            //             // }
+            //             // else
+            //             //     window.location.replace(APP_URL+'/search-results?type=job&s=&category[]='+slug);
                                              
-                    }                                                               
-                    return false;
-                }
+            //         }    
+            //         else if (types == 'Services '){
+            //             types = 'service';
+            //             if(slug == "") 
+            //                 window.location.replace(APP_URL+'/search-results?type='+types);   
+            //             else
+            //                 window.location.replace(APP_URL+'/service/'+slug);
+            //         } 
+                                                                              
+            //         return false;
+            //     }
             });
   
 

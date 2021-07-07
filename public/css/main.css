@@ -681,7 +681,7 @@ li.wt-rss a { background:#ff6600; }
 .wt-socialiconssimple li.wt-clone a i{color:#878787;}
 .wt-socialiconfooter li.wt-facebook:hover a i{ color: #9013F3; }
 .wt-socialiconfooter li.wt-twitter:hover a i{ color: #9013F3; }
-.wt-socialiconfooter li.wt-linkedin:hover a i{ color: #9013F3; }
+.wt-socialiconfooter li.wt-linkedIn:hover a i{ color: #9013F3; }
 .wt-socialiconfooter li.wt-skype:hover a i{ color: #00aff0; }
 .wt-socialiconfooter li.wt-dropbox:hover a i{ color: #007ee5; }
 .wt-socialiconfooter li.wt-vimeo:hover a i{ color: #1ab7ea; }
@@ -1780,6 +1780,12 @@ body.wt-login .wt-loginarea{display: block;}
 	position: absolute;
 }
 body.wt-login .wt-userlogedin{display: block;}
+@media (max-width:420px){
+	body.wt-login .wt-userlogedin{
+		float: left;
+		padding: 20px 20px 20px 0px;
+	}
+}
 .wt-userlogedin .wt-userimg{
 	float:left;
 	margin-right:10px;
