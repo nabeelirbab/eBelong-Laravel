@@ -316,7 +316,7 @@
 												</figure>
 												<div class="wt-username">
 													<h3>{{{ Helper::getUserName(Auth::user()->id) }}}</h3>
-													<span>{{{ !empty(Auth::user()->profile->tagline) ? str_limit(Auth::user()->profile->tagline, 26, '') : Helper::getAuthRoleName() }}}</span>
+													<span>{{{ !empty(Auth::user()->profile->tagline) ? str_limit(Auth::user()->profile->tagline, 30, '') : Helper::getAuthRoleName() }}}</span>
 												</div>
 												@if (file_exists(resource_path('views/extend/back-end/includes/profile-menu.blade.php'))) 
 													@include('extend.back-end.includes.profile-menu')

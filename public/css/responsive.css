@@ -809,7 +809,10 @@
 	}
 	.sj-paymentmethod li a i{border: 0;}
 	.wt-header .wt-rightarea .wt-nav .navbar-toggler{margin-right:10px; }
-	.wt-username h3, .wt-username span{max-width: 120px;}
+	.wt-username h3, .wt-username span{
+		/* max-width: 120px; */
+		max-width: 200px;
+	}
 	.wt-innerbannercontent .wt-breadcrumb{line-height: 26px;font-size: 16px;}
 	.wt-radioholder{top: 120px;width: 100%;}
 	.wt-formbannervtwo .wt-radioholder{top: 100%;}
