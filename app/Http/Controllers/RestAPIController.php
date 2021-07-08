@@ -346,9 +346,6 @@ class RestAPIController extends Controller
         $json = array();
         $credentials = $request->only('email', 'password');
 
-
-        
-
         if (auth()->attempt($credentials)) {
             $json['type'] = 'success';
 
@@ -977,10 +974,25 @@ class RestAPIController extends Controller
      */
     public function getAllJobs(Request $request) {
 
-       $getJobs = DB::table('jobs')
-        ->join('job_skill','job_skill.job_id','=','jobs.id')
-        ->select('jobs.*','job_skill.skill_id')
-        ->get();
+
+        if(isset($request['skills_ids'])) {
+
+            $ids = $request['skills_ids'];
+
+            $getJobs = DB::table('jobs')
+            ->join('job_skill','job_skill.job_id','=','jobs.id')
+            ->select('jobs.*','job_skill.skill_id')
+            ->whereIn('job_skill.skill_id', $ids)
+            ->get();
+
+        }
+        else {
+
+            $getJobs = DB::table('jobs')
+            ->join('job_skill','job_skill.job_id','=','jobs.id')
+            ->select('jobs.*','job_skill.skill_id')
+            ->get();
+        }
 
         $jsonEcodedJobs = json_encode($getJobs);
 
