@@ -985,16 +985,9 @@ class RestAPIController extends Controller
             ->whereIn('job_skill.skill_id', $ids)
             ->get();
 
-        }
-        else {
+            $jsonEcodedJobs = json_encode($getJobs);
 
-            $getJobs = DB::table('jobs')
-            ->join('job_skill','job_skill.job_id','=','jobs.id')
-            ->select('jobs.*','job_skill.skill_id')
-            ->get();
         }
-
-        $jsonEcodedJobs = json_encode($getJobs);
 
         return $jsonEcodedJobs;
 

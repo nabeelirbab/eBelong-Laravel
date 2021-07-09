@@ -18,7 +18,7 @@ Route::get('logos','LogoController@index');
 Route::get('v1/logos/get/{skill}','LogoController@getLogos');
 Route::get('v1/listing/get-freelancers', 'RestAPIController@getFreelancer');
 Route::get('v1/listing/get-employers', 'RestAPIController@getEmployer');
-Route::get('v1/listing/get-jobs', 'RestAPIController@getAllJobs');
+Route::post('v1/listing/get-jobs', 'RestAPIController@getAllJobs');
 Route::post('v1/user/update-profile', 'RestAPIController@updateProfile');
 Route::post('v1/user/do-login', 'RestAPIController@userLogin');
 Route::post('v1/user/do-logout', 'RestAPIController@userLogout');
