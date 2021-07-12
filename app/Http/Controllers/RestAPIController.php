@@ -349,11 +349,11 @@ class RestAPIController extends Controller
         if (auth()->attempt($credentials)) {
             $json['type'] = 'success';
 
-            $slug = DB::table('users')->select('slug')
+            $p_data = DB::table('users')->select('slug','is_certified')
             ->where('id', '=', auth()->user()->id)
             ->get();
 
-            $user_slug = @json_decode(json_encode($slug), true);
+            $p_data_array = @json_decode(json_encode($p_data), true);
 
 
             $skills = DB::table('skill_user')->select('skill_id')
@@ -376,7 +376,8 @@ class RestAPIController extends Controller
             $json['profile']['pmeta']['_is_verified'] = auth()->user()->user_verified == 1 ? 'yes' : 'no';
             $json['profile']['pmeta']['full_name'] = Helper::getUserName(auth()->user()->id);
             $json['profile']['pmeta']['skill_id'] = $skills_ids;
-            $json['profile']['pmeta']['slug'] = $user_slug[0]['slug'];
+            $json['profile']['pmeta']['slug'] = $p_data_array[0]['slug'];
+            $json['profile']['pmeta']['is_certified'] = $p_data_array[0]['is_certified'];
             $json['profile']['umeta']['profile_id'] = auth()->user()->profile->id;
             $json['profile']['umeta']['id'] = auth()->user()->id;
             $json['profile']['umeta']['user_token'] = auth()->user()->remember_token;
