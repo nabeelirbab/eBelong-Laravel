@@ -87,6 +87,12 @@ iframe {
 	float: left;
 	border: none;
 }
+.list-group-item.active {
+	z-index: 2;
+	color: #fff;
+	background-color: #9013F3;
+	border-color: #9013F3;
+  }
 .wp-caption.alignleft,
 .wp-caption.alignnone { width: 100%; }
 button { border: none; }
@@ -10064,7 +10070,10 @@ a:focus{text-decoration: none !important;}
 .wt-userdetails {
 	width: 100%;
 }
-}
+/* 
+.instagram-widget .wx-footer+a {
+    display: none !important;
+} */
 
 @keyframes gradient {
 	0% {

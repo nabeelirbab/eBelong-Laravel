@@ -458,7 +458,13 @@
 				<div data-component="Slider" data-vue='<?php echo json_encode($freelancers);?>' id="e-freelancer"></div>
 				<div data-component="BannerJob" data-vue='{}'  id="e-banner-job" ></div>
 				<div data-component="PostSkill" data-vue='<?php echo json_encode(array('categories'=> $categories,'skills'=>$all_skills)) ?>' id="e-postskill"></div>
-				
+				<div class="instagram-widget">
+					<div data-mc-src="0d13b9ae-91ec-4ad7-9cf1-0fef35eb2bbe#instagram"></div>
+					<script 
+					src="https://cdn2.woxo.tech/a.js#60ed75977550f200151dbbe8" 
+					async data-usrc>
+					</script>
+				</div>
 				
 				
 				@auth
