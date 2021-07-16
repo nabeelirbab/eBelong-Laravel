@@ -19,7 +19,7 @@
 		<link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
 		<link href="{{ asset('css/home.css') }}" rel="stylesheet">
 		<!-- <link href="http://amentotech.com/projects/worketic/css/transitions.css" rel="stylesheet"> -->
-		<link href="http://amentotech.com/projects/worketic/css/color.css" rel="stylesheet">
+		<link href="https://amentotech.com/projects/worketic/css/color.css" rel="stylesheet">
 
 		<link href="{{asset('css/linearicons.css') }}" rel="stylesheet">
 		<link
