@@ -54,14 +54,7 @@
             </div>
           </div>
         </div>
-        <vue-instagram token="IGQVJVX083Qmhvdl9VUzZANWFVJcGplTlFYc1VNVm9KcWNYSC16eDE5Tlc5a3ZAtMlJqQjFZARXZAGaDhMeHozLWlyeXphN1FLZAWFXTHdjenB0ckthZAHFOUjZAxU0hjd3dseWNjVV9DRHNnd21FRUcyeTV4NgZDZD" :count="6" mediaType="image">
-          <template slot="feeds" slot-scope="props">
-            <li class="fancy-list"> {{ props.feed.link }} </li>
-          </template>
-          <template slot="error" slot-scope="props">
-            <div class="fancy-alert"> {{ props.error.error_message }} </div>
-          </template>
-        </vue-instagram>
+        
     </div>
     
 </template>
@@ -75,7 +68,6 @@ import Vue from 'vue'
 import VueCookies from 'vue-cookies'
 Vue.use(VueCookies)
 
-import VueInstagram from 'vue-instagram';
 import carousel from 'vue-owl-carousel2'
 // import sourceimage from '../../../../public/404-img.jpg';
 const initalData = {
@@ -102,7 +94,6 @@ export default {
       Step2,
       Step3,
       Step4,
-      VueInstagram,
       carousel
   },
    props:['items'],

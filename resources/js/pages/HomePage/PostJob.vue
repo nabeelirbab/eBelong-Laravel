@@ -22,7 +22,7 @@
                   />
                   <p v-if="errors.length">
                     <ul>
-                      <li style="list-style:none; color : red " v-for="error in errors">{{ error }}</li>
+                      <li style="list-style:none; color : red " v-for="error in errors" v-bind:key="error.id" >{{ error }}</li>
                     </ul>
                   </p>
                   <button v-on:click="onClick" class="e-button e-button-primary my-3">Continue</button>
@@ -70,7 +70,7 @@ export default {
     };
   },
   mounted(){
-    console.log(this.items);
+    // console.log(this.items);
     this.show = this.items && this.items.roles && this.items.roles[0].role_type === "admin" ? false : true;
   },
   methods:{
