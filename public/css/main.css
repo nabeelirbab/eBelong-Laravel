@@ -1772,7 +1772,7 @@ body.wt-login .wt-loginarea{display: block;}
 	display: none;
 	cursor:pointer;
 	position:relative;
-	padding-right:0;
+	/* padding-right:0; */
 	position: relative;
 }
 .wt-userlogedin:before{
@@ -7556,7 +7556,7 @@ select.is-invalid {border-color: #dc3545;}
     text-align: left;
     overflow: hidden;
     white-space: nowrap;
-    text-overflow: ellipsis;
+    /* text-overflow: ellipsis; */
 }
 @keyframes sonarWave {
   from {
@@ -10074,7 +10074,7 @@ a:focus{text-decoration: none !important;}
 .instagram-widget .wx-footer+a {
     display: none !important;
 } */
-
+}
 @keyframes gradient {
 	0% {
 		background-position: 0% 50%;

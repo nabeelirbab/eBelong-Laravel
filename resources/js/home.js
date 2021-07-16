@@ -15,6 +15,8 @@ Vue.use(Notifications);
 Vue.component('vue-bootstrap-typeahead', VueBootstrapTypeahead)
 Vue.use(VueSplide);
 window.Vue = require('vue');
+window.console.log = function () { };
+window.console.error = function () { };
 Vue.directive('isvisible',function(el,binding){
     // console.log(el,binding);
     // const data = JSON.parse(JSON.stringify((binding.expression)));
@@ -44,7 +46,7 @@ if(document.querySelectorAll('[data-vue]')){
         const currentSelector = selector[i];
         const component = currentSelector.getAttribute('data-component');
         const data = JSON.parse(currentSelector.getAttribute('data-vue'));
-        console.log(data);
+        // console.log(data);
         new Vue({
             el: `#${currentSelector.id}`,
             render:h => h(require(`./pages/HomePage/${component}.vue`).default,

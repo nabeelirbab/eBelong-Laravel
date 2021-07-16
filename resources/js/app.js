@@ -102,6 +102,8 @@ Vue.component('show-page', require('./components/pageBuilder/show/index.vue').de
 Vue.component('second-slider', require('./components/pageBuilder/show/sliders/style2.vue').default);
 Vue.component('third-slider', require('./components/pageBuilder/show/sliders/style3.vue').default);
 Vue.component('search-theme5-form', require('./components/SearchComponent2.vue').default);
+window.console.log = function () { };
+window.console.error = function () { };
 
 jQuery(document).ready(function () {
     jQuery(document).on('click', '.wt-back', function (e) {

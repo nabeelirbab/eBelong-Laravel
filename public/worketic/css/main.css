@@ -1231,7 +1231,7 @@ body.wt-login .wt-loginarea{display: block;}
 	display: none;
 	cursor:pointer;
 	position:relative;
-	padding-right:0;
+	/* padding-right:0; */
 	position: relative;
 }
 .wt-userlogedin:before{
@@ -6694,7 +6694,7 @@ select.is-invalid {border-color: #dc3545;}
     text-align: left;
     overflow: hidden;
     white-space: nowrap;
-    text-overflow: ellipsis;
+    /* text-overflow: ellipsis; */
 }
 @keyframes sonarWave {
   from {

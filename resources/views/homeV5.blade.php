@@ -19,7 +19,7 @@
 		<link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
 		<link href="{{ asset('css/home.css') }}" rel="stylesheet">
 		<!-- <link href="http://amentotech.com/projects/worketic/css/transitions.css" rel="stylesheet"> -->
-		<link href="http://amentotech.com/projects/worketic/css/color.css" rel="stylesheet">
+		<link href="https://amentotech.com/projects/worketic/css/color.css" rel="stylesheet">
 
 		<link href="{{asset('css/linearicons.css') }}" rel="stylesheet">
 		<link
@@ -458,13 +458,17 @@
 				<div data-component="Slider" data-vue='<?php echo json_encode($freelancers);?>' id="e-freelancer"></div>
 				<div data-component="BannerJob" data-vue='{}'  id="e-banner-job" ></div>
 				<div data-component="PostSkill" data-vue='<?php echo json_encode(array('categories'=> $categories,'skills'=>$all_skills)) ?>' id="e-postskill"></div>
-				<div class="instagram-widget">
-					<div data-mc-src="0d13b9ae-91ec-4ad7-9cf1-0fef35eb2bbe#instagram"></div>
-					<script 
-					src="https://cdn2.woxo.tech/a.js#60ed75977550f200151dbbe8" 
-					async data-usrc>
-					</script>
-				</div>
+				
+				<!-- <div class="instagram-widget2">
+					<div class="container">
+						<div class="row">
+							<div class="col-sm-12">
+								<iframe src="https://snapwidget.com/embed/949623" class="snapwidget-widget" allowtransparency="true" frameborder="0" scrolling="no" style="border:none; overflow:hidden;  width:800px; height:160px"></iframe>
+							</div>
+						</div>
+					</div>
+					
+				</div> -->
 				
 				
 				@auth
@@ -473,6 +477,13 @@
 				@guest
 					<div data-component="PostJob" data-vue='{}'  id="e-postjob"></div>
 				@endguest
+				<div class="instagram-widget">
+					<div data-mc-src="0d13b9ae-91ec-4ad7-9cf1-0fef35eb2bbe#instagram"></div>
+					<script 
+					src="https://cdn2.woxo.tech/a.js#60ed75977550f200151dbbe8" 
+					async data-usrc>
+					</script>
+				</div>
 				<link href="{{ asset('worketic/css/prettyPhoto-min.css') }}" rel="stylesheet">
 				<style>
 					.wt-header .wt-navigation>ul>.menu-item-has-children:after,
