@@ -108,6 +108,8 @@ Route::post('user/add-wishlist', 'UserController@addWishlist');
 Route::group(
     ['middleware' => ['role:admin']],
     function () {
+        Route::get('user', ['uses'=>'UserController@records', 'as'=>'user.records']);
+
         // Article Category Routes
         Route::get('admin/article/categories', 'ArticleCategoryController@index')->name('articleCategories');
         Route::get('admin/article/categories/edit-cats/{id}', 'ArticleCategoryController@edit')->name('editArticleCategories');
@@ -137,6 +139,7 @@ Route::group(
         Route::get('admin/payouts/download/{year}/{month}/{ids?}', 'UserController@generatePDF');
 		
         Route::get('users', 'UserController@userListing')->name('userListing');
+        Route::get('admin/dashboard', 'StatsController@index');
 		Route::get('users/profile-edit/{id}','UserController@userProfileUpdate');
 		Route::post('admin/store-freelancer-profile-settings','UserController@storeFreelancerProfileSettings');
 		Route::post('admin/store-employer-profile-settings','UserController@storeEmployerProfileSettings');

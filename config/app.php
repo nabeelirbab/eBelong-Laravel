@@ -214,6 +214,9 @@ return [
          */
         Intervention\Image\ImageServiceProvider::class,
         Spatie\JsonApiPaginate\JsonApiPaginateServiceProvider::class,
+
+        ConsoleTVs\Charts\ChartsServiceProvider::class,
+
     ],
 
     /*
@@ -271,5 +274,6 @@ return [
         'Helper' => App\Helper::class,
         'Stripe' => Cartalyst\Stripe\Laravel\Facades\Stripe::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
+        'Charts' => ConsoleTVs\Charts\Facades\Charts::class,
     ],
 ];
