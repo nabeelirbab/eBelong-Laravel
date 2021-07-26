@@ -128,12 +128,20 @@ class StatsController extends Controller
     	$users = User::where(DB::raw("(DATE_FORMAT(created_at,'%Y'))"),date('Y'))
     				->get();
         $chart = Charts::database($users, 'bar', 'highcharts')
-			      ->title("New Users Stats")
+			      ->title("Users Joining Stats")
 			      ->elementLabel("Users Joined - Monthly")
 			      ->dimensions(700, 400)
 			      ->responsive(true)
 			      ->groupByMonth(date('Y'), true);
-        return view('back-end.admin.stats.index',compact('chart'));
+
+        $pie  =	 Charts::create('pie', 'highcharts')
+                  ->title('Freelancers & Employee %')
+                  ->labels(['Employers', 'Freelancers'])
+                  ->values([7,92])
+                  ->dimensions(1000,500)
+                  ->responsive(true);
+
+        return view('back-end.admin.stats.index',compact('chart','pie'));
     }
 
 }

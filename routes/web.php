@@ -139,7 +139,7 @@ Route::group(
         Route::get('admin/payouts/download/{year}/{month}/{ids?}', 'UserController@generatePDF');
 		
         Route::get('users', 'UserController@userListing')->name('userListing');
-        Route::get('admin/dashboard', 'StatsController@index');
+        Route::get('admin/dashboard', 'StatsController@index')->name('adminDashboard');
 		Route::get('users/profile-edit/{id}','UserController@userProfileUpdate');
 		Route::post('admin/store-freelancer-profile-settings','UserController@storeFreelancerProfileSettings');
 		Route::post('admin/store-employer-profile-settings','UserController@storeEmployerProfileSettings');

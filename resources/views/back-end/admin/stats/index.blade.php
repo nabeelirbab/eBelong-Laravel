@@ -4,19 +4,23 @@
 
     <div >
         <div >
+
+            <h2>Ebelong Statistics</h2>
             <div >
             <div >
-                <div >Chart Demo</div>
 
                 <div >
                 {!! $chart->html() !!}
                 </div>
+                <hr>
+                {!!$pie->html() !!}
             </div>
             </div>
         </div>
     </div>
     {!! Charts::scripts() !!}
     {!! $chart->script() !!}
+    {!! $pie->script() !!}
 
     </section>
 @endsection

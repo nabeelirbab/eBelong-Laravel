@@ -50,6 +50,12 @@
             <nav id="wt-navdashboard" class="wt-navdashboard">
                 <ul>
                     @if ($role === 'admin')
+                        <li>
+                            <a href="{{{ route('adminDashboard') }}}">
+                                <i class="ti-desktop" aria-hidden="true"></i>
+                                <span>Admin Dashboard</span>
+                            </a>
+                        </li>
                         <li class="menu-item-has-children">
                             <span class="wt-dropdowarrow"><i class="lnr lnr-chevron-right"></i></span>
                             <a href="javascript:void(0)">
