@@ -145,7 +145,7 @@
 
     <script>
         $(function() {
-            alert(222);
+            // alert(222);
             $('#users-table').DataTable({
                 processing: true,
                 serverSide: true,
