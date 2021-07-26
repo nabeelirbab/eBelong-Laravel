@@ -1,5 +1,13 @@
 @extends(file_exists(resource_path('views/extend/back-end/master.blade.php')) ? 'extend.back-end.master' : 'back-end.master')
 @section('content')
+
+<!-- <link href="http://netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"> -->
+<link rel="stylesheet" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
+
+<script src="//code.jquery.com/jquery.js"></script>
+<script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js" defer></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
     <section class="wt-haslayout wt-dbsectionspace" id="profile_settings">
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 float-right">
@@ -105,4 +113,55 @@
             </div>
         </div>
     </section>
-@endsection
+
+    <div class="container">
+ 
+        <div class="panel panel-primary">
+    
+            <div class="panel-heading">Server Side Datatable in Laravel 5</div>
+    
+                <div class="panel-body">    
+            
+                    <table class="table table-bordered" id="users-table">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Name</th>
+                                <th>Status</th>
+                                <th>Email</th>
+                                <th>Invitation Status</th>
+                                <th>Joining Date</th>
+                                <th>Is featured</th>
+                                <th>Is certified</th>
+                            </tr>
+                        </thead>
+                    </table>
+            
+                </div>
+    
+        </div>
+ 
+    </div>
+
+    <script>
+        $(function() {
+            alert(222);
+            $('#users-table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: '{!! route('users.data') !!}',
+                columns: [
+                    { data: 'id', name: 'id' },
+                    { data: 'first_name', name: 'first_name' },
+                    { data: 'status', name: 'status' },
+                    { data: 'email', name: 'email' },
+                    { data: 'invitation_status', name: 'invitation_status' },
+                    { data: 'created_at', name: 'created_at' },
+                    { data: 'is_featured', name: 'is_featured' },
+                    { data: 'is_certified', name: 'is_certified' },
+                ]
+            });
+        });
+       </script>
+
+    @endsection

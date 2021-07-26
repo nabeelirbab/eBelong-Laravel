@@ -216,6 +216,8 @@ return [
         Spatie\JsonApiPaginate\JsonApiPaginateServiceProvider::class,
 
         ConsoleTVs\Charts\ChartsServiceProvider::class,
+        Yajra\DataTables\DataTablesServiceProvider::class,
+
 
     ],
 
@@ -275,5 +277,7 @@ return [
         'Stripe' => Cartalyst\Stripe\Laravel\Facades\Stripe::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'Charts' => ConsoleTVs\Charts\Facades\Charts::class,
+        'DataTables' => Yajra\DataTables\Facades\DataTables::class,
+
     ],
 ];

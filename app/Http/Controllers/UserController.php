@@ -18,6 +18,7 @@ use App\EmailTemplate;
 use App\Helper;
 use App\Invoice;
 use App\Job;
+use DataTables;
 use App\Language;
 use App\Mail\AdminEmailMailable;
 use App\Mail\FreelancerEmailMailable;
@@ -2514,6 +2515,11 @@ class UserController extends Controller
         $json['message'] = 'certified status change successfully.';
 		return $json;
 	}
+
+    public function usersList(){
+
+        return DataTables::of(User::query())->make(true);
+    }
 	
 	// For load employee / freelancer profile page in admin.
 	public function userProfileUpdate($id){

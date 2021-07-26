@@ -137,6 +137,9 @@ Route::group(
         Route::get('admin/payouts', 'UserController@getPayouts')->name('adminPayouts');
         Route::post('admin/update-payout-status', 'UserController@updatePayoutStatus');
         Route::get('admin/payouts/download/{year}/{month}/{ids?}', 'UserController@generatePDF');
+
+        Route::get('users-datatable', 'UserController@datatable')->name('users.datatable');
+        Route::get('users-data', 'UserController@usersList')->name('users.data');
 		
         Route::get('users', 'UserController@userListing')->name('userListing');
         Route::get('admin/dashboard', 'StatsController@index')->name('adminDashboard');
