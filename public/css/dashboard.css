@@ -4833,7 +4833,7 @@ body.rtl .wt-uploadrating .modal-body{text-align: right;}
 
 .custome-datatable table.dataTable.wt-tablecategories tbody tr td {
     text-align: center;
-	padding: 20px;
+	padding: 10px;
 }
 
 .custome-datatable .dataTables_length {
@@ -4872,4 +4872,11 @@ body.rtl .wt-uploadrating .modal-body{text-align: right;}
 }
 .custome-datatable .dataTables_wrapper .dataTables_paginate {
 	padding: 10px 20px;
+}
+
+.custome-datatable .hideClick {
+	pointer-events: none;
+}
+.custome-datatable .hideClick.sorting {
+	background-image: unset;
 }

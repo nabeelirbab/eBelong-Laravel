@@ -161,9 +161,11 @@
                                         <th>Joining Date</th>
                                         <th>Is featured</th>
                                         <th>Is certified</th>
+                                        <th class="hideClick" ></th>
                                     </tr>
                                 </thead>
                             </table>
+                            
                         </div>
                     </div>
                 </div>
@@ -201,6 +203,7 @@
     </div> -->
 
     <script>
+
         $(function() {
             // alert(222);
             $('#users-table').DataTable({
@@ -214,8 +217,33 @@
                     { data: 'email', name: 'email' },
                     { data: 'invitation_status', name: 'invitation_status' },
                     { data: 'created_at', name: 'created_at' },
-                    { data: 'is_featured', name: 'is_featured' },
-                    { data: 'is_certified', name: 'is_certified' },
+                    { data: 'is_featured', name: 'is_featured',
+                        render: function(data){
+                            return  "<select id='is_featured_dropdown'>"+
+                                    "<option>No</option>"+
+                                    "<option>Yes</option>"+
+                                    "</select>";
+                        }
+                    },
+                    { data: 'is_certified', name: 'is_certified',
+                        render: function(data){
+                            return  "<select id='is_certified_dropdown'>"+
+                                    "<option>No</option>"+
+                                    "<option>Yes</option>"+
+                                    "</select>";
+                        }
+                    },
+                    {
+                        render: function(data){
+                            return  "<div class='wt-actionbtn'>"+
+							"<a href='javascript:void()' class='wt-addinfo wt-skillsaddinfo'><i class='lnr lnr-eye'></i></a>"+
+                            "<a href='javascript:void()' class='wt-addinfo wt-skillsaddinfo'><i class='fa fa-edit'></i></a>"+
+														
+                            "<a href='javascript:void()' v-on:click.prevent='deleteUser({{$user->id}})' class='wt-deleteinfo wt-skillsaddinfo'><i class='fa fa-trash'></i></a>"+
+                            "</div>";
+                        }
+                       
+                    }
                 ]
             });
         });
