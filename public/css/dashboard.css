@@ -3435,7 +3435,7 @@ input[type=submit],
 .wt-attachfile li + li{border-top:0; }
 .switch-button-control .switch-button.enabled{
 	border: none;
-    box-shadow: inset 0 0 0 20px #26de81 !important;
+    box-shadow: inset 0 0 0 20px #9013F3 !important;
 }
 .switch-button-control .switch-button{background: transparent !important;}
 .multile-file-attachments .dz-message .form-group-label .wt-labelgroup label span{margin-right:14px; }
@@ -4824,3 +4824,52 @@ body.rtl .wt-uploadrating .modal-body{text-align: right;}
 		cursor: pointer;
 	}
 /*-- End Bank Transfar Info Model --*/
+
+.custome-datatable table.dataTable.wt-tablecategories thead tr th {
+	font-weight: unset;
+	text-align: center;
+	padding: 20px;
+}
+
+.custome-datatable table.dataTable.wt-tablecategories tbody tr td {
+    text-align: center;
+	padding: 20px;
+}
+
+.custome-datatable .dataTables_length {
+    padding: 12px 30px;
+}
+.custome-datatable .dataTables_filter {
+    padding: 12px 30px;
+}
+.custome-datatable .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    color: white !important;
+    border: 1px solid #9013F3;
+    background-color: #9013F3;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #9013F3), color-stop(100%, #9013F3));
+    background: -webkit-linear-gradient(top, #9013F3 0%, #9013F3 100%);
+    background: -moz-linear-gradient(top, #9013F3 0%, #9013F3 100%);
+    background: -ms-linear-gradient(top, #9013F3 0%, #9013F3 100%);
+    background: -o-linear-gradient(top, #9013F3 0%, #9013F3 100%);
+    background: linear-gradient(to bottom, #9013F3 0%, #9013F3 100%);
+}
+.custome-datatable .dataTables_wrapper .dataTables_paginate .paginate_button.current, .custome-datatable .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+    color: white !important;
+    border: 1px solid #9013F3 !important;
+    background-color: #9013F3 !important;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #9013F3), color-stop(100%, #9013F3)) !important;
+    background: -webkit-linear-gradient(top, #9013F3 0%, #9013F3 100%) !important;
+    background: -moz-linear-gradient(top, #9013F3 0%, #9013F3 100%) !important;
+    background: -ms-linear-gradient(top, #9013F3 0%, #9013F3 100%) !important;
+    background: -o-linear-gradient(top, #9013F3 0%, #9013F3 100%) !important;
+    background: linear-gradient(to bottom, #9013F3 0%, #9013F3 100%) !important;
+}
+
+
+
+.custome-datatable .dataTables_wrapper .dataTables_info {
+	padding: 10px 20px ;
+}
+.custome-datatable .dataTables_wrapper .dataTables_paginate {
+	padding: 10px 20px;
+}

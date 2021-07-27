@@ -112,9 +112,66 @@
                 </div>
             </div>
         </div>
+        <!-- <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 float-right">
+                <div class="wt-dashboardbox">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">Server Side Datatable in Laravel 5</div>
+                        <div class="panel-body">    
+                            <table class="table table-bordered" id="users-table">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Name</th>
+                                        <th>Status</th>
+                                        <th>Email</th>
+                                        <th>Invitation Status</th>
+                                        <th>Joining Date</th>
+                                        <th>Is featured</th>
+                                        <th>Is certified</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div> -->
     </section>
 
-    <div class="container">
+    <section class="custome-datatable">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 float-right">
+                <div class="wt-dashboardbox">
+                    <div class="wt-dashboardboxtitle wt-titlewithsearch">
+                        <h2>{{{ trans('lang.manage_users') }}}</h2>
+                    </div>
+                    <div class="panel panel-primary">
+                        <!-- <div class="panel-heading">Server Side Datatable in Laravel 5</div> -->
+                        <div class="panel-body wt-dashboardboxcontent wt-categoriescontentholder">    
+                            <table class="table table-bordered wt-tablecategories" id="users-table">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Name</th>
+                                        <th>Status</th>
+                                        <th>Email</th>
+                                        <th>Invitation Status</th>
+                                        <th>Joining Date</th>
+                                        <th>Is featured</th>
+                                        <th>Is certified</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- <div class="container">
  
         <div class="panel panel-primary">
     
@@ -141,7 +198,7 @@
     
         </div>
  
-    </div>
+    </div> -->
 
     <script>
         $(function() {
