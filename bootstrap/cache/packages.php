@@ -39,6 +39,24 @@
       'Zipper' => 'Chumper\\Zipper\\Zipper',
     ),
   ),
+  'consoletvs/charts' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'ConsoleTVs\\Charts\\ChartsServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Charts' => 'ConsoleTVs\\Charts\\Facades\\Charts',
+    ),
+  ),
+  'consoletvs/support' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'ConsoleTVs\\Support\\SupportServiceProvider',
+    ),
+  ),
   'davejamesmiller/laravel-breadcrumbs' => 
   array (
     'providers' => 
@@ -66,6 +84,17 @@
     'aliases' => 
     array (
       'Image' => 'Intervention\\Image\\Facades\\Image',
+    ),
+  ),
+  'jenssegers/date' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Jenssegers\\Date\\DateServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Date' => 'Jenssegers\\Date\\Date',
     ),
   ),
   'laravel/nexmo-notification-channel' => 
@@ -99,6 +128,17 @@
     array (
       'Form' => 'Collective\\Html\\FormFacade',
       'Html' => 'Collective\\Html\\HtmlFacade',
+    ),
+  ),
+  'maatwebsite/excel' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Maatwebsite\\Excel\\ExcelServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Excel' => 'Maatwebsite\\Excel\\Facades\\Excel',
     ),
   ),
   'mariuzzo/laravel-js-localization' => 
@@ -170,6 +210,45 @@
     'providers' => 
     array (
       0 => 'Tanmuhittin\\LaravelGoogleTranslate\\LaravelGoogleTranslateServiceProvider',
+    ),
+  ),
+  'yajra/laravel-datatables-buttons' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Yajra\\DataTables\\ButtonsServiceProvider',
+    ),
+  ),
+  'yajra/laravel-datatables-editor' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Yajra\\DataTables\\EditorServiceProvider',
+    ),
+  ),
+  'yajra/laravel-datatables-fractal' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Yajra\\DataTables\\FractalServiceProvider',
+    ),
+  ),
+  'yajra/laravel-datatables-html' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Yajra\\DataTables\\HtmlServiceProvider',
+    ),
+  ),
+  'yajra/laravel-datatables-oracle' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Yajra\\DataTables\\DataTablesServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'DataTables' => 'Yajra\\DataTables\\Facades\\DataTables',
     ),
   ),
 );
