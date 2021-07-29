@@ -112,68 +112,9 @@
                 </div>
             </div>
         </div>
-        <!-- <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 float-right">
-                <div class="wt-dashboardbox">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">Server Side Datatable in Laravel 5</div>
-                        <div class="panel-body">    
-                            <table class="table table-bordered" id="users-table">
-                                <thead>
-                                    <tr>
-                                        <th>Id</th>
-                                        <th>Name</th>
-                                        <th>Status</th>
-                                        <th>Email</th>
-                                        <th>Invitation Status</th>
-                                        <th>Joining Date</th>
-                                        <th>Is featured</th>
-                                        <th>Is certified</th>
-                                    </tr>
-                                </thead>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-        </div> -->
     </section>
 
-    <section class="custome-datatable">
-        <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 float-right">
-                <div class="wt-dashboardbox">
-                    <div class="wt-dashboardboxtitle wt-titlewithsearch">
-                        <h2>{{{ trans('lang.manage_users') }}}</h2>
-                    </div>
-                    <div class="panel panel-primary">
-                        <!-- <div class="panel-heading">Server Side Datatable in Laravel 5</div> -->
-                        <div class="panel-body wt-dashboardboxcontent wt-categoriescontentholder">    
-                            <table class="table table-bordered wt-tablecategories" id="users-table">
-                                <thead>
-                                    <tr>
-                                        <th>Id</th>
-                                        <th>Name</th>
-                                        <th>Status</th>
-                                        <th>Email</th>
-                                        <th>Invitation Status</th>
-                                        <th>Joining Date</th>
-                                        <th>Is featured</th>
-                                        <th>Is certified</th>
-                                        <th class="hideClick" ></th>
-                                    </tr>
-                                </thead>
-                            </table>
-                            
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- <div class="container">
+    <div class="container">
  
         <div class="panel panel-primary">
     
@@ -200,10 +141,9 @@
     
         </div>
  
-    </div> -->
+    </div>
 
     <script>
-
         $(function() {
             // alert(222);
             $('#users-table').DataTable({
@@ -217,33 +157,8 @@
                     { data: 'email', name: 'email' },
                     { data: 'invitation_status', name: 'invitation_status' },
                     { data: 'created_at', name: 'created_at' },
-                    { data: 'is_featured', name: 'is_featured',
-                        render: function(data){
-                            return  "<select id='is_featured_dropdown'>"+
-                                    "<option>No</option>"+
-                                    "<option>Yes</option>"+
-                                    "</select>";
-                        }
-                    },
-                    { data: 'is_certified', name: 'is_certified',
-                        render: function(data){
-                            return  "<select id='is_certified_dropdown'>"+
-                                    "<option>No</option>"+
-                                    "<option>Yes</option>"+
-                                    "</select>";
-                        }
-                    },
-                    {
-                        render: function(data){
-                            return  "<div class='wt-actionbtn'>"+
-							"<a href='javascript:void()' class='wt-addinfo wt-skillsaddinfo'><i class='lnr lnr-eye'></i></a>"+
-                            "<a href='javascript:void()' class='wt-addinfo wt-skillsaddinfo'><i class='fa fa-edit'></i></a>"+
-														
-                            "<a href='javascript:void()' v-on:click.prevent='deleteUser({{$user->id}})' class='wt-deleteinfo wt-skillsaddinfo'><i class='fa fa-trash'></i></a>"+
-                            "</div>";
-                        }
-                       
-                    }
+                    { data: 'is_featured', name: 'is_featured' },
+                    { data: 'is_certified', name: 'is_certified' },
                 ]
             });
         });
