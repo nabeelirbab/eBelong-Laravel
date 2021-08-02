@@ -6,11 +6,11 @@
           <div class="col-sm-12 col-md-7">
             <div class="e-postjob__left">
               <div class="e-postjob__header py-5">
-                  <div class="e-postjob__header__title">Post a Job</div>
+                  <div class="e-postjob__header__title">Post a Service</div>
                   <div class="e-postjob__header__image"><img :src="`${APP_URL}/images/paper_plane.svg`" alt="paper_plane"/></div>
               </div>
               <div class="e-postjob__content">
-                    You can always start your hunt for the right freelancer by just posting your job and start receiving proposals from our top talent. You can then shortlist and select the most suitable Freelancer for your job
+                    You can always start your hunt for the right work by just posting your service and start receiving offers from our best available Employers. You can then discuss with them and select the most suitable Client to work with.
               </div>
               <div class="row">
                 <div class="col-12 my-4 col-md-10">
