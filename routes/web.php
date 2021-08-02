@@ -143,6 +143,8 @@ Route::group(
 		
         Route::get('users', 'UserController@userListing')->name('userListing');
         Route::get('admin/dashboard', 'StatsController@index')->name('adminDashboard');
+        Route::get('admin/invitation', 'UserController@newInviteForm')->name('inviteUser');
+        Route::post('admin/invitationsubmit', 'UserController@newInvite')->name('inviteUserSubmit');
 		Route::get('users/profile-edit/{id}','UserController@userProfileUpdate');
 		Route::post('admin/store-freelancer-profile-settings','UserController@storeFreelancerProfileSettings');
 		Route::post('admin/store-employer-profile-settings','UserController@storeEmployerProfileSettings');
@@ -305,6 +307,8 @@ Route::group(
         Route::post('/admin/login-notification-updated','UserController@updateNotificationData');
 		Route::post('/admin/update-user-is-featured-status','UserController@updateIsFeaturedStatus');
         Route::post('/admin/update-user-is-certified-status','UserController@updateIsCertifiedStatus');
+        Route::post('/admin/update-user-is-disabled-status','UserController@updateIsDisabledStatus');
+
 
     }
 );

@@ -1212,6 +1212,7 @@ return [
     'invitation_status' => 'Invitation Status',
 	'is_featured'=> 'Is Featured',
     'is_certified'=> 'Is Certified',
+    'is_disabled'=> 'Is Disabled',
     'location' => 'Location',
     'city' => 'City',
     'state' => 'State',

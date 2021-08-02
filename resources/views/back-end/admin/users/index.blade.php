@@ -42,7 +42,7 @@
                                         <th>{{{ trans('lang.invitation_status') }}}</th>
 										<th>{{{ trans('lang.is_featured') }}}</th>
                                         <th>{{{ trans('lang.is_certified') }}}</th>
-
+                                        <th>{{{ trans('lang.is_disabled') }}}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -85,6 +85,12 @@
 													</select>
 												</td>
                                                 <td>
+													<select id="{{$user->id}}-is_disabled" v-on:change.prevent='changeDisabledStatus({{$user->id}})'>
+														<option value="false" {{ $user->is_disabled == 'false' ? "selected":"" }}>No</option>
+														<option value="true" {{ $user->is_disabled == 'true' ? "selected":"" }}>Yes</option>
+													</select>
+												</td>
+                                                <td>
                                                     <div class="wt-actionbtn">
 														<a href="{{ url('profile/'.$user->slug) }}" class="wt-addinfo wt-skillsaddinfo"><i class="lnr lnr-eye"></i></a>
 													 
@@ -114,7 +120,7 @@
         </div>
     </section>
 
-    <div class="container">
+    <!-- <div class="custome-datatable">
  
         <div class="panel panel-primary">
     
@@ -125,14 +131,15 @@
                     <table class="table table-bordered" id="users-table">
                         <thead>
                             <tr>
-                                <th>Id</th>
                                 <th>Name</th>
                                 <th>Status</th>
                                 <th>Email</th>
+                                <th>Role</th>
                                 <th>Invitation Status</th>
                                 <th>Joining Date</th>
                                 <th>Is featured</th>
                                 <th>Is certified</th>
+                                <th class="hideClick" ></th>
                             </tr>
                         </thead>
                     </table>
@@ -141,7 +148,7 @@
     
         </div>
  
-    </div>
+    </div> -->
 
     <script>
         $(function() {
@@ -151,14 +158,37 @@
                 serverSide: true,
                 ajax: '{!! route('users.data') !!}',
                 columns: [
-                    { data: 'id', name: 'id' },
                     { data: 'first_name', name: 'first_name' },
                     { data: 'status', name: 'status' },
                     { data: 'email', name: 'email' },
+                    { data: 'role', name: 'role' },
                     { data: 'invitation_status', name: 'invitation_status' },
                     { data: 'created_at', name: 'created_at' },
-                    { data: 'is_featured', name: 'is_featured' },
-                    { data: 'is_certified', name: 'is_certified' },
+                    { data: 'is_featured', name: 'is_featured',
+                        render: function(data){
+                            return  "<select id='is_featured_dropdown'>"+
+                                    "<option>No</option>"+
+                                    "<option>Yes</option>"+
+                                    "</select>";
+                        }
+                    },
+                    { data: 'is_certified', name: 'is_certified',
+                        render: function(data){
+                            return  "<select id='is_certified_dropdown'>"+
+                                    "<option>No</option>"+
+                                    "<option>Yes</option>"+
+                                    "</select>";
+                        }
+                    },
+                    {
+                        render: function(data){
+                            return  "<div class='wt-actionbtn'>"+
+							"<a href='javascript:void()' class='wt-addinfo wt-skillsaddinfo'><i class='lnr lnr-eye'></i></a>"+
+                            "<a href='javascript:void()' class='wt-addinfo wt-skillsaddinfo'><i class='fa fa-edit'></i></a>"+				
+                            "<a href='javascript:void()' class='wt-deleteinfo wt-skillsaddinfo'><i class='fa fa-trash'></i></a>"+
+                            "</div>";
+                        }
+                    }
                 ]
             });
         });

@@ -15,6 +15,7 @@
 namespace App\Http\Controllers;
 
 use App\EmailTemplate;
+use App\Mail\InvitationToUser;
 use App\Helper;
 use App\Invoice;
 use App\Job;
@@ -2516,9 +2517,45 @@ class UserController extends Controller
 		return $json;
 	}
 
+    public function updateIsDisabledStatus(Request $request){
+		$userid = $request->post('id');
+		$status = $request->post('status');
+
+        // echo '<pre>';
+        // print($status);
+        // exit();
+		
+		DB::table('users')->where('id',$userid)->update(array('is_disabled'=>$status));
+		$json = array();
+		$json['type'] = 'success';
+        $json['message'] = 'disabled status change successfully.';
+		return $json;
+	}
+
     public function usersList(){
 
         return DataTables::of(User::query())->make(true);
+    }
+    
+    public function newInvite(Request $request){
+
+        $data = [
+            'email' => $request['email'],
+            'message' => $request['message']
+        ];
+        
+
+        Mail::to($data['email'])->send(new  InvitationToUser($data));
+
+
+        return Redirect::back()->with('messageInviteSuccess','Invitation has been sucessfully sent.');
+
+    }
+
+    public function newInviteForm(Request $request){
+
+        return view('back-end.admin.invite.index');
+
     }
 	
 	// For load employee / freelancer profile page in admin.
