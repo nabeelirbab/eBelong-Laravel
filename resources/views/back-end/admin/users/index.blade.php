@@ -150,9 +150,8 @@
  
     </div> -->
 
-    <script>
+    <!-- <script>
         $(function() {
-            // alert(222);
             $('#users-table').DataTable({
                 processing: true,
                 serverSide: true,
@@ -192,6 +191,6 @@
                 ]
             });
         });
-       </script>
+    </script> -->
 
     @endsection
