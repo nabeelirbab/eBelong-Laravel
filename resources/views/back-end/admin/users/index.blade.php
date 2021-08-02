@@ -2,11 +2,11 @@
 @section('content')
 
 <!-- <link href="http://netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"> -->
-<link rel="stylesheet" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
+<!-- <link rel="stylesheet" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
 
 <script src="//code.jquery.com/jquery.js"></script>
 <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js" defer></script>
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> -->
 
     <section class="wt-haslayout wt-dbsectionspace" id="profile_settings">
         <div class="row">
