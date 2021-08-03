@@ -19,15 +19,15 @@
 		<link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
 		<link href="{{ asset('css/home.css') }}" rel="stylesheet">
 		<!-- <link href="http://amentotech.com/projects/worketic/css/transitions.css" rel="stylesheet"> -->
-		<link href="https://amentotech.com/projects/worketic/css/color.css" rel="stylesheet">
+		<link href="http://amentotech.com/projects/worketic/css/color.css" rel="stylesheet">
 
 		<link href="{{asset('css/linearicons.css') }}" rel="stylesheet">
 		<link
 		rel="stylesheet"
-		href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+		href="http://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
 		{{-- <!-- <link href="http://amentotech.com/projects/worketic/css/linearicons.css" rel="stylesheet"> --> --}}	<link href="{{ asset('worketic/css/main.css') }}" rel="stylesheet">
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 		
 		
 		<style>
@@ -80,7 +80,7 @@
 		</script>
 
 		<!-- Global site tag (gtag.js) - Google Analytics -->
-		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-47887669-1"></script>
+		<script async src="http://www.googletagmanager.com/gtag/js?id=UA-47887669-1"></script>
 		<script>
 			window.dataLayer = window.dataLayer || [];
 			function gtag(){dataLayer.push(arguments);}
@@ -463,7 +463,7 @@
 					<div class="container">
 						<div class="row">
 							<div class="col-sm-12">
-								<iframe src="https://snapwidget.com/embed/949623" class="snapwidget-widget" allowtransparency="true" frameborder="0" scrolling="no" style="border:none; overflow:hidden;  width:800px; height:160px"></iframe>
+								<iframe src="http://snapwidget.com/embed/949623" class="snapwidget-widget" allowtransparency="true" frameborder="0" scrolling="no" style="border:none; overflow:hidden;  width:800px; height:160px"></iframe>
 							</div>
 						</div>
 					</div>
@@ -480,7 +480,7 @@
 				<div class="instagram-widget">
 					<div data-mc-src="0d13b9ae-91ec-4ad7-9cf1-0fef35eb2bbe#instagram"></div>
 					<script 
-					src="https://cdn2.woxo.tech/a.js#60ed75977550f200151dbbe8" 
+					src="http://cdn2.woxo.tech/a.js#60ed75977550f200151dbbe8" 
 					async data-usrc>
 					</script>
 				</div>
@@ -737,7 +737,7 @@
 				var js, fjs = d.getElementsByTagName(s)[0];
 				if (d.getElementById(id)) return;
 				js = d.createElement(s); js.id = id;
-				js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
+				js.src = 'http://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
 				fjs.parentNode.insertBefore(js, fjs);
 			}(document, 'script', 'facebook-jssdk'));
 		</script>
