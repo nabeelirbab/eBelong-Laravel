@@ -268,7 +268,7 @@
 		border: 0;
 		padding: 0;
 	}
-	.wt-dashboardboxcontent.wt-categoriescontentholder{padding: 0;}
+	.wt-dashboardboxcontent.wt-categoriescontentholder{padding: 0; overflow: auto;}
 	.wt-packageinfo{line-height: 20px;}
 	.wt-querycontent .wt-userform,
 	.wt-dashboardboxcontent.wt-packages{padding: 0;}

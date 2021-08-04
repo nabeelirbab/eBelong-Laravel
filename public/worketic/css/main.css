@@ -1224,7 +1224,7 @@ li.wt-rss a { background:#ff6600; }
 	position: absolute;
 	margin: -15px 0 0;
 }
-body.wt-login .wt-loginarea{display: block;}
+body.wt-login .wt-loginarea{display: inline-flex;}
 .wt-userlogedin{
 	float:right;
 	padding:20px;

@@ -1664,7 +1664,12 @@ body.wt-login .wt-loginarea .wt-btn {
 	max-width: 100%;
     max-height: 100%;
 }
-.wt-loginarea .wt-loginbtn{color:#ffffff;margin-right:20px; }
+.wt-loginarea .wt-loginbtn{
+	color:#ffffff;
+	margin-right:20px; 
+	position: relative;
+    top: 5px;
+}
 .wt-loginarea .wt-loginbtn:hover{
 	color: #3A0B5F !important;
 }
@@ -1765,7 +1770,11 @@ body.wt-login .wt-loginarea .wt-btn {
 	position: absolute;
 	margin: -15px 0 0;
 }
-body.wt-login .wt-loginarea{display: block;}
+body.wt-login .wt-loginarea{
+	/* display: block; */
+	display: inline-flex;
+
+}
 .wt-userlogedin{
 	float:right;
 	padding:20px;
@@ -1813,7 +1822,7 @@ body.wt-login .wt-userlogedin{display: block;}
 	color: white;
 }
 .wt-usernav{
-	right:0;
+	left:0;
 	opacity:0;
 	top:140px;
 	z-index:9;
@@ -10086,3 +10095,24 @@ a:focus{text-decoration: none !important;}
 		background-position: 0% 50%;
 	}
 }
+
+@media only screen and (max-width: 768px){
+	a.wt-btn.join-now-nav{
+		display: none;
+	}
+	.wt-headereleven .join-now-menu{
+		display: block;
+	}
+}
+@media only screen and (min-width: 769px){
+	a.wt-btn.join-now-nav{
+		display: block;
+	}
+	/* .wt-headereleven .join-now-menu{
+		display: none;
+	} */
+	li.join-now-menu a {
+		display: none !important;
+	}
+}
+
