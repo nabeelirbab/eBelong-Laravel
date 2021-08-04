@@ -38,6 +38,8 @@
 .wt-loginarea .wt-loginbtn{
     color: #fff !important;
     font-weight: bold;
+    position: relative;
+    top: 5px;
 }
 .wt-loginarea .wt-loginbtn:hover{
 	color: #3A0B5F !important;
@@ -54,7 +56,7 @@
     }
     body.wt-login .wt-loginarea{
         align-items: center;
-        margin: 4px !important;
+        // margin: 4px !important;
         .wt-loginbtn{
             // margin:0px !important;
         }
@@ -82,6 +84,7 @@
     }
     .wt-loginarea .wt-loginbtn{
         color: white !important;
+        top: 1px;
     }
     .wt-nav button{
         background: transparent !important;
@@ -112,13 +115,14 @@
     } 
     body.wt-login .wt-loginarea {
         display: block;
-        margin: 20px 2px;
+        margin: 12px 2px;
         position: absolute;
-        top: 9px;
+        top: 7px;
         right: 28px;
     }
     .wt-loginformhold{
-        left: 0;
+        // left: 0;
+        right: 70px !important;
         margin: 0 auto;
         position: fixed !important;
         top: 66px !important;
@@ -340,6 +344,13 @@
         color: #9013F3;
     }
 }
+@media only screen and (max-width: 415px)  {
+    .wt-loginformhold {
+        left: 0;
+        right: 0px !important;
+        width: 300px !important;
+    }
+}
 
 .bannerjob__item {
     cursor: default;
@@ -520,4 +531,21 @@
 .wt-footertwo .wt-footercol2 {
 	margin-top: 20px;
 	margin-bottom: 20px;
-  }
+}
+
+@media only screen and (max-width: 768px){
+	a.wt-btn.join-now-nav{
+		display: none;
+	}
+	.wt-headereleven .join-now-menu{
+		display: block;
+	}
+}
+@media only screen and (min-width: 769px){
+	a.wt-btn.join-now-nav{
+		display: block;
+	}
+	.wt-headereleven .join-now-menu{
+		display: none;
+	}
+}
