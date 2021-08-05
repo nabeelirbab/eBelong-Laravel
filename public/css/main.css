@@ -9382,6 +9382,9 @@ body.lang-ja .wt-loginfooterinfo a + a:before {
 	width: 100%;
 	display: block;
 	border-radius: 50px;
+	max-width: 40px;
+    max-height: 40px;
+    object-fit: cover;
 }
 .wt-freelancers-content{overflow: hidden;}
 .wt-freelancers-rating{
