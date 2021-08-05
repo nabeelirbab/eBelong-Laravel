@@ -3033,15 +3033,15 @@ class Helper extends Model
                 } elseif (file_exists($path . '/' . $image)) {
                     return $path . '/' . $requested_file;
                 } else {
-                    return '/images/user.jpg';
+                    return '/uploads/settings/general/imgae-not-availabe.png';
                 }
             } elseif (file_exists($path . '/' . $image)) {
                 return $path . '/' . $requested_file;
             } else {
-                return '/images/user.jpg';
+                return '/uploads/settings/general/imgae-not-availabe.png';
             }
         } else {
-            return '/images/user.jpg';
+            return '/uploads/settings/general/imgae-not-availabe.png';
         }
     }
 
