@@ -318,7 +318,7 @@
                                                 </form>
                                             </div>
                                         </div>
-                                        <a href="{{{ route('register') }}}" class="wt-btn">{{{ trans('lang.join_now') }}}</a>
+                                        <a href="{{{ route('register') }}}" class="wt-btn join-now-nav">{{{ trans('lang.join_now') }}}</a>
                                     </div>
                                 @endguest
                                 @auth

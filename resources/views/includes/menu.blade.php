@@ -26,6 +26,11 @@
                     {{{ trans('lang.browse_services') }}}
                 </a>
                 </li>
+                <li style="order: 6;" class="join-now-menu">
+					<a href="{{{ route('register') }}}" class="">
+						{{{ trans('lang.join_now') }}}
+					</a>
+				</li>
 
             <?php elseif($user_role == 'admin'): ?>
                 <li style="order: 2;">

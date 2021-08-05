@@ -1,7 +1,7 @@
 <html class="no-js" lang="" dir="ltr">
 	<head>
 		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta https-equiv="X-UA-Compatible" content="IE=edge">
 		
 		<title> eBelong : FREE Platform for talented freelancers</title>
 		<meta name="description" content="eBelong is a platform that connects freelancers with talent hunters. eBelong is a FREE platform to help professionals to get the remote jobs specially at this time where remote job is the norm.">
@@ -10,15 +10,15 @@
 		<meta name="csrf-token" content="{{ csrf_token() }}">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="apple-touch-icon" href="apple-touch-icon.png">
-		{{-- <link rel="icon" href="http://amentotech.com/projects/worketic/" type="image/x-icon"> --}}
+		{{-- <link rel="icon" href="https://amentotech.com/projects/worketic/" type="image/x-icon"> --}}
 		<link rel="icon" href="{{{ asset(Helper::getSiteFavicon()) }}}" type="image/x-icon">
 		<link href="{{ asset('worketic/css/app.css') }}" rel="stylesheet">
-		{{-- <!--<link href="http://amentotech.com/projects/worketic/css/fontawesome/fontawesome-all.min.css" rel="stylesheet">
-		<link href="http://amentotech.com/projects/worketic/css/font-awesome.min.css" rel="stylesheet"> --> --}}
+		{{-- <!--<link href="https://amentotech.com/projects/worketic/css/fontawesome/fontawesome-all.min.css" rel="stylesheet">
+		<link href="https://amentotech.com/projects/worketic/css/font-awesome.min.css" rel="stylesheet"> --> --}}
 		<link href="{{ asset('css/fontawesome/fontawesome-all.min.css') }}" rel="stylesheet">
 		<link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
 		<link href="{{ asset('css/home.css') }}" rel="stylesheet">
-		<!-- <link href="http://amentotech.com/projects/worketic/css/transitions.css" rel="stylesheet"> -->
+		<!-- <link href="https://amentotech.com/projects/worketic/css/transitions.css" rel="stylesheet"> -->
 		<link href="https://amentotech.com/projects/worketic/css/color.css" rel="stylesheet">
 
 		<link href="{{asset('css/linearicons.css') }}" rel="stylesheet">
@@ -26,7 +26,7 @@
 		rel="stylesheet"
 		href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
-		{{-- <!-- <link href="http://amentotech.com/projects/worketic/css/linearicons.css" rel="stylesheet"> --> --}}	<link href="{{ asset('worketic/css/main.css') }}" rel="stylesheet">
+		{{-- <!-- <link href="https://amentotech.com/projects/worketic/css/linearicons.css" rel="stylesheet"> --> --}}	<link href="{{ asset('worketic/css/main.css') }}" rel="stylesheet">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 		
 		
@@ -91,7 +91,7 @@
 
 	<body class="wt-login lang-en ltr ">
 		<!--[if lt IE 8]>
-			<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+			<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 		<![endif]-->
 		<div class="preloader-outer" style="display: block;">
 			<div class="preloader-holder">
@@ -160,6 +160,11 @@
 														<li style="order: 5;">
 															<a href="{{url('search-results?type=service')}}">
 																{{{ trans('lang.browse_services') }}}
+															</a>
+														</li>
+														<li style="order: 6;" class="join-now-menu">
+															<a href="{{{ route('register') }}}" class="">
+																{{{ trans('lang.join_now') }}}
 															</a>
 														</li>
 														<?php elseif($user_role == 'admin'): ?>
@@ -294,7 +299,7 @@
 													</form>
 												</div>
 											</div>
-											<a href="{{{ route('register') }}}" class="wt-btn">{{{ trans('lang.join_now') }}}</a>
+											<a href="{{{ route('register') }}}" class="wt-btn join-now-nav">{{{ trans('lang.join_now') }}}</a>
 										</div>
 										@endguest
 										@auth
@@ -611,8 +616,8 @@
 									<p class="wt-copyrights">Copyright © 2021 eBelong, All Right Reserved eBelong</p>
 									<nav class="wt-addnav">
 										<ul>
-										<!--<li><a href="http://amentotech.com/projects/worketic/page/about-us">About Us</a></li>
-											<li><a href="http://amentotech.com/projects/worketic/page/privacy-policy">Privacy Policy</a></li> -->
+										<!--<li><a href="https://amentotech.com/projects/worketic/page/about-us">About Us</a></li>
+											<li><a href="https://amentotech.com/projects/worketic/page/privacy-policy">Privacy Policy</a></li> -->
 										</ul>
 									</nav>
 								</div>

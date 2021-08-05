@@ -58,6 +58,8 @@
     54 => 'Spatie\\Permission\\PermissionServiceProvider',
     55 => 'Intervention\\Image\\ImageServiceProvider',
     56 => 'Spatie\\JsonApiPaginate\\JsonApiPaginateServiceProvider',
+    57 => 'ConsoleTVs\\Charts\\ChartsServiceProvider',
+    58 => 'Yajra\\DataTables\\DataTablesServiceProvider',
   ),
   'eager' => 
   array (
@@ -99,6 +101,8 @@
     35 => 'Spatie\\Permission\\PermissionServiceProvider',
     36 => 'Intervention\\Image\\ImageServiceProvider',
     37 => 'Spatie\\JsonApiPaginate\\JsonApiPaginateServiceProvider',
+    38 => 'ConsoleTVs\\Charts\\ChartsServiceProvider',
+    39 => 'Yajra\\DataTables\\DataTablesServiceProvider',
   ),
   'deferred' => 
   array (
