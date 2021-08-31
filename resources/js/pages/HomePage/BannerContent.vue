@@ -16,7 +16,7 @@
                         class="e-input-field banner-content__search--input" placeholder="Search for Designers, Developers and more"/><button v-on:click="()=>onClick()" class="e-button e-button-primary">
                     <span class="d-none d-md-block">Search</span><i class="fas fa-search d-block d-md-none"></i></button>
                 </div>
-            <div>
+            <div class="home_slider_skill">
                 <ul class="e-project-type__list">
                     <li
                         v-on:click="()=>onClick(item.slug)"
