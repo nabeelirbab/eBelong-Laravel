@@ -1072,15 +1072,38 @@ class RestAPIController extends Controller
 
             $profile->save();
             $json['type'] = 'success';
-            $json['user_id'] = $request['user_id'] ? $request['user_id'] : '';
-            $json['first_name'] = $request['first_name'] ? $request['first_name'] : '';
-            $json['last_name'] = $request['last_name'] ? $request['last_name']: '';
-            $json['skills'] = $request['skills'] ? $request['skills']: '';
-            $json['gender'] = $request['gender'] ? $request['gender']: '';
-            $json['tagline'] = $request['tagline'] ? $request['tagline']: '';
-            $json['hourly_rate'] = $request['hourly_rate'] ? $request['hourly_rate']: '';
-            $json['tagline'] = $request['tagline'] ? $request['tagline']: '';
-            $json['address'] = $request['address'] ? $request['address']: '';
+
+            $request['user_id']
+
+            $p_data = DB::table('users')->select('slug','is_certified')
+            ->where('id', '=', auth()->user()->id)
+            ->get();
+
+            $p_data_array = @json_decode(json_encode($p_data), true);
+
+
+            $skills = DB::table('skill_user')->select('skill_id')
+            ->where('user_id', '=', auth()->user()->id)
+            ->get();
+
+            $user_skills = @json_decode(json_encode($skills), true);
+
+            $skills_ids = null;
+
+            foreach ($user_skills as $skills) {
+                $skills_ids[] = $skills['skill_id'];
+            }
+
+            $json['profile']['pmeta']['user_type'] = auth()->user()->getRoleNames()[0];
+            $json['profile']['pmeta']['profile_img'] = url(Helper::getProfileImage(auth()->user()->id));
+            $json['profile']['pmeta']['banner_img'] = url(Helper::getProfileBanner(auth()->user()->id));
+            $json['profile']['pmeta']['_tag_line'] = auth()->user()->profile->tagline;
+            $json['profile']['pmeta']['_gender'] = auth()->user()->profile->gender;
+            $json['profile']['pmeta']['_is_verified'] = auth()->user()->user_verified == 1 ? 'yes' : 'no';
+            $json['profile']['pmeta']['full_name'] = Helper::getUserName(auth()->user()->id);
+            $json['profile']['pmeta']['skill_id'] = $skills_ids;
+            $json['profile']['pmeta']['slug'] = $p_data_array[0]['slug'];
+            $json['profile']['pmeta']['is_certified'] = $p_data_array[0]['is_certified'];
 
             $json['message'] = trans('lang.profile_update_success');
         } else {
