@@ -1092,12 +1092,10 @@ class RestAPIController extends Controller
                 $skills_ids[] = $skills['skill_id'];
             }
 
-            $json['profile']['pmeta']['user_type'] = auth()->user()->getRoleNames()[0];
             $json['profile']['pmeta']['profile_img'] = url(Helper::getProfileImage($request['user_id']));
             $json['profile']['pmeta']['banner_img'] = url(Helper::getProfileBanner($request['user_id']));
-            $json['profile']['pmeta']['_tag_line'] = auth()->user()->profile->tagline;
-            $json['profile']['pmeta']['_gender'] = auth()->user()->profile->gender;
-            $json['profile']['pmeta']['_is_verified'] = auth()->user()->user_verified == 1 ? 'yes' : 'no';
+            $json['profile']['pmeta']['_tag_line'] = $profile->tagline;
+            $json['profile']['pmeta']['_gender'] = $profile->gender;
             $json['profile']['pmeta']['full_name'] = Helper::getUserName($request['user_id']);
             $json['profile']['pmeta']['skill_id'] = $skills_ids;
             $json['profile']['pmeta']['slug'] = $p_data_array[0]['slug'];
