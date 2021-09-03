@@ -1072,6 +1072,16 @@ class RestAPIController extends Controller
 
             $profile->save();
             $json['type'] = 'success';
+            $json['user_id'] = $request['user_id'] ? $request['user_id'] : '';
+            $json['first_name'] = $request['first_name'] ? $request['first_name'] : '';
+            $json['last_name'] = $request['last_name'] ? $request['last_name']: '';
+            $json['skills'] = $request['skills'] ? $request['skills']: '';
+            $json['gender'] = $request['gender'] ? $request['gender']: '';
+            $json['tagline'] = $request['tagline'] ? $request['tagline']: '';
+            $json['hourly_rate'] = $request['hourly_rate'] ? $request['hourly_rate']: '';
+            $json['tagline'] = $request['tagline'] ? $request['tagline']: '';
+            $json['address'] = $request['address'] ? $request['address']: '';
+
             $json['message'] = trans('lang.profile_update_success');
         } else {
             $json['type'] = 'error';
