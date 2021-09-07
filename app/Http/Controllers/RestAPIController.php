@@ -1101,8 +1101,8 @@ class RestAPIController extends Controller
             $json['profile']['pmeta']['slug'] = $p_data_array[0]['slug'];
             $json['profile']['pmeta']['is_certified'] = $p_data_array[0]['is_certified'];
 
-            $json['profile']['umeta']['profile_id'] = auth()->user()->profile->id;
-            $json['profile']['umeta']['id'] = $profile->id;
+            $json['profile']['umeta']['profile_id'] = $profile->id;
+            $json['profile']['umeta']['id'] = $request['user_id'];
             $json['profile']['umeta']['user_token'] = '';
             $json['profile']['umeta']['user_login'] = $request['email'];
             $json['profile']['umeta']['user_pass'] = $request['password'];
