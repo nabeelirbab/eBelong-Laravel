@@ -1073,7 +1073,7 @@ class RestAPIController extends Controller
             $profile->save();
             $json['type'] = 'success';
 
-            $p_data = DB::table('users')->select('slug','is_certified','email','')
+            $p_data = DB::table('users')->select('slug','is_certified')
             ->where('id', '=', $request['user_id'])
             ->get();
 
