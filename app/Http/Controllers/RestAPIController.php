@@ -1073,7 +1073,7 @@ class RestAPIController extends Controller
             $profile->save();
             $json['type'] = 'success';
 
-            $p_data = DB::table('users')->select('slug','is_certified')
+            $p_data = DB::table('users')->select('slug','is_certified','email','')
             ->where('id', '=', $request['user_id'])
             ->get();
 
@@ -1100,13 +1100,6 @@ class RestAPIController extends Controller
             $json['profile']['pmeta']['skill_id'] = $skills_ids;
             $json['profile']['pmeta']['slug'] = $p_data_array[0]['slug'];
             $json['profile']['pmeta']['is_certified'] = $p_data_array[0]['is_certified'];
-
-            $json['profile']['umeta']['profile_id'] = $profile->id;
-            $json['profile']['umeta']['id'] = $request['user_id'];
-            $json['profile']['umeta']['user_token'] = '';
-            $json['profile']['umeta']['user_login'] = $request['email'];
-            $json['profile']['umeta']['user_pass'] = $request['password'];
-            $json['profile']['umeta']['user_email'] = $request['email'];
 
             $json['message'] = trans('lang.profile_update_success');
         } else {
