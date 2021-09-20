@@ -597,6 +597,14 @@
 										</div>
 									</div>
 								</div>
+								<div class="row">
+									<div class="col-lg-12 col-md-12 col-sm-12">
+										<div class="mob-app-link">
+										<a href="https://play.google.com/store/apps/details?id=com.ebelong" target="_blank" rel="noopener noreferrer"><img src="https://d1a3f4spazzrp4.cloudfront.net/uber-com/1.3.8/d1a3f4spazzrp4.cloudfront.net/illustrations/app-store-google-4d63c31a3e.svg" alt="Play Store Link" style="/* width:100px; */height: 35px;"></a>
+										<a href="https://apps.apple.com/pk/app/ebelong-app/id1578731419" target="_blank" rel="noopener noreferrer"><img src="https://d1a3f4spazzrp4.cloudfront.net/uber-com/1.3.8/d1a3f4spazzrp4.cloudfront.net/illustrations/app-store-apple-f1f919205b.svg" alt="App Store Link" style="/* width:42px; */height: 35px;"></a>
+									</div>
+									</div>
+								</div>
 							</div>
 						</div>
 						<div class="row wt-footercol2">
