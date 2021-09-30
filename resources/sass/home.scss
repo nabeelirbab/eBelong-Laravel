@@ -549,11 +549,16 @@
 		display: none;
 	}
 }
-.mob-app-link {
-    width: 100%;
-    margin: 20px auto;
-    text-align: right;
-    a {
-        margin-left: 5px;
+@media only screen and (max-width: 512px){
+	.mob-app-link {
+        padding-top: 10px;
     }
 }
+
+@media only screen and (max-width: 768px){
+    .mob-app-link {
+        padding-top: 30px;
+    }
+}
+
+

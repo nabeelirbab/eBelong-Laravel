@@ -12,7 +12,7 @@
                 We know how difficult it can be to quickly expand your team with
                 key development resources while maintaining the continuity and
                 velocity required to stay on time and in budget. When our
-                customers need experienced resources for their team or project,
+                customers need experienced resources for their team or project, 
                 they call us and that’s why 100’s of other engineering firms
                 continue to call upon us to meet their needs and that’s why you
                 can call on us too.
@@ -31,7 +31,7 @@
               class="why_ebelong_img d-none d-md-block"
             >
               <img
-                :src="`${baseUrl}/images/home/whyebelong.svg`"
+                :src="`${baseUrl}/images/home/whyebelong-1.svg`"
                 alt="post_job"
               />
             </div>
@@ -81,7 +81,7 @@
                     <h5 class="mt-0">Custom Software Development</h5>
                     <p>
                       Our team is equipped to handle any development need you
-                      have, big,small,mobile apps,compression and everything
+                      have, big, small, mobile apps, compression and everything
                       in-between.
                     </p>
                   </div>
