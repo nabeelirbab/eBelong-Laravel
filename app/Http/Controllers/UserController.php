@@ -578,11 +578,11 @@ class UserController extends Controller
                         }
 
                         if (!empty($messageFailure) && !empty($messageSuccess)) {
-                            $type = 'alert';
+                            $type = 'error';
                             $message = $messageSuccess . ' & ' . $messageFailure;
                         }
                         elseif(empty($messageFailure) && !empty($messageSuccess)) {
-                            $type = 'success';
+                            $type = 'alert';
                             $message = $messageSuccess;
                         }
                         elseif(!empty($messageFailure) && empty($messageSuccess)) {
