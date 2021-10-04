@@ -355,12 +355,27 @@ class RestAPIController extends Controller
 
             $p_data_array = @json_decode(json_encode($p_data), true);
 
-
             $skills = DB::table('skill_user')->select('skill_id')
             ->where('user_id', '=', auth()->user()->id)
             ->get();
 
             $user_skills = @json_decode(json_encode($skills), true);
+
+            $userId = auth()->user()->id;
+            $deviceIdAdded = 0;
+            if(!empty($userId) && isset($request['device_token']) && !empty($request['device_token']) && !empty($request['device_type'])){
+                $device_tokens = DB::table('user_device_tokens')->select('device_token')
+                    ->where('user_id', '=', $userId)
+                    ->where('device_type', '=', $request['device_type'])
+                    ->where('device_token', '=', $request['device_token'])
+                    ->get();
+
+                $device_tokens = @json_decode(json_encode($device_tokens), true);
+
+                if (empty($device_tokens)) {
+                    $deviceIdAdded = DB::insert('insert into user_device_tokens (user_id,device_token,device_type) values (?,?,?)', [$userId, $request['device_token'], $request['device_type']]);
+                }
+            }
 
             $skills_ids = null;
 
@@ -384,9 +399,15 @@ class RestAPIController extends Controller
             $json['profile']['umeta']['user_login'] = $request['email'];
             $json['profile']['umeta']['user_pass'] = $request['password'];
             $json['profile']['umeta']['user_email'] = $request['email'];
+            $json['profile']['umeta']['device_added'] = $deviceIdAdded;
+            $json['profile']['umeta']['device_type'] = $request['device_type'];
+            $json['profile']['umeta']['device_token'] = $request['device_token'];
+
             return response()->json($json, 200);
+
         } else {
-            return response()->json(['error' => 'UnAuthorized'], 203);
+
+            return response()->json(['error' => 'UnAuthorized Credentials'], 203);
         }
     }
 
