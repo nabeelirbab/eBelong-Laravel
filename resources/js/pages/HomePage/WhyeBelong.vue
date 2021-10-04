@@ -31,7 +31,7 @@
               class="why_ebelong_img d-none d-md-block"
             >
               <img
-                :src="`${baseUrl}/images/home/whyebelong-1.svg`"
+                :src="`${baseUrl}/images/home/whyebelong-1.png`"
                 alt="post_job"
               />
             </div>
