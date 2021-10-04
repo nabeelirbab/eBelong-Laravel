@@ -82,6 +82,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('articles/{category?}', 'ArticleController@articlesList')->name('articlesList');
 Route::get('article/{slug}', 'ArticleController@showArticle')->name('showArticle');
 Route::get('profile/{slug}', 'PublicController@showUserProfile')->name('showUserProfile');
+Route::get('agency/{slug}', 'PublicController@agencyView')->name('agencyView');
 Route::get('categories', 'CategoryController@categoriesList')->name('categoriesList');
 Route::get('page/{slug}', 'PageController@show')->name('showPage');
 Route::post('store/project-offer', 'UserController@storeProjectOffers');
@@ -304,6 +305,8 @@ Route::group(
             'as' => 'UserData', 
             'uses' => 'UserController@getLogNotificationData'
         ]);
+        Route::get('/admin/send-notifications','UserController@viewNotificationData')->name('viewMobileNotification');
+        Route::post('/admin/send-notifications-post','UserController@sendNotificationData')->name('sendMobileNotification');
         Route::post('/admin/login-notification-updated','UserController@updateNotificationData');
 		Route::post('/admin/update-user-is-featured-status','UserController@updateIsFeaturedStatus');
         Route::post('/admin/update-user-is-certified-status','UserController@updateIsCertifiedStatus');
@@ -402,9 +405,10 @@ Route::group(
 
         Route::get('freelancer/bill/workdiary/{id}', 'WorkDiaryController@submitFreelancerBill');
 
+        Route::get('agency/create/new', 'AgencyController@createNew');
+        Route::post('agency/upload-temp-image', 'AgencyController@uploadTempImage');
         Route::get('agency/users','AgencyController@index')->name('agency-user-list');
         Route::get('agency-user-status-change/{id}','AgencyController@updateStatus');
-        
         Route::get('get-agency-list','AgencyController@getAgencyList');
     }
 );
@@ -420,6 +424,8 @@ Route::group(
         Route::get('profile/settings/email-notification-settings', 'UserController@emailNotificationSettings')->name('emailNotificationSettings');
         Route::post('profile/settings/save-email-settings', 'UserController@saveEmailNotificationSettings');
         Route::post('profile/settings/save-account-settings', 'UserController@saveAccountSettings');
+        Route::post('profile/settings/save-agency', 'UserController@saveAgencyData')->name('agencyDataPost');
+        Route::post('agency/suggest', 'UserController@autoSuggestFetch')->name('autocomplete.fetch');
         Route::get('profile/settings/delete-account', 'UserController@deleteAccount')->name('deleteAccount');
         Route::post('profile/settings/delete-user', 'UserController@destroy');
         Route::post('admin/delete-user', 'UserController@deleteUser');

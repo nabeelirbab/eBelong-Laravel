@@ -111,6 +111,12 @@
                                 <span>{{ trans('lang.email_templates') }}</span>
                             </a>
                         </li>
+                        <li>
+                            <a href="{{{ route('viewMobileNotification') }}}">
+                                <i class="ti-email"></i>
+                                <span>{{ 'Push Notifications' }}</span>
+                            </a>
+                        </li>
                         <li class="menu-item-has-children">
                             <span class="wt-dropdowarrow"><i class="lnr lnr-chevron-right"></i></span>
                             <a href="javascript:void(0)">

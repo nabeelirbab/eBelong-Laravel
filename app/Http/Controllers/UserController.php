@@ -112,20 +112,28 @@ class UserController extends Controller
         $freelancer_type = !empty($saved_options->freelancer_type) ? $saved_options->freelancer_type : "";
         $user = $this->user::find($user_id);
         $user_languages = array();
+        $agency_info = array();
+        $agency_info = Helper::getAgencyList(0,array('user_id'=>Auth::user()->id));
         if (!empty($user->languages)) {
             foreach ($user->languages as $user_language) {
                 $user_languages[] = $user_language->id;
             }
         }
+
+        if (!empty($agency_info)) {
+            $agency_info = @json_decode(json_encode($agency_info), true);
+        }
+
+
         if (file_exists(resource_path('views/extend/back-end/settings/security-settings.blade.php'))) {
             return view(
                 'extend.back-end.settings.security-settings',
-                compact('languages', 'saved_options', 'user_languages', 'english_levels', 'user_level','freelancer_type')
+                compact('languages', 'saved_options', 'user_languages', 'english_levels', 'user_level','agency_info')
             );
         } else {
             return view(
                 'back-end.settings.security-settings',
-                compact('languages', 'saved_options', 'user_languages', 'english_levels', 'user_level','freelancer_type')
+                compact('languages', 'saved_options', 'user_languages', 'english_levels', 'user_level','agency_info')
             );
         }
     }
@@ -222,6 +230,152 @@ class UserController extends Controller
 		
         Session::flash('message', trans('lang.account_settings_saved'));
         return Redirect::back();
+    }
+
+    function autoSuggestFetch(Request $request)
+    {
+        if($request->get('query'))
+        {
+            $query = $request->get('query');
+            $data = DB::table('agency_user')
+                ->where('agency_name', 'LIKE', "%{$query}%")
+                ->get();
+
+            $output = '<ul class="dropdown-menu" style="display:block; position:relative">';
+            foreach($data as $row)
+            {
+                $output .= '
+       <li><a href="">'.$row->agency_name.'</a></li>
+       ';
+            }
+            $output .= '</ul>';
+            echo $output;
+        }
+    }
+
+    /**
+     * Save user account settings.
+     *
+     * @param mixed $request request attribute
+     *
+     * @access public
+     *
+     * @return View
+     */
+    public function saveAgencyData(Request $request)
+    {
+        $data = $request->all();
+        $user_id = Auth::user()->id;
+        $data['agency_type'] = 'new_agency';
+
+        if (Helper::getRoleByUserID(Auth::user()->id) == 3){
+
+            if(isset($data['agency_id']) && !empty($data['agency_id'])) {
+                Session::flash('error', 'Edit Agency - WORK IN PROGRESS');
+                return Redirect::back();
+            }
+            else {
+                if (isset($data['agency_type']) && $data['agency_type'] == "new_agency" && !empty($data['agency_name'])
+                    && !empty($data['contact_email'])){
+
+                    $has_agency_associated = DB::table('agency_user')->select('agency_name')
+                        ->where('user_id',$user_id)
+                        ->get();
+
+                    $has_agency_associated_name = DB::table('agency_user')->select('agency_name')
+                        ->where('agency_name',$data['agency_name'])
+                        ->get();
+
+                    $has_agency_associated_email = DB::table('agency_user')->select('contact_email')
+                        ->where('contact_email',$data['contact_email'])
+                        ->get();
+
+                    $has_agency_associated = @json_decode(json_encode($has_agency_associated), true);
+                    $has_agency_associated_name = @json_decode(json_encode($has_agency_associated_name), true);
+                    $has_agency_associated_email = @json_decode(json_encode($has_agency_associated_email), true);
+
+                    if (count($has_agency_associated) > 0) {
+                        Session::flash('error', 'You can only create one agency account!');
+                        return Redirect::back();
+                    }
+
+                    if (count($has_agency_associated_name) > 0) {
+                        Session::flash('error', 'Agency with this name already exists, please retry!');
+                        return Redirect::back();
+                    }
+                    if (count($has_agency_associated_email) > 0) {
+                        Session::flash('error', 'Provided email is already associated with another Agency!');
+                        return Redirect::back();
+                    }
+
+                    if (count($has_agency_associated) === 0 && $has_agency_associated == false
+                        && count($has_agency_associated_email) === 0 && $has_agency_associated_email == false
+                        && count($has_agency_associated_email) === 0 && $has_agency_associated_email == false) {
+
+                        if (isset($data['agency_name']) && isset($data['hourly_rates_min'])
+                            && isset($data['hourly_rates_max']) && isset($data['contact_email'])) {
+
+                            $slug = str_replace(" ", "-", strtolower($data['agency_name']));
+                            $agency = array();
+                            $agency['user_id'] = Auth::user()->id;
+                            $agency['agency_name'] = trim($data['agency_name']);
+                            $agency['slug'] = $slug .'-'. rand(00000,99999);
+                            $agency['contact_no'] = trim($data['contact_no']);
+                            $agency['contact_email'] = trim($data['contact_email']);
+                            $agency['founded_in'] = trim($data['founded_in']);
+                            $agency['description'] = trim($data['description']);
+                            $agency['hourly_rates_min'] = trim($data['hourly_rates_min']);
+                            $agency['hourly_rates_max'] = trim($data['hourly_rates_max']);
+                            $agency['agency_size'] = trim($data['agency_size']);
+
+                            $agencyid = DB::table('agency_user')->insertGetId($agency);
+
+                            $updateUserAgencyStatus = DB::table('users')->where('id',$agency['user_id'])->update(array('is_agency'=>1,'agency_id'=>$agencyid));
+
+                            if ($agencyid && $updateUserAgencyStatus) {
+                                if (trim(config('mail.username')) != "" && trim(config('mail.password')) != "") {
+                                    $email_params = array();
+                                    $template = DB::table('email_types')->select('id')->where('email_type','new_agency')->get()->first();
+                                    if (!empty($template->id)) {
+                                        $template_data = EmailTemplate::getEmailTemplateByID($template->id);
+                                        $email_params['freelancer_name'] = Helper::getUserName($user_id);
+                                        Mail::to(Auth::user()->email)
+                                            ->send(
+                                                new FreelancerEmailMailable(
+                                                    'new_agency',
+                                                    $template_data,
+                                                    $email_params
+                                                )
+                                            );
+                                    }
+                                }
+                                Session::flash('message', 'Your new Agency has been successfully created.');
+                                return Redirect::back();
+                            }
+                            else {
+                                Session::flash('error', 'Something went wrong while associating your account with Agency.');
+                                return Redirect::back();
+                            }
+
+                        }
+                        else {
+                            Session::flash('error', 'Please enter hourly rates range for your Agency.');
+                            return Redirect::back();
+                        }
+                    }
+                } else {
+                    Session::flash('error', 'Please enter all the required fields, and then retry.');
+                    return Redirect::back();
+                }
+            }
+
+
+        } else {
+
+            Session::flash('error', 'You dont have access to create an Agency account');
+            return Redirect::back();
+        }
+
     }
 
     /**
@@ -342,6 +496,232 @@ class UserController extends Controller
          $json['type'] = 'success';
         return $json;
     }
+
+    public function viewNotificationData(){
+
+        $skills = Skill::all();
+
+        return view('extend.back-end.admin.send-notifications.index', compact('skills'));
+
+    }
+
+    public function sendNotificationData(Request $request){
+
+        if (!empty($request->notification_type) && $request->notification_type == 'skills') {
+            foreach ($request->skills as $skill) {
+
+                $user_ids = DB::table('skill_user')->select('user_id')
+                    ->where('skill_id', '=', $skill)
+                    ->get();
+
+                $user_ids = @json_decode(json_encode($user_ids), true);
+
+                foreach ($user_ids as $user_id) {
+
+                    $firebaseTokens = DB::table('user_device_tokens')->select('device_token')
+                        ->where('user_id', '=', $user_id['user_id'])
+                        ->get();
+
+                    $firebaseTokens = @json_decode(json_encode($firebaseTokens), true);
+                    $user_devices_token = null;
+                    foreach ($firebaseTokens as $firebaseToken) {
+                       $user_devices_token[] =  $firebaseToken['device_token'];
+                    }
+
+                    $error = null;
+                    if (!empty($user_devices_token)) {
+
+
+                        $SERVER_API_KEY = 'AAAAp3qfLLo:APA91bGlk3jqc5EF-Lhd3lSyiH1AmFtUx_r5bNILM7OuKiHZSCFd1dVF5U9laQhAfXRtNR6XSUx9_--13mOd3MWSbQlxTJZfMve5h8TjBn5op2oARsTOcyd3b0afTU9Pewm6sWGZ8xTY';
+
+                        $data = [
+                            "registration_ids" => $user_devices_token,
+                            "notification" => [
+                                "title" => $request->title,
+                                "body" => $request->description,
+                                "sound" => $request->sound,
+                                "image" => $request->image,
+
+                            ]
+                        ];
+
+                        $dataString = json_encode($data);
+
+                        $headers = [
+                            'Authorization: key=' . $SERVER_API_KEY,
+                            'Content-Type: application/json',
+                        ];
+
+                        $ch = curl_init();
+                        $type = null;
+                        $message = null;
+                        $messageFailure = null;
+                        $messageSuccess = null;
+
+                        curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+                        curl_setopt($ch, CURLOPT_POST, true);
+                        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+                        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+                        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                        curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
+
+                        $response = curl_exec($ch);
+
+                        $response = @json_decode($response,true);
+
+                        if ($response['failure'] > 0) {
+                            $messageFailure = $response['failure'].' alerts were Failed!';
+                        }
+
+                        if ($response['success'] > 0) {
+                            $messageSuccess = $response['success'].' alerts were Success!';
+                        }
+
+                        if (!empty($messageFailure) && !empty($messageSuccess)) {
+                            $type = 'alert';
+                            $message = $messageSuccess . ' & ' . $messageFailure;
+                        }
+                        elseif(empty($messageFailure) && !empty($messageSuccess)) {
+                            $type = 'success';
+                            $message = $messageSuccess;
+                        }
+                        elseif(!empty($messageFailure) && empty($messageSuccess)) {
+                            $type = 'error';
+                            $message = $messageFailure;
+                        }
+                        else {
+                            $message = 'No response from Firebase Api';
+                        }
+
+                        return redirect()->back()->with($type, $message);
+
+                    }
+                    else {
+
+                        $error['no_application'] = 'Following User dont have Mobile Application yet!';
+
+                    }
+                    if(isset($error['no_application'])) {
+
+                        return redirect()->back()->with('alert', $error['no_application']);
+                    }
+
+                }
+
+            }
+        }
+        else if (!empty($request->notification_type) && $request->notification_type == 'email') {
+            $user_emails = explode(',', $request->notification_emails);
+
+            foreach ($user_emails as $email) {
+
+                $user_ids = DB::table('users')->select('id')
+                    ->where('email', '=', $email)
+                    ->get();
+
+                $user_ids = @json_decode(json_encode($user_ids), true);
+
+                foreach ($user_ids as $user_id) {
+
+                    $firebaseTokens = DB::table('user_device_tokens')->select('device_token')
+                        ->where('user_id', '=', $user_id)
+                        ->get();
+
+                    $firebaseTokens = @json_decode(json_encode($firebaseTokens), true);
+                    $user_devices_token = null;
+                    foreach ($firebaseTokens as $firebaseToken) {
+                        $user_devices_token[] =  $firebaseToken['device_token'];
+                    }
+
+                    $error = null;
+                    if (!empty($user_devices_token)) {
+
+
+                        $SERVER_API_KEY = 'AAAAp3qfLLo:APA91bGlk3jqc5EF-Lhd3lSyiH1AmFtUx_r5bNILM7OuKiHZSCFd1dVF5U9laQhAfXRtNR6XSUx9_--13mOd3MWSbQlxTJZfMve5h8TjBn5op2oARsTOcyd3b0afTU9Pewm6sWGZ8xTY';
+
+                        $data = [
+                            "registration_ids" => $user_devices_token,
+                            "notification" => [
+                                "title" => $request->title,
+                                "body" => $request->description,
+                                "sound" => $request->sound,
+                                "image" => $request->image,
+
+                            ]
+                        ];
+
+                        $dataString = json_encode($data);
+
+                        $headers = [
+                            'Authorization: key=' . $SERVER_API_KEY,
+                            'Content-Type: application/json',
+                        ];
+
+                        $ch = curl_init();
+                        $type = null;
+                        $message = null;
+                        $messageFailure = null;
+                        $messageSuccess = null;
+
+                        curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+                        curl_setopt($ch, CURLOPT_POST, true);
+                        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+                        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+                        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                        curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
+
+                        $response = curl_exec($ch);
+
+                        $response = @json_decode($response,true);
+
+                        if ($response['failure'] > 0) {
+                            $messageFailure = $response['failure'].' alerts were Failed!';
+                        }
+
+                        if ($response['success'] > 0) {
+                            $messageSuccess = $response['success'].' alerts were Success!';
+                        }
+
+                        if (!empty($messageFailure) && !empty($messageSuccess)) {
+                            $type = 'alert';
+                            $message = $messageSuccess . ' & ' . $messageFailure;
+                        }
+                        elseif(empty($messageFailure) && !empty($messageSuccess)) {
+                            $type = 'success';
+                            $message = $messageSuccess;
+                        }
+                        elseif(!empty($messageFailure) && empty($messageSuccess)) {
+                            $type = 'error';
+                            $message = $messageFailure;
+                        }
+                        else {
+                            $message = 'No response from Firebase Api';
+                        }
+
+                        return redirect()->back()->with($type, $message);
+
+                    }
+                    else {
+
+                        $error['no_application'] = 'Following User dont have Mobile Application yet!';
+
+                    }
+                    if(isset($error['no_application'])) {
+
+                        return redirect()->back()->with('alert', $error['no_application']);
+                    }
+
+                }
+
+            }
+        }
+        else {
+            return redirect()->back()->with('alert', 'No User type selected!');
+
+        }
+
+    }
+
     /**
      * Email Notification Settings Form.
      *

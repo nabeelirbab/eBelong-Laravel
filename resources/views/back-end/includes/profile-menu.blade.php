@@ -65,6 +65,12 @@
                     </a>
                 </li>
                 <li>
+                    <a href="{{{ route('viewMobileNotification') }}}">
+                        <i class="ti-email"></i>
+                        <span>{{ 'Push Notifications' }}</span>
+                    </a>
+                </li>
+                <li>
                     <a href="{{{ route('invitePeople') }}}">
                         <i class="ti-email"></i>
                         <span>{{ trans('invite.invite_people') }}</span>
