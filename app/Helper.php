@@ -16,6 +16,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Intervention\Image\Facades\Image;
 use File;
+use App\Skill;
 use Storage;
 use Spatie\Permission\Models\Role;
 use DB;
@@ -993,6 +994,58 @@ class Helper extends Model
             return '';
         }
     }
+
+    /**
+     * Get Skills.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getSkills()
+    {
+//        $json = array();
+        $skills = Skill::select('title', 'id')->get()->toArray();
+        if (!empty($skills)) {
+            return $skills;
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Get Skills.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    static function getUserAgency($id)
+    {
+        $agency_data = null;
+        $associated_agency_data = null;
+
+        $agency_ids = DB::table('agency_associated_users')
+            ->select('agency_id')
+            ->where('user_id',$id)
+            ->where('is_accepted',1)
+            ->get();
+        $agency_ids = @json_decode(json_encode($agency_ids), true);
+
+        if(count($agency_ids) > 0) {
+            foreach ($agency_ids as $agency_id) {
+
+                $agency_data = DB::table('agency_user')
+                    ->where('id',$agency_id['agency_id'])
+                    ->get();
+
+                $agency_data = @json_decode(json_encode($agency_data), true);
+
+            }
+        }
+
+
+        return $agency_data;
+
+    }
+
+
 
     /**
      * Get role name by ID
@@ -3808,7 +3861,7 @@ class Helper extends Model
     }
     
     public static function getAgencyList($id = 0,$where = array()){
-		$data;
+		$data = null;
 		if($id == 0){
 			$data = DB::table('agency_user');
 			if(!empty($where)){

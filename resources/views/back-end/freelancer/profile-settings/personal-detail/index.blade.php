@@ -40,10 +40,10 @@
                                         @endif
                                     </div>
                                     <div class="wt-profilephoto wt-tabsinfo">
-                                        @if (file_exists(resource_path('views/extend/back-end/freelancer/profile-settings/personal-detail/profile_photo.blade.php'))) 
-                                            @include('extend.back-end.freelancer.profile-settings.personal-detail.profile_photo') 
-                                        @else 
-                                            @include('back-end.freelancer.profile-settings.personal-detail.profile_photo') 
+                                        @if (file_exists(resource_path('views/extend/back-end/freelancer/profile-settings/personal-detail/profile_photo.blade.php')))
+                                            @include('extend.back-end.freelancer.profile-settings.personal-detail.profile_photo')
+                                        @else
+                                            @include('back-end.freelancer.profile-settings.personal-detail.profile_photo')
                                         @endif
                                     </div>
                                     @if (!empty($options) && $options['banner_option'] === 'true')

@@ -73,92 +73,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- If uset type freelancer -->
-                            @if(Helper::getRoleByUserID(Auth::user()->id) == 3)
-                             <div class="wt-location wt-tabsinfo profile-freelancer-type-section">
-                                <div class="wt-tabscontenttitle">
-                                    <h2>{{{ trans('lang.freelancer_type') }}}</h2>
-                                </div>
-                                <div class="wt-settingscontent">
-                                    <div class="wt-description">
-                                        <p>{{{ trans('lang.freelancer_type_note') }}}</p>
-                                    </div>
-                                    <div class="wt-formtheme wt-userform">
-                                        <div class="form-group">
-                                            <span class="wt-select">
-                                                @php 
-                                                    $freelancertype = array(
-                                                        ""=>"Select Freelancer Type",
-                                                        "Independent Freelancers"=>"Independent Freelancers",
-														"Agency Freelancers"=>"Agency Freelancers", 
-                                                        "New Rising Talent"=>"New Rising Talent",
-                                                    );
-                                                @endphp
-                                                {!! Form::select('freelancer_type', $freelancertype, 
-                                                $freelancer_type,array()) !!}
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-							@endif
-							@php
-								$agency_info = Helper::getAgencyList(0,array('user_id'=>Auth::user()->id));
-							@endphp
-							@if(($freelancer_type == "Agency Freelancers" && count($agency_info)) || ($freelancer_type == "Agency Freelancers" && count($agency_info) == 0 && Auth::user()->agency_id != 0))
-								<div class="wt-location wt-tabsinfo agency-selection-form">
-									<div class='wt-tabscontenttitle'>
-										<h2>{{{ trans('lang.agency_section') }}}</h2>
-									</div>
-									<div class='wt-settingscontent'>
-										<div class='wt-description'>
-											<p>{{{ trans('lang.select_option') }}}</p>
-										</div>
-										<!--div class='wt-formtheme wt-userform'>
-											<div class='form-group'>
-												<input type='radio' name='agency_type' value='existing_agency'> Existing Agency &nbsp;&nbsp;
-												<input type='radio' name='agency_type' value='new_agency'> Create New Agency
-											</div>
-										</div-->
-										<div class='wt-formtheme wt-userform agency-form'>
-											@if($freelancer_type == "Agency Freelancers" && count($agency_info))
-												<div class="row">
-													<div class="form-group"></div>
-													<div class="col-md-6">
-														<div class="form-group">
-															<input type="text" name="agency_name" placeholder="Agency Name" class="form-control" value="{{ $agency_info[0]->agency_name }}">
-														</div>
-													</div>
-													
-													<div class="col-md-6">
-														<div class="form-group">
-															<input type="text" name="contact_no" placeholder="Agency Contect No" class="form-control" value="{{ $agency_info[0]->contact_no }}">
-														</div>
-													</div>
-													
-													<div class="col-md-12">
-														<div class="form-group">
-															<input type="text" name="contact_email" placeholder="Agency Email" class="form-control"  value="{{ $agency_info[0]->contact_email }}">
-														</div>
-													</div>
-												</div>
-											@elseif($freelancer_type == "Agency Freelancers" && count($agency_info) == 0 && Auth::user()->agency_id != 0)
-												<div class='row'>
-													<div class='col-md-12'>
-														<div class='form-group'>
-															<select class='form-control basicAutoSelect' name='agency_id' id="agency_search">
-                                                            </select>
-														</div>
-													</div>
-													{!! Auth::user()->agency_status == 0 ? '<div class="col-md-12 text text-info"><div class="alert alert-success alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Note:</strong>&nbsp;&nbsp; Your agency joining request sent to agency owner but not approved.</div></div>' : '' !!}
-												</div>
-											@endif
-										</div>
-									</div>
-								</div>
-							@else
-								<div class="wt-location wt-tabsinfo agency-selection-form" style="display:none;"></div>
-							@endif
 
                             <div class="form-group form-group-half wt-btnarea">
                                 {!! Form::submit(trans('lang.btn_save'), ['class' => 'wt-btn']) !!}
@@ -170,4 +84,85 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function(){
+
+        $('#agency_name').keyup(function(){
+            var query = $(this).val();
+            if(query != '')
+            {
+                var _token = $('input[name="_token"]').val();
+                $.ajax({
+                    url:"{{ route('autocomplete.fetch') }}",
+                    method:"POST",
+                    data:{query:query, _token:_token},
+                    success:function(data){
+                        $('#agencyList').fadeIn();
+                        $('#agencyList').html(data);
+                    }
+                });
+            }
+        });
+
+        $(document).on('click', 'li', function(){
+            $('#agency_name').val($(this).text());
+            $('#agencyList').fadeOut();
+        });
+
+    });
+</script>
+<script>
+    // display a modal (small modal)
+    $(document).on('click', '#smallButton', function(event) {
+        event.preventDefault();
+        let href = $(this).attr('data-attr');
+        $.ajax({
+            url: href,
+            beforeSend: function() {
+                $('#loader').show();
+            },
+            // return the result
+            success: function(result) {
+                $('#smallModal').modal("show");
+                $('#smallBody').html(result).show();
+            },
+            complete: function() {
+                $('#loader').hide();
+            },
+            error: function(jqXHR, testStatus, error) {
+                console.log(error);
+                alert("Page " + href + " cannot open. Error:" + error);
+                $('#loader').hide();
+            },
+            timeout: 8000
+        })
+    });
+
+    // display a modal (medium modal)
+    $(document).on('click', '#mediumButton', function(event) {
+        event.preventDefault();
+        let href = $(this).attr('data-attr');
+        $.ajax({
+            url: href,
+            beforeSend: function() {
+                $('#loader').show();
+            },
+            // return the result
+            success: function(result) {
+                $('#mediumModal').modal("show");
+                $('#mediumBody').html(result).show();
+            },
+            complete: function() {
+                $('#loader').hide();
+            },
+            error: function(jqXHR, testStatus, error) {
+                console.log(error);
+                alert("Page " + href + " cannot open. Error:" + error);
+                $('#loader').hide();
+            },
+            timeout: 8000
+        })
+    });
+
+</script>
 @endsection

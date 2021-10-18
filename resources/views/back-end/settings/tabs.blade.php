@@ -16,6 +16,9 @@
             </li>
         @endif
         <li class="nav-item">
+            <a class="{{{ \Request::route()->getName()==='agencySettings'? 'active': '' }}}" href="{{{ route('agencySettings') }}}">{{{ 'Agency Settings' }}}</a>
+        </li>
+        <li class="nav-item">
             <a class="{{{ \Request::route()->getName()==='resetPassword'? 'active': '' }}}" href="{{{ route('resetPassword') }}}">{{{ trans('lang.reset_pass') }}}</a>
         </li>
     </ul>

@@ -110,7 +110,6 @@ Route::group(
     ['middleware' => ['role:admin']],
     function () {
         Route::get('user', ['uses'=>'UserController@records', 'as'=>'user.records']);
-
         // Article Category Routes
         Route::get('admin/article/categories', 'ArticleCategoryController@index')->name('articleCategories');
         Route::get('admin/article/categories/edit-cats/{id}', 'ArticleCategoryController@edit')->name('editArticleCategories');
@@ -406,6 +405,7 @@ Route::group(
         Route::get('freelancer/bill/workdiary/{id}', 'WorkDiaryController@submitFreelancerBill');
 
         Route::get('agency/create/new', 'AgencyController@createNew');
+        Route::get('agency/invitations/list', 'AgencyController@viewInvites');
         Route::post('agency/upload-temp-image', 'AgencyController@uploadTempImage');
         Route::get('agency/users','AgencyController@index')->name('agency-user-list');
         Route::get('agency-user-status-change/{id}','AgencyController@updateStatus');
@@ -420,11 +420,13 @@ Route::group(
         Route::get('job/proposal/{job_slug}', 'ProposalController@createProposal')->name('createProposal');
         Route::get('profile/settings/manage-account', 'UserController@accountSettings')->name('manageAccount');
         Route::get('profile/settings/reset-password', 'UserController@resetPassword')->name('resetPassword');
+        Route::get('profile/settings/agency-settings', 'UserController@agencySettings')->name('agencySettings');
         Route::post('profile/settings/request-password', 'UserController@requestPassword');
         Route::get('profile/settings/email-notification-settings', 'UserController@emailNotificationSettings')->name('emailNotificationSettings');
         Route::post('profile/settings/save-email-settings', 'UserController@saveEmailNotificationSettings');
         Route::post('profile/settings/save-account-settings', 'UserController@saveAccountSettings');
         Route::post('profile/settings/save-agency', 'UserController@saveAgencyData')->name('agencyDataPost');
+        Route::post('agency/invite-user', 'UserController@inviteToAgency')->name('inviteToAgency');
         Route::post('agency/suggest', 'UserController@autoSuggestFetch')->name('autocomplete.fetch');
         Route::get('profile/settings/delete-account', 'UserController@deleteAccount')->name('deleteAccount');
         Route::post('profile/settings/delete-user', 'UserController@destroy');

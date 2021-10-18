@@ -112,28 +112,17 @@ class UserController extends Controller
         $freelancer_type = !empty($saved_options->freelancer_type) ? $saved_options->freelancer_type : "";
         $user = $this->user::find($user_id);
         $user_languages = array();
-        $agency_info = array();
-        $agency_info = Helper::getAgencyList(0,array('user_id'=>Auth::user()->id));
-        if (!empty($user->languages)) {
-            foreach ($user->languages as $user_language) {
-                $user_languages[] = $user_language->id;
-            }
-        }
-
-        if (!empty($agency_info)) {
-            $agency_info = @json_decode(json_encode($agency_info), true);
-        }
 
 
         if (file_exists(resource_path('views/extend/back-end/settings/security-settings.blade.php'))) {
             return view(
                 'extend.back-end.settings.security-settings',
-                compact('languages', 'saved_options', 'user_languages', 'english_levels', 'user_level','agency_info')
+                compact('languages', 'saved_options', 'user_languages', 'english_levels', 'user_level')
             );
         } else {
             return view(
                 'back-end.settings.security-settings',
-                compact('languages', 'saved_options', 'user_languages', 'english_levels', 'user_level','agency_info')
+                compact('languages', 'saved_options', 'user_languages', 'english_levels', 'user_level')
             );
         }
     }
@@ -268,6 +257,7 @@ class UserController extends Controller
         $user_id = Auth::user()->id;
         $data['agency_type'] = 'new_agency';
 
+
         if (Helper::getRoleByUserID(Auth::user()->id) == 3){
 
             if(isset($data['agency_id']) && !empty($data['agency_id'])) {
@@ -328,7 +318,26 @@ class UserController extends Controller
                             $agency['hourly_rates_max'] = trim($data['hourly_rates_max']);
                             $agency['agency_size'] = trim($data['agency_size']);
 
+                            request()->validate([
+                                'agency_logo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                            ]);
+                            $agency['agency_logo'] = null;
+
+
                             $agencyid = DB::table('agency_user')->insertGetId($agency);
+
+                            if ($files = $request->file('agency_logo')) {
+                                // Define upload path
+                                $destinationPath = public_path( '/uploads/agency_logos/' .$agencyid ); // upload path
+                                // Upload Orginal Image
+                                $profileImage = date('YmdHis') . "." . $files->getClientOriginalExtension();
+                                $files->move($destinationPath, $profileImage);
+
+                                $insert['image'] = "$profileImage";
+                                $agency['agency_logo'] = "$profileImage";
+                            }
+
+                            DB::table('agency_user')->where('id',$agencyid)->update(array('agency_logo'=> $agency['agency_logo']));
 
                             $updateUserAgencyStatus = DB::table('users')->where('id',$agency['user_id'])->update(array('is_agency'=>1,'agency_id'=>$agencyid));
 
@@ -378,6 +387,34 @@ class UserController extends Controller
 
     }
 
+    public function inviteToAgency(Request $request) {
+
+
+        $user_id = User::select('id')->where('email', $request->invitation_email)->get();
+
+        if (count($user_id) > 0) {
+
+            $associate_user = DB::table('agency_associated_users')->insert(
+                ['agency_id' => $request->agency_id, 'user_id' => $user_id[0]['id'], 'member_type' => $request->freelancer_type, 'is_pending' => 1, 'member_role' => $request->member_role]
+            );
+
+            if ($associate_user === true) {
+                Session::flash('message', 'Invitation has sent.');
+                return Redirect::back();
+            }
+            else {
+                Session::flash('error', 'Unable to invite user.');
+                return Redirect::back();
+            }
+        }
+        else {
+            Session::flash('error', 'No users found with this email.');
+            return Redirect::back();
+        }
+
+
+    }
+
     /**
      * Reset password form.
      *
@@ -391,6 +428,60 @@ class UserController extends Controller
             return view('extend.back-end.settings.reset-password');
         } else {
             return view('back-end.settings.reset-password');
+        }
+    }
+
+    /**
+     * Reset password form.
+     *
+     * @access public
+     *
+     * @return View
+     */
+    public function agencySettings()
+    {
+        $agency_info['is_owner'] = null;
+        $agency_info = array();
+        $agency_info = Helper::getAgencyList(0,array('user_id'=>Auth::user()->id));
+
+        if (!empty($user->languages)) {
+            foreach ($user->languages as $user_language) {
+                $user_languages[] = $user_language->id;
+            }
+        }
+
+        if (!empty($agency_info) && isset($agency_info[0])) {
+
+            $agency_info = @json_decode(json_encode($agency_info), true);
+
+            if (!empty($agency_info)) {
+                $agency_info['is_owner'] = 1;
+            }
+        }
+        else {
+
+            $agency_info = DB::table('agency_associated_users')->select('agency_id')
+                ->where('user_id',Auth::user()->id)
+                ->where('is_pending',0)
+                ->where('is_accepted',1)
+                ->get();
+            $agency_info = @json_decode(json_encode($agency_info), true);
+
+            if (!empty($agency_info)) {
+                $agency_info['is_owner'] = 0;
+            }
+
+        }
+        $member_type = [
+            'exclusive_member' => ' Exclusive Member',
+            'non_exclusive_member' => 'Non Exclusive Member',
+
+        ];
+
+        if (file_exists(resource_path('views/extend/back-end/settings/agency-settings.blade.php'))) {
+            return view('extend.back-end.settings.agency-settings',compact('agency_info'));
+        } else {
+            return view('back-end.settings.agency-settings',compact('agency_info','member_type'));
         }
     }
 

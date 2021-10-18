@@ -129,7 +129,6 @@ class HomeController extends Controller
                 'categories',
                 'jobs',
                 'freelancers',
-                'user',
                 'all_skills'
             )
         ); 

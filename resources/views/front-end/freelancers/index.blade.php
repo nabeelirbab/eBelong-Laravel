@@ -8,10 +8,20 @@
 @section('description', $f_list_meta_desc)
 @section('content')
 @php
+
 $show_f_banner = 'true'
 @endphp
 @if ($show_f_banner == 'true')
 @php $breadcrumbs = Breadcrumbs::generate('searchResults'); @endphp
+<style>
+    .d-flex.agency-box-logo-name img {
+        border-radius: 100%;
+    }
+    button.up-btn-link.text-left {
+         background: none;
+     }
+
+</style>
 <div class="wt-haslayout wt-innerbannerholder" style="background-image:url({{{ asset(Helper::getBannerImage($f_inner_banner, 'uploads/settings/general')) }}})">
     <div class="container">
         <div class="row justify-content-md-center">
@@ -262,6 +272,36 @@ $show_f_banner = 'true'
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            @if($agency_data = \App\Helper::getUserAgency($freelancer->id) != null ? $agency_data = \App\Helper::getUserAgency($freelancer->id) : $agency_data = null)
+                                                @foreach($agency_data as $data)
+                                                    <div class="col-lg-12 col-md-12 col-sm-12" style="margin: 10px;">
+                                                        <div class="row">
+                                                            <div class="col-md-4 col-sm-6" >
+                                                                <div class="d-flex agency-box-logo-name">
+                                                                    @if(isset($data['agency_logo']))
+                                                                        <img src="{{{ url( 'uploads/agency_logos/'. $data['id']. '/' .$data['agency_logo']) }}}" alt="eBelong" class="up-avatar up-avatar-company flex-shrink-0 up-avatar-30" style="width: 50px;height: 50px;margin-right: 10px;">
+                                                                    @else
+                                                                        <img src="https://ebelongmaster-1517a.kxcdn.com/uploads/settings/general/imgae-not-availabe.png" alt="eBelong" class="up-avatar up-avatar-company flex-shrink-0 up-avatar-30" style="width: 50px;height: 50px;margin-right: 10px;">
+                                                                    @endif
+                                                                    <div class="ml-10 agency-box-name">
+                                                                        <div>Associated with</div>
+                                                                        <a href="{{{ url('/agency/'.$data['slug']) }}}" target="_blank" class="up-btn-link text-left">
+                                                                            {{{ $data['agency_name'] }}}
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+{{--                                                            <div class="col-md-4 col-sm-6">--}}
+{{--                                                                <div class="ml-10 agency-box-stats">--}}
+{{--                                                                    <p class="mb-0"><strong>$400k+</strong></p>--}}
+{{--                                                                    <p class="mb-0">earned</p>--}}
+{{--                                                                </div>--}}
+{{--                                                            </div>--}}
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            @endif
                                         </div>
                                         <!-- ======================== Old script ============================== -->
                                         <!-- <figure class="wt-userlistingimg">

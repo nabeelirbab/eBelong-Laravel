@@ -281,6 +281,33 @@ class PublicController extends Controller
         }
     }
 
+
+    function agencyView($slug)
+
+    {
+        $agency = null;
+
+        if(!empty($slug)) {
+
+            $agency = DB::table('agency_user')
+                ->where('slug', '=', $slug)
+                ->first();
+
+            $agency = @json_decode(json_encode($agency), true);
+
+            if (count($agency) > 0) {
+
+                return View('front-end.agencies.profile-show', compact('agency'));
+
+            } else {
+                abort(404);
+            }
+        } else {
+            abort(404);
+        }
+
+    }
+
     /**
      * Show user profile.
      *

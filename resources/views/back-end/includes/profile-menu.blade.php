@@ -149,6 +149,12 @@
                     </a>
                 </li>
                 <li>
+                    <a href="{{{ url('agency/invitations/list') }}}">
+                        <i class="ti-envelope"></i>
+                        <span>{{ 'Agency Invitation' }}</span>
+                    </a>
+                </li>
+                <li>
                     <a href="{{{ route('message') }}}">
                         <i class="ti-envelope"></i>
                         <span>{{ trans('lang.msg_center') }}</span>
