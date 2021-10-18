@@ -478,9 +478,9 @@ class UserController extends Controller
 
         ];
 
-        echo '<pre>';
-        print_r($agency_info);
-        exit();
+        if (empty($agency_info)) {
+            return Redirect::to('agency/create/new/');
+        }
 
         if (file_exists(resource_path('views/extend/back-end/settings/agency-settings.blade.php'))) {
             return view('extend.back-end.settings.agency-settings',compact('agency_info'));

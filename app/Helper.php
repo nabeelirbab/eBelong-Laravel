@@ -3877,6 +3877,22 @@ class Helper extends Model
 		}
 		return $data;
     }
+
+    public static function getAgencyById($id) {
+
+        $dataAgency = DB::table('agency_user')
+            ->where('user_id',$id)
+            ->first();
+
+        if (empty($dataAgency->id)) {
+            $dataAgency = DB::table('agency_associated_users')
+                ->where('user_id',$id)
+                ->first();
+        }
+
+        return $dataAgency;
+
+    }
     
     public static function getAutocompleteAgencyList(){
         $result = DB::table('agency_user')->get();

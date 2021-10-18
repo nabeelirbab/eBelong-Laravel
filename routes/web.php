@@ -404,7 +404,7 @@ Route::group(
 
         Route::get('freelancer/bill/workdiary/{id}', 'WorkDiaryController@submitFreelancerBill');
 
-        Route::get('agency/create/new', 'AgencyController@createNew');
+        Route::get('agency/create/new', 'AgencyController@createNew')->name('agencyNew');
         Route::get('agency/invitations/list', 'AgencyController@viewInvites');
         Route::post('agency/upload-temp-image', 'AgencyController@uploadTempImage');
         Route::get('agency/users','AgencyController@index')->name('agency-user-list');

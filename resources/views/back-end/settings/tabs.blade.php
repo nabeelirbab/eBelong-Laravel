@@ -15,9 +15,15 @@
                 <a class="{{{ \Request::route()->getName()==='deleteAccount'? 'active': '' }}}" href="{{{ route('deleteAccount') }}}">{{{ trans('lang.delete_account') }}}</a>
             </li>
         @endif
+        @if(!empty(\App\Helper::getAgencyById(Auth::user()->id)))
         <li class="nav-item">
             <a class="{{{ \Request::route()->getName()==='agencySettings'? 'active': '' }}}" href="{{{ route('agencySettings') }}}">{{{ 'Agency Settings' }}}</a>
         </li>
+        @else
+        <li class="nav-item">
+            <a class="{{{ \Request::route()->getName()==='agencyNew'? 'active': '' }}}" href="{{{ route('agencyNew') }}}">{{{ 'Create an Agency' }}}</a>
+        </li>
+        @endif
         <li class="nav-item">
             <a class="{{{ \Request::route()->getName()==='resetPassword'? 'active': '' }}}" href="{{{ route('resetPassword') }}}">{{{ trans('lang.reset_pass') }}}</a>
         </li>
