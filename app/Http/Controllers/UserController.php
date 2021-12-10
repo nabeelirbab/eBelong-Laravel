@@ -1228,7 +1228,7 @@ class UserController extends Controller
             if (!empty($request['id'])) {
                 $user_id = Auth::user()->id;
                 $id = $request['id'];
-                if (!empty($request['column']) && ($request['column'] === 'saved_employers' || $request['column'] === 'saved_freelancer' || $request['column'] === 'saved_services')) {
+                if (!empty($request['column']) && ($request['column'] === 'saved_employers' || $request['column'] === 'saved_freelancer' || $request['column'] === 'saved_services'||$request['column'] === 'saved_cources')) {
                     if (!empty($request['seller_id'])) {
                         if ($user_id == $request['seller_id']) {
                             $json['type'] = 'error';

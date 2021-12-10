@@ -11,6 +11,11 @@
         <?php if($user_role): ?>
 
             <?php if($user_role == 'guest'): ?>
+            <li style="order: 1;">
+                <a href="{{url('search-results?type=instructors')}}">
+                    {{{ trans('lang.browse_instructors') }}}
+                </a>
+            </li>
                 <li style="order: 2;">
                 <a href="{{url('search-results?type=freelancer')}}">
                     {{{ trans('lang.view_freelancers') }}}

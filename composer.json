@@ -29,7 +29,8 @@
         "srmklive/paypal": "~1.0",
         "workerman/channel": ">=1.0.0",
         "workerman/phpsocket.io": "^1.1",
-        "workerman/workerman": ">=3.5.16"
+        "workerman/workerman": ">=3.5.16",
+        "yajra/laravel-datatables-oracle": "~8.0"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

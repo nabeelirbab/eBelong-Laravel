@@ -1204,6 +1204,8 @@ return [
     'ph_change_password' => 'Enter New Password',
     'ph_confirm_change_password' => 'Confirm Password',
     'ph_old_password' => 'Enter Old Password',
+    'browse_instructors' => 'Find Instructors',
+    "Cource_detail"=> 'Cource Detail',
     
     'created_at' => 'Created Date',
     'updated_at' => 'Updated Date',
@@ -1326,6 +1328,7 @@ return [
         'jobs_val' => 'job',
         'employers_val' => 'employer',
         'service_val' => 'service',
+        'instructors' => 'Instructors',
     ],
     'social_icons' => [
         'fb' => 'Facebook',

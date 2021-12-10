@@ -19,6 +19,7 @@ class AgencyController extends Controller
      */
 
     public function index(){
+        echo "test";
 		if (Auth::user()){
 			$agency_info = Helper::getAgencyList(0,array('user_id'=>Auth::user()->id));
 			if(count($agency_info)){

@@ -1904,6 +1904,11 @@ if (document.getElementById("user_profile")) {
                                     jQuery('#' + element_id).addClass('wt-clicksave');
                                     jQuery('#' + element_id).find('.save_text').text(saved_text);
                                 }
+                                else if (column == 'saved_cources') {
+                                    jQuery('#' + element_id).addClass('wt-btndisbaled wt-clicksave');
+                                    // self.saved_class = 'wt-clicksave';
+                                    self.text = saved_text;
+                                }
                                 self.showMessage(response.data.message);
                             } else {
                                 self.showError(response.data.message);
