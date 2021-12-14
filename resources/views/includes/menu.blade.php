@@ -70,7 +70,7 @@
             <?php elseif($user_role == 'freelancer'): ?>
 
                 <li style="order: 4;">
-                <a href="{{url('search-results?type=job')}}">
+                <a href="{{url('search-results?type=freelancerjobs')}}">
                     {{{ trans('lang.browse_jobs') }}}
                 </a>
                 </li>

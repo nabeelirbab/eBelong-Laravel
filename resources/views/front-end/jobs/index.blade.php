@@ -71,10 +71,10 @@
                             <div class="wt-userlistingholder wt-haslayout" id="list-layout">
                                 @if (!empty($keyword))
                                     <div class="wt-userlistingtitle">
-                                        <span>{{ trans('lang.01') }} {{$jobs->count()}} of {{$Jobs_total_records}} results for <em>"{{{$keyword}}}"</em></span>
+                                        <span>{{ trans('lang.01') }}  results for <em>"{{{$keyword}}}"</em></span>
                                     </div>
                                 @endif
-                                @if (!empty($jobs) && $jobs->count() > 0)
+                                @if (!empty($jobs))
                                     @foreach ($jobs as $job)
                                         @if (\Schema::hasColumn('jobs', 'expiry_date') && !empty($job->expiry_date))
                                             @php $expiry = Carbon\Carbon::parse($job->expiry_date); @endphp
@@ -257,11 +257,11 @@
                                 
                                 @if (!empty($keyword))
                                     <div class="wt-userlistingtitle">
-                                        <span>{{ trans('lang.01') }} {{$jobs->count()}} of {{$Jobs_total_records}} results for <em>"{{{$keyword}}}"</em></span>
+                                        <span>{{ trans('lang.01') }}results for <em>"{{{$keyword}}}"</em></span>
                                     </div>
                                 @endif
                                 <div class="row">
-                                @if (!empty($jobs) && $jobs->count() > 0)
+                                @if (!empty($jobs) )
                                     @foreach ($jobs as $job)
                                         @if (\Schema::hasColumn('jobs', 'expiry_date') && !empty($job->expiry_date))
                                             @php $expiry = Carbon\Carbon::parse($job->expiry_date); @endphp

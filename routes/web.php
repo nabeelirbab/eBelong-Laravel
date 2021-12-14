@@ -287,6 +287,7 @@ Route::group(
         //All Services
         Route::get('admin/services', 'ServiceController@adminServices')->name('allServices');
         Route::get('admin/service-orders', 'ServiceController@adminServiceOrders')->name('ServiceOrders');
+        Route::get('admin/services/search' , 'ServiceController@adminServices');
         //All packages
         Route::get('admin/packages', 'PackageController@create')->name('createPackage');
         Route::get('admin/packages/search', 'PackageController@create');
@@ -314,6 +315,7 @@ Route::group(
 		Route::post('/admin/update-user-is-featured-status','UserController@updateIsFeaturedStatus');
         Route::post('/admin/update-user-is-certified-status','UserController@updateIsCertifiedStatus');
         Route::post('/admin/update-user-is-disabled-status','UserController@updateIsDisabledStatus');
+        Route::post('/admin/update-user-badge','UserController@updateUserBadge');
 
 
     }
@@ -393,6 +395,8 @@ Route::group(
         Route::get('freelancer/jobs/{status}', 'FreelancerController@showFreelancerJobs');
         Route::get('freelancer/job/{slug}', 'FreelancerController@showOnGoingJobDetail')->name('showOnGoingJobDetail');
         Route::get('freelancer/proposals', 'FreelancerController@showFreelancerProposals')->name('showFreelancerProposals');
+        Route::get('freelancer/proposal-edit/{job_slug}/{id}','ProposalController@ProposalUpdate');
+        Route::post('proposal/update-proposal', 'ProposalController@update');
         Route::get('freelancer/dashboard', 'FreelancerController@freelancerDashboard')->name('freelancerDashboard');
         Route::get('freelancer/profile', 'FreelancerController@index')->name('personalDetail');
         Route::post('freelancer/upload-temp-image', 'FreelancerController@uploadTempImage');
@@ -409,6 +413,7 @@ Route::group(
         Route::get('freelancer/bill/workdiary/{id}', 'WorkDiaryController@submitFreelancerBill');
 
         Route::get('agency/create/new', 'AgencyController@createNew')->name('agencyNew');
+        Route::get('agency-members', 'AgencyController@viewMembers')->name('Members');
         Route::get('agency/invitations/list', 'AgencyController@viewInvites');
         Route::post('agency/upload-temp-image', 'AgencyController@uploadTempImage');
         Route::get('agency/users','AgencyController@index')->name('agency-user-list');

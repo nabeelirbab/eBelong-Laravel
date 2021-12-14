@@ -43,11 +43,15 @@
 										<th>{{{ trans('lang.is_featured') }}}</th>
                                         <th>{{{ trans('lang.is_certified') }}}</th>
                                         <th>{{{ trans('lang.is_disabled') }}}</th>
+                                        <th>{{{ trans('lang.assign_badge') }}}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($users as $key => $user_data)
-                                        @php $user = \App\User::find($user_data['id']); @endphp
+                                        @php 
+                                        $user = \App\User::find($user_data['id']);
+                                        $badges = \App\Badge::all();
+                                        @endphp
                                         @if ($user->getRoleNames()->first() != 'admin')
                                             <tr class="del-user-{{ $user->id }}">
                                                 <td>{{{ ucwords(\App\Helper::getUserName($user->id)) }}}</td>
@@ -88,6 +92,15 @@
 													<select id="{{$user->id}}-is_disabled" v-on:change.prevent='changeDisabledStatus({{$user->id}})'>
 														<option value="false" {{ $user->is_disabled == 'false' ? "selected":"" }}>No</option>
 														<option value="true" {{ $user->is_disabled == 'true' ? "selected":"" }}>Yes</option>
+													</select>
+												</td>
+                                                <td>
+													<select id="{{$user->id}}-assign_badge" v-on:change.prevent='changeBadge({{$user->id}})'>
+														<option value="null" {{ $user->badge_id == 'null' ? "selected":"" }}>No badge</option>
+                                                        @foreach ($badges as $badge)
+                                                        <option value="{{$badge->id}}" {{ $user->badge_id == $badge->id ? "selected":"" }}>{{$badge->title}}</option>
+                                                        @endforeach
+														
 													</select>
 												</td>
                                                 <td>
@@ -153,7 +166,7 @@
 {{--        </div>--}}
 {{--    </section>--}}
 
-    <script>
+    {{-- <script>
         {{--$(function() {--}}
         {{--    // alert(222);--}}
         {{--    $('#users-table').DataTable({--}}
@@ -197,6 +210,6 @@
         {{--        ]--}}
         {{--    });--}}
         {{--});--}}
-   </script>
+   
 
     @endsection

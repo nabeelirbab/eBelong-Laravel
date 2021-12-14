@@ -14,6 +14,7 @@ namespace App\Http\Controllers;
 
 use App\Freelancer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 use App\Helper;
 use App\Location;
 use App\Skill;
@@ -864,8 +865,16 @@ class FreelancerController extends Controller
             $currency   = SiteManagement::getMetaValue('commision');
             $symbol = !empty($currency) && !empty($currency[0]['currency']) ? Helper::currencyList($currency[0]['currency']) : array();
             $status_list = array_pluck(Helper::getFreelancerServiceStatus(), 'title', 'value');
-            if (!empty($status) && $status === 'posted') {
-                $services = $freelancer->services;
+            if (!empty($_GET['keyword']) && !empty($status) && $status === 'posted') {
+                $keyword = $_GET['keyword'];
+                $services = $freelancer->services()->where('title', 'like', '%' . $keyword . '%')->orderBy('id' , 'DESC')->paginate(6)->setPath('');
+                // dd($services);
+                $pagination = $services->appends(
+                    array(
+                        'keyword' => Input::get('keyword')
+                    )
+                );
+            
                 if (file_exists(resource_path('views/extend/back-end/freelancer/services/index.blade.php'))) {
                     return view(
                         'extend.back-end.freelancer.services.index',
@@ -885,7 +894,31 @@ class FreelancerController extends Controller
                         )
                     );
                 }
-            } else if (!empty($status) && $status === 'hired') {
+            }
+            else if (empty($_GET['keyword']) && !empty($status) && $status === 'posted') {
+                $services = $freelancer->services->sortByDesc('id');
+                if (file_exists(resource_path('views/extend/back-end/freelancer/services/index.blade.php'))) {
+                    return view(
+                        'extend.back-end.freelancer.services.index',
+                        compact(
+                            'services',
+                            'symbol',
+                            'status_list'
+                        )
+                    );
+                } else {
+                    
+                    return view(
+                        'back-end.freelancer.services.index',
+                        compact(
+                            'services',
+                            'symbol',
+                            'status_list'
+                        )
+                    );
+                }
+            }
+             else if (!empty($status) && $status === 'hired') {
                 $services = Helper::getFreelancerServices('hired', Auth::user()->id);
                 if (file_exists(resource_path('views/extend/back-end/freelancer/services/ongoing.blade.php'))) {
                     return view(

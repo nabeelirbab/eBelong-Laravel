@@ -57,6 +57,7 @@
                                                             @if (!empty($proposal->job->duration))
                                                                 <li><span class="wt-dashboradclock"><i class="far fa-clock"></i> {{ trans('lang.duration') }} {{{ $duration }}}</span></li>
                                                             @endif
+                                                            <li><a href="{{ url('freelancer/proposal-edit/'.$proposal->job->slug.'/'.$proposal->id) }}" ><i class="fa fa-edit"></i></a></li>
                                                         </ul>
                                                     @endif
                                                 </div>

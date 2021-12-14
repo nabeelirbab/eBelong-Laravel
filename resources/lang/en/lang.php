@@ -1206,6 +1206,7 @@ return [
     'ph_old_password' => 'Enter Old Password',
     'browse_instructors' => 'Find Instructors',
     "Cource_detail"=> 'Cource Detail',
+    'assign_badge' =>'Assign Badge',
     
     'created_at' => 'Created Date',
     'updated_at' => 'Updated Date',

@@ -294,4 +294,46 @@ class Proposal extends Model
         }
         return $proposal->delete();
     }
+
+    public function updateProposal($request , $id , $login_id=""){
+// dd($request->amount);
+        $json = array();
+        if (!empty($request)) {
+            $user_id = !empty($login_id) ? $login_id :Auth::user()->id;
+            $proposal = Proposal::find($id);
+            // dd($proposal);
+            $proposal->amount = intval($request->amount);
+            $proposal->completion_time = filter_var($request['completion_time'], FILTER_SANITIZE_STRING);
+            $proposal->content = filter_var($request['description'], FILTER_SANITIZE_STRING);
+            $proposal->freelancer_id = intval($user_id);
+            $job = Job::find($request->job_id);
+            $proposal->job()->associate($job);
+            $old_path = 'uploads\proposals\temp';
+            $proposal_attachments = array();
+            if (!empty($request['attachments'])) {
+
+                $attachments = $request['attachments'];
+                foreach ($attachments as $key => $attachment) {
+                    if (Storage::disk('local')->exists($old_path . '/' . $attachment)) {
+                        $new_path = 'uploads/proposals/' . $user_id;
+                        if (!file_exists($new_path)) {
+                            File::makeDirectory($new_path, 0755, true, true);
+                        }
+                        $filename = time() . '-' . $attachment;
+                        Storage::move($old_path . '/' . $attachment, $new_path . '/' . $filename);
+                        $proposal_attachments[] = $filename;
+                    }
+                }
+                $proposal->attachments = serialize($proposal_attachments);
+            }
+            $proposal->save();
+            $json['type'] = 'success';
+            return $json;
+        } else {
+            $json['type'] = 'error';
+            return $json;
+        }
+
+    }
+
 }
