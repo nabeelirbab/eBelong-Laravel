@@ -11,6 +11,17 @@
 				<div class="wt-dashboardbox wt-dashboardservcies">
 					<div class="wt-dashboardboxtitle wt-titlewithsearch">
 						<h2>{{ trans('lang.services_listing') }}</h2>
+						{!! Form::open(['url' => url('admin/services/search'),
+                            'method' => 'get', 'class' => 'wt-formtheme wt-formsearch'])
+                        !!}
+                        <fieldset>
+                            <div class="form-group">
+                                <input type="text" name="keyword" value="{{{ !empty($_GET['keyword']) ? $_GET['keyword'] : '' }}}"
+                                    class="form-control" placeholder="{{{ trans('lang.ph_search_services') }}}">
+                                <button type="submit" class="wt-searchgbtn"><i class="lnr lnr-magnifier"></i></button>
+                            </div>
+                        </fieldset>
+                        {!! Form::close() !!}
 					</div>
 					<div class="wt-dashboardboxcontent wt-categoriescontentholder">
 						@if ($services->count() > 0)

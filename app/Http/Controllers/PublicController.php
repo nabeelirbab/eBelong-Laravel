@@ -17,6 +17,7 @@ use App\Mail\FindMatchEmailAdminMailable;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Http\Request;
 use App\User;
+use App\Cource;
 use App\Language;
 use App\FindMatchRequest;
 use Illuminate\Support\Facades\Mail;
@@ -880,7 +881,163 @@ class PublicController extends Controller
                         )
                     );
                 }
-            } else {
+            } 
+            elseif ($type == 'instructors') {
+                $service_list_meta_title = !empty($inner_page) && !empty($inner_page[0]['service_list_meta_title']) ? $inner_page[0]['service_list_meta_title'] : trans('lang.service_listing');
+                $service_list_meta_desc = !empty($inner_page) && !empty($inner_page[0]['service_list_meta_desc']) ? $inner_page[0]['service_list_meta_desc'] : trans('lang.service_meta_desc');
+                $show_service_banner = !empty($inner_page) && !empty($inner_page[0]['show_service_banner']) ? $inner_page[0]['show_service_banner'] : 'true';
+                $service_inner_banner = !empty($inner_page) && !empty($inner_page[0]['service_inner_banner']) ? $inner_page[0]['service_inner_banner'] : null;
+                $delivery_time = DeliveryTime::all();
+                $response_time = ResponseTime::all();
+                $services_total_records = Cource::count();
+                $results = Cource::getSearchResult(
+                    $keyword,
+                    $search_categories,
+                    $search_locations,
+                    $search_languages,
+                    $search_delivery_time,
+                    $search_response_time
+                );
+                $services = $results['services'];
+                
+                if (file_exists(resource_path('views/extend/front-end/cources/index.blade.php'))) {
+                    return view(
+                        'extend.front-end.cources.index',
+                        compact(
+                            'services_total_records',
+                            'type',
+                            'services',
+                            'symbol',
+                            'keyword',
+                            'categories',
+                            'locations',
+                            'languages',
+                            'delivery_time',
+                            'response_time',
+                            'service_list_meta_title',
+                            'service_list_meta_desc',
+                            'show_service_banner',
+                            'service_inner_banner',
+                            'show_breadcrumbs'
+                        )
+                    );
+                } else {
+                    return view(
+                        'front-end.cources.index',
+                        compact(
+                            'services_total_records',
+                            'type',
+                            'services',
+                            'symbol',
+                            'keyword',
+                            'categories',
+                            'locations',
+                            'languages',
+                            'delivery_time',
+                            'response_time',
+                            'service_list_meta_title',
+                            'service_list_meta_desc',
+                            'show_service_banner',
+                            'service_inner_banner',
+                            'show_breadcrumbs'
+                        )
+                    );
+                }
+            }
+            elseif ($type === 'freelancerjobs') 
+            {
+                $allJobs = array();
+                $freelancer_skills = Skill::getFreelancerSkill(Auth::user()['id']);
+                foreach ($freelancer_skills as $key => $skill_id) {
+                $jobss[$key] = Skill::getJob($skill_id);
+                }
+                if(!empty($jobss)){
+                foreach ($jobss as $key => $job) {
+                 foreach ($job as $key => $value) {
+                    $allJobs[$key] = $value->job_id;
+                }
+                }
+            }
+               
+                $jobs=array();
+                if(!empty($allJobs)){
+                $allJobs = array_unique($allJobs);
+                foreach ($allJobs as $job_id) {
+                        $Jobs[$job_id] = Job::where('id',$job_id)->get();                    
+                }
+            }
+                $Jobs_total_records = Job::count();
+                $job_list_meta_title = !empty($inner_page) && !empty($inner_page[0]['job_list_meta_title']) ? $inner_page[0]['job_list_meta_title'] : trans('lang.job_listing');
+                $job_list_meta_desc = !empty($inner_page) && !empty($inner_page[0]['job_list_meta_desc']) ? $inner_page[0]['job_list_meta_desc'] : trans('lang.job_meta_desc');
+                $show_job_banner = !empty($inner_page) && !empty($inner_page[0]['show_job_banner']) ? $inner_page[0]['show_job_banner'] : 'true';
+                $job_inner_banner = !empty($inner_page) && !empty($inner_page[0]['job_inner_banner']) ? $inner_page[0]['job_inner_banner'] : null;
+                $project_settings = !empty(SiteManagement::getMetaValue('project_settings')) ? SiteManagement::getMetaValue('project_settings') : array();
+                $completed_project_setting = !empty($project_settings) && !empty($project_settings['enable_completed_projects']) ? $project_settings['enable_completed_projects'] : 'true';
+                if(!empty($Jobs)){
+                foreach ($Jobs as $key => $value) {
+                    $jobs[$key] = $value[0];
+                        // dd($jobss->employeer->slug);
+                    // }
+                }
+            }
+             
+            
+                if (!empty($jobs)) {
+                     
+                    // if (file_exists(resource_path('views/extend/front-end/jobs/index.blade.php'))) {
+                        
+                        return view(
+                            'front-end.jobs.index',
+                            compact(
+                                'jobs',
+                                'categories',
+                                'locations',
+                                'languages',
+                                'freelancer_skills',
+                                'project_length',
+                                'Jobs_total_records',
+                                'keyword',
+                                'skills',
+                                'type',
+                                'current_date',
+                                'symbol',
+                                'job_list_meta_title',
+                                'job_list_meta_desc',
+                                'show_job_banner',
+                                'job_inner_banner',
+                                'show_breadcrumbs'
+                            )
+                        );
+                    // }
+                }
+                else{
+                    $jobs=[];
+                    return view(
+                        'front-end.jobs.index',
+                        compact(
+                            'jobs',
+                            'categories',
+                            'locations',
+                            'languages',
+                            'freelancer_skills',
+                            'project_length',
+                            'Jobs_total_records',
+                            'keyword',
+                            'skills',
+                            'type',
+                            'current_date',
+                            'symbol',
+                            'job_list_meta_title',
+                            'job_list_meta_desc',
+                            'show_job_banner',
+                            'job_inner_banner',
+                            'show_breadcrumbs'
+                        )
+                    );
+                }
+                
+            }
+            else {
                 $Jobs_total_records = Job::count();
                 $job_list_meta_title = !empty($inner_page) && !empty($inner_page[0]['job_list_meta_title']) ? $inner_page[0]['job_list_meta_title'] : trans('lang.job_listing');
                 $job_list_meta_desc = !empty($inner_page) && !empty($inner_page[0]['job_list_meta_desc']) ? $inner_page[0]['job_list_meta_desc'] : trans('lang.job_meta_desc');

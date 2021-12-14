@@ -82,6 +82,8 @@
                                                 </span>
                                             </li>
                                         @endif
+                                        @if (Auth::user())
+                                        @if ($profile->user_id != Auth::user()->id)
                                         @if (in_array($profile->id, $save_freelancer))
                                             <li class="wt-btndisbaled">
                                                 <a href="javascrip:void(0);" class="wt-clicksave wt-clicksave">
@@ -96,6 +98,8 @@
                                                     @{{ text }}
                                                 </a>
                                             </li>
+                                        @endif
+                                        @endif
                                         @endif
                                     </ul>
                                     @if (!empty($profile->description))
@@ -122,11 +126,13 @@
                                         <h3 data-from="0" data-to="{{ $amount }}" data-speed="8000" data-refresh-interval="100">{{ empty($amount) ? $symbol.'0.00' : $symbol."".$amount }}</h3>
                                         <h4>{{ trans('lang.total_earnings') }}</h4>
                                     </div>
+                                    <?php $user_role = Helper::getSessionUserRole(); ?>
+                                    <?php if($user_role !== 'freelancer'): ?>
                                     <div class="wt-description">
                                         <p>{{ trans('lang.send_offer_note') }}</p>
                                         <a href="javascript:void(0);" @click.prevent='sendOffer("{{$auth_user}}")' class="wt-btn">{{{ trans('lang.btn_send_offer') }}}</a>
-                                        
                                     </div>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         </div>
@@ -486,6 +492,8 @@
                                     </ul>
                                 </div>
                             </div>
+                            @if (Auth::user())
+                            @if ($profile->user_id != Auth::user()->id)
                             <div class="wt-widget wt-reportjob">
                                 <div class="wt-widgettitle">
                                     <h2>{{ trans('lang.report_user') }}</h2>
@@ -508,6 +516,8 @@
                                     {!! form::close(); !!}
                                 </div>
                             </div>
+                            @endif
+                            @endif
                         </aside>
                     </div>
                 </div>

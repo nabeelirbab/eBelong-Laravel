@@ -39,6 +39,24 @@
       'Zipper' => 'Chumper\\Zipper\\Zipper',
     ),
   ),
+  'consoletvs/charts' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'ConsoleTVs\\Charts\\ChartsServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Charts' => 'ConsoleTVs\\Charts\\Facades\\Charts',
+    ),
+  ),
+  'consoletvs/support' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'ConsoleTVs\\Support\\SupportServiceProvider',
+    ),
+  ),
   'davejamesmiller/laravel-breadcrumbs' => 
   array (
     'providers' => 
@@ -66,6 +84,17 @@
     'aliases' => 
     array (
       'Image' => 'Intervention\\Image\\Facades\\Image',
+    ),
+  ),
+  'jenssegers/date' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Jenssegers\\Date\\DateServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Date' => 'Jenssegers\\Date\\Date',
     ),
   ),
   'laravel/nexmo-notification-channel' => 
@@ -170,6 +199,17 @@
     'providers' => 
     array (
       0 => 'Tanmuhittin\\LaravelGoogleTranslate\\LaravelGoogleTranslateServiceProvider',
+    ),
+  ),
+  'yajra/laravel-datatables-oracle' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Yajra\\DataTables\\DataTablesServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'DataTables' => 'Yajra\\DataTables\\Facades\\DataTables',
     ),
   ),
 );

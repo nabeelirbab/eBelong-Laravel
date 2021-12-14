@@ -479,16 +479,7 @@ class Profile extends Model
                 $payouts['bank_iban'] = $payout_setting['bank_iban'];
                 $payouts['bank_bic_swift'] = $payout_setting['bank_bic_swift']; */ 
 
-                $payout_id = $payout_setting['account_number'];
-                $payouts['email'] = $payout_setting['email'];
-                $payouts['account_holder'] = $payout_setting['account_holder'];
-                $payouts['country'] = $payout_setting['country'];
-                $payouts['city'] = $payout_setting['city'];
-                $payouts['address'] = $payout_setting['address']; 
-                $payouts['zipcode'] = $payout_setting['zipcode'];  
-                $payouts['state'] = $payout_setting['state'];  
-                $payouts['isfccode'] = $payout_setting['isfccode']; 
-                $payouts['account_number'] = $payout_setting['account_number'];
+               
             }
         }
         $profile->payout_settings  = serialize($payouts);
