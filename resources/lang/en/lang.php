@@ -771,6 +771,7 @@ return [
     'cancelled_projects' => 'Cancelled Projects',
     'ongoing_projects' => 'Ongoing Projects',
     'services' => 'Services',
+    'courses' => 'Courses',
     'manage_services' => 'Manage Services',
     'posted_services' => 'Posted Services',
     'completed_services' => 'Completed Services',
