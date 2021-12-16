@@ -104,15 +104,16 @@
                                 </div>
                             </div>
                             <div class="wt-clientfeedback">
-                                <div class="wt-usertitle wt-titlewithselect">
-                                    <h2>{{ trans('lang.reviews') }}</h2>
-                                </div>
+                                
                                 @if (!empty($reviews) && $reviews->count() != 0)
                                     @foreach ($reviews as $key => $review)
                                         @php
                                             $user = App\User::find($review->user_id);
                                             $stars  = $review->avg_rating != 0 ? $review->avg_rating/5*100 : 0;
                                         @endphp
+                                        <div class="wt-usertitle wt-titlewithselect">
+                                         <h2>{{ trans('lang.reviews') }}</h2>
+                                        </div>
                                         <div class="wt-userlistinghold wt-userlistingsingle">
                                                 <figure class="wt-userlistingimg">
                                                     <img src="{{ asset(Helper::getProfileImage($review->user_id)) }}" alt="{{{ trans('Employer') }}}">
@@ -146,13 +147,13 @@
                                             </div>
                                     @endforeach
                                 @else
-                                    <div class="wt-userprofile">
+                                    <!-- <div class="wt-userprofile">
                                         @if (file_exists(resource_path('views/extend/errors/no-record.blade.php')))
                                             @include('extend.errors.no-record')
                                         @else
                                             @include('errors.no-record')
                                         @endif
-                                    </div>
+                                    </div> -->
                                 @endif
                             </div>
                         </div>
