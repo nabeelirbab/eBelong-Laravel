@@ -393,6 +393,7 @@ Route::group(
         Route::get('freelancer/profile', 'FreelancerController@index')->name('personalDetail');
         Route::post('freelancer/upload-temp-image', 'FreelancerController@uploadTempImage');
         Route::get('freelancer/dashboard/post-service', 'ServiceController@create')->name('freelancerPostService');
+        Route::get('freelancer/dashboard/post-course', 'CourseController@create')->name('freelancerPostCourse');
         Route::get('freelancer/payout-settings', 'FreelancerController@payoutSettings')->name('FreelancerPayoutsSettings');
         Route::get('freelancer/payouts', 'FreelancerController@getPayouts')->name('getFreelancerPayouts');
         Route::get('freelancer/jobs/workdiary', 'WorkDiaryController@index');

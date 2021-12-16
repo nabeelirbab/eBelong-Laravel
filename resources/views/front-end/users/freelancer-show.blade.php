@@ -106,18 +106,18 @@
                                     
                                 </div>
                                 <div id="wt-statistics" class="wt-statistics wt-profilecounter">
-                                    <div class="wt-statisticcontent wt-countercolor1">
+                                    <!-- <div class="wt-statisticcontent wt-countercolor1">
                                         <h3 data-from="0" data-to="{{{ Helper::getProposals($user->id, 'hired')->count() }}}" data-speed="800" data-refresh-interval="03">{{{ Helper::getProposals($user->id, 'hired')->count() }}}</h3>
                                         <h4>{{ trans('lang.ongoing_project') }}</h4>
-                                    </div>
+                                    </div> -->
                                     <div class="wt-statisticcontent wt-countercolor2">
                                         <h3 data-from="0" data-to="{{{ Helper::getProposals($user->id, 'completed')->count() }}}" data-speed="8000" data-refresh-interval="100">{{{ Helper::getProposals($user->id, 'completed')->count() }}}</h3>
                                         <h4>{{ trans('lang.completed_projects') }}</h4>
                                     </div>
-                                    <div class="wt-statisticcontent wt-countercolor4">
+                                    <!-- <div class="wt-statisticcontent wt-countercolor4">
                                         <h3 data-from="0" data-to="{{{ Helper::getProposals($user->id, 'cancelled')->count() }}}" data-speed="800" data-refresh-interval="02">{{{ Helper::getProposals($user->id, 'cancelled')->count() }}}</h3>
                                         <h4>{{ trans('lang.cancelled_projects') }}</h4>
-                                    </div>
+                                    </div> -->
                                     <div class="wt-statisticcontent wt-countercolor3">
                                         <h3 data-from="0" data-to="{{ $amount }}" data-speed="8000" data-refresh-interval="100">{{ empty($amount) ? $symbol.'0.00' : $symbol."".$amount }}</h3>
                                         <h4>{{ trans('lang.total_earnings') }}</h4>

@@ -199,7 +199,7 @@ body{background: #f7f7f7;}
 .wt-usersidebar .wt-companysinfo .wt-title h2{margin-bottom:2px; }
 .wt-usersidebar .wt-companysinfo .wt-title{margin-bottom:14px; }
 .wt-openmenu .wt-usersidebar .wt-companysinfo .wt-title,
-.wt-openmenu .wt-usersidebar .wt-companysinfo .wt-btnarea{margin-left: 200px;display: none;}
+.wt-openmenu .wt-usersidebar .wt-companysinfo .wt-btnarea{margin-left: 200px;display: none; margin-bottom: 10px !important;}
 .wt-openmenu .wt-usersidebar .wt-companysinfo figure{
 	width: 46px;
 	height: 46px;
@@ -1895,7 +1895,6 @@ table.wt-tablecategories tbody tr td figure img{
 .wt-historycontentcol{
 	float: left;
 	width: 100%;
-	line-height: ;
 	list-style:none;
 	border:1px solid #eff2f5;
 }
