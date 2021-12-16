@@ -340,6 +340,9 @@ class PublicController extends Controller
                 if (Schema::hasTable('services') && Schema::hasTable('service_user')) {
                     $services = $user->services;
                 }
+                if (Schema::hasTable('cources') && Schema::hasTable('cource_user')) {
+                    $cources = $user->cources;
+                }
                 $reviews = Review::where('receiver_id', $user->id)->get();
                 $awards = !empty($profile->awards) ? unserialize($profile->awards) : array();
                 $projects = !empty($profile->projects) ? unserialize($profile->projects) : array();
@@ -372,6 +375,7 @@ class PublicController extends Controller
                             'average_rating_count',
                             'videos',
                             'services',
+                            'cources',
                             'profile',
                             'amount',
                             'skills',
@@ -412,6 +416,7 @@ class PublicController extends Controller
                             'average_rating_count',
                             'videos',
                             'services',
+                            'cources',
                             'profile',
                             'amount',
                             'skills',

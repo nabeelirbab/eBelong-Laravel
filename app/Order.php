@@ -64,7 +64,24 @@ class Order extends Model
             $json['service_order'] = $service_order_id;
             $json['id'] = $this->id;
             return $json;
-        } else {
+        } 
+        if($type='cource'){
+            $cource = Cource::find($product_id);
+            $seller = Helper::getCourceSeller($cource->id);
+            $cource_order_id = DB::table('cource_user')->insertGetId(
+                ['cource_id' => $product_id, 'user_id' => Auth::user()->id,'seller_id' => $seller->user_id,'type' => 'employer','seller_id' => $seller->user_id, 'paid' => 'pending']
+            );
+           
+            $this->user_id = $id;
+            $this->cource_product_id = $cource_order_id;
+            $this->status = 'pending';
+            $this->type = $type;
+            $this->save();
+            $json['cource_order'] = $cource_order_id;
+            $json['id'] = $this->id;
+            return $json;
+        }
+        else {
             $this->user_id = $id;
             $this->product_id = $product_id;
             $this->status = 'pending';
