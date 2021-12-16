@@ -108,6 +108,12 @@
                             </a>
                         </li>
                         <li>
+                            <a href="{{{ url($role.'/saved-items') }}}">
+                                <i class="ti-heart"></i>
+                                <span>{{ trans('lang.saved_items') }}</span>
+                            </a>
+                        </li>
+                        <li>
                             <a href="{{{ route('emailTemplates') }}}">
                                 <i class="ti-email"></i>
                                 <span>{{ trans('lang.email_templates') }}</span>

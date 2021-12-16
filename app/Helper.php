@@ -989,7 +989,7 @@ class Helper extends Model
     public static function getUserName($user_id)
     {
         if (!empty($user_id)) {
-            return User::find($user_id)->first_name . ' ' . User::find($user_id)->last_name;
+       return User::find($user_id)['first_name'] . ' ' . User::find($user_id)['last_name'];
         } else {
             return '';
         }
@@ -1289,6 +1289,15 @@ class Helper extends Model
                     "slug"
                 )->get()->toArray();
             $json = $services;
+        }
+        if ($type == 'instructors') {
+            $cources = DB::table("cources")
+                ->select(
+                    "title AS name",
+                    "slug"
+                )->get()->toArray();
+              
+            $json = $cources;
         }
         return $json;
     }
@@ -2876,6 +2885,18 @@ class Helper extends Model
             ->select('reviews.*')
             ->where('reviews.receiver_id', $receiver_id)
             ->where('reviews.service_id', $service_id)->get();
+    }
+
+    public static function getCourceReviews($receiver_id, $cource_id)
+    {
+        return DB::table('reviews')
+            ->select('reviews.*')
+            ->where('reviews.receiver_id', $receiver_id)
+            ->where('reviews.cource_id', $cource_id)->get();
+    }
+    public static function getCourceCount($cource_id)
+    {
+        return DB::table('cource_user')->where('cource_id', $cource_id)->count();
     }
 
     /**

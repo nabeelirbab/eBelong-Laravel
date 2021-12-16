@@ -85,7 +85,7 @@
 
                                                 </div>
                                             </div>
-                                            <div class="form-group">
+                                            {{-- <div class="form-group">
                                                 <div class="col-md-12" style="padding-top: 30px;">
                                                     <div class="wt-radioboxholder">
                                                         <div class="wt-title">
@@ -99,11 +99,11 @@
                                                         @endforeach
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> --}}
 
                                             <div class="form-group form-group-half wt-btnarea" style="padding-top: 20px;">
-                                                <input type="submit" value="Invite" class="wt-btn">
-                                                <input type="button" value="View Members" class="wt-btn">
+                                                <input type="submit" value="Invite" class="wt-btn"style="margin: 10px;">
+                                                <a href="/agency-members" class="wt-btn" style="margin: 10px;">View Members</a>
 
                                             </div>
                                         </form>

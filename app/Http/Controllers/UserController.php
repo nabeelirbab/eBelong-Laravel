@@ -472,11 +472,11 @@ class UserController extends Controller
             }
 
         }
-        $member_type = [
-            'exclusive_member' => ' Exclusive Member',
-            'non_exclusive_member' => 'Non Exclusive Member',
+        // $member_type = [
+        //     'exclusive_member' => ' Exclusive Member',
+        //     'non_exclusive_member' => 'Non Exclusive Member',
 
-        ];
+        // ];
 
         if (empty($agency_info)) {
             return Redirect::to('agency/create/new/');
@@ -485,7 +485,7 @@ class UserController extends Controller
         if (file_exists(resource_path('views/extend/back-end/settings/agency-settings.blade.php'))) {
             return view('extend.back-end.settings.agency-settings',compact('agency_info'));
         } else {
-            return view('back-end.settings.agency-settings',compact('agency_info','member_type'));
+            return view('back-end.settings.agency-settings',compact('agency_info'));
         }
     }
 
@@ -1135,7 +1135,33 @@ class UserController extends Controller
                         )
                     );
                 }
-            } elseif ($request->path() === 'freelancer/saved-items') {
+            }
+            elseif ($request->path() === 'admin/saved-items') {
+                if (file_exists(resource_path('views/extend/back-end/admin/saved-items.blade.php'))) {
+                    return view(
+                        'extend.back-end.admin.saved-items',
+                        compact(
+                            'profile',
+                            'saved_jobs',
+                            'saved_freelancers',
+                            'saved_employers',
+                            'symbol'
+                        )
+                    );
+                } else {
+                    return view(
+                        'back-end.admin.saved-items',
+                        compact(
+                            'profile',
+                            'saved_jobs',
+                            'saved_freelancers',
+                            'saved_employers',
+                            'symbol'
+                        )
+                    );
+                }
+            }
+             elseif ($request->path() === 'freelancer/saved-items') {
                 if (file_exists(resource_path('views/extend/back-end/freelancer/saved-items.blade.php'))) {
                     return view(
                         'extend.back-end.freelancer.saved-items',
@@ -1228,7 +1254,7 @@ class UserController extends Controller
             if (!empty($request['id'])) {
                 $user_id = Auth::user()->id;
                 $id = $request['id'];
-                if (!empty($request['column']) && ($request['column'] === 'saved_employers' || $request['column'] === 'saved_freelancer' || $request['column'] === 'saved_services')) {
+                if (!empty($request['column']) && ($request['column'] === 'saved_employers' || $request['column'] === 'saved_freelancer' || $request['column'] === 'saved_services'||$request['column'] === 'saved_cources')) {
                     if (!empty($request['seller_id'])) {
                         if ($user_id == $request['seller_id']) {
                             $json['type'] = 'error';
@@ -2668,7 +2694,14 @@ class UserController extends Controller
         if (Auth::user() && Auth::user()->getRoleNames()->first() === 'admin') {
             if (!empty($_GET['keyword'])) {
                 $keyword = $_GET['keyword'];
-                $users = $this->user::where('first_name', 'like', '%' . $keyword . '%')->orWhere('last_name', 'like', '%' . $keyword . '%')->paginate(7)->setPath('');
+                $keyword_tokens = explode(' ', $keyword);
+                $count = count($keyword_tokens);
+                if($count>1){
+                    $users = $this->user::where('first_name', 'like', '%' . $keyword_tokens[0] . '%')->where('last_name', 'like', '%' . $keyword_tokens[$count-1] . '%')->paginate(7)->setPath('');
+                }
+                else{
+                    $users = $this->user::where('first_name', 'like', '%' . $keyword . '%')->orWhere('last_name', 'like', '%' . $keyword . '%')->paginate(7)->setPath(''); 
+                }
                 $pagination = $users->appends(
                     array(
                         'keyword' => Input::get('keyword')
@@ -2922,21 +2955,7 @@ class UserController extends Controller
     public function updatePayoutDetail(Request $request)
     {   
         $payout_setting = $request['payout_settings'];
-        if( ($payout_setting['type'] == 'bacs')  && (
-            $payout_setting['account_holder'] == "" || 
-            $payout_setting['country'] == "" ||
-            $payout_setting['city'] == "" || 
-            $payout_setting['address'] == "" ||  
-            $payout_setting['zipcode'] == "" || 
-            $payout_setting['state'] == "" ||
-            $payout_setting['isfccode'] ==  "" ||
-            $payout_setting['account_number'] ==  ""
-            ) )
-        {
-            $json['type'] = 'error';
-            $json['message'] = 'Something is wrong please try again.';
-            return $json;
-        }
+       
         $user_id = $request['id'];
         if (!empty($user_id)) {
             $payout_setting = $this->profile->savePayoutDetail($request,$user_id);
@@ -3285,4 +3304,15 @@ class UserController extends Controller
             return $json;
         }
     }
+
+    public function updateUserBadge(Request $request){
+		$userid = $request->post('id');
+		$badge = $request->post('status');
+		
+		DB::table('users')->where('id',$userid)->update(array('badge_id'=>$badge));
+		$json = array();
+		$json['type'] = 'success';
+        $json['message'] = 'featured status change successfully.';
+		return $json;
+	}
 } 

@@ -129,7 +129,7 @@
 								<div class="pl-0 col-xs-12 col-sm-12 col-md-12 col-lg-12">
 									<strong class="wt-logo wt-logo-header desktop-logo" >
 										<a href="{{{ url('/') }}}"><!--<img src="{{{ asset($logo) }}}" alt="{{{ trans('Logo') }}}" style="height:30px;">-->
-											<img src="{{ asset('uploads/settings/general/ebelong-logo-header.png') }}" alt="{{{ trans('Logo') }}}"  style="width:184px;">
+											<img src="{{ asset('uploads/settings/general/1615054786-ebelong-logo-header.png') }}" alt="{{{ trans('Logo') }}}"  style="width:184px;">
 										</a>
 									</strong>
 									<strong class="wt-logo wt-logo-header mobile-logo" >
@@ -147,6 +147,11 @@
 													<?php $user_role = Helper::getSessionUserRole(); ?>
 													<?php if($user_role): ?>
 														<?php if($user_role == 'guest'): ?>
+														<li style="order: 1;">
+															<a href="{{url('search-results?type=instructors')}}">
+																{{{ trans('lang.browse_instructors') }}}
+															</a>
+														</li>
 														<li style="order: 2;">
 															<a href="{{url('search-results?type=freelancer')}}">
 																{{{ trans('lang.view_freelancers') }}}

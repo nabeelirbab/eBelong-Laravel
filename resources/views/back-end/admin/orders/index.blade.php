@@ -76,13 +76,13 @@
 												<td>
 													<span class="bt-content">
 														<div class="wt-service-tabel">
-															<figure class="service-feature-image"><img src="{{{asset(Helper::getProfileImage($user->id))}}}" alt="{{{trans('lang.image')}}}"></figure>
+															<figure class="service-feature-image"><img src="{{{asset(Helper::getProfileImage($user['id']))}}}" alt="{{{trans('lang.image')}}}"></figure>
 															<div class="wt-freelancers-content">
 																<div class="dc-title">
-																	@if ($user->user_verified == 1)
+																	@if ($user['user_verified'] == 1)
 																		<span class="wt-featuredtagvtwo">{{ trans('lang.featured') }}</span>
 																	@endif
-																	<a href="{{{url('profile/'.$user->slug)}}}"><h3>{{{Helper::getUserName($user->id)}}}</h3></a>
+																	<a href="{{{url('profile/'.$user['slug'])}}}"><h3>{{{Helper::getUserName($user['id'])}}}</h3></a>
 																</div>
 															</div>
 														</div>
@@ -98,7 +98,7 @@
 														</div>
 														@if ($order->invoice->transection_doc)
 															<div class="wt-payment-attachment">
-																<a href="javascript:void(0);"  v-on:click.prevent="downloadAttachment('users', '{{Helper::getUnserializeData($order->invoice->transection_doc)[0]}}', '{{$order->user_id}}')" >{{ trans('lang.attachment') }}</a>
+																{{-- <a href="javascript:void(0);"  v-on:click.prevent="downloadAttachment('users', '{{Helper::getUnserializeData($order->invoice->transection_doc)[0]}}', '{{$order->user_id}}')" >{{ trans('lang.attachment') }}</a> --}}
 															</div>
 														@endif
 													</span>

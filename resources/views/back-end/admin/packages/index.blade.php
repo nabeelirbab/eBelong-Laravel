@@ -182,9 +182,9 @@
                                                         <a href="{{{ url('admin/packages/edit') }}}/{{{ $package->slug }}}" class="wt-addinfo wt-packagesaddinfo">
                                                             <i class="lnr lnr-pencil"></i>
                                                         </a>
-                                                        @if ($package->trial != 1)
+                                                        {{-- @if ($package->trial != 1) --}}
                                                             <delete :title="'{{trans("lang.ph_delete_confirm_title")}}'" :id="'{{$package->id}}'" :message="'{{trans("lang.ph_pkg_delete_message")}}'" :url="'{{url('admin/packages/delete-package')}}'"></delete>
-                                                        @endif
+                                                        {{-- @endif --}}
                                                     </div>
                                                 </td>
                                             </tr>

@@ -1904,6 +1904,11 @@ if (document.getElementById("user_profile")) {
                                     jQuery('#' + element_id).addClass('wt-clicksave');
                                     jQuery('#' + element_id).find('.save_text').text(saved_text);
                                 }
+                                else if (column == 'saved_cources') {
+                                    jQuery('#' + element_id).addClass('wt-btndisbaled wt-clicksave');
+                                    // self.saved_class = 'wt-clicksave';
+                                    self.text = saved_text;
+                                }
                                 self.showMessage(response.data.message);
                             } else {
                                 self.showError(response.data.message);
@@ -2990,6 +2995,27 @@ if (document.getElementById("profile_settings")) {
                 var status = document.getElementById(id+'-is_disabled').value;
                 var self = this;
                 axios.post(APP_URL + '/admin/update-user-is-disabled-status', {
+                    status: status,
+                    id: id,
+                })
+                .then(function (response) {
+                    if (response.data.type == 'success') {
+                        self.showMessage(response.data.message);
+                        self.loading = false;
+                    }else {
+                        self.loading = false;
+                        self.showError(response.data.message);
+                    }
+                })
+                .catch(function (error) {
+                    self.loading = false;
+                });
+            },
+            changeBadge: function (id) {
+                this.loading = true;
+                var status = document.getElementById(id+'-assign_badge').value;
+                var self = this;
+                axios.post(APP_URL + '/admin/update-user-badge', {
                     status: status,
                     id: id,
                 })

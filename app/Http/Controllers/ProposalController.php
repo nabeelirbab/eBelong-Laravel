@@ -130,6 +130,160 @@ class ProposalController extends Controller
         }
     }
 
+    public function ProposalUpdate($job_slug ,$id){
+        
+        if(!empty($id)){
+            $proposal = Proposal::where('id',$id)->first();
+            // dd($proposal->completion_time);
+            
+        }
+        if (!empty($job_slug)) {
+            $job = Job::all()->where('slug', $job_slug)->first();
+            if (!empty($job)) {
+                $job_skills = $job->skills->pluck('id')->toArray();
+                $check_skill_req = $this->proposal->getJobSkillRequirement($job_skills);
+                $proposal_status = Job::find($job->id)->proposals()->where('status', 'hired')->first();
+                $role_id =  Helper::getRoleByUserID(Auth::user()->id);
+                $package_options = Package::select('options')->where('role_id', $role_id)->first();
+                $options = !empty($package_options) ? unserialize($package_options['options']) : array();
+                $settings = SiteManagement::getMetaValue('settings');
+                $required_connects = !empty($settings) && !empty($settings[0]['connects_per_job']) ? $settings[0]['connects_per_job'] : 2;
+                $remaining_proposals = !empty($options) && !empty($options['no_of_connects']) ? $options['no_of_connects'] / $required_connects : 0;
+                $submitted_proposals = $this->proposal::where('freelancer_id', Auth::user()->id)->count();
+                $duration =  Helper::getJobDurationList($job->duration);
+                $job_completion_time = Helper::getJobDurationList();
+                $commision_amount = SiteManagement::getMetaValue('commision');
+                $commision = !empty($commision_amount) && !empty($commision_amount[0]["commision"]) ? $commision_amount[0]["commision"] : 0;
+                $currency = SiteManagement::getMetaValue('commision');
+                $symbol = !empty($currency) && !empty($currency[0]['currency']) ? Helper::currencyList($currency[0]['currency']) : array();
+                $breadcrumbs_settings = SiteManagement::getMetaValue('show_breadcrumb');
+                $show_breadcrumbs = !empty($breadcrumbs_settings) ? $breadcrumbs_settings : 'true';
+                if (Auth::user() && !empty(Auth::user()->id)) {
+                    $submitted_proposals_count = DB::table('proposals')
+                        ->where('job_id', $job->id)
+                        ->where('freelancer_id', Auth::user()->id)->count();
+                }
+            }
+        }
+        // dd($job_completion_time);
+        return View(
+            'back-end.freelancer.proposals.freelancerProposalUpdate',compact(
+                'job',
+                'proposal_status',
+                'duration',
+                'job_completion_time',
+                'commision',
+                'check_skill_req',
+                'remaining_proposals',
+                'submitted_proposals',
+                'symbol',
+                'submitted_proposals_count',
+                'show_breadcrumbs',
+                'proposal'
+            ));
+    
+}
+
+public function update(Request $request)
+    {
+        // dd($request);
+        if (Auth::user()) {
+            $server = Helper::worketicIsDemoSiteAjax();
+            if (!empty($server)) {
+                $response['message'] = $server->getData()->message;
+                return $response;
+            }
+            if (!empty($request)) {
+                
+                $json = array();
+                $this->validate(
+                    $request,
+                    [
+                        'amount' => 'required',
+                        'completion_time'    => 'required',
+                        'description'    => 'required',
+                    ]
+                );
+                $job = Job::find($request['job_id']);
+                if ($job['status'] != 'posted') {
+                    $json['type'] = 'error';
+                    $json['message'] = trans('lang.job_not_avail');
+                    return $json;
+                }
+                if (intval($request['amount']) > $job->price) {
+                    $json['type'] = 'error';
+                    $json['message'] = trans('lang.proposal_exceed');
+                    return $json;
+                }
+                $package = DB::table('items')->where('subscriber', Auth::user()->id)->select('product_id')->first();
+                $proposals = $this->proposal::where('freelancer_id', Auth::user()->id)->count();
+                $settings = SiteManagement::getMetaValue('settings');
+                $payment_settings = SiteManagement::getMetaValue('commision');
+                $required_connects = !empty($settings) && !empty($settings[0]['connects_per_job']) ? $settings[0]['connects_per_job'] : 2;
+                $package_status = '';
+                
+                if (!empty($payment_settings) && empty($payment_settings[0]['enable_packages'])) {
+                    $package_status = 'true';
+                } else {
+                    $package_status = $payment_settings[0]['enable_packages'];
+                }
+                if (!empty($payment_settings) && $package_status === 'true') {
+                    
+                    if (empty($package->product_id)) {
+                        $json['type'] = 'error';
+                        $json['message'] = trans('lang.need_to_purchase_pkg');
+                        return $json;
+                    }
+                    $package_options = Package::select('options')->where('id', $package->product_id)->get()->first();
+                    $option = unserialize($package_options->options);
+                    $allowed_proposals = $option['no_of_connects'] / $required_connects;
+                    if ($proposals > $allowed_proposals) {
+                        $json['type'] = 'error';
+                        $json['message'] = trans('lang.not_enough_connects');
+                        return $json;
+                    } else {
+                       
+                        $submit_propsal = $this->proposal->updateProposal($request, $request['id']);
+                        if ($submit_propsal = 'success') {
+                            $json['type'] = 'success';
+                            $json['message'] = trans('lang.proposal_submitted');
+
+                            return redirect('freelancer/proposals');
+                        } else {
+                            $json['type'] = 'error';
+                            $json['message'] = trans('lang.something_wrong');
+                            return $json;
+                        }
+                    }
+                } else {
+                
+                    $submit_propsal = $this->proposal->updateProposal($request, $request['id']);
+                   
+                    if ($submit_propsal = 'success') {
+                        $json['type'] = 'success';
+                        $json['message'] = trans('lang.proposal_submitted');
+                        $user = User::find(Auth::user()->id);
+                        
+                        return redirect('freelancer/proposals');
+                    } else {
+                        $json['type'] = 'error';
+                        $json['message'] = trans('lang.something_wrong');
+                        return $json;
+                    }
+                }
+            } else {
+                $json['type'] = 'error';
+                $json['message'] = trans('lang.something_wrong');
+                return $json;
+            }
+        } else {
+            $json['type'] = 'error';
+            $json['message'] = trans('lang.not_authorize');
+            return $json;
+        }
+    }
+
+
     /**
      * Upload Image to temporary folder.
      *

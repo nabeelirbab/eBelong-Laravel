@@ -10,6 +10,7 @@ use DB;
 use View;
 use Auth;
 
+
 class AgencyController extends Controller
 {
     /**
@@ -19,6 +20,7 @@ class AgencyController extends Controller
      */
 
     public function index(){
+        echo "test";
 		if (Auth::user()){
 			$agency_info = Helper::getAgencyList(0,array('user_id'=>Auth::user()->id));
 			if(count($agency_info)){
@@ -163,6 +165,19 @@ class AgencyController extends Controller
         } elseif (!empty($request['award_img'])) {
             $agency_image = $request['award_img'];
             return Helper::uploadTempImage($path, $agency_image);
+        }
+    }
+    public function viewMembers(){
+        if(Auth::user()){
+        $user_id = Auth::user()->id;
+        $agency_id = DB::table('users')->select('agency_id')->where('id',$user_id)->first();
+        $users = DB::table('agency_associated_users')
+        ->where('agency_id',$agency_id->agency_id)
+        ->get();
+        return View::make('front-end.agencies.agencyMembers',compact('users'));
+        }
+        else{
+            abort(404);
         }
     }
 }

@@ -87,7 +87,7 @@
 </template>
 <script>
  export default{
-    props: ['widget_type', 'no_record_message', 'placeholder', 'freelancer_placeholder', 'employer_placeholder', 'job_placeholder', 'service_placeholder'],
+    props: ['widget_type', 'no_record_message', 'placeholder', 'freelancer_placeholder', 'employer_placeholder', 'job_placeholder', 'service_placeholder','instructor_placeholder'],
         data(){
             return {
                 filters:[],
@@ -123,6 +123,9 @@
                 } else if(type == 'service') {
                     this.selected_type = this.service_placeholder;
                 }
+                else if(type == 'instructors') {
+                    this.selected_type = this.instructor_placeholder;
+                }
             },
             getFilters(){
                 
@@ -154,6 +157,9 @@
                     } else if (type == 'job') {
                         self.searchable_data = response.data.searchables;
                     } else if (type == 'service') {
+                        self.searchable_data = response.data.searchables;
+                    }
+                    else if (type == 'instructors') {
                         self.searchable_data = response.data.searchables;
                     }
                 });
@@ -192,7 +198,7 @@
                         type = 'job';
                     } else if(type == 'Services') {
                         type = 'service';
-                    }
+                    }       
                     jQuery('.search-field').parents('.form-group').find('span.no-record-span').css("display", "none");
                     jQuery('.wt-related-result').remove();
                     var html = '<a href="'+this.url+'?s='+keyword+'&type='+type+'" class="wt-related-result"><span v-if="related_results">show all result related to'+' <em>'+ keyword+'</em></span></a>';
@@ -230,6 +236,9 @@
                     } else if(type == 'Services') {
                             type = 'service';
                     }
+                     else if(type == 'Instructors') {
+                            type = 'instructor';
+                    }
                 }
                 if (this.$refs.searchfield.inputValue != '') {
                     let slug = document.getElementById('hidden_field').value;
@@ -244,6 +253,9 @@
                             window.location.replace(APP_URL+'/search-results?type=job&s=&category[]='+slug);
                     } else if (type == 'service'){
                         window.location.replace(APP_URL+'/service/'+slug);
+                    }
+                     else if (type == 'instructors'){
+                        window.location.replace(APP_URL+'/instructor/'+slug);
                     }
                     else if(type == 'freelancer')
                     {
