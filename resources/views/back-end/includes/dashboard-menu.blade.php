@@ -42,7 +42,6 @@
                         @if (Helper::getAccessType() == 'both' || Helper::getAccessType() == 'services')
                             <div class="wt-btnarea services-btn"><a href="{{{ url(route('freelancerPostService')) }}}" class="wt-btn">{{{ trans('lang.post_service') }}}</a></div>
                             <div class="wt-btnarea course-btn"><a href="{{{ url(route('freelancerPostCourse')) }}}" class="wt-btn">{{{ trans('lang.post_course') }}}</a></div>
-
                         @else
                             <div class="wt-btnarea"><a href="{{{ url(route('showUserProfile', ['slug' => Auth::user()->slug])) }}}" class="wt-btn">{{{ trans('lang.view_profile') }}}</a></div>
                         @endif

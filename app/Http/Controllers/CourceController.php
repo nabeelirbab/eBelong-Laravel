@@ -47,6 +47,40 @@ class CourceController extends Controller
     {
         $this->cource = $cource;
     }
+    public function create()
+    {
+        $languages = Language::pluck('title', 'id');
+        $locations = Location::pluck('title', 'id');
+        $response_time = ResponseTime::pluck('title', 'id');
+        $delivery_time = DeliveryTime::pluck('title', 'id');
+        $english_levels = Helper::getEnglishLevelList();
+        $categories = Category::pluck('title', 'id');
+        if (file_exists(resource_path('views/extend/back-end/freelancer/cources/create.blade.php'))) {
+            return view(
+                'extend.back-end.freelancer.services.create',
+                compact(
+                    'english_levels',
+                    'languages',
+                    'categories',
+                    'locations',
+                    'response_time',
+                    'delivery_time'
+                )
+            );
+        } else {
+            return view(
+                'back-end.freelancer.cources.create',
+                compact(
+                    'english_levels',
+                    'languages',
+                    'categories',
+                    'locations',
+                    'response_time',
+                    'delivery_time'
+                )
+            );
+        }
+    }
 
     /**
      * Display a listing of the resource.
