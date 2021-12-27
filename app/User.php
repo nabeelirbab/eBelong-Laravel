@@ -175,7 +175,7 @@ class User extends Authenticatable
      */
     public function cources()
     {
-        return $this->belongsToMany('App\Cource')->withPivot('type',  'seller_id', 'paid');
+        return $this->belongsToMany('App\Cource')->withPivot('type', 'status', 'seller_id', 'paid');
     }
 
 

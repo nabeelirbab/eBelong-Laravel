@@ -305,6 +305,17 @@
                                         <li><hr><a href="{{{ route('ServiceListing', ['status'=>'cancelled']) }}}">{{ trans('lang.cancelled_services') }}</a></li>
                                     </ul>
                                 </li>
+                                 <li class="menu-item-has-children">
+                                    <span class="wt-dropdowarrow"><i class="lnr lnr-chevron-right"></i></span>
+                                    <a href="javascript:void(0)">
+                                        <i class="ti-briefcase"></i>
+                                        <span>{{ trans('lang.manage_courses') }}</span>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><hr><a href="{{{ route('CourseListing', ['status'=>'posted']) }}}">{{ trans('lang.posted_courses') }}</a></li>
+                                        <li><hr><a href="{{{ route('CourseListing', ['status'=>'bought']) }}}">{{ trans('lang.bought_courses') }}</a></li>
+                                        </ul>
+                                </li>
                             @endif
                             <li>
                                 <a href="{{{ route('showFreelancerProposals') }}}">

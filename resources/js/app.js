@@ -4973,7 +4973,7 @@ if (document.getElementById("cources")) {
             }
         },
         created: function () {
-            // this.getSettings();
+            this.getSettings();
         },
         data: {
             report: {
@@ -5049,12 +5049,12 @@ if (document.getElementById("cources")) {
             },
             submitCource: function () {
                 this.loading = true;
-                let Form = document.getElementById('post_service_form');
+                let Form = document.getElementById('post_cource_form');
                 let form_data = new FormData(Form);
                 var description = tinyMCE.get('wt-tinymceeditor').getContent();
                 form_data.append('description', description);
                 var self = this;
-                axios.post(APP_URL + '/services/post-service', form_data)
+                axios.post(APP_URL + '/courses/post-course', form_data)
                     .then(function (response) {
                         if (response.data.type == 'success') {
                             self.loading = false;
@@ -5062,7 +5062,7 @@ if (document.getElementById("cources")) {
                             document.addEventListener('iziToast-closing', function (data) {
                                 if (data.detail.id == 'info_notify') {
                                     self.showCompleted(response.data.message);
-                                    window.location.replace(APP_URL + '/freelancer/services/posted');
+                                    window.location.replace(APP_URL + '/freelancer/courses');
                                 }
                             });
                         } else {
@@ -5103,8 +5103,8 @@ if (document.getElementById("cources")) {
                 var segment_str = window.location.pathname;
                 var segment_array = segment_str.split('/');
                 var id = segment_array[segment_array.length - 1];
-                if (segment_str == '/freelancer/dashboard/edit-service/' + id) {
-                    axios.post(APP_URL + '/service/get-service-settings', {
+                if (segment_str == '/freelancer/dashboard/edit-course/' + id) {
+                    axios.post(APP_URL + '/course/get-course-settings', {
                         id: id
                     })
                         .then(function (response) {
@@ -5123,7 +5123,83 @@ if (document.getElementById("cources")) {
                         });
                 }
             },
-            
+            updateCource: function (id) {
+                this.loading = true;
+                let register_Form = document.getElementById('update_course_form');
+                let form_data = new FormData(register_Form);
+                var description = tinyMCE.get('wt-tinymceeditor').getContent();
+                form_data.append('description', description);
+                form_data.append('id', id);
+                var self = this;
+                axios.post(APP_URL + '/service/update-course', form_data)
+                    .then(function (response) {
+                        self.loading = false;
+                        if (response.data.type == 'success') {
+                            self.showInfo(response.data.progress);
+                            document.addEventListener('iziToast-closing', function (data) {
+                                if (data.detail.id == 'info_notify') {
+                                    self.showCompleted(response.data.message);
+                                    if (response.data.role == 'freelancer') {
+                                        window.location.replace(APP_URL + '/freelancer/courses/posted');
+                                    } else if (response.data.role == 'admin') {
+                                        //window.location.replace(APP_URL+'/admin/jobs');
+                                    }
+                                }
+                            });
+                        } else {
+                            self.loading = false;
+                            self.showError(response.data.message);
+                        }
+                    })
+                    .catch(function (error) {
+                        self.loading = false;
+                        if (error.response.data.errors.title) {
+                            self.showError(error.response.data.errors.title[0]);
+                        }
+                        if (error.response.data.errors.delivery_time) {
+                            self.showError(error.response.data.errors.delivery_time[0]);
+                        }
+                        if (error.response.data.errors.service_price) {
+                            self.showError(error.response.data.errors.service_price[0]);
+                        }
+                        if (error.response.data.errors.response_time) {
+                            self.showError(error.response.data.errors.response_time[0]);
+                        }
+                        if (error.response.data.errors.description) {
+                            self.showError(error.response.data.errors.description[0]);
+                        }
+                        if (error.response.data.errors.english_level) {
+                            self.showError(error.response.data.errors.english_level[0]);
+                        }
+                        if (error.response.data.errors.latitude) {
+                            self.showError(error.response.data.errors.latitude[0]);
+                        }
+                        if (error.response.data.errors.longitude) {
+                            self.showError(error.response.data.errors.longitude[0]);
+                        }
+                    });
+            },
+            changeStatus: function (id) {
+                this.loading = true;
+                var status = document.getElementById(id + '-cource_status').value;
+                var self = this;
+                axios.post(APP_URL + '/courses/change-status', {
+                    status: status,
+                    id: id,
+                })
+                    .then(function (response) {
+                        if (response.data.type == 'success') {
+                            self.loading = false;
+                            self.showMessage(response.data.message);
+                        } else {
+                            self.loading = false;
+                            self.showError(response.data.message);
+                        }
+                    })
+                    .catch(function (error) {
+                        self.loading = false;
+                    });
+            },
             deleteAttachment: function (id) {
                 jQuery('#' + id).remove();
             },

@@ -10,6 +10,7 @@ use App\Helper;
 use App\ResponseTime;
 use App\DeliveryTime;
 use App\Service;
+use App\Cource;
 use App\Item;
 use Auth;
 use App\Package;
@@ -33,7 +34,7 @@ class CourseController extends Controller
      * @access protected
      * @var    array $job
      */
-    protected $service;
+    protected $cource;
 
     /**
      * Create a new controller instance.
@@ -42,9 +43,9 @@ class CourseController extends Controller
      *
      * @return void
      */
-    public function __construct(Service $service)
+    public function __construct(Cource $cource)
     {
-        $this->service = $service;
+        $this->cource = $cource;
     }
 
     /**
@@ -54,7 +55,7 @@ class CourseController extends Controller
      */
     public function index()
     {
-        $type = 'service';
+        $type = 'cource';
         $categories = Category::all();
         $locations  = Location::all();
         $languages  = Language::all();
@@ -160,6 +161,7 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
+        
         $json = array();
         $server = Helper::worketicIsDemoSiteAjax();
         if (!empty($server)) {
@@ -168,7 +170,7 @@ class CourseController extends Controller
         }
         if (Helper::getAccessType() == 'jobs') {
             $json['type'] = 'error';
-            $json['message'] = trans('lang.service_warning');
+            $json['message'] = trans('lang.course_warning');
             return $json;
         }
         $this->validate(
@@ -176,7 +178,7 @@ class CourseController extends Controller
             [
                 'title' => 'required',
                 'delivery_time'    => 'required',
-                'service_price'    => 'required',
+                'cource_price'    => 'required',
                 'response_time'    => 'required',
                 'english_level'    => 'required',
                 'description'    => 'required',
@@ -198,8 +200,8 @@ class CourseController extends Controller
         $expiry = !empty($option) ? $package_item->created_at->addDays($option['duration']) : '';
         $expiry_date = !empty($expiry) ? Carbon::parse($expiry)->format('Y-m-d') : '';
         $current_date = Carbon::now()->format('Y-m-d');
-        $posted_services = $user->services->count();
-        $posted_featured_services = $user->services->where('is_featured', 'true')->count();
+        $posted_cources = $user->cources->count();
+        $posted_featured_cources = $user->cources->where('is_featured', 'true')->count();
         $payment_settings = SiteManagement::getMetaValue('commision');
         $package_status = '';
         if (empty($payment_settings)) {
@@ -215,52 +217,52 @@ class CourseController extends Controller
             }
 
             if ($request['is_featured'] == 'true') {
-                if (!empty($option['no_of_featured_services']) && $posted_featured_services >= intval($option['no_of_featured_services'])) {
+                if (!empty($option['no_of_featured_cources']) && $posted_featured_cources >= intval($option['no_of_featured_cources'])) {
                     $json['type'] = 'error';
-                    $json['message'] = trans('lang.sorry_can_only_feature')  . ' ' . $option['no_of_featured_services'] . ' ' . trans('lang.services_acc_to_pkg');
+                    $json['message'] = trans('lang.sorry_can_only_feature')  . ' ' . $option['no_of_featured_cources'] . ' ' . trans('lang.services_acc_to_pkg');
                     return $json;
                 }
             }
-            if (!empty($option['no_of_services']) && $posted_services >= intval($option['no_of_services'])) {
+            if (!empty($option['no_of_cources']) && $posted_cources >= intval($option['no_of_cources'])) {
                 $json['type'] = 'error';
-                $json['message'] = trans('lang.sorry_cannot_submit') . ' ' . $option['no_of_services'] . ' ' . trans('lang.services_acc_to_pkg');
+                $json['message'] = trans('lang.sorry_cannot_submit') . ' ' . $option['no_of_cources'] . ' ' . trans('lang.services_acc_to_pkg');
                 return $json;
             } else {
                 $image_size = array(
                     'small',
                     'medium'
                 );
-                $service_post = $this->service->storeService($request, $image_size);
-                if ($service_post['type'] == 'success') {
+                $cource_post = $this->cource->storeCource($request, $image_size);
+                if ($cource_post['type'] == 'success') {
                     $json['type'] = 'success';
-                    $json['progress'] = trans('lang.service_publishing');
-                    $json['message'] = trans('lang.service_post_success');
+                    $json['progress'] = trans('lang.course_publishing');
+                    $json['message'] = trans('lang.course_post_success');
                     // Send Email
                     $user = User::find(Auth::user()->id);
                     //send email to admin
                     if (trim(env('MAIL_USERNAME')) != "" && trim(env('MAIL_PASSWORD')) != "") {
-                        $service = $this->service::where('id', $service_post['new_service'])->first();
+                        $cource = $this->cource::where('id', $cource_post['new_course'])->first();
                         $email_params = array();
-                        $email_params['service_title'] = $service->title;
-                        $email_params['posted_service_link'] = url('/service/' . $service->slug);
+                        $email_params['cource_title'] = $cource->title;
+                        $email_params['posted_cource_link'] = url('/instructor/' . $cource->slug);
                         $email_params['name'] = Helper::getUserName(Auth::user()->id);
                         $email_params['link'] = url('profile/' . $user->slug);
                         $template_data = Helper::getAdminServicePostedEmailContent();
                         Mail::to(getenv('MAIL_FROM_ADDRESS'))
                             ->send(
                                 new AdminEmailMailable(
-                                    'admin_email_new_service_posted',
+                                    'admin_email_new_course_posted',
                                     $template_data,
                                     $email_params
                                 )
                             );
                     }
                     return $json;
-                } elseif ($service_post['type'] == 'error') {
+                } elseif ($cource_post['type'] == 'error') {
                     $json['type'] = 'error';
                     $json['message'] = trans('lang.need_to_purchase_pkg');
                     return $json;
-                } elseif ($service_post['type'] == 'service_warning') {
+                } elseif ($cource_post['type'] == 'service_warning') {
                     $json['type'] = 'error';
                     $json['message'] = trans('lang.not_authorize');
                     return $json;
@@ -271,37 +273,37 @@ class CourseController extends Controller
                 'small',
                 'medium'
             );
-            $service_post = $this->service->storeService($request, $image_size);
-            if ($service_post['type'] == 'success') {
+            $cource_post = $this->cource->storeCource($request, $image_size);
+            if ($cource_post['type'] == 'success') {
                 $json['type'] = 'success';
-                $json['progress'] = trans('lang.service_publishing');
-                $json['message'] = trans('lang.service_post_success');
+                $json['progress'] = trans('lang.cource_publishing');
+                $json['message'] = trans('lang.cource_post_success');
                 // Send Email
                 $user = User::find(Auth::user()->id);
                 //send email to admin
                 if (trim(env('MAIL_USERNAME')) != "" && trim(env('MAIL_PASSWORD')) != "") {
-                    $service = $this->service::where('id', $service_post['new_service'])->first();
+                    $cource = $this->cource::where('id', $cource_post['new_cource'])->first();
                     $email_params = array();
-                    $email_params['service_title'] = $service->title;
-                    $email_params['posted_service_link'] = url('/service/' . $service->slug);
+                    $email_params['cource_title'] = $cource->title;
+                    $email_params['posted_cource_link'] = url('/instructor/' . $cource->slug);
                     $email_params['name'] = Helper::getUserName(Auth::user()->id);
                     $email_params['link'] = url('profile/' . $user->slug);
                     $template_data = Helper::getAdminServicePostedEmailContent();
                     Mail::to(getenv('MAIL_FROM_ADDRESS'))
                         ->send(
                             new AdminEmailMailable(
-                                'admin_email_new_service_posted',
+                                'admin_email_new_course_posted',
                                 $template_data,
                                 $email_params
                             )
                         );
                 }
                 return $json;
-            } elseif ($service_post['type'] == 'error') {
+            } elseif ($cource_post['type'] == 'error') {
                 $json['type'] = 'error';
                 $json['message'] = trans('lang.need_to_purchase_pkg');
                 return $json;
-            } elseif ($service_post['type'] == 'service_warning') {
+            } elseif ($cource_post['type'] == 'service_warning') {
                 $json['type'] = 'error';
                 $json['message'] = trans('lang.not_authorize');
                 return $json;
@@ -318,17 +320,17 @@ class CourseController extends Controller
      */
     public function show($slug)
     {
-        $selected_service = $this->service::select('id')->where('slug', $slug)->first();
-        if (!empty($selected_service)) {
-            $service = $this->service::find($selected_service->id);
+        $selected_cource = $this->cource::select('id')->where('slug', $slug)->first();
+        if (!empty($selected_cource)) {
+            $cource = $this->cource::find($selected_cource->id);
             $currency   = SiteManagement::getMetaValue('commision');
             $symbol = !empty($currency) && !empty($currency[0]['currency']) ? Helper::currencyList($currency[0]['currency']) : array();
             $mode = !empty($currency) && !empty($currency[0]['payment_mode']) ? $currency[0]['payment_mode'] : 'true';
-            $delivery_time = DeliveryTime::where('id', $service->delivery_time_id)->first();
-            $response_time = ResponseTime::where('id', $service->response_time_id)->first();
+            $delivery_time = DeliveryTime::where('id', $cource->delivery_time_id)->first();
+            $response_time = ResponseTime::where('id', $cource->response_time_id)->first();
             $reasons = Helper::getReportReasons();
-            $seller = $service->seller->first();
-            $reviews = !empty($seller) ? Helper::getServiceReviews($seller->id, $service->id) : '';
+            $seller = $cource->seller->first();
+            $reviews = !empty($seller) ? Helper::getCourceReviews($seller->id, $cource->id) : '';
             $auth_profile = Auth::user() ? auth()->user()->profile : '';
             if (!empty($reviews)) {
                 $rating  = $reviews->sum('avg_rating') != 0 ? round($reviews->sum('avg_rating') / $reviews->count()) : 0;
@@ -336,31 +338,31 @@ class CourseController extends Controller
                 $rating = 0;
             }
 
-            $total_orders = Helper::getServiceCount($service->id, 'hired');
-            $attachments = !empty($seller) ? Helper::getUnserializeData($service->attachments) : '';
+            $total_orders = Helper::getCourceCount($cource->id);
+            $attachments = !empty($seller) ? Helper::getUnserializeData($cource->attachments) : '';
             // $service_reviews = DB::table('reviews')->where('job_id', $service->id)->get();
-            $save_services = !empty(auth()->user()->profile->saved_services) ? unserialize(auth()->user()->profile->saved_services) : array();
-            $key = 'set_service_view';
+            $saved_cources = !empty(auth()->user()->profile->saved_cources) ? unserialize(auth()->user()->profile->saved_cources) : array();
+            $key = 'set_cource_view';
             $breadcrumbs_settings = SiteManagement::getMetaValue('show_breadcrumb');
             $show_breadcrumbs = !empty($breadcrumbs_settings) ? $breadcrumbs_settings : 'true';
-            if (!isset($_COOKIE[$key . $selected_service->id])) {
-                setcookie($key . $selected_service->id, $key, time() + 3600);
+            if (!isset($_COOKIE[$key . $selected_cource->id])) {
+                setcookie($key . $selected_cource->id, $key, time() + 3600);
                 $view_key = $key;
-                $count = $service->views;
+                $count = $cource->views;
                 if ($count == '') {
                     $count = 1;
                 } else {
                     $count++;
                 }
-                $service->views = $count;
-                $service->save();
+                $cource->views = $count;
+                $cource->save();
             }
-            if (!empty($service)) {
-                if (file_exists(resource_path('views/extend/front-end/services/show.blade.php'))) {
+            if (!empty($cource)) {
+                if (file_exists(resource_path('views/extend/front-end/cources/show.blade.php'))) {
                     return view(
-                        'extend.front-end.services.show',
+                        'extend.front-end.cources.show',
                         compact(
-                            'service',
+                            'cource',
                             'symbol',
                             'delivery_time',
                             'response_time',
@@ -370,16 +372,16 @@ class CourseController extends Controller
                             'seller',
                             'total_orders',
                             'attachments',
-                            'save_services',
+                            'saved_cources',
                             'show_breadcrumbs',
                             'mode'
                         )
                     );
                 } else {
                     return view(
-                        'front-end.services.show',
+                        'front-end.cources.show',
                         compact(
-                            'service',
+                            'cource',
                             'symbol',
                             'delivery_time',
                             'response_time',
@@ -389,7 +391,7 @@ class CourseController extends Controller
                             'seller',
                             'total_orders',
                             'attachments',
-                            'save_services',
+                            'saved_cources',
                             'show_breadcrumbs',
                             'mode'
                         )
@@ -418,19 +420,19 @@ class CourseController extends Controller
         $delivery_time = DeliveryTime::pluck('title', 'id');
         $english_levels = Helper::getEnglishLevelList();
         $categories = Category::pluck('title', 'id');
-        $service = $this->service::find($id);
+        $cource = $this->cource::find($id);
         $serialize_attachment = preg_replace_callback(
             '!s:(\d+):"(.*?)";!',
             function ($match) {
                 return ($match[1] == strlen($match[2])) ? $match[0] : 's:' . strlen($match[2]) . ':"' . $match[2] . '";';
             },
-            $service->attachments
+            $cource->attachments
         );
-        $freelancer  = Helper::getServiceSeller($service->id);
+        $freelancer  = Helper::getCourceSeller($cource->id);
         $attachments = !empty($serialize_attachment) ? unserialize($serialize_attachment) : '';
-        if (file_exists(resource_path('views/extend/back-end/freelancer/services/edit.blade.php'))) {
+        if (file_exists(resource_path('views/extend/back-end/freelancer/courses/edit.blade.php'))) {
             return view(
-                'extend.back-end.freelancer.services.edit',
+                'extend.back-end.freelancer.courses.edit',
                 compact(
                     'english_levels',
                     'languages',
@@ -438,14 +440,14 @@ class CourseController extends Controller
                     'locations',
                     'response_time',
                     'delivery_time',
-                    'service',
+                    'cource',
                     'attachments',
                     'freelancer'
                 )
             );
         } else {
             return view(
-                'back-end.freelancer.services.edit',
+                'back-end.freelancer.courses.edit',
                 compact(
                     'english_levels',
                     'languages',
@@ -453,7 +455,7 @@ class CourseController extends Controller
                     'locations',
                     'response_time',
                     'delivery_time',
-                    'service',
+                    'cource',
                     'attachments',
                     'freelancer'
                 )
@@ -491,7 +493,7 @@ class CourseController extends Controller
             [
                 'title' => 'required',
                 'delivery_time'    => 'required',
-                'service_price'    => 'required',
+                'cource_price'    => 'required',
                 'response_time'    => 'required',
                 'english_level'    => 'required',
                 'description'    => 'required',
@@ -503,12 +505,12 @@ class CourseController extends Controller
                 'small',
                 'medium'
             );
-            $service_update = $this->service->updateService($request, $id, $image_size);
-            if ($service_update['type'] = 'success') {
+            $course_update = $this->cource->updateCourse($request, $id, $image_size);
+            if ($course_update['type'] = 'success') {
                 $json['type'] = 'success';
                 $json['role'] = Auth::user()->getRoleNames()->first();
-                $json['progress'] = trans('lang.service_updating');
-                $json['message'] = trans('lang.service_update_success');
+                $json['progress'] = trans('lang.course_updating');
+                $json['message'] = trans('lang.course_update_success');
                 return $json;
             } else {
                 $json['type'] = 'error';
@@ -554,7 +556,7 @@ class CourseController extends Controller
     {
         if (!empty($request['file'])) {
             $attachments = $request['file'];
-            $path = Helper::PublicPath() . '/uploads/services/temp/';
+            $path = Helper::PublicPath() . '/uploads/courses/temp/';
             $image_size = array(
                 'small' => array(
                     'width' => 80,
@@ -580,11 +582,11 @@ class CourseController extends Controller
     {
         $json = array();
         if (!empty($request['id'])) {
-            $orders = Helper::getServiceOrdersCount($request['id'], 'hired');
+            $orders = Helper::getCourseOrdersCount($request['id'], 'hired');
             if ($orders == 0) {
-                $service = $this->service::find($request['id']);
-                $service->status = $request['status'];
-                $service->save();
+                $cource = $this->cource::find($request['id']);
+                $cource->status = $request['status'];
+                $cource->save();
                 $json['type'] = 'success';
                 $json['message'] = trans('lang.status_update');
                 return $json;
@@ -607,11 +609,11 @@ class CourseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getServiceSettings(Request $request)
+    public function getCourseSettings(Request $request)
     {
         $json = array();
         if ($request['id']) {
-            $settings = Service::find($request['id'])
+            $settings = Cource::find($request['id'])
                 ->select('is_featured', 'show_attachments')->first();
             if (!empty($settings)) {
                 $json['type'] = 'success';
@@ -628,78 +630,7 @@ class CourseController extends Controller
         }
     }
 
-    /**
-     * Employer Payment Process.
-     *
-     * @param string $id proposal ID
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function employerPaymentProcess($id)
-    {
-        if (Auth::user() && !empty($id)) {
-            if (Auth::user()->getRoleNames()->first() === 'employer') {
-                $user_id = Auth::user()->id;
-                $employer = User::find($user_id);
-                $service = Service::find($id);
-                $seller = Helper::getServiceSeller($service->id);
-                $freelancer = User::find($seller->user_id);
-                $freelancer_name = Helper::getUserName($freelancer->id);
-                $profile = User::find($freelancer->id)->profile;
-                $user_image = !empty($profile) ? $profile->avater : '';
-                $profile_image = !empty($user_image) ? '/uploads/users/' . $freelancer->id . '/' . $user_image : 'images/user-login.png';
-                $payout_settings = SiteManagement::getMetaValue('commision');
-                $payment_gateway = !empty($payout_settings) && !empty($payout_settings[0]['payment_method']) ? $payout_settings[0]['payment_method'] : null;
-                $currency   = SiteManagement::getMetaValue('commision');
-                $symbol = !empty($currency) && !empty($currency[0]['currency']) ? Helper::currencyList($currency[0]['currency']) : array();
-               
-               if(!empty($payout_settings) && !empty($payout_settings[0]['commision'] || $payout_settings[0]['commision'] == 0 || $payout_settings[0]['commision'] == 'Null'))
-                {
-                    $commision_amount = ($payout_settings[0]['emp_commision']/100)*$service->price;
-                    $total_amount = $service->price + $commision_amount;
-                }
-
-
-                if (file_exists(resource_path('views/extend/back-end/employer/services/checkout.blade.php'))) {
-                    return view(
-                        'extend.back-end.employer.services.checkout',
-                        compact(
-                            'service',
-                            'freelancer_name',
-                            'profile_image',
-                            'payment_gateway',
-                            'symbol',
-                            'user_id',
-                            'freelancer',
-                            'commision_amount',
-                            'total_amount'
-                        )
-                    );
-                } else {
-                    return view(
-                        'back-end.employer.services.checkout',
-                        compact(
-                            'service',
-                            'freelancer_name',
-                            'profile_image',
-                            'payment_gateway',
-                            'symbol',
-                            'user_id',
-                            'freelancer',
-                            'commision_amount',
-                            'total_amount'
-                        )
-                    );
-                }
-            } else {
-                Session::flash('error', trans('lang.buy_service_warning'));
-                return Redirect::back();
-            }
-        } else {
-            Session::flash('error', trans('lang.buy_service_warning'));
-            return Redirect::back();
-        }
-    }
+  
 
     /**
      * Upload Image to temporary folder.
@@ -832,6 +763,71 @@ class CourseController extends Controller
         } else {
             $json['type'] = 'error';
             return $json;
+        }
+    }
+    public function employerPaymentProcess($id)
+    {
+        if (Auth::user() && !empty($id)) {
+            if (Auth::user()->getRoleNames()->first() === 'freelancer') {
+                $user_id = Auth::user()->id;
+                $employer = User::find($user_id);
+                $service = Cource::find($id);
+                $seller = Helper::getCourceSeller($service->id);
+                $freelancer = User::find($seller->user_id);
+                $freelancer_name = Helper::getUserName($freelancer->id);
+                $profile = User::find($freelancer->id)->profile;
+                $user_image = !empty($profile) ? $profile->avater : '';
+                $profile_image = !empty($user_image) ? '/uploads/users/' . $freelancer->id . '/' . $user_image : 'images/user-login.png';
+                $payout_settings = SiteManagement::getMetaValue('commision');
+                $payment_gateway = !empty($payout_settings) && !empty($payout_settings[0]['payment_method']) ? $payout_settings[0]['payment_method'] : null;
+                $currency   = SiteManagement::getMetaValue('commision');
+                $symbol = !empty($currency) && !empty($currency[0]['currency']) ? Helper::currencyList($currency[0]['currency']) : array();
+               
+               if(!empty($payout_settings) && !empty($payout_settings[0]['commision'] || $payout_settings[0]['commision'] == 0 || $payout_settings[0]['commision'] == 'Null'))
+                {
+                    $commision_amount = ($payout_settings[0]['emp_commision']/100)*$service->price;
+                    $total_amount = $service->price + $commision_amount;
+                }
+
+
+                if (file_exists(resource_path('views/extend/back-end/employer/services/checkout.blade.php'))) {
+                    return view(
+                        'extend.back-end.employer.services.checkout',
+                        compact(
+                            'service',
+                            'freelancer_name',
+                            'profile_image',
+                            'payment_gateway',
+                            'symbol',
+                            'user_id',
+                            'freelancer',
+                            'commision_amount',
+                            'total_amount'
+                        )
+                    );
+                } else {
+                    return view(
+                        'back-end.employer.services.checkout',
+                        compact(
+                            'service',
+                            'freelancer_name',
+                            'profile_image',
+                            'payment_gateway',
+                            'symbol',
+                            'user_id',
+                            'freelancer',
+                            'commision_amount',
+                            'total_amount'
+                        )
+                    );
+                }
+            } else {
+                Session::flash('error', trans('lang.buy_service_warning'));
+                return Redirect::back();
+            }
+        } else {
+            Session::flash('error', trans('lang.buy_service_warning'));
+            return Redirect::back();
         }
     }
 }
