@@ -72,7 +72,7 @@ class Cource extends Model
      */
     public function users()
     {
-        return $this->belongsToMany('App\User')->withPivot('type', 'status', 'seller_id', 'paid');
+        return $this->belongsToMany('App\User')->withPivot('type',  'seller_id', 'paid');
     }
 
     /**

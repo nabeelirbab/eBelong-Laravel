@@ -4964,6 +4964,308 @@ if (document.getElementById("services")) {
         }
     });
 }
+if (document.getElementById("cources")) {
+    const vservices = new Vue({
+        el: '#cources',
+        mounted: function () {
+            if (document.getElementsByClassName("flash_msg") != null) {
+                flashVue.$emit('showFlashMessage');
+            }
+        },
+        created: function () {
+            // this.getSettings();
+        },
+        data: {
+            report: {
+                reason: '',
+                description: '',
+                id: '',
+                model: 'App\\Cource',
+                report_type: '',
+            },
+            title: '',
+            delivery_time: '',
+            price: '',
+            response_time: '',
+            english_level: '',
+            message: '',
+            form_errors: [],
+            custom_error: false,
+            is_show: false,
+            loading: false,
+            show_attachments: false,
+            is_featured: false,
+            is_progress: false,
+            is_completed: false,
+            redirect_url: '',
+            errors: '',
+            disable_btn: '',
+            saved_class: '',
+            heart_class: 'fa fa-heart',
+            text: Vue.prototype.trans('lang.click_to_save'),
+            follow_text: Vue.prototype.trans('lang.click_to_follow'),
+            disable_follow: '',
+            refundable_user: '',
+            refundable_payment_method: '',
+            notificationSystem: {
+                options: {
+                    success: {
+                        position: "center",
+                        timeout: 4000
+                    },
+                    error: {
+                        position: "topRight",
+                        timeout: 7000
+                    },
+                    completed: {
+                        overlay: true,
+                        zindex: 999,
+                        position: 'center',
+                        progressBar: false,
+                    },
+                    info: {
+                        overlay: true,
+                        zindex: 999,
+                        position: 'center',
+                        timeout: 3000,
+                        class: 'iziToast-info',
+                        id: 'info_notify',
+                    }
+                }
+            }
+        },
+        methods: {
+            showCompleted(message) {
+                return this.$toast.success(' ', message, this.notificationSystem.options.completed);
+            },
+            showInfo(message) {
+                return this.$toast.info(' ', message, this.notificationSystem.options.info);
+            },
+            showMessage(message) {
+                return this.$toast.success(' ', message, this.notificationSystem.options.success);
+            },
+            showError(error) {
+                return this.$toast.error(' ', error, this.notificationSystem.options.error);
+            },
+            submitCource: function () {
+                this.loading = true;
+                let Form = document.getElementById('post_service_form');
+                let form_data = new FormData(Form);
+                var description = tinyMCE.get('wt-tinymceeditor').getContent();
+                form_data.append('description', description);
+                var self = this;
+                axios.post(APP_URL + '/services/post-service', form_data)
+                    .then(function (response) {
+                        if (response.data.type == 'success') {
+                            self.loading = false;
+                            self.showInfo(response.data.progress);
+                            document.addEventListener('iziToast-closing', function (data) {
+                                if (data.detail.id == 'info_notify') {
+                                    self.showCompleted(response.data.message);
+                                    window.location.replace(APP_URL + '/freelancer/services/posted');
+                                }
+                            });
+                        } else {
+                            self.loading = false;
+                            self.showError(response.data.message);
+                        }
+                    })
+                    .catch(function (error) {
+                        self.loading = false;
+                        if (error.response.data.errors.title) {
+                            self.showError(error.response.data.errors.title[0]);
+                        }
+                        if (error.response.data.errors.delivery_time) {
+                            self.showError(error.response.data.errors.delivery_time[0]);
+                        }
+                        if (error.response.data.errors.service_price) {
+                            self.showError(error.response.data.errors.service_price[0]);
+                        }
+                        if (error.response.data.errors.response_time) {
+                            self.showError(error.response.data.errors.response_time[0]);
+                        }
+                        if (error.response.data.errors.description) {
+                            self.showError(error.response.data.errors.description[0]);
+                        }
+                        if (error.response.data.errors.english_level) {
+                            self.showError(error.response.data.errors.english_level[0]);
+                        }
+                        if (error.response.data.errors.latitude) {
+                            self.showError(error.response.data.errors.latitude[0]);
+                        }
+                        if (error.response.data.errors.longitude) {
+                            self.showError(error.response.data.errors.longitude[0]);
+                        }
+                    });
+            },
+            getSettings: function () {
+                let self = this;
+                var segment_str = window.location.pathname;
+                var segment_array = segment_str.split('/');
+                var id = segment_array[segment_array.length - 1];
+                if (segment_str == '/freelancer/dashboard/edit-service/' + id) {
+                    axios.post(APP_URL + '/service/get-service-settings', {
+                        id: id
+                    })
+                        .then(function (response) {
+                            if (response.data.type == 'success') {
+                                if ((response.data.is_featured == 'true')) {
+                                    self.is_featured = true;
+                                } else {
+                                    self.is_featured = false;
+                                }
+                                if ((response.data.show_attachments == 'true')) {
+                                    self.show_attachments = true;
+                                } else {
+                                    self.show_attachments = false;
+                                }
+                            }
+                        });
+                }
+            },
+            
+            deleteAttachment: function (id) {
+                jQuery('#' + id).remove();
+            },
+            submitReport: function (id, report_type) {
+                this.report.report_type = report_type;
+                this.report.id = id;
+                var self = this;
+                axios.post(APP_URL + '/submit-report', self.report)
+                    .then(function (response) {
+                        if (response.data.type == 'success') {
+                            self.showMessage(response.data.message);
+                        } else if (response.data.type == 'error') {
+                            self.showError(response.data.message);
+                        }
+                    })
+                    .catch(error => {
+                        if (error.response.status == 422) {
+                            if (error.response.data.errors.description) {
+                                self.showError(error.response.data.errors.description[0]);
+                            }
+                            if (error.response.data.errors.reason) {
+                                self.showError(error.response.data.errors.reason[0]);
+                            }
+                        }
+                    });
+            },
+            add_wishlist: function (element_id, id, column, seller_id, saved_text) {
+                var self = this;
+                axios.post(APP_URL + '/user/add-wishlist', {
+                    id: id,
+                    column: column,
+                    seller_id: seller_id,
+                })
+                    .then(function (response) {
+                        if (response.data.authentication == true) {
+                            if (response.data.type == 'success') {
+                                if (column == 'saved_freelancer') {
+                                    jQuery('#' + element_id).parents('li').addClass('wt-btndisbaled');
+                                    jQuery('#' + element_id).addClass('wt-clicksave');
+                                    jQuery('#' + element_id).find('.save_text').text(saved_text);
+                                    self.disable_btn = 'wt-btndisbaled';
+                                    self.text = 'Save';
+                                    self.saved_class = 'fa fa-heart';
+                                    self.click_to_save = 'wt-clicksave'
+                                }
+                                else if (column == 'saved_employers') {
+                                    jQuery('#' + element_id).addClass('wt-btndisbaled wt-clicksave');
+                                    jQuery('#' + element_id).text(saved_text);
+                                    jQuery('#' + element_id).parents('.wt-clicksavearea').find('i').addClass('fa fa-heart');
+                                    self.disable_follow = 'wt-btndisbaled';
+                                    self.follow_text = saved_text;
+                                }
+                                else if (column == 'saved_services') {
+                                    jQuery('#' + element_id).addClass('wt-btndisbaled wt-clicksave');
+                                    // self.saved_class = 'wt-clicksave';
+                                    self.text = saved_text;
+                                }
+                                else if (column == 'saved_cources') {
+                                    jQuery('#' + element_id).addClass('wt-btndisbaled wt-clicksave');
+                                    // self.saved_class = 'wt-clicksave';
+                                    self.text = saved_text;
+                                }
+                                self.showMessage(response.data.message);
+                            } else {
+                                self.showError(response.data.message);
+                            }
+                        } else {
+                            self.showError(response.data.message);
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            },
+            BuyCource: function (id, title, text, mode) {
+                this.$swal({
+                    title: title,
+                    text: text,
+                    type: "warning",
+                    customContainerClass: 'hire_popup',
+                    showCancelButton: true,
+                    confirmButtonClass: "btn-danger",
+                    confirmButtonText: "Yes",
+                    cancelButtonText: "No",
+                    closeOnConfirm: true,
+                    closeOnCancel: true,
+                    showLoaderOnConfirm: false
+                }).then((result) => {
+                    if (result.value) {
+                        if (mode == 'false') {
+                            axios.post(APP_URL + '/user/generate-order/bacs/'+id+'/cource')
+                            .then(function (response) {
+                                if (response.data.type == 'success') {
+                                    window.location.replace(APP_URL+'/user/order/bacs/'+response.data.cource_order+'/'+response.data.order_id+'/project/cource');
+                                }
+                            })
+                            .catch(function (error) {
+                                console.log(error);
+                            });
+                        } else {
+                            window.location.replace(APP_URL + '/cource/payment-process/' + id);
+                        }
+                    } else {
+                        this.$swal.close()
+                    }
+                })
+            },
+           
+           
+            check_auth: function (url) {
+                var self = this;
+                axios.get(APP_URL + '/check-service-auth-user')
+                    .then(function (response) {
+                        if (response.data.auth == 1) {
+                            window.location.replace(url);
+                        } else {
+                            self.showError(response.data.message);
+                        }
+                    })
+                    .catch(function (error) {
+
+                    });
+            },
+            showReview: function (id) {
+                var modal_ref = 'myModalRef-' + id;
+                if (this.$refs[modal_ref]) {
+                    this.$refs[modal_ref].show();
+                } else {
+                    this.showError(Vue.prototype.trans('lang.review_not_found'),);
+                }
+            },
+            showReason: function (id) {
+                var modal_ref = 'myModalRef-' + id;
+                this.$refs[modal_ref].show();
+            },
+            showRefoundForm: function (id) {
+                var modal_ref = 'myModalRef-' + id;
+                this.$refs[modal_ref].show();
+            },
+        }
+    });
+}
 if (document.getElementById("article-cat")) {
     const vmcatList = new Vue({
         el: '#article-cat',

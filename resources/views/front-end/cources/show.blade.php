@@ -32,7 +32,7 @@
             </div>
         </div>
     </div>
-    <div class="wt-haslayout wt-main-section" id="services">
+    <div class="wt-haslayout wt-main-section" id="cources">
         @if (Session::has('message'))
             <div class="flash_msg">
                 <flash_messages :message_class="'success'" :time ='5' :message="'{{{ Session::get('message') }}}'" v-cloak></flash_messages>

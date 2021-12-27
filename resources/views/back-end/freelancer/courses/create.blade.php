@@ -2,14 +2,14 @@
 @section('content')
 <div class="wt-haslayout wt-dbsectionspace">
     <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8 float-left" id="courses">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8 float-left" id="services">
             <div class="preloader-section" v-if="loading" v-cloak>
                 <div class="preloader-holder">
                     <div class="loader"></div>
                 </div>
             </div>
             <div class="wt-haslayout wt-post-job-wrap">
-                {!! Form::open(['url' => '', 'class' =>'wt-haslayout', 'id' => 'post_course_form',  '@submit.prevent'=>'submitCourse']) !!}
+                {!! Form::open(['url' => '', 'class' =>'wt-haslayout', 'id' => 'post_service_form',  '@submit.prevent'=>'submitService']) !!}
                     <div class="wt-dashboardbox">
                         <div class="wt-dashboardboxtitle">
                             <h2>{{ trans('lang.post_course') }}</h2>
@@ -30,7 +30,7 @@
                                             </span>
                                         </div>
                                         <div class="form-group form-group-half wt-formwithlabel job-cost-input">
-                                            {!! Form::number('course_price', null, array('class' => '', 'placeholder' => trans('lang.course_price'), 'v-model'=>'price')) !!}
+                                            {!! Form::number('service_price', null, array('class' => '', 'placeholder' => trans('lang.course_price'), 'v-model'=>'price')) !!}
                                         </div>
                                     </fieldset>
                                 </div>
@@ -49,7 +49,7 @@
                             </div>
                             <div class="wt-languages-holder wt-tabsinfo">
                                 <div class="wt-tabscontenttitle">
-                                    <h2>{{ trans('lang.course_response_time') }}</h2>
+                                    <h2>{{ trans('lang.service_response_time') }}</h2>
                                 </div>
                                 <div class="wt-divtheme wt-userform wt-userformvtwo">
                                     <div class="form-group">
@@ -88,7 +88,7 @@
                                     <h2>{{ trans('lang.course_desc') }}</h2>
                                 </div>
                                 <div class="wt-formtheme wt-userform wt-userformvtwo">
-                                    {!! Form::textarea('description', null, ['class' => 'wt-tinymceeditor', 'id' => 'wt-tinymceeditor', 'placeholder' => trans('lang.course_desc_note')]) !!}
+                                    {!! Form::textarea('description', null, ['class' => 'wt-tinymceeditor', 'id' => 'wt-tinymceeditor', 'placeholder' => trans('lang.service_desc_note')]) !!}
                                 </div>
                             </div>
                             <div class="wt-joblocation wt-tabsinfo">
@@ -143,7 +143,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <image-attachments :temp_url="'{{url('course/upload-temp-image')}}'" :type="'image'"></image-attachments>
+                                    <image-attachments :temp_url="'{{url('service/upload-temp-image')}}'" :type="'image'"></image-attachments>
                                     <div class="form-group input-preview">
                                         <ul class="wt-attachfile dropzone-previews">
 
@@ -156,7 +156,7 @@
                     <div class="wt-updatall">
                         <i class="ti-announcement"></i>
                         <span>{{{ trans('lang.save_changes_note') }}}</span>
-                        {!! Form::submit(trans('lang.post_course'), ['class' => 'wt-btn', 'id'=>'submit-course']) !!}
+                        {!! Form::submit(trans('lang.post_course'), ['class' => 'wt-btn', 'id'=>'submit-service']) !!}
                     </div>
                 {!! form::close(); !!}
             </div>

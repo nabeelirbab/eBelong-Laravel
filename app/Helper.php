@@ -2820,6 +2820,10 @@ class Helper extends Model
     {
         return DB::table('service_user')->where('service_id', $service_id)->where('status', $status)->count();
     }
+    public static function getCourceCount($cource_id)
+    {
+        return DB::table('cource_user')->where('cource_id', $cource_id)->count();
+    }
 
     /**
      * Get freelancer services
@@ -2894,10 +2898,7 @@ class Helper extends Model
             ->where('reviews.receiver_id', $receiver_id)
             ->where('reviews.cource_id', $cource_id)->get();
     }
-    public static function getCourceCount($cource_id)
-    {
-        return DB::table('cource_user')->where('cource_id', $cource_id)->count();
-    }
+   
 
     /**
      * Get service reviews
@@ -2943,6 +2944,10 @@ class Helper extends Model
     public static function getServiceSeller($service_id)
     {
         return DB::table('service_user')->where('service_id', $service_id)->where('type', 'seller')->first();
+    }
+    public static function getCourceSeller($cource_id)
+    {
+        return DB::table('cource_user')->where('cource_id', $cource_id)->where('type', 'seller')->first();
     }
 
     /**

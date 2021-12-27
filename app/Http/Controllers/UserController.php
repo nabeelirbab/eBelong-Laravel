@@ -18,6 +18,7 @@ use App\EmailTemplate;
 use App\Mail\InvitationToUser;
 use App\Helper;
 use App\Invoice;
+use App\Cource;
 use App\Job;
 use DataTables;
 use App\Language;
@@ -1839,6 +1840,9 @@ class UserController extends Controller
             if ($type == 'service') {
                 $json['service_order'] = $new_order['service_order'];
             }
+            if($type == 'cource'){
+                $json['cource_order'] = $new_order['cource_order'];
+            } 
             $json['type'] = 'success';
             $json['order_id'] = $new_order['id'];
             $json['process'] = trans('lang.saving_profile');
@@ -1870,7 +1874,16 @@ class UserController extends Controller
                     $title = $service->title;
                     $cost = $service->price;
                     $product_id = $id;
-                } else {
+                } 
+                if ($project_type == 'cource') {
+                   
+                    $cource_order = DB::table('cource_user')->select('cource_id')->where('id', $id)->first();
+                    $cource = Cource::find($cource_order->cource_id);
+                    $title = $cource->title;
+                    $cost = $cource->price;
+                    $product_id = $id;
+                }
+                else {
                     $proposal = Proposal::where('id', $id)->get()->first();
                     if (!empty($proposal)) {
                         $job = $proposal->job;

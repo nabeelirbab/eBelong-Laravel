@@ -168,6 +168,16 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Service')->withPivot('type', 'status', 'seller_id', 'paid');
     }
+     /**
+     * Get the cources for the freelancer.
+     *
+     * @return relation
+     */
+    public function cources()
+    {
+        return $this->belongsToMany('App\Cource')->withPivot('type',  'seller_id', 'paid');
+    }
+
 
     /**
      * Get the employer purchased services
