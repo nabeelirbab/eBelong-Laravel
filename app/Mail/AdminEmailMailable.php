@@ -67,7 +67,9 @@ class AdminEmailMailable extends Mailable
             $email_message = $this->prepareAdminEmailJobPosted($this->email_params);
         } elseif ($this->type == 'admin_email_new_service_posted') {
             $email_message = $this->prepareAdminEmailServicePosted($this->email_params);
-        } elseif ($this->type == 'admin_email_job_completed') {
+        } elseif ($this->type == 'admin_email_new_course_posted') {
+            $email_message = $this->prepareAdminEmailCoursePosted($this->email_params);
+        }elseif ($this->type == 'admin_email_job_completed') {
             $email_message = $this->prepareAdminEmailJobCompleted($this->email_params);
         } elseif ($this->type == 'admin_email_dispute_raised') {
             $email_message = $this->prepareAdminEmailDisputeRaised($this->email_params);
@@ -358,6 +360,38 @@ class AdminEmailMailable extends Mailable
         $app_content = str_replace("%freelancer_name%", $freelancer_name, $app_content);
         $app_content = str_replace("%service_link%", $service_link, $app_content);
         $app_content = str_replace("%service_title%", $title, $app_content);
+        $app_content = str_replace("%signature%", $signature, $app_content);
+
+        $body = "";
+        $body .= EmailHelper::getEmailHeader();
+        $body .= $app_content;
+        $body .= EmailHelper::getEmailFooter();
+        return $body;
+    }
+
+    public function prepareAdminEmailCoursePosted($email_params)
+    {
+        extract($email_params);
+        $title = $cource_title;
+        $cource_link = $posted_cource_link;
+        $cource_name = $name;
+        $freelancer_name = $name;
+        $freelancer_link = $link;
+        $signature = EmailHelper::getSignature();
+        $app_content = $this->template;
+        $email_content_default =    "Hello,
+                                    A new course is posted by <a href='%freelancer_link%'>%freelancer_name%</a>.
+                                    Click to view the course link. <a href='%cource_link%' target='_blank' rel='noopener'>%cource_title%</a>
+
+                                    %signature%";
+        //set default contents
+        if (empty($app_content)) {
+            $app_content = $email_content_default;
+        }
+        $app_content = str_replace("%freelancer_link%", $freelancer_link, $app_content);
+        $app_content = str_replace("%freelancer_name%", $freelancer_name, $app_content);
+        $app_content = str_replace("%service_link%", $cource_link, $app_content);
+        $app_content = str_replace("%cource_title%", $title, $app_content);
         $app_content = str_replace("%signature%", $signature, $app_content);
 
         $body = "";

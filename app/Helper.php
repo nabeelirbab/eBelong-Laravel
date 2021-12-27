@@ -2805,6 +2805,10 @@ class Helper extends Model
     {
         return DB::table('service_user')->where('service_id', $service_id)->where('status', $status)->count();
     }
+    public static function getCourseOrdersCount($course_id, $status)
+    {
+        return DB::table('cource_user')->where('cource_id', $course_id)->where('status', $status)->count();
+    }
 
     /**
      * Get service orders count
@@ -2853,6 +2857,19 @@ class Helper extends Model
             $services->where('service_user.paid', $paid_status);
         }
         return $services->get();
+    }
+
+    public static function getFreelancerCourses($status, $user_id, $paid_status = '')
+    {
+        $courses = DB::table('cources')
+            ->join('cource_user', 'cource_user.cource_id', '=', 'cources.id')
+            ->select('cources.*', 'cource_user.id as pivot_id', 'cource_user.seller_id as seller', 'cource_user.type', 'cource_user.status as pivot_status', 'cource_user.user_id as buyer')
+            ->where('cource_user.status', $status)
+            ->where('cource_user.user_id',$user_id);
+        if (!empty($paid_status)) {
+            $courses->where('cource_user.paid', $paid_status);
+        }
+        return $courses->get();
     }
 
     /**
@@ -3045,6 +3062,10 @@ class Helper extends Model
     public static function getPivotService($pivot_id)
     {
         return  DB::table('service_user')->where('id', $pivot_id)->first();
+    }
+    public static function getPivotCourse($pivot_id)
+    {
+        return  DB::table('cource_user')->where('id', $pivot_id)->first();
     }
 
     /**

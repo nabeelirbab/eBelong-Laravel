@@ -171,6 +171,7 @@ class Service extends Model
                         $service_attachments[] = $filename;
                     }
                 }
+                // dd($service_attachments);
                 $this->attachments = serialize($service_attachments);
             }
             $this->code = $code;

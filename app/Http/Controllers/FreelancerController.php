@@ -13,6 +13,7 @@
 namespace App\Http\Controllers;
 
 use App\Freelancer;
+use App\Cource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use App\Helper;
@@ -1063,6 +1064,136 @@ class FreelancerController extends Controller
         }
     }
 
+    public function showCourseDetail($id, $status)
+    {
+        if (Auth::user()) {
+            $pivot_course = Helper::getPivotCourse($id);
+            $pivot_id = $pivot_course->id;
+            $course = Cource::find($pivot_course->cource_id);
+            $seller = Helper::getCourceSeller($course->id);
+            $purchaser = $course->purchaser->first();
+            $freelancer = !empty($seller) ? User::find($seller->user_id) : ''; 
+            $course_status = Helper::getProjectStatus();
+            $review_options = DB::table('review_options')->get()->all();
+            $avg_rating = !empty($freelancer) ? Review::where('receiver_id', $freelancer->id)->sum('avg_rating') : '';
+            $freelancer_rating  = !empty($freelancer) && !empty($freelancer->profile->ratings) ? Helper::getUnserializeData($freelancer->profile->ratings) : 0;
+            $rating = !empty($freelancer_rating) ? $freelancer_rating[0] : 0;
+            $stars  =  !empty($freelancer_rating) ? $freelancer_rating[0] / 5 * 100 : 0;
+            $reviews = !empty($freelancer) ? Review::where('receiver_id', $freelancer->id)->where('cource_id', $id)->where('project_type', 'cource')->get() : '';
+            $feedbacks = !empty($freelancer) ? Review::select('feedback')->where('receiver_id', $freelancer->id)->count() : '';
+            $cancel_proposal_text = trans('lang.cancel_proposal_text');
+            $cancel_proposal_button = trans('lang.send_request');
+            $validation_error_text = trans('lang.field_required');
+            $cancel_popup_title = trans('lang.reason');
+            $attachment = Helper::getUnserializeData($course->attachments);
+            $currency   = SiteManagement::getMetaValue('commision');
+            $symbol = !empty($currency) && !empty($currency[0]['currency']) ? Helper::currencyList($currency[0]['currency']) : array();
+            if (file_exists(resource_path('views/extend/back-end/employer/courses/show.blade.php'))) {
+                return view(
+                    'extend.back-end.employer.courses.show',
+                    compact(
+                        'pivot_course',
+                        'id',
+                        'course',
+                        'freelancer',
+                        'course_status',
+                        'attachment',
+                        'review_options',
+                        'stars',
+                        'rating',
+                        'feedbacks',
+                        'cancel_proposal_text',
+                        'cancel_proposal_button',
+                        'validation_error_text',
+                        'cancel_popup_title',
+                        'pivot_id',
+                        'purchaser',
+                        'symbol'
+                    )
+                );
+            } else {
+                return view(
+                    'back-end.employer.courses.show',
+                    compact(
+                        'pivot_course',
+                        'id',
+                        'course',
+                        'freelancer',
+                        'course_status',
+                        'attachment',
+                        'review_options',
+                        'stars',
+                        'rating',
+                        'feedbacks',
+                        'cancel_proposal_text',
+                        'cancel_proposal_button',
+                        'validation_error_text',
+                        'cancel_popup_title',
+                        'pivot_id',
+                        'purchaser',
+                        'symbol'
+                    )
+                );
+            }
+        } else {
+            abort(404);
+        }
+    }
+
+    public function showCourses($status)
+    {
+        $freelancer_id = Auth::user()->id;
+        if (Auth::user()) {
+            $freelancer = User::find($freelancer_id);
+            $currency   = SiteManagement::getMetaValue('commision');
+            $symbol = !empty($currency) && !empty($currency[0]['currency']) ? Helper::currencyList($currency[0]['currency']) : array();
+            $status_list = array_pluck(Helper::getFreelancerServiceStatus(), 'title', 'value');
+            
+            if (empty($_GET['keyword']) && !empty($status) && $status === 'posted') {
+                $cources = $freelancer->cources()->where('type','seller')->get();
+                if (file_exists(resource_path('views/extend/back-end/freelancer/courses/index.blade.php'))) {
+                    return view(
+                        'extend.back-end.freelancer.courses.index',
+                        compact(
+                            'cources',
+                            'symbol',
+                            'status_list'
+                        )
+                    );
+                } else {
+                    
+                    return view(
+                        'back-end.freelancer.courses.index',
+                        compact(
+                            'cources',
+                            'symbol',
+                            'status_list'
+                        )
+                    );
+                }
+            }
+            else if (!empty($status) && $status === 'bought') {
+                $courses = Helper::getFreelancerCourses('bought', $freelancer_id);
+                if (file_exists(resource_path('views/extend/back-end/freelancer/courses/bought.blade.php'))) {
+                    return view(
+                        'extend.back-end.freelancer.courses.bought',
+                        compact(
+                            'courses',
+                            'symbol'
+                        )
+                    );
+                } else {
+                    return view(
+                        'back-end.freelancer.courses.bought',
+                        compact(
+                            'courses',
+                            'symbol'
+                        )
+                    );
+                }
+            }
+        }   
+    }
     /**
      * Get freelancer payouts.
      *

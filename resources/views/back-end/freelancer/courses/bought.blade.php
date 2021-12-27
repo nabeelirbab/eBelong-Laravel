@@ -5,7 +5,7 @@
 	@endif
 	<div class="wt-haslayout wt-dbsectionspace la-manage-jobs-holder">
 		<div class="row">
-			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 float-right" id="services">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 float-right" id="cources">
 				<div class="preloader-section" v-if="loading" v-cloak>
 					<div class="preloader-holder">
 						<div class="loader"></div>
@@ -13,39 +13,39 @@
 				</div>
 				<div class="wt-dashboardbox wt-dashboardservcies">
 					<div class="wt-dashboardboxtitle wt-titlewithsearch">
-						<h2>{{ trans('lang.ongoing_services') }}</h2>
+						<h2>{{ trans('lang.bought_courses') }}</h2>
 					</div>
 					<div class="wt-dashboardboxcontent wt-categoriescontentholder">
-						@if ($services->count() > 0)
+						@if ($courses->count() > 0)
 							<table class="wt-tablecategories wt-tableservice">
 								<thead>
 									<tr>
-										<th>{{ trans('lang.service_title') }}</th>
+										<th>{{ trans('lang.course_title') }}</th>
 										<th>{{ trans('lang.offered_by') }}</th>
 										<th>{{ trans('lang.action') }}</th>
 									</tr>
 								</thead>
 								<tbody>
-									@foreach ($services as $service)
+									@foreach ($courses as $course)
 										@php 
-											$seller = Helper::getServiceSeller($service->id);
-											$freelancer = App\User::find($seller->user_id);
-											$attachment = Helper::getUnserializeData($service->attachments); 
+											$seller = Helper::getCourceSeller($course->id);
+											$freelancer = App\User::find($course->seller);
+											$attachment = Helper::getUnserializeData($course->attachments); 
 										@endphp
-										<tr class="del-{{{ $service->status }}}">
+										<tr class="del-{{{ $course->status }}}">
 											<td data-th="Service Title">
 												<span class="bt-content">
 													<div class="wt-service-tabel">
 														@if (!empty($attachment))
-															<figure class="service-feature-image"><img src="{{{asset('/uploads/services/'.$freelancer->id.'/'.$attachment[0])}}}" alt="{{{$service->title}}}"></figure>
+															<figure class="service-feature-image"><img src="{{{asset('/uploads/courses/'.$freelancer->id.'/'.$attachment[0])}}}" alt="{{{$course->title}}}"></figure>
 														@endif
 														<div class="wt-freelancers-content">
 															<div class="dc-title">
-																@if ($service->is_featured == 'true')
+																@if ($course->is_featured == 'true')
 																	<span class="wt-featuredtagvtwo">{{ trans('lang.featured') }}</span>
 																@endif
-																<h3>{{{$service->title}}}</h3>
-																<span><strong>{{ !empty($symbol) ? $symbol['symbol'] : '$' }} {{{$service->price}}}</strong> {{ trans('lang.starting_from') }}</span>
+																<h3>{{{$course->title}}}</h3>
+																<span><strong>{{ !empty($symbol) ? $symbol['symbol'] : '$' }} {{{$course->price}}}</strong> {{ trans('lang.starting_from') }}</span>
 															</div>
 														</div>
 													</div>
@@ -75,7 +75,7 @@
 											<td data-th="Action">
 												<span class="bt-content">
 													<div class="wt-actionbtn">
-														<a href="{{{url('freelancer/service/'.$service->pivot_id.'/hired')}}}" class="wt-viewinfo wt-btnhistory">{{ trans('lang.view') }}</a>
+														<a href="{{{url('freelancer/cource/'.$course->pivot_id.'/bought')}}}" class="wt-viewinfo wt-btnhistory">{{ trans('lang.view') }}</a>
 													</div>
 												</span>
 											</td>

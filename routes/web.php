@@ -97,7 +97,7 @@ if (Helper::getAccessType() == 'both' || Helper::getAccessType() == 'services') 
 }
 if (Helper::getAccessType() == 'both' || Helper::getAccessType() == 'instructor') {
    
-    Route::get('instructor/{slug}', 'CourceController@show')->name('CourceDetail');
+    Route::get('instructor/{slug}', 'CourseController@show')->name('CourceDetail');
 }
 Route::get('user/password/reset/{verify_code}', 'PublicController@resetPasswordView')->name('getResetPassView');
 Route::post('user/update/password', 'PublicController@resetUserPassword')->name('resetUserPassword');
@@ -338,14 +338,22 @@ Route::group(
         if (Helper::getAccessType() == 'both' || Helper::getAccessType() == 'services') {
             Route::get('freelancer/services/{status}', 'FreelancerController@showServices')->name('ServiceListing');
             Route::get('freelancer/service/{id}/{status}', 'FreelancerController@showServiceDetail')->name('ServiceDetail');
+            Route::get('freelancer/courses/{status}', 'FreelancerController@showCourses')->name('CourseListing');
+            Route::get('freelancer/cource/{id}/{status}', 'FreelancerController@showCourseDetail');
         }
         Route::post('services/change-status', 'ServiceController@changeStatus');
+        Route::post('courses/change-status', 'CourseController@changeStatus');
         Route::get('freelancer/dashboard/edit-service/{id}', 'ServiceController@edit')->name('edit_service');
+        Route::get('freelancer/dashboard/edit-course/{id}', 'CourseController@edit')->name('edit_course');
         Route::post('services/post-service', 'ServiceController@store');
+        Route::post('courses/post-course', 'CourseController@store');
         Route::post('service/upload-temp-image', 'ServiceController@uploadTempImage');
+        Route::post('cource/upload-temp-image', 'CourseController@uploadTempImage');
         Route::post('freelancer/dashboard/delete-service', 'ServiceController@destroy');
         Route::post('service/get-service-settings', 'ServiceController@getServiceSettings');
+        Route::post('course/get-course-settings', 'CourseController@getCourseSettings');
         Route::post('service/update-service', 'ServiceController@update');
+        Route::post('service/update-course', 'CourseController@update');
     }
 );
 //Employer Routes
@@ -513,6 +521,6 @@ Route::post('addmoney/stripe', array('as' => 'addmoney.stripe', 'uses' => 'Strip
 
 
 Route::get('service/payment-process/{id}', 'ServiceController@employerPaymentProcess');
-
+Route::get('cource/payment-process/{id}', 'CourseController@employerPaymentProcess');
 Route::get('paypal/ec-hourly-checkout', 'PaypalController@getHourlyExpressCheckout');
 Route::get('paypal/ec-hourly-checkout-success', 'PaypalController@getHourlyExpressCheckoutSuccess');

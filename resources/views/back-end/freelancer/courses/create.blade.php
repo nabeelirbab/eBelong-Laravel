@@ -2,14 +2,14 @@
 @section('content')
 <div class="wt-haslayout wt-dbsectionspace">
     <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8 float-left" id="services">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8 float-left" id="cources">
             <div class="preloader-section" v-if="loading" v-cloak>
                 <div class="preloader-holder">
                     <div class="loader"></div>
                 </div>
             </div>
             <div class="wt-haslayout wt-post-job-wrap">
-                {!! Form::open(['url' => '', 'class' =>'wt-haslayout', 'id' => 'post_service_form',  '@submit.prevent'=>'submitService']) !!}
+                {!! Form::open(['url' => '', 'class' =>'wt-haslayout', 'id' => 'post_cource_form',  '@submit.prevent'=>'submitCource']) !!}
                     <div class="wt-dashboardbox">
                         <div class="wt-dashboardboxtitle">
                             <h2>{{ trans('lang.post_course') }}</h2>
@@ -30,7 +30,7 @@
                                             </span>
                                         </div>
                                         <div class="form-group form-group-half wt-formwithlabel job-cost-input">
-                                            {!! Form::number('service_price', null, array('class' => '', 'placeholder' => trans('lang.course_price'), 'v-model'=>'price')) !!}
+                                            {!! Form::number('cource_price', null, array('class' => '', 'placeholder' => trans('lang.course_price'), 'v-model'=>'price')) !!}
                                         </div>
                                     </fieldset>
                                 </div>
@@ -143,7 +143,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <image-attachments :temp_url="'{{url('service/upload-temp-image')}}'" :type="'image'"></image-attachments>
+                                    <image-attachments :temp_url="'{{url('cource/upload-temp-image')}}'" :type="'image'"></image-attachments>
                                     <div class="form-group input-preview">
                                         <ul class="wt-attachfile dropzone-previews">
 

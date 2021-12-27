@@ -82,6 +82,8 @@
                                                 </span>
                                             </li>
                                         @endif
+                                        @if (Auth::user())
+                                        @if ($profile->user_id != Auth::user()->id)
                                         @if (in_array($profile->id, $save_freelancer))
                                             <li class="wt-btndisbaled">
                                                 <a href="javascrip:void(0);" class="wt-clicksave wt-clicksave">
@@ -97,6 +99,8 @@
                                                 </a>
                                             </li>
                                         @endif
+                                        @endif
+                                        @endif
                                     </ul>
                                     @if (!empty($profile->description))
                                         <div class="wt-description">
@@ -106,27 +110,30 @@
                                     
                                 </div>
                                 <div id="wt-statistics" class="wt-statistics wt-profilecounter">
-                                    <!-- <div class="wt-statisticcontent wt-countercolor1">
-                                        <h3 data-from="0" data-to="{{{ Helper::getProposals($user->id, 'hired')->count() }}}" data-speed="800" data-refresh-interval="03">{{{ Helper::getProposals($user->id, 'hired')->count() }}}</h3>
-                                        <h4>{{ trans('lang.ongoing_project') }}</h4>
-                                    </div> -->
-                                    <div class="wt-statisticcontent wt-countercolor2">
+                                    <div class="wt-statisticcontent wt-countercolor1">
                                         <h3 data-from="0" data-to="{{{ Helper::getProposals($user->id, 'completed')->count() }}}" data-speed="8000" data-refresh-interval="100">{{{ Helper::getProposals($user->id, 'completed')->count() }}}</h3>
                                         <h4>{{ trans('lang.completed_projects') }}</h4>
+                                        
                                     </div>
-                                    <!-- <div class="wt-statisticcontent wt-countercolor4">
-                                        <h3 data-from="0" data-to="{{{ Helper::getProposals($user->id, 'cancelled')->count() }}}" data-speed="800" data-refresh-interval="02">{{{ Helper::getProposals($user->id, 'cancelled')->count() }}}</h3>
-                                        <h4>{{ trans('lang.cancelled_projects') }}</h4>
-                                    </div> -->
+                                    <div class="wt-statisticcontent wt-countercolor2">
+                                        {{-- <h3 data-from="0" data-to="{{{ Helper::getProposals($user->id, 'hired')->count() }}}" data-speed="800" data-refresh-interval="03">{{{ Helper::getProposals($user->id, 'hired')->count() }}}</h3>
+                                        <h4>{{ trans('lang.ongoing_project') }}</h4> --}}
+                                    </div>
+                                    <div class="wt-statisticcontent wt-countercolor4">
+                                        {{-- <h3 data-from="0" data-to="{{{ Helper::getProposals($user->id, 'cancelled')->count() }}}" data-speed="800" data-refresh-interval="02">{{{ Helper::getProposals($user->id, 'cancelled')->count() }}}</h3> --}}
+                                        {{-- <h4>{{ trans('lang.cancelled_projects') }}</h4> --}}
+                                    </div>
                                     <div class="wt-statisticcontent wt-countercolor3">
                                         <h3 data-from="0" data-to="{{ $amount }}" data-speed="8000" data-refresh-interval="100">{{ empty($amount) ? $symbol.'0.00' : $symbol."".$amount }}</h3>
                                         <h4>{{ trans('lang.total_earnings') }}</h4>
                                     </div>
+                                    <?php $user_role = Helper::getSessionUserRole(); ?>
+                                    <?php if($user_role !== 'freelancer'): ?>
                                     <div class="wt-description">
                                         <p>{{ trans('lang.send_offer_note') }}</p>
                                         <a href="javascript:void(0);" @click.prevent='sendOffer("{{$auth_user}}")' class="wt-btn">{{{ trans('lang.btn_send_offer') }}}</a>
-                                        
                                     </div>
+                                    <?php endif;  ?>
                                 </div>
                             </div>
                         </div>
@@ -134,80 +141,6 @@
                 </div>
             </div>
         </div>
-        @if (Helper::getAccessType() == 'both' || Helper::getAccessType() == 'services')
-            @if (!empty($services) && $services->count() > 0)
-                <div class="container">
-                    <div class="row">	
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 float-left">
-                            <div class="wt-services-holder">
-                                <div class="wt-title">
-                                    <h2>{{ trans('lang.courses') }}</h2>
-                                </div>
-                                <div class="wt-services-content">
-                                    <div class="row">
-                                        @foreach ($services as $service)
-                                            @php 
-                                                $service_reviews = Helper::getServiceReviews($user->id, $service->id); 
-                                                $service_rating  = $service_reviews->sum('avg_rating') != 0 ? round($service_reviews->sum('avg_rating') / $service_reviews->count()) : 0;
-                                                $attachments = Helper::getUnserializeData($service->attachments);
-                                                $no_attachments = empty($attachments) ? 'la-service-info' : '';
-                                                $total_orders = Helper::getServiceCount($service->id, 'hired');
-                                            @endphp
-                                            <div class="col-12 col-sm-12 col-md-6 col-lg-4 float-left" style="margin-bottom: 20px">
-                                                <div class="wt-freelancers-info {{$no_attachments}}">
-                                                    @if (!empty($attachments))
-                                                        @php $enable_slider = count($attachments) > 1 ? 'wt-freelancerslider owl-carousel' : ' '; @endphp
-                                                        <div class="wt-freelancers {{{$enable_slider}}}">
-                                                            @foreach ($attachments as $attachment)
-                                                                <figure class="item">
-                                                                    <a href="{{{ url('profile/'.$user->slug) }}}"><img src="{{{asset(Helper::getImageWithSize('uploads/services/'.$user->id, $attachment, 'medium'))}}}" alt="img description" class="item"></a>
-                                                                </figure>
-                                                            @endforeach
-                                                        </div>
-                                                    @else
-                                                    <div class="wt-freelancers">
-                                                        <figure class="item">
-                                                            <a href="javascript:void(0)"><img src="{{ asset('uploads/settings/general/imgae-not-availabe.png') }}" alt="img description" class="item"></a>
-                                                        </figure>
-                                                    </div>
-                                                    @endif
-                                                    @if ($service->is_featured == 'true')
-                                                        <span class="wt-featuredtagvtwo">{{ trans('lang.featured') }}</span>
-                                                    @endif
-                                                    <div class="wt-freelancers-details">
-                                                        <figure class="wt-freelancers-img">
-                                                            <img src="{{ asset(Helper::getProfileImage($user->id)) }}" alt="img description">
-                                                        </figure>
-                                                        <div class="wt-freelancers-content">
-                                                            <div class="dc-title">
-                                                                <a href="{{{ url('profile/'.$user->slug) }}}"><i class="fa fa-check-circle"></i> {{{Helper::getUserName($user->id)}}}</a>
-                                                                <a href="{{{url('service/'.$service->slug)}}}"><h3>{{{$service->title}}}</h3></a>
-                                                                <span><strong>{{ $symbol }}{{{$service->price}}}</strong> {{trans('lang.starting_from')}}</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="wt-freelancers-rating">
-                                                            <ul>
-                                                                <li><span><i class="fa fa-star"></i>{{{ $service_rating }}}/<i>5</i> ({{{$service_reviews->count()}}})</span></li>
-                                                                <li>
-                                                                    @if ($total_orders > 0)
-                                                                        <i class="fa fa-spinner fa-spin"></i>
-                                                                    @endif
-                                                                    {{{$total_orders}}} {{ trans('lang.in_queue') }}
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @endforeach
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            @endif
-        @endif
         @if (Helper::getAccessType() == 'both' || Helper::getAccessType() == 'services')
             @if (!empty($services) && $services->count() > 0)
                 <div class="container">
@@ -281,81 +214,79 @@
                     </div>
                 </div>
             @endif
-        @endif
-        
-            @if (!empty($cources) && $cources->count() > 0)
-                <div class="container">
-                    <div class="row">	
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 float-left">
-                            <div class="wt-services-holder">
-                                <div class="wt-title">
-                                    <h2>{{ trans('lang.courses') }}</h2>
-                                </div>
-                                <div class="wt-services-content">
-                                    <div class="row">
-                                        @foreach ($cources as $cource)
-                                            @php 
-                                                $cource_reviews = Helper::getCourceReviews($user->id, $cource->id); 
-                                                $cource_rating  = $cource_reviews->sum('avg_rating') != 0 ? round($cource_reviews->sum('avg_rating') / $cource_reviews->count()) : 0;
-                                                $attachments = Helper::getUnserializeData($cource->attachments);
-                                                $no_attachments = empty($attachments) ? 'la-service-info' : '';
-                                                $total_orders = Helper::getCourceCount($cource->id);
-                                            @endphp
-                                            <div class="col-12 col-sm-12 col-md-6 col-lg-4 float-left" style="margin-bottom: 20px">
-                                                <div class="wt-freelancers-info {{$no_attachments}}">
-                                                    @if (!empty($attachments))
-                                                        @php $enable_slider = count($attachments) > 1 ? 'wt-freelancerslider owl-carousel' : ' '; @endphp
-                                                        <div class="wt-freelancers {{{$enable_slider}}}">
-                                                            @foreach ($attachments as $attachment)
-                                                                <figure class="item">
-                                                                    <a href="{{{ url('profile/'.$user->slug) }}}"><img src="{{{asset(Helper::getImageWithSize('uploads/services/'.$user->id, $attachment, 'medium'))}}}" alt="img description" class="item"></a>
-                                                                </figure>
-                                                            @endforeach
-                                                        </div>
-                                                    @else
-                                                    <div class="wt-freelancers">
-                                                        <figure class="item">
-                                                            <a href="javascript:void(0)"><img src="{{ asset('uploads/settings/general/imgae-not-availabe.png') }}" alt="img description" class="item"></a>
-                                                        </figure>
-                                                    </div>
-                                                    @endif
-                                                    @if ($cource->is_featured == 'true')
-                                                        <span class="wt-featuredtagvtwo">{{ trans('lang.featured') }}</span>
-                                                    @endif
-                                                    <div class="wt-freelancers-details">
-                                                        <figure class="wt-freelancers-img">
-                                                            <img src="{{ asset(Helper::getProfileImage($user->id)) }}" alt="img description">
-                                                        </figure>
-                                                        <div class="wt-freelancers-content">
-                                                            <div class="dc-title">
-                                                                <a href="{{{ url('profile/'.$user->slug) }}}"><i class="fa fa-check-circle"></i> {{{Helper::getUserName($user->id)}}}</a>
-                                                                <a href="{{{url('instructor/'.$cource->slug)}}}"><h3>{{{$cource->title}}}</h3></a>
-                                                                <span><strong>{{ $symbol }}{{{$cource->price}}}</strong> {{trans('lang.starting_from')}}</span>
+            @if(!empty($cources) && $cources->count() > 0)
+                    <div class="container">
+                        <div class="row">	
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 float-left">
+                                <div class="wt-services-holder">
+                                    <div class="wt-title">
+                                        <h2>{{ trans('lang.courses') }}</h2>
+                                    </div>
+                                    <div class="wt-services-content">
+                                        <div class="row">
+                                            @foreach ($cources as $cource)
+                                                @php 
+                                                    $cource_reviews = Helper::getCourceReviews($user->id, $cource->id); 
+                                                    $cource_rating  = $cource_reviews->sum('avg_rating') != 0 ? round($cource_reviews->sum('avg_rating') / $cource_reviews->count()) : 0;
+                                                    $attachments = Helper::getUnserializeData($cource->attachments);
+                                                    $no_attachments = empty($attachments) ? 'la-service-info' : '';
+                                                    $total_orders = Helper::getCourceCount($cource->id);
+                                                @endphp
+                                                <div class="col-12 col-sm-12 col-md-6 col-lg-4 float-left" style="margin-bottom: 20px">
+                                                    <div class="wt-freelancers-info {{$no_attachments}}">
+                                                        @if (!empty($attachments))
+                                                            @php $enable_slider = count($attachments) > 1 ? 'wt-freelancerslider owl-carousel' : ' '; @endphp
+                                                            <div class="wt-freelancers {{{$enable_slider}}}">
+                                                                @foreach ($attachments as $attachment)
+                                                                    <figure class="item">
+                                                                        <a href="{{{ url('profile/'.$user->slug) }}}"><img src="{{{asset(Helper::getImageWithSize('uploads/services/'.$user->id, $attachment, 'medium'))}}}" alt="img description" class="item"></a>
+                                                                    </figure>
+                                                                @endforeach
                                                             </div>
+                                                        @else
+                                                        <div class="wt-freelancers">
+                                                            <figure class="item">
+                                                                <a href="javascript:void(0)"><img src="{{ asset('uploads/settings/general/imgae-not-availabe.png') }}" alt="img description" class="item"></a>
+                                                            </figure>
                                                         </div>
-                                                        <div class="wt-freelancers-rating">
-                                                            <ul>
-                                                                <li><span><i class="fa fa-star"></i>{{{ $cource_rating }}}/<i>5</i> ({{{$cource_reviews->count()}}})</span></li>
-                                                                <li>
-                                                                    @if ($total_orders > 0)
-                                                                        <i class="fa fa-spinner fa-spin"></i>
-                                                                    @endif
-                                                                    {{{$total_orders}}} {{ trans('lang.in_queue') }}
-                                                                </li>
-                                                            </ul>
+                                                        @endif
+                                                        @if ($cource->is_featured == 'true')
+                                                            <span class="wt-featuredtagvtwo">{{ trans('lang.featured') }}</span>
+                                                        @endif
+                                                        <div class="wt-freelancers-details">
+                                                            <figure class="wt-freelancers-img">
+                                                                <img src="{{ asset(Helper::getProfileImage($user->id)) }}" alt="img description">
+                                                            </figure>
+                                                            <div class="wt-freelancers-content">
+                                                                <div class="dc-title">
+                                                                    <a href="{{{ url('profile/'.$user->slug) }}}"><i class="fa fa-check-circle"></i> {{{Helper::getUserName($user->id)}}}</a>
+                                                                    <a href="{{{url('instructor/'.$cource->slug)}}}"><h3>{{{$cource->title}}}</h3></a>
+                                                                    <span><strong>{{ $symbol }}{{{$cource->price}}}</strong> {{trans('lang.starting_from')}}</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="wt-freelancers-rating">
+                                                                <ul>
+                                                                    <li><span><i class="fa fa-star"></i>{{{ $cource_rating }}}/<i>5</i> ({{{$cource_reviews->count()}}})</span></li>
+                                                                    <li>
+                                                                        @if ($total_orders > 0)
+                                                                            <i class="fa fa-spinner fa-spin"></i>
+                                                                        @endif
+                                                                        {{{$total_orders}}} {{ trans('lang.in_queue') }}
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        @endforeach
+                                            @endforeach
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            @endif
-      
+             @endif
+      @endif
         <div class="container">
             <div class="row">
                 <div id="wt-twocolumns" class="wt-twocolumns wt-haslayout">
@@ -409,40 +340,40 @@
                                                     </div>
                                                 @endif
                                                 @elseif ($review->project_type == 'cource')
-                                                    @php $cource = \App\Cource::where('id', $review->cource_id)->first(); @endphp    
-                                                    @if (!empty($cource))
-                                                     <div class="wt-userlistinghold wt-userlistingsingle">
-                                                        <figure class="wt-userlistingimg">
-                                                            <img src="{{ asset(Helper::getProfileImage($review->user_id)) }}" alt="{{{ trans('Employer') }}}">
-                                                        </figure>
-                                                        <div class="wt-userlistingcontent">
-                                                            <div class="wt-contenthead">
-                                                                <div class="wt-title">
-                                                                    <a href="{{{ url('profile/'.$user->slug) }}}">@if ($user->user_verified == 1)<i class="fa fa-check-circle"></i>@endif {{{ Helper::getUserName($review->user_id) }}}</a>
-                                                                    <h3>{{{ $cource->title }}}</h3>
-                                                                </div>
-                                                                <ul class="wt-userlisting-breadcrumb">
-                                                                    @if (!empty($cource->location))
-                                                                        <li>
-                                                                            <span>
-                                                                                <img src="{{{asset(Helper::getLocationFlag($cource->location->flag))}}}" alt="{{{ trans('lang.flag_img') }}}"> {{{ $cource->location->title }}}
-                                                                            </span>
-                                                                        </li>
-                                                                    @endif
-                                                                    <li><span><i class="far fa-calendar"></i> {{ Carbon\Carbon::parse($cource->created_at)->format('M Y') }} - {{ Carbon\Carbon::parse($cource->updated_at)->format('M Y') }}</span></li>
-                                                                    <li>
-                                                                        <span class="wt-stars"><span style="width: {{ $stars }}%;"></span></span>
-                                                                    </li> 
-                                                                </ul>
+                                                @php $cource = \App\Cource::where('id', $review->cource_id)->first(); @endphp    
+                                                @if (!empty($cource))
+                                                 <div class="wt-userlistinghold wt-userlistingsingle">
+                                                    <figure class="wt-userlistingimg">
+                                                        <img src="{{ asset(Helper::getProfileImage($review->user_id)) }}" alt="{{{ trans('Employer') }}}">
+                                                    </figure>
+                                                    <div class="wt-userlistingcontent">
+                                                        <div class="wt-contenthead">
+                                                            <div class="wt-title">
+                                                                <a href="{{{ url('profile/'.$user->slug) }}}">@if ($user->user_verified == 1)<i class="fa fa-check-circle"></i>@endif {{{ Helper::getUserName($review->user_id) }}}</a>
+                                                                <h3>{{{ $cource->title }}}</h3>
                                                             </div>
+                                                            <ul class="wt-userlisting-breadcrumb">
+                                                                @if (!empty($cource->location))
+                                                                    <li>
+                                                                        <span>
+                                                                            <img src="{{{asset(Helper::getLocationFlag($cource->location->flag))}}}" alt="{{{ trans('lang.flag_img') }}}"> {{{ $cource->location->title }}}
+                                                                        </span>
+                                                                    </li>
+                                                                @endif
+                                                                <li><span><i class="far fa-calendar"></i> {{ Carbon\Carbon::parse($cource->created_at)->format('M Y') }} - {{ Carbon\Carbon::parse($cource->updated_at)->format('M Y') }}</span></li>
+                                                                <li>
+                                                                    <span class="wt-stars"><span style="width: {{ $stars }}%;"></span></span>
+                                                                </li> 
+                                                            </ul>
                                                         </div>
-                                                        <div class="wt-description">
-                                                            @if (!empty($review->feedback))
-                                                                <p>“ {{{ $review->feedback }}} ”</p>
-                                                            @endif
-                                                        </div>
-                                                     </div>
-                                                  @endif
+                                                    </div>
+                                                    <div class="wt-description">
+                                                        @if (!empty($review->feedback))
+                                                            <p>“ {{{ $review->feedback }}} ”</p>
+                                                        @endif
+                                                    </div>
+                                                 </div>
+                                              @endif    
                                             @else
                                                 @if (Helper::getAccessType() == 'both' || Helper::getAccessType() == 'services')
                                                     @php $service = \App\Service::where('id', $review->service_id)->first(); @endphp    
@@ -511,7 +442,7 @@
                                     @endif
                                 </div>
                             @endif
-                            @if (!($videos))
+                            @if (!empty($videos))
                                 <div class="wt-videos">
                                     <div class="wt-usertitle">
                                         <h2>{{{ trans('lang.videos') }}}</h2>
@@ -669,6 +600,8 @@
                                     </ul>
                                 </div>
                             </div>
+                             @if (Auth::user())
+                             @if ($profile->user_id != Auth::user()->id)
                             <div class="wt-widget wt-reportjob">
                                 <div class="wt-widgettitle">
                                     <h2>{{ trans('lang.report_user') }}</h2>
@@ -691,6 +624,8 @@
                                     {!! form::close(); !!}
                                 </div>
                             </div>
+                            @endif
+                            @endif
                         </aside>
                     </div>
                 </div>

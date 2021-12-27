@@ -2,47 +2,47 @@
 @section('content')
 <div class="wt-haslayout wt-dbsectionspace">
     <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8 float-left" id="services">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8 float-left" id="cources">
             <div class="preloader-section" v-if="loading" v-cloak>
                 <div class="preloader-holder">
                     <div class="loader"></div>
                 </div>
             </div>
             <div class="wt-haslayout wt-post-job-wrap">
-                {!! Form::open(['url' => '', 'class' =>'wt-haslayout', 'id' => 'update_service_form',  '@submit.prevent'=>'updateService("'.$service->id.'")']) !!}
+                {!! Form::open(['url' => '', 'class' =>'wt-haslayout', 'id' => 'update_course_form','@submit.prevent'=>'updateCource("'.$cource->id.'")']) !!}
                     <div class="wt-dashboardbox">
                         <div class="wt-dashboardboxtitle">
-                            <h2>{{ trans('lang.update_service') }}</h2>
+                            <h2>{{ trans('lang.update_course') }}</h2>
                         </div>
                         <div class="wt-dashboardboxcontent">
                             <div class="wt-jobdescription wt-tabsinfo">
                                 <div class="wt-tabscontenttitle">
-                                    <h2>{{ trans('lang.service_desc') }}</h2>
+                                    <h2>{{ trans('lang.course_desc') }}</h2>
                                 </div>
                                 <div class="wt-formtheme wt-userform wt-userformvtwo">
                                     <fieldset>
                                         <div class="form-group">
-                                            {!! Form::text('title', e($service->title), array('class' => 'form-control', 'placeholder' => trans('lang.service_title'))) !!}
+                                            {!! Form::text('title', e($cource->title), array('class' => 'form-control', 'placeholder' => trans('lang.course_title'))) !!}
                                         </div>
                                         <div class="form-group form-group-half wt-formwithlabel">
                                             <span class="wt-select">
-                                                {!! Form::select('delivery_time', $delivery_time, e($service->delivery_time_id), array('class' => '', 'placeholder' => trans('lang.select_delivery_time'))) !!}
+                                                {!! Form::select('delivery_time', $delivery_time, e($cource->delivery_time_id), array('class' => '', 'placeholder' => trans('lang.select_delivery_time'))) !!}
                                             </span>
                                         </div>
                                         <div class="form-group form-group-half wt-formwithlabel job-cost-input">
-                                            {!! Form::number('service_price', e($service->price), array('class' => '', 'placeholder' => trans('lang.service_price'))) !!}
+                                            {!! Form::number('cource_price', e($cource->price), array('class' => '', 'placeholder' => trans('lang.course_price'))) !!}
                                         </div>
                                     </fieldset>
                                 </div>
                             </div>
                             <div class="wt-jobcategories wt-tabsinfo">
                                 <div class="wt-tabscontenttitle">
-                                    <h2>{{ trans('lang.service_cats') }}</h2>
+                                    <h2>{{ trans('lang.course_cats') }}</h2>
                                 </div>
                                 <div class="wt-divtheme wt-userform wt-userformvtwo">
                                     <div class="form-group">
                                         <span class="wt-select">
-                                            {!! Form::select('categories[]', $categories, $service->categories, array('class' => 'chosen-select', 'multiple', 'data-placeholder' => trans('lang.select_service_cats'))) !!}
+                                            {!! Form::select('categories[]', $categories, $cource->categories, array('class' => 'chosen-select', 'multiple', 'data-placeholder' => trans('lang.select_course_cats'))) !!}
                                         </span>
                                     </div>
                                 </div>
@@ -54,7 +54,7 @@
                                 <div class="wt-divtheme wt-userform wt-userformvtwo">
                                     <div class="form-group">
                                         <span class="wt-select">
-                                            {!! Form::select('response_time', $response_time, e($service->response_time_id), array('class' => '', 'placeholder' => trans('lang.select_response_time'))) !!}
+                                            {!! Form::select('response_time', $response_time, e($cource->response_time_id), array('class' => '', 'placeholder' => trans('lang.select_response_time'))) !!}
                                         </span>
                                     </div>
                                 </div>
@@ -66,7 +66,7 @@
                                 <div class="wt-divtheme wt-userform wt-userformvtwo">
                                     <div class="form-group">
                                         <span class="wt-select">
-                                            {!! Form::select('languages[]', $languages, $service->languages, array('class' => 'chosen-select', 'multiple', 'data-placeholder' => trans('lang.select_lang'))) !!}
+                                            {!! Form::select('languages[]', $languages, $cource->languages, array('class' => 'chosen-select', 'multiple', 'data-placeholder' => trans('lang.select_lang'))) !!}
                                         </span>
                                     </div>
                                 </div>
@@ -78,7 +78,7 @@
                                 <div class="wt-divtheme wt-userform wt-userformvtwo">
                                     <div class="form-group">
                                         <span class="wt-select">
-                                            {!! Form::select('english_level', $english_levels, e($service->english_level), array('class' => '', 'placeholder' => trans('lang.select_english_level'))) !!}
+                                            {!! Form::select('english_level', $english_levels, e($cource->english_level), array('class' => '', 'placeholder' => trans('lang.select_english_level'))) !!}
                                         </span>
                                     </div>
                                 </div>
@@ -88,7 +88,7 @@
                                     <h2>{{ trans('lang.service_desc') }}</h2>
                                 </div>
                                 <div class="wt-formtheme wt-userform wt-userformvtwo">
-                                    {!! Form::textarea('description', e($service->description), ['class' => 'wt-tinymceeditor', 'id' => 'wt-tinymceeditor', 'placeholder' => trans('lang.service_desc_note')]) !!}
+                                    {!! Form::textarea('description', e($cource->description), ['class' => 'wt-tinymceeditor', 'id' => 'wt-tinymceeditor', 'placeholder' => trans('lang.service_desc_note')]) !!}
                                 </div>
                             </div>
                             <div class="wt-joblocation wt-tabsinfo">
@@ -99,24 +99,24 @@
                                     <fieldset>
                                         <div class="form-group form-group-half">
                                             <span class="wt-select">
-                                                {!! Form::select('locations', $locations, e($service->location_id), array('class' => 'skill-dynamic-field', 'placeholder' => trans('lang.select_locations'))) !!}
+                                                {!! Form::select('locations', $locations, e($cource->location_id), array('class' => 'skill-dynamic-field', 'placeholder' => trans('lang.select_locations'))) !!}
                                             </span>
                                         </div>
                                         <div class="form-group form-group-half">
-                                            {!! Form::text( 'address', e($service->address), ['class' =>'form-control', 'placeholder' => trans('lang.your_address')] ) !!}
+                                            {!! Form::text( 'address', e($cource->address), ['class' =>'form-control', 'placeholder' => trans('lang.your_address')] ) !!}
                                         </div>
-                                        @if (!empty($service->longitude) && !empty($service->latitude))
+                                        @if (!empty($cource->longitude) && !empty($cource->latitude))
                                             <div class="form-group wt-formmap">
                                                 <div class="wt-locationmap">
-                                                    <custom-map :latitude="{{$service->longitude}}" :longitude="{{$service->latitude}}"></custom-map>
+                                                    <custom-map :latitude="{{$cource->longitude}}" :longitude="{{$cource->latitude}}"></custom-map>
                                                 </div>
                                             </div>
                                         @endif
                                         <div class="form-group form-group-half">
-                                            {!! Form::text( 'longitude', e($service->longitude), ['class' =>'form-control', 'placeholder' => trans('lang.enter_logitude')]) !!}
+                                            {!! Form::text( 'longitude', e($cource->longitude), ['class' =>'form-control', 'placeholder' => trans('lang.enter_logitude')]) !!}
                                         </div>
                                         <div class="form-group form-group-half">
-                                            {!! Form::text( 'latitude', e($service->latitude), ['class' =>'form-control', 'placeholder' => trans('lang.enter_latitude')]) !!}
+                                            {!! Form::text( 'latitude', e($cource->latitude), ['class' =>'form-control', 'placeholder' => trans('lang.enter_latitude')]) !!}
                                         </div>
                                     </fieldset>
                                 </div>
@@ -144,7 +144,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <image-attachments :temp_url="'{{url('service/upload-temp-image')}}'" :type="'image'"></image-attachments>
+                                        <image-attachments :temp_url="'{{url('cource/upload-temp-image')}}'" :type="'image'"></image-attachments>
                                         <div class="form-group input-preview">
                                             <ul class="wt-attachfile dropzone-previews">
                                                 @if (!empty($attachments))
@@ -153,10 +153,10 @@
                                                     <li id="attachment-item-{{$key}}">
                                                         <span>{{{Helper::formateFileName($attachment)}}}</span>
                                                         <em>
-                                                            @if (Storage::disk('local')->exists('uploads/services/'.$freelancer->user_id.'/'.$attachment))
-                                                                {{ trans('lang.file_size') }} {{{Helper::bytesToHuman(Storage::size('uploads/services/'.$freelancer->user_id.'/'.$attachment))}}}
+                                                            @if (Storage::disk('local')->exists('uploads/courses/'.$freelancer->user_id.'/'.$attachment))
+                                                                {{ trans('lang.file_size') }} {{{Helper::bytesToHuman(Storage::size('uploads/courses/'.$freelancer->user_id.'/'.$attachment))}}}
                                                             @endif
-                                                            <a href="{{{route('getfile', ['type'=>'services','attachment'=>$attachment,'id'=>$freelancer->user_id])}}}"><i class="lnr lnr-download"></i></a>
+                                                            <a href="{{{route('getfile', ['type'=>'courses','attachment'=>$attachment,'id'=>$freelancer->user_id])}}}"><i class="lnr lnr-download"></i></a>
                                                             <a href="#" v-on:click.prevent="deleteAttachment('attachment-item-{{$key}}')"><i class="lnr lnr-cross"></i></a>
                                                         </em>
                                                         <input type="hidden" value="{{{$attachment}}}" class="" name="attachments[{{$key}}]">
@@ -174,7 +174,7 @@
                     <div class="wt-updatall">
                         <i class="ti-announcement"></i>
                         <span>{{{ trans('lang.save_changes_note') }}}</span>
-                        {!! Form::submit(trans('lang.post_course'), ['class' => 'wt-btn', 'id'=>'submit-service']) !!}
+                        {!! Form::submit(trans('lang.post_course'), ['class' => 'wt-btn', 'id'=>'submit-course']) !!}
                     </div>
                 {!! form::close(); !!}
             </div>

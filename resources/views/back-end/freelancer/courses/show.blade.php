@@ -1,6 +1,6 @@
 @extends(file_exists(resource_path('views/extend/back-end/master.blade.php')) ? 'extend.back-end.master' : 'back-end.master')
 @section('content')
-   <section class="wt-haslayout wt-dbsectionspace" id="services">
+   <section class="wt-haslayout wt-dbsectionspace" id="cources">
         <div class="preloader-section" v-if="loading" v-cloak>
             <div class="preloader-holder">
                 <div class="loader"></div>
@@ -25,15 +25,15 @@
                     <div class="wt-dashboardboxcontent wt-jobdetailsholder">
                         <div class="wt-service-tabel wt-jobservice-details">
                             @if (!empty($attachment))
-                                <figure class="service-feature-image"><img src="{{{asset('/uploads/services/'.$freelancer->id.'/'.$attachment[0])}}}" alt="{{{$service['title']}}}"></figure>
+                                <figure class="service-feature-image"><img src="{{{asset('/uploads/services/'.$freelancer->id.'/'.$attachment[0])}}}" alt="{{{$course['title']}}}"></figure>
                             @endif
                             <div class="wt-freelancers-content">
                                 <div class="dc-title">
-                                    @if ($service['is_featured'] == 'true')
+                                    @if ($course['is_featured'] == 'true')
                                         <span class="wt-featuredtagvtwo">{{ trans('lang.featured') }}</span>
                                     @endif
-                                    <h3>{{{$service['title']}}}</h3>
-                                    <span><strong>{{ !empty($symbol) ? $symbol['symbol'] : '$' }}{{{$service['price']}}}</strong> {{ trans('lang.starting_from') }}</span>
+                                    <h3>{{{$course['title']}}}</h3>
+                                    <span><strong>{{ !empty($symbol) ? $symbol['symbol'] : '$' }}{{{$course['price']}}}</strong> {{ trans('lang.starting_from') }}</span>
                                 </div>
                             </div>
                         </div>
@@ -58,13 +58,13 @@
                                             <span class="wt-starcontent">{{{ $rating }}}<sub>{{ trans('lang.5') }}</sub> <em>({{{ $feedbacks }}} {{ trans('lang.feedbacks') }})</em></span>
                                         </div>													
                                     </div>
-                                    @if ($pivot_service->status == 'hired')
+                                    @if ($pivot_service->status == 'bought')
                                         <div class="wt-rightarea wt-titlewithsearch wt-titlewithsearchvtwo">
                                             <form class="wt-formtheme wt-formsearch" id="change_job_status">
                                                 <fieldset>
                                                     <div class="form-group">
                                                         <span class="wt-select">
-                                                            {!! Form::select('status', $service_status, 'hired', array('id' =>'employer_service_status', 'data-placeholder' => trans('lang.select_status'), '@change' => 'serviceStatus('.$service->id.', '.$id.', '.Auth::user()->id.', "'.$cancel_proposal_text.'", "'.$cancel_proposal_button.'", "'.$validation_error_text.'", "'.$cancel_popup_title.'")')) !!}
+                                                            {!! Form::select('status', $course_status, 'bought', array('id' =>'employer_service_status', 'data-placeholder' => trans('lang.select_status'), '@change' => 'serviceStatus('.$service->id.', '.$id.', '.Auth::user()->id.', "'.$cancel_proposal_text.'", "'.$cancel_proposal_button.'", "'.$validation_error_text.'", "'.$cancel_popup_title.'")')) !!}
                                                         </span>
                                                         <a href="javascrip:void(0);" class="wt-searchgbtn job_status_popup" @click.prevent='serviceStatus({{$service->id}}, {{$id}}, {{Auth::user()->id}}, "{{$cancel_proposal_text}}", "{{$cancel_proposal_button}}", "{{$validation_error_text}}", "{{$cancel_popup_title}}")'><i class="fa fa-check"></i></a>
                                                     </div>
@@ -80,7 +80,7 @@
                                 <h2>{{ trans('lang.project_history') }}</h2>
                             </div>
                             <div class="wt-historycontent la-jobdetails-holder">
-                                <private-message :placeholder="'{{ trans('lang.ph_job_dtl') }}'" :upload_tmp_url="'{{url('service/upload-temp-message_attachments')}}'" :id="'{{$id}}'" :recipent_id="'{{$pivot_service->user_id}}'" :project_type="'service'"></private-message>
+                                <private-message :placeholder="'{{ trans('lang.ph_job_dtl') }}'" :upload_tmp_url="'{{url('service/upload-temp-message_attachments')}}'" :id="'{{$id}}'" :recipent_id="'{{$pivot_course->user_id}}'" :project_type="'service'"></private-message>
                             </div>
                         </div>
                     </div>
@@ -120,7 +120,7 @@
                             @endforeach
                         @endif
                         <input type="hidden" name="receiver_id" value="{{{$freelancer->id}}}">
-                        <input type="hidden" name="service_id" value="{{{$service->id}}}">
+                        <input type="hidden" name="service_id" value="{{{$course->id}}}">
                         <div class="form-group wt-btnarea">
                            <a class="wt-btn" href="javascript:void(0);" v-on:click='submitFeedback({{$freelancer->id}}, {{$id}})'>{{ trans('lang.btn_send_feedback') }}</a>
                         </div>
