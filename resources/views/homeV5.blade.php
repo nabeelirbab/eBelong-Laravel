@@ -173,6 +173,11 @@
 															</a>
 														</li>
 														<?php elseif($user_role == 'admin'): ?>
+														<li style="order: 1;">
+															<a href="{{url('search-results?type=instructors')}}">
+																{{{ trans('lang.browse_instructors') }}}
+															</a>
+														</li>
 														<li style="order: 2;">
 															<a href="{{url('search-results?type=freelancer')}}">
 																{{{ trans('lang.view_freelancers') }}}
@@ -200,6 +205,11 @@
 															</a>
 														</li>		
 														<?php elseif($user_role == 'freelancer'): ?>
+														<li style="order: 1;">
+															<a href="{{url('search-results?type=instructors')}}">
+																{{{ trans('lang.browse_instructors') }}}
+															</a>
+														</li>
 														<li style="order: 4;">
 															<a href="{{url('search-results?type=job')}}">
 																{{{ trans('lang.browse_jobs') }}}

@@ -11,7 +11,7 @@
  * @link    http://www.amentotech.com
  */
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Schema;
 use App\Freelancer;
 use App\Cource;
 use Illuminate\Http\Request;
@@ -1067,6 +1067,8 @@ class FreelancerController extends Controller
     public function showCourseDetail($id, $status)
     {
         if (Auth::user()) {
+            if (Schema::hasTable('cources') && Schema::hasTable('cource_user')) {
+            if (Schema::hasColumn('cource_user','cource_id') && Schema::hasColumn('cource_user','paid') && Schema::hasColumn('cource_user','paid_progress') && Schema::hasColumn('cource_user','status') && Schema::hasColumn('cource_user','type') && Schema::hasColumn('cource_user','seller_id') && Schema::hasColumn('cource_user','user_id')) {
             $pivot_course = Helper::getPivotCourse($id);
             $pivot_id = $pivot_course->id;
             $course = Cource::find($pivot_course->cource_id);
@@ -1135,7 +1137,11 @@ class FreelancerController extends Controller
                     )
                 );
             }
-        } else {
+        } 
+    }
+}
+
+else {
             abort(404);
         }
     }
@@ -1144,6 +1150,8 @@ class FreelancerController extends Controller
     {
         $freelancer_id = Auth::user()->id;
         if (Auth::user()) {
+            if (Schema::hasTable('cources') && Schema::hasTable('cource_user')) {
+                if (Schema::hasColumn('cource_user','cource_id') && Schema::hasColumn('cource_user','paid') && Schema::hasColumn('cource_user','paid_progress') && Schema::hasColumn('cource_user','status') && Schema::hasColumn('cource_user','type') && Schema::hasColumn('cource_user','seller_id') && Schema::hasColumn('cource_user','user_id')) {    
             $freelancer = User::find($freelancer_id);
             $currency   = SiteManagement::getMetaValue('commision');
             $symbol = !empty($currency) && !empty($currency[0]['currency']) ? Helper::currencyList($currency[0]['currency']) : array();
@@ -1194,6 +1202,8 @@ class FreelancerController extends Controller
             }
         }   
     }
+  }
+}
     /**
      * Get freelancer payouts.
      *

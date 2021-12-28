@@ -4,7 +4,7 @@
 @push('stylesheets')
     <link href="{{ asset('css/owl.carousel.min.css') }}" rel="stylesheet">
 @endpush
-@section('title'){{ $service_list_meta_title }} @stop
+@section('title'){{'Course Listing' }} @stop
 @section('description', $service_list_meta_desc)
 @section('content')
 @php
@@ -89,7 +89,7 @@
                                                 $attachments = Helper::getUnserializeData($service->attachments);
                                                 $no_attachments = empty($attachments) ? 'la-service-info' : '';
                                                 $enable_slider = !empty($attachments) ? 'wt-servicesslider' : '';
-                                                $total_orders = Helper::getCourceCount($service->id);
+                                                $total_orders = Helper::getCourceCount($service->id,'bought');
                                             @endphp
                                             <div class="col-12 col-sm-12 col-md-6 col-lg-6 float-left">
                                                 <div class="wt-freelancers-info {{$no_attachments}}">
@@ -99,7 +99,7 @@
                                                             <div class="wt-freelancers {{{$enable_slider}}}">
                                                                 @foreach ($attachments as $attachment)
                                                                     <figure class="item">
-                                                                        <a href="{{{ url('instructor/'.$service->slug) }}}"><img src="{{{asset(Helper::getImageWithSize('uploads/services/'.$service->seller[0]->id, $attachment, 'medium'))}}}" alt="img descriptions" class="item"></a>
+                                                                        <a href="{{{ url('instructor/'.$service->slug) }}}"><img src="{{{asset(Helper::getImageWithSize('uploads/courses/'.$service->seller[0]->id, $attachment, 'medium'))}}}" alt="img descriptions" class="item"></a>
                                                                     </figure>
                                                                 @endforeach
                                                             </div>

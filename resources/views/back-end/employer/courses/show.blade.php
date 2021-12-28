@@ -1,6 +1,6 @@
 @extends(file_exists(resource_path('views/extend/back-end/master.blade.php')) ? 'extend.back-end.master' : 'back-end.master')
 @section('content')
-   <section class="wt-haslayout wt-dbsectionspace" id="services">
+   <section class="wt-haslayout wt-dbsectionspace" id="cources">
         <div class="preloader-section" v-if="loading" v-cloak>
             <div class="preloader-holder">
                 <div class="loader"></div>
@@ -123,9 +123,9 @@
                                                             <fieldset>
                                                                 <div class="form-group">
                                                                     <span class="wt-select">
-                                                                        {!! Form::select('status', $course_status, 'hired', array('id' =>'employer_service_status', 'data-placeholder' => trans('lang.select_status'), '@change' => 'serviceStatus('.$course->id.', '.$pivot_id.', '.Auth::user()->id.', "'.$cancel_proposal_text.'", "'.$cancel_proposal_button.'", "'.$validation_error_text.'", "'.$cancel_popup_title.'")')) !!}
+                                                                        {!! Form::select('status', $course_status, 'hired', array('id' =>'employer_service_status', 'data-placeholder' => trans('lang.select_status'), '@change' => 'courseStatus('.$course->id.', '.$pivot_id.', '.Auth::user()->id.', "'.$cancel_proposal_text.'", "'.$cancel_proposal_button.'", "'.$validation_error_text.'", "'.$cancel_popup_title.'")')) !!}
                                                                     </span>
-                                                                    <a href="javascrip:void(0);" class="wt-searchgbtn job_status_popup" @click.prevent='serviceStatus({{$course->id}}, {{$pivot_id}}, {{Auth::user()->id}}, "{{$cancel_proposal_text}}", "{{$cancel_proposal_button}}", "{{$validation_error_text}}", "{{$cancel_popup_title}}")'><i class="fa fa-check"></i></a>
+                                                                    <a href="javascrip:void(0);" class="wt-searchgbtn job_status_popup" @click.prevent='courseStatus({{$course->id}}, {{$pivot_id}}, {{Auth::user()->id}}, "{{$cancel_proposal_text}}", "{{$cancel_proposal_button}}", "{{$validation_error_text}}", "{{$cancel_popup_title}}")'><i class="fa fa-check"></i></a>
                                                                 </div>
                                                             </fieldset>
                                                         </form>											
@@ -185,7 +185,7 @@
                             <input type="hidden" name="receiver_id" value="{{{$freelancer->id}}}">
                             <input type="hidden" name="course_id" value="{{{$course->id}}}">
                             <div class="form-group wt-btnarea">
-                                <a class="wt-btn" href="javascript:void(0);" v-on:click='submitFeedback({{$freelancer->id}}, {{$pivot_id}})'>{{ trans('lang.btn_send_feedback') }}</a>
+                                <a class="wt-btn" href="javascript:void(0);" v-on:click='submitFeedback({{$freelancer->id}})'>{{ trans('lang.btn_send_feedback') }}</a>
                             </div>
                         </fieldset>
                     </form>

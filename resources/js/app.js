@@ -5062,7 +5062,7 @@ if (document.getElementById("cources")) {
                             document.addEventListener('iziToast-closing', function (data) {
                                 if (data.detail.id == 'info_notify') {
                                     self.showCompleted(response.data.message);
-                                    window.location.replace(APP_URL + '/freelancer/courses');
+                                    window.location.replace(APP_URL + '/freelancer/courses/posted');
                                 }
                             });
                         } else {
@@ -5307,7 +5307,94 @@ if (document.getElementById("cources")) {
                     }
                 })
             },
-           
+            courseStatus: function (id, pivot_id, employer_id, cancel_text, confirm_button, validation_error, popup_title) {
+                var job_status = document.getElementById("employer_service_status");
+                var status = job_status.options[job_status.selectedIndex].value;
+                if (status == "cancelled") {
+                    this.$swal({
+                        title: popup_title,
+                        text: cancel_text,
+                        type: 'info',
+                        input: 'textarea',
+                        confirmButtonText: confirm_button,
+                        showCancelButton: true,
+                        showLoaderOnConfirm: true,
+                        inputValidator: (textarea) => {
+                            return new Promise((resolve) => {
+                                if (textarea != '') {
+                                    resolve()
+                                } else {
+                                    resolve(validation_error)
+                                }
+                            })
+                        },
+                        preConfirm: (textarea) => {
+                            var self = this;
+                            return axios.post(APP_URL + '/submit-report', {
+                                reason: 'course cancel',
+                                report_type: 'course_cancel',
+                                description: textarea,
+                                id: id,
+                                pivot_id: pivot_id,
+                                model: 'App\\Cource',
+                                employer_id: employer_id
+                            })
+                                .then(function (response) {
+                                    if (response.data.type == 'success') {
+                                        self.loading = false;
+                                        self.showInfo(response.data.progress);
+                                        document.addEventListener('iziToast-closing', function (data) {
+                                            if (data.detail.id == 'info_notify') {
+                                                self.showCompleted(response.data.message);
+                                                window.location.replace(APP_URL + '/freelancer/courses/bought');
+                                            }
+                                        });
+                                    } else if (response.data.type == 'error') {
+                                        self.showError(response.data.message);
+                                    }
+                                })
+                                .catch(error => {
+                                    if (error.response.status == 422) {
+                                        if (error.response.data.errors.description) {
+                                            self.$swal.showValidationMessage(
+                                                error.response.data.errors.description[0]
+                                            )
+                                        }
+                                    }
+                                })
+                        },
+                        allowOutsideClick: () => !this.$swal.isLoading()
+                    }).then((result) => { })
+                } else if (status == "completed") {
+                    this.$refs.myModalRef.show()
+                }
+            },
+            submitFeedback: function (id) {
+                this.loading = true;
+                let review_form = document.getElementById('submit-review-form');
+                let form_data = new FormData(review_form);
+                form_data.append('freelancer_id', id);
+                form_data.append('type', 'course');
+                var self = this;
+                axios.post(APP_URL + '/user/submit-review', form_data)
+                    .then(function (response) {
+                        if (response.data.type == 'success') {
+                            self.loading = false;
+                            var message = response.data.message;
+                            self.showMessage(message);
+                            setTimeout(function () {
+                                self.$refs.myModalRef.hide()
+                                window.location.replace(APP_URL + '/freelancer/courses/bought');
+                            }, 1000);
+                        } else {
+                            self.loading = false;
+                            self.showError(response.data.message);
+                        }
+                    })
+                    .catch(function (error) {
+                        self.loading = false;
+                    });
+            },           
            
             check_auth: function (url) {
                 var self = this;

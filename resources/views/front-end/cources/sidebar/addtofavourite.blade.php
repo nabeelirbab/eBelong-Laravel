@@ -1,4 +1,5 @@
 @php $seller_id = !empty($seller) ? $seller->id : 0; @endphp
+@if(Auth::user()->id != $seller_id)
 <div class="wt-clicksavearea">
     <span>{{{trans("lang.cource_id")}}}: {{{$cource->code}}}</span>
     @if (!empty($saved_cources))
@@ -15,3 +16,4 @@
         </div>
     @endif
 </div>
+@endif

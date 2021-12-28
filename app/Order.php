@@ -69,7 +69,7 @@ class Order extends Model
             $cource = Cource::find($product_id);
             $seller = Helper::getCourceSeller($cource->id);
             $cource_order_id = DB::table('cource_user')->insertGetId(
-                ['cource_id' => $product_id, 'user_id' => Auth::user()->id,'seller_id' => $seller->user_id,'type' => 'employer','seller_id' => $seller->user_id, 'paid' => 'pending']
+                ['cource_id' => $product_id, 'user_id' => Auth::user()->id,'seller_id' => $seller->user_id,'type' => 'employer','status' => 'bought','seller_id' => $seller->user_id, 'paid' => 'pending']
             );
            
             $this->user_id = $id;

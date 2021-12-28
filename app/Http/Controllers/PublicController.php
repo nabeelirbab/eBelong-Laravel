@@ -341,8 +341,10 @@ class PublicController extends Controller
                     $services = $user->services;
                 }
                 if (Schema::hasTable('cources') && Schema::hasTable('cource_user')) {
+                    if (Schema::hasColumn('cource_user','cource_id') && Schema::hasColumn('cource_user','paid') && Schema::hasColumn('cource_user','paid_progress') && Schema::hasColumn('cource_user','status') && Schema::hasColumn('cource_user','type') && Schema::hasColumn('cource_user','seller_id') && Schema::hasColumn('cource_user','user_id')) {
                     $cources = $user->cources;
                 }
+            }
                 $reviews = Review::where('receiver_id', $user->id)->get();
                 $awards = !empty($profile->awards) ? unserialize($profile->awards) : array();
                 $projects = !empty($profile->projects) ? unserialize($profile->projects) : array();

@@ -213,7 +213,8 @@
                         </div>
                     </div>
                 </div>
-            @endif
+            @endif           
+        @if (Schema::hasColumn('cource_user', 'paid')) 
             @if(!empty($cources) && $cources->count() > 0)
                     <div class="container">
                         <div class="row">	
@@ -230,7 +231,7 @@
                                                     $cource_rating  = $cource_reviews->sum('avg_rating') != 0 ? round($cource_reviews->sum('avg_rating') / $cource_reviews->count()) : 0;
                                                     $attachments = Helper::getUnserializeData($cource->attachments);
                                                     $no_attachments = empty($attachments) ? 'la-service-info' : '';
-                                                    $total_orders = Helper::getCourceCount($cource->id);
+                                                    $total_orders = Helper::getCourceCount($cource->id,'bought');
                                                 @endphp
                                                 <div class="col-12 col-sm-12 col-md-6 col-lg-4 float-left" style="margin-bottom: 20px">
                                                     <div class="wt-freelancers-info {{$no_attachments}}">
@@ -287,6 +288,7 @@
                     </div>
              @endif
       @endif
+    @endif
         <div class="container">
             <div class="row">
                 <div id="wt-twocolumns" class="wt-twocolumns wt-haslayout">

@@ -1,6 +1,6 @@
 <div class="wt-widget wt-sharejob">
     <div class="wt-widgettitle">
-        <h2>{{ trans('lang.share_service') }}</h2>
+        <h2>{{ trans('lang.share_course') }}</h2>
     </div>
     <div class="wt-widgetcontent">
         <ul class="wt-socialiconssimple">
