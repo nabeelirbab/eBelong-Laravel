@@ -27,7 +27,7 @@
 									@foreach ($cources as $cource)
 										@php 
 											$attachment = Helper::getUnserializeData($cource['attachments']); 
-											$total_orders = Helper::getcourceCount($cource['id']);
+											$total_orders = Helper::getcourceCount($cource['id'],'bought');
 										@endphp
 										<tr class="del-{{{ $cource['status'] }}}">
 											<td data-th="Service Title">

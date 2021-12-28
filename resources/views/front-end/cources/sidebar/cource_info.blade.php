@@ -13,7 +13,7 @@
              <span><i class="fa fa-search iconcolor2"></i><strong>{{{$cource->views}}}</strong>&nbsp;{{ trans('lang.views') }}</span>
           </li>
           <li>
-             <span><i class="fa fa-shopping-basket iconcolor3"></i><strong>{{{Helper::getCourceCount($cource->id)}}}</strong>&nbsp;{{ trans('lang.sales') }}</span>
+             <span><i class="fa fa-shopping-basket iconcolor3"></i><strong>{{{Helper::getCourceCount($cource->id,'completed')}}}</strong>&nbsp;{{ trans('lang.sales') }}</span>
           </li>
           <li>
              <span><i class="fa fa-clock-o iconcolor4"></i><strong>{{{$response_time->title}}}</strong>&nbsp;{{ trans('lang.response_time') }}</span>
@@ -21,7 +21,10 @@
        </ul>
        <div class="wt-ratingcontent">
           <p><em>*</em> {{ trans('lang.service_note') }}</p>
+          @php $seller_id = !empty($seller) ? $seller->id : 0; @endphp
+          @if(Auth::user()->id != $seller_id)
           <a href="javascript:;" class="wt-btn" v-on:click.prevent="BuyCource('{{{$cource->id}}}', '{{{trans('lang.hire_cource_title')}}}', '{{{trans('lang.hire_cource_text')}}}', '{{$mode}}')">{{ trans('lang.buy_now') }} </a>
-       </div>
+          @endif
+         </div>
     </div>
  </div>

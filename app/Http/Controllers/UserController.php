@@ -1368,6 +1368,20 @@ class UserController extends Controller
                                 )
                             );
                     }
+                    else if ($project_type == 'course') {
+                        $course = Cource::find($request['course_id']);
+                        $email_params['project_title'] = $course->title;
+                        $email_params['completed_project_link'] = url('instructor/' . $course->slug);
+                        $template_data = Helper::getFreelancerCompletedServiceEmailContent();
+                        Mail::to($freelancer->email)
+                            ->send(
+                                new FreelancerEmailMailable(
+                                    'freelancer_email_job_completed',
+                                    $template_data,
+                                    $email_params
+                                )
+                            );
+                    }
                 }
                 return $json;
             } elseif ($submit_review['type'] == "rating_error") {
@@ -1567,7 +1581,49 @@ class UserController extends Controller
                                 );
                         }
                     }
-                } else if ($request['report_type'] == 'service_cancel') {
+                }
+                else if ($request['report_type'] == 'course_cancel') {
+                    $json['message'] = trans('lang.course_cancelled');
+                    if (trim(env('MAIL_USERNAME')) != "" && trim(env('MAIL_PASSWORD')) != "") {
+                        $freelancer_job_cancelled = DB::table('email_types')->select('id')->where('email_type', 'freelancer_email_cancel_job')->get()->first();
+                        if (!empty($freelancer_job_cancelled->id)) {
+                            $template_data = EmailTemplate::getEmailTemplateByID($freelancer_job_cancelled->id);
+                            $course = Cource::find($request['id']);
+                            $freelancer = $course->seller->first();
+                            $email_params['project_title'] = $course->title;
+                            $email_params['cancelled_project_link'] = url('instructor/' . $course->slug);
+                            $email_params['name'] = Helper::getUserName($freelancer->id);
+                            $email_params['link'] = url('profile/' . $freelancer->slug);
+                            $email_params['employer_profile'] = url('profile/' . Auth::user()->slug);
+                            $email_params['emp_name'] = Helper::getUserName(Auth::user()->id);
+                            $email_params['msg'] = $request['description'];
+                            Mail::to($freelancer->email)
+                                ->send(
+                                    new FreelancerEmailMailable(
+                                        'freelancer_email_cancel_job',
+                                        $template_data,
+                                        $email_params
+                                    )
+                                );
+                        }
+
+                        $job_cancelle_admin_template = DB::table('email_types')->select('id')->where('email_type', 'admin_email_cancel_job')->get()->first();
+                        if (!empty($job_cancelle_admin_template)) {
+                            $template_data = EmailTemplate::getEmailTemplateByID($job_cancelle_admin_template->id);
+                        } else {
+                            $template_data = '';
+                        }
+                        Mail::to(getenv('MAIL_FROM_ADDRESS'))
+                            ->send(
+                                new AdminEmailMailable(
+                                    'admin_email_cancel_job',
+                                    $template_data,
+                                    $email_params
+                                )
+                            );
+                    }
+                }
+                 else if ($request['report_type'] == 'service_cancel') {
                     $json['message'] = trans('lang.service_cancelled');
                     if (trim(env('MAIL_USERNAME')) != "" && trim(env('MAIL_PASSWORD')) != "") {
                         $freelancer_job_cancelled = DB::table('email_types')->select('id')->where('email_type', 'freelancer_email_cancel_job')->get()->first();
@@ -1609,6 +1665,9 @@ class UserController extends Controller
                     }
                 }
                 if ($request['report_type'] == 'service_cancel') {
+                    $json['progress'] = trans('lang.report_submitting');
+                }
+                if ($request['report_type'] == 'course_cancel') {
                     $json['progress'] = trans('lang.report_submitting');
                 }
                 $json['message'] = trans('lang.report_submitted');

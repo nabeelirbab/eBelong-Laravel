@@ -1,6 +1,8 @@
+@php $seller_id = !empty($seller) ? $seller->id : 0; @endphp
+@if(Auth::user()->id != $seller_id)
 <div class="wt-widget wt-reportjob">
     <div class="wt-widgettitle">
-        <h2>{{ trans('lang.report_service') }}</h2>
+        <h2>{{ trans('lang.report_course') }}</h2>
     </div>
     <div class="wt-widgetcontent">
         {!! Form::open(['url' => '', 'class' =>'wt-formtheme wt-formreport', 'id' => 'submit-report',  '@submit.prevent'=>'submitReport("'.$cource->id.'","cource-report")']) !!}
@@ -20,3 +22,4 @@
         {!! form::close(); !!}
     </div>
 </div>
+@endif

@@ -2824,11 +2824,15 @@ class Helper extends Model
     {
         return DB::table('service_user')->where('service_id', $service_id)->where('status', $status)->count();
     }
-    public static function getCourceCount($cource_id)
+    public static function getCourceCount($cource_id,$status)
     {
-        return DB::table('cource_user')->where('cource_id', $cource_id)->count();
+        
+       if (Schema::hasTable('course_user')) {
+       if (Schema::hasColumn('course', 'paid')) {
+       return DB::table('cource_user')->where('cource_id', $cource_id)->where('status', $status)->count();
     }
-
+  }
+}
     /**
      * Get freelancer services
      *

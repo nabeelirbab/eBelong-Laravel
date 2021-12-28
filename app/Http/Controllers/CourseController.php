@@ -338,7 +338,7 @@ class CourseController extends Controller
                 $rating = 0;
             }
 
-            $total_orders = Helper::getCourceCount($cource->id);
+            $total_orders = Helper::getCourceCount($cource->id,'bought');
             $attachments = !empty($seller) ? Helper::getUnserializeData($cource->attachments) : '';
             // $service_reviews = DB::table('reviews')->where('job_id', $service->id)->get();
             $saved_cources = !empty(auth()->user()->profile->saved_cources) ? unserialize(auth()->user()->profile->saved_cources) : array();

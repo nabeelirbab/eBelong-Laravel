@@ -371,7 +371,6 @@ Route::group(
         Route::post('employer/store-profile-settings', 'EmployerController@storeProfileSettings');
         Route::post('job/post-job', 'JobController@store');
         Route::post('job/upload-temp-image', 'JobController@uploadTempImage');
-        Route::post('user/submit-review', 'UserController@submitReview');
         Route::post('proposal/hire-freelancer', 'ProposalController@hiredFreelencer');
         Route::get('employer/services/{status}', 'EmployerController@showEmployerServices');
         Route::get('employer/service/{service_id}/{id}/{status}', 'EmployerController@showServiceDetail');
@@ -476,6 +475,12 @@ Route::group(
 
         
       
+    }
+);
+Route::group(
+    ['middleware' => ['role:employer|freelancer|admin']],
+    function () {
+        Route::post('user/submit-review', 'UserController@submitReview');
     }
 );
 Route::get('page/get-page-data/{id}', 'PageController@getPage');

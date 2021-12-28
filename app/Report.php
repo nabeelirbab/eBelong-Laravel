@@ -66,7 +66,21 @@ class Report extends Model
                 $report->reportable_type = 'App\Service';
                 $report->save();
                 return 'success';
-            } else {
+            } 
+            elseif ($request['report_type'] == 'course_cancel') {
+                DB::table('cource_user')
+                    ->where('id', $request['pivot_id'])
+                    ->where('user_id', $request['employer_id'])
+                    ->update(['status' => 'cancelled']); 
+                $report = new Report;
+                $report->reason = filter_var($request['reason'], FILTER_SANITIZE_STRING);
+                $report->description = filter_var($request['description'], FILTER_SANITIZE_STRING);
+                $report->reportable_id = $request['pivot_id'];
+                $report->reportable_type = 'App\Cource';
+                $report->save();
+                return 'success';
+            }
+            else {
                 $report = new Report;
                 $report->reason = filter_var($request['reason'], FILTER_SANITIZE_STRING);
                 $report->description = filter_var($request['description'], FILTER_SANITIZE_STRING);

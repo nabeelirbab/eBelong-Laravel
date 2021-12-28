@@ -50,7 +50,9 @@ class Review extends Model
         $user = User::find($author_id);
         $review->user()->associate($user);
         $review->receiver_id = intval($request['receiver_id']);
+        if (!empty($request['job_id'])) {
         $review->job_id = intval($request['job_id']);
+        }
         $review->feedback = filter_var($request['feedback'], FILTER_SANITIZE_STRING);
         foreach ($request['rating'] as $key => $value) {
             if ($value['rate'] > 0) {
@@ -70,6 +72,9 @@ class Review extends Model
         $review->project_type = $project_type;
         if (!empty($request['service_id'])) {
             $review->service_id = intval($request['service_id']);
+        }
+        if (!empty($request['course_id'])) {
+            $review->cource_id = intval($request['course_id']);
         }
         $review->save();
 
@@ -101,7 +106,14 @@ class Review extends Model
                 ->where('id', $request['job_id'])
                 ->where('user_id', $author_id)
                 ->update(['status' => 'completed']);
-        } else {
+        } 
+        elseif ($project_type == 'course') {
+            DB::table('cource_user')
+                ->where('cource_id', $request['course_id'])
+                ->where('user_id', $author_id)
+                ->update(['status' => 'completed']);
+        } 
+        else {
             $proposal = Proposal::find($request['proposal_id']);
             $proposal->status = 'completed';
             $proposal->save();
