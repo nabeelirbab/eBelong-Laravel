@@ -350,6 +350,7 @@ Route::group(
         Route::post('service/upload-temp-image', 'ServiceController@uploadTempImage');
         Route::post('cource/upload-temp-image', 'CourseController@uploadTempImage');
         Route::post('freelancer/dashboard/delete-service', 'ServiceController@destroy');
+        Route::post('freelancer/dashboard/delete-course', 'CourseController@destroy');
         Route::post('service/get-service-settings', 'ServiceController@getServiceSettings');
         Route::post('course/get-course-settings', 'CourseController@getCourseSettings');
         Route::post('service/update-service', 'ServiceController@update');

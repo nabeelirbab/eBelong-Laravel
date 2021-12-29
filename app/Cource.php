@@ -212,11 +212,12 @@ class Cource extends Model
                 $course->slug = filter_var($request['title'], FILTER_SANITIZE_STRING);
             }
             $course->title = filter_var($request['title'], FILTER_SANITIZE_STRING);
-            $course->price = filter_var($request['course_price'], FILTER_SANITIZE_STRING);
+            $course->price = filter_var($request['cource_price'], FILTER_SANITIZE_STRING);
             $course->delivery_time_id = intval($request['delivery_time']);
             $course->description = $request['description'];
             $course->english_level = filter_var($request['english_level'], FILTER_SANITIZE_STRING);
             $course->response_time_id = intval($request['response_time']);
+            $course->is_featured = filter_var($request['is_featured'], FILTER_SANITIZE_STRING);
             $course->show_attachments = filter_var($request['show_attachments'], FILTER_SANITIZE_STRING);
             $course->address = filter_var($request['address'], FILTER_SANITIZE_STRING);
             $course->longitude = filter_var($request['longitude'], FILTER_SANITIZE_STRING);

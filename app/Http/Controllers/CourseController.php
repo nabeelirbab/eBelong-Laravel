@@ -276,8 +276,8 @@ class CourseController extends Controller
             $cource_post = $this->cource->storeCource($request, $image_size);
             if ($cource_post['type'] == 'success') {
                 $json['type'] = 'success';
-                $json['progress'] = trans('lang.cource_publishing');
-                $json['message'] = trans('lang.cource_post_success');
+                $json['progress'] = trans('lang.course_publishing');
+                $json['message'] = trans('lang.course_post_success');
                 // Send Email
                 $user = User::find(Auth::user()->id);
                 //send email to admin
@@ -531,12 +531,12 @@ class CourseController extends Controller
     {
         $json = array();
         if (!empty($request['id'])) {
-            $service = $this->service::find($request['id']);
-            $service->users()->detach();
-            $service->delete();
-            DB::table('service_user')->where('service_id', $request['user_id'])->delete();
+            $course = $this->cource::find($request['id']);
+            $course->users()->detach();
+            $course->delete();
+            DB::table('cource_user')->where('cource_id', $request['user_id'])->delete();
             $json['type'] = 'success';
-            $json['message'] = trans('lang.service_delete');
+            $json['message'] = trans('lang.course_delete');
             return $json;
         } else {
             $json['type'] = 'error';
@@ -822,11 +822,11 @@ class CourseController extends Controller
                     );
                 }
             } else {
-                Session::flash('error', trans('lang.buy_service_warning'));
+                Session::flash('error', trans('lang.buy_course_warning'));
                 return Redirect::back();
             }
         } else {
-            Session::flash('error', trans('lang.buy_service_warning'));
+            Session::flash('error', trans('lang.buy_course_warning'));
             return Redirect::back();
         }
     }

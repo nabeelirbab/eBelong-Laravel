@@ -1,5 +1,5 @@
 @php $seller_id = !empty($seller) ? $seller->id : 0; @endphp
-@if(Auth::user()->id != $seller_id)
+@if(Auth::user() && Auth::user()->id != $seller_id)
 <div class="wt-widget wt-reportjob">
     <div class="wt-widgettitle">
         <h2>{{ trans('lang.report_course') }}</h2>
