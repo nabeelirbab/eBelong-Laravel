@@ -270,9 +270,11 @@ class PublicController extends Controller
      */
     function getFile($type, $filename, $id)
     {
+        // dd(public_path());
         if (!empty($type) && !empty($filename) && !empty($id)) {
-            if (Storage::disk('local')->exists('uploads/' . $type . '/' . $id . '/' . $filename)) {
-                return Storage::download('uploads/' . $type . '/' . $id . '/' . $filename);
+            if (public_path().'uploads/' . $type . '/' . $id . '/' . $filename) {
+                $path = public_path('uploads/' . $type . '/' . $id . '/' . $filename);
+                return response()->download($path);
             } else {
                 Session::flash('error', trans('lang.file_not_found'));
                 return Redirect::back();
@@ -342,7 +344,7 @@ class PublicController extends Controller
                 }
                 if (Schema::hasTable('cources') && Schema::hasTable('cource_user')) {
                     if (Schema::hasColumn('cource_user','cource_id') && Schema::hasColumn('cource_user','paid') && Schema::hasColumn('cource_user','paid_progress') && Schema::hasColumn('cource_user','status') && Schema::hasColumn('cource_user','type') && Schema::hasColumn('cource_user','seller_id') && Schema::hasColumn('cource_user','user_id')) {
-                    $cources = $user->cources;
+                       $cources = Helper::getFreelancerCourses('posted', $user->id);
                 }
             }
                 $reviews = Review::where('receiver_id', $user->id)->get();

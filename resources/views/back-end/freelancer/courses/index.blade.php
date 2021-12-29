@@ -82,7 +82,7 @@
 															<i class="lnr lnr-pencil"></i>
 														</a>
 														@if ($total_orders == 0)
-															<delete :title="'{{trans("lang.ph_delete_confirm_title")}}'" :id="'{{ $cource['id'] }}'" :message="'{{trans("lang.ph_badge_delete_message")}}'" :url="'{{url('freelancer/dashboard/delete-cource')}}'"></delete>
+															<delete :title="'{{trans("lang.ph_delete_confirm_title")}}'" :id="'{{ $cource['id'] }}'" :message="'{{trans("lang.ph_course_delete_message")}}'" :url="'{{url('freelancer/dashboard/delete-course')}}'"></delete>
 														@endif
 													</div>
 												</span>

@@ -22,7 +22,7 @@
        <div class="wt-ratingcontent">
           <p><em>*</em> {{ trans('lang.service_note') }}</p>
           @php $seller_id = !empty($seller) ? $seller->id : 0; @endphp
-          @if(Auth::user()->id != $seller_id)
+          @if(Auth::user() && Auth::user()->id != $seller_id)
           <a href="javascript:;" class="wt-btn" v-on:click.prevent="BuyCource('{{{$cource->id}}}', '{{{trans('lang.hire_cource_title')}}}', '{{{trans('lang.hire_cource_text')}}}', '{{$mode}}')">{{ trans('lang.buy_now') }} </a>
           @endif
          </div>
