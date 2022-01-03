@@ -1288,6 +1288,52 @@ class UserController extends Controller
             return $json;
         }
     }
+    public function RemoveWishlist(Request $request)
+    {
+        $server = Helper::worketicIsDemoSiteAjax();
+        if (!empty($server)) {
+            $response['message'] = $server->getData()->message;
+            return $response;
+        }
+        $json = array();
+        if (Auth::user()) {
+            $json['authentication'] = true;
+            if (!empty($request['id'])) {
+                $user_id = Auth::user()->id;
+                $id = $request['id'];
+                if (!empty($request['column']) && ($request['column'] === 'saved_employers' || $request['column'] === 'saved_freelancer' || $request['column'] === 'saved_services'||$request['column'] === 'saved_cources')) {
+                    if (!empty($request['seller_id'])) {
+                        if ($user_id == $request['seller_id']) {
+                            $json['type'] = 'error';
+                            $json['message'] = trans('lang.login_from_different_user');
+                            return $json;
+                        }
+                    } else {
+                        if ($user_id == $id) {
+                            $json['type'] = 'error';
+                            $json['message'] = trans('lang.login_from_different_user');
+                            return $json;
+                        }
+                    }
+                }
+                $profile = new Profile();
+                $add_wishlist = $profile->RemoveWishlist($request['column'], $id, $user_id);
+                if ($add_wishlist == "success") {
+                    $json['type'] = 'success';
+                    $json['message'] = trans('lang.removed_to_wishlist');
+                    return $json;
+                } else {
+                    $json['type'] = 'error';
+                    $json['message'] = trans('lang.something_wrong');
+                    return $json;
+                }
+            }
+        } else {
+            $json['authentication'] = false;
+            $json['message'] = trans('lang.need_to_reg');
+            return $json;
+        }
+    }
 
     /**
      * Submit Reviews.

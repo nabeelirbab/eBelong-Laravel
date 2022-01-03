@@ -956,6 +956,7 @@ return [
     'course_publishing' => 'course publishing',
     'job_update_success' => 'Job Updated Successfully',
     'added_to_wishlist' => 'Added to your Wishlist',
+    'removed_to_wishlist' => 'Removed from your Wishlist',
     'need_to_reg' => 'You need to register before saving this item',
     'lang_already_selected' => 'Languages already selected',
     'location_created' => 'Location Created Successfully',

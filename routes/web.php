@@ -109,6 +109,7 @@ Route::post('register/form-step1-custom-errors', 'PublicController@RegisterStep1
 Route::post('register/form-step2-custom-errors', 'PublicController@RegisterStep2Validation');
 Route::get('search-results', 'PublicController@getSearchResult')->name('searchResults');
 Route::post('user/add-wishlist', 'UserController@addWishlist');
+Route::post('user/remove-wishlist', 'UserController@RemoveWishlist');
 // Admin Routes
 Route::group(
     ['middleware' => ['role:admin']],

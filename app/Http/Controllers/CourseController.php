@@ -330,6 +330,10 @@ class CourseController extends Controller
             $response_time = ResponseTime::where('id', $cource->response_time_id)->first();
             $reasons = Helper::getReportReasons();
             $seller = $cource->seller->first();
+            if(Auth::user()){
+            $boughtcourse = DB::table('cource_user')->where('cource_id', $selected_cource->id)->where(function($query) {$query->where('user_id',Auth::user()->id)->orwhere('status','bought');})->get();
+            }
+            $boughtcourse = !empty($boughtcourse) ? true : false ;
             $reviews = !empty($seller) ? Helper::getCourceReviews($seller->id, $cource->id) : '';
             $auth_profile = Auth::user() ? auth()->user()->profile : '';
             if (!empty($reviews)) {
@@ -342,6 +346,7 @@ class CourseController extends Controller
             $attachments = !empty($seller) ? Helper::getUnserializeData($cource->attachments) : '';
             // $service_reviews = DB::table('reviews')->where('job_id', $service->id)->get();
             $saved_cources = !empty(auth()->user()->profile->saved_cources) ? unserialize(auth()->user()->profile->saved_cources) : array();
+            $course_saved = array_search($selected_cource->id,$saved_cources);
             $key = 'set_cource_view';
             $breadcrumbs_settings = SiteManagement::getMetaValue('show_breadcrumb');
             $show_breadcrumbs = !empty($breadcrumbs_settings) ? $breadcrumbs_settings : 'true';
@@ -373,8 +378,10 @@ class CourseController extends Controller
                             'total_orders',
                             'attachments',
                             'saved_cources',
+                            'course_saved',
                             'show_breadcrumbs',
-                            'mode'
+                            'mode',
+                            'boughtcourse'
                         )
                     );
                 } else {
@@ -391,9 +398,11 @@ class CourseController extends Controller
                             'seller',
                             'total_orders',
                             'attachments',
+                            'course_saved',
                             'saved_cources',
                             'show_breadcrumbs',
-                            'mode'
+                            'mode',
+                            'boughtcourse'
                         )
                     );
                 }

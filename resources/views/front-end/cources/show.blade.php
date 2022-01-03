@@ -88,7 +88,7 @@
                                         @if (count($attachments) > 1)
                                             <div id="wt-servicesgallery" class="wt-servicesgallery owl-carousel">
                                                 @foreach ($attachments as $attachment)
-                                                    @php $image = 'uploads/services/'.$seller->id.'/'.$attachment; @endphp
+                                                    @php $image = 'uploads/courses/'.$seller->id.'/'.$attachment; @endphp
                                                     <div class="item"><figure><img src="{{{asset($image)}}}" alt="img description"></figure></div>
                                                 @endforeach
                                             </div>
