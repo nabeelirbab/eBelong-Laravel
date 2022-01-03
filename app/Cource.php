@@ -343,13 +343,13 @@ class Cource extends Model
         $search_response_time
     ) {
         $json = array();
-        $services = Cource::select('*');
+        $services = Cource::select('*')->where('status','published');
         $service_id = array();
         $filters = array();
         $filters['type'] = 'service';
         if (!empty($keyword)) {
             $filters['s'] = $keyword;
-            $services->where('title', 'like', '%' . $keyword . '%');
+            $services->where('title', 'like', '%' . $keyword . '%')->where('status','published')->get();
         };
         if (!empty($search_categories)) {
             $filters['category'] = $search_categories;
@@ -363,12 +363,12 @@ class Cource extends Model
                     }
                 }
             }
-            $services->whereIn('id', $service_id);
+            $services->where('status','published')->whereIn('id', $service_id);
         }
         if (!empty($search_locations)) {
             $filters['locations'] = $search_locations;
             $locations = Location::select('id')->whereIn('slug', $search_locations)->get()->pluck('id')->toArray();
-            $services->whereIn('location_id', $locations);
+            $services->where('status','published')->whereIn('location_id', $locations);
         }
         if (!empty($search_languages)) {
             $filters['languages'] = $search_languages;
@@ -378,17 +378,17 @@ class Cource extends Model
                     $service_id[] = $language->services[$key]->id;
                 }
             }
-            $services->whereIn('id', $service_id);
+            $services->where('status','published')->whereIn('id', $service_id);
         }
         if (!empty($search_delivery_time)) {
             $filters['delivery_time'] = $search_delivery_time;
             $delivery_time = DeliveryTime::select('id')->whereIn('slug', $search_delivery_time)->get()->pluck('id')->toArray();
-            $services->whereIn('delivery_time_id', $delivery_time);
+            $services->where('status','published')->whereIn('delivery_time_id', $delivery_time);
         }
         if (!empty($search_response_time)) {
             $filters['response_time'] = $search_response_time;
             $response_time = ResponseTime::select('id')->whereIn('slug', $search_response_time)->get()->pluck('id')->toArray();
-            $services->whereIn('response_time_id', $response_time);
+            $services->where('status','published')->whereIn('response_time_id', $response_time);
         }
         $services = $services->orderByRaw("is_featured DESC, updated_at DESC")->paginate(20)->setPath('');
         foreach ($filters as $key => $filter) {

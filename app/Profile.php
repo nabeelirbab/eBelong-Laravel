@@ -384,6 +384,35 @@ class Profile extends Model
 
         return "success";
     }
+    public function RemoveWishlist($column, $id, $user_id)
+    {
+        $wishlist = array();
+        $user_profile = $this::select('id')->where('user_id', $user_id)->get()->first();
+        if (!empty($user_profile->id)) {
+            $profile = $this::find($user_profile->id);
+        } else {
+            $profile = $this;
+            $profile->user()->associate($user_id);
+        }
+        $wishlist = unserialize($profile[$column]);
+        $wishlist = !empty($wishlist) && is_array($wishlist) ? $wishlist : array();
+        $item[] = $id;
+        $wishlist = array_diff($wishlist,$item);
+        $wishlist = array_unique($wishlist);
+        $profile->$column = serialize($wishlist);
+        $profile->save();
+        if (!empty($column) && ($column === 'saved_employers' || $column === 'saved_freelancer')) {
+            // DB::table('followers')->insert(
+            //     [
+            //         'follower' => $user_id, 'following' => $id,
+            //         'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            //         'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+            //     ]
+            // );
+        }
+
+        return "success";
+    }
 
     /**
      * Update experienceEducation

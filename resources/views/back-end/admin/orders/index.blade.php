@@ -42,11 +42,19 @@
 												$title = !empty($service) ? $service->title : '';
 												$amount = !empty($service) ? $service->price : '';
 												$attachment = !empty($service) ? Helper::getUnserializeData($service->attachments)[0] : '';
-											} elseif ($order->type == 'package') {
+											} 
+											elseif ($order->type == 'package') {
 												$package = App\Package::find($order->product_id);
 												$title = $package->title;
 												$amount = $package->cost;
 											}
+											elseif ($order->type == 'cource') {
+												$course_order = !empty($order->cource_product_id) ? DB::table('cource_user')->select('cource_id')->where('id', $order->cource_product_id)->first() : '';
+												$course = !empty($course_order->cource_id) ? App\Cource::find($course_order->cource_id) : '';
+												$title = !empty($course) ? $course->title : '';
+												$amount = !empty($course) ? $course->price : '';
+												$attachment = !empty($course) ? Helper::getUnserializeData($course->attachments)[0] : '';
+										}
 											$user = App\User::find($order->user_id);
 										@endphp
 
@@ -57,8 +65,10 @@
 														<div class="wt-service-tabel">
 															@if (!empty($attachment) && $order->type == 'service')
 																<figure class="service-feature-image"><img src="{{{asset( Helper::getImageWithSize('uploads/services/'.$service->seller[0]->id, $attachment, 'small' ))}}}" alt="{{{$service['title']}}}"></figure>
+															@elseif (!empty($attachment) && $order->type == 'course')
+																<figure class="service-feature-image"><img src="{{{asset( Helper::getImageWithSize('uploads/courses/'.$course->seller[0]->id, $attachment, 'small' ))}}}" alt="{{{$course['title']}}}"></figure>
 															@else
-																<figure class="service-feature-image"><img src="{{{asset('images/order-no-image.jpg')}}}" alt="no-image"></figure>
+															<figure class="service-feature-image"><img src="{{{asset('images/order-no-image.jpg')}}}" alt="no-image"></figure>
 															@endif
 															<div class="wt-freelancers-content">
 																<div class="dc-title">
@@ -98,7 +108,7 @@
 														</div>
 														@if ($order->invoice->transection_doc)
 															<div class="wt-payment-attachment">
-																{{-- <a href="javascript:void(0);"  v-on:click.prevent="downloadAttachment('users', '{{Helper::getUnserializeData($order->invoice->transection_doc)[0]}}', '{{$order->user_id}}')" >{{ trans('lang.attachment') }}</a> --}}
+																<a href="javascript:void(0);"  v-on:click.prevent="downloadAttachment('users', '{{Helper::getUnserializeData($order->invoice->transection_doc)[0]}}', '{{$order->user_id}}')" >{{ trans('lang.attachment') }}</a>
 															</div>
 														@endif
 													</span>

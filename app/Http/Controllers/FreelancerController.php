@@ -1158,7 +1158,7 @@ else {
             $status_list = array_pluck(Helper::getFreelancerServiceStatus(), 'title', 'value');
             
             if (empty($_GET['keyword']) && !empty($status) && $status === 'posted') {
-                $cources = $freelancer->cources()->where('type','seller')->get();
+                $cources = $freelancer->cources()->where('type','seller')->orderBy('id','DESC')->get();
                 if (file_exists(resource_path('views/extend/back-end/freelancer/courses/index.blade.php'))) {
                     return view(
                         'extend.back-end.freelancer.courses.index',

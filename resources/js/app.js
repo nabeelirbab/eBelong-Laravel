@@ -5226,7 +5226,7 @@ if (document.getElementById("cources")) {
                         }
                     });
             },
-            add_wishlist: function (element_id, id, column, seller_id, saved_text) {
+            add_wishlist: function (element_id, id, column, seller_id, saved_text,hidable_element_id) {
                 var self = this;
                 axios.post(APP_URL + '/user/add-wishlist', {
                     id: id,
@@ -5258,9 +5258,58 @@ if (document.getElementById("cources")) {
                                     self.text = saved_text;
                                 }
                                 else if (column == 'saved_cources') {
+                                    jQuery('#' + hidable_element_id).show();
+                                    jQuery('#' + element_id).hide();
+                                
+                                }
+                                self.showMessage(response.data.message);
+                            } else {
+                                self.showError(response.data.message);
+                            }
+                        } else {
+                            self.showError(response.data.message);
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            },
+            remove_wishlist: function (element_id, id, column, seller_id, saved_text,hidable_element_id) {
+                var self = this;
+                axios.post(APP_URL + '/user/remove-wishlist', {
+                    id: id,
+                    column: column,
+                    seller_id: seller_id,
+                })
+                    .then(function (response) {
+                        if (response.data.authentication == true) {
+                            if (response.data.type == 'success') {
+                                if (column == 'saved_freelancer') {
+                                    jQuery('#' + element_id).parents('li').addClass('wt-btndisbaled');
+                                    jQuery('#' + element_id).addClass('wt-clicksave');
+                                    jQuery('#' + element_id).find('.save_text').text(saved_text);
+                                    self.disable_btn = 'wt-btndisbaled';
+                                    self.text = 'Save';
+                                    self.saved_class = 'fa fa-heart';
+                                    self.click_to_save = 'wt-clicksave'
+                                }
+                                else if (column == 'saved_employers') {
+                                    jQuery('#' + element_id).addClass('wt-btndisbaled wt-clicksave');
+                                    jQuery('#' + element_id).text(saved_text);
+                                    jQuery('#' + element_id).parents('.wt-clicksavearea').find('i').addClass('fa fa-heart');
+                                    self.disable_follow = 'wt-btndisbaled';
+                                    self.follow_text = saved_text;
+                                }
+                                else if (column == 'saved_services') {
                                     jQuery('#' + element_id).addClass('wt-btndisbaled wt-clicksave');
                                     // self.saved_class = 'wt-clicksave';
                                     self.text = saved_text;
+                                }
+                                else if (column == 'saved_cources') {
+                                    // jQuery('#' + element_id).removeClass('wt-clicksave');
+                                    // self.saved_class = 'wt-clicksave';
+                                    jQuery('#' + hidable_element_id).show();
+                                    jQuery('#' + element_id).hide();
                                 }
                                 self.showMessage(response.data.message);
                             } else {
