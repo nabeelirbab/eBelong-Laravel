@@ -331,9 +331,12 @@ class CourseController extends Controller
             $reasons = Helper::getReportReasons();
             $seller = $cource->seller->first();
             if(Auth::user()){
-            $boughtcourse = DB::table('cource_user')->where('cource_id', $selected_cource->id)->where(function($query) {$query->where('user_id',Auth::user()->id)->orwhere('status','bought');})->get();
-            }
-            $boughtcourse = !empty($boughtcourse) ? true : false ;
+            $boughtcourse = DB::table('cource_user')->where('cource_id', $selected_cource->id)->where('user_id', Auth::user()->id)->where('status','bought')->get();
+            $boughtcourse = !empty($boughtcourse[0]) ? true : false ;
+        }
+           else{
+               $boughtcourse = false;
+           }
             $reviews = !empty($seller) ? Helper::getCourceReviews($seller->id, $cource->id) : '';
             $auth_profile = Auth::user() ? auth()->user()->profile : '';
             if (!empty($reviews)) {
