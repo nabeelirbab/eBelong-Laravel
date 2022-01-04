@@ -429,6 +429,8 @@ Route::group(
         Route::get('agency/users','AgencyController@index')->name('agency-user-list');
         Route::get('agency-user-status-change/{id}','AgencyController@updateStatus');
         Route::get('get-agency-list','AgencyController@getAgencyList');
+        Route::post('freelancer/dashboard/delete-agency', 'AgencyController@destroy');
+        Route::get('freelancer/dashboard/edit-agency/{id}', 'AgencyController@edit')->name('edit_agency');
     }
 );
 // Employer|Freelancer Routes
@@ -445,6 +447,7 @@ Route::group(
         Route::post('profile/settings/save-email-settings', 'UserController@saveEmailNotificationSettings');
         Route::post('profile/settings/save-account-settings', 'UserController@saveAccountSettings');
         Route::post('profile/settings/save-agency', 'UserController@saveAgencyData')->name('agencyDataPost');
+        Route::post('profile/settings/edit-agency', 'UserController@EditAgencyData')->name('agencyDataEdit');
         Route::post('agency/invite-user', 'UserController@inviteToAgency')->name('inviteToAgency');
         Route::post('agency/suggest', 'UserController@autoSuggestFetch')->name('autocomplete.fetch');
         Route::get('profile/settings/delete-account', 'UserController@deleteAccount')->name('deleteAccount');

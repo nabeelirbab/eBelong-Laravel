@@ -180,4 +180,32 @@ class AgencyController extends Controller
             abort(404);
         }
     }
+    public function edit($id){
+        $agency = DB::table('agency_user')->where('id',$id)->first();
+        // dd($agency);
+        $skillsData = Skill::select('title', 'id')->get()->toArray();
+        if (!empty($skillsData)) {
+            $skills = $skillsData;
+        } else {
+            $skills = [];
+        }
+
+        return View::make('back-end.freelancer.agency.edit', compact('skills','agency'));
+    }
+    public function destroy(Request $request)
+    {
+        $json = array();
+        if (!empty($request['id'])) {
+            $course = DB::table('agency_user')->where('id',$request['id'])->delete();
+            DB::table('agency_associated_users')->where('agency_id', $request['id'])->delete();
+            DB::table('users')->where('id',Auth::user()->id)->update(array('is_agency'=>0));
+            $json['type'] = 'success';
+            $json['message'] = trans('lang.agency_delete');
+            return $json;
+        } else {
+            $json['type'] = 'error';
+            $json['message'] = trans('lang.something_wrong');
+            return $json;
+        }
+    }
 }

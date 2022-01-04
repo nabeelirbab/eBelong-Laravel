@@ -18,45 +18,69 @@
                         {{ Session::get('error') }}
                     </div>
                 @endif
+                            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
                 <div class='wt-tabscontenttitle'>
-                    <h2>Create your Agency</h2>
+                    <h2>Edit your Agency</h2>
                 </div>
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9">
                         <div class="wt-dashboardbox wt-dashboardtabsholder">
                             <div class="wt-location wt-tabsinfo agency-selection-form">
                                 <div class='wt-settingscontent'>
-                                    <form action="{{ route('agencyDataPost') }}" method="post" enctype="multipart/form-data">
+                                    <form action="{{ route('agencyDataEdit') }}" method="post" enctype="multipart/form-data">
                                         @csrf
                                         <div class='wt-formtheme wt-userform agency-form'>
                                             <div class="row" style="padding-top: 20px">
                                                 <div class="col-md-6">
+                                                    <input type="hidden" name="agency_id"  value="{{$agency->id}}">
                                                     <div class="form-group">
-                                                        <input type="text" name="agency_name" placeholder="Agency Name" class="form-control" value="">
+                                                        <input type="text" name="agency_name" placeholder="Agency Name" class="form-control" value="{{$agency->agency_name}}">
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <input type="number" name="contact_no" placeholder="Agency Contact No" class="form-control" value="">
+                                                        <input type="number" name="contact_no" placeholder="Agency Contact No" class="form-control" value="{{ $agency->contact_no }}">
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <input type="email" name="contact_email" placeholder="Agency Email" class="form-control"  value="">
+                                                        <input type="text" name="contact_email" placeholder="Agency Email" class="form-control"  value="{{ $agency->contact_email }}">
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <input type="text" name="founded_in" placeholder="Founded Year" class="form-control"  value="">
+                                                        <input type="text" name="founded_in" placeholder="Founded Year" class="form-control"  value="{{ $agency->founded_in }}">
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-6">
-                                                    <div class="form-group">
+                                                    <div class="form-group input-preview">
                                                         <input type="file" name="agency_logo" class="form-control">
+                                            <ul class="wt-attachfile dropzone-previews">
+                                                @if (!empty($agency->agency_logo))
+                                                <li id="attachment-item-{{$agency->id}}">
+                                                <span>{{$agency->agency_logo}}</span>
+                                                <em>
+                                                    @if (Storage::disk('local')->exists('uploads/courses/'.$agency->id.'/'.$agency->agency_logo))
+                                                        {{ trans('lang.file_size') }} {{{Helper::bytesToHuman(Storage::size('uploads/agaency_logos/'.$agency->id.'/'.$agency->agency_logo))}}}
+                                                    @endif
+                                                    <a href="{{{route('getfile', ['type'=>'agency_logos','attachment'=>$agency->agency_logo,'id'=>$agency->id])}}}"><i class="lnr lnr-download"></i></a>
+                                                    {{-- <a href="javascript:void(0)" v-on:click.prevent="deleteAttachment('attachment-item-{{$agency->id}}')"><i class="lnr lnr-cross"></i></a> --}}
+                                                </em>
+                                            </li>
+                                                @endif
+                                                </ul>
                                                     </div>
                                                 </div>
 
@@ -70,28 +94,28 @@
 
                                                 <div class="col-md-12">
                                                     <div class="form-group">
-                                                        <textarea class="form-control" name="description" id="" placeholder="Enter agency Description" cols="30" rows="20"></textarea>
+                                                        <textarea class="form-control" name="description" id=""  placeholder="Enter agency Description" cols="30" rows="20">{{ $agency->description }}</textarea>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <input type="number" name="hourly_rates_min" placeholder="Hourly Min Rate" class="form-control"  value="">
+                                                        <input type="number" name="hourly_rates_min" placeholder="Hourly Min Rate" class="form-control"  value="{{ $agency->hourly_rates_min }}">
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <input type="number" name="hourly_rates_max" placeholder="Hourly Max Rate" class="form-control"  value="">
+                                                        <input type="number" name="hourly_rates_max" placeholder="Hourly Max Rate" class="form-control"  value="{{ $agency->hourly_rates_max }}">
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-12">
                                                     <div class="form-group" placeholder="Agency size" >
-                                                        <select class="col-md-6" name="agency_size" id="agency_size">
-                                                            <option value="10-50">10-50 Employees</option>
-                                                            <option value="51-100">51-100 Employees</option>
-                                                            <option value="101-200">101-200 Employees</option>
+                                                        <select class="col-md-6" name="agency_size" id="agency_size" >
+                                                            <option value="10-50"<?php echo $agency->agency_size == '10-50' ? 'selected' : ''?>>10-50 Employees</option>
+                                                            <option value="51-100"<?php echo $agency->agency_size == '51-100' ? 'selected' : ''?>>51-100 Employees</option>
+                                                            <option value="101-200"<?php echo $agency->agency_size == '101-200' ? 'selected' : ''?>>101-200 Employees</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -111,7 +135,7 @@
                                                     <div class="wt-statisticcontent wt-countercolor4" style="padding-top: 10px;padding-left: 10px;"><h3 data-from="0" data-to="665" data-speed="8000" data-refresh-interval="100">0</h3> <h4>Total Jobs</h4></div>
                                                 </div>
                                             </div>
-                                            <input type="submit" value="Save">
+                                            <input type="submit" value="Edit">
                                         </div>
 
                                     </form>

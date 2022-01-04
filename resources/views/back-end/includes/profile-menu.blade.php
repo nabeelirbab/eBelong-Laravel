@@ -154,12 +154,20 @@
                         <span>My Profile</span>
                     </a>
                 </li>
+                @php 
+                $user = !empty(Auth::user()) ? Auth::user() : '';
+                if(!empty($user)){
+                  $agency_user = \App\User::select('is_agency')->where('id', Auth::user()->id)->first();
+                  }
+                  @endphp
+                @if(!empty($agency_user) && $agency_user->is_agency==0)
                 <li>
                     <a href="{{{ url('agency/invitations/list') }}}">
                         <i class="ti-envelope"></i>
                         <span>{{ 'Agency Invitation' }}</span>
                     </a>
                 </li>
+                @endif
                 <li>
                     <a href="{{{ route('message') }}}">
                         <i class="ti-envelope"></i>
