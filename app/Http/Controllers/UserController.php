@@ -388,6 +388,113 @@ class UserController extends Controller
 
     }
 
+    public function EditAgencyData(Request $request)
+    {
+        $data = $request->all();
+        $user_id = Auth::user()->id;
+        $data['agency_type'] = 'new_agency';
+
+
+        if (Helper::getRoleByUserID(Auth::user()->id) == 3){
+
+                if (isset($data['agency_type']) && $data['agency_type'] == "new_agency" && !empty($data['agency_name'])&& !empty($data['contact_email']))
+                {
+
+                    $has_agency_associated_name = DB::table('agency_user')->select('agency_name')
+                        ->where('agency_name',$data['agency_name'])->where('id',"!=",$data['agency_id'])
+                        ->get();
+
+                    $has_agency_associated_email = DB::table('agency_user')->select('contact_email')
+                        ->where('contact_email',$data['contact_email'])->where('id',"!=",$data['agency_id'])
+                        ->get();
+
+                    $has_agency_associated = @json_decode(json_encode($has_agency_associated), true);
+                    $has_agency_associated_name = @json_decode(json_encode($has_agency_associated_name), true);
+                    $has_agency_associated_email = @json_decode(json_encode($has_agency_associated_email), true);
+
+                    if (count($has_agency_associated_name) > 0) {
+                        Session::flash('error', 'Agency with this name already exists, please retry!');
+                        return Redirect::back();
+                    }
+                    if (count($has_agency_associated_email) > 0) {
+                        Session::flash('error', 'Provided email is already associated with another Agency!');
+                        return Redirect::back();
+                    }
+
+                    if ( count($has_agency_associated_name) === 0 && $has_agency_associated_name == false
+                        && count($has_agency_associated_email) === 0 && $has_agency_associated_email == false) {
+                        if (isset($data['agency_name']) && isset($data['hourly_rates_min'])
+                            && isset($data['hourly_rates_max']) && isset($data['contact_email'])) {
+                                
+                            $slug = str_replace(" ", "-", strtolower($data['agency_name']));
+                            $agency = [
+                            'user_id' => Auth::user()->id,
+                            'agency_name' => trim($data['agency_name']),
+                            'slug' => $slug .'-'. rand(00000,99999),
+                            'contact_no' => trim($data['contact_no']),
+                            'contact_email' => trim($data['contact_email']),
+                            'founded_in' => trim($data['founded_in']),
+                            'description' => trim($data['description']),
+                            'hourly_rates_min' => trim($data['hourly_rates_min']),
+                            'hourly_rates_max' => trim($data['hourly_rates_max']),
+                            'agency_size' => trim($data['agency_size'])
+                            ];
+                            // dd($agency);
+                            // request()->validate([
+                            //     'agency_logo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                            // ]);
+                           
+                            $updated = DB::table('agency_user')->where('id',$data['agency_id'])->update($agency);
+                            if ($files = $request->file('agency_logo')) {
+                                request()->validate([
+                                    'agency_logo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                                ]);
+                                // Define upload path
+                                $destinationPath = public_path( '/uploads/agency_logos/' .$data['agency_id'] ); // upload path
+                                // Upload Orginal Image
+                                $profileImage = date('YmdHis') . "." . $files->getClientOriginalExtension();
+                                $files->move($destinationPath, $profileImage);
+
+                                $insert['image'] = "$profileImage";
+                                $agency['agency_logo'] = "$profileImage";
+                                $updated = DB::table('agency_user')->where('id',$data['agency_id'])->update(array('agency_logo'=> $agency['agency_logo']));
+                            }
+                                if($updated){
+                                Session::flash('message', 'Your new Agency has been successfully updated.');
+                                return Redirect::back();}
+                              
+                                else{
+                                Session::flash('message', 'Something Wrong!.');
+                                return Redirect::back();
+                                }
+                        } 
+                        else {
+                            Session::flash('error', 'Please enter hourly rates range for your Agency.');
+                            return Redirect::back();
+                         }  
+
+                        }
+                        else {
+                            Session::flash('error', 'Please enter other agency email or agency name.');
+                            return Redirect::back();
+                         } 
+                   
+                } else {
+                    Session::flash('error', 'Please enter all the required fields, and then retry.');
+                    return Redirect::back();
+                }
+            
+
+
+        } else {
+
+            Session::flash('error', 'You dont have access to create an Agency account');
+            return Redirect::back();
+        }
+
+    }
+
+
     public function inviteToAgency(Request $request) {
 
 
@@ -396,7 +503,7 @@ class UserController extends Controller
         if (count($user_id) > 0) {
 
             $associate_user = DB::table('agency_associated_users')->insert(
-                ['agency_id' => $request->agency_id, 'user_id' => $user_id[0]['id'], 'member_type' => $request->freelancer_type, 'is_pending' => 1, 'member_role' => $request->member_role]
+                ['agency_id' => $request->agency_id, 'user_id' => $user_id[0]['id'], 'member_type' => $request->freelancer_type, 'is_pending' => 1]
             );
 
             if ($associate_user === true) {
@@ -478,7 +585,6 @@ class UserController extends Controller
         //     'non_exclusive_member' => 'Non Exclusive Member',
 
         // ];
-
         if (empty($agency_info)) {
             return Redirect::to('agency/create/new/');
         }

@@ -503,6 +503,7 @@ class JobController extends Controller
             $reasons = Helper::getReportReasons();
             $auth_profile = Auth::user() ? auth()->user()->profile : '';
             $save_jobs = !empty($auth_profile->saved_jobs) ? unserialize($auth_profile->saved_jobs) : array();
+            $job_saved = array_search($job->id,$save_jobs);
             $save_employers = !empty($auth_profile->saved_employers) ? unserialize($auth_profile->saved_employers) : array();
             $attachments  = unserialize($job->attachments);
             $currency   = SiteManagement::getMetaValue('commision');
@@ -523,6 +524,7 @@ class JobController extends Controller
                         'attachments',
                         'symbol',
                         'project_type',
+                        'job_saved',
                         'show_breadcrumbs'
                     )
                 );
@@ -539,6 +541,7 @@ class JobController extends Controller
                         'attachments',
                         'symbol',
                         'project_type',
+                        'job_saved',
                         'show_breadcrumbs'
                     )
                 );

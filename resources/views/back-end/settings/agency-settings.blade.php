@@ -41,6 +41,7 @@
                                                     <div class="col-md-3" style="margin-left: -65px;">
                                                         <a href="{{ '/agency/'.$agency_info[0]['slug'] }}" target="_blank">  <p>{{{ $agency_info[0]['agency_name']  }}}</p></a>
                                                     </div>
+                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -76,7 +77,6 @@
                                                                 <select name="member_role" id="user_role">
                                                                     <option value="">Select User Role</option>
                                                                     <option value="manager">Business Manager</option>
-                                                                    <option value="rep">Representative</option>
                                                                     <option value="member">Member</option>
                                                                 </select>
                                                             </div>
@@ -85,7 +85,7 @@
 
                                                 </div>
                                             </div>
-                                            {{-- <div class="form-group">
+                                            <!-- {{-- <div class="form-group">
                                                 <div class="col-md-12" style="padding-top: 30px;">
                                                     <div class="wt-radioboxholder">
                                                         <div class="wt-title">
@@ -99,7 +99,7 @@
                                                         @endforeach
                                                     </div>
                                                 </div>
-                                            </div> --}}
+                                            </div> --}} -->
 
                                             <div class="form-group form-group-half wt-btnarea" style="padding-top: 20px;">
                                                 <input type="submit" value="Invite" class="wt-btn"style="margin: 10px;">
@@ -116,6 +116,19 @@
                                             <input type="button" value="Settings" class="wt-btn" style="background: #248a57">
                                         </div>
                                     </div>
+                                    <div class="agency_settings" style="padding-bottom: 10px">
+                                    <div class='wt-tabscontenttitle'>
+                                            <h2>Delete Or Update Agency</h2>
+                                    </div>
+                                    <div class="wt-actionbtn"style="margin: 30px;">
+                                    <delete :title="'{{trans("lang.ph_delete_confirm_title")}}'" :id="'{{ $agency_info[0]['id'] }}'" :message="'{{trans("ph_agency_delete_message")}}'" :url="'{{url('freelancer/dashboard/delete-agency')}}'"></delete>
+                                    </div>
+                                            <div class="wt-actionbtn"style="margin: 30px;">
+                                            <a href="{{{route('edit_agency',$agency_info[0]['id'])}}}" class="wt-addinfo wt-skillsaddinfo">
+															<i class="lnr lnr-pencil"></i>
+											</a>
+                                            </div>
+                                </div>
                                     @endif
 
                                     @if($agency_info['is_owner'] === 0)

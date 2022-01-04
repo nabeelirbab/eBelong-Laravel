@@ -341,6 +341,8 @@ class ServiceController extends Controller
             $attachments = !empty($seller) ? Helper::getUnserializeData($service->attachments) : '';
             // $service_reviews = DB::table('reviews')->where('job_id', $service->id)->get();
             $save_services = !empty(auth()->user()->profile->saved_services) ? unserialize(auth()->user()->profile->saved_services) : array();
+            $service_saved = array_search($selected_service->id,$save_services);
+            // dd($service_saved);
             $key = 'set_service_view';
             $breadcrumbs_settings = SiteManagement::getMetaValue('show_breadcrumb');
             $show_breadcrumbs = !empty($breadcrumbs_settings) ? $breadcrumbs_settings : 'true';
@@ -373,7 +375,8 @@ class ServiceController extends Controller
                             'attachments',
                             'save_services',
                             'show_breadcrumbs',
-                            'mode'
+                            'mode',
+                            'service_saved'
                         )
                     );
                 } else {
@@ -392,7 +395,8 @@ class ServiceController extends Controller
                             'attachments',
                             'save_services',
                             'show_breadcrumbs',
-                            'mode'
+                            'mode',
+                            'service_saved'
                         )
                     );
                 }

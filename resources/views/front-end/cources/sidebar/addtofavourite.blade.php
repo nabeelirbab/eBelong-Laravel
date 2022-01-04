@@ -10,7 +10,7 @@
         </a>
     
         <div class="wt-clicksavearea">
-            <a href="javascript:void(0);" id="add-{{$cource->id}}" class="wt-clicksavebtn" {{ $course_saved ? 'display: none;' : '' }} @click.prevent="add_wishlist('add-{{$cource->id}}', {{ $cource->id }}, 'saved_cources', {{$seller_id}}, '{{{trans("lang.saved")}}}','remove-{{$cource->id}}')" v-cloak>
+            <a href="javascript:void(0);" id="add-{{$cource->id}}" class="wt-clicksavebtn" style="{{ $course_saved ? 'display: none;' : '' }}"@click.prevent="add_wishlist('add-{{$cource->id}}', {{ $cource->id }}, 'saved_cources', {{$seller_id}}, '{{{trans('lang.saved')}}}','remove-{{$cource->id}}')" v-cloak>
                 <i v-bind:class="heart_class"></i> 
                 Click to Save
             </a>

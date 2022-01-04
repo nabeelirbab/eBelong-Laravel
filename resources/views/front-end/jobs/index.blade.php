@@ -86,6 +86,8 @@
                                                     $featured_class = $job->is_featured == 'true' ? 'wt-featured' : '';
                                                     $user = Auth::user() ? \App\User::find(Auth::user()->id) : '';
                                                     $project_type  = Helper::getProjectTypeList($job->project_type);
+                                                    $save_jobs = !empty($user->profile->saved_jobs) ? unserialize($user->profile->saved_jobs) : array();
+                                                    $job_saved = array_search($job->id,$save_jobs);
                                                 @endphp
                                                 <div class="wt-userlistinghold wt-userlistingholdvtwo {{$featured_class}}">
                                                     @if ($job->is_featured == 'true')
@@ -116,15 +118,18 @@
                                                                                 <span class="wt-viewjobhour"><i class="fa fa-dollar-sign wt-viewjobdollar"></i>{{{$job->price}}}</span>
                                                                                 @endif
                                                                             @endif
-                                                                            @if (!empty($user->profile->saved_jobs) && in_array($job->id, unserialize($user->profile->saved_jobs)))
-                                                                                <span class="wt-viewjobheart"><a href="javascript:void(0);" class="wt-clicklike wt-clicksave"><i class="fa fa-heart"></i> {{trans("lang.saved")}}</a></span>
-                                                                            @else
-                                                                                <span class="wt-viewjobheart">
-                                                                                    <a href="javascrip:void(0);" class="wt-clicklike" id="job-{{$job->id}}" @click.prevent="add_wishlist('job-{{$job->id}}', {{$job->id}}, 'saved_jobs', '{{trans("lang.saved")}}')" v-cloak>
+                                                                           
+                                                                                <span class="wt-viewjobheart"id="remove-{{$job->id}}" style="{{ $job_saved ? '' : 'display: none;' }}">
+                                                                                    <a href="javascript:void(0);"  class="wt-clicklike wt-clicksave"
+                                                                                 @click.prevent="remove_wishlist('remove-{{$job->id}}', {{ $job->id }}, 'saved_jobs', 'Save','add-{{$job->id}}')" v-cloak>
+                                                                                    <i class="fa fa-heart"></i> {{trans("lang.saved")}}</a></span>
+                                                                            
+                                                                                <span class="wt-viewjobheart"id="add-{{$job->id}}" style="{{ $job_saved ? 'display: none;' : '' }}">
+                                                                                    <a href="javascrip:void(0);" class="wt-clicklike" @click.prevent="add_wishlist('job-{{$job->id}}', {{$job->id}}, 'saved_jobs', '{{trans('lang.saved')}}','remove-{{$job->id}}')" v-cloak>
                                                                                         <i class="fa fa-heart"></i>
                                                                                     </a>
                                                                                 </span>
-                                                                            @endif
+                                                                            
                                                                         </div>
                                                                     </div>
                                                                 </div>
