@@ -461,7 +461,7 @@ class UserController extends Controller
                             }
                                 if($updated){
                                 Session::flash('message', 'Your new Agency has been successfully updated.');
-                                return Redirect::back();}
+                                return Redirect::to('/profile/settings/agency-settings');}
                               
                                 else{
                                 Session::flash('message', 'Something Wrong!.');
@@ -503,7 +503,7 @@ class UserController extends Controller
         if (count($user_id) > 0) {
 
             $associate_user = DB::table('agency_associated_users')->insert(
-                ['agency_id' => $request->agency_id, 'user_id' => $user_id[0]['id'], 'member_type' => $request->freelancer_type, 'is_pending' => 1]
+                ['agency_id' => $request->agency_id, 'user_id' => $user_id[0]['id'], 'member_role' => $request->member_role, 'is_pending' => 1]
             );
 
             if ($associate_user === true) {
