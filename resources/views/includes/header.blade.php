@@ -72,6 +72,9 @@
                                                                 </span>
                                                             </div>
                                                         </fieldset>
+                                                        <div class="wt-logininfo" style="display: block; width: 100%;padding: 6px 20px;">
+                                                            <a href="/auth/linkedin/redirect"class="wt-btn do-login-button"style ="background-color:#0072b1;width: 100% ">Login With LinkedIn</a>  
+                                                    </div>
                                                         <div class="wt-loginfooterinfo">
                                                             @if (Route::has('password.request'))
                                                                 <a href="{{ route('password.request') }}" class="wt-forgot-password">{{{ trans('lang.forget_pass') }}}</a>
@@ -190,6 +193,9 @@
                                                                 </span>
                                                             </div>
                                                         </fieldset>
+                                                        <div class="wt-logininfo" style="display: block; width: 100%;padding: 6px 20px;">
+                                                            <a href="/auth/linkedin/redirect"class="wt-btn do-login-button"style ="background-color:#0072b1;width: 100% ">Login With LinkedIn</a>  
+                                                    </div>
                                                         <div class="wt-loginfooterinfo">
                                                             @if (Route::has('password.request'))
                                                                 <a href="{{ route('password.request') }}" class="wt-forgot-password">{{{ trans('lang.forget_pass') }}}</a>
