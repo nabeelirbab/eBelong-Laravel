@@ -95,13 +95,15 @@
                                                         </select>
                                                     </div>
                                                 </div>
-<!--                                                --><?php //print_r($skills); ?>
+
                                                 <div class="wt-skills la-skills-holder wt-tabsinfo">
                                                     <div class="wt-tabscontenttitle">
-                                                        <h2></h2>
+                                                        <h2>{{{ 'Agency Skills' }}}</h2>
                                                     </div>
-                                                    <user_skills :ph_rate_skills="'{{ trans('lang.ph_rate_skills') }}'"></user_skills>                                                </div>
-                                                <div class="col-md-4">
+                                                    <user_skills :ph_rate_skills="'{{ trans('lang.ph_rate_skills') }}'"></user_skills>                                               
+                                                 </div>
+                                            
+                                                    <div class="col-md-4">
                                                     <div class="wt-statisticcontent wt-countercolor3" style="padding-top: 10px;padding-left: 10px;"><h3 data-from="0" data-to="665" data-speed="8000" data-refresh-interval="100">$0</h3> <h4>Total Earned</h4></div>
                                                 </div>
                                                 <div class="col-md-4">

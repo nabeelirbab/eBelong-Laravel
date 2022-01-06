@@ -336,7 +336,7 @@
                             </li>
                             @if(count(Helper::getAgencyList(0,array('user_id'=>Auth::user()->id))))
 							<li>
-                                <a href="{{{ route('agency-user-list') }}}">
+                                <a href="agency-members">
                                     <i class="fa fa-users"></i>
                                     <span> {{ trans('lang.agency_section') }}</span>
                                 </a>

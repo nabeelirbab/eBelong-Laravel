@@ -295,11 +295,9 @@ class PublicController extends Controller
             $agency = DB::table('agency_user')
                 ->where('slug', '=', $slug)
                 ->first();
-
-            $agency = @json_decode(json_encode($agency), true);
-
-            if (count($agency) > 0) {
-
+             
+            if (!empty($agency)) {
+                $agency = @json_decode(json_encode($agency), true);
                 return View('front-end.agencies.profile-show', compact('agency'));
 
             } else {

@@ -995,6 +995,15 @@ class Helper extends Model
         }
     }
 
+    public static function getUserEmail($user_id)
+    {
+        if (!empty($user_id)) {
+       return User::find($user_id)['email'];
+        } else {
+            return '';
+        }
+    }
+
     /**
      * Get Skills.
      *

@@ -108,14 +108,14 @@
                                             </div>
                                         </form>
                                     </div>
-                                    <div class="agency_settings" style="padding-bottom: 10px">
+                                    {{-- <div class="agency_settings" style="padding-bottom: 10px">
                                         <div class='wt-tabscontenttitle'>
                                             <h2>{{{ 'Agency Settings' }}}</h2>
                                         </div>
                                         <div class="form-group form-group-half wt-btnarea">
                                             <input type="button" value="Settings" class="wt-btn" style="background: #248a57">
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="agency_settings" style="padding-bottom: 10px">
                                     <div class='wt-tabscontenttitle'>
                                             <h2>Delete Or Update Agency</h2>

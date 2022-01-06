@@ -360,7 +360,7 @@ class UserController extends Controller
                                     }
                                 }
                                 Session::flash('message', 'Your new Agency has been successfully created.');
-                                return Redirect::back();
+                                return Redirect::to('/profile/settings/agency-settings');
                             }
                             else {
                                 Session::flash('error', 'Something went wrong while associating your account with Agency.');
