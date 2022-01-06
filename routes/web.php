@@ -57,6 +57,9 @@ Route::get(
 $this->get('onboard', 'Auth\RegisterController@showOnboardForm')->name('onboard');
 $this->post('onboard', 'Auth\RegisterController@register');
 Route::get('/theme5', 'HomeController@theme5');
+/** Linkedin OAuth routes */
+Route::get('/auth/linkedin/redirect', 'Auth\LinkedinController@handleLinkedinRedirect');
+Route::get('/auth/linkedin/callback', 'Auth\LinkedinController@handleLinkedinCallback');
 
 /*Route::get('/sendemail', 'SendMailController@index');
 Route::post('/sendemail/send', 'SendMailController@send'); */
@@ -430,6 +433,7 @@ Route::group(
         Route::get('agency-user-status-change/{id}','AgencyController@updateStatus');
         Route::get('get-agency-list','AgencyController@getAgencyList');
         Route::post('freelancer/dashboard/delete-agency', 'AgencyController@destroy');
+        Route::post('agency/remove-member', 'AgencyController@removeMembers');
         Route::get('freelancer/dashboard/edit-agency/{id}', 'AgencyController@edit')->name('edit_agency');
     }
 );

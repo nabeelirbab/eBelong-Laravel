@@ -103,6 +103,7 @@
                 axios.get(APP_URL + '/get-freelancer-skills')
                 .then(function (response) {
                     self.stored_skills = response.data.skills;
+                    console.log("jjj")
                 });
             },
             getUserSkills(){

@@ -52,7 +52,7 @@ class User extends Authenticatable
         'first_name', 'last_name', 'slug', 'email', 'password',
         'avatar', 'banner', 'tagline', 'description',
         'location_id', 'verification_code', 'address',
-        'longitude', 'latitude'
+        'longitude', 'latitude','oauth_type','oauth_id'
     ];
 
     /**
@@ -320,6 +320,14 @@ class User extends Authenticatable
             if (!empty($request['locations'])) {
                 $location = Location::find($request['locations']);
                 $this->location()->associate($location);
+            }
+            if (!empty($request['oauth_id'])) {
+                
+                $this->oauth_id=$request['oauth_id'];
+            }
+            if (!empty($request['oauth_type'])) {
+                
+                $this->oauth_type=$request['oauth_type'];
             }
             $this->badge_id = null;
             $this->expiry_date = null;

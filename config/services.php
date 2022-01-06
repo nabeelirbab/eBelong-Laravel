@@ -1,5 +1,5 @@
 <?php
-
+$linkedin_url = env('APP_URL').'/auth/linkedin/callback';
 return [
 
     /*
@@ -42,6 +42,12 @@ return [
             'secret' => env('STRIPE_WEBHOOK_SECRET'),
             'tolerance' => env('STRIPE_WEBHOOK_TOLERANCE', 300),
         ],
+    ],
+
+    'linkedin' => [
+        'client_id' => env('LINKEDIN_CLIENT_ID'),
+        'client_secret' => env('LINKEDIN_CLIENT_SECRET'),
+        'redirect' => $linkedin_url,
     ],
 
 ];

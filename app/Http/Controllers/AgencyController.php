@@ -9,7 +9,8 @@ use Illuminate\Support\Facades\Schema;
 use DB; 
 use View;
 use Auth;
-
+use Illuminate\Support\Facades\Input;
+use App\User;
 
 class AgencyController extends Controller
 {
@@ -90,6 +91,19 @@ class AgencyController extends Controller
         return View::make('back-end.freelancer.agency.invitations', compact('requested_agency','getInvites'));
 
     }
+    public function removeMembers(Request $request){
+        if(!empty($request['id'])){
+        $delData = DB::table('agency_associated_users')
+        ->where('user_id',$request['id'])->delete();
+        $json['type'] = 'success';
+        $json['message'] = trans('lang.ph_user_delete_message');
+        return $json;
+    } else {
+        $json['type'] = 'error';
+        $json['message'] = trans('lang.something_wrong');
+        return $json;
+    }
+    }
 
     public function updateAgencyDetails() {
 
@@ -169,11 +183,42 @@ class AgencyController extends Controller
     }
     public function viewMembers(){
         if(Auth::user()){
-        $user_id = Auth::user()->id;
-        $agency_id = DB::table('users')->select('agency_id')->where('id',$user_id)->first();
-        $users = DB::table('agency_associated_users')
-        ->where('agency_id',$agency_id->agency_id)
-        ->get();
+            $user_id = Auth::user()->id;
+            $agency_id = DB::table('users')->select('agency_id')->where('id',$user_id)->first();
+            if (!empty($_GET['keyword'])) {
+                $keyword = $_GET['keyword'];
+                $keyword_tokens = explode(' ', $keyword);
+                $keyword_tokens = array_diff($keyword_tokens, [""]);
+                $count = count($keyword_tokens);
+                if($count>1){
+                    // $users = User::where('first_name', 'like', '%' . $keyword_tokens[0] . '%')->where('last_name', 'like', '%' . $keyword_tokens[$count-1] . '%')->paginate(7)->setPath('');
+                    $users = User::where('first_name', 'like', '%' . $keyword_tokens[0] . '%')->orwhere('last_name', 'like', '%' . $keyword_tokens[$count-1] . '%')
+                    ->join('agency_associated_users', 'agency_associated_users.user_id', '=', 'users.id')->where('agency_associated_users.user_id','!=' ,null)->where('agency_associated_users.agency_id', "=",$agency_id->agency_id)
+                    ->select('agency_associated_users.*')->paginate(10);
+                    
+                }
+
+                else{
+                    // $users = User::where('first_name', 'like', '%' . $keyword . '%')->orWhere('last_name', 'like', '%' . $keyword . '%')
+                    $users = $users = User::where('first_name', 'like', '%' . $keyword . '%')->orWhere('last_name', 'like', '%' . $keyword . '%')
+                    ->join('agency_associated_users', 'agency_associated_users.user_id', '=', 'users.id')->where('agency_associated_users.user_id','!=' ,null)->where('agency_associated_users.agency_id', "=",$agency_id->agency_id)
+                    ->select('agency_associated_users.*')->paginate(10);
+                }
+                $pagination = $users->appends(
+                    array(
+                        'keyword' => Input::get('keyword')
+                    )
+                );
+            }
+            else{
+                $user_id = Auth::user()->id;
+                $agency_id = DB::table('users')->select('agency_id')->where('id',$user_id)->first();
+                $users = DB::table('agency_associated_users')
+                ->where('agency_id',$agency_id->agency_id)
+                ->latest()->paginate(10);
+
+            }
+        
         return View::make('front-end.agencies.agencyMembers',compact('users'));
         }
         else{

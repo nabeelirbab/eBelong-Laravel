@@ -63,9 +63,6 @@
                                                                 </div>
                                                                 @endforeach
                                                             @endif
-                                                                @endphp
-                                                               
-                                                            @endif
                                                         </div>
                                                     </fieldset>
                                                 @endif

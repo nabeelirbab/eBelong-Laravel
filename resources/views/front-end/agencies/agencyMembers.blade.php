@@ -18,12 +18,12 @@
                 @endif
                 <div class="wt-dashboardbox">
                     <div class="wt-dashboardboxtitle wt-titlewithsearch">
-                        <h2>{{{ trans('lang.manage_users') }}}</h2>
+                        <h2>{{{ "Agency Members"}}}</h2>
                         <form class="wt-formtheme wt-formsearch">
                             <fieldset>
                                 <div class="form-group">
                                     <input type="text" name="keyword" value="{{{ !empty($_GET['keyword']) ? $_GET['keyword'] : '' }}}"
-                                        class="form-control" placeholder="{{{ trans('lang.ph_search_users') }}}">
+                                        class="form-control" placeholder="{{{ 'Search Members' }}}">
                                     <button type="submit" class="wt-searchgbtn"><i class="lnr lnr-magnifier"></i></button>
                                 </div>
                             </fieldset>
@@ -35,9 +35,11 @@
                                 <thead>
                                     <tr>
                                         <th>Member Name</th>
+                                        <th>Member Email</th>
                                         <th>Member Role</th>
 										<th>is Pending</th>
                                         <th>is Accepted</th>
+                                        <th>Cancel Invitation</th>
                                         
                                     </tr>
                                 </thead>
@@ -46,6 +48,7 @@
                                        
                                             <tr class="del-user-{{ $user->user_id }}">
                                                 <td>{{{ ucwords(\App\Helper::getUserName($user->user_id)) }}}</td>
+                                                <td>{{{ ucwords(\App\Helper::getUserEmail($user->user_id)) }}}</td>
                                                 <td>{{ $user->member_role }}</td>                                          
                                                 <td>
                                                     @if($user->is_pending==1)
@@ -60,6 +63,11 @@
                                                     @else
                                                         {{ 'Not Accepted' }}
                                                     @endif
+                                                </td>
+                                                <td>
+                                                    <div class="wt-actionbtn"style="margin: 30px;">
+                                                    <delete :title="'{{trans("lang.ph_delete_confirm_title")}}'" :id="'{{ $user->user_id }}'" :message="'{{trans("lang.ph_user_delete_message")}}'" :url="'{{url('agency/remove-member')}}'"></delete>
+                                                    </div>
                                                 </td>
                                             </tr>
                                        
