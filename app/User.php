@@ -15,11 +15,13 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Traits\HasRoles;
 use Spatie\Permission\Models\Role;
 use DB;
+use File;
 use App\Payout;
 use Illuminate\Support\Facades\Schema;
 use App\Location;
@@ -333,6 +335,7 @@ class User extends Authenticatable
             $this->expiry_date = null;
             $this->save();
             $user_id = $this->id;
+            $user_name=$this->first_name;
             $profile = new Profile();
             $profile->user()->associate($user_id);
             if (!empty($request['employees'])) {
@@ -341,6 +344,42 @@ class User extends Authenticatable
             if (!empty($request['department_name'])) {
                 $department = Department::find($request['department_name']);
                 $profile->department()->associate($department);
+            }
+            if (!empty($request['hidden_avater_image'])) {
+                $file_original_name = substr($request['hidden_avater_image'], strrpos($request['hidden_avater_image'], '/') + 1);
+                $file_original_name = explode('?',$file_original_name);
+                $file_original_name = $file_original_name[0];
+                $small_img = Image::make($request['hidden_avater_image']);
+                $path = Helper::PublicPath() . '/uploads/users/'.$user_id.'/';
+                if (!file_exists($path)) {
+                    File::makeDirectory($path, 0755, true, true);
+                }
+                // generate small image size
+                $small_img->fit(
+                    36,
+                    36,
+                    function ($constraint) {
+                        $constraint->upsize();
+                    }
+                );
+                $small_img->save($path . '/small-' . $file_original_name."-".$user_name. ".jpg");
+                // generate medium image size
+                $medium_img = Image::make($request['hidden_avater_image']);
+                $medium_img->fit(
+                    100,
+                    100,
+                    function ($constraint) {
+                        $constraint->upsize();
+                    }
+                );
+                $medium_img->save($path . '/medium-' . $file_original_name."-".$user_name. ".jpg");
+                // save original image size
+                $img = Image::make($request['hidden_avater_image']);
+                $img->save($path . '/' . $file_original_name."-".$user_name. ".jpg");
+                $profile->avater = $file_original_name."-".$user_name.".jpg";
+            }
+            else {
+                $profile->avater = null;
             }
             $profile->save();
             $role_id = Helper::getRoleByUserID($user_id);

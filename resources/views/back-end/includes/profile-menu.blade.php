@@ -295,6 +295,14 @@
                             <span>{{ trans('lang.payouts') }}</span>
                         </a>
                     </li>
+                    <li>
+                        @if(count(Helper::getAgencyList(0,array('user_id'=>Auth::user()->id))))
+                        <a href="agency-members">
+                            <i class="fa fa-users"></i>
+                            <span> {{ trans('lang.agency_section') }}</span>
+                        </a>
+                    </li>
+                    @endif
                     @if ($payment_module === 'true' )
                         <li class="menu-item-has-children">
                             <a href="javascript:void(0);">
