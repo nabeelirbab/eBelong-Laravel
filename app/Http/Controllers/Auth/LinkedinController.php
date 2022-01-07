@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Socialite\Facades\Socialite;
 use Session;
+use Intervention\Image\ImageManagerStatic as Image;
+use Helper;
+use File;
 
 class LinkedinController extends Controller
 {
@@ -41,6 +44,7 @@ class LinkedinController extends Controller
                 "location" => "",
                 "oauth_id" => $user->id,
                 "oauth_type" => static::DRIVER_TYPE,
+                "hidden_avater_image" => $user->avatar,
 
 
             ];
