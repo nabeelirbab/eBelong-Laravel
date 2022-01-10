@@ -343,7 +343,7 @@ Route::group(
             Route::get('freelancer/services/{status}', 'FreelancerController@showServices')->name('ServiceListing');
             Route::get('freelancer/service/{id}/{status}', 'FreelancerController@showServiceDetail')->name('ServiceDetail');
             Route::get('freelancer/courses/{status}', 'FreelancerController@showCourses')->name('CourseListing');
-            Route::get('freelancer/cource/{id}/{status}', 'FreelancerController@showCourseDetail');
+            Route::get('freelancer/course/{id}/{status}', 'FreelancerController@showCourseDetail');
         }
         Route::post('services/change-status', 'ServiceController@changeStatus');
         Route::post('courses/change-status', 'CourseController@changeStatus');
@@ -535,6 +535,6 @@ Route::post('addmoney/stripe', array('as' => 'addmoney.stripe', 'uses' => 'Strip
 
 
 Route::get('service/payment-process/{id}', 'ServiceController@employerPaymentProcess');
-Route::get('cource/payment-process/{id}', 'CourseController@employerPaymentProcess');
+Route::get('course/payment-process/{id}', 'CourseController@employerPaymentProcess');
 Route::get('paypal/ec-hourly-checkout', 'PaypalController@getHourlyExpressCheckout');
 Route::get('paypal/ec-hourly-checkout-success', 'PaypalController@getHourlyExpressCheckoutSuccess');

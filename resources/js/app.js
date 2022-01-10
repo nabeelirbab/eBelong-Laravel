@@ -5443,17 +5443,17 @@ if (document.getElementById("cources")) {
                 }).then((result) => {
                     if (result.value) {
                         if (mode == 'false') {
-                            axios.post(APP_URL + '/user/generate-order/bacs/'+id+'/cource')
+                            axios.post(APP_URL + '/user/generate-order/bacs/'+id+'/course')
                             .then(function (response) {
                                 if (response.data.type == 'success') {
-                                    window.location.replace(APP_URL+'/user/order/bacs/'+response.data.cource_order+'/'+response.data.order_id+'/project/cource');
+                                    window.location.replace(APP_URL+'/user/order/bacs/'+response.data.cource_order+'/'+response.data.order_id+'/project/course');
                                 }
                             })
                             .catch(function (error) {
                                 console.log(error);
                             });
                         } else {
-                            window.location.replace(APP_URL + '/cource/payment-process/' + id);
+                            window.location.replace(APP_URL + '/course/payment-process/' + id);
                         }
                     } else {
                         this.$swal.close()

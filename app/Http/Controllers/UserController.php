@@ -2051,7 +2051,7 @@ class UserController extends Controller
             if ($type == 'service') {
                 $json['service_order'] = $new_order['service_order'];
             }
-            if($type == 'cource'){
+            if($type == 'course'){
                 $json['cource_order'] = $new_order['cource_order'];
             } 
             $json['type'] = 'success';
@@ -2086,7 +2086,7 @@ class UserController extends Controller
                     $cost = $service->price;
                     $product_id = $id;
                 } 
-                if ($project_type == 'cource') {
+                if ($project_type == 'course') {
                    
                     $cource_order = DB::table('cource_user')->select('cource_id')->where('id', $id)->first();
                     $cource = Cource::find($cource_order->cource_id);

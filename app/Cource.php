@@ -343,7 +343,7 @@ class Cource extends Model
         $search_response_time
     ) {
         $json = array();
-        $services = Cource::select('*')->where('status','published');
+        $services = Cource::select('*')->where('status','published')->orderBy('id','DESC');
         $service_id = array();
         $filters = array();
         $filters['type'] = 'service';
