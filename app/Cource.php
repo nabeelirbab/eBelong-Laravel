@@ -95,6 +95,14 @@ class Cource extends Model
         return $this->belongsToMany('App\User')->wherePivot('type', 'employer', 'seller_id');
     }
 
+    public function skills()
+
+    {
+
+        return $this->belongsToMany('App\Skill');
+
+    }
+
     /**
      * Set slug before saving in DB
      *

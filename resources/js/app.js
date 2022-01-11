@@ -5427,7 +5427,8 @@ if (document.getElementById("cources")) {
                         console.log(error);
                     });
             },
-            BuyCource: function (id, title, text, mode) {
+            BuyCource: function (id, title, text, mode,user_role) {
+                if(user_role == "freelancer"){
                 this.$swal({
                     title: title,
                     text: text,
@@ -5459,7 +5460,15 @@ if (document.getElementById("cources")) {
                         this.$swal.close()
                     }
                 })
-            },
+            }
+            else{
+                window.location.replace(APP_URL + '/register');
+
+                self.showError("you need to Register as freelancer");
+
+            }
+        }
+            ,
             courseStatus: function (id, pivot_id, employer_id, cancel_text, confirm_button, validation_error, popup_title) {
                 var job_status = document.getElementById("employer_service_status");
                 var status = job_status.options[job_status.selectedIndex].value;

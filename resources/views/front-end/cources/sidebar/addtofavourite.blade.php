@@ -1,5 +1,7 @@
-@php $seller_id = !empty($seller) ? $seller->id : 0; @endphp
-@if(Auth::user() && Auth::user()->id != $seller_id)
+@php $seller_id = !empty($seller) ? $seller->id : 0;
+$user_role = Helper::getSessionUserRole();
+ @endphp
+@if(Auth::user() && Auth::user()->id != $seller_id || $user_role == "guest")
 <div class="wt-clicksavearea">
     <span>{{{trans("lang.cource_id")}}}: {{{$cource->code}}}</span>
   
