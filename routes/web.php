@@ -343,12 +343,14 @@ Route::group(
             Route::get('freelancer/services/{status}', 'FreelancerController@showServices')->name('ServiceListing');
             Route::get('freelancer/service/{id}/{status}', 'FreelancerController@showServiceDetail')->name('ServiceDetail');
             Route::get('freelancer/courses/{status}', 'FreelancerController@showCourses')->name('CourseListing');
-            Route::get('freelancer/cource/{id}/{status}', 'FreelancerController@showCourseDetail');
+            Route::get('freelancer/course/{id}/{status}', 'FreelancerController@showCourseDetail');
         }
         Route::post('services/change-status', 'ServiceController@changeStatus');
         Route::post('courses/change-status', 'CourseController@changeStatus');
         Route::get('freelancer/dashboard/edit-service/{id}', 'ServiceController@edit')->name('edit_service');
         Route::get('freelancer/dashboard/edit-course/{id}', 'CourseController@edit')->name('edit_course');
+        Route::post('course/get-stored-course-skills', 'CourseController@getCourseSkills');
+        Route::post('skills/get-course-skills', 'SkillController@getCourseSkills');
         Route::post('services/post-service', 'ServiceController@store');
         Route::post('courses/post-course', 'CourseController@store');
         Route::post('service/upload-temp-image', 'ServiceController@uploadTempImage');
@@ -391,6 +393,8 @@ Route::group(
     ['middleware' => ['role:freelancer']],
     function () {
         Route::get('/get-freelancer-skills', 'SkillController@getFreelancerSkills');
+        Route::get('/get-freelancer-skills', 'SkillController@getCourseSkills');
+        Route::get('course/{id}/enrolled-students', 'CourseController@StudentsListing');
         Route::get('/get-skills', 'SkillController@getSkills');
         Route::get('freelancer/dispute/{slug}', 'UserController@raiseDispute');
         Route::post('freelancer/store-dispute', 'UserController@storeDispute');
@@ -535,6 +539,6 @@ Route::post('addmoney/stripe', array('as' => 'addmoney.stripe', 'uses' => 'Strip
 
 
 Route::get('service/payment-process/{id}', 'ServiceController@employerPaymentProcess');
-Route::get('cource/payment-process/{id}', 'CourseController@employerPaymentProcess');
+Route::get('course/payment-process/{id}', 'CourseController@employerPaymentProcess');
 Route::get('paypal/ec-hourly-checkout', 'PaypalController@getHourlyExpressCheckout');
 Route::get('paypal/ec-hourly-checkout-success', 'PaypalController@getHourlyExpressCheckoutSuccess');

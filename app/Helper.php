@@ -2838,10 +2838,10 @@ class Helper extends Model
     public static function getCourceCount($cource_id,$status)
     {
         
-       if (Schema::hasTable('course_user')) {
-       if (Schema::hasColumn('course', 'paid')) {
+       if (Schema::hasTable('cource_user')) {
+    
        return DB::table('cource_user')->where('cource_id', $cource_id)->where('status', $status)->count();
-    }
+  
   }
 }
     /**
@@ -2981,7 +2981,10 @@ class Helper extends Model
     {
         return DB::table('cource_user')->where('cource_id', $cource_id)->where('type', 'seller')->first();
     }
-
+    public static function getCourseBuyers($cource_id)
+    {
+        return DB::table('cource_user')->select('user_id as id')->where('cource_id', $cource_id)->where('status', 'bought')->paginate(10);;
+    }
     /**
      * Get employer service status
      *

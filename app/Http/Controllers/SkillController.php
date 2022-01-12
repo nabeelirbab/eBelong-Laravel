@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use DB;
 use App\Helper;
+use App\Cource;
 
 /**
  * Class Skill Controller
@@ -297,6 +298,52 @@ class SkillController extends Controller
             $job_skills = Skill::getJobSkill($job->id);
             if (!empty($job_skills)) {
                 $result = array_diff($db_skills, $job_skills);
+                if (!empty($result)) {
+                    $skills = DB::table('skills')
+                        ->whereIn('id', $result)
+                        ->orderBy('title')->get()->toArray();
+                } else {
+                    $skills = array();
+                }
+                $json['type'] = 'success';
+                $json['skills'] = $skills;
+                $json['message'] = trans('lang.skills_already_selected');
+                return $json;
+            } else {
+                $skills = Skill::select('title', 'id')->get()->toArray();
+                if (!empty($skills)) {
+                    $json['type'] = 'success';
+                    $json['skills'] = $skills;
+                    return $json;
+                } else {
+                    $json['type'] = 'error';
+                    $json['message'] = trans('lang.something_wrong');
+                    return $json;
+                }
+            }
+        } else {
+            $skills = Skill::select('title', 'id')->get()->toArray();
+            if (!empty($skills)) {
+                $json['type'] = 'success';
+                $json['skills'] = $skills;
+                return $json;
+            } else {
+                $json['type'] = 'error';
+                $json['message'] = trans('lang.something_wrong');
+                return $json;
+            }
+        }
+    }
+
+    public function getCourseSkills(Request $request)
+    {
+        $json = array();
+        if (!empty($request['slug']) && $request['slug'] != "post-course") {
+            $job = Cource::where('slug', $request['slug'])->select('id')->first();
+            $db_skills = Skill::select('id')->get()->pluck('id')->toArray();
+            $course_skills = Skill::getCourseSkill($job->id);
+            if (!empty($course_skills)) {
+                $result = array_diff($db_skills, $course_skills);
                 if (!empty($result)) {
                     $skills = DB::table('skills')
                         ->whereIn('id', $result)

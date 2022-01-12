@@ -19,7 +19,7 @@
 									<tr>
 										<th>{{ trans('lang.course_title') }}</th>
 										<th>{{ trans('lang.course_status') }}</th>
-										<th>{{ trans('lang.in_queue') }}</th>
+										<th>Students Enrolled</th>
 										<th>{{ trans('lang.action') }}</th>
 									</tr>
 								</thead>
@@ -66,9 +66,14 @@
 												<span class="bt-content">
 													<span>
 														@if ($total_orders > 0)
+														<a href="/course/{{ $cource["id"] }}/enrolled-students">
 															<i class="fa fa-spinner fa-spin"></i> 
+															{{{$total_orders}}} Students Enrolled
+														</a>
+														@else
+														<a href="#" >0 Students Enrolled</a>
 														@endif
-														{{{$total_orders}}} {{ trans('lang.in_queue') }}
+														
 													</span>
 												</span>
 											</td>

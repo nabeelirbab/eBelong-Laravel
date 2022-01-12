@@ -15,6 +15,7 @@ use App\Item;
 use Auth;
 use App\Package;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Input;
 use App\User;
 use DB;
 use App\SiteManagement;
@@ -840,6 +841,64 @@ class CourseController extends Controller
         } else {
             Session::flash('error', trans('lang.buy_course_warning'));
             return Redirect::back();
+        }
+    }
+    public function getCourseSkills(Request $request)
+    {
+        $json = array();
+        if (!empty($request['slug'])) {
+            $course = $this->cource::where('slug', $request['slug'])->select('id')->first();
+            if (!empty($course)) {
+                $course = $this->cource::find($course['id']);
+                $skills = $course->skills->toArray();
+                if (!empty($skills)) {
+                    $json['type'] = 'success';
+                    $json['skills'] = $skills;
+                    return $json;
+                } else {
+                    $json['error'] = 'error';
+                    return $json;
+                }
+            } else {
+                $json['error'] = 'error';
+                return $json;
+            }
+        }
+    }
+    public function StudentsListing($course_id)
+    {
+        if (Auth::user() && Auth::user()->getRoleNames()->first() === 'freelancer') {
+            if (!empty($_GET['keyword'])) {
+                $keyword = $_GET['keyword'];
+                $keyword_tokens = explode(' ', $keyword);
+                $count = count($keyword_tokens);
+                $buyers =DB::table('cource_user')->where('cource_id', $course_id)->where('status', 'bought')->pluck('user_id');
+                if($count>1){
+                    $users = User::where('first_name', 'like', '%' . $keyword_tokens[0] . '%')->where('last_name', 'like', '%' . $keyword_tokens[$count-1] . '%')->whereIn('id',$buyers)->paginate(7)->setPath('');
+                }
+                else{
+                    $users = User::whereIn('id',$buyers)
+                    ->where(function ($query) use($keyword){ $query->where('first_name', 'like', '%' . $keyword . '%')
+                        ->orWhere('last_name', 'like', '%' . $keyword . '%');
+                    })->paginate(7)->setPath('');
+                    // dd($users);
+                }
+                $pagination = $users->appends(
+                    array(
+                        'keyword' => Input::get('keyword')
+                    )
+                );
+            } else {
+                $users = Helper::getCourseBuyers($course_id);
+                // dd($users);
+            }
+            /* if (file_exists(resource_path('views/extend/back-end/admin/users/index.blade.php'))) {
+                return view('extend.back-end.admin.users.index', compact('users'));
+            } else { */
+                return view('back-end.freelancer.courses.enrolled-students', compact('users'));
+           // }
+        } else {
+            abort(404);
         }
     }
 }

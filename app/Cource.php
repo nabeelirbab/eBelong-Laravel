@@ -95,6 +95,14 @@ class Cource extends Model
         return $this->belongsToMany('App\User')->wherePivot('type', 'employer', 'seller_id');
     }
 
+    public function skills()
+
+    {
+
+        return $this->belongsToMany('App\Skill');
+
+    }
+
     /**
      * Set slug before saving in DB
      *
@@ -343,7 +351,7 @@ class Cource extends Model
         $search_response_time
     ) {
         $json = array();
-        $services = Cource::select('*')->where('status','published');
+        $services = Cource::select('*')->where('status','published')->orderBy('id','DESC');
         $service_id = array();
         $filters = array();
         $filters['type'] = 'service';

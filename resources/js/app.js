@@ -5427,7 +5427,8 @@ if (document.getElementById("cources")) {
                         console.log(error);
                     });
             },
-            BuyCource: function (id, title, text, mode) {
+            BuyCource: function (id, title, text, mode,user_role) {
+                if(user_role == "freelancer"){
                 this.$swal({
                     title: title,
                     text: text,
@@ -5443,23 +5444,31 @@ if (document.getElementById("cources")) {
                 }).then((result) => {
                     if (result.value) {
                         if (mode == 'false') {
-                            axios.post(APP_URL + '/user/generate-order/bacs/'+id+'/cource')
+                            axios.post(APP_URL + '/user/generate-order/bacs/'+id+'/course')
                             .then(function (response) {
                                 if (response.data.type == 'success') {
-                                    window.location.replace(APP_URL+'/user/order/bacs/'+response.data.cource_order+'/'+response.data.order_id+'/project/cource');
+                                    window.location.replace(APP_URL+'/user/order/bacs/'+response.data.cource_order+'/'+response.data.order_id+'/project/course');
                                 }
                             })
                             .catch(function (error) {
                                 console.log(error);
                             });
                         } else {
-                            window.location.replace(APP_URL + '/cource/payment-process/' + id);
+                            window.location.replace(APP_URL + '/course/payment-process/' + id);
                         }
                     } else {
                         this.$swal.close()
                     }
                 })
-            },
+            }
+            else{
+                window.location.replace(APP_URL + '/register');
+
+                self.showError("you need to Register as freelancer");
+
+            }
+        }
+            ,
             courseStatus: function (id, pivot_id, employer_id, cancel_text, confirm_button, validation_error, popup_title) {
                 var job_status = document.getElementById("employer_service_status");
                 var status = job_status.options[job_status.selectedIndex].value;

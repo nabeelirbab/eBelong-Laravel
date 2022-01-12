@@ -118,6 +118,12 @@
                                         <div class="form-group form-group-half">
                                             {!! Form::text( 'latitude', null, ['class' =>'form-control', 'placeholder' => trans('lang.enter_latitude')]) !!}
                                         </div>
+                                        <div class="wt-jobskills wt-jobskills-holder wt-tabsinfo">
+                                            <div class="wt-tabscontenttitle">
+                                                <h2>{{ trans('lang.skills_req') }}</h2>
+                                            </div>
+                                          {{-- add Course Skills --}}
+                                    </div>
                                     </fieldset>
                                 </div>
                             </div>

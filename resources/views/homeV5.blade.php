@@ -774,7 +774,7 @@
 
 
 		<!-- Load Facebook SDK for JavaScript -->
-		<div id="fb-root"></div>
+		{{-- <div id="fb-root"></div>
 		<script>
 			window.fbAsyncInit = function() {
 				FB.init({
@@ -790,15 +790,15 @@
 				js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
 				fjs.parentNode.insertBefore(js, fjs);
 			}(document, 'script', 'facebook-jssdk'));
-		</script>
+		</script> --}}
 
 
 		<!-- Your Chat Plugin code -->
-		<div class="fb-customerchat"
+		{{-- <div class="fb-customerchat"
 			attribution=install_email
 			page_id="143435542479695"
 			theme_color="#7646FF">
-		</div>
+		</div> --}}
 		<!-- </div> -->
 	</body>
 </html>
