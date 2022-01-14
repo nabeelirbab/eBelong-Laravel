@@ -1867,7 +1867,17 @@ class UserController extends Controller
                         $json['message'] = trans('lang.not_allowed_msg');
                         return $json;
                     }
-                } else {
+                } if($request['project_type'] == 'course'){
+                    // $purchase_service = Helper::getPivotService($request['proposal_id']);
+                    // $status = $purchase_service->status;
+                    // if ($status == "hired") {
+                        $course = new Cource();
+                        $send_message = $course::sendMessage($request, $user_id);
+                    
+
+                }
+                
+                else {
                     $purchase_service = Helper::getPivotService($request['proposal_id']);
                     $status = $purchase_service->status;
                     if ($status == "hired") {
@@ -2087,7 +2097,6 @@ class UserController extends Controller
                     $product_id = $id;
                 } 
                 if ($project_type == 'course') {
-                   
                     $cource_order = DB::table('cource_user')->select('cource_id')->where('id', $id)->first();
                     $cource = Cource::find($cource_order->cource_id);
                     $title = $cource->title;

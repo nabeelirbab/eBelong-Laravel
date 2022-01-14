@@ -5304,6 +5304,28 @@ if (document.getElementById("cources")) {
                         self.loading = false;
                     });
             },
+            changeCourseStatus: function (id) {
+                this.loading = true;
+                var status = document.getElementById(id + '-course_status').value;
+                var self = this;
+                axios.post(APP_URL + '/courses/change-course-status', {
+                    status: status,
+                    id: id,
+                })
+                    .then(function (response) {
+                        if (response.data.type == 'success') {
+                            self.loading = false;
+                            self.showMessage(response.data.message);
+                            window.location.reload();
+                        } else {
+                            self.loading = false;
+                            self.showError(response.data.message);
+                        }
+                    })
+                    .catch(function (error) {
+                        self.loading = false;
+                    });
+            },
             deleteAttachment: function (id) {
                 jQuery('#' + id).remove();
             },
@@ -5443,19 +5465,20 @@ if (document.getElementById("cources")) {
                     showLoaderOnConfirm: false
                 }).then((result) => {
                     if (result.value) {
-                        if (mode == 'false') {
-                            axios.post(APP_URL + '/user/generate-order/bacs/'+id+'/course')
-                            .then(function (response) {
-                                if (response.data.type == 'success') {
-                                    window.location.replace(APP_URL+'/user/order/bacs/'+response.data.cource_order+'/'+response.data.order_id+'/project/course');
-                                }
-                            })
-                            .catch(function (error) {
-                                console.log(error);
-                            });
-                        } else {
-                            window.location.replace(APP_URL + '/course/payment-process/' + id);
-                        }
+                        // if (mode == 'false') {
+                        //     axios.post(APP_URL + '/user/generate-order/bacs/'+id+'/course')
+                        //     .then(function (response) {
+                        //         if (response.data.type == 'success') {
+                        //             window.location.replace(APP_URL+'/user/order/bacs/'+response.data.cource_order+'/'+response.data.order_id+'/project/course');
+                        //         }
+                        //     })
+                        //     .catch(function (error) {
+                        //         console.log(error);
+                        //     });
+                        // } else {
+                        //     window.location.replace(APP_URL + '/course/payment-process/' + id);
+                        // }
+                        window.location.replace(APP_URL+'/course/'+id+'/generate-order')
                     } else {
                         this.$swal.close()
                     }

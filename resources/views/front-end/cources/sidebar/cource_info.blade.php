@@ -24,10 +24,14 @@
           @php $seller_id = !empty($seller) ? $seller->id : 0; 
           $user_role = Helper::getSessionUserRole();
           @endphp
-          @if((Auth::user() && Auth::user()->id != $seller_id  && $boughtcourse == false) || $user_role == "guest" )
+          @if((Auth::user() && Auth::user()->id != $seller_id  && $boughtcourse == false && $waiting_status== false) || $user_role == "guest")
           <a href="javascript:;" class="wt-btn" v-on:click.prevent="BuyCource('{{{$cource->id}}}', '{{{trans('lang.hire_cource_title')}}}', '{{{trans('lang.hire_cource_text')}}}', '{{$mode}}','{{ $user_role }}')">{{ trans('lang.buy_now') }} </a>
           @endif
           @if(Auth::user() && $boughtcourse == true)
+          <a href="javascript:;" class="wt-btn" disabled>Enrolled </a>
+          @endif
+          @if(Auth::user() && $waiting_status == true)
+          <p><em>*</em> {{ "Wait for the Instructor to Enroll you " }}</p>
           <a href="javascript:;" class="wt-btn" disabled>Bought </a>
           @endif
          </div>

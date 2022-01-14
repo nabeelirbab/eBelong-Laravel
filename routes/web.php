@@ -344,9 +344,12 @@ Route::group(
             Route::get('freelancer/service/{id}/{status}', 'FreelancerController@showServiceDetail')->name('ServiceDetail');
             Route::get('freelancer/courses/{status}', 'FreelancerController@showCourses')->name('CourseListing');
             Route::get('freelancer/course/{id}/{status}', 'FreelancerController@showCourseDetail');
+          
         }
+        Route::get('freelancer/course/orders', 'CourseController@courseOrders')->name('CourseOrders');
         Route::post('services/change-status', 'ServiceController@changeStatus');
         Route::post('courses/change-status', 'CourseController@changeStatus');
+        Route::post('courses/change-course-status', 'CourseController@changeCourseStatus');
         Route::get('freelancer/dashboard/edit-service/{id}', 'ServiceController@edit')->name('edit_service');
         Route::get('freelancer/dashboard/edit-course/{id}', 'CourseController@edit')->name('edit_course');
         Route::post('course/get-stored-course-skills', 'CourseController@getCourseSkills');
@@ -475,6 +478,7 @@ Route::group(
         Route::get('user/package/checkout/{id}', 'UserController@checkout');
         Route::get('user/order/bacs/{id}/{order}/{type}/{project_type?}', 'UserController@bankCheckout');
         Route::post('user/generate-order/bacs/{id}/{type}', 'UserController@generateOrder');
+        Route::get('course/{id}/generate-order','CourseController@generateOrder');
         Route::get('employer/{type}/invoice', 'UserController@getEmployerInvoices')->name('employerInvoice');
         Route::get('freelancer/{type}/invoice', 'UserController@getFreelancerInvoices')->name('freelancerInvoice');
         Route::get('show/invoice/{id}', 'UserController@showInvoice');

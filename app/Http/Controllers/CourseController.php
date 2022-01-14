@@ -12,6 +12,7 @@ use App\DeliveryTime;
 use App\Service;
 use App\Cource;
 use App\Item;
+use App\Message;
 use Auth;
 use App\Package;
 use Carbon\Carbon;
@@ -334,9 +335,12 @@ class CourseController extends Controller
             if(Auth::user()){
             $boughtcourse = DB::table('cource_user')->where('cource_id', $selected_cource->id)->where('user_id', Auth::user()->id)->where('status','bought')->get();
             $boughtcourse = !empty($boughtcourse[0]) ? true : false ;
+            $waiting_status = DB::table('cource_user')->where('cource_id', $selected_cource->id)->where('user_id', Auth::user()->id)->where('status','waiting')->get();
+            $waiting_status = !empty($waiting_status[0]) ? true : false ;
         }
            else{
                $boughtcourse = false;
+               $waiting_status = false;
            }
             $reviews = !empty($seller) ? Helper::getCourceReviews($seller->id, $cource->id) : '';
             $auth_profile = Auth::user() ? auth()->user()->profile : '';
@@ -385,7 +389,8 @@ class CourseController extends Controller
                             'course_saved',
                             'show_breadcrumbs',
                             'mode',
-                            'boughtcourse'
+                            'boughtcourse',
+                            'waiting_status'
                         )
                     );
                 } else {
@@ -406,7 +411,8 @@ class CourseController extends Controller
                             'saved_cources',
                             'show_breadcrumbs',
                             'mode',
-                            'boughtcourse'
+                            'boughtcourse',
+                            'waiting_status'
                         )
                     );
                 }
@@ -899,6 +905,83 @@ class CourseController extends Controller
            // }
         } else {
             abort(404);
+        }
+    }
+
+    public function generateOrder($id){
+        $symbol = !empty($payout_settings) && !empty($payout_settings[0]['currency']) ? Helper::currencyList($payout_settings[0]['currency']) : array();
+        $mode = !empty($payout_settings) && !empty($payout_settings[0]['payment_mode']) ? $payout_settings[0]['payment_mode'] : 'true';
+        $bank_detail = SiteManagement::getMetaValue('bank_detail');
+        $subtitle = '';
+        $options = '';
+        $seller = '';
+        $payrols = Helper::getPayoutsList();
+        $user = User::find(Auth::user()->id);
+        $location = Location::select('title')->where('id',$user->location_id)->first();
+        $user->location_name = $location->title; 
+        $course = Cource::find($id);
+        $title = $course->title;
+        $seller = Helper::getCourceSeller($course->id);
+        $freelancer = User::find($seller->user_id);
+        $cost = $course->price;
+        $payout_settings = $user->profile->count() > 0 ? Helper::getUnserializeData($user->profile->payout_settings) : '';
+        return view('back-end.freelancer.courses.checkout', compact('course','freelancer','symbol','mode','bank_detail','subtitle','options','seller','title', 'cost','payrols' , 'user' , 'payout_settings'));
+    }
+    public function courseOrders(){
+        $courses = DB::table('cource_user')->where('status','waiting')->where('seller_id',Auth::user()->id)->get();
+        $status_list = array_pluck(Helper::getFreelancerCourseStatus(), 'title', 'value');
+    
+        return view('back-end.freelancer.courses.course-orders',compact('courses','status_list'));
+    }
+    public function changeCourseStatus(Request $request)
+    {
+        $json = array();
+        if (!empty($request['id'])) {
+                if ($request['status']=='enroll'){
+                DB::table('cource_user')->where('id',$request['id'])->update(['status'=>"bought"]);
+                $courseid = DB::table('cource_user')->where('id',$request['id'])->pluck('cource_id')->first();
+                $userid = DB::table('cource_user')->where('id',$request['id'])->pluck('user_id')->first();
+                $freelancer = User::find($userid);
+                // code for changing order status from pending to completed
+                DB::table('orders')->where('product_id',$courseid)->where('user_id',$userid)->update(['status'=>"completed"]);
+                $course = Cource::find($courseid);
+                $user = User::find(intval(Auth::user()->id));
+                 // send message to student
+                 $message = new Message();
+                 $message->user()->associate($user);
+                 $message->receiver_id = intval($userid);
+                 $message->body = 'Your Request For the Course is Accepted by the Instructor '.Helper::getUserName(Auth::user()->id) . ' ' . 'welcome to' . ' ' . $course->title;
+                 $message->status = 0;
+                 $message->save();
+                 // send mail
+                 if (trim(env('MAIL_USERNAME')) != "" && trim(env('MAIL_PASSWORD')) != "") {
+                    $email_params = array();
+                    $template_data = Helper::getFreelancerCourseEnrollEmailContent();
+                    $email_params['title'] = $course->title;
+                    $email_params['course_link'] = url('instructor/' . $course->slug);
+                    $email_params['amount'] = $course->price;
+                    $email_params['freelancer_name'] = Helper::getUserName($userid);
+                    $email_params['employer_profile'] = url('profile/' . $user->slug);
+                    $email_params['employer_name'] = Helper::getUserName($user->id);
+                    $freelancer_data = User::find(intval($userid));
+                    Mail::to($freelancer_data->email)
+                        ->send(
+                            new FreelancerEmailMailable(
+                                'freelancer_email_course_enrolled',
+                                $template_data,
+                                $email_params
+                            )
+                        );
+                }
+                }
+                $json['type'] = 'success';
+                $json['message'] = trans('lang.status_update');
+                return $json;
+            } 
+        else {
+            $json['type'] = 'error';
+            $json['message'] = trans('lang.something_wrong');
+            return $json;
         }
     }
 }

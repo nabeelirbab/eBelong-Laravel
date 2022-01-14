@@ -2801,7 +2801,25 @@ class Helper extends Model
             return $status_list;
         }
     }
+    public static function getFreelancerCourseStatus($status = '')
+    {
+        $status_list = array(
+            'waiting' => array(
+                'title' => "waiting",
+                'value' => 'waiting',
+            ),
+            'enroll' => array(
+                'title' => 'enroll',
+                'value' => 'enroll',
+            ),
+        );
 
+        if (!empty($status) && array_key_exists($status, $status_list)) {
+            return $status_list[$status];
+        } else {
+            return $status_list;
+        }
+    }
     /**
      * Get service orders count
      *
@@ -3015,6 +3033,29 @@ class Helper extends Model
         $output .= "<a href='%employer_link%'>%employer_name%</a> has purchased your following service <a href='%service_link%'>%service_title%</a>.";
         $output .= "service Information is given below.";
         $output .= "service Amount : %service_amount%";
+        $output .= "%signature%";
+        return $output;
+    }
+
+    public static function getFreelancerNewCourseOrderEmailContent()
+    {
+        $output = "";
+        $output .= "Hello %freelancer_name%";
+        $output .= "<a href='%employer_link%'>%employer_name%</a> has purchased your following course<a href='%course_link%'>%course_title%</a>.";
+        $output .= "Course Information is given below.";
+        $output .= "Course Amount : %course_amount%";
+        $output .= "Student is waiting for you to enroll him";
+        $output .= "%signature%";
+        return $output;
+    }
+
+    public static function getFreelancerCourseEnrollEmailContent()
+    {
+        $output = "";
+        $output .= "Hello %freelancer_name%";
+        $output .= "<a href='%employer_link%'>%employer_name%</a> has enrolled you for the following course<a href='%course_link%'>%course_title%</a>.";
+        $output .= "Course Information is given below.";
+        $output .= "Course Amount : %course_amount%";
         $output .= "%signature%";
         return $output;
     }

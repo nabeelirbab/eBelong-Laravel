@@ -27,16 +27,18 @@
                             <div class="wt-service-tabel wt-jobservice-details">
                                 @if (!empty($freelancer))
                                     @if (!empty($attachment))
+                                    <a href="/instructor/{{ $course->slug }}">
                                         <figure class="service-feature-image"><img src="{{{asset('/uploads/courses/'.$freelancer->id.'/'.$attachment[0])}}}" alt="{{{$course['title']}}}"></figure>
-                                    @endif
+                                    </a>
+                                        @endif
                                 @endif
                                 <div class="wt-freelancers-content">
                                     <div class="dc-title">
                                         @if ($course['is_featured'] == 'true')
                                             <span class="wt-featuredtagvtwo">{{ trans('lang.featured') }}</span>
                                         @endif
-                                        <h3>{{{$course['title']}}}</h3>
-                                        <span><strong>{{ !empty($symbol) ? $symbol['symbol'] : '$' }}{{{$course['price']}}}</strong> {{ trans('lang.starting_from') }}</span>
+                                        <a href="/instructor/{{ $course->title }}"><h3>{{{$course['title']}}}</h3></a>
+                                        <span><strong>{{ !empty($symbol) ? $symbol['symbol'] : '$' }}{{{$course['price']}}}</strong></span>
                                     </div>
                                 </div>
                             </div>
@@ -123,7 +125,7 @@
                                                             <fieldset>
                                                                 <div class="form-group">
                                                                     <span class="wt-select">
-                                                                        {!! Form::select('status', $course_status, 'hired', array('id' =>'employer_service_status', 'data-placeholder' => trans('lang.select_status'), '@change' => 'courseStatus('.$course->id.', '.$pivot_id.', '.Auth::user()->id.', "'.$cancel_proposal_text.'", "'.$cancel_proposal_button.'", "'.$validation_error_text.'", "'.$cancel_popup_title.'")')) !!}
+                                                                        {!! Form::select('status', $course_status, 'bought', array('id' =>'employer_service_status', 'data-placeholder' => trans('lang.select_status'), '@change' => 'courseStatus('.$course->id.', '.$pivot_id.', '.Auth::user()->id.', "'.$cancel_proposal_text.'", "'.$cancel_proposal_button.'", "'.$validation_error_text.'", "'.$cancel_popup_title.'")')) !!}
                                                                     </span>
                                                                     <a href="javascrip:void(0);" class="wt-searchgbtn job_status_popup" @click.prevent='courseStatus({{$course->id}}, {{$pivot_id}}, {{Auth::user()->id}}, "{{$cancel_proposal_text}}", "{{$cancel_proposal_button}}", "{{$validation_error_text}}", "{{$cancel_popup_title}}")'><i class="fa fa-check"></i></a>
                                                                 </div>
@@ -136,14 +138,14 @@
                                     </div>
                                 </div>
                             @endif
-                            <div class="wt-projecthistory">
+                            {{-- <div class="wt-projecthistory">
                                 <div class="wt-tabscontenttitle">
                                     <h2>{{ trans('lang.project_history') }}</h2>
                                 </div>
                                 <div class="wt-historycontent la-jobdetails-holder">
-                                    <private-message :placeholder="'{{ trans('lang.ph_job_dtl') }}'" :upload_tmp_url="'{{url('service/upload-temp-message_attachments')}}'" :id="'{{$pivot_id}}'" :recipent_id="'{{$freelancer->id}}'" :project_type="'service'"></private-message>
+                                    <private-message :placeholder="'{{ trans('lang.ph_job_dtl') }}'" :upload_tmp_url="'{{url('course/upload-temp-message_attachments')}}'" :id="'{{$pivot_id}}'" :recipent_id="'{{$freelancer->id}}'" :project_type="'course'"></private-message>
                                 </div>
-                            </div>
+                            </div> --}}
                         @endif
                     </div>
                 </div>
