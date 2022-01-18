@@ -71,10 +71,16 @@
                                                                     <label for="remember">{{{ trans('lang.remember') }}}</label>
                                                                 </span>
                                                             </div>
+                                                            <div class="wt-logininfo linkedIn-btn">
+																<div style="display: flex;">
+																	<img class="linkedIn-btn-icon" src="{{ asset('uploads/social-media-icons/linkedin-logo.png') }}" alt="linkedin icon"> 
+																	<a href="/auth/linkedin/redirect">Sign Up With LinkedIn</a> 
+																</div>
+															</div>
                                                         </fieldset>
-                                                        <div class="wt-logininfo" style="display: block; width: 100%;padding: 6px 20px;">
-                                                            <a href="/auth/linkedin/redirect"class="wt-btn do-login-button"style ="background-color:#0072b1;width: 100% ">Login With LinkedIn</a>  
-                                                    </div>
+                                                        <!-- <div class="wt-logininfo" style="display: block; width: 100%;padding: 6px 20px;">
+                                                            <a href="/auth/linkedin/redirect"class="wt-btn do-login-button linkedIn-btn">Login With LinkedIn</a>  
+                                                    </div> -->
                                                         <div class="wt-loginfooterinfo">
                                                             @if (Route::has('password.request'))
                                                                 <a href="{{ route('password.request') }}" class="wt-forgot-password">{{{ trans('lang.forget_pass') }}}</a>
@@ -192,10 +198,16 @@
                                                                     <label for="remember">{{{ trans('lang.remember') }}}</label>
                                                                 </span>
                                                             </div>
+                                                            <div class="wt-logininfo linkedIn-btn">
+																<div style="display: flex;">
+																	<img class="linkedIn-btn-icon" src="{{ asset('uploads/social-media-icons/linkedin-logo.png') }}" alt="linkedin icon"> 
+																	<a href="/auth/linkedin/redirect">Sign Up With LinkedIn</a> 
+																</div>
+															</div>
                                                         </fieldset>
-                                                        <div class="wt-logininfo" style="display: block; width: 100%;padding: 6px 20px;">
-                                                            <a href="/auth/linkedin/redirect"class="wt-btn do-login-button"style ="background-color:#0072b1;width: 100% ">Login With LinkedIn</a>  
-                                                    </div>
+                                                        <!-- <div class="wt-logininfo" style="display: block; width: 100%;padding: 6px 20px;">
+                                                            <a href="/auth/linkedin/redirect"class="wt-btn do-login-button linkedIn-btn">Login With LinkedIn</a>  
+                                                    </div> -->
                                                         <div class="wt-loginfooterinfo">
                                                             @if (Route::has('password.request'))
                                                                 <a href="{{ route('password.request') }}" class="wt-forgot-password">{{{ trans('lang.forget_pass') }}}</a>
@@ -314,10 +326,17 @@
                                                                 <label for="remember">{{{ trans('lang.remember') }}}</label>
                                                             </span>
                                                         </div>
+
+                                                        <div class="wt-logininfo linkedIn-btn">
+															<div style="display: flex;">
+																<img class="linkedIn-btn-icon" src="{{ asset('uploads/social-media-icons/linkedin-logo.png') }}" alt="linkedin icon"> 
+																<a href="/auth/linkedin/redirect">Sign Up With LinkedIn</a> 
+															</div>
+														</div>
                                                     </fieldset>
-                                                    <div class="wt-logininfo" style="display: block; width: 100%;padding: 6px 20px;">
-                                                        <a href="/auth/linkedin/redirect"class="wt-btn do-login-button"style ="background-color:#0072b1;width: 100% ">Login With LinkedIn</a>  
-                                                </div>
+                                                    <!-- <div class="wt-logininfo" style="display: block; width: 100%;padding: 6px 20px;">
+                                                        <a href="/auth/linkedin/redirect"class="wt-btn do-login-button linkedIn-btn">Login With LinkedIn</a>  
+                                                </div> -->
                                                     <div class="wt-loginfooterinfo">
                                                         @if (Route::has('password.request'))
                                                             <a href="{{ route('password.request') }}" class="wt-forgot-password">{{{ trans('lang.forget_pass') }}}</a>
