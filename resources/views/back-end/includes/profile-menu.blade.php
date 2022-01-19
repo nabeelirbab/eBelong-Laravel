@@ -280,7 +280,9 @@
                             <ul class="sub-menu">
                                 <li><a href="{{{ route('CourseListing', ['status'=>'posted']) }}}">{{ trans('lang.posted_courses') }}</a></li>
                                 <li><a href="{{{ route('CourseListing', ['status'=>'bought']) }}}">{{ trans('lang.bought_courses') }}</a></li>
-                           </ul>
+                                <li><a href="{{{ route('CourseOrders') }}}">{{ trans('lang.course_orders') }}</a></li>
+
+                            </ul>
                         </li>
                     @endif
                     <li>
