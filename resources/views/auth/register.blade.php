@@ -23,7 +23,7 @@
     $breadcrumbs_settings = \App\SiteManagement::getMetaValue('show_breadcrumb');
     $show_breadcrumbs = !empty($breadcrumbs_settings) ? $breadcrumbs_settings : 'true';
 @endphp
-@if (!empty($show_reg_form_banner) && $show_reg_form_banner === 'true')
+<!-- @if (!empty($show_reg_form_banner) && $show_reg_form_banner === 'true')
     <div class="wt-haslayout wt-innerbannerholder" style="background-image:url({{{ asset(Helper::getBannerImage('uploads/settings/home/'.$reg_form_banner)) }}})">
         <div class="container">
             <div class="row justify-content-md-center">
@@ -43,11 +43,68 @@
             </div>
         </div>
     </div>
-@endif
-<div class="wt-haslayout wt-main-section">
-    <div class="container">
-        <div class="row justify-content-md-center">
-            <div class="col-xs-12 col-sm-12 col-md-10 push-md-1 col-lg-8 push-lg-2" id="registration">
+@endif -->
+<div class="wt-haslayout wt-main-section registration-section">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-5 push-md-1 col-lg-5 push-lg-2 registration-left-side">
+                <div class="registration-left-side-logo">
+                    <img class="" src="{{ asset('uploads/pages/registration/ebelong-logo.png') }}" alt="ebelong logo">
+                </div>
+                <div class="registration-left-side-text">
+                    <div class="registration-left-side-text-1">
+                        <h1 class="text1">Countless perks</h1>
+                        <h1 class="text2">to join our network</h1>
+                    </div>
+                    <div class="registration-left-side-text-2">
+                        eBelong connects you with new people.
+                    </div>
+                </div>
+                <div class="registration-carousel">
+                    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <div class="carousel-item-text"> Find courses or become an instructor </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="carousel-item-text"> Find Jobs, gigs, projects </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="carousel-item-text"> Join a community of innovators </div>
+                            </div>
+                            
+                        </div>    
+                        <ol class="carousel-indicators">
+                            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="registration-left-side-bottom-logo">
+                    <img class="" src="{{ asset('uploads/pages/registration/tree-image.png') }}" alt="ebelong logo">
+                </div>           
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-7 push-md-1 col-lg-7 push-lg-2 registration-right-side" id="registration">
+                @if (!empty($show_reg_form_banner) && $show_reg_form_banner === 'true')
+                    <div class="wt-haslayout wt-innerbannerholder" style="background-image:url({{{ asset(Helper::getBannerImage('uploads/settings/home/'.$reg_form_banner)) }}})">
+                        <div class="justify-content-md-center">
+                            <div class="wt-innerbannercontent">
+                                <div class="wt-title">
+                                    <h2>{{ trans('lang.join_for_free') }}</h2>
+                                </div>
+                                @if (!empty($show_breadcrumbs) && $show_breadcrumbs === 'true')
+                                    <ol class="wt-breadcrumb">
+                                        <li><a href="{{ url('/') }}">{{ trans('lang.home') }}</a></li>
+                                        <li class="wt-active">{{ trans('lang.join_now') }}</li>
+                                     </ol>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                @endif
+
                 <div class="preloader-section" v-if="loading" v-cloak>
                     <div class="preloader-holder">
                         <div class="loader"></div>
@@ -301,11 +358,29 @@
                         
                     <div class="wt-registerformfooter">
                         <span>{{{ trans('lang.have_account') }}}<a id="wt-lg" href="javascript:void(0);" @click.prevent='scrollTop()'>{{{ trans('lang.btn_login_now') }}}</a></span>
-                 
-
+                        <div class="row">
+                            <div class="col-lg-3 col-md-2 col-sm-3 col-xs-3"></div>
+                            <div class="col-lg-6 col-md-8 col-sm-6 col-xs-6">
+                                <div class="wt-registerformfooter-social-btn">
+                                    <div class="wt-logininfo linkedIn-btn">
+                                        <div style="display: flex;">
+                                            <img class="linkedIn-btn-icon" src="{{ asset('uploads/social-media-icons/linkedin-logo.png') }}" alt="linkedin icon"> 
+                                            <a href="/auth/linkedin/redirect">Sign Up With LinkedIn</a> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-2 col-sm-3 col-xs-3"></div>
+                        </div>
+                        
                     </div>
+                    
                 </div>
             </div>
         </div>
     </div>
+</div>
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
 @endsection
