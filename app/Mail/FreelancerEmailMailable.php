@@ -77,6 +77,9 @@ class FreelancerEmailMailable extends Mailable
         } elseif ($this->type == 'join_agency') {
             $email_message = $this->prepareFreelancerEmailJoinAgency($this->email_params);
         }
+        elseif ($this->type == 'freelancer_email_course_cancelled') {
+            $email_message = $this->prepareFreelancerEmailCourseCancel($this->email_params);
+        }
         $message = $this->from($from_email, $from_email_id)
             ->subject($subject)->view('emails.index')
             ->with(
@@ -529,6 +532,42 @@ class FreelancerEmailMailable extends Mailable
         $body .= EmailHelper::getEmailFooter();
         return $body;
     }
+
+    public function prepareFreelancerEmailCourseCancel($email_params)
+    {
+        extract($email_params);
+        $employer_name = $employer_name;
+        $freelancer_name = $freelancer_name;
+        $employer_link = $employer_profile;
+        $course_title = $title;
+        $course_link = $course_link;
+        $course_amount = $amount;
+        $signature = EmailHelper::getSignature();
+        $app_content = $this->template;
+        $email_content_default =    "Hello %freelancer_name%,
+
+                                    <a href='%employer_link%'>%employer_name%</a> has not enrolled you for the following course <a href='%course_link%'>%course_title%</a>.
+                                    ,Your course Amount has been refunded! course amount is %course_amount%. 
+                                    %signature%,";
+        //set default contents
+        if (empty($app_content)) {
+            $app_content = $email_content_default;
+        }
+        $app_content = str_replace("%employer_name%", $employer_name, $app_content);
+        $app_content = str_replace("%employer_link%", $employer_link, $app_content);
+        $app_content = str_replace("%freelancer_name%", $freelancer_name, $app_content);
+        $app_content = str_replace("%course_link%", $course_link, $app_content);
+        $app_content = str_replace("%course_title%", $course_title, $app_content);
+        $app_content = str_replace("%course_amount%", $course_amount, $app_content);
+        $app_content = str_replace("%signature%", $signature, $app_content);
+
+        $body = "";
+        $body .= EmailHelper::getEmailHeader();
+        $body .= $app_content;
+        $body .= EmailHelper::getEmailFooter();
+        return $body;
+    }
+
 
 
     public function prepareFreelancerEmailNewAgency($email_params){
