@@ -72,7 +72,7 @@ class HomeController extends Controller
 	   
 	   $freelancers = DB::table('users')
 			->join('profiles', 'profiles.user_id', '=', 'users.id')
-			->selectRaw('users.id as id,users.slug, users.first_name, users.last_name, profiles.avater, profiles.tagline, profiles.hourly_rate, users.location_id as userlocation')
+			->selectRaw('users.id as id,users.slug, users.first_name, users.last_name, profiles.avater, profiles.tagline, profiles.hourly_rate, users.location_id as userlocation,users.is_agency as has_agency,users.agency_id')
 			->where('users.is_featured',1)
 			->orderBy('users.id', 'DESC')->get()->toArray();
 			
@@ -81,7 +81,23 @@ class HomeController extends Controller
             foreach ($freelancers as $key => $freelancer) 
             {
                 // $skills = Skill::join('skill_user', 'skill_user.skill_id', '=', 'id')->selectRaw('skills.title,skills.slug')->get()->toArray();
+                if($freelancer->has_agency==0){
+                
+                $agency_id= DB::table('agency_associated_users')->where('user_id',$freelancer->id)->first();
+                // dd($agency_id);
+                if(!empty($agency_id)){
+                    $freelancer->has_agency = 1;
+                    $freelancer->agency_id=$agency_id->agency_id;
+                    $freelancer->agency_name= DB::table('agency_user')->where('id',$agency_id->agency_id)->pluck('agency_name')->first();
+                    $freelancer->agency_avatar= DB::table('agency_user')->where('id',$agency_id->agency_id)->pluck('agency_logo')->first();
+                }
+                else{
+                    $freelancer->agency_avatar = null;
+                    $freelancer->agency_name = null;
+                }
 
+                }
+                
                 $skills = Skill::getFreelancerSkill($freelancer->id);
                 $feedbacks = \App\Review::select('feedback')->where('receiver_id', $freelancer->id)->count();
                 $avg_rating = \App\Review::where('receiver_id', $freelancer->id)->sum('avg_rating');
@@ -121,6 +137,7 @@ class HomeController extends Controller
                     $freelancers[$key]->location_name = "";
                 }
             }
+            // dd($freelancers);
            
         }
         
@@ -130,7 +147,7 @@ class HomeController extends Controller
                 'categories',
                 'jobs',
                 'freelancers',
-                'user',
+                // 'user',
                 'all_skills'
             )
         ); 

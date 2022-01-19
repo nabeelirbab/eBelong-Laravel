@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Cartalyst\Stripe\Laravel\Facades\Stripe;
+use Stripe\Error\Card;
 use Illuminate\Http\Request;
 use App\Language;
 use App\Category;
@@ -852,10 +853,11 @@ class CourseController extends Controller
     public function getCourseSkills(Request $request)
     {
         $json = array();
-        if (!empty($request['slug'])) {
-            $course = $this->cource::where('slug', $request['slug'])->select('id')->first();
-            if (!empty($course)) {
-                $course = $this->cource::find($course['id']);
+        if (!empty($request['id'])) {
+            // $course = $this->cource::where('slug', $request['slug'])->select('id')->first();
+            
+                $course = $this->cource::find($request['id']);
+                if (!empty($course)) {
                 $skills = $course->skills->toArray();
                 if (!empty($skills)) {
                     $json['type'] = 'success';
@@ -869,7 +871,7 @@ class CourseController extends Controller
                 $json['error'] = 'error';
                 return $json;
             }
-        }
+      }
     }
     public function StudentsListing($course_id)
     {
@@ -933,55 +935,175 @@ class CourseController extends Controller
     
         return view('back-end.freelancer.courses.course-orders',compact('courses','status_list'));
     }
+    public function waitingStudents($course_id){
+        $courses = DB::table('cource_user')->where('status','waiting')->where('seller_id',Auth::user()->id)
+        ->where('cource_id',$course_id)->get();
+        $status_list = array_pluck(Helper::getFreelancerCourseStatus(), 'title', 'value');
+    
+        return view('back-end.freelancer.courses.course-orders',compact('courses','status_list'));
+    }
     public function changeCourseStatus(Request $request)
     {
         $json = array();
         if (!empty($request['id'])) {
                 if ($request['status']=='enroll'){
-                DB::table('cource_user')->where('id',$request['id'])->update(['status'=>"bought"]);
-                $courseid = DB::table('cource_user')->where('id',$request['id'])->pluck('cource_id')->first();
-                $userid = DB::table('cource_user')->where('id',$request['id'])->pluck('user_id')->first();
-                $freelancer = User::find($userid);
-                // code for changing order status from pending to completed
-                DB::table('orders')->where('product_id',$courseid)->where('user_id',$userid)->update(['status'=>"completed"]);
-                $course = Cource::find($courseid);
-                $user = User::find(intval(Auth::user()->id));
-                 // send message to student
-                 $message = new Message();
-                 $message->user()->associate($user);
-                 $message->receiver_id = intval($userid);
-                 $message->body = 'Your Request For the Course is Accepted by the Instructor '.Helper::getUserName(Auth::user()->id) . ' ' . 'welcome to' . ' ' . $course->title;
-                 $message->status = 0;
-                 $message->save();
-                 // send mail
-                 if (trim(env('MAIL_USERNAME')) != "" && trim(env('MAIL_PASSWORD')) != "") {
-                    $email_params = array();
-                    $template_data = Helper::getFreelancerCourseEnrollEmailContent();
-                    $email_params['title'] = $course->title;
-                    $email_params['course_link'] = url('instructor/' . $course->slug);
-                    $email_params['amount'] = $course->price;
-                    $email_params['freelancer_name'] = Helper::getUserName($userid);
-                    $email_params['employer_profile'] = url('profile/' . $user->slug);
-                    $email_params['employer_name'] = Helper::getUserName($user->id);
-                    $freelancer_data = User::find(intval($userid));
-                    Mail::to($freelancer_data->email)
-                        ->send(
-                            new FreelancerEmailMailable(
-                                'freelancer_email_course_enrolled',
-                                $template_data,
-                                $email_params
-                            )
-                        );
+                    //capture Payment
+                    if (!empty(env('STRIPE_SECRET'))) {
+                        \Artisan::call('optimize:clear');
+                        $stripe = Stripe::make(env('STRIPE_SECRET'));
+                    } else {
+                        // Session::flash('error', trans('lang.empty_stripe_key'));
+                        // return Redirect::back();
+                        $json['type'] = 'error';
+                        $json['message'] = trans('lang.empty_stripe_key');
+                        return $json;
+                    }
+                    try {
+                        $invoice_id= DB::table('cource_user')->where('id',$request['id'])->pluck('invoice_id')->first();
+                        $transaction_id = DB::table('invoices')->where('id',$invoice_id)->pluck('transaction_id')->first();
+                        $amount = DB::table('invoices')->where('id',$invoice_id)->pluck('price')->first();
+                        $capture = $stripe->charges()->capture($transaction_id);
+                        if ($capture['status'] == 'succeeded') {
+                            DB::table('cource_user')->where('id',$request['id'])->update(['status'=>"bought"]);
+                            $courseid = DB::table('cource_user')->where('id',$request['id'])->pluck('cource_id')->first();
+                            $userid = DB::table('cource_user')->where('id',$request['id'])->pluck('user_id')->first();
+                            $freelancer = User::find($userid);
+                            // code for changing order status from pending to completed
+                            DB::table('orders')->where('product_id',$courseid)->where('user_id',$userid)->update(['status'=>"completed"]);
+                            $course = Cource::find($courseid);
+                            $user = User::find(intval(Auth::user()->id));
+                            
+            
+                            // send message to student
+                            $message = new Message();
+                            $message->user()->associate($user);
+                            $message->receiver_id = intval($userid);
+                            $message->body = 'Your Request For the Course is Accepted by the Instructor '.Helper::getUserName(Auth::user()->id) . ' ' . 'welcome to' . ' ' . $course->title;
+                            $message->status = 0;
+                            $message->save();
+                            // send mail
+                            if (trim(env('MAIL_USERNAME')) != "" && trim(env('MAIL_PASSWORD')) != "") {
+                                $email_params = array();
+                                $template_data = Helper::getFreelancerCourseEnrollEmailContent();
+                                $email_params['title'] = $course->title;
+                                $email_params['course_link'] = url('instructor/' . $course->slug);
+                                $email_params['amount'] = $course->price;
+                                $email_params['freelancer_name'] = Helper::getUserName($userid);
+                                $email_params['employer_profile'] = url('profile/' . $user->slug);
+                                $email_params['employer_name'] = Helper::getUserName($user->id);
+                                $freelancer_data = User::find(intval($userid));
+                                Mail::to($freelancer_data->email)
+                                    ->send(
+                                        new FreelancerEmailMailable(
+                                            'freelancer_email_course_enrolled',
+                                            $template_data,
+                                            $email_params
+                                        )
+                                    );
+                            
+                                        
+                            } 
+                            $json['type'] = 'success';
+                            $json['message'] = trans('lang.status_update');
+                            return $json;
+
+
+                        }
+                        else {
+                            $json['type'] = 'error';
+                            $json['message'] = trans('lang.money_not_add');
+                            return $json;
+                        }
+                    
+                    
+                        }
+        
+                    
+                    catch (Exception $e) {
+                        $json['type'] = 'error';
+                        $json['message'] = $e->getMessage();
+                        return $json;
+                    }
+               }
+               if ($request['status']=='cancel'){
+                   //capture Payment
+                   if (!empty(env('STRIPE_SECRET'))) {
+                    \Artisan::call('optimize:clear');
+                    $stripe = Stripe::make(env('STRIPE_SECRET'));
+                } else {
+                    // Session::flash('error', trans('lang.empty_stripe_key'));
+                    // return Redirect::back();
+                    $json['type'] = 'error';
+                    $json['message'] = trans('lang.empty_stripe_key');
+                    return $json;
                 }
+                try {
+                    $invoice_id= DB::table('cource_user')->where('id',$request['id'])->pluck('invoice_id')->first();
+                    $transaction_id = DB::table('invoices')->where('id',$invoice_id)->pluck('transaction_id')->first();
+                    $amount = DB::table('invoices')->where('id',$invoice_id)->pluck('price')->first();
+                    $refund = $stripe->refunds()->create(
+                      $transaction_id
+
+                    );
+                    if ($refund['status'] == 'succeeded') {
+                        $courseid = DB::table('cource_user')->where('id',$request['id'])->pluck('cource_id')->first();
+                        $userid = DB::table('cource_user')->where('id',$request['id'])->pluck('user_id')->first();
+                        $freelancer = User::find($userid);
+                        DB::table('cource_user')->where('id',$request['id'])->delete();
+                        DB::table('orders')->where('product_id',$courseid)->where('user_id',$userid)->delete();
+                        $course = Cource::find($courseid);
+                        $user = User::find(intval(Auth::user()->id));
+                          // send message to student
+                          $message = new Message();
+                          $message->user()->associate($user);
+                          $message->receiver_id = intval($userid);
+                          $message->body = 'Your Request For the Course '.$course->title.' is Denied by the Instructor '.Helper::getUserName(Auth::user()->id).'. Your Payment has been refunded';
+                          $message->status = 0;
+                          $message->save();
+                          //add mail code
+                          if (trim(env('MAIL_USERNAME')) != "" && trim(env('MAIL_PASSWORD')) != "") {
+                            $email_params = array();
+                            $template_data = Helper::getFreelancerCoursePaymentRefundEmailContent();
+                            $email_params['title'] = $course->title;
+                            $email_params['course_link'] = url('instructor/' . $course->slug);
+                            $email_params['amount'] = $course->price;
+                            $email_params['freelancer_name'] = Helper::getUserName($userid);
+                            $email_params['employer_profile'] = url('profile/' . $user->slug);
+                            $email_params['employer_name'] = Helper::getUserName($user->id);
+                            $freelancer_data = User::find(intval($userid));
+                            Mail::to($freelancer_data->email)
+                                ->send(
+                                    new FreelancerEmailMailable(
+                                        'freelancer_email_course_cancelled',
+                                        $template_data,
+                                        $email_params
+                                    )
+                                );
+                        
+                                    
+                        }
+
+                        $json['type'] = 'success';
+                        $json['message'] = trans('lang.status_update');
+                        return $json;
+                        
+                    }
+                    else{
+
+                        $json['type'] = 'error';
+                        $json['message'] = trans('lang.money_not_add');
+                        return $json;
+
+                    }
+                        
                 }
-                $json['type'] = 'success';
-                $json['message'] = trans('lang.status_update');
-                return $json;
-            } 
-        else {
-            $json['type'] = 'error';
-            $json['message'] = trans('lang.something_wrong');
-            return $json;
-        }
-    }
-}
+                catch (Exception $e) {
+                    $json['type'] = 'error';
+                    $json['message'] = $e->getMessage();
+                    return $json;
+                }
+
+            }
+        }  
+    }     
+}  

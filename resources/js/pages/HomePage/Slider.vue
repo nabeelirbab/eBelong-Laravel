@@ -27,7 +27,8 @@
             
             <!-- <img v-if="item.is_certified == 1" style="margin-left: 180px;height: 40px;" :src="`${baseUrl}/images/certified/Certified_Icon.png`"/> -->
             <img v-if="item.is_certified == 1" style="position: absolute; top: 10px; right: 8px; max-width: 50px;" :src="`${baseUrl}/images/certified/Certified_Icon.png`"/>
-
+             <!-- <img v-if="item.has_agency == 1" style="position: absolute; top: 10px; right: 8px; max-width: 50px;" :src="`${baseUrl}/uploads/agency_logos/${item.agency_id}/${item.agency_avatar}`"/> -->
+           
 
             <div  v-on:click="() => onClick(item.slug)" class="e-freelancer__item-image c-pointer">
               <img :src="item.imagePath" :alt="item.first_name" />

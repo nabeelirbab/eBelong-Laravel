@@ -10,33 +10,34 @@
 				</div>
 				<div class="wt-dashboardbox wt-dashboardservcies">
 					<div class="wt-dashboardboxtitle wt-titlewithsearch">
-						<h2>{{ trans('lang.cource_listing') }}</h2>
+						<h2>{{ trans('lang.course_orders') }}</h2>
 					</div>
 					<div class="wt-dashboardboxcontent wt-categoriescontentholder">
-						@if ($cources->count() > 0)
+						@if ($courses->count() > 0)
 							<table class="wt-tablecategories wt-tableservice">
 								<thead>
 									<tr>
 										<th>{{ trans('lang.course_title') }}</th>
+										<th>{{ 'Student Name' }}</th>
 										<th>{{ trans('lang.course_status') }}</th>
 										<th>Students Enrolled</th>
-										<th>Students On Wait</th>
-										<th>{{ trans('lang.action') }}</th>
 									</tr>
 								</thead>
 								<tbody>
-									@foreach ($cources as $cource)
+									@foreach ($courses as $course)
 										@php 
+										    $username = ucwords(\App\Helper::getUserName($course->user_id));
+                                            $cource = App\Cource::find($course->cource_id);
+											$seller = $course->seller_id;
 											$attachment = Helper::getUnserializeData($cource['attachments']); 
 											$total_orders = Helper::getcourceCount($cource['id'],'bought');
-											$total_waiting_students = Helper::getcourceCount($cource['id'],'waiting');
 										@endphp
 										<tr class="del-{{{ $cource['status'] }}}">
 											<td data-th="Service Title">
 												<span class="bt-content">
 													<div class="wt-service-tabel">
 														@if (!empty($attachment))
-															<figure class="service-feature-image"><img src="{{{asset( Helper::getImageWithSize('uploads/courses/'.Auth::user()->id, $attachment[0], 'small' ))}}}" alt="{{{$cource['title']}}}"></figure>
+															<figure class="service-feature-image"><img src="{{{asset( Helper::getImageWithSize('uploads/courses/'.$seller, $attachment[0], 'small' ))}}}" alt="{{{$cource['title']}}}"></figure>
 														@endif
 														<div class="wt-freelancers-content">
 															<div class="dc-title">
@@ -44,21 +45,22 @@
 																	<span class="wt-featuredtagvtwo">Featured</span>
 																@endif
 																<h3>{{{$cource['title']}}}</h3>
-																<span><strong>{{ !empty($symbol) ? $symbol['symbol'] : '$' }}{{{$cource['price']}}}</strong> {{ trans('lang.starting_from') }}</span>
+																<span><strong>{{ !empty($symbol) ? $symbol['symbol'] : '$' }}{{{$cource['price']}}}</strong></span>
 															</div>
 														</div>
 													</div>
 												</span>
 											</td>
+											<td>{{ $username }}</td>
 											<td data-th="Service Status">
 												<span class="bt-content">
 													<form class="wt-formtheme wt-formsearch" id="change_job_status">
 														<fieldset>
 															<div class="form-group">
 																<span class="wt-select">
-																	{!! Form::select('status', $status_list, $cource['status'], array('id'=>$cource["id"].'-cource_status', 'data-placeholder' => trans('lang.select_status'))) !!}
+																	{!! Form::select('status', $status_list, $course->status, array('id'=>$course->id.'-course_status', 'data-placeholder' => trans('lang.select_status'))) !!}
 																</span>
-																<a href="javascrip:void(0);" class="wt-searchgbtn job_status_popup" @click.prevent='changeStatus({{$cource['id']}})'><i class="fa fa-check"></i></a>
+																<a href="javascrip:void(0);" class="wt-searchgbtn job_status_popup" @click.prevent='changeCourseStatus({{$course->id}})'><i class="fa fa-check"></i></a>
 															</div>
 														</fieldset>
 													</form>
@@ -79,22 +81,7 @@
 													</span>
 												</span>
 											</td>
-											<td data-th="In Queue">
-												<span class="bt-content">
-													<span>
-														@if ($total_orders > 0)
-														<a href="/course/{{ $cource["id"] }}/waiting-students">
-															<i class="fa fa-spinner fa-spin"></i> 
-															{{{$total_waiting_students}}} Students waiting for Approval
-														</a>
-														@else
-														<a href="#" >0 Students on Wait</a>
-														@endif
-														
-													</span>
-												</span>
-											</td>
-											<td data-th="Action">
+											{{-- <td data-th="Action">
 												<span class="bt-content">
 													<div class="wt-actionbtn">
 														<a href="{{{route('CourceDetail',$cource['slug'])}}}" class="wt-viewinfo">
@@ -108,7 +95,7 @@
 														@endif
 													</div>
 												</span>
-											</td>
+											</td> --}}
 										</tr>	
 									@endforeach
 								</tbody>

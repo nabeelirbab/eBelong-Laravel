@@ -2807,10 +2807,15 @@ class Helper extends Model
             'waiting' => array(
                 'title' => "waiting",
                 'value' => 'waiting',
+                
             ),
             'enroll' => array(
                 'title' => 'enroll',
                 'value' => 'enroll',
+            ),
+            'cancel' => array(
+                'title' => 'cancel and refund',
+                'value' => 'cancel',
             ),
         );
 
@@ -3055,6 +3060,16 @@ class Helper extends Model
         $output .= "Hello %freelancer_name%";
         $output .= "<a href='%employer_link%'>%employer_name%</a> has enrolled you for the following course<a href='%course_link%'>%course_title%</a>.";
         $output .= "Course Information is given below.";
+        $output .= "Course Amount : %course_amount%";
+        $output .= "%signature%";
+        return $output;
+    }
+    public static function getFreelancerCoursePaymentRefundEmailContent()
+    {
+        $output = "";
+        $output .= "Hello %freelancer_name%";
+        $output .= "<a href='%employer_link%'>%employer_name%</a> has not enrolled you for the following course<a href='%course_link%'>%course_title%</a>.";
+        $output .= "Your Course Payment has been refunded";
         $output .= "Course Amount : %course_amount%";
         $output .= "%signature%";
         return $output;
