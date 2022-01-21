@@ -4893,3 +4893,19 @@ body.rtl .wt-uploadrating .modal-body{text-align: right;}
 .custome-datatable .hideClick.sorting {
 	background-image: unset;
 }
+
+.invitations-buttons {
+	text-align: center;	
+}
+.invitations-buttons button{
+	padding: 0.8rem 4rem;
+	border-radius: 4px;
+	font-size: 0.8rem;
+}
+
+.invitations-buttons .e-button-primary {
+    background: #9013F3;
+    color: #fff;
+    box-shadow: 0px 5px 22px rgb(144 19 243 / 27%);
+}
+
