@@ -48,15 +48,23 @@ class LinkedinController extends Controller
 
 
             ];
+            $emailExisted = User::where('email', $user->email)->first();
             $userExisted = User::where('oauth_id', $user->id)->where('oauth_type', static::DRIVER_TYPE)->first();
-            
             if( $userExisted ) {
                 
                 Auth::login($userExisted);
 
                 return redirect()->route('freelancerDashboard');
 
-            }else {
+            }
+            elseif ($emailExisted){
+                User::where('email', $user->email)->update(["oauth_id"=>$user->id, "oauth_type"=>static::DRIVER_TYPE]);
+                $emailExisted = User::where('email', $user->email)->first();
+                Auth::login($emailExisted);
+                return redirect()->route('freelancerDashboard');
+
+            }
+            else {
                 $verification_code = Session::get('code');
                 $newUser = $this->User->storeUser(
                     $request , $verification_code
@@ -72,8 +80,8 @@ class LinkedinController extends Controller
 
 
         } catch (Exception $e) {
-            Session::flash('error', $e);
-            return Redirect::back();
+            Session::flash('error', "Account Already Exists");
+            return redirect()->back();
         }
 
     }

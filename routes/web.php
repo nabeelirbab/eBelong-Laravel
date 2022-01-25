@@ -353,7 +353,7 @@ Route::group(
         Route::get('freelancer/dashboard/edit-service/{id}', 'ServiceController@edit')->name('edit_service');
         Route::get('freelancer/dashboard/edit-course/{id}', 'CourseController@edit')->name('edit_course');
         Route::post('course/get-stored-course-skills', 'CourseController@getCourseSkills');
-        Route::post('skills/get-course-skills', 'SkillController@getCourseSkills');
+        Route::get('skills/get-course-skills', 'SkillController@getCourseSkills');
         Route::post('services/post-service', 'ServiceController@store');
         Route::post('courses/post-course', 'CourseController@store');
         Route::post('service/upload-temp-image', 'ServiceController@uploadTempImage');
@@ -396,8 +396,9 @@ Route::group(
     ['middleware' => ['role:freelancer']],
     function () {
         Route::get('/get-freelancer-skills', 'SkillController@getFreelancerSkills');
-        Route::get('/get-freelancer-skills', 'SkillController@getCourseSkills');
+        // Route::get('/get-freelancer-skills', 'SkillController@getCourseSkills');
         Route::get('course/{id}/enrolled-students', 'CourseController@StudentsListing');
+        Route::get('course/{id}/waiting-students', 'CourseController@waitingStudents');
         Route::get('/get-skills', 'SkillController@getSkills');
         Route::get('freelancer/dispute/{slug}', 'UserController@raiseDispute');
         Route::post('freelancer/store-dispute', 'UserController@storeDispute');

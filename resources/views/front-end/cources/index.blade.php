@@ -18,7 +18,7 @@
                     <div class="col-xs-12 col-sm-12 col-md-8 push-md-2 col-lg-6 push-lg-3">
                         <div class="wt-innerbannercontent">
                             <div class="wt-title">
-                                <h2>Instructors</h2>
+                                <h2>Courses</h2>
                             </div>
                             @if (!empty($show_breadcrumbs) && $show_breadcrumbs === 'true')
                                 @if (count($breadcrumbs))
@@ -47,7 +47,7 @@
                 :employer_placeholder="'{{ trans('lang.search_filter_list.employers') }}'"
                 :job_placeholder="'{{ trans('lang.search_filter_list.jobs') }}'"
                 :service_placeholder="'{{ trans('lang.search_filter_list.services') }}'"
-                :instructor_placeholder="'{{ trans('lang.search_filter_list.instructors') }}'"
+                :instructor_placeholder="'{{ trans('lang.search_filter_list.courses') }}'"
                 :no_record_message="'{{ trans('lang.no_record') }}'"
                 >
                 </search-form>

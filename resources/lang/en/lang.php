@@ -1376,7 +1376,7 @@ return [
         'jobs_val' => 'job',
         'employers_val' => 'employer',
         'service_val' => 'service',
-        'instructors' => 'Instructors',
+        'courses' => 'Courses',
     ],
     'social_icons' => [
         'fb' => 'Facebook',

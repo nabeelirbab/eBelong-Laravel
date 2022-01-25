@@ -124,14 +124,31 @@ class StripeController extends Controller
                     $json['message'] = 'The Stripe Token was not generated correctly';
                     return $json;
                 }
-                $payment_detail = $stripe->charges()->create(
+                if (session()->has('project_type')) {
+                    $project_type = session()->get('project_type');
+                    if ($project_type == 'course') {
+                        $payment_detail = $stripe->charges()->create(
                     [
                         'card' => $token['id'],
                         'currency' => $currency,
                         'amount'   => $product_price,
                         'description' => trans('lang.add_in_wallet'),
+                        'capture' => false,
                     ]
-                );
+                        );
+                    }
+                }
+        else{
+            $payment_detail = $stripe->charges()->create(
+                [
+                    'card' => $token['id'],
+                    'currency' => $currency,
+                    'amount'   => $product_price,
+                    'description' => trans('lang.add_in_wallet'),
+                    
+                ]
+            );
+        }
 
                 $customer = $stripe->customers()->create(
                     [
@@ -271,7 +288,7 @@ class StripeController extends Controller
                                         ['user_id' => $user_id, 'product_id'=>$id,'type'=>'course','cource_product_id' => $id, 'invoice_id' => $invoice_id, 'status' => 'pending', 'created_at' => \Carbon\Carbon::now(), 'updated_at' => \Carbon\Carbon::now()]
                                     );
                                     $course = Cource::find($id);
-                                    $course->users()->attach(Auth::user()->id, ['type' => 'employer', 'status' => 'waiting', 'seller_id' => $freelancer, 'paid' => 'completed']);
+                                    $course->users()->attach(Auth::user()->id, ['type' => 'employer', 'status' => 'waiting', 'seller_id' => $freelancer, 'paid' => 'completed','invoice_id' => $invoice_id,]);
                                     $course->save();
                                     // send message to freelancer
                                     $message = new Message();

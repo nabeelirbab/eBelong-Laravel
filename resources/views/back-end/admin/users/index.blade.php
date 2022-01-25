@@ -72,6 +72,8 @@
                                                 <td>
                                                     @if($user->invitation_status==1)
                                                         {{ 'Invited' }}
+                                                    @elseif($user->oauth_type=='linkedin')
+                                                         {{ 'Via LinkedIn' }}
                                                     @else
                                                         {{ 'Not Invited' }}
                                                     @endif
