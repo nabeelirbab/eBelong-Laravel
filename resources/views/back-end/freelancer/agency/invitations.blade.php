@@ -44,6 +44,10 @@
                                         @endif
                                     </div>
                                 </div>
+                                <div class="invitations-buttons">
+                                    <button onclick="" class="e-button e-button-primary">Accept</button>
+						            <button onclick="" class="e-button e-button-primary my-3">Decline</a></button>
+                                </div>
                             </div>
                         </div>
                     </div>
