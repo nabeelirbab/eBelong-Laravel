@@ -381,7 +381,7 @@
                 </ul>
             </nav>
             <div class="wt-navdashboard-footer">
-                <span>{{{ $copyright }}}</span>
+                <span>Copyright © <?php echo date("Y"); ?> eBelong, All Right Reserved eBelong</span>
                 <span class="version-area">{{ config('app.version') }}</span>
             </div>
         </div>

@@ -44,6 +44,7 @@
                                         <th>{{{ trans('lang.is_certified') }}}</th>
                                         <th>{{{ trans('lang.is_disabled') }}}</th>
                                         <th>{{{ trans('lang.assign_badge') }}}</th>
+                                        <th>{{{ trans('lang.is_rating') }}}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -103,6 +104,16 @@
                                                         <option value="{{$badge->id}}" {{ $user->badge_id == $badge->id ? "selected":"" }}>{{$badge->title}}</option>
                                                         @endforeach
 														
+													</select>
+												</td>
+                                                <td>
+													<select>
+														<option value="0">0</option>
+														<option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                        <option value="5">5</option>
 													</select>
 												</td>
                                                 <td>
