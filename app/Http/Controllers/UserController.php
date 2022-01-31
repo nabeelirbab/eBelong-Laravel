@@ -320,7 +320,7 @@ class UserController extends Controller
                             $agency['agency_size'] = trim($data['agency_size']);
 
                             request()->validate([
-                                'agency_logo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                                'agency_logo' => 'required|file|mimes:jpeg,png,jpg,gif,svg|max:2048',
                             ]);
                             $agency['agency_logo'] = null;
 
@@ -497,27 +497,35 @@ class UserController extends Controller
 
     public function inviteToAgency(Request $request) {
 
+        if(!empty($request->member_role)){
+            $user_id = User::select('id')->where('email', $request->invitation_email)->get();
 
-        $user_id = User::select('id')->where('email', $request->invitation_email)->get();
+            if (count($user_id) > 0) {
 
-        if (count($user_id) > 0) {
 
-            $associate_user = DB::table('agency_associated_users')->insert(
-                ['agency_id' => $request->agency_id, 'user_id' => $user_id[0]['id'], 'member_role' => $request->member_role, 'is_pending' => 1]
-            );
+                $associate_user = DB::table('agency_associated_users')->insert(
+                    ['agency_id' => $request->agency_id, 'user_id' => $user_id[0]['id'], 'member_role' => $request->member_role, 'is_pending' => 1]
+                );
 
-            if ($associate_user === true) {
-                Session::flash('message', 'Invitation has sent.');
-                return Redirect::back();
+                if ($associate_user === true) {
+                    Session::flash('message', 'Invitation has sent.');
+                    return Redirect::back();
+                }
+                else {
+                    Session::flash('error', 'Unable to invite user.');
+                    return Redirect::back();
+                }
             }
             else {
-                Session::flash('error', 'Unable to invite user.');
+                Session::flash('error', 'No users found with this email.');
                 return Redirect::back();
             }
+
         }
-        else {
-            Session::flash('error', 'No users found with this email.');
+        else{
+            Session::flash('error', 'Please Choose the Role.');
             return Redirect::back();
+
         }
 
 

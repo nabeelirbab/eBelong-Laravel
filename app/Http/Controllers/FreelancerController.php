@@ -1242,8 +1242,8 @@ else {
         if (Auth::user()) {
             $payrols = Helper::getPayoutsList();
             $user = User::find(Auth::user()->id);
-            $location = Location::select('title')->where('id',$user->location_id)->first();
-            $user->location_name = $location->title; 
+            // $location = Location::select('title')->where('id',$user->location_id)->first();
+            // $user->location_name = $location->title; 
             $payout_settings = $user->profile->count() > 0 ? Helper::getUnserializeData($user->profile->payout_settings) : '';
             if (file_exists(resource_path('views/extend/back-end/freelancer/payouts/payout_settings.blade.php'))) {
                 return view(

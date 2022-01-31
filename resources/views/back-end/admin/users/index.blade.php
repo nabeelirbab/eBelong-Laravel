@@ -37,6 +37,7 @@
                                         <th>{{{ trans('lang.user_name') }}}</th>
                                         <th>{{{ trans('lang.ph_email') }}}</th>
                                         <th>{{{ trans('lang.role') }}}</th>
+                                        <th>{{{ "Agency Type" }}}</th>
                                         <th>{{{ trans('lang.joining_date') }}}</th>
                                         <th>{{{ trans('lang.invited_at') }}}</th>
                                         <th>{{{ trans('lang.invitation_status') }}}</th>
@@ -51,14 +52,23 @@
                                         @php 
                                         $user = \App\User::find($user_data['id']);
                                         $badges = \App\Badge::all();
+                                        $is_agency_member = DB::table('agency_associated_users')->where('user_id', $user->id)->where('is_accepted',0)->first();
                                         @endphp
                                         @if ($user->getRoleNames()->first() != 'admin')
                                             <tr class="del-user-{{ $user->id }}">
                                                 <td>{{{ ucwords(\App\Helper::getUserName($user->id)) }}}</td>
                                                 <td>{{{ $user->email }}}</td>
                                                 <td>{{{ ucfirst($user->getRoleNames()->first()) }}}</td>
+                                                <td>@if($user->is_agency==1)
+                                                    {{ " Agency Creator" }}
+                                                @elseif(!empty($is_agency_member))
+                                                     {{ 'Agency Member' }}
+                                                @else
+                                                    {{ 'Not associated with agency' }}
+                                                @endif</td>
                                                 <?php $default = "0000-00-00 00:00:00"; ?>                                               
                                                 <td><?= date('d/m/Y', strtotime($user->created_at)) ?></td>
+                                                
                                                 <td>
                                                 <?php
                                                 if($user->invited_at > $default)

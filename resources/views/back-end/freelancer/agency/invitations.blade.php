@@ -40,13 +40,13 @@
                                                 <div class="alert alert-warning" role="alert">
                                                     You have been invited to join -- <a target="_blank" href="{{ url('agency/'.$details['slug']) }}">{{ $details['agency_name'] }}</a> by {{ \App\Helper::getUserName($details['user_id']) }}
                                                 </div>
+                                                <div class="invitations-buttons">
+                                                    <button onclick = "location.href='/agency/acceptInvitation/{{ $details['id'] }}'" class="e-button e-button-primary">Accept</button>
+                                                    <button onclick="location.href='/agency/declineInvitation/{{ $details['id'] }}'" class="e-button e-button-primary my-3">Decline</a></button>
+                                                </div>
                                             @endforeach
                                         @endif
                                     </div>
-                                </div>
-                                <div class="invitations-buttons">
-                                    <button onclick="" class="e-button e-button-primary">Accept</button>
-						            <button onclick="" class="e-button e-button-primary my-3">Decline</a></button>
                                 </div>
                             </div>
                         </div>

@@ -336,9 +336,25 @@
                                     <span> {{ trans('lang.payouts') }}</span>
                                 </a>
                             </li>
+                            <?php
+                            $is_agency_member = DB::table('agency_associated_users')->where('user_id',Auth::user()->id)->where('is_accepted',1)->first();
+                            ?>
                             @if(count(Helper::getAgencyList(0,array('user_id'=>Auth::user()->id))))
+                            <?php $slug = (Helper::getAgencyList(0,array('user_id'=>Auth::user()->id))[0]->slug); ?>
 							<li>
-                                <a href="agency-members">
+                               
+                                <a href="{{{ url('agency/'.$slug)}}}">
+                                    <i class="fa fa-users"></i>
+                                    <span> {{ trans('lang.agency_section') }}</span>
+                                </a>
+                            </li>
+        
+                            @elseif(!empty($is_agency_member))
+                            <li>
+                                <?php $id = DB::table('agency_associated_users')->select('agency_id')->where('user_id',Auth::user()->id)->where('is_accepted',1)->first();
+                                $slug =  DB::table('agency_user')->select('slug')->where('id',$id->agency_id)->first();
+                                ?>
+                                <a href="{{{ url('agency/'.$slug->slug)}}}">
                                     <i class="fa fa-users"></i>
                                     <span> {{ trans('lang.agency_section') }}</span>
                                 </a>

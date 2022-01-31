@@ -3024,6 +3024,15 @@ class Helper extends Model
         return $service->status;
     }
 
+    public static function getAgencyInvitationAcceptEmailContent()
+    {
+        $output = "";
+        $output .= "Hello %creator_name%";
+        $output .= "Your %agency_name% join is request accepted successfully by <strong><a href='%member_link%'>'%member_name%'</a>";
+        $output .= "%signature%";
+        return $output;
+    }
+
     /**
      * Service new order email content
      *

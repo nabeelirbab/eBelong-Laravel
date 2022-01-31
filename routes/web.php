@@ -436,6 +436,8 @@ Route::group(
         Route::get('agency/create/new', 'AgencyController@createNew')->name('agencyNew');
         Route::get('agency-members', 'AgencyController@viewMembers')->name('Members');
         Route::get('agency/invitations/list', 'AgencyController@viewInvites');
+        Route::get('agency/acceptInvitation/{agencyid}', 'AgencyController@acceptInvitation');
+        Route::get('agency/declineInvitation/{agencyid}', 'AgencyController@DeclineInvitation');
         Route::post('agency/upload-temp-image', 'AgencyController@uploadTempImage');
         Route::get('agency/users','AgencyController@index')->name('agency-user-list');
         Route::get('agency-user-status-change/{id}','AgencyController@updateStatus');
