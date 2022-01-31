@@ -590,8 +590,11 @@
     display: flex;
     align-items: center;
     margin: 0px 40px;
+    img {
+        height: 35px;
+        width: 35px;
+    }
     &-image {
-        max-width: 30px;
         margin-right: 10px;
         &-area {
             border-radius: 100%;

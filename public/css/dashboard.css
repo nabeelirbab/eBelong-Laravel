@@ -4909,3 +4909,24 @@ body.rtl .wt-uploadrating .modal-body{text-align: right;}
     box-shadow: 0px 5px 22px rgb(144 19 243 / 27%);
 }
 
+.course-skills .wt-skillsform fieldset .form-group {
+	padding-right: unset;
+}
+
+.course-skills .wt-skillsform fieldset .form-group.wt-btnarea {
+	position: static;
+	padding-left: 5px;
+}
+
+.customized-submit-button {
+    background: #9013F3;
+    color: #fff;
+    box-shadow: 0px 5px 22px rgb(144 19 243 / 27%);
+    padding: 0.8rem 4rem;
+    font-size: 1rem;
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    border-radius: 2px;
+    text-align: right;
+	margin-top: 20px;
+}
