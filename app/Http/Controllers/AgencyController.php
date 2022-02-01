@@ -287,8 +287,8 @@ class AgencyController extends Controller
         }
     }
     public function acceptInvitation($agencyid){
-        $user_has_agency = DB::table('agency_associated_users')->where('user_id',Auth::user()->id)->where('is_accepted' , 0)->first();
-    //    dd($user_has_agency);
+        $user_has_agency = DB::table('agency_associated_users')->where('user_id',Auth::user()->id)->where('is_accepted' , 1)->first();
+    // dd($user_has_agency);
         if(empty($user_has_agency)){
         DB::table('agency_associated_users')->where('agency_id',$agencyid)->where('user_id',Auth::user()->id)->update(array('is_pending'=>0, 'is_accepted'=>1));
         $agency_name = DB::table('agency_user')->select('agency_name')->where('id',$agencyid)->first();
