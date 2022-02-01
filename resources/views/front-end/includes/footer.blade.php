@@ -97,7 +97,7 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-						<p class="wt-copyrights">Copyright © 2021 eBelong, All Right Reserved eBelong</p>
+						<p class="wt-copyrights">Copyright © <?php echo date("Y"); ?> eBelong, All Right Reserved eBelong</p>
 						<nav class="wt-addnav">
 							<ul>
 								<!--<li><a href="http://amentotech.com/projects/worketic/page/about-us">About Us</a></li>

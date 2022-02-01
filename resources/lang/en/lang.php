@@ -1263,6 +1263,7 @@ return [
 	'is_featured'=> 'Is Featured',
     'is_certified'=> 'Is Certified',
     'is_disabled'=> 'Is Disabled',
+    'is_rating'=> 'Rating',
     'location' => 'Location',
     'city' => 'City',
     'state' => 'State',
