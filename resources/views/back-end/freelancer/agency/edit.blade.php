@@ -1,7 +1,7 @@
 @extends(file_exists(resource_path('views/extend/back-end/master.blade.php')) ? 'extend.back-end.master' : 'back-end.master')
 @section('content')
 
-    <section class="wt-haslayout wt-dbsectionspace" id="profile_settings">
+    <section class="wt-haslayout wt-dbsectionspace">
         <div class="wt-dbsectionspace wt-haslayout la-ps-freelancer">
             <div class="freelancer-profile" id="user_profile">
                 <div class="preloader-section" v-if="loading" v-cloak>
@@ -31,7 +31,7 @@
                     <h2>Edit your Agency</h2>
                 </div>
                 <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9" id="agency">
                         <div class="wt-dashboardbox wt-dashboardtabsholder">
                             <div class="wt-location wt-tabsinfo agency-selection-form">
                                 <div class='wt-settingscontent'>
@@ -113,29 +113,48 @@
                                                 <div class="col-md-12">
                                                     <div class="form-group" placeholder="Agency size" >
                                                         <select class="col-md-6" name="agency_size" id="agency_size" >
-                                                            <option value="10-50"<?php echo $agency->agency_size == '10-50' ? 'selected' : ''?>>10-50 Employees</option>
-                                                            <option value="51-100"<?php echo $agency->agency_size == '51-100' ? 'selected' : ''?>>51-100 Employees</option>
-                                                            <option value="101-200"<?php echo $agency->agency_size == '101-200' ? 'selected' : ''?>>101-200 Employees</option>
+                                                            <option value="1-10"<?php echo $agency->agency_size == '1-10' ? 'selected' : ''?>>Up to 10</option>
+                                                            <option value="11-100"<?php echo $agency->agency_size == '11-100' ? 'selected' : ''?>>11-100</option>
+                                                            <option value="101-1000"<?php echo $agency->agency_size == '101-1000' ? 'selected' : ''?>>101-1000</option>
                                                         </select>
                                                     </div>
                                                 </div>
-<!--                                                --><?php //print_r($skills); ?>
-                                                <div class="wt-skills la-skills-holder wt-tabsinfo">
-                                                    <div class="wt-tabscontenttitle">
-                                                        <h2></h2>
+                                                <?php //print_r($skills); ?>
+                                                <!-- <div class="col-md-12">
+                                                    <div class="wt-skills la-skills-holder wt-tabsinfo">
+                                                        <div class="wt-tabscontenttitle">
+                                                            <h2>Agency Skills</h2>
+                                                        </div>
                                                     </div>
-                                                    {{-- <user_skills :ph_rate_skills="'{{ trans('lang.ph_rate_skills') }}'"></user_skills>                                                </div> --}}
-                                                <div class="col-md-4">
-                                                    <div class="wt-statisticcontent wt-countercolor3" style="padding-top: 10px;padding-left: 10px;"><h3 data-from="0" data-to="665" data-speed="8000" data-refresh-interval="100">$0</h3> <h4>Total Earned</h4></div>
+                                                    <agency_skills :ph_rate_skills="'{{ trans('lang.ph_rate_skills') }}'"></agency_skills>
+                                                </div> -->
+                                                <div class="wt-courses wt-tabsinfo">
+                                                    <div class="wt-skills la-skills-holder wt-tabsinfo" id="wt-skills">
+                                                        <div class="wt-tabscontenttitle">
+                                                            <h2>{{ trans('lang.skills_req') }}</h2>
+                                                        </div>
+                                                        <div class="wt-formtheme wt-userform">
+                                                            {{-- add Course Skills --}}
+                                                            
+                                                            <agency_skills :ph_rate_skills="'{{ trans('lang.ph_rate_skills') }}'"></agency_skills>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div class="col-md-4">
-                                                    <div class="wt-statisticcontent wt-countercolor1" style="padding-top: 10px;padding-left: 10px;"><h3 data-from="0" data-to="665" data-speed="8000" data-refresh-interval="100">0</h3> <h4>Total Hours</h4></div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="wt-statisticcontent wt-countercolor4" style="padding-top: 10px;padding-left: 10px;"><h3 data-from="0" data-to="665" data-speed="8000" data-refresh-interval="100">0</h3> <h4>Total Jobs</h4></div>
+                                                <div class="col-md-12">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="wt-statisticcontent wt-countercolor3" style="padding-top: 10px;padding-left: 10px;"><h3 data-from="0" data-to="665" data-speed="8000" data-refresh-interval="100">$0</h3> <h4>Total Earned</h4></div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="wt-statisticcontent wt-countercolor1" style="padding-top: 10px;padding-left: 10px;"><h3 data-from="0" data-to="665" data-speed="8000" data-refresh-interval="100">0</h3> <h4>Total Hours</h4></div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="wt-statisticcontent wt-countercolor4" style="padding-top: 10px;padding-left: 10px;"><h3 data-from="0" data-to="665" data-speed="8000" data-refresh-interval="100">0</h3> <h4>Total Jobs</h4></div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <input type="submit" value="Edit">
+                                            <input class= "customized-submit-button" type="submit" value="Edit">
                                         </div>
 
                                     </form>

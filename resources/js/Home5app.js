@@ -62,6 +62,7 @@ Vue.component('upload-image', require('./components/UploadImageComponent.vue').d
 Vue.component('flash_messages', require('./components/FlashMessages.vue').default);
 Vue.component('switch_button', require('./components/SwitchButton.vue').default);
 Vue.component('user_skills', require('./components/ProfileSkillComponent.vue').default);
+Vue.component('agency_skills', require('./components/AgencySkillComponent.vue').default);
 Vue.component('page-order', require('./components/PageOrderComponent.vue').default);
 Vue.component('freelancer_experience', require('./components/ProfileExperienceComponent.vue').default);
 Vue.component('freelancer_education', require('./components/ProfileEducationComponent.vue').default);
