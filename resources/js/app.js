@@ -5069,6 +5069,151 @@ if (document.getElementById("services")) {
         }
     });
 }
+if (document.getElementById("agency")) {
+    console.log("hi")
+    const vagency = new Vue({
+        el: '#agency',
+        mounted: function () {
+            if (document.getElementsByClassName("flash_msg") != null) {
+                flashVue.$emit('showFlashMessage');
+            }
+        },
+        created: function () {
+            this.getSettings();
+        },
+        data: {
+            
+            agency_name: '',
+            contact_no: '',
+            contact_email: '',
+            founded_in: '',
+            agency_logo: '',
+            description:"",
+            hourly_rates_min:"",
+            hourly_rates_max:"",
+            agency_size:'',
+            message: '',
+            form_errors: [],
+            custom_error: false,
+            is_show: false,
+            loading: false,
+            show_attachments: false,
+            is_featured: false,
+            is_progress: false,
+            is_completed: false,
+            redirect_url: '',
+            errors: '',
+            disable_btn: '',
+            saved_class: '',
+            heart_class: 'fa fa-heart',
+            text: Vue.prototype.trans('lang.click_to_save'),
+            follow_text: Vue.prototype.trans('lang.click_to_follow'),
+            disable_follow: '',
+            refundable_user: '',
+            refundable_payment_method: '',
+            notificationSystem: {
+                options: {
+                    success: {
+                        position: "center",
+                        timeout: 4000
+                    },
+                    error: {
+                        position: "topRight",
+                        timeout: 7000
+                    },
+                    completed: {
+                        overlay: true,
+                        zindex: 999,
+                        position: 'center',
+                        progressBar: false,
+                    },
+                    info: {
+                        overlay: true,
+                        zindex: 999,
+                        position: 'center',
+                        timeout: 3000,
+                        class: 'iziToast-info',
+                        id: 'info_notify',
+                    }
+                }
+            }
+        },
+        methods: {
+            showCompleted(message) {
+                return this.$toast.success(' ', message, this.notificationSystem.options.completed);
+            },
+            showInfo(message) {
+                return this.$toast.info(' ', message, this.notificationSystem.options.info);
+            },
+            showMessage(message) {
+                return this.$toast.success(' ', message, this.notificationSystem.options.success);
+            },
+            showError(error) {
+                return this.$toast.error(' ', error, this.notificationSystem.options.error);
+            },
+            submitAgency: function () {
+                console.log('ima called');
+                this.loading = true;
+                let Form = document.getElementById('post_agency_form');
+                console.log(Form);
+                let form_data = new FormData(Form);
+                console.log(form_data.get("agency_logo"));
+                var description = tinyMCE.get('wt-tinymceeditor').getContent();
+                form_data.append('description', description);
+                console.log(form_data);
+                var self = this;
+                try {
+                 
+                axios.post(APP_URL + 'profile/settings/save-agency', form_data)
+                    .then(function (response) {
+                        console.log("response",response)
+                        if (response.data.type == 'success') {
+                            self.loading = false;
+                            self.showInfo(response.data.progress);
+                            document.addEventListener('iziToast-closing', function (data) {
+                                if (data.detail.id == 'info_notify') {
+                                    self.showCompleted(response.data.message);
+                                    window.location.replace(APP_URL + '/freelancer/courses/posted');
+                                }
+                            });
+                        } else {
+                            self.loading = false;
+                            self.showError(response.data.message);
+                        }
+                    })
+                    .catch(function (error) {
+                        self.loading = false;
+                        if (error.response.data.errors.title) {
+                            self.showError(error.response.data.errors.title[0]);
+                        }
+                        if (error.response.data.errors.delivery_time) {
+                            self.showError(error.response.data.errors.delivery_time[0]);
+                        }
+                        if (error.response.data.errors.service_price) {
+                            self.showError(error.response.data.errors.service_price[0]);
+                        }
+                        if (error.response.data.errors.response_time) {
+                            self.showError(error.response.data.errors.response_time[0]);
+                        }
+                        if (error.response.data.errors.description) {
+                            self.showError(error.response.data.errors.description[0]);
+                        }
+                        if (error.response.data.errors.english_level) {
+                            self.showError(error.response.data.errors.english_level[0]);
+                        }
+                        if (error.response.data.errors.latitude) {
+                            self.showError(error.response.data.errors.latitude[0]);
+                        }
+                        if (error.response.data.errors.longitude) {
+                            self.showError(error.response.data.errors.longitude[0]);
+                        }
+                    });
+                }
+                 catch (error) {console.log("dead")}
+            },
+        }
+    });
+}
 if (document.getElementById("cources")) {
     const vservices = new Vue({
         el: '#cources',
@@ -5156,6 +5301,7 @@ if (document.getElementById("cources")) {
                 this.loading = true;
                 let Form = document.getElementById('post_cource_form');
                 let form_data = new FormData(Form);
+                console.log(form_data);
                 var description = tinyMCE.get('wt-tinymceeditor').getContent();
                 form_data.append('description', description);
                 var self = this;
