@@ -355,7 +355,7 @@ Route::group(
         Route::post('course/get-stored-course-skills', 'CourseController@getCourseSkills');
         Route::post('agency/get-stored-agency-skills', 'AgencyController@getAgencySkills');
         Route::get('skills/get-course-skills', 'SkillController@getCourseSkills');
-        Route::get('skills/get-agency-skills', 'SkillController@getAgencySkills');
+        Route::post('skills/get-agency-skills', 'SkillController@getAgencySkills');
         Route::post('services/post-service', 'ServiceController@store');
         Route::post('courses/post-course', 'CourseController@store');
         Route::post('service/upload-temp-image', 'ServiceController@uploadTempImage');

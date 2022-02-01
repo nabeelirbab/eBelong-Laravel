@@ -100,12 +100,19 @@
             },
             getSkills(){
                 let self = this;
-                axios.get(APP_URL + '/skills/get-agency-skills')
+                var segment_str = window.location.pathname;
+                var segment_array = segment_str.split( '/' );
+                var slug = segment_array[segment_array.length - 1];
+                console.log(slug)
+                axios.post(APP_URL + '/skills/get-agency-skills',{
+                    slug: slug
+                })
                 .then(function (response) {
-                    console.log("jjj skillsssss", response)
                     self.stored_skills = response.data.skills;
-                    self.$forceUpdate()
-                    console.log("jjj")
+                    if(self.stored_skills.length == 0) {
+                        self.all_skills_selected = response.data.message;
+                        self.is_empty = true;
+                    }
                 });
             },
             getUserSkills(){

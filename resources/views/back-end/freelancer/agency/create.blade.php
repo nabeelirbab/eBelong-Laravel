@@ -3,7 +3,7 @@
 
     <div class="wt-haslayout wt-dbsectionspace">
         <div class="wt-dbsectionspace wt-haslayout la-ps-freelancer">
-            <div class="freelancer-profile" id="user_profile">
+            <div class="freelancer-profile" >
                 <div class="preloader-section" v-if="loading" v-cloak>
                     <div class="preloader-holder">
                         <div class="loader"></div>

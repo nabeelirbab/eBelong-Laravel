@@ -160,6 +160,12 @@ class Skill extends Model
             ->where('job_id', $job_id)
             ->get()->pluck('skill_id')->toArray();
     }
+    public static function getAgencySkill($agency_id)
+    {
+        return DB::table('agency_user_skill')->select('skill_id')
+            ->where('agency_user_id', $agency_id)
+            ->get()->pluck('skill_id')->toArray();
+    }
     public static function getCourseSkill($course_id)
     {
         return DB::table('cource_skill')->select('skill_id')

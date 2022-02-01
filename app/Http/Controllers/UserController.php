@@ -26,6 +26,7 @@ use App\Mail\AdminEmailMailable;
 use App\Mail\FreelancerEmailMailable;
 use App\Mail\GeneralEmailMailable;
 use App\Package;
+use App\AgencyUser;
 use App\Profile;
 use App\Proposal;
 use App\Report;
@@ -89,10 +90,11 @@ class UserController extends Controller
      *
      * @return void
      */
-    public function __construct(User $user, Profile $profile)
+    public function __construct(User $user, Profile $profile, AgencyUser $agency_user) 
     {
         $this->user = $user;
         $this->profile = $profile;
+        $this->agency_user = $agency_user;
     }
 
     /**
@@ -324,9 +326,14 @@ class UserController extends Controller
                                 'agency_logo' => 'required|file|mimes:jpeg,png,jpg,gif,svg|max:2048',
                             ]);
                             $agency['agency_logo'] = null;
-
-
                             $agencyid = DB::table('agency_user')->insertGetId($agency);
+                            if ($request['skills']) {
+                            $skills = $request['skills'];
+                            $_agency = AgencyUser::find($agencyid);
+                            foreach ($skills as $skill) {
+                                $_agency->skills()->attach($skill['id']);
+                            }
+                        }
 
                             if ($files = $request->file('agency_logo')) {
                                 // Define upload path
@@ -446,6 +453,17 @@ class UserController extends Controller
                             // ]);
                            
                             $updated = DB::table('agency_user')->where('id',$data['agency_id'])->update($agency);
+                            $_agency = AgencyUser::find($data['agency_id']);
+                            $_agency->skills()->detach();
+                            if ($request['skills']) {
+                                $skills = $request['skills'];
+                                $_agency->skills()->detach();
+                                if (!empty($skills)) {
+                                    foreach ($skills as $skill) {
+                                        $_agency->skills()->attach($skill['id']);
+                                    }
+                                }
+                            }
                             if ($files = $request->file('agency_logo')) {
                                 request()->validate([
                                     'agency_logo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -459,6 +477,8 @@ class UserController extends Controller
                                 $insert['image'] = "$profileImage";
                                 $agency['agency_logo'] = "$profileImage";
                                 $updated = DB::table('agency_user')->where('id',$data['agency_id'])->update(array('agency_logo'=> $agency['agency_logo']));
+                                
+                            
                             }
                                 if($updated){
                                 Session::flash('message', 'Your new Agency has been successfully updated.');
