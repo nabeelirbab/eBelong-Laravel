@@ -57,8 +57,32 @@ class AgencyController extends Controller
 
         return View::make('back-end.freelancer.agency.create', compact('skills'));
 
+        
     }
-
+    public function getAgencySkills(Request $request)
+    {
+        $json = array();
+        if (!empty($request['id'])) {
+            // $course = $this->cource::where('slug', $request['slug'])->select('id')->first();
+            
+                // $agency = $this->cource::find($request['id']);
+                $agency = AgencyUser::find($request['id']);
+                if (!empty($agency)) {
+                $skills = $agency->skills->toArray();
+                if (!empty($skills)) {
+                    $json['type'] = 'success';
+                    $json['skills'] = $skills;
+                    return $json;
+                } else {
+                    $json['error'] = 'error';
+                    return $json;
+                }
+            } else {
+                $json['error'] = 'error';
+                return $json;
+            }
+      }
+    }
     public function viewInvites() {
 
         $requested_agency = [];

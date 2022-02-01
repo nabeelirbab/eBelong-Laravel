@@ -353,7 +353,9 @@ Route::group(
         Route::get('freelancer/dashboard/edit-service/{id}', 'ServiceController@edit')->name('edit_service');
         Route::get('freelancer/dashboard/edit-course/{id}', 'CourseController@edit')->name('edit_course');
         Route::post('course/get-stored-course-skills', 'CourseController@getCourseSkills');
+        Route::post('course/get-stored-agency-skills', 'AgencyController@getAgencySkills');
         Route::get('skills/get-course-skills', 'SkillController@getCourseSkills');
+        Route::get('skills/get-agency-skills', 'SkillController@getAgencySkills');
         Route::post('services/post-service', 'ServiceController@store');
         Route::post('courses/post-course', 'CourseController@store');
         Route::post('service/upload-temp-image', 'ServiceController@uploadTempImage');

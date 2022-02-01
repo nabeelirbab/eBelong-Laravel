@@ -253,7 +253,8 @@ class UserController extends Controller
      * @return View
      */
     public function saveAgencyData(Request $request)
-    {
+    {   
+        $json = array();
         $data = $request->all();
         $user_id = Auth::user()->id;
         $data['agency_type'] = 'new_agency';

@@ -351,6 +351,22 @@ class SkillController extends Controller
             }
         
     }
+    public function getAgencySkills()
+    {
+        $json = array();
+       
+            $skills = Skill::select('title', 'id')->get()->toArray();
+            if (!empty($skills)) {
+                $json['type'] = 'success';
+                $json['skills'] = $skills;
+                return $json;
+            } else {
+                $json['type'] = 'error';
+                $json['message'] = trans('lang.something_wrong');
+                return $json;
+            }
+        
+    }
 
     /**
      * Get Skills.
