@@ -5,12 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Helper;
 use App\Skill;
+use App\AgencyUser;
 use Illuminate\Support\Facades\Schema;
+use Session;
 use DB; 
 use View;
 use Auth;
 use Illuminate\Support\Facades\Input;
 use App\User;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\FreelancerEmailMailable;
 
 class AgencyController extends Controller
 {
@@ -21,7 +26,6 @@ class AgencyController extends Controller
      */
 
     public function index(){
-        echo "test";
 		if (Auth::user()){
 			$agency_info = Helper::getAgencyList(0,array('user_id'=>Auth::user()->id));
 			if(count($agency_info)){
@@ -54,8 +58,32 @@ class AgencyController extends Controller
 
         return View::make('back-end.freelancer.agency.create', compact('skills'));
 
+        
     }
-
+    public function getAgencySkills(Request $request)
+    {
+        $json = array();
+        if (!empty($request['id'])) {
+            // $course = $this->cource::where('slug', $request['slug'])->select('id')->first();
+            
+                // $agency = $this->cource::find($request['id']);
+                $agency = AgencyUser::find($request['id']);
+                if (!empty($agency)) {
+                $skills = $agency->skills->toArray();
+                if (!empty($skills)) {
+                    $json['type'] = 'success';
+                    $json['skills'] = $skills;
+                    return $json;
+                } else {
+                    $json['error'] = 'error';
+                    return $json;
+                }
+            } else {
+                $json['error'] = 'error';
+                return $json;
+            }
+      }
+    }
     public function viewInvites() {
 
         $requested_agency = [];
@@ -193,7 +221,9 @@ class AgencyController extends Controller
                 if($count>1){
                     // $users = User::where('first_name', 'like', '%' . $keyword_tokens[0] . '%')->where('last_name', 'like', '%' . $keyword_tokens[$count-1] . '%')->paginate(7)->setPath('');
                     $users = User::where('first_name', 'like', '%' . $keyword_tokens[0] . '%')->orwhere('last_name', 'like', '%' . $keyword_tokens[$count-1] . '%')
-                    ->join('agency_associated_users', 'agency_associated_users.user_id', '=', 'users.id')->where('agency_associated_users.user_id','!=' ,null)->where('agency_associated_users.agency_id', "=",$agency_id->agency_id)
+                    ->join('agency_associated_users', 'agency_associated_users.user_id', '=', 'users.id')
+                    ->where('agency_associated_users.user_id','!=' ,null)->where('agency_associated_users.agency_id', "=",$agency_id->agency_id)
+                    // ->where('agency_associated_users.is_pending',"!=",0)->where('agency_associated_users.is_accepted','!=',0)
                     ->select('agency_associated_users.*')->paginate(10);
                     
                 }
@@ -201,7 +231,9 @@ class AgencyController extends Controller
                 else{
                     // $users = User::where('first_name', 'like', '%' . $keyword . '%')->orWhere('last_name', 'like', '%' . $keyword . '%')
                     $users = $users = User::where('first_name', 'like', '%' . $keyword . '%')->orWhere('last_name', 'like', '%' . $keyword . '%')
-                    ->join('agency_associated_users', 'agency_associated_users.user_id', '=', 'users.id')->where('agency_associated_users.user_id','!=' ,null)->where('agency_associated_users.agency_id', "=",$agency_id->agency_id)
+                    ->join('agency_associated_users', 'agency_associated_users.user_id', '=', 'users.id')
+                    ->where('agency_associated_users.user_id','!=' ,null)->where('agency_associated_users.agency_id', "=",$agency_id->agency_id)
+                    // ->where('agency_associated_users.is_pending',"!=",0)->where('agency_associated_users.is_accepted','!=',0)
                     ->select('agency_associated_users.*')->paginate(10);
                 }
                 $pagination = $users->appends(
@@ -215,6 +247,7 @@ class AgencyController extends Controller
                 $agency_id = DB::table('users')->select('agency_id')->where('id',$user_id)->first();
                 $users = DB::table('agency_associated_users')
                 ->where('agency_id',$agency_id->agency_id)
+                // ->where('is_pending',"!=",0)->where('is_accepted','!=',0)
                 ->latest()->paginate(10);
 
             }
@@ -252,5 +285,47 @@ class AgencyController extends Controller
             $json['message'] = trans('lang.something_wrong');
             return $json;
         }
+    }
+    public function acceptInvitation($agencyid){
+        $user_has_agency = DB::table('agency_associated_users')->where('user_id',Auth::user()->id)->where('is_accepted' , 0)->first();
+    //    dd($user_has_agency);
+        if(empty($user_has_agency)){
+        DB::table('agency_associated_users')->where('agency_id',$agencyid)->where('user_id',Auth::user()->id)->update(array('is_pending'=>0, 'is_accepted'=>1));
+        $agency_name = DB::table('agency_user')->select('agency_name')->where('id',$agencyid)->first();
+        $creator = DB::table('agency_user')->select('user_id')->where('id',$agencyid)->first();
+        $creator_email = DB::table('users')->select('email')->where('id',$creator->user_id)->first();
+        if (trim(config('mail.username')) != "" && trim(config('mail.password')) != "") {
+            $email_params = array();
+            
+                //email to creator of agency
+                $template_data = Helper::getAgencyInvitationAcceptEmailContent();
+                $email_params['agency_creator_name'] = Helper::getUserName($creator->user_id);
+                $email_params['agency_member_name'] = Helper::getUserName(Auth::user()->id);
+                // $agency_info =  Helper::getAgencyList($data['agency_id']);
+                $email_params['agency_name'] = $agency_name->agency_name;
+                Mail::to($creator_email->email)
+                    ->send(
+                        new FreelancerEmailMailable(
+                            'accept_agency',
+                            $template_data,
+                            $email_params
+                        )
+                    );
+            
+        }
+        Session::flash('message', "Invitation Sucessfully Accepted");
+        return Redirect::back();
+    }
+    else{
+        Session::flash('message', "You're Already Associated with an Agency");
+        return Redirect::back();
+
+    }
+    }
+    public function DeclineInvitation($agencyid){
+
+        DB::table('agency_associated_users')->where('agency_id',$agencyid)->where('user_id',Auth::user()->id)->update(array('is_pending'=>0, 'is_accepted'=>0));
+        Session::flash('message', "Invitation Sucessfully Declined");
+        return Redirect::back();
     }
 }

@@ -97,6 +97,10 @@ class HomeController extends Controller
                 }
 
                 }
+                else{
+                    $freelancer->agency_name= DB::table('agency_user')->where('id',$freelancer->agency_id)->pluck('agency_name')->first();
+                    $freelancer->agency_avatar= DB::table('agency_user')->where('id',$freelancer->agency_id)->pluck('agency_logo')->first();
+                }
                 
                 $skills = Skill::getFreelancerSkill($freelancer->id);
                 $feedbacks = \App\Review::select('feedback')->where('receiver_id', $freelancer->id)->count();

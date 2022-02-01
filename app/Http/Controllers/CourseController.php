@@ -919,8 +919,8 @@ class CourseController extends Controller
         $seller = '';
         $payrols = Helper::getPayoutsList();
         $user = User::find(Auth::user()->id);
-        $location = Location::select('title')->where('id',$user->location_id)->first();
-        $user->location_name = $location->title; 
+        // $location = Location::select('title')->where('id',$user->location_id)->first();
+        // $user->location_name = $location->title; 
         $course = Cource::find($id);
         $title = $course->title;
         $seller = Helper::getCourceSeller($course->id);

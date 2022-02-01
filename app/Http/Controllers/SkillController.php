@@ -351,6 +351,53 @@ class SkillController extends Controller
             }
         
     }
+    public function getAgencySkills(Request $request)
+    {
+        $json = array();
+        if (!empty($request['slug']) && $request['slug'] == "new") {
+            $skills = Skill::select('title', 'id')->get()->toArray();
+            if (!empty($skills)) {
+                $json['type'] = 'success';
+                $json['skills'] = $skills;
+                return $json;
+            } else {
+                $json['type'] = 'error';
+                $json['message'] = trans('lang.something_wrong');
+                return $json;
+            }
+            
+        }
+        else{            
+            $agencyid = $request['slug'];
+            $db_skills = Skill::select('id')->get()->pluck('id')->toArray();
+            $agency_skills = Skill::getAgencySkill($agencyid);
+            if (!empty($agency_skills)) {
+                $result = array_diff($db_skills, $agency_skills);
+                if (!empty($result)) {
+                    $skills = DB::table('skills')
+                        ->whereIn('id', $result)
+                        ->orderBy('title')->get()->toArray();
+                } else {
+                    $skills = array();
+                }
+                $json['type'] = 'success';
+                $json['skills'] = $skills;
+                $json['message'] = trans('lang.skills_already_selected');
+                return $json;
+            } else {
+                $skills = Skill::select('title', 'id')->get()->toArray();
+                if (!empty($skills)) {
+                    $json['type'] = 'success';
+                    $json['skills'] = $skills;
+                    return $json;
+                } else {
+                    $json['type'] = 'error';
+                    $json['message'] = trans('lang.something_wrong');
+                    return $json;
+                }
+            }
+        }
+    }
 
     /**
      * Get Skills.

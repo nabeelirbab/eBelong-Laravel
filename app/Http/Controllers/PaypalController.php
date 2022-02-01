@@ -15,6 +15,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Cource;
 use App\Invoice;
 use App\Item;
 use Carbon\Carbon;
@@ -97,8 +98,16 @@ class PaypalController extends Controller
                     return Redirect::to('dashboard/packages/employer');
                 }
             } else if (Auth::user()->getRoleNames()[0] == "freelancer") {
+                if ($product_type == 'project') {
+                    if ($project_type == 'course') {
+                        return Redirect::to('search-results?type=instructors');
+                        session()->forget('type');
+                    }
+                }
+                else{
                 session()->forget('type');
                 return Redirect::to('dashboard/packages/freelancer');
+                }
             }
         } else {
             abort(404);
@@ -116,6 +125,7 @@ class PaypalController extends Controller
     {
         $settings = SiteManagement::getMetaValue('payment_settings');
         $payment_mode = !empty($settings) && !empty($settings[0]['enable_sandbox']) ? $settings[0]['enable_sandbox'] : 'false';
+        $payment_mode = true;
         if ($payment_mode == 'true') {
             if (empty(env('PAYPAL_SANDBOX_API_USERNAME'))
                 && empty(env('PAYPAL_SANDBOX_API_PASSWORD'))
@@ -136,20 +146,24 @@ class PaypalController extends Controller
 
         $settings = SiteManagement::getMetaValue('commision');
         $currency = !empty($settings[0]['currency']) ? $settings[0]['currency'] : 'USD';
+        // dd($currency);
         if (Auth::user()) {
             //$recurring = ($request->get('mode') === 'recurring') ? true : false;
             $recurring = false;
             $success = true;
             $cart = $this->getCheckoutData($recurring, $success);
+            // dd($cart);
             $payment_detail = array();
             try {
                 $response = $this->provider->setCurrency($currency)->setExpressCheckout($cart, $recurring);
+                // dd($response);
                 if ($response['ACK'] == 'Failure') {
                     Session::flash('error', $response['L_LONGMESSAGE0']);
                     return Redirect::back();
                 }
                 return redirect($response['paypal_link']);
             } catch (\Exception $e) {
+                 dd($e);
                 $invoice = $this->createInvoice($cart, 'Invalid', $payment_detail);
                 session()->put(['code' => 'danger', 'message' => "Error processing PayPal payment for Order $invoice->id!"]);
             }
@@ -394,7 +408,14 @@ class PaypalController extends Controller
                 DB::table('orders')
                     ->where('id', $last_order_id)
                     ->update(['status' => 'completed', 'invoice_id' => $invoice->id, 'type' => $project_type]);
-                }else {
+                }
+                elseif($project_type == "course"){
+                    DB::table('orders')
+                    ->where('id', $last_order_id)
+                    ->update(['status' => 'completed', 'invoice_id' => $invoice->id, 'type' => $project_type]);
+                
+                }
+                else {
 
                    DB::table('orders')
                     ->where('id', $last_order_id)
@@ -518,7 +539,49 @@ class PaypalController extends Controller
                                 );
                         }
                     }
-                } else {
+                
+                //
+                elseif ($project_type == 'course') {
+                    $project_type = session()->get('project_type');
+                    $id = session()->get('product_id');
+                    $freelancer = session()->get('course_seller');
+                    // DB::table('orders')->insert(
+                    //     ['user_id' => $user_id, 'product_id'=>$id,'type'=>'course','cource_product_id' => $id, 'invoice_id' => $invoice_id, 'status' => 'pending', 'created_at' => \Carbon\Carbon::now(), 'updated_at' => \Carbon\Carbon::now()]
+                    // );
+                    $course = Cource::find($id);
+                    $course->users()->attach(Auth::user()->id, ['type' => 'employer', 'status' => 'waiting', 'seller_id' => $freelancer, 'paid' => 'completed','invoice_id' => $invoice_id,]);
+                    $course->save();
+                    // send message to freelancer
+                    $message = new Message();
+                    $user = User::find(intval(Auth::user()->id));
+                    $message->user()->associate($user);
+                    $message->receiver_id = intval($freelancer);
+                    $message->body = Helper::getUserName(Auth::user()->id) . ' ' . trans('lang.course_purchase') . ' ' . $course->title;
+                    $message->status = 0;
+                    $message->save();
+                    // send mail
+                    if (trim(env('MAIL_USERNAME')) != "" && trim(env('MAIL_PASSWORD')) != "") {
+                        $email_params = array();
+                        $template_data = Helper::getFreelancerNewCourseOrderEmailContent();
+                        $email_params['title'] = $course->title;
+                        $email_params['course_link'] = url('instructor/' . $course->slug);
+                        $email_params['amount'] = $course->price;
+                        $email_params['freelancer_name'] = Helper::getUserName($freelancer);
+                        $email_params['employer_profile'] = url('profile/' . $user->slug);
+                        $email_params['employer_name'] = Helper::getUserName($user->id);
+                        $freelancer_data = User::find(intval($freelancer));
+                        Mail::to($freelancer_data->email)
+                            ->send(
+                                new FreelancerEmailMailable(
+                                    'freelancer_email_new_course_order',
+                                    $template_data,
+                                    $email_params
+                                )
+                            );
+                    }
+                }
+                //
+                else {
                     $id = session()->get('product_id');
                     $proposal = Proposal::find($id);
                     $proposal->hired = 1;
@@ -577,7 +640,8 @@ class PaypalController extends Controller
                                             $email_params
                                         )
                                     );
-                            }
+                               }
+                           }
                         }
                     }
                 }
@@ -590,6 +654,7 @@ class PaypalController extends Controller
         session()->forget('product_price');
         session()->forget('custom_order_id');
         return $invoice;
+    
     }
 
     //Checkout Start

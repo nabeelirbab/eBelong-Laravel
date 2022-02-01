@@ -26,6 +26,7 @@ use App\Mail\AdminEmailMailable;
 use App\Mail\FreelancerEmailMailable;
 use App\Mail\GeneralEmailMailable;
 use App\Package;
+use App\AgencyUser;
 use App\Profile;
 use App\Proposal;
 use App\Report;
@@ -89,10 +90,11 @@ class UserController extends Controller
      *
      * @return void
      */
-    public function __construct(User $user, Profile $profile)
+    public function __construct(User $user, Profile $profile, AgencyUser $agency_user) 
     {
         $this->user = $user;
         $this->profile = $profile;
+        $this->agency_user = $agency_user;
     }
 
     /**
@@ -253,7 +255,8 @@ class UserController extends Controller
      * @return View
      */
     public function saveAgencyData(Request $request)
-    {
+    {   
+        $json = array();
         $data = $request->all();
         $user_id = Auth::user()->id;
         $data['agency_type'] = 'new_agency';
@@ -320,12 +323,17 @@ class UserController extends Controller
                             $agency['agency_size'] = trim($data['agency_size']);
 
                             request()->validate([
-                                'agency_logo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                                'agency_logo' => 'required|file|mimes:jpeg,png,jpg,gif,svg|max:2048',
                             ]);
                             $agency['agency_logo'] = null;
-
-
                             $agencyid = DB::table('agency_user')->insertGetId($agency);
+                            if ($request['skills']) {
+                            $skills = $request['skills'];
+                            $_agency = AgencyUser::find($agencyid);
+                            foreach ($skills as $skill) {
+                                $_agency->skills()->attach($skill['id']);
+                            }
+                        }
 
                             if ($files = $request->file('agency_logo')) {
                                 // Define upload path
@@ -445,6 +453,17 @@ class UserController extends Controller
                             // ]);
                            
                             $updated = DB::table('agency_user')->where('id',$data['agency_id'])->update($agency);
+                            $_agency = AgencyUser::find($data['agency_id']);
+                            $_agency->skills()->detach();
+                            if ($request['skills']) {
+                                $skills = $request['skills'];
+                                $_agency->skills()->detach();
+                                if (!empty($skills)) {
+                                    foreach ($skills as $skill) {
+                                        $_agency->skills()->attach($skill['id']);
+                                    }
+                                }
+                            }
                             if ($files = $request->file('agency_logo')) {
                                 request()->validate([
                                     'agency_logo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -458,6 +477,8 @@ class UserController extends Controller
                                 $insert['image'] = "$profileImage";
                                 $agency['agency_logo'] = "$profileImage";
                                 $updated = DB::table('agency_user')->where('id',$data['agency_id'])->update(array('agency_logo'=> $agency['agency_logo']));
+                                
+                            
                             }
                                 if($updated){
                                 Session::flash('message', 'Your new Agency has been successfully updated.');
@@ -497,27 +518,35 @@ class UserController extends Controller
 
     public function inviteToAgency(Request $request) {
 
+        if(!empty($request->member_role)){
+            $user_id = User::select('id')->where('email', $request->invitation_email)->get();
 
-        $user_id = User::select('id')->where('email', $request->invitation_email)->get();
+            if (count($user_id) > 0) {
 
-        if (count($user_id) > 0) {
 
-            $associate_user = DB::table('agency_associated_users')->insert(
-                ['agency_id' => $request->agency_id, 'user_id' => $user_id[0]['id'], 'member_role' => $request->member_role, 'is_pending' => 1]
-            );
+                $associate_user = DB::table('agency_associated_users')->insert(
+                    ['agency_id' => $request->agency_id, 'user_id' => $user_id[0]['id'], 'member_role' => $request->member_role, 'is_pending' => 1]
+                );
 
-            if ($associate_user === true) {
-                Session::flash('message', 'Invitation has sent.');
-                return Redirect::back();
+                if ($associate_user === true) {
+                    Session::flash('message', 'Invitation has sent.');
+                    return Redirect::back();
+                }
+                else {
+                    Session::flash('error', 'Unable to invite user.');
+                    return Redirect::back();
+                }
             }
             else {
-                Session::flash('error', 'Unable to invite user.');
+                Session::flash('error', 'No users found with this email.');
                 return Redirect::back();
             }
+
         }
-        else {
-            Session::flash('error', 'No users found with this email.');
+        else{
+            Session::flash('error', 'Please Choose the Role.');
             return Redirect::back();
+
         }
 
 

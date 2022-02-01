@@ -1,9 +1,9 @@
 @extends(file_exists(resource_path('views/extend/back-end/master.blade.php')) ? 'extend.back-end.master' : 'back-end.master')
 @section('content')
 
-    <section class="wt-haslayout wt-dbsectionspace" id="profile_settings">
+    <div class="wt-haslayout wt-dbsectionspace">
         <div class="wt-dbsectionspace wt-haslayout la-ps-freelancer">
-            <div class="freelancer-profile" id="user_profile">
+            <div class="freelancer-profile" >
                 <div class="preloader-section" v-if="loading" v-cloak>
                     <div class="preloader-holder">
                         <div class="loader"></div>
@@ -22,41 +22,42 @@
                     <h2>Create your Agency</h2>
                 </div>
                 <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9" id="agency">
                         <div class="wt-dashboardbox wt-dashboardtabsholder">
                             <div class="wt-location wt-tabsinfo agency-selection-form">
                                 <div class='wt-settingscontent'>
-                                    <form action="{{ route('agencyDataPost') }}" method="post" enctype="multipart/form-data">
+                                    {{-- {!! Form::open(['url' => '', 'id' => 'post_agency_form', '@submit.prevent'=>'submitAgency']) !!} --}}
+                                    <form action="{{ route('agencyDataPost') }}" method="POST" enctype="multipart/form-data" id="post_agency_form">
                                         @csrf
                                         <div class='wt-formtheme wt-userform agency-form'>
                                             <div class="row" style="padding-top: 20px">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <input type="text" name="agency_name" placeholder="Agency Name" class="form-control" value="">
+                                                        <input type="text" name="agency_name" placeholder="Agency Name" class="form-control" value="" v-model="agency_name">
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <input type="number" name="contact_no" placeholder="Agency Contact No" class="form-control" value="">
+                                                        <input type="number" name="contact_no" placeholder="Agency Contact No" class="form-control" value=""v-model="contact_no">
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <input type="email" name="contact_email" placeholder="Agency Email" class="form-control"  value="">
+                                                        <input type="email" name="contact_email" placeholder="Agency Email" class="form-control"  value="" v-model="contact_email">
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <input type="text" name="founded_in" placeholder="Founded Year" class="form-control"  value="">
+                                                        <input type="text" name="founded_in" placeholder="Founded Year" class="form-control"  value="" v-model="founded_in">
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <input type="file" name="agency_logo" class="form-control">
+                                                        <input type="file" name="agency_logo" class="form-control" v-model="agency_logo">
                                                     </div>
                                                 </div>
 
@@ -70,40 +71,52 @@
 
                                                 <div class="col-md-12">
                                                     <div class="form-group">
-                                                        <textarea class="form-control" name="description" id="" placeholder="Enter agency Description" cols="30" rows="20"></textarea>
+                                                        <textarea class="form-control" name="description" id="" placeholder="Enter agency Description" cols="30" rows="20" v-model="description"></textarea>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <input type="number" name="hourly_rates_min" placeholder="Hourly Min Rate" class="form-control"  value="">
+                                                        <input type="number" name="hourly_rates_min" placeholder="Hourly Min Rate" class="form-control"  value=""v-model="hourly_rates_min">
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <input type="number" name="hourly_rates_max" placeholder="Hourly Max Rate" class="form-control"  value="">
+                                                        <input type="number" name="hourly_rates_max" placeholder="Hourly Max Rate" class="form-control"  value="" v-model="hourly_rates_max">
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-12">
                                                     <div class="form-group" placeholder="Agency size" >
-                                                        <select class="col-md-6" name="agency_size" id="agency_size">
-                                                            <option value="10-50">10-50 Employees</option>
-                                                            <option value="51-100">51-100 Employees</option>
-                                                            <option value="101-200">101-200 Employees</option>
+                                                        <select class="col-md-6" name="agency_size" id="agency_size" v-model="agency_size">
+                                                            <option value="1-10">Up to 10</option>
+                                                            <option value="11-100">11 - 100</option>
+                                                            <option value="101-1000">101 - 1000</option>
                                                         </select>
                                                     </div>
                                                 </div>
 
-                                                <div class="wt-skills la-skills-holder wt-tabsinfo">
+                                                <!-- <div class="wt-skills la-skills-holder wt-tabsinfo">
                                                     <div class="wt-tabscontenttitle">
                                                         <h2>{{{ 'Agency Skills' }}}</h2>
                                                     </div>
-                                                    <user_skills :ph_rate_skills="'{{ trans('lang.ph_rate_skills') }}'"></user_skills>                                               
-                                                 </div>
+                                                    <agency_skills :ph_rate_skills="'{{ trans('lang.ph_rate_skills') }}'"></agency_skills>                                               
+                                                </div> -->
+                                                <div class="wt-courses wt-tabsinfo">
+                                                    <div class="wt-skills la-skills-holder wt-tabsinfo" id="wt-skills">
+                                                        <div class="wt-tabscontenttitle">
+                                                            <h2>{{ trans('lang.skills_req') }}</h2>
+                                                        </div>
+                                                        <div class="wt-formtheme wt-userform">
+                                                            {{-- add Course Skills --}}
+                                                            
+                                                            <agency_skills :ph_rate_skills="'{{ trans('lang.ph_rate_skills') }}'"></agency_skills>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             
-                                                    <div class="col-md-4">
+                                                <div class="col-md-4">
                                                     <div class="wt-statisticcontent wt-countercolor3" style="padding-top: 10px;padding-left: 10px;"><h3 data-from="0" data-to="665" data-speed="8000" data-refresh-interval="100">$0</h3> <h4>Total Earned</h4></div>
                                                 </div>
                                                 <div class="col-md-4">
@@ -113,9 +126,10 @@
                                                     <div class="wt-statisticcontent wt-countercolor4" style="padding-top: 10px;padding-left: 10px;"><h3 data-from="0" data-to="665" data-speed="8000" data-refresh-interval="100">0</h3> <h4>Total Jobs</h4></div>
                                                 </div>
                                             </div>
-                                            <input type="submit" value="Save">
+                                            {!! Form::submit('Save', ['class' => 'customized-submit-button', 'id'=>'submit-agency']) !!}
                                         </div>
 
+                                        {{-- {!! form::close(); !!} --}}
                                     </form>
                                 </div>
                             </div>

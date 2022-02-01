@@ -218,7 +218,7 @@ body{background: #f7f7f7;}
 		-webkit-box-shadow: 0 0 30px 0 rgba(0,0,0,0.30);
 	box-shadow: 0 0 30px 0 rgba(0,0,0,0.30);
 }
-.wt-usersidebar .wt-companysinfo figure img{border-radius: 50%;}
+.wt-usersidebar .wt-companysinfo figure img{border-radius: 50%; height: 100%;}
 .wt-companysdetails.wt-usersidebar .wt-companysinfo{margin-top:-56px; }
 .wt-companysdetails.wt-usersidebar .wt-companysimg img,
 .wt-companysdetails.wt-usersidebar:hover .wt-companysimg img{opacity: 0.40;}
@@ -1201,6 +1201,8 @@ body{background: #f7f7f7;}
 	border: 0;
 	margin: 0;
 	border-collapse: separate;
+	display: block;
+	overflow-x: auto;
 }
 .wt-tablecategories thead tr th{
 	border:0;
@@ -4909,3 +4911,24 @@ body.rtl .wt-uploadrating .modal-body{text-align: right;}
     box-shadow: 0px 5px 22px rgb(144 19 243 / 27%);
 }
 
+.course-skills .wt-skillsform fieldset .form-group {
+	padding-right: unset;
+}
+
+.course-skills .wt-skillsform fieldset .form-group.wt-btnarea {
+	position: static;
+	padding-left: 5px;
+}
+
+.customized-submit-button {
+    background: #9013F3;
+    color: #fff;
+    box-shadow: 0px 5px 22px rgb(144 19 243 / 27%);
+    padding: 0.8rem 4rem;
+    font-size: 1rem;
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    border-radius: 5px;
+    text-align: right;
+	margin-top: 20px;
+}

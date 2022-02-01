@@ -80,12 +80,18 @@
                                                     <i class="fa fa-paypal"></i>
                                                     <span><em>{{ trans('lang.pay_amount_via') }}</em> {{ Helper::getPaymentMethodList("paypal")['title']}} {{ trans('lang.pay_gateway') }}</span>
                                                 </a>
-                                                </li>
-                                                <li>
+                                            </li>
+                                            <li>
                                                 <a href="javascrip:void(0);" v-on:click.prevent="getStriprForm">
-                                                    <!--  <i class="fab fa-stripe-s"></i> -->
+                                                     <i class="fab fa-stripe-s"></i>
                                                     {{-- <img src="http://ec2-52-87-199-242.compute-1.amazonaws.com/images/credit-card.png" alt="credit-card" style="width:70px; height:48px"> --}}
                                                     <span><em>{{ trans('lang.pay_amount_via') }}</em> {{ Helper::getPaymentMethodList("stripe")['title']}} {{ trans('lang.pay_gateway') }}</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="javascrip:void(0);" v-on:click.prevent="getStriprForm">
+                                                    <i class="fas fa-university"></i>
+                                                    <span><em>{{ trans('lang.pay_amount_via') }}</em> {{ Helper::getPaymentMethodList("banktransfar")['title']}}</span>
                                                 </a>
                                             </li>
                                             </div>

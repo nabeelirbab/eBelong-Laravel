@@ -76,6 +76,8 @@ class FreelancerEmailMailable extends Mailable
             $email_message = $this->prepareFreelancerEmailNewAgency($this->email_params);
         } elseif ($this->type == 'join_agency') {
             $email_message = $this->prepareFreelancerEmailJoinAgency($this->email_params);
+        }elseif ($this->type == 'accept_agency') {
+            $email_message = $this->getAgencyInvitationAcceptEmailContent($this->email_params);
         }
         elseif ($this->type == 'freelancer_email_course_cancelled') {
             $email_message = $this->prepareFreelancerEmailCourseCancel($this->email_params);
@@ -610,6 +612,33 @@ class FreelancerEmailMailable extends Mailable
         } 
         $app_content = str_replace("%freelancer_name%", $freelancer_name, $app_content);
         $app_content = str_replace("%freelancer_link%", $freelancer_link, $app_content);
+        $app_content = str_replace("%agency_name%", $agency_name, $app_content);
+        $app_content = str_replace("%signature%", $signature, $app_content);
+
+        $body = "";
+        $body .= EmailHelper::getEmailHeader();
+        $body .= $app_content;
+        $body .= EmailHelper::getEmailFooter();
+        return $body;
+	}
+    public function getAgencyInvitationAcceptEmailContent($email_params){
+		extract($email_params);
+        $creator_name = $agency_creator_name;
+        $member_name = $agency_member_name;
+        $agency_name = $agency_name;
+		$freelancer_link = 'http://dev.ebelong.com/profile/'.Auth::user()->slug;
+        $signature = EmailHelper::getSignature();
+        $app_content = $this->template->content;
+        $email_content_default = 	'<p>Hello <strong><a href="%creator_link%">%creator_name%</a></strong>,</p>
+									 <p>Your %agency_name% join request accepted successfully by <strong><a href="%member_link%">%member_name%</a></strong> .</p>
+									 <p>%signature%</p>';
+        //set default contents
+        if (empty($app_content)) {
+            $app_content = $email_content_default;
+        } 
+        $app_content = str_replace("%creator_name%", $creator_name, $app_content);
+        $app_content = str_replace("%member_link%", $member_link, $app_content);
+        $app_content = str_replace("%member_name%", $member_name, $app_content);
         $app_content = str_replace("%agency_name%", $agency_name, $app_content);
         $app_content = str_replace("%signature%", $signature, $app_content);
 
