@@ -39,7 +39,7 @@
 
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <input type="number" name="contact_no" placeholder="Agency Contact No" class="form-control" value=""v-model="contact_no">
+                                                        <input type="text" name="contact_no" placeholder="Agency Contact No" class="form-control" maxlength="15" pattern="\d{15}" required value=""v-model="contact_no">
                                                     </div>
                                                 </div>
 
@@ -51,12 +51,13 @@
 
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <input type="text" name="founded_in" placeholder="Founded Year" class="form-control"  value="" v-model="founded_in">
+                                                        <input type="text" name="founded_in" placeholder="Founded Year" class="form-control" maxlength="4" pattern="\d{4}" required value="" v-model="founded_in">
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-6">
                                                     <div class="form-group">
+                                                        <label style="font-size: 16px;line-height: 20px;color: black;"> Agency Logo </label>
                                                         <input type="file" name="agency_logo" class="form-control" v-model="agency_logo">
                                                     </div>
                                                 </div>
@@ -71,7 +72,7 @@
 
                                                 <div class="col-md-12">
                                                     <div class="form-group">
-                                                        <textarea class="form-control" name="description" id="" placeholder="Enter agency Description" cols="30" rows="20" v-model="description"></textarea>
+                                                        <textarea class="form-control" name="description" id="" placeholder="Enter agency Description" cols="30" rows="20" maxlength="200" v-model="description"></textarea>
                                                     </div>
                                                 </div>
 
@@ -90,6 +91,7 @@
                                                 <div class="col-md-12">
                                                     <div class="form-group" placeholder="Agency size" >
                                                         <select class="col-md-6" name="agency_size" id="agency_size" v-model="agency_size">
+                                                            <option value="" disabled selected>Company Size</option>
                                                             <option value="1-10">Up to 10</option>
                                                             <option value="11-100">11 - 100</option>
                                                             <option value="101-1000">101 - 1000</option>
