@@ -294,25 +294,25 @@ class AgencyController extends Controller
         $agency_name = DB::table('agency_user')->select('agency_name')->where('id',$agencyid)->first();
         $creator = DB::table('agency_user')->select('user_id')->where('id',$agencyid)->first();
         $creator_email = DB::table('users')->select('email')->where('id',$creator->user_id)->first();
-        if (trim(config('mail.username')) != "" && trim(config('mail.password')) != "") {
-            $email_params = array();
+        // // if (trim(config('mail.username')) != "" && trim(config('mail.password')) != "") {
+        //     $email_params = array();
             
-                //email to creator of agency
-                $template_data = Helper::getAgencyInvitationAcceptEmailContent();
-                $email_params['agency_creator_name'] = Helper::getUserName($creator->user_id);
-                $email_params['agency_member_name'] = Helper::getUserName(Auth::user()->id);
-                // $agency_info =  Helper::getAgencyList($data['agency_id']);
-                $email_params['agency_name'] = $agency_name->agency_name;
-                Mail::to($creator_email->email)
-                    ->send(
-                        new FreelancerEmailMailable(
-                            'accept_agency',
-                            $template_data,
-                            $email_params
-                        )
-                    );
+        //         //email to creator of agency
+        //         $template_data = Helper::getAgencyInvitationAcceptEmailContent();
+        //         $email_params['agency_creator_name'] = Helper::getUserName($creator->user_id);
+        //         $email_params['agency_member_name'] = Helper::getUserName(Auth::user()->id);
+        //         // $agency_info =  Helper::getAgencyList($data['agency_id']);
+        //         $email_params['agency_name'] = $agency_name->agency_name;
+        //         Mail::to($creator_email->email)
+        //             ->send(
+        //                 new FreelancerEmailMailable(
+        //                     'accept_agency',
+        //                     $template_data,
+        //                     $email_params
+        //                 )
+        //             );
             
-        }
+        // // }
         Session::flash('message', "Invitation Sucessfully Accepted");
         return Redirect::back();
     }

@@ -1036,6 +1036,15 @@ class Helper extends Model
             ->where('is_accepted',1)
             ->get();
         $agency_ids = @json_decode(json_encode($agency_ids), true);
+        if(empty($agency_ids)){
+            $agency_ids = DB::table('users')
+            ->select('agency_id')
+            ->where('id',$id)
+            ->where('is_agency',1)
+            ->get();
+        $agency_ids = @json_decode(json_encode($agency_ids), true);
+
+        }
 
         if(count($agency_ids) > 0) {
             foreach ($agency_ids as $agency_id) {
@@ -1048,8 +1057,6 @@ class Helper extends Model
 
             }
         }
-
-
         return $agency_data;
 
     }
