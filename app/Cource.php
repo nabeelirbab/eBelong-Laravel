@@ -137,7 +137,7 @@ class Cource extends Model
      * @return \Illuminate\Http\Response
      */
     public function storeCource($request, $image_size = array())
-    {
+    {   
         $json = array();
         if (!empty($request)) {
             $random_number = Helper::generateRandomCode(8);
@@ -189,6 +189,13 @@ class Cource extends Model
             $cource->languages()->sync($languages);
             $categories = $request['categories'];
             $cource->categories()->sync($categories);
+            if ($request['skills']) {
+                $skills = $request['skills'];
+                foreach ($skills as $skill) {
+                    $cource->skills()->attach($skill['id']);
+                }
+            }
+            // $cource->skills()->attach($request['skills']);
             $this->users()->attach($user_id, ['type' => 'seller', 'seller_id' => $user_id]);
             $json['new_cource'] = $cource_id;
             $json['type'] = 'success';
@@ -263,6 +270,15 @@ class Cource extends Model
             $course->languages()->sync($languages);
             $categories = $request['categories'];
             $course->categories()->sync($categories);
+            if ($request['skills']) {
+                $skills = $request['skills'];
+                $course->skills()->detach();
+                if (!empty($skills)) {
+                    foreach ($skills as $skill) {
+                        $course->skills()->attach($skill['id']);
+                    }
+                }
+            }
             $json['type'] = 'success';
             return $json;
         } else {

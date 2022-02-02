@@ -454,7 +454,7 @@ class UserController extends Controller
                            
                             $updated = DB::table('agency_user')->where('id',$data['agency_id'])->update($agency);
                             $_agency = AgencyUser::find($data['agency_id']);
-                            $_agency->skills()->detach();
+                            // $_agency->skills()->detach();
                             if ($request['skills']) {
                                 $skills = $request['skills'];
                                 $_agency->skills()->detach();
