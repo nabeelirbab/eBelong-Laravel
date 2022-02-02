@@ -82,7 +82,7 @@
 											<td data-th="In Queue">
 												<span class="bt-content">
 													<span>
-														@if ($total_orders > 0)
+														@if ($total_waiting_students > 0)
 														<a href="/course/{{ $cource["id"] }}/waiting-students">
 															<i class="fa fa-spinner fa-spin"></i> 
 															{{{$total_waiting_students}}} Students waiting for Approval

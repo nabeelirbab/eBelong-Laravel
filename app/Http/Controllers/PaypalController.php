@@ -560,25 +560,25 @@ class PaypalController extends Controller
                     $message->status = 0;
                     $message->save();
                     // send mail
-                    if (trim(env('MAIL_USERNAME')) != "" && trim(env('MAIL_PASSWORD')) != "") {
-                        $email_params = array();
-                        $template_data = Helper::getFreelancerNewCourseOrderEmailContent();
-                        $email_params['title'] = $course->title;
-                        $email_params['course_link'] = url('instructor/' . $course->slug);
-                        $email_params['amount'] = $course->price;
-                        $email_params['freelancer_name'] = Helper::getUserName($freelancer);
-                        $email_params['employer_profile'] = url('profile/' . $user->slug);
-                        $email_params['employer_name'] = Helper::getUserName($user->id);
-                        $freelancer_data = User::find(intval($freelancer));
-                        Mail::to($freelancer_data->email)
-                            ->send(
-                                new FreelancerEmailMailable(
-                                    'freelancer_email_new_course_order',
-                                    $template_data,
-                                    $email_params
-                                )
-                            );
-                    }
+                    // if (trim(env('MAIL_USERNAME')) != "" && trim(env('MAIL_PASSWORD')) != "") {
+                    //     $email_params = array();
+                    //     $template_data = Helper::getFreelancerNewCourseOrderEmailContent();
+                    //     $email_params['title'] = $course->title;
+                    //     $email_params['course_link'] = url('instructor/' . $course->slug);
+                    //     $email_params['amount'] = $course->price;
+                    //     $email_params['freelancer_name'] = Helper::getUserName($freelancer);
+                    //     $email_params['employer_profile'] = url('profile/' . $user->slug);
+                    //     $email_params['employer_name'] = Helper::getUserName($user->id);
+                    //     $freelancer_data = User::find(intval($freelancer));
+                    //     Mail::to($freelancer_data->email)
+                    //         ->send(
+                    //             new FreelancerEmailMailable(
+                    //                 'freelancer_email_new_course_order',
+                    //                 $template_data,
+                    //                 $email_params
+                    //             )
+                    //         );
+                    // }
                 }
                 //
                 else {
