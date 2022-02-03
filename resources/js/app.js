@@ -3037,6 +3037,28 @@ if (document.getElementById("profile_settings")) {
                     self.loading = false;
                 });
             },
+            giveRating: function (id) {
+                this.loading = true;
+                var rating = document.getElementById(id+'-assign_rating').value;
+                var self = this;
+                axios.post(APP_URL + '/admin/submit-rating', {
+                    rating: rating,
+                    id: id,
+                })
+                .then(function (response) {
+                    console.log(response)
+                    if (response.data.type == 'success') {
+                        self.showMessage(response.data.message);
+                        self.loading = false;
+                    }else {
+                        self.loading = false;
+                        self.showError(response.data.message);
+                    }
+                })
+                .catch(function (error) {
+                    self.loading = false;
+                });
+            },
             deleteUser: function (id) {
                 var self = this;
                 this.$swal({
@@ -5071,6 +5093,12 @@ if (document.getElementById("services")) {
     });
 }
 if (document.getElementById("agency")) {
+            var text = document
+            .getElementById("description");
+
+        const char= text.value.length;
+        document.getElementById("show")
+            .innerHTML = char+"/200";
     console.log("hi")
     const vagency = new Vue({
         el: '#agency',
@@ -5152,6 +5180,29 @@ if (document.getElementById("agency")) {
             showError(error) {
                 return this.$toast.error(' ', error, this.notificationSystem.options.error);
             },
+            
+            countWords:function () {
+
+                // Get the input text value
+                var text = document
+                    .getElementById("description");
+                
+                // Initialize the char counter
+                
+                const char= text.value.length;
+                document.getElementById("show")
+                    .innerHTML = char+"/200";
+            },
+            setCharCount:function(){
+                var text = document
+                  .getElementById("description");
+              
+              // Initialize the char counter
+              
+              const char= text.value.length;
+              document.getElementById("show")
+                  .innerHTML = char+"/200";
+          },
             submitAgency: function () {
                 console.log('ima called');
                 this.loading = true;

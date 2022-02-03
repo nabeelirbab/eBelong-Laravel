@@ -308,7 +308,7 @@ class UserController extends Controller
 
                         if (isset($data['agency_name']) && isset($data['hourly_rates_min'])
                             && isset($data['hourly_rates_max']) && isset($data['contact_email'])) {
-
+                            
                             $slug = str_replace(" ", "-", strtolower($data['agency_name']));
                             $agency = array();
                             $agency['user_id'] = Auth::user()->id;
@@ -321,7 +321,12 @@ class UserController extends Controller
                             $agency['hourly_rates_min'] = trim($data['hourly_rates_min']);
                             $agency['hourly_rates_max'] = trim($data['hourly_rates_max']);
                             $agency['agency_size'] = trim($data['agency_size']);
-
+                            request()->validate([
+                                'agency_name' => 'required|max:120',
+                                'contact_email' => 'required|email|',
+                                'contact_no' => 'required|regex:/(0)[0-9]{9}/|numeric',
+                                'founded_in' => 'required||numeric|digits:4'
+                                ]);
                             request()->validate([
                                 'agency_logo' => 'required|file|mimes:jpeg,png,jpg,gif,svg|max:2048',
                             ]);
@@ -447,10 +452,12 @@ class UserController extends Controller
                             'hourly_rates_max' => trim($data['hourly_rates_max']),
                             'agency_size' => trim($data['agency_size'])
                             ];
-                            // dd($agency);
-                            // request()->validate([
-                            //     'agency_logo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-                            // ]);
+                            request()->validate([
+                                'agency_name' => 'required|max:120',
+                                'contact_email' => 'required|email|',
+                                'contact_no' => 'required|regex:/(0)[0-9]{9}/|numeric',
+                                'founded_in' => 'required||numeric|digits:4'
+                                ]);
                            
                             $updated = DB::table('agency_user')->where('id',$data['agency_id'])->update($agency);
                             $_agency = AgencyUser::find($data['agency_id']);
@@ -466,7 +473,7 @@ class UserController extends Controller
                             }
                             if ($files = $request->file('agency_logo')) {
                                 request()->validate([
-                                    'agency_logo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                                    'agency_logo' => 'file|mimes:jpeg,png,jpg,gif,svg|max:2048',
                                 ]);
                                 // Define upload path
                                 $destinationPath = public_path( '/uploads/agency_logos/' .$data['agency_id'] ); // upload path

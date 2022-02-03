@@ -48,7 +48,7 @@
 
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <input type="number" name="contact_no" placeholder="Agency Contact No" class="form-control" value="{{ $agency->contact_no }}">
+                                                        <input type="number" onKeyPress="if(this.value.length==12) return false;" name="contact_no" placeholder="Agency Contact No" class="form-control" maxlength="15" pattern="\d{15}" required value="{{ $agency->contact_no }}">
                                                     </div>
                                                 </div>
 
@@ -60,12 +60,13 @@
 
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <input type="text" name="founded_in" placeholder="Founded Year" class="form-control"  value="{{ $agency->founded_in }}">
+                                                        <input type="number" onKeyPress="if(this.value.length==4) return false;" name="founded_in" placeholder="Founded Year" class="form-control" maxlength="4" pattern="\d{4}" required value="{{ $agency->founded_in }}">
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-6">
                                                     <div class="form-group input-preview">
+                                                    <label style="font-size: 16px;line-height: 20px;color: black;"> Agency Logo </label>
                                                         <input type="file" name="agency_logo" class="form-control">
                                             <ul class="wt-attachfile dropzone-previews">
                                                 @if (!empty($agency->agency_logo))
@@ -94,7 +95,9 @@
 
                                                 <div class="col-md-12">
                                                     <div class="form-group">
-                                                        <textarea class="form-control" name="description" id=""  placeholder="Enter agency Description" cols="30" rows="20">{{ $agency->description }}</textarea>
+                                                        <textarea autofocus="true" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off" 
+                                                        class="form-control" name="description" id="description" @keyup ="countWords" id="description"  placeholder="Enter agency Description" maxlength="200" cols="30" rows="20">{{ $agency->description }}</textarea>
+                                                        <span id="show">0/200</span>
                                                     </div>
                                                 </div>
 
@@ -113,6 +116,7 @@
                                                 <div class="col-md-12">
                                                     <div class="form-group" placeholder="Agency size" >
                                                         <select class="col-md-6" name="agency_size" id="agency_size" >
+                                                            <option value="" disabled selected>Company Size</option>
                                                             <option value="1-10"<?php echo $agency->agency_size == '1-10' ? 'selected' : ''?>>Up to 10</option>
                                                             <option value="11-100"<?php echo $agency->agency_size == '11-100' ? 'selected' : ''?>>11-100</option>
                                                             <option value="101-1000"<?php echo $agency->agency_size == '101-1000' ? 'selected' : ''?>>101-1000</option>
