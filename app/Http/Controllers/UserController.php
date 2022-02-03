@@ -473,7 +473,7 @@ class UserController extends Controller
                             }
                             if ($files = $request->file('agency_logo')) {
                                 request()->validate([
-                                    'agency_logo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                                    'agency_logo' => 'file|mimes:jpeg,png,jpg,gif,svg|max:2048',
                                 ]);
                                 // Define upload path
                                 $destinationPath = public_path( '/uploads/agency_logos/' .$data['agency_id'] ); // upload path
