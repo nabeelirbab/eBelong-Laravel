@@ -9,6 +9,15 @@
                         <div class="loader"></div>
                     </div>
                 </div>
+                @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
                 @if (Session::has('message'))
                     <div class="alert alert-success">
                         {{ Session::get('message') }}
@@ -33,25 +42,25 @@
                                             <div class="row" style="padding-top: 20px">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <input type="text" name="agency_name" placeholder="Agency Name" class="form-control" value="" v-model="agency_name">
+                                                        <input type="text" name="agency_name" placeholder="Agency Name" class="form-control" value="{{old('agency_name')}}">
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <input type="text" name="contact_no" placeholder="Agency Contact No" class="form-control" maxlength="15" pattern="\d{15}" required value=""v-model="contact_no">
+                                                        <input type="number" onKeyPress="if(this.value.length==12) return false;" name="contact_no" placeholder="Agency Contact No" class="form-control" value="{{old('contact_no')}}" required value="">
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <input type="email" name="contact_email" placeholder="Agency Email" class="form-control"  value="" v-model="contact_email">
+                                                        <input type="email" name="contact_email" placeholder="Agency Email" class="form-control"  value="{{old('contact_email')}}" >
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <input type="text" name="founded_in" placeholder="Founded Year" class="form-control" maxlength="4" pattern="\d{4}" required value="" v-model="founded_in">
+                                                        <input type="number" onKeyPress="if(this.value.length==4) return false;" name="founded_in" placeholder="Founded Year" class="form-control" value="{{old('founded_in') }}" required value="" >
                                                     </div>
                                                 </div>
 
@@ -72,29 +81,31 @@
 
                                                 <div class="col-md-12">
                                                     <div class="form-group">
-                                                        <textarea class="form-control" name="description" id="" placeholder="Enter agency Description" cols="30" rows="20" maxlength="200" v-model="description"></textarea>
+                                                        <textarea spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off" 
+                                                          class="form-control" name="description" id="description" @keyup ="countWords" placeholder="Enter agency Description" cols="30" rows="20" maxlength="200"></textarea>
+                                                        <span id="show">0/200</span>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <input type="number" name="hourly_rates_min" placeholder="Hourly Min Rate" class="form-control"  value=""v-model="hourly_rates_min">
+                                                        <input type="number" name="hourly_rates_min" placeholder="Hourly Min Rate" class="form-control"  value="{{old('hourly_rates_min')}}">
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <input type="number" name="hourly_rates_max" placeholder="Hourly Max Rate" class="form-control"  value="" v-model="hourly_rates_max">
+                                                        <input type="number" name="hourly_rates_max" placeholder="Hourly Max Rate" class="form-control"  value="{{old('hourly_rates_max')}}">
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-12">
                                                     <div class="form-group" placeholder="Agency size" >
-                                                        <select class="col-md-6" name="agency_size" id="agency_size" v-model="agency_size">
+                                                        <select class="col-md-6" name="agency_size" id="agency_size">
                                                             <option value="" disabled selected>Company Size</option>
-                                                            <option value="1-10">Up to 10</option>
-                                                            <option value="11-100">11 - 100</option>
-                                                            <option value="101-1000">101 - 1000</option>
+                                                            <option value="1-10"{{ old('agency_size') == "1-10" ? 'selected' : '' }}>Up to 10</option>
+                                                            <option value="11-100"{{ old('agency_size') == "11-100" ? 'selected' : '' }}>11-100</option>
+                                                            <option value="101-1000"{{ old('agency_size') == "101-1000" ? 'selected' : '' }}>101 - 1000</option>
                                                         </select>
                                                     </div>
                                                 </div>

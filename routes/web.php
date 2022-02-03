@@ -308,6 +308,9 @@ Route::group(
 
         Route::get('admin/orders', 'UserController@showOrders')->name('orderList');
         Route::post('admin/order/change-status', 'UserController@changeOrderStatus');
+        //rating to freelancer
+
+        Route::post('admin/submit-rating', 'FreelancerController@adminRating');
         
         Route::get('/admin/login-notification', [
             'as' => 'UserData', 
