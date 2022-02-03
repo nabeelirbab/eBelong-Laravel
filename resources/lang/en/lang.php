@@ -432,7 +432,7 @@ return [
     'cource_id' => 'Project ID:',
     'hire_service_title' => 'Hire Freelancer For Service',
     'hire_service_text' => 'Are you sure you want to hire freelancer for this service?',
-    'hire_cource_title' => 'Hire Freelancer For Cource',
+    'hire_cource_title' => 'Hire Freelancer For Course',
     'hire_cource_text' => 'Are you sure you want to Buy the Course?',
     'courses' => 'Courses',
     'post_course' => 'Post a Course',
