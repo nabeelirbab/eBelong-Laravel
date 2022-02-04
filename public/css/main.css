@@ -176,7 +176,7 @@ form p span i {
 option { padding: 5px 15px; }
 li {
 	line-height: 28px;
-	list-style: disc inside none;
+	/* list-style: disc inside none; */
 }
 ul ul { margin-left: 20px; }
 ol {
@@ -10250,4 +10250,19 @@ a:focus{text-decoration: none !important;}
 	color: #3A0B5F;
 	line-height: 2;
     font-weight: 600;
+}
+.course-detail-description li {
+	line-height: 50px;
+    list-style: unset;
+}
+.course-detail-description p {
+	margin-bottom: unset !important;
+    line-height: 12px !important;
+    background: unset !important;
+    font-size: unset !important;
+    font-variant-numeric: unset !important;
+    font-variant-east-asian: unset !important;
+    border: unset !important;
+    padding: unset !important;
+    orphans: unset !important;
 }
