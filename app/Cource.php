@@ -147,7 +147,7 @@ class Cource extends Model
             $this->location()->associate($location);
             $this->title = filter_var($request['title'], FILTER_SANITIZE_STRING);
             $this->slug = filter_var($request['title'], FILTER_SANITIZE_STRING);
-            $this->price = filter_var($request['cource_price'], FILTER_SANITIZE_STRING);
+            $this->price = filter_var($request['course_price'], FILTER_SANITIZE_STRING);
             $this->delivery_time_id = intval($request['delivery_time']);
             $this->description = $request['description'];
             $this->english_level = filter_var($request['english_level'], FILTER_SANITIZE_STRING);
@@ -227,7 +227,7 @@ class Cource extends Model
                 $course->slug = filter_var($request['title'], FILTER_SANITIZE_STRING);
             }
             $course->title = filter_var($request['title'], FILTER_SANITIZE_STRING);
-            $course->price = filter_var($request['cource_price'], FILTER_SANITIZE_STRING);
+            $course->price = filter_var($request['course_price'], FILTER_SANITIZE_STRING);
             $course->delivery_time_id = intval($request['delivery_time']);
             $course->description = $request['description'];
             $course->english_level = filter_var($request['english_level'], FILTER_SANITIZE_STRING);

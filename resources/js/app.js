@@ -5381,8 +5381,8 @@ if (document.getElementById("cources")) {
                         if (error.response.data.errors.delivery_time) {
                             self.showError(error.response.data.errors.delivery_time[0]);
                         }
-                        if (error.response.data.errors.service_price) {
-                            self.showError(error.response.data.errors.service_price[0]);
+                        if (error.response.data.errors.course_price) {
+                            self.showError(error.response.data.errors.course_price[0]);
                         }
                         if (error.response.data.errors.response_time) {
                             self.showError(error.response.data.errors.response_time[0]);
@@ -5462,8 +5462,8 @@ if (document.getElementById("cources")) {
                         if (error.response.data.errors.delivery_time) {
                             self.showError(error.response.data.errors.delivery_time[0]);
                         }
-                        if (error.response.data.errors.service_price) {
-                            self.showError(error.response.data.errors.service_price[0]);
+                        if (error.response.data.errors.course_price) {
+                            self.showError(error.response.data.errors.course_price[0]);
                         }
                         if (error.response.data.errors.response_time) {
                             self.showError(error.response.data.errors.response_time[0]);
