@@ -25,6 +25,7 @@ use App\Review;
 use Session;
 use Illuminate\Support\Facades\Redirect;
 use App\Mail\AdminEmailMailable;
+use App\Mail\FreelancerEmailMailable;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Schema;
@@ -181,7 +182,7 @@ class CourseController extends Controller
             [
                 'title' => 'required',
                 'delivery_time'    => 'required',
-                'cource_price'    => 'required',
+                'course_price'    => 'required',
                 'response_time'    => 'required',
                 'english_level'    => 'required',
                 'description'    => 'required',
@@ -243,18 +244,41 @@ class CourseController extends Controller
                     // Send Email
                     $user = User::find(Auth::user()->id);
                     //send email to admin
-                    if (trim(env('MAIL_USERNAME')) != "" && trim(env('MAIL_PASSWORD')) != "") {
+                    if (trim(config('mail.username')) != "" && trim(config('mail.password')) != "") {
                         $cource = $this->cource::where('id', $cource_post['new_course'])->first();
                         $email_params = array();
                         $email_params['cource_title'] = $cource->title;
                         $email_params['posted_cource_link'] = url('/instructor/' . $cource->slug);
                         $email_params['name'] = Helper::getUserName(Auth::user()->id);
                         $email_params['link'] = url('profile/' . $user->slug);
-                        $template_data = Helper::getAdminServicePostedEmailContent();
-                        Mail::to(getenv('MAIL_FROM_ADDRESS'))
+                        $template_data = (object)array();
+                        $template_data->content = Helper::getAdminCoursePostedEmailContent();
+                        $template_data->subject = "Course Posted";
+                        // $template_data = Helper::getFreelancerCoursePostedEmailContent();
+                        Mail::to(env('MAIL_FROM_ADDRESS'))
                             ->send(
                                 new AdminEmailMailable(
                                     'admin_email_new_course_posted',
+                                    $template_data,
+                                    $email_params
+                                )
+                            );
+                    }
+                    if (trim(config('mail.username')) != "" && trim(config('mail.password')) != "") {
+                        $cource = $this->cource::where('id', $cource_post['new_course'])->first();
+                        $email_params = array();
+                        $email_params['cource_title'] = $cource->title;
+                        $email_params['posted_cource_link'] = url('/instructor/' . $cource->slug);
+                        $email_params['name'] = Helper::getUserName(Auth::user()->id);
+                        $email_params['link'] = url('profile/' . $user->slug);
+                        $template_data = Helper::getFreelancerCoursePostedEmailContent();
+                        $template_data = (object)array();
+                        $template_data->content = Helper::getFreelancerCoursePostedEmailContent();
+                        $template_data->subject = "Course Posted";
+                        Mail::to(Helper::getUserEmail(Auth::user()->id))
+                            ->send(
+                                new FreelancerEmailMailable(
+                                    'freelancer_email_new_course_posted',
                                     $template_data,
                                     $email_params
                                 )
@@ -284,18 +308,41 @@ class CourseController extends Controller
                 // Send Email
                 $user = User::find(Auth::user()->id);
                 //send email to admin
-                if (trim(env('MAIL_USERNAME')) != "" && trim(env('MAIL_PASSWORD')) != "") {
+                if (trim(config('mail.username')) != "" && trim(config('mail.password')) != "") {
                     $cource = $this->cource::where('id', $cource_post['new_cource'])->first();
                     $email_params = array();
                     $email_params['cource_title'] = $cource->title;
                     $email_params['posted_cource_link'] = url('/instructor/' . $cource->slug);
                     $email_params['name'] = Helper::getUserName(Auth::user()->id);
                     $email_params['link'] = url('profile/' . $user->slug);
-                    $template_data = Helper::getAdminServicePostedEmailContent();
-                    Mail::to(getenv('MAIL_FROM_ADDRESS'))
+                    $template_data = (object)array();
+                    $template_data->content = Helper::getAdminCoursePostedEmailContent();
+                    $template_data->subject = "Course Posted";
+                    // $template_data = Helper::getFreelancerCoursePostedEmailContent();
+                    Mail::to(env('MAIL_FROM_ADDRESS'))
                         ->send(
                             new AdminEmailMailable(
                                 'admin_email_new_course_posted',
+                                $template_data,
+                                $email_params
+                            )
+                        );
+                }
+                if (trim(config('mail.username')) != "" && trim(config('mail.password')) != "") {
+                    $cource = $this->cource::where('id', $cource_post['new_cource'])->first();
+                    $email_params = array();
+                    $email_params['cource_title'] = $cource->title;
+                    $email_params['posted_cource_link'] = url('/instructor/' . $cource->slug);
+                    $email_params['name'] = Helper::getUserName(Auth::user()->id);
+                    $email_params['link'] = url('profile/' . $user->slug);
+                    $template_data = Helper::getFreelancerCoursePostedEmailContent();
+                    $template_data = (object)array();
+                    $template_data->content = Helper::getFreelancerCoursePostedEmailContent();
+                    $template_data->subject = "Course Posted";
+                    Mail::to(Helper::getUserEmail(Auth::user()->id))
+                        ->send(
+                            new FreelancerEmailMailable(
+                                'freelancer_email_new_course_posted',
                                 $template_data,
                                 $email_params
                             )
@@ -513,7 +560,7 @@ class CourseController extends Controller
             [
                 'title' => 'required',
                 'delivery_time'    => 'required',
-                'cource_price'    => 'required',
+                'course_price'    => 'required',
                 'response_time'    => 'required',
                 'english_level'    => 'required',
                 'description'    => 'required',

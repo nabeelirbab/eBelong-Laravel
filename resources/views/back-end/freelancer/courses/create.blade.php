@@ -30,7 +30,7 @@
                                             </span>
                                         </div>
                                         <div class="form-group form-group-half wt-formwithlabel job-cost-input">
-                                            {!! Form::number('cource_price', null, array('class' => '', 'placeholder' => trans('lang.course_price'), 'v-model'=>'price')) !!}
+                                            {!! Form::number('course_price', null, array('class' => '', 'placeholder' => trans('lang.course_price'), 'v-model'=>'price','min'=>"1",'step' => 'any')) !!}
                                         </div>
                                     </fieldset>
                                 </div>
@@ -49,7 +49,7 @@
                             </div>
                             <div class="wt-languages-holder wt-tabsinfo">
                                 <div class="wt-tabscontenttitle">
-                                    <h2>{{ trans('lang.service_response_time') }}</h2>
+                                    <h2>{{ trans('lang.course_response_time') }}</h2>
                                 </div>
                                 <div class="wt-divtheme wt-userform wt-userformvtwo">
                                     <div class="form-group">

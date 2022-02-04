@@ -97,7 +97,7 @@
                                 @endif
                                 <div class="wt-service-details">
                                     @if (!empty($cource->description))
-                                        <div class="wt-description">
+                                        <div class="wt-description course-detail-description">
                                             @php echo htmlspecialchars_decode(stripslashes($cource->description)); @endphp
                                         </div>
                                     @endif
