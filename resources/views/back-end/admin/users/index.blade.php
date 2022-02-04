@@ -117,7 +117,7 @@
 													</select>
 												</td>
                                                 <td>
-													<select>
+													<select id="{{ $user->id }}-assign_rating" v-on:change.prevent='giveRating({{ $user->id }})'>
 														<option value="0">0</option>
 														<option value="1">1</option>
                                                         <option value="2">2</option>

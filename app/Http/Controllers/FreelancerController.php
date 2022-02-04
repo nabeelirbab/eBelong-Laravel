@@ -1204,6 +1204,30 @@ else {
     }
   }
 }
+
+public function adminRating(Request $request){
+    
+    $json = array();
+    $reviewid = DB::table('reviews')->insertGetId(
+    [
+        'user_id'=>1, 'receiver_id'=>$request['id'], 
+        'feedback'=>'admin Feedback', 
+        'avg_rating'=>$request['rating'],
+        'project_type'=>NULL,
+        "created_at" => \Carbon\Carbon::now(),
+        'updated_at' => \Carbon\Carbon::now()
+    ]); 
+    if($reviewid){
+        $json['message']= "Rating Submitted Successfully";
+        $json['type']="success";
+        return $json;
+    }
+    else{
+        $json['type']="error";
+        return $json;
+    
+    }
+}
     /**
      * Get freelancer payouts.
      *

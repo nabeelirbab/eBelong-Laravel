@@ -125,4 +125,8 @@ class Review extends Model
         $json['type'] = 'success';
         return $json;
     }
+    // public static function submitAdminRating($reciever_id){
+    //     dd($reciever_id);
+    // }
+
 }
