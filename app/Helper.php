@@ -3061,11 +3061,12 @@ class Helper extends Model
     public static function getFreelancerNewCourseOrderEmailContent()
     {
         $output = "";
-        $output .= "Hello %freelancer_name%";
-        $output .= "<a href='%employer_link%'>%employer_name%</a> has purchased your following course<a href='%course_link%'>%course_title%</a>.";
-        $output .= "Course Information is given below.";
-        $output .= "Course Amount : %course_amount%";
-        $output .= "Student is waiting for you to enroll him";
+        $output .= "Hello %freelancer_name% <br>";
+        $output .= "<a href='%employer_link%'>%employer_name%</a> has purchased your following course <a href='%course_link%'>%course_title%</a>. through %payment_mode%";
+        $output .= " Student is waiting for you to enroll him";
+        $output .= " Course Information is given below.";
+        $output .= "<br>Course Amount : %course_amount% $";
+     
         $output .= "%signature%";
         return $output;
     }
@@ -3073,20 +3074,20 @@ class Helper extends Model
     public static function getFreelancerCourseEnrollEmailContent()
     {
         $output = "";
-        $output .= "Hello %freelancer_name%";
+        $output .= "Hello %freelancer_name% <br>";
         $output .= "<a href='%employer_link%'>%employer_name%</a> has enrolled you for the following course<a href='%course_link%'>%course_title%</a>.";
-        $output .= "Course Information is given below.";
-        $output .= "Course Amount : %course_amount%";
+        $output .= " Course Information is given below.";
+        $output .= "<br> Course Amount : %course_amount% $";
         $output .= "%signature%";
         return $output;
     }
     public static function getFreelancerCoursePaymentRefundEmailContent()
     {
         $output = "";
-        $output .= "Hello %freelancer_name%";
+        $output .= "Hello %freelancer_name% <br>";
         $output .= "<a href='%employer_link%'>%employer_name%</a> has not enrolled you for the following course<a href='%course_link%'>%course_title%</a>.";
-        $output .= "Your Course Payment has been refunded";
-        $output .= "Course Amount : %course_amount%";
+        $output .= " Your Course Payment has been refunded. <br>";
+        $output .= "Course Amount : %course_amount% $";
         $output .= "%signature%";
         return $output;
     }
@@ -3137,7 +3138,7 @@ class Helper extends Model
     public static function getAdminServicePostedEmailContent()
     {
         $output = "";
-        $output .= "Hello <3";
+        $output .= "Hello ";
         $output .= "A new service is posted by <a href='%freelancer_link%'>%freelancer_name%</a>.";
         $output .= "Click to view the service link. <a href='%service_link%' target='_blank' rel='noopener'>%service_title%</a>";
         $output .= "%signature%";

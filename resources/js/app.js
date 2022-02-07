@@ -3999,6 +3999,29 @@ if (document.getElementById("packages")) {
             getStriprForm: function () {
                 this.$refs.myModalRef.show()
             },
+            submitBankOrder: function () {
+                this.loading = true;
+                var self = this;
+                axios.get(APP_URL + '/course/bacs-checkout')
+                    .then(function (response) {
+                        console.log(response.data);
+                        if (response.data.type == 'success') {
+                            self.loading = false;
+                            self.showMessage(response.data.message);
+                            setTimeout(function () {
+                                window.location.replace('/search-results?type=instructors');
+                            }, 3000);
+                        } else if (response.data.type == 'error') {
+                            self.loading = false;
+                            self.showError(response.data.message);
+                        }
+                    })
+                    .catch(function (error) {
+                        self.loading = false;
+                        console.log(error);
+                    });
+            },
+        
             submitStripeFrom: function () {
                 this.loading = true;
                 let stripe_payment = document.getElementById('stripe-payment-form');
@@ -5514,8 +5537,13 @@ if (document.getElementById("cources")) {
                     .then(function (response) {
                         if (response.data.type == 'success') {
                             self.loading = false;
+                            // window.location.reload();
+                            // self.showMessage(response.data.message);
+                            self.loading = false;
                             self.showMessage(response.data.message);
-                            window.location.reload();
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 3000);
                         } else {
                             self.loading = false;
                             self.showError(response.data.message);
@@ -5753,6 +5781,8 @@ if (document.getElementById("cources")) {
                     this.$refs.myModalRef.show()
                 }
             },
+            
+
             submitFeedback: function (id) {
                 this.loading = true;
                 let review_form = document.getElementById('submit-review-form');

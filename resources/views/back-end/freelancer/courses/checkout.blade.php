@@ -89,7 +89,7 @@
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="javascrip:void(0);">
+                                                <a href="javascrip:void(0);" v-on:click.prevent="submitBankOrder">
                                                     <i class="fas fa-university"></i>
                                                     <span><em>{{ trans('lang.pay_amount_via') }}</em> {{ Helper::getPaymentMethodList("banktransfar")['title']}}</span>
                                                 </a>
