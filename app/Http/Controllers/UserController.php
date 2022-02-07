@@ -361,7 +361,7 @@ class UserController extends Controller
                                     $template = DB::table('email_types')->select('id')->where('email_type','new_agency')->get()->first();
                                     if (!empty($template->id)) {
                                         $template_data = EmailTemplate::getEmailTemplateByID($template->id);
-                                        dd($template_data);
+                                        // dd($template_data);
                                         $email_params['freelancer_name'] = Helper::getUserName($user_id);
                                         Mail::to(Auth::user()->email)
                                             ->send(
