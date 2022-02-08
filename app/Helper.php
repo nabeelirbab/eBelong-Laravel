@@ -3034,8 +3034,8 @@ class Helper extends Model
     public static function getAgencyInvitationAcceptEmailContent()
     {
         $output = "";
-        $output .= "Hello %creator_name%";
-        $output .= "Your %agency_name% join is request accepted successfully by <strong><a href='%member_link%'>'%member_name%'</a>";
+        $output .= "Hello %creator_name%,<br>";
+        $output .= " Your Invation Request is accepted successfully by <strong><a href='%member_link%'>'%member_name%'</a> for %agency_name%";
         $output .= "%signature%";
         return $output;
     }
@@ -3137,9 +3137,28 @@ class Helper extends Model
     public static function getAdminServicePostedEmailContent()
     {
         $output = "";
-        $output .= "Hello";
+        $output .= "Hello <3";
         $output .= "A new service is posted by <a href='%freelancer_link%'>%freelancer_name%</a>.";
         $output .= "Click to view the service link. <a href='%service_link%' target='_blank' rel='noopener'>%service_title%</a>";
+        $output .= "%signature%";
+        return $output;
+    }
+
+    public static function getAdminCoursePostedEmailContent()
+    {
+        $output = "";
+        $output .= "Hello <br>";
+        $output .= "A new course is posted by <a href='%freelancer_link%'>%freelancer_name%</a>.";
+        $output .= "Click to view the course link. <a href='%cource_link%' target='_blank' rel='noopener'>%cource_title%</a>";
+        $output .= "%signature%";
+        return $output;
+    }
+    public static function getFreelancerCoursePostedEmailContent()
+    {
+        $output = "";
+        $output .= "Hello <a href='%freelancer_link%'>%freelancer_name%</a> <br>";
+        $output .= "You have posted a new course  .";
+        $output .= "Click to view the course link. <a href='%cource_link%' target='_blank' rel='noopener'>%cource_title%</a>";
         $output .= "%signature%";
         return $output;
     }

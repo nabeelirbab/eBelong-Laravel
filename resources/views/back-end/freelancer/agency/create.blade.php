@@ -82,7 +82,7 @@
                                                 <div class="col-md-12">
                                                     <div class="form-group">
                                                         <textarea spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off" 
-                                                          class="form-control" name="description" id="description" @keyup ="countWords" placeholder="Enter agency Description" cols="30" rows="20" maxlength="200"></textarea>
+                                                          class="form-control" name="description" id="description" @keyup ="countWords" placeholder="Enter agency Description" cols="30" rows="20" maxlength="200">{{ old('description') }}</textarea>
                                                         <span id="show">0/200</span>
                                                     </div>
                                                 </div>

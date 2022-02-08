@@ -68,6 +68,8 @@ class FreelancerEmailMailable extends Mailable
             $email_message = $this->prepareFreelancerEmailJobCompleted($this->email_params);
         } elseif ($this->type == 'freelancer_email_new_order') {
             $email_message = $this->prepareFreelancerEmailNewOrder($this->email_params);
+        }elseif ($this->type == 'freelancer_email_new_course_posted') {
+            $email_message = $this->prepareFreelancerEmailCoursePosted($this->email_params);
         }elseif ($this->type == 'freelancer_email_new_course_order') {
             $email_message = $this->prepareFreelancerEmailNewCourseOrder($this->email_params);
         }elseif ($this->type == 'freelancer_email_course_enrolled') {
@@ -475,7 +477,7 @@ class FreelancerEmailMailable extends Mailable
         $course_link = $course_link;
         $course_amount = $amount;
         $signature = EmailHelper::getSignature();
-        $app_content = $this->template;
+        $app_content = $this->template->content;
         $email_content_default =    "Hello %freelancer_name%,
 
                                     <a href='%employer_link%'>%employer_name%</a> has purchased your following course <a href='%course_link%'>%course_title%</a>.
@@ -510,7 +512,7 @@ class FreelancerEmailMailable extends Mailable
         $course_link = $course_link;
         $course_amount = $amount;
         $signature = EmailHelper::getSignature();
-        $app_content = $this->template;
+        $app_content = $this->template->content;
         $email_content_default =    "Hello %freelancer_name%,
 
                                     <a href='%employer_link%'>%employer_name%</a> has enrolled you for the following course <a href='%course_link%'>%course_title%</a>.
@@ -545,7 +547,7 @@ class FreelancerEmailMailable extends Mailable
         $course_link = $course_link;
         $course_amount = $amount;
         $signature = EmailHelper::getSignature();
-        $app_content = $this->template;
+        $app_content = $this->template->content;
         $email_content_default =    "Hello %freelancer_name%,
 
                                     <a href='%employer_link%'>%employer_name%</a> has not enrolled you for the following course <a href='%course_link%'>%course_title%</a>.
@@ -626,11 +628,12 @@ class FreelancerEmailMailable extends Mailable
         $creator_name = $agency_creator_name;
         $member_name = $agency_member_name;
         $agency_name = $agency_name;
-		$freelancer_link = 'http://dev.ebelong.com/profile/'.Auth::user()->slug;
+		$member_link = 'http://dev.ebelong.com/profile/'.Auth::user()->slug;
         $signature = EmailHelper::getSignature();
+        // /dd($this->template);
         $app_content = $this->template->content;
         $email_content_default = 	'<p>Hello <strong><a href="%creator_link%">%creator_name%</a></strong>,</p>
-									 <p>Your %agency_name% join request accepted successfully by <strong><a href="%member_link%">%member_name%</a></strong> .</p>
+									 <p>Your Invitation request is accepted successfully by <strong><a href="%member_link%">%member_name%</a></strong> for %agency_name%.</p>
 									 <p>%signature%</p>';
         //set default contents
         if (empty($app_content)) {
@@ -648,4 +651,35 @@ class FreelancerEmailMailable extends Mailable
         $body .= EmailHelper::getEmailFooter();
         return $body;
 	}
+    public function prepareFreelancerEmailCoursePosted($email_params)
+    {
+        extract($email_params);
+        $title = $cource_title;
+        $cource_link = $posted_cource_link;
+        $cource_name = $name;
+        $freelancer_name = $name;
+        $freelancer_link = $link;
+        $signature = EmailHelper::getSignature();
+        $app_content = $this->template->content;
+        $email_content_default =    "Hello  <a href='%freelancer_link%'> <br>,
+                                    You have posted a new course.
+                                    Click to view the course link. <a href='%cource_link%' target='_blank' rel='noopener'>%cource_title%</a>
+
+                                    %signature%";
+        //set default contents
+        if (empty($app_content)) {
+            $app_content = $email_content_default;
+        }
+        $app_content = str_replace("%freelancer_link%", $freelancer_link, $app_content);
+        $app_content = str_replace("%freelancer_name%", $freelancer_name, $app_content);
+        $app_content = str_replace("%cource_link%", $cource_link, $app_content);
+        $app_content = str_replace("%cource_title%", $title, $app_content);
+        $app_content = str_replace("%signature%", $signature, $app_content);
+
+        $body = "";
+        $body .= EmailHelper::getEmailHeader();
+        $body .= $app_content;
+        $body .= EmailHelper::getEmailFooter();
+        return $body;
+    }
 }

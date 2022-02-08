@@ -378,7 +378,7 @@ class AdminEmailMailable extends Mailable
         $freelancer_name = $name;
         $freelancer_link = $link;
         $signature = EmailHelper::getSignature();
-        $app_content = $this->template;
+        $app_content = $this->template->content;
         $email_content_default =    "Hello,
                                     A new course is posted by <a href='%freelancer_link%'>%freelancer_name%</a>.
                                     Click to view the course link. <a href='%cource_link%' target='_blank' rel='noopener'>%cource_title%</a>
@@ -390,7 +390,7 @@ class AdminEmailMailable extends Mailable
         }
         $app_content = str_replace("%freelancer_link%", $freelancer_link, $app_content);
         $app_content = str_replace("%freelancer_name%", $freelancer_name, $app_content);
-        $app_content = str_replace("%service_link%", $cource_link, $app_content);
+        $app_content = str_replace("%cource_link%", $cource_link, $app_content);
         $app_content = str_replace("%cource_title%", $title, $app_content);
         $app_content = str_replace("%signature%", $signature, $app_content);
 
