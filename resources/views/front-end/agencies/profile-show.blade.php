@@ -33,14 +33,15 @@
                         <div class="col-12 col-sm-12 col-md-12 col-lg-3 float-left">
                             <div class="row">
                                 <div class="wt-userprofile">
-                                    @if (!empty($agency['is_verified']))
+                                    <!-- please add if condition for agency logo  -->
                                         <figure><img src="{{{ 'https://ebelongmaster-1517a.kxcdn.com/uploads/settings/general/imgae-not-availabe.png' }}}" alt="{{{ trans('lang.user_avatar') }}}"></figure>
-                                    @endif
+                                    <!-- \--- -->
                                     <div class="wt-title">
                                         @if (!empty($agency['is_verified']))
                                             <h3>@if ($agency['is_verified'] === 1)<i class="fa fa-check-circle"></i> @endif {{{ $agency['agency_name'] }}}</h3>
                                         @endif
                                         <span>
+                                            <div> Agency Name </div>
                                             <div class="wt-proposalfeedback"><span class="wt-starcontent"> {{{ 5 }}}/<i>5</i>&nbsp;<em>({{{ 100 }}} {{ trans('lang.feedbacks') }})</em></span></div>
                                             @if (!empty($agency['created_at']))
                                                 {{{ 'Agency since: ' }}}&nbsp;{{{ $agency['created_at'] }}}
@@ -55,6 +56,9 @@
                         <div class="col-12 col-sm-12 col-md-12 col-lg-9 float-left">
                             <div class="row">
                                 <div class="wt-proposalhead wt-userdetails">
+                                    <!-- please add agency name condition -->
+                                    <h2> Agency Name</h2>
+                                    <!-- ----- -->
                                     <ul class="wt-userlisting-breadcrumb wt-userlisting-breadcrumbvtwo">
                                         @if (!empty($agency['hourly_rates_min'] && $agency['hourly_rates_max']))
                                             <li><span><i class="far fa-money-bill-alt"></i> {{ '$' }}{{{ $agency['hourly_rates_min'] .' - '. $agency['hourly_rates_max'] }}} {{{ trans('lang.per_hour') }}}</span></li>
