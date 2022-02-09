@@ -148,13 +148,13 @@
             navText: ['<span class="lnr lnr-chevron-left"></span>', '<span class="lnr lnr-chevron-right"></span>'],
         });
 
-        var _readmore = jQuery('.wt-userdetails .wt-description');
-        _readmore.readmore({
-            speed: 500,
-            collapsedHeight: 230,
-            moreLink: '<a class="wt-btntext" href="#">'+readmore_trans+'</a>',
-            lessLink: '<a class="wt-btntext" href="#">'+less_trans+'</a>',
-        });
+        // var _readmore = jQuery('.wt-userdetails .wt-description');
+        // _readmore.readmore({
+        //     speed: 500,
+        //     collapsedHeight: 230,
+        //     moreLink: '<a class="wt-btntext" href="#">'+readmore_trans+'</a>',
+        //     lessLink: '<a class="wt-btntext" href="#">'+less_trans+'</a>',
+        // });
         $('#wt-ourskill').appear(function () {
             jQuery('.wt-skillholder').each(function () {
                 jQuery(this).find('.wt-skillbar').animate({
