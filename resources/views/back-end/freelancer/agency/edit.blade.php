@@ -108,8 +108,9 @@
                                                         }
                                                             if(count > wordLen){
                                                             return false;
-                                                            }"autofocus="true" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off" 
-                                                        class="form-control" name="description" id="description" @keyup ="countWords" id="description"  placeholder="Enter agency Description" maxlength="200" cols="30" rows="20">{{ $agency->description }}</textarea>
+                                                            }"
+                                                            autofocus="true" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off" 
+                                                        class="form-control" name="description" id="description" @keyup ="countWords"   pattern="^(?:\w+\W+){0,5}(?:\w+)$"  placeholder="Enter agency Description" cols="30" rows="20">{{ $agency->description }}</textarea>
                                                         <span id="show">0/200</span>
                                                     </div>
                                                 </div>
