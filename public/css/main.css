@@ -10109,14 +10109,14 @@ a:focus{text-decoration: none !important;}
 }
 
 @media only screen and (max-width: 768px){
-	a.wt-btn.join-now-nav{
+	a.wt-btn.join-now-nav {
 		display: none;
 	}
-	.wt-headereleven .join-now-menu{
+	.wt-headereleven .join-now-menu 
 		display: block;
 	}
 }
-@media only screen and (min-width: 769px){
+@media only screen and (min-width: 769px) {
 	a.wt-btn.join-now-nav{
 		display: block;
 	}

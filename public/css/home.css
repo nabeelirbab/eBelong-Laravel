@@ -1415,8 +1415,12 @@
     display: block;
   }
 
-  .wt-headereleven .join-now-menu {
-    display: none;
+  /* .wt-headereleven .join-now-menu{
+  	display: none;
+  } */
+
+  li.join-now-menu a {
+    display: none !important;
   }
 }
 

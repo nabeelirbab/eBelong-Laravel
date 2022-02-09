@@ -542,11 +542,20 @@
 	}
 }
 @media only screen and (min-width: 769px){
-	a.wt-btn.join-now-nav{
+	// a.wt-btn.join-now-nav{
+	// 	display: block;
+	// }
+	// .wt-headereleven .join-now-menu{
+	// 	display: none;
+	// }
+    a.wt-btn.join-now-nav{
 		display: block;
 	}
-	.wt-headereleven .join-now-menu{
+	/* .wt-headereleven .join-now-menu{
 		display: none;
+	} */
+	li.join-now-menu a {
+		display: none !important;
 	}
 }
 @media only screen and (max-width: 512px){
