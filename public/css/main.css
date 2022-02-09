@@ -5098,19 +5098,20 @@ body.wt-login .wt-userlogedin{display: block;}
 	font-size: 16px;
 	margin: 0 0 26px;
 	line-height: 26px;
+	overflow-wrap: break-word;
 }
 .wt-userdetails .wt-description{position: relative;top: 30px;}
 .wt-userdetails .wt-description:after{
-	left: 0;
+	/* left: 0;
 	bottom: 0;
 	width: 100%;
 	content: '';
 	position: absolute;
-	background: url(../images/bg-img.png);
+	background: url(../images/bg-img.png); */
 	/* height: 99px; */
-	height: 60px;
+	/* height: 60px;
 	background-size: cover;
-	background-repeat: no-repeat;
+	background-repeat: no-repeat; */
 }
 .wt-btntext{
 	float: left;

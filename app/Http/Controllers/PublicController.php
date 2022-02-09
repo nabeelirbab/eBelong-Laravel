@@ -17,6 +17,7 @@ use App\Mail\FindMatchEmailAdminMailable;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Http\Request;
 use App\User;
+use App\AgencyUser;
 use App\Cource;
 use App\Language;
 use App\FindMatchRequest;
@@ -295,10 +296,14 @@ class PublicController extends Controller
             $agency = DB::table('agency_user')
                 ->where('slug', '=', $slug)
                 ->first();
+            $agency_ = AgencyUser::find($agency->id);
+
+                $skills = $agency_->skills()->get();
+                // dd($skills);
              
             if (!empty($agency)) {
                 $agency = @json_decode(json_encode($agency), true);
-                return View('front-end.agencies.profile-show', compact('agency'));
+                return View('front-end.agencies.profile-show', compact('agency','skills'));
 
             } else {
                 abort(404);

@@ -476,11 +476,12 @@ class FreelancerEmailMailable extends Mailable
         $course_title = $title;
         $course_link = $course_link;
         $course_amount = $amount;
+        $payment_mode = $payment_mode;
         $signature = EmailHelper::getSignature();
         $app_content = $this->template->content;
         $email_content_default =    "Hello %freelancer_name%,
 
-                                    <a href='%employer_link%'>%employer_name%</a> has purchased your following course <a href='%course_link%'>%course_title%</a>.
+                                    <a href='%employer_link%'>%employer_name%</a> has purchased your following course <a href='%course_link%'>%course_title%</a> through %payment_mode%.
                                     course amount is %course_amount%. the student is waiting for you to enroll
                                     %signature%,";
         //set default contents
@@ -493,6 +494,7 @@ class FreelancerEmailMailable extends Mailable
         $app_content = str_replace("%course_link%", $course_link, $app_content);
         $app_content = str_replace("%course_title%", $course_title, $app_content);
         $app_content = str_replace("%course_amount%", $course_amount, $app_content);
+        $app_content = str_replace("%payment_mode%", $payment_mode, $app_content);
         $app_content = str_replace("%signature%", $signature, $app_content);
 
         $body = "";

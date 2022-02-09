@@ -12,7 +12,7 @@
                                 <option v-for="(stored_skill, index) in stored_skills" :key="index" :value="stored_skill.id">{{stored_skill.title}}</option>
                             </select>
                         </span>
-                        <input type="number" class="form-control" :placeholder="ph_rate_skills" id="selected_rating_value">
+                        <input type="number" :value="amount" @input="loadNumber($event)" class="form-control" :placeholder="ph_rate_skills" id="selected_rating_value">
                     </div>
                 </div>
                 <div class="form-group wt-btnarea">
@@ -92,6 +92,7 @@
                         timeout: 4000
                     }
                 },
+                amount: null,
             }
         },
         methods: {
@@ -216,7 +217,35 @@
             },
             editInput: function (index) {
                 this.edit_class = true;
-            }
+            },
+            loadNumber: function (event) {
+                const value = event.target.value
+                console.log(value, this.amount)
+                var reg = /^(\d{1,2}|100)$/;
+                if (!value.match(reg)) {
+                    this.amount = null
+                    return false;
+                }
+                else {
+                    this.amount = value
+                    return true;
+                }
+                // this.$forceUpdate()
+
+
+                // var el = event.currentTarget;
+                // var elValue = el.value;
+                // var reg = /^((?!0)\d{1,2}|100)$/;
+                // if (!elValue.match(reg)) {
+                //     elValue = "";
+                //     console.log("b")
+                //     this.$forceUpdate()
+                //     return false;
+                // } else {
+                //     return true;
+                // }
+
+            },
         },
         mounted: function () {
             jQuery(document).on('click', '.wt-addinfo', function (e) {

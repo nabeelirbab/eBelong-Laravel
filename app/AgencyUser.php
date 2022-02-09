@@ -29,7 +29,7 @@ class AgencyUser extends Model
 
     {
 
-        return $this->belongsToMany('App\Skill');
+        return $this->belongsToMany('App\Skill')->withPivot('skill_rating');
 
     }
 }

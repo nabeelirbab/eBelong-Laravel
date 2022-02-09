@@ -93,20 +93,24 @@ class AgencyController extends Controller
             ->where('is_pending',1)
             ->where('is_accepted',0)
             ->get();
-
-        if(!empty($getInvitesData) && isset($getInvitesData[0])) {
-            $getInvites = @json_decode(json_encode($getInvitesData), true);
-        }
-
-        if (!empty($getInvites) && isset($getInvites[0])) {
-            foreach ($getInvites as $invites) {
-                $requested_agency[] = DB::table('agency_user')
-                    ->where('id',$invites['agency_id'])
-                    ->get();
-
-                $requested_agency = @json_decode(json_encode($requested_agency[0]), true);
+            if(!empty($getInvitesData) && isset($getInvitesData[0])) {
+            $getInvites = count($getInvitesData);
             }
-        }
+        // dd(count($getInvitesData));
+        // if(!empty($getInvitesData) && isset($getInvitesData[0])) {
+        //     $getInvites = @json_decode(json_encode($getInvitesData), true);
+        // }
+
+        // if (!empty($getInvites) && isset($getInvites[0])) {
+        //     foreach ($getInvites as $invites) {
+        //         $requested_agency[] = DB::table('agency_user')
+        //             ->where('id',$invites['agency_id'])
+        //             ->get();
+
+        //         $requested_agency = @json_decode(json_encode($requested_agency[0]), true);
+        //     }
+        // }
+        // dd($requested_agency);
 
 
 //        $skillsData = Skill::select('title', 'id')->get()->toArray();
@@ -116,7 +120,7 @@ class AgencyController extends Controller
 //            $skills = [];
 //        }
 
-        return View::make('back-end.freelancer.agency.invitations', compact('requested_agency','getInvites'));
+        return View::make('back-end.freelancer.agency.invitations', compact('getInvitesData','getInvites'));
 
     }
     public function removeMembers(Request $request){
@@ -293,16 +297,20 @@ class AgencyController extends Controller
         DB::table('agency_associated_users')->where('agency_id',$agencyid)->where('user_id',Auth::user()->id)->update(array('is_pending'=>0, 'is_accepted'=>1));
         $agency_name = DB::table('agency_user')->select('agency_name')->where('id',$agencyid)->first();
         $creator = DB::table('agency_user')->select('user_id')->where('id',$agencyid)->first();
-        $creator_email = DB::table('users')->select('email')->where('id',$creator->user_id)->first();
-        // // if (trim(config('mail.username')) != "" && trim(config('mail.password')) != "") {
-        //     $email_params = array();
+        $creator_email = User::find($creator->user_id);
+        // dd(config('mail.password'));
+        // if (trim(config('mail.username')) != "" && trim(config('mail.password')) != "") {
             
-        //         //email to creator of agency
-        //         $template_data = Helper::getAgencyInvitationAcceptEmailContent();
-        //         $email_params['agency_creator_name'] = Helper::getUserName($creator->user_id);
-        //         $email_params['agency_member_name'] = Helper::getUserName(Auth::user()->id);
-        //         // $agency_info =  Helper::getAgencyList($data['agency_id']);
-        //         $email_params['agency_name'] = $agency_name->agency_name;
+        //     $email_params = array();
+        //     $template_data = (object)array();
+        //     $template_data->content = Helper::getAgencyInvitationAcceptEmailContent();
+        //     $template_data->title =  "Agency Invitation Approval";
+        //     $template_data->subject = "Agency Invitation Approval";
+        //     // dd($template_data->content);
+        //     $email_params['agency_creator_name'] = Helper::getUserName($creator->user_id);
+        //     $email_params['agency_member_name'] = Helper::getUserName(Auth::user()->id);
+        //     // $agency_info =  Helper::getAgencyList($data['agency_id']);
+        //     $email_params['agency_name'] = $agency_name->agency_name;
         //         Mail::to($creator_email->email)
         //             ->send(
         //                 new FreelancerEmailMailable(
@@ -312,7 +320,7 @@ class AgencyController extends Controller
         //                 )
         //             );
             
-        // // }
+        // }
         Session::flash('message', "Invitation Sucessfully Accepted");
         return Redirect::back();
     }
