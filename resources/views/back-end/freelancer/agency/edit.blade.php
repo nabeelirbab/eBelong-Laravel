@@ -95,7 +95,18 @@
 
                                                 <div class="col-md-12">
                                                     <div class="form-group">
-                                                        <textarea autofocus="true" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off" 
+                                                        <textarea onKeyPress="var words = this.value;
+                                                        var count = 0;
+                                                        var wordLen = 200;
+                                                        var split = words.split(' ');
+                                                        for (var i = 0; i < split.length; i++) {
+                                                            if (split[i] != '') {
+                                                                count += 1;
+                                                            }
+                                                        }
+                                                            if(count > wordLen){
+                                                            return false;
+                                                            }"autofocus="true" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off" 
                                                         class="form-control" name="description" id="description" @keyup ="countWords" id="description"  placeholder="Enter agency Description" maxlength="200" cols="30" rows="20">{{ $agency->description }}</textarea>
                                                         <span id="show">0/200</span>
                                                     </div>

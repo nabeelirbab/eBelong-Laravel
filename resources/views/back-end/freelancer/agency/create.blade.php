@@ -81,8 +81,22 @@
 
                                                 <div class="col-md-12">
                                                     <div class="form-group">
-                                                        <textarea spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off" 
-                                                          class="form-control" name="description" id="description" @keyup ="countWords" placeholder="Enter agency Description" cols="30" rows="20" maxlength="200">{{ old('description') }}</textarea>
+                                                        <textarea onKeyPress="var words = this.value;
+                                                        console.log('im changes');
+                                                            var count = 0;
+                                                            const wordLen = 200;
+                                                            var split = words.split(' ');
+                                                            for (var i = 0; i < split.length; i++) {
+                                                                if (split[i] != '') {
+                                                                    count += 1;
+                                                                }
+                                                            }
+                                                                if(count > wordLen){
+                                                                return false;
+                                                                }
+                                                            
+                                                     "spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="false"
+                                                          class="form-control" name="description" id="description" @keyup ="countWords" pattern="^(?:\w+\W+){0,5}(?:\w+)$" placeholder="Enter agency Description" cols="30" rows="20" >{{ old('description') }}</textarea>
                                                         <span id="show">0/200</span>
                                                     </div>
                                                 </div>

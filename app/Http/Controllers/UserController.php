@@ -336,7 +336,8 @@ class UserController extends Controller
                             $skills = $request['skills'];
                             $_agency = AgencyUser::find($agencyid);
                             foreach ($skills as $skill) {
-                                $_agency->skills()->attach($skill['id']);
+                                $_agency->skills()->attach($skill['id'], ['skill_rating' => $skill['rating']]);
+                                
                             }
                         }
 
@@ -468,7 +469,8 @@ class UserController extends Controller
                                 $_agency->skills()->detach();
                                 if (!empty($skills)) {
                                     foreach ($skills as $skill) {
-                                        $_agency->skills()->attach($skill['id']);
+                                        $_agency->skills()->attach($skill['id'],['skill_rating' => $skill['rating']]);
+                                        // $_agency->skills()->attach($skill['id'], ['skill_rating' => $skill['rating']]);
                                     }
                                 }
                             }

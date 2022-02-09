@@ -5206,25 +5206,37 @@ if (document.getElementById("agency")) {
             
             countWords:function () {
 
-                // Get the input text value
-                var text = document
-                    .getElementById("description");
-                
-                // Initialize the char counter
-                
-                const char= text.value.length;
+             var words = document
+             .getElementById("description").value;
+
+                // Initialize the word counter
+                var count = 0;
+                var wordLen = 200;
+
+                // Split the words on each
+                // space character
+                var split = words.split(' ');
+
+                // Loop through the words and
+                // increase the counter when
+                // each split word is not empty
+                for (var i = 0; i < split.length; i++) {
+                    if (split[i] != "") {
+                        count += 1;
+                    }
+                }
+
+         // Display it as output
+         document.getElementById("show")
+             .innerHTML = count+"/200";
+             if(count > wordLen){
+                document
+                .getElementById("description").value = document
+                .getElementById("description").value.split(" ").splice(0,200).join(" ");
                 document.getElementById("show")
-                    .innerHTML = char+"/200";
-            },
-            setCharCount:function(){
-                var text = document
-                  .getElementById("description");
-              
-              // Initialize the char counter
-              
-              const char= text.value.length;
-              document.getElementById("show")
-                  .innerHTML = char+"/200";
+             .innerHTML = "200/200";
+             }
+             
           },
             submitAgency: function () {
                 console.log('ima called');
@@ -5372,6 +5384,65 @@ if (document.getElementById("cources")) {
             showError(error) {
                 return this.$toast.error(' ', error, this.notificationSystem.options.error);
             },
+            // getMessageForm: function (id) {
+            //     var modal_ref = 'myModalRef-' + id;
+            //     this.$refs[modal_ref].show();
+            // },
+            // sendMessage: function (id) {
+            //     console.log(id)
+            //     this.loading = true;
+            //     var msg = $('#message-'+id).val();
+            //     let form = new FormData;
+            //     form.append('message',msg)
+            //     form.append('id',id)
+            //     var self = this;
+            //     axios.post(APP_URL + '/course/send-message', form)
+            //         .then(function (response) {
+            //             console.log(response);
+            //             if (response.data.type == 'success') {
+            //                 self.loading = false;
+            //                 self.showMessage(response.data.message);
+            //                 setTimeout(function () {
+            //                     window.location.replace(response.data.url);
+            //                 }, 3000);
+            //             } else if (response.data.type == 'error') {
+            //                 self.loading = false;
+            //                 self.showError(response.data.message);
+            //             }
+            //         })
+            //         .catch(function (error) {
+            //             self.loading = false;
+            //             console.log(error);
+            //         });
+            // },
+            // sendMessagetoInstructor: function (id) {
+            //     console.log(id)
+            //     this.loading = true;
+            //     var msg = $('#message-'+id).val();
+            //     let form = new FormData;
+            //     console(msg+"...")
+            //     form.append('message',msg)
+            //     form.append('id',id)
+            //     var self = this;
+            //     axios.post(APP_URL + '/course/send-message-to-instructor', form)
+            //         .then(function (response) {
+            //             console.log(response);
+            //             if (response.data.type == 'success') {
+            //                 self.loading = false;
+            //                 self.showMessage(response.data.message);
+            //                 setTimeout(function () {
+            //                     window.location.replace(response.data.url);
+            //                 }, 3000);
+            //             } else if (response.data.type == 'error') {
+            //                 self.loading = false;
+            //                 self.showError(response.data.message);
+            //             }
+            //         })
+            //         .catch(function (error) {
+            //             self.loading = false;
+            //             console.log(error);
+            //         });
+            // },
             submitCource: function () {
                 this.loading = true;
                 let Form = document.getElementById('post_cource_form');

@@ -34,15 +34,20 @@
                             <div class="row">
                                 <div class="wt-userprofile">
                                     <!-- please add if condition for agency logo  -->
+                                    @if (empty($agency['agency_logo']))
                                         <figure><img src="{{{ 'https://ebelongmaster-1517a.kxcdn.com/uploads/settings/general/imgae-not-availabe.png' }}}" alt="{{{ trans('lang.user_avatar') }}}"></figure>
                                     <!-- \--- -->
+                                    @else
+                                    <figure><img src="{{{asset('/uploads/agency_logos/'.$agency['id'].'/'.$agency['agency_logo'] )}}}" alt="{{{ trans('lang.user_avatar') }}}"></figure>
+
+                                    @endif
                                     <div class="wt-title">
                                         @if (!empty($agency['is_verified']))
                                             <h3>@if ($agency['is_verified'] === 1)<i class="fa fa-check-circle"></i> @endif {{{ $agency['agency_name'] }}}</h3>
                                         @endif
                                         <span>
-                                            <div> Agency Name </div>
-                                            <div class="wt-proposalfeedback"><span class="wt-starcontent"> {{{ 5 }}}/<i>5</i>&nbsp;<em>({{{ 100 }}} {{ trans('lang.feedbacks') }})</em></span></div>
+                                            <div> Agency Created by <h4>{{  Helper::getUserName($agency['user_id'])}}</h4></div>
+                                            {{-- <div class="wt-proposalfeedback"><span class="wt-starcontent"> {{{ 5 }}}/<i>5</i>&nbsp;<em>({{{ 100 }}} {{ trans('lang.feedbacks') }})</em></span></div> --}}
                                             @if (!empty($agency['created_at']))
                                                 {{{ 'Agency since: ' }}}&nbsp;{{{ $agency['created_at'] }}}
                                             @endif
@@ -57,7 +62,7 @@
                             <div class="row">
                                 <div class="wt-proposalhead wt-userdetails">
                                     <!-- please add agency name condition -->
-                                    <h2> Agency Name</h2>
+                                    <h2> {{  $agency['agency_name']}}</h2>
                                     <!-- ----- -->
                                     <ul class="wt-userlisting-breadcrumb wt-userlisting-breadcrumbvtwo">
                                         @if (!empty($agency['hourly_rates_min'] && $agency['hourly_rates_max']))
@@ -95,6 +100,26 @@
                                         <h3 data-from="0" data-to="{{ $agency['agency_size'] }}" data-speed="8000" data-refresh-interval="100">{{ $agency['agency_size'] }}</h3>
                                         <h4>{{ 'Agency Size' }}</h4>
                                     </div>
+                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-5 col-xl-4 float-left">
+                        <aside id="wt-sidebar" class="wt-sidebar">
+                            <div id="wt-ourskill" class="wt-widget">
+                                <div class="wt-widgettitle">
+                                    <h2>{{ 'Agency Skills' }}</h2>
+                                </div>
+                                @if (!empty($skills) && $skills->count() > 0)
+                                    <div class="wt-widgetcontent wt-skillscontent">
+                                        @foreach ($skills as $skill)
+                                            <div class="wt-skillholder" data-percent="{{{ $skill->pivot->skill_rating }}}%">
+                                                <span>{{{ $skill->title }}} <em>{{{ $skill->pivot->skill_rating }}}%</em></span>
+                                                <div class="wt-skillbarholder"><div class="wt-skillbar"></div></div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                @else
+                                    <p>{{ trans('lang.no_skills') }}</p>
+                                @endif
+                            </div>
+                   
                                 </div>
                             </div>
                         </div>
