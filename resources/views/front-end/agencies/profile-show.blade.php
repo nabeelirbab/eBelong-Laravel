@@ -100,28 +100,28 @@
                                         <h3 data-from="0" data-to="{{ $agency['agency_size'] }}" data-speed="8000" data-refresh-interval="100">{{ $agency['agency_size'] }}</h3>
                                         <h4>{{ 'Agency Size' }}</h4>
                                     </div>
-                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-5 col-xl-4 float-left">
-                        <aside id="wt-sidebar" class="wt-sidebar">
-                            <div id="wt-ourskill" class="wt-widget">
-                                <div class="wt-widgettitle">
-                                    <h2>{{ 'Agency Skills' }}</h2>
-                                </div>
-                                @if (!empty($skills) && $skills->count() > 0)
-                                    <div class="wt-widgetcontent wt-skillscontent">
-                                        @foreach ($skills as $skill)
-                                            <div class="wt-skillholder" data-percent="{{{ $skill->pivot->skill_rating }}}%">
-                                                <span>{{{ $skill->title }}} <em>{{{ $skill->pivot->skill_rating }}}%</em></span>
-                                                <div class="wt-skillbarholder"><div class="wt-skillbar"></div></div>
+                                     <!-- <div class="col-xs-12 col-sm-12 col-md-12 col-lg-5 col-xl-4 float-left"> -->
+                                    <aside id="wt-sidebar" class="wt-sidebar">
+                                        <div id="wt-ourskill" class="wt-widget" style="text-align: left;">
+                                            <div class="wt-widgettitle">
+                                                <h2>{{ 'Agency Skills' }}</h2>
                                             </div>
-                                        @endforeach
-                                    </div>
-                                @else
-                                    <p>{{ trans('lang.no_skills') }}</p>
-                                @endif
-                            </div>
-                   
+                                            @if (!empty($skills) && $skills->count() > 0)
+                                                <div class="wt-widgetcontent wt-skillscontent" style="text-align: left;">
+                                                    @foreach ($skills as $skill)
+                                                        <div class="wt-skillholder" data-percent="{{{ $skill->pivot->skill_rating }}}%">
+                                                            <span>{{{ $skill->title }}} <em>{{{ $skill->pivot->skill_rating }}}%</em></span>
+                                                            <div class="wt-skillbarholder"><div class="wt-skillbar"></div></div>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                            @else
+                                                <p>{{ trans('lang.no_skills') }}</p>
+                                            @endif
+                                        </div>
+                                    </aside>
                                 </div>
-                            </div>
+                            <!-- </div> -->
                         </div>
                     </div>
                 </div>

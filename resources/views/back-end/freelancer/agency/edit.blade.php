@@ -63,10 +63,12 @@
                                                         <input type="number" onKeyPress="if(this.value.length==4) return false;" name="founded_in" placeholder="Founded Year" class="form-control" maxlength="4" pattern="\d{4}" required value="{{ $agency->founded_in }}">
                                                     </div>
                                                 </div>
-
+                                                <div class="wt-tabscontenttitle">
+                                                    <h2>Agency Logo</h2>
+                                                </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group input-preview">
-                                                    <label style="font-size: 16px;line-height: 20px;color: black;"> Agency Logo </label>
+                                                    <!-- <label style="font-size: 16px;line-height: 20px;color: black;"> Agency Logo </label> -->
                                                         <input type="file" name="agency_logo" class="form-control">
                                             <ul class="wt-attachfile dropzone-previews">
                                                 @if (!empty($agency->agency_logo))

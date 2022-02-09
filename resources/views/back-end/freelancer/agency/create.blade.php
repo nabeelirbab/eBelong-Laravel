@@ -63,6 +63,9 @@
                                                         <input type="number" onKeyPress="if(this.value.length==4) return false;" name="founded_in" placeholder="Founded Year" class="form-control" value="{{old('founded_in') }}" required value="" >
                                                     </div>
                                                 </div>
+                                                <div class="wt-tabscontenttitle">
+                                                    <h2>Agency Logo</h2>
+                                                </div>
 
                                                 <div class="col-md-6">
                                                     <div class="form-group">
