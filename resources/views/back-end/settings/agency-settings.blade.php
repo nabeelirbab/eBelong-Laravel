@@ -124,7 +124,7 @@
                                     <delete :title="'{{trans("lang.ph_delete_confirm_title")}}'" :id="'{{ $agency_info[0]['id'] }}'" :message="'{{trans("lang.ph_agency_delete_message")}}'" :url="'{{url('freelancer/dashboard/delete-agency')}}'"></delete>
                                     </div>
                                             <div class="wt-actionbtn"style="margin: 30px;">
-                                            <a href="{{{route('edit_agency',$agency_info[0]['id'])}}}" class="wt-addinfo wt-skillsaddinfo">
+                                            <a href="{{{route('edit_agency',$agency_info[0]['id'])}}}" class="wt-addinfo wt-skillsaddinfo" style="margin-left: 10px;">
 															<i class="lnr lnr-pencil"></i>
 											</a>
                                             </div>
