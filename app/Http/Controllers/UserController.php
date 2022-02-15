@@ -2985,7 +2985,16 @@ class UserController extends Controller
                         'keyword' => Input::get('keyword')
                     )
                 );
-            } else {
+            } 
+            if (!empty($_GET['role'])) {
+                $users = User::getFilterUsers($_GET['role']);
+                $pagination = $users->appends(
+                    array(
+                        'keyword' => Input::get('keyword')
+                    )
+                );
+            }
+            else {
                 $users = User::select('*')->latest()->paginate(10);
             }
             /* if (file_exists(resource_path('views/extend/back-end/admin/users/index.blade.php'))) {

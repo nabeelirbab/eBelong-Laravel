@@ -2974,6 +2974,9 @@ if (document.getElementById("profile_settings")) {
                     self.loading = false;
                 });
             },
+            submitUserFilter: function () {
+                document.getElementById("user_filter_form").submit();
+            },
             changeCertifiedStatus: function (id) {
                 this.loading = true;
                 var status = document.getElementById(id+'-is_certified').value;

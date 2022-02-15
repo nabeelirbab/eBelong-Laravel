@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Traits\HasRoles;
 use Spatie\Permission\Models\Role;
 use DB;
+use Illuminate\Support\Facades\Input;
 use File;
 use App\Payout;
 use Illuminate\Support\Facades\Schema;
@@ -727,6 +728,67 @@ class User extends Authenticatable
                 Order BY rating DESC Limit 4"
                 )
             );
+    }
+    public static function getFilterUsers($role = ""){
+
+        $query = '';
+        if($role=="agency_member"){
+        $agency_members= DB::table('agency_associated_users')->where('is_pending',0)->where('is_accepted', 1)->pluck('user_id')->toArray();
+        $query = User::whereIn('id', $agency_members)
+                   ->latest()
+                   ->paginate(10)->setPath('');
+        }
+        if($role == "agency_creator"){
+            $agency_members= DB::table('agency_user')->pluck('user_id')->toArray();
+            $query = User::whereIn('id', $agency_members)
+                       ->latest()
+                       ->paginate(10)->setPath('');
+            }
+        
+        if($role == "instructors"){
+            $instructor_ids= DB::table('cource_user')->distinct()->pluck('seller_id')->toArray();
+            $query = User::whereIn('id', $instructor_ids)
+            ->latest()
+            ->paginate(10)->setPath('');
+            
+        }
+        if($role == "freelancers"){
+            $instructor_ids= DB::table('cource_user')->distinct()->pluck('seller_id')->toArray();
+            $query = User::whereNotIn('id', $instructor_ids)
+            ->latest()
+            ->paginate(10)->setPath('');
+            
+        }
+        if($role=="new_members"){
+            $query = User::select('*')->latest()->paginate(10)->setPath('');
+        }
+        if($role=="old_members"){
+            $query = User::oldest()->paginate(10)->setPath('');
+            
+        }
+        if($role=="Email_asc"){
+            $query = User::orderBy('email','asc')->paginate(10)->setpath('');
+        }
+        if($role=="Email_desc"){
+            $query = User::orderBy('email','desc')->paginate(10)->setpath('');
+        }
+        if($role=="name_asc"){
+            $query = User::orderBy('first_name','asc')->paginate(10)->setpath('');
+        }
+        if($role=="name_desc"){
+            $query = User::orderBy('first_name','desc')->paginate(10)->setpath('');
+        }
+        return $query;
+
+        // if (!empty($role)) {
+        //     $pagination = $query->appends(
+        //         array(
+        //             'role' => Input::get('role')
+        //         )
+        //     );
+        //     return $query;
+        // }
+     
     }
 
 

@@ -263,6 +263,7 @@ Route::group(
         Route::post('admin/store/banktransfar-settings', 'SiteManagementController@storeBankTransfarSettings');
         Route::get('admin/email-templates', 'EmailTemplateController@index')->name('emailTemplates');
         Route::get('admin/email-templates/filter-templates', 'EmailTemplateController@index')->name('emailTemplates');
+        Route::get('admin/manage-users/filter-users', 'UserController@userListing');
         Route::get('admin/email-templates/{id}', 'EmailTemplateController@edit')->name('editEmailTemplates');
         Route::post('admin/email-templates/update-content', 'EmailTemplateController@updateTemplateContent');
         Route::post('admin/email-templates/update-templates/{id}', 'EmailTemplateController@update');
