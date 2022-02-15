@@ -90,18 +90,28 @@ class HomeController extends Controller
                     $freelancer->agency_id=$agency_id->agency_id;
                     $freelancer->agency_name= DB::table('agency_user')->where('id',$agency_id->agency_id)->pluck('agency_name')->first();
                     $freelancer->agency_avatar= DB::table('agency_user')->where('id',$agency_id->agency_id)->pluck('agency_logo')->first();
+                    // if(empty($freelancer->agency_avatar)){
+                    //     $freelancer->is_null_logo = true;
+                    // }
                 }
                 else{
                     $freelancer->agency_avatar = null;
                     $freelancer->agency_name = null;
+                    // $freelancer->is_null_logo = null;
                 }
 
                 }
                 else{
                     $freelancer->agency_name= DB::table('agency_user')->where('id',$freelancer->agency_id)->pluck('agency_name')->first();
                     $freelancer->agency_avatar= DB::table('agency_user')->where('id',$freelancer->agency_id)->pluck('agency_logo')->first();
+                    // if(empty($freelancer->agency_avatar)){
+                    //     $freelancer->is_null_logo = true;
+                    // }
+                    // else{
+                    //     $freelancer->is_null_logo = false;
+                    // }
                 }
-                
+                // dd($freelancers);
                 $skills = Skill::getFreelancerSkill($freelancer->id);
                 $feedbacks = \App\Review::select('feedback')->where('receiver_id', $freelancer->id)->count();
                 $avg_rating = \App\Review::where('receiver_id', $freelancer->id)->sum('avg_rating');

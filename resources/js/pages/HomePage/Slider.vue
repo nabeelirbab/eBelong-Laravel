@@ -37,7 +37,7 @@
             <div class="e-freelancer__item-skill text-center">
               {{ item.tagline }}
             </div>
-            <div v-if="item.has_agency == 1" class="e-freelancer__item-agency text-center">
+            <div v-if="item.has_agency == 1 && item.agency_avatar != null" class="e-freelancer__item-agency text-center">
               <div class="e-freelancer__item-agency-image">
                 <img class="e-freelancer__item-agency-image-area" :src="`${baseUrl}/uploads/agency_logos/${item.agency_id}/${item.agency_avatar}`"/>
               </div>
@@ -45,6 +45,15 @@
                 {{item.agency_name}}
               </div>
             </div>
+            <div v-if="item.has_agency == 1 && item.agency_avatar == null" class="e-freelancer__item-agency text-center">
+              <div class="e-freelancer__item-agency-image">
+                <img class="e-freelancer__item-agency-image-area" :src="`${baseUrl}/uploads/settings/general/imgae-not-availabe.png`"/>
+              </div>
+              <div class="e-freelancer__item-agency-text">
+                {{item.agency_name}}
+              </div>
+            </div>
+            
             <div class="e-freelancer__item-rating my-2 mb-4">
                <span class="wt-stars"><span :style="{'width': item.rating_width+'%'}"></span></span>
             </div>

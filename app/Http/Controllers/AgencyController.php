@@ -278,9 +278,9 @@ class AgencyController extends Controller
     {
         $json = array();
         if (!empty($request['id'])) {
-            $course = DB::table('agency_user')->where('id',$request['id'])->delete();
+            DB::table('agency_user')->where('id',$request['id'])->delete();
             DB::table('agency_associated_users')->where('agency_id', $request['id'])->delete();
-            DB::table('users')->where('id',Auth::user()->id)->update(array('is_agency'=>0));
+            DB::table('users')->where('id',Auth::user()->id)->update(array('is_agency'=>0,'agency_id'=>null));
             $json['type'] = 'success';
             $json['message'] = trans('lang.agency_delete');
             return $json;
