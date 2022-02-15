@@ -402,8 +402,8 @@ Route::group(
     function () {
         Route::get('/get-freelancer-skills', 'SkillController@getFreelancerSkills');
         Route::get('course/bacs-checkout','CourseController@bacsPayment');
-        // Route::post('course/send-message','CourseController@sendMessage');
-        // Route::post('course/send-message-to-instructor','CourseController@sendMessagetoInstructor');
+        Route::post('course/send-message','CourseController@sendMessage');
+        Route::post('course/send-message-to-instructor','CourseController@sendMessagetoInstructor');
         // // Route::get('/get-freelancer-skills', 'SkillController@getCourseSkills');
         Route::get('course/{id}/enrolled-students', 'CourseController@StudentsListing');
         Route::get('course/{id}/waiting-students', 'CourseController@waitingStudents');
