@@ -1,10 +1,20 @@
 @extends(file_exists(resource_path('views/extend/back-end/master.blade.php')) ? 'extend.back-end.master' : 'back-end.master')
 @section('content')
-
+   
 <div class="invite-people" id="invite_people">
+    @if (Session::has('success'))
+    <div class="flash_msg">
+        <flash_messages :message_class="'success'" :time ='5' :message="'{{{ Session::get('success') }}}'" v-cloak></flash_messages>
+    </div>
+    @endif
     @if (Session::has('message'))
     <div class="flash_msg">
         <flash_messages :message_class="'success'" :time ='5' :message="'{{{ Session::get('message') }}}'" v-cloak></flash_messages>
+    </div>
+    @endif
+    @if (Session::has('error'))
+    <div class="flash_msg">
+        <flash_messages :message_class="'danger'" :time ='5' :message="'{{{ Session::get('error') }}}'" v-cloak></flash_messages>
     </div>
     @endif
     @if ($errors->any())
@@ -30,11 +40,16 @@
                  {{ Session::get('duplicate_email_num') }}
             </div>
             @endif
-            @if (Session::has('unsubscribe_email_num'))
-             <div class="alert alert-success">
-                 {{ Session::get('unsubscribe_email_num') }}
-            </div>
-            @endif
+            @if (Session::has('empty_email_num'))
+            <div class="alert alert-success">
+                {{ Session::get('empty_email_num') }}
+           </div>
+           @endif
+           @if (Session::has('wrong_email_num'))
+            <div class="alert alert-success">
+                {{ Session::get('wrong_email_num') }}
+           </div>
+           @endif
             </div>
         </div>
         
@@ -48,7 +63,7 @@
 
                     <div class="wt-dashboardboxcontent">
 
-                        {!! Form::open([ 'url' => url('admin/invite-people'), 'class' =>'wt-formtheme wt-formprojectinfo wt-formcategory','enctype'=>'multipart/form-data','method'=>'post', 'id' => 'invite-peoples', 'id' => 'invite_people_form' ]) !!}
+                        {!! Form::open([ 'url' => url('admin/invite-people'), 'class' =>'wt-formtheme wt-formprojectinfo wt-formcategory','enctype'=>'multipart/form-data','method'=>'post', 'id' => 'invite-people', 'id' => 'invite_people_form' ]) !!}
                         <fieldset>
 
                             <div class="form-group">
@@ -70,7 +85,7 @@
                                 <div class = "wt-formtheme wt-userform">
                                     {!!  Form::file('email_address_csv',['class'=>'form-control','width'=>'100','accept'=>'.csv']) !!}
                                     <div class="label label-default " style="">
-                                        <strong>[Note:</strong> must be import a csv file.]
+                                        <strong>[Note:</strong> must import a csv file.]
                                     </div> 
                                     <a href="{{ asset('/')}}sample_files/people-information.csv" class="pull-left" style="font-style: italic">
                                         <i class="fa fa-download"></i>{{trans('invite.sample_file')}}</a>
