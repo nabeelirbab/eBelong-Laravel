@@ -45,6 +45,18 @@
                             <span>{{ trans('lang.service_orders') }}</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="{{{ route('allCourses') }}}">
+                            <i class="ti-briefcase"></i>
+                            <span>{{ trans('lang.courses') }}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{{ route('adminCourseOrders') }}}">
+                            <i class="ti-briefcase"></i>
+                            <span>{{ trans('lang.course_orders') }}</span>
+                        </a>
+                    </li>
                 @endif
                 <li>
                     <a href="{{{ route('reviewOptions') }}}">

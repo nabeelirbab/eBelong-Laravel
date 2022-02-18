@@ -654,7 +654,7 @@ class CourseController extends Controller
     {
         $json = array();
         if (!empty($request['id'])) {
-            $orders = Helper::getCourseOrdersCount($request['id'], 'hired');
+            $orders = Helper::getCourseOrdersCount($request['id'], 'bought');
             if ($orders == 0) {
                 $cource = $this->cource::find($request['id']);
                 $cource->status = $request['status'];
@@ -725,31 +725,31 @@ class CourseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function adminServices()
+    public function adminCourses()
     {
         if (!empty($_GET['keyword'])) {
             $keyword = $_GET['keyword'];
-            $services = $this->service::where('title', 'like', '%' . $keyword . '%')->paginate(6)->setPath('');
-            $pagination = $services->appends(
+            $courses = $this->cource::where('title', 'like', '%' . $keyword . '%')->paginate(6)->setPath('');
+            $pagination = $courses->appends(
                 array(
                     'keyword' => Input::get('keyword')
                 )
             );
         } else {
-            $services = $this->service->latest()->paginate(8);
+            $courses = $this->cource->latest()->paginate(8);
         }
         $currency   = SiteManagement::getMetaValue('commision');
         $symbol = !empty($currency) && !empty($currency[0]['currency']) ? Helper::currencyList($currency[0]['currency']) : array();
         $status_list = array_pluck(Helper::getFreelancerServiceStatus(), 'title', 'value');
-        if (file_exists(resource_path('views/extend/back-end/admin/services/index.blade.php'))) {
+        if (file_exists(resource_path('views/extend/back-end/admin/courses/index.blade.php'))) {
             return view(
-                'extend.back-end.admin.services.index',
-                compact('services', 'symbol', 'status_list')
+                'extend.back-end.admin.courses.index',
+                compact('courses', 'symbol', 'status_list')
             );
         } else {
             return view(
-                'back-end.admin.services.index',
-                compact('services', 'symbol', 'status_list')
+                'back-end.admin.courses.index',
+                compact('courses', 'symbol', 'status_list')
             );
         }
     }
@@ -759,30 +759,30 @@ class CourseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function adminServiceOrders()
+    public function adminCourseOrders()
     {
         if (!empty($_GET['keyword'])) {
             $keyword = $_GET['keyword'];
-            $orders = DB::table('service_user')->where('type', 'employer')->paginate(8);
+            $orders = DB::table('cource_user')->where('type', 'employer')->paginate(8);
             $pagination = $orders->appends(
                 array(
                     'keyword' => Input::get('keyword')
                 )
             );
         } else {
-            $orders = DB::table('service_user')->where('type', 'employer')->paginate(8);
+            $orders = DB::table('cource_user')->where('type', 'employer')->paginate(8);
         }
         $currency   = SiteManagement::getMetaValue('commision');
         $symbol = !empty($currency) && !empty($currency[0]['currency']) ? Helper::currencyList($currency[0]['currency']) : array();
         $payment_methods = Arr::pluck(Helper::getPaymentMethodList(), 'title', 'value');
-        if (file_exists(resource_path('views/extend/back-end/admin/services/order.blade.php'))) {
+        if (file_exists(resource_path('views/extend/back-end/admin/courses/order.blade.php'))) {
             return view(
-                'extend.back-end.admin.services.order',
+                'extend.back-end.admin.courses.order',
                 compact('orders', 'symbol', 'payment_methods')
             );
         } else {
             return view(
-                'back-end.admin.services.order',
+                'back-end.admin.courses.order',
                 compact('orders', 'symbol', 'payment_methods')
             );
         }

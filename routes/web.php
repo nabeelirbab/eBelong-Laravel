@@ -293,6 +293,10 @@ Route::group(
         Route::get('admin/services', 'ServiceController@adminServices')->name('allServices');
         Route::get('admin/service-orders', 'ServiceController@adminServiceOrders')->name('ServiceOrders');
         Route::get('admin/services/search' , 'ServiceController@adminServices');
+       //All Courses
+        Route::get('admin/courses', 'CourseController@adminCourses')->name('allCourses');
+        Route::get('admin/course-orders', 'CourseController@adminCourseOrders')->name('adminCourseOrders');
+        Route::get('admin/course/search' , 'CourseController@adminCourses');
         //All packages
         Route::get('admin/packages', 'PackageController@create')->name('createPackage');
         Route::get('admin/packages/search', 'PackageController@create');

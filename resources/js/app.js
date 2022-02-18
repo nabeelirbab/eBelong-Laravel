@@ -5542,7 +5542,7 @@ if (document.getElementById("cources")) {
                                     if (response.data.role == 'freelancer') {
                                         window.location.replace(APP_URL + '/freelancer/courses/posted');
                                     } else if (response.data.role == 'admin') {
-                                        //window.location.replace(APP_URL+'/admin/jobs');
+                                        window.location.replace(APP_URL+'/admin/courses');
                                     }
                                 }
                             });
