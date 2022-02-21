@@ -124,9 +124,11 @@ class AgencyController extends Controller
 
     }
     public function removeMembers(Request $request){
+        // dd($request);
         if(!empty($request['id'])){
+        $agency = DB::table('agency_user')->where('user_id',Auth::user()->id)->first();
         $delData = DB::table('agency_associated_users')
-        ->where('user_id',$request['id'])->delete();
+        ->where('user_id',$request['id'])->where('agency_id',$agency->id)->delete();
         $json['type'] = 'success';
         $json['message'] = trans('lang.ph_user_delete_message');
         return $json;
@@ -256,7 +258,7 @@ class AgencyController extends Controller
 
             }
         
-        return View::make('front-end.agencies.agencyMembers',compact('users'));
+        return View::make('front-end.agencies.agencyMembers',compact('users','agency_id'));
         }
         else{
             abort(404);
