@@ -2980,13 +2980,14 @@ class UserController extends Controller
                 else{
                     $users = $this->user::where('first_name', 'like', '%' . $keyword . '%')->orWhere('last_name', 'like', '%' . $keyword . '%')->paginate(7)->setPath(''); 
                 }
+                // dd($users);
                 $pagination = $users->appends(
                     array(
                         'keyword' => Input::get('keyword')
                     )
                 );
             } 
-            if (!empty($_GET['role'])) {
+            elseif (!empty($_GET['role'])) {
                 $users = User::getFilterUsers($_GET['role']);
                 $pagination = $users->appends(
                     array(
