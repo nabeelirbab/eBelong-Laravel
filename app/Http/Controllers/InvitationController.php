@@ -36,6 +36,8 @@ class InvitationController extends Controller {
         // File upload ----------------------------
         $fileName = '';
         $usersArr = array();
+        $emptyEmails=0;
+        $wrongMails=0;
         if ($request->hasFile('email_address_csv')) {
             $this->validate($request, [
                 'email_address_csv' => 'mimes:csv,txt'
@@ -46,6 +48,9 @@ class InvitationController extends Controller {
             $filename = storage_path($fileName);
             $file = fopen($filename, "r");
             $data = array();
+            // $pattern = '/[a-z]+@uni\.com/i';
+            // $wrongMails=0;
+
             // fgetcsv($file); //Adding this line will skip the reading of the first line
             $row = 1;
             while (($data = fgetcsv($file, 1000, ",")) !== FALSE) {
@@ -54,6 +59,12 @@ class InvitationController extends Controller {
                     continue;
                 } //Adding this line will skip the reading of the first line
                 if ($data[2] == '') {
+                    $emptyEmails++;
+                    continue;
+                }
+                if(!(filter_var($data[2], FILTER_VALIDATE_EMAIL) ))
+                {
+                    $wrongMails++;
                     continue;
                 }
                 $i = 2; // record start from row 2
@@ -71,9 +82,9 @@ class InvitationController extends Controller {
             unlink($filename); // delete file after imported.
         } else {
             $this->validate($request, [
-                'email_address' => 'required'
+                'email_address' => 'required|email'
             ]);
-        }
+        
         $toEmails = explode(",", $request['email_address']);
         foreach ($toEmails as $toEmail) {
             $userData = array(
@@ -86,9 +97,12 @@ class InvitationController extends Controller {
             );
             array_push($usersArr, $userData);
         }
+    }
+        // dd($usersArr);
         $sendGridUserName = env('MAIL_USERNAME','default_val');
         $sendGridPass = env('MAIL_PASSWORD','default_pass');
-        $url = file_get_contents("https://api.sendgrid.com/api/unsubscribes.get.json?api_user=$sendGridUserName&api_key=$sendGridPass");
+        // dd($)
+        // $url = file_get_contents("https://api.sendgrid.com/api/unsubscribes.get.json?api_user=$sendGridUserName&api_key=$sendGridPass");
         /*
         $url = "https://api.sendgrid.com/api/unsubscribes.get.json?api_user=$sendGridUserName&api_key=$sendGridPass";
         $ch = curl_init();
@@ -96,14 +110,15 @@ class InvitationController extends Controller {
         $output = curl_exec($ch);
         curl_close($ch);
         */        
-        $output = json_decode($url, true);
-        $unsubscribeList = array(); 
-        for($i=0;$i<count($output);$i++){
-           array_push($unsubscribeList, $output[$i]['email']);
-        }
+        // $output = json_decode($url, true);
+        // $unsubscribeList = array(); 
+        // for($i=0;$i<count($output);$i++){
+        //    array_push($unsubscribeList, $output[$i]['email']);
+        // }
         $unsubscribeEmailNum = 0;
         $sentEmailNum = 0;
         $duplicateEmailNum =0;
+        
         $totalEmailNum = 0;
         for ($i = 0; $i < count($usersArr); $i++) {
             $toEmail = $usersArr[$i]['email'];
@@ -146,7 +161,13 @@ class InvitationController extends Controller {
                         'model_id' => $user_id
                     ); 
                     DB::table('model_has_roles')->insert($hasRoleData);
-                    $admin_template = DB::table('email_types')->select('id')->where('email_type', 'invite_people')->get()->first();
+                    if($request['user_type']== 3 ){
+                    $admin_template = DB::table('email_types')->select('id')->where('email_type', 'invite_freelancer')->get()->first();
+                    }
+                    if($request['user_type']== 2 ){
+                        $admin_template = DB::table('email_types')->select('id')->where('email_type', 'invite_employer')->get()->first();
+                    }
+                    
                     $template_data = EmailTemplate::getEmailTemplateByID($admin_template->id);
                     $email_params['name'] = Helper::getUserName($user_id);
                     $email_params['email'] = $toEmail;
@@ -155,31 +176,32 @@ class InvitationController extends Controller {
 
                     Mail::to($toEmail)->send(new InvitationMailable( 'invite_people',$template_data, $email_params));
                     $sentEmailNum++;
-                } else {
-                    $duplicateEmailNum++;
-                //echo "Exist".$toEmail;
-//                $userPassword = "Enter your password or <a href='".url('password/reset')."'>Reset Password</a>";
-//                $user_id=$userExist->id;
-                }
+                    } else {
+                        $duplicateEmailNum++;
+                   
+                    }
                 
-                // count unsubscribe email --
-                if (in_array($toEmail, $unsubscribeList)) {
-                    //echo $toEmail." Unsubscribed!";
-                    $unsubscribeEmailNum++;
-                }
-                
-            }
+                   }
+            
         }
         Session::flash('unsubscribe_email_num', $unsubscribeEmailNum." emails unsubscribed Out of ".$totalEmailNum);
         Session::flash('duplicate_email_num', $duplicateEmailNum." emails duplicate out of ".$totalEmailNum);
         Session::flash('sent_email_num', $sentEmailNum." emails sent out of ".$totalEmailNum);
+        Session::flash('empty_email_num', $emptyEmails." empty emails ");
+        Session::flash('wrong_email_num', $wrongMails." emails with Wrong Pattern ");
        // Session::flash('total_email_num', $totalEmailNum." emails");
-        $unsubscribeEmailNum = 0;
-        $sentEmailNum = 0;
-        $duplicateEmailNum =0;
-        $totalEmailNum = 0;
-        Session::flash('message', trans('invite.invitation_message'));
-        return Redirect::back();
+        // $unsubscribeEmailNum = 0;
+        // $sentEmailNum = 0;
+        // $duplicateEmailNum =0;
+        // $totalEmailNum = 0;
+
+        if($sentEmailNum>0){
+        // Session::flash('message', trans('invite.invitation_message'));
+        return Redirect::back()->with('success', 'Invitation Sent');}
+        else{
+            // Session::flash('', "Email Sent");
+            return Redirect::back()->with('error', "Email Not Sent");
+        }
         // return Redirect::to('admin/invite-people');
     }
 

@@ -1,5 +1,9 @@
 @extends(file_exists(resource_path('views/extend/back-end/master.blade.php')) ? 'extend.back-end.master' : 'back-end.master')
 @section('content')
+@php
+    $selected_role = !empty($_GET['role']) ? $_GET['role'] : '';
+    
+@endphp
 
 <!-- <link href="http://netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"> -->
 <link rel="stylesheet" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
@@ -28,6 +32,29 @@
                                 </div>
                             </fieldset>
                         </form>
+                        @php
+                        $roles = array(
+                            "instructors" =>"Instructors",
+                            "freelancers" =>"Freelancers",
+                            "agency_creator" => "Agency Creators",
+                            "agency_member" => "Agency Members",
+                            "new_members" => "New Members",
+                            "old_members" => "Old Members",
+                            "name_asc" => "Name (A-Z)",
+                            "name_desc" => "Name (Z-A)",
+                            "Email_asc"=> "Email (A-Z)",
+                            "Email_desc" => "Email (Z-A)",
+                            
+
+                        )
+                        @endphp
+                        {!! Form::open(['url' => url('admin/manage-users/filter-users'), 'method' => 'get', 'class' => 'wt-formtheme wt-formsearch la-mailfilter', 'id'=>'user_filter_form']) !!}
+                            <div class="form-group">
+                                <span class="wt-select">
+                                    {!! Form::select('role', array_map('strtoupper', $roles) ,$selected_role, array('placeholder' => 'Filter Users By', '@change'=>'submitUserFilter')) !!}
+                                </span>
+                            </div>
+                        {!! Form::close() !!}
                     </div>
                     <div class="wt-dashboardboxcontent wt-categoriescontentholder">
                         @if ($users->count() > 0)
@@ -53,13 +80,19 @@
                                         @php 
                                         $user = \App\User::find($user_data['id']);
                                         $badges = \App\Badge::all();
-                                        $is_agency_member = DB::table('agency_associated_users')->where('user_id', $user->id)->where('is_accepted',0)->first();
+                                        $is_agency_member = DB::table('agency_associated_users')->where('user_id', $user->id)->where('is_accepted',1)->where('is_pending',0)->first();
+                                        $is_instructor=DB::table('cource_user')->where('seller_id', $user->id)->first();
                                         @endphp
                                         @if ($user->getRoleNames()->first() != 'admin')
                                             <tr class="del-user-{{ $user->id }}">
                                                 <td>{{{ ucwords(\App\Helper::getUserName($user->id)) }}}</td>
                                                 <td>{{{ $user->email }}}</td>
-                                                <td>{{{ ucfirst($user->getRoleNames()->first()) }}}</td>
+                                                
+                                                <td>@if(empty($is_instructor))
+                                                    {{ ucfirst($user->getRoleNames()->first()) }}
+                                                @else
+                                                    {{ "Instructor" }}</td>
+                                                @endif
                                                 <td>@if($user->is_agency==1)
                                                     {{ " Agency Creator" }}
                                                 @elseif(!empty($is_agency_member))

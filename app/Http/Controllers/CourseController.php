@@ -654,7 +654,7 @@ class CourseController extends Controller
     {
         $json = array();
         if (!empty($request['id'])) {
-            $orders = Helper::getCourseOrdersCount($request['id'], 'hired');
+            $orders = Helper::getCourseOrdersCount($request['id'], 'bought');
             if ($orders == 0) {
                 $cource = $this->cource::find($request['id']);
                 $cource->status = $request['status'];
@@ -725,31 +725,31 @@ class CourseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function adminServices()
+    public function adminCourses()
     {
         if (!empty($_GET['keyword'])) {
             $keyword = $_GET['keyword'];
-            $services = $this->service::where('title', 'like', '%' . $keyword . '%')->paginate(6)->setPath('');
-            $pagination = $services->appends(
+            $courses = $this->cource::where('title', 'like', '%' . $keyword . '%')->paginate(6)->setPath('');
+            $pagination = $courses->appends(
                 array(
                     'keyword' => Input::get('keyword')
                 )
             );
         } else {
-            $services = $this->service->latest()->paginate(8);
+            $courses = $this->cource->latest()->paginate(8);
         }
         $currency   = SiteManagement::getMetaValue('commision');
         $symbol = !empty($currency) && !empty($currency[0]['currency']) ? Helper::currencyList($currency[0]['currency']) : array();
         $status_list = array_pluck(Helper::getFreelancerServiceStatus(), 'title', 'value');
-        if (file_exists(resource_path('views/extend/back-end/admin/services/index.blade.php'))) {
+        if (file_exists(resource_path('views/extend/back-end/admin/courses/index.blade.php'))) {
             return view(
-                'extend.back-end.admin.services.index',
-                compact('services', 'symbol', 'status_list')
+                'extend.back-end.admin.courses.index',
+                compact('courses', 'symbol', 'status_list')
             );
         } else {
             return view(
-                'back-end.admin.services.index',
-                compact('services', 'symbol', 'status_list')
+                'back-end.admin.courses.index',
+                compact('courses', 'symbol', 'status_list')
             );
         }
     }
@@ -759,30 +759,30 @@ class CourseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function adminServiceOrders()
+    public function adminCourseOrders()
     {
         if (!empty($_GET['keyword'])) {
             $keyword = $_GET['keyword'];
-            $orders = DB::table('service_user')->where('type', 'employer')->paginate(8);
+            $orders = DB::table('cource_user')->where('type', 'employer')->paginate(8);
             $pagination = $orders->appends(
                 array(
                     'keyword' => Input::get('keyword')
                 )
             );
         } else {
-            $orders = DB::table('service_user')->where('type', 'employer')->paginate(8);
+            $orders = DB::table('cource_user')->where('type', 'employer')->paginate(8);
         }
         $currency   = SiteManagement::getMetaValue('commision');
         $symbol = !empty($currency) && !empty($currency[0]['currency']) ? Helper::currencyList($currency[0]['currency']) : array();
         $payment_methods = Arr::pluck(Helper::getPaymentMethodList(), 'title', 'value');
-        if (file_exists(resource_path('views/extend/back-end/admin/services/order.blade.php'))) {
+        if (file_exists(resource_path('views/extend/back-end/admin/courses/order.blade.php'))) {
             return view(
-                'extend.back-end.admin.services.order',
+                'extend.back-end.admin.courses.order',
                 compact('orders', 'symbol', 'payment_methods')
             );
         } else {
             return view(
-                'back-end.admin.services.order',
+                'back-end.admin.courses.order',
                 compact('orders', 'symbol', 'payment_methods')
             );
         }
@@ -1375,76 +1375,120 @@ class CourseController extends Controller
             }  
         } 
     public function bacspayment(){
-                    $user_id = Auth::user() ? Auth::user()->id : '';
-                    $product_id = Session::has('product_id') ? session()->get('product_id') : '';
-                    $product_title = Session::has('product_title') ? session()->get('product_title') : '';
-                    $product_price = Session::has('product_price') ? session()->get('product_price') : 0;
-                    $id = session()->get('product_id');
-                    $type = Session::has('type') ? session()->get('type') : '';
-                    $invoice = new Invoice();
-                    $invoice->title = 'Bank Transfer';
-                    $invoice->price = $product_price;
-                    $invoice->payer_name = filter_var(Helper::getUserName(Auth::user()->id), FILTER_SANITIZE_STRING);
-                    $invoice->payer_email = filter_var(Auth::user()->email, FILTER_SANITIZE_EMAIL);
-                    $invoice->seller_email = 'test@email.com';
-                    $invoice->currency_code = '';
-                    $invoice->payer_status = '';
-                    $invoice->transaction_id = '';
-                    $invoice->invoice_id = '';
-                    $invoice->customer_id = filter_var(Auth::user()->id, FILTER_SANITIZE_STRING);
-                    $invoice->shipping_amount = 0;
-                    $invoice->handling_amount = 0;
-                    $invoice->insurance_amount = 0;
-                    $invoice->sales_tax = 0;
-                    $invoice->payment_mode = filter_var('bacs', FILTER_SANITIZE_STRING);
-                    $invoice->paypal_fee = '';
-                    $invoice->paid = 0;
-                    $product_type = $type;
-                    $invoice->type = $product_type;
-                    $invoice->save();
-                    $invoice_id = DB::getPdo()->lastInsertId();
-                    $freelancer = session()->get('course_seller');
-                    DB::table('orders')->insert(
-                        ['user_id' => $user_id, 'product_id'=>$id,'type'=>'course','cource_product_id' => $id, 'invoice_id' => $invoice_id, 'status' => 'pending', 'created_at' => \Carbon\Carbon::now(), 'updated_at' => \Carbon\Carbon::now()]
+            $user_id = Auth::user() ? Auth::user()->id : '';
+            $product_id = Session::has('product_id') ? session()->get('product_id') : '';
+            $product_title = Session::has('product_title') ? session()->get('product_title') : '';
+            $product_price = Session::has('product_price') ? session()->get('product_price') : 0;
+            $id = session()->get('product_id');
+            $type = Session::has('type') ? session()->get('type') : '';
+            $invoice = new Invoice();
+            $invoice->title = 'Bank Transfer';
+            $invoice->price = $product_price;
+            $invoice->payer_name = filter_var(Helper::getUserName(Auth::user()->id), FILTER_SANITIZE_STRING);
+            $invoice->payer_email = filter_var(Auth::user()->email, FILTER_SANITIZE_EMAIL);
+            $invoice->seller_email = 'test@email.com';
+            $invoice->currency_code = '';
+            $invoice->payer_status = '';
+            $invoice->transaction_id = '';
+            $invoice->invoice_id = '';
+            $invoice->customer_id = filter_var(Auth::user()->id, FILTER_SANITIZE_STRING);
+            $invoice->shipping_amount = 0;
+            $invoice->handling_amount = 0;
+            $invoice->insurance_amount = 0;
+            $invoice->sales_tax = 0;
+            $invoice->payment_mode = filter_var('bacs', FILTER_SANITIZE_STRING);
+            $invoice->paypal_fee = '';
+            $invoice->paid = 0;
+            $product_type = $type;
+            $invoice->type = $product_type;
+            $invoice->save();
+            $invoice_id = DB::getPdo()->lastInsertId();
+            $freelancer = session()->get('course_seller');
+            DB::table('orders')->insert(
+                ['user_id' => $user_id, 'product_id'=>$id,'type'=>'course','cource_product_id' => $id, 'invoice_id' => $invoice_id, 'status' => 'pending', 'created_at' => \Carbon\Carbon::now(), 'updated_at' => \Carbon\Carbon::now()]
+            );
+            $course = Cource::find($id);
+            $course->users()->attach(Auth::user()->id, ['type' => 'employer', 'status' => 'waiting', 'seller_id' => $freelancer, 'paid' => 'pending','invoice_id' => $invoice_id,]);
+            $course->save();
+            // send message to freelancer
+            $message = new Message();
+            $user = User::find(intval(Auth::user()->id));
+            $message->user()->associate($user);
+            $message->receiver_id = intval($freelancer);
+            $message->body = Helper::getUserName(Auth::user()->id) . ' has requested to buy your course ' . $course->title." thorugh offline bank payment";
+            $message->status = 0;
+            $message->save();
+            // send mail
+            if (trim(env('MAIL_USERNAME')) != "" && trim(env('MAIL_PASSWORD')) != "") {
+                $email_params = array();
+                $template_data=(object)array();
+                $template_data->content = Helper::getFreelancerNewCourseOrderEmailContent();
+                $template_data->subject = "Course Order";
+                $email_params['title'] = $course->title;
+                $email_params['course_link'] = url('instructor/' . $course->slug);
+                $email_params['amount'] = $course->price;
+                $email_params['freelancer_name'] = Helper::getUserName($freelancer);
+                $email_params['employer_profile'] = url('profile/' . $user->slug);
+                $email_params['employer_name'] = Helper::getUserName($user->id);
+                $email_params['payment_mode'] = "offline bank payment";
+                $freelancer_data = User::find(intval($freelancer));
+                
+                Mail::to($freelancer_data->email)
+                    ->send(
+                        new FreelancerEmailMailable(
+                            'freelancer_email_new_course_order',
+                            $template_data,
+                            $email_params
+                        )
                     );
-                    $course = Cource::find($id);
-                    $course->users()->attach(Auth::user()->id, ['type' => 'employer', 'status' => 'waiting', 'seller_id' => $freelancer, 'paid' => 'pending','invoice_id' => $invoice_id,]);
-                    $course->save();
-                    // send message to freelancer
-                    $message = new Message();
-                    $user = User::find(intval(Auth::user()->id));
-                    $message->user()->associate($user);
-                    $message->receiver_id = intval($freelancer);
-                    $message->body = Helper::getUserName(Auth::user()->id) . ' has requested to buy your course ' . $course->title." thorugh offline bank payment";
-                    $message->status = 0;
-                    $message->save();
-                    // send mail
-                    if (trim(env('MAIL_USERNAME')) != "" && trim(env('MAIL_PASSWORD')) != "") {
-                        $email_params = array();
-                        $template_data=(object)array();
-                        $template_data->content = Helper::getFreelancerNewCourseOrderEmailContent();
-                        $template_data->subject = "Course Order";
-                        $email_params['title'] = $course->title;
-                        $email_params['course_link'] = url('instructor/' . $course->slug);
-                        $email_params['amount'] = $course->price;
-                        $email_params['freelancer_name'] = Helper::getUserName($freelancer);
-                        $email_params['employer_profile'] = url('profile/' . $user->slug);
-                        $email_params['employer_name'] = Helper::getUserName($user->id);
-                        $email_params['payment_mode'] = "offline bank payment";
-                        $freelancer_data = User::find(intval($freelancer));
-                        
-                        Mail::to($freelancer_data->email)
-                            ->send(
-                                new FreelancerEmailMailable(
-                                    'freelancer_email_new_course_order',
-                                    $template_data,
-                                    $email_params
-                                )
-                            );
-                    }
-                    $json['type']='success';
-                    $json['message']='Your Order has been sent to the Instructor please pay offline for the course and use message system for communication';
-                    return $json;
+            }
+            $json['type']='success';
+            $json['message']='Your Order has been sent to the Instructor please pay offline for the course and use message system for communication';
+            return $json;
 
-    }    
+    }
+    public function sendMessage(Request $request){
+       
+        $json = array();
+        $course_title = DB::table('cources')->select('title')->where('id',$request['id'])->first();
+        $msg = $request['message']."       ~".$course_title->title;
+        $students = DB::table('cource_user')->select('user_id')->where('cource_id',$request['id'])->where('status','bought')->get();
+        foreach ($students as $student) {
+            $message = new Message();
+            $user = User::find(intval(Auth::user()->id));
+            $message->user()->associate($user);
+            $message->receiver_id = intval($student->user_id);
+            $message->body = $msg;
+            $message->status = 0;
+            $message->save();
+        }
+        
+        $json['type'] = 'success';
+        $json['message']= 'Message Sent';
+        $json['url']= '/freelancer/courses/posted';
+        return $json;
+
+    } 
+    public function sendMessagetoInstructor(Request $request){
+       
+        $json = array();
+        $course_title = DB::table('cources')->select('title')->where('id',$request['id'])->first();
+        $course_seller = Helper::getCourceSeller($request['id']);
+        $msg = $request['message']."       ~".$course_title->title;
+        
+            $message = new Message();
+            $user = User::find(intval(Auth::user()->id));
+            $message->user()->associate($user);
+            $message->receiver_id = intval($course_seller->user_id);
+            $message->body = $msg;
+            $message->status = 0;
+            $message->save();
+       
+        
+        $json['type'] = 'success';
+        $json['message']= 'Message Sent';
+        $json['url']= '/freelancer/courses/bought';
+        return $json;
+
+    }     
     }  

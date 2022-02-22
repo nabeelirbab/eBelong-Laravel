@@ -263,6 +263,7 @@ Route::group(
         Route::post('admin/store/banktransfar-settings', 'SiteManagementController@storeBankTransfarSettings');
         Route::get('admin/email-templates', 'EmailTemplateController@index')->name('emailTemplates');
         Route::get('admin/email-templates/filter-templates', 'EmailTemplateController@index')->name('emailTemplates');
+        Route::get('admin/manage-users/filter-users', 'UserController@userListing');
         Route::get('admin/email-templates/{id}', 'EmailTemplateController@edit')->name('editEmailTemplates');
         Route::post('admin/email-templates/update-content', 'EmailTemplateController@updateTemplateContent');
         Route::post('admin/email-templates/update-templates/{id}', 'EmailTemplateController@update');
@@ -292,6 +293,10 @@ Route::group(
         Route::get('admin/services', 'ServiceController@adminServices')->name('allServices');
         Route::get('admin/service-orders', 'ServiceController@adminServiceOrders')->name('ServiceOrders');
         Route::get('admin/services/search' , 'ServiceController@adminServices');
+       //All Courses
+        Route::get('admin/courses', 'CourseController@adminCourses')->name('allCourses');
+        Route::get('admin/course-orders', 'CourseController@adminCourseOrders')->name('adminCourseOrders');
+        Route::get('admin/course/search' , 'CourseController@adminCourses');
         //All packages
         Route::get('admin/packages', 'PackageController@create')->name('createPackage');
         Route::get('admin/packages/search', 'PackageController@create');
@@ -402,8 +407,8 @@ Route::group(
     function () {
         Route::get('/get-freelancer-skills', 'SkillController@getFreelancerSkills');
         Route::get('course/bacs-checkout','CourseController@bacsPayment');
-        // Route::post('course/send-message','CourseController@sendMessage');
-        // Route::post('course/send-message-to-instructor','CourseController@sendMessagetoInstructor');
+        Route::post('course/send-message','CourseController@sendMessage');
+        Route::post('course/send-message-to-instructor','CourseController@sendMessagetoInstructor');
         // // Route::get('/get-freelancer-skills', 'SkillController@getCourseSkills');
         Route::get('course/{id}/enrolled-students', 'CourseController@StudentsListing');
         Route::get('course/{id}/waiting-students', 'CourseController@waitingStudents');

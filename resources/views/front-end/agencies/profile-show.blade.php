@@ -52,7 +52,7 @@
                                                 {{{ 'Agency since: ' }}}&nbsp;{{{ $agency['created_at'] }}}
                                             @endif
                                             <br>
-                                            <a href="{{url('profile/'.$agency['slug'])}}">{{ '@' }}{{{ $agency['slug'] }}}</a>
+                                            <a href="javascrip:void(0);">{{ '@' }}{{{ $agency['slug'] }}}</a>
                                         </span>
                                     </div>
                                 </div>
