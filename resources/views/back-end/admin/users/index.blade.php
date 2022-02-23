@@ -82,6 +82,7 @@
                                         $badges = \App\Badge::all();
                                         $is_agency_member = DB::table('agency_associated_users')->where('user_id', $user->id)->where('is_accepted',1)->where('is_pending',0)->first();
                                         $is_instructor=DB::table('cource_user')->where('seller_id', $user->id)->first();
+                                        $feedback = \App\Review::select('avg_rating')->where('receiver_id', $user->id)->where('user_id',1)->first();
                                         @endphp
                                         @if ($user->getRoleNames()->first() != 'admin')
                                             <tr class="del-user-{{ $user->id }}">
@@ -151,12 +152,12 @@
 												</td>
                                                 <td>
 													<select id="{{ $user->id }}-assign_rating" v-on:change.prevent='giveRating({{ $user->id }})'>
-														<option value="0">0</option>
-														<option value="1">1</option>
-                                                        <option value="2">2</option>
-                                                        <option value="3">3</option>
-                                                        <option value="4">4</option>
-                                                        <option value="5">5</option>
+														<option value="0"{{ $feedback['avg_rating'] == "0" ? 'selected' : '' }}>0</option>
+														<option value="1"{{ $feedback['avg_rating'] == "1" ? 'selected' : '' }}>1</option>
+                                                        <option value="2"{{ $feedback['avg_rating'] == "2" ? 'selected' : '' }}>2</option>
+                                                        <option value="3"{{ $feedback['avg_rating'] == "3" ? 'selected' : '' }}>3</option>
+                                                        <option value="4"{{ $feedback['avg_rating'] == "4" ? 'selected' : '' }}>4</option>
+                                                        <option value="5"{{ $feedback['avg_rating'] == "5" ? 'selected' : '' }}>5</option>
 													</select>
 												</td>
                                                 <td>
