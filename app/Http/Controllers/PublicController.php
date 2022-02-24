@@ -299,11 +299,14 @@ class PublicController extends Controller
             $agency_ = AgencyUser::find($agency->id);
 
                 $skills = $agency_->skills()->get();
+                $members = DB::table('agency_associated_users')
+                ->where('agency_id', $agency->id)->where('is_pending', 0)->where('is_accepted',1)
+                ->get();
                 // dd($skills);
              
             if (!empty($agency)) {
                 $agency = @json_decode(json_encode($agency), true);
-                return View('front-end.agencies.profile-show', compact('agency','skills'));
+                return View('front-end.agencies.profile-show', compact('agency','skills','members'));
 
             } else {
                 abort(404);

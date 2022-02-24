@@ -224,6 +224,18 @@ $show_f_banner = 'true'
                                                             @endif
                                                         </div>
                                                     </div>
+                                                    @php $instructor = DB::table('cource_user')->where('seller_id',$freelancer->id)->where('status','posted')->count();
+                                                    if(!empty($instructor) && $instructor > 0){
+                                                        $freelancer->is_instructor = 1;
+                                                    }
+                                                    else{
+                                                        $freelancer->is_instructor = 0;
+                                                    }@endphp
+                                                    @if($freelancer->is_instructor == 1)
+                                                    <a href="{{{ url('profile/'.$freelancer->slug) }}}" class="instructor-badge">
+                                                        <img src="/images/instructor/instructor_logo.png" />
+                                                    </a>
+                                                    @endif
                                                     @if($freelancer->is_certified == 1)
                                                     <a href="{{{ url('profile/'.$freelancer->slug) }}}" class="certified-badge">
                                                         <img src="/images/certified/Certified_Icon.svg" />

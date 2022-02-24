@@ -313,6 +313,7 @@
                             $is_agency_member = DB::table('agency_associated_users')->where('user_id',Auth::user()->id)->where('is_accepted',1)->first();
                             ?>
                             @if(count(Helper::getAgencyList(0,array('user_id'=>Auth::user()->id))))
+                            
                             <?php $slug = (Helper::getAgencyList(0,array('user_id'=>Auth::user()->id))[0]->slug); ?>
 							<li>
                                
