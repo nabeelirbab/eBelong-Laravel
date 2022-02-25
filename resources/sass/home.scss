@@ -619,4 +619,37 @@
     }
 }
 
+.why_ebelong_tiles {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    text-align: center;
+    .col {
+        padding-right: 10px;
+        padding-left: 10px;
+    }
+
+    .card {
+        height: 100%;
+        box-shadow: 0px 0px 7px 3px rgba(0, 0, 0, 0.15);
+        -webkit-box-shadow: 0px 0px 7px 3px rgba(0, 0, 0, 0.15);
+        -moz-box-shadow: 0px 0px 7px 3px rgba(0, 0, 0, 0.15);
+    }
+    .card-body {
+        padding: 1.25rem 0.3rem;
+    }
+    .card-body-title {
+        margin: 30px 0px;
+        h6 {
+            margin: 0px;
+            font-size: 13px;
+        }
+    }
+    .card-body-description p {
+        font-size: 10px;
+        margin-bottom: unset;
+    }
+    .card-body-img {
+        margin-bottom: 10px;
+    }
+}
 
