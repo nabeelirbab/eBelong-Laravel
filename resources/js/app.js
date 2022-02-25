@@ -2974,6 +2974,9 @@ if (document.getElementById("profile_settings")) {
                     self.loading = false;
                 });
             },
+            submitUserFilter: function () {
+                document.getElementById("user_filter_form").submit();
+            },
             changeCertifiedStatus: function (id) {
                 this.loading = true;
                 var status = document.getElementById(id+'-is_certified').value;
@@ -5384,65 +5387,65 @@ if (document.getElementById("cources")) {
             showError(error) {
                 return this.$toast.error(' ', error, this.notificationSystem.options.error);
             },
-            // getMessageForm: function (id) {
-            //     var modal_ref = 'myModalRef-' + id;
-            //     this.$refs[modal_ref].show();
-            // },
-            // sendMessage: function (id) {
-            //     console.log(id)
-            //     this.loading = true;
-            //     var msg = $('#message-'+id).val();
-            //     let form = new FormData;
-            //     form.append('message',msg)
-            //     form.append('id',id)
-            //     var self = this;
-            //     axios.post(APP_URL + '/course/send-message', form)
-            //         .then(function (response) {
-            //             console.log(response);
-            //             if (response.data.type == 'success') {
-            //                 self.loading = false;
-            //                 self.showMessage(response.data.message);
-            //                 setTimeout(function () {
-            //                     window.location.replace(response.data.url);
-            //                 }, 3000);
-            //             } else if (response.data.type == 'error') {
-            //                 self.loading = false;
-            //                 self.showError(response.data.message);
-            //             }
-            //         })
-            //         .catch(function (error) {
-            //             self.loading = false;
-            //             console.log(error);
-            //         });
-            // },
-            // sendMessagetoInstructor: function (id) {
-            //     console.log(id)
-            //     this.loading = true;
-            //     var msg = $('#message-'+id).val();
-            //     let form = new FormData;
-            //     console(msg+"...")
-            //     form.append('message',msg)
-            //     form.append('id',id)
-            //     var self = this;
-            //     axios.post(APP_URL + '/course/send-message-to-instructor', form)
-            //         .then(function (response) {
-            //             console.log(response);
-            //             if (response.data.type == 'success') {
-            //                 self.loading = false;
-            //                 self.showMessage(response.data.message);
-            //                 setTimeout(function () {
-            //                     window.location.replace(response.data.url);
-            //                 }, 3000);
-            //             } else if (response.data.type == 'error') {
-            //                 self.loading = false;
-            //                 self.showError(response.data.message);
-            //             }
-            //         })
-            //         .catch(function (error) {
-            //             self.loading = false;
-            //             console.log(error);
-            //         });
-            // },
+            getMessageForm: function (id) {
+                var modal_ref = 'myModalRef-' + id;
+                this.$refs[modal_ref].show();
+            },
+            sendMessage: function (id) {
+                console.log(id)
+                this.loading = true;
+                var msg = $('#message-'+id).val();
+                let form = new FormData;
+                form.append('message',msg)
+                form.append('id',id)
+                var self = this;
+                axios.post(APP_URL + '/course/send-message', form)
+                    .then(function (response) {
+                        console.log(response);
+                        if (response.data.type == 'success') {
+                            self.loading = false;
+                            self.showMessage(response.data.message);
+                            setTimeout(function () {
+                                window.location.replace(response.data.url);
+                            }, 3000);
+                        } else if (response.data.type == 'error') {
+                            self.loading = false;
+                            self.showError(response.data.message);
+                        }
+                    })
+                    .catch(function (error) {
+                        self.loading = false;
+                        console.log(error);
+                    });
+            },
+            sendMessagetoInstructor: function (id) {
+                console.log(id)
+                this.loading = true;
+                var msg = $('#message-'+id).val();
+                let form = new FormData;
+                console(msg+"...")
+                form.append('message',msg)
+                form.append('id',id)
+                var self = this;
+                axios.post(APP_URL + '/course/send-message-to-instructor', form)
+                    .then(function (response) {
+                        console.log(response);
+                        if (response.data.type == 'success') {
+                            self.loading = false;
+                            self.showMessage(response.data.message);
+                            setTimeout(function () {
+                                window.location.replace(response.data.url);
+                            }, 3000);
+                        } else if (response.data.type == 'error') {
+                            self.loading = false;
+                            self.showError(response.data.message);
+                        }
+                    })
+                    .catch(function (error) {
+                        self.loading = false;
+                        console.log(error);
+                    });
+            },
             submitCource: function () {
                 this.loading = true;
                 let Form = document.getElementById('post_cource_form');
@@ -5539,7 +5542,7 @@ if (document.getElementById("cources")) {
                                     if (response.data.role == 'freelancer') {
                                         window.location.replace(APP_URL + '/freelancer/courses/posted');
                                     } else if (response.data.role == 'admin') {
-                                        //window.location.replace(APP_URL+'/admin/jobs');
+                                        window.location.replace(APP_URL+'/admin/courses');
                                     }
                                 }
                             });

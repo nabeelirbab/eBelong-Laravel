@@ -74,10 +74,29 @@
 												<span class="bt-content">
 													<div class="wt-actionbtn">
 														<a href="{{{url('freelancer/course/'.$course->pivot_id.'/bought')}}}" class="wt-viewinfo wt-btnhistory">{{ trans('lang.view') }}</a>
+														<a href="javascript:void(0);"  v-on:click.prevent="getMessageForm({{ $course->id }})" class="wt-addinfo wt-skillsaddinfo" v-cloak>
+															<i class="fas fa-envelope-open"></i>
+														</a>
 													</div>
 												</span>
 											</td>
 										</tr>	
+										<b-modal ref="myModalRef-{{ $course->id }}" hide-footer title="Send Message to Instructor">
+											<div class="d-block text-center">
+												<form class="wt-formtheme wt-form-paycard" id="course-message-form-{{ $course->id }}" >
+													
+													<fieldset>
+														<div class="form-group wt-inputwithicon">
+															<label>{{ 'Message' }}</label>
+															<textarea class="form-control" id="message-{{ $course->id }}" name="message-{{ $course->id }}" ></textarea>
+														</div>
+														{{-- <input type="text" class="form-control" value="hello"> --}}
+														<div class="form-group wt-btnarea">
+															<a class="wt-btn" href="javascript:void(0);" v-on:click='sendMessagetoInstructor({{ $course->id }})'>Send</a>
+														</div>
+													</fieldset>
+												</form>
+											</b-modal>	
 									@endforeach
 								</tbody>
 							</table>

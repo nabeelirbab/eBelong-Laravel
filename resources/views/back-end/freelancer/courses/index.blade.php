@@ -106,10 +106,31 @@
 														@if ($total_orders == 0)
 															<delete :title="'{{trans("lang.ph_delete_confirm_title")}}'" :id="'{{ $cource['id'] }}'" :message="'{{trans("lang.ph_course_delete_message")}}'" :url="'{{url('freelancer/dashboard/delete-course')}}'"></delete>
 														@endif
+														@if ($total_orders > 0)
+														<a href="javascript:void(0);"  v-on:click.prevent="getMessageForm({{ $cource['id'] }})" class="wt-addinfo wt-skillsaddinfo" v-cloak>
+															<i class="fas fa-envelope-open"></i>
+														</a>
+														@endif
 													</div>
 												</span>
 											</td>
-										</tr>	
+										</tr>
+										<b-modal ref="myModalRef-{{ $cource['id'] }}" hide-footer title="Send Message to All Students">
+											<div class="d-block text-center">
+												<form class="wt-formtheme wt-form-paycard" id="course-message-form-{{ $cource['id'] }}" >
+													
+													<fieldset>
+														<div class="form-group wt-inputwithicon">
+															<label>{{ 'Message' }}</label>
+															<textarea class="form-control" id="message-{{ $cource['id'] }}" name="message-{{ $cource['id'] }}" ></textarea>
+														</div>
+														{{-- <input type="text" class="form-control" value="hello"> --}}
+														<div class="form-group wt-btnarea">
+															<a class="wt-btn" href="javascript:void(0);" v-on:click='sendMessage({{ $cource['id'] }})'>Send</a>
+														</div>
+													</fieldset>
+												</form>
+											</b-modal>	
 									@endforeach
 								</tbody>
 							</table>
