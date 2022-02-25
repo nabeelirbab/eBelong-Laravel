@@ -69,7 +69,7 @@
 
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label style="font-size: 16px;line-height: 20px;color: black;"> Agency Logo </label>
+                                                        <!-- <label style="font-size: 16px;line-height: 20px;color: black;"> Agency Logo </label> -->
                                                         <input type="file" name="agency_logo" class="form-control" v-model="agency_logo">
                                                     </div>
                                                 </div>
