@@ -5423,13 +5423,13 @@ if (document.getElementById("cources")) {
                 this.loading = true;
                 var msg = $('#message-'+id).val();
                 let form = new FormData;
-                console(msg+"...")
+                // console.log(msg+"...")
                 form.append('message',msg)
                 form.append('id',id)
                 var self = this;
                 axios.post(APP_URL + '/course/send-message-to-instructor', form)
                     .then(function (response) {
-                        console.log(response);
+                        // console.log(response);
                         if (response.data.type == 'success') {
                             self.loading = false;
                             self.showMessage(response.data.message);
