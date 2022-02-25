@@ -364,7 +364,8 @@ class Cource extends Model
         $search_locations,
         $search_languages,
         $search_delivery_time,
-        $search_response_time
+        $search_response_time,
+        $search_skills
     ) {
         $json = array();
         $services = Cource::select('*')->where('status','published')->orderBy('id','DESC');
@@ -380,9 +381,25 @@ class Cource extends Model
             foreach ($search_categories as $key => $search_category) {
                 $categor_obj = Category::where('slug', $search_category)->first();
                 $category = Category::find($categor_obj->id);
-                if (!empty($category->services)) {
-                    $category_services = $category->services->pluck('id')->toArray();
+               
+                if (!empty($category->courses)) {
+                    $category_services = $category->courses->pluck('id')->toArray();
                     foreach ($category_services as $id) {
+                        $service_id[] = $id;
+                    }
+                }
+            }
+            $services->where('status','published')->whereIn('id', $service_id);
+        }
+        if (!empty($search_skills)) {
+            $filters['skills'] = $search_skills;
+            foreach ($search_skills as $key => $search_skill) {
+                $skill_obj = Skill::where('slug', $search_skill)->first();
+                $skill= Skill::find($skill_obj->id);
+                    //  dd($skill->courses);
+                if (!empty($skill->courses)) {
+                    $skill_services = $skill->courses->pluck('id')->toArray();
+                    foreach ($skill_services as $id) {
                         $service_id[] = $id;
                     }
                 }
@@ -396,10 +413,16 @@ class Cource extends Model
         }
         if (!empty($search_languages)) {
             $filters['languages'] = $search_languages;
-            $languages = Language::whereIn('slug', $search_languages)->get();
-            foreach ($languages as $key => $language) {
-                if (!empty($language->services[$key]->id)) {
-                    $service_id[] = $language->services[$key]->id;
+            // $languages = Language::whereIn('slug', $search_languages)->get();
+           
+            foreach ($search_languages as $key => $language) {
+                $languages = Language::where('slug', $language)->first();
+                $lang = Language::find($languages->id);
+                if (!empty($lang->courses)) {
+                    $lang_courses = $lang->courses->pluck('id')->toArray();
+                    foreach ($lang_courses as $id) {
+                        $service_id[] = $id;
+                    }
                 }
             }
             $services->where('status','published')->whereIn('id', $service_id);

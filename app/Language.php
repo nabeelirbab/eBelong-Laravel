@@ -72,6 +72,11 @@ class Language extends Model
         return $this->morphedByMany('App\Service', 'langable');
     }
 
+    public function courses()
+    {
+        return $this->morphedByMany('App\Cource', 'langable');
+    }
+
     /**
      * Set slug before saving in DB
      *

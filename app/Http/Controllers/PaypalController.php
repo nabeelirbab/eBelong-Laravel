@@ -134,6 +134,9 @@ class PaypalController extends Controller
                 Session::flash('error', trans('lang.paypal_empty_credentials'));
                 return Redirect::back();
             }
+            // else{
+            //     // dd(env('PAYPAL_SANDBOX_API_USERNAME'));
+            // }
         } elseif ($payment_mode == 'false') {
             if (empty(env('PAYPAL_LIVE_API_USERNAME'))
                 && empty(env('PAYPAL_LIVE_API_PASSWORD'))
@@ -147,9 +150,10 @@ class PaypalController extends Controller
         $settings = SiteManagement::getMetaValue('commision');
         $currency = !empty($settings[0]['currency']) ? $settings[0]['currency'] : 'USD';
         // dd($currency);
+        // $currency = 'USD';
         if (Auth::user()) {
-            //$recurring = ($request->get('mode') === 'recurring') ? true : false;
-            $recurring = false;
+            $recurring = ($request->get('mode') === 'recurring') ? true : false;
+            // $recurring = false;
             $success = true;
             $cart = $this->getCheckoutData($recurring, $success);
             // dd($cart);
@@ -182,8 +186,8 @@ class PaypalController extends Controller
     public function getExpressCheckoutSuccess(Request $request)
     {
         if (Auth::user()) {
-            //$recurring = ($request->get('mode') === 'recurring') ? true : false;
-            $recurring = false;
+            $recurring = ($request->get('mode') === 'recurring') ? true : false;
+            // $recurring = false;
             $token = $request->get('token');
             $PayerID = $request->get('PayerID');
             $success = true;

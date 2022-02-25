@@ -52,7 +52,10 @@ class Skill extends Model
     {
         return $this->belongsToMany('App\User');
     }
-
+    public function courses()
+    {
+        return $this->belongsToMany('App\Cource');
+    }
     /**
      * The job that belong to the skill.
      *
