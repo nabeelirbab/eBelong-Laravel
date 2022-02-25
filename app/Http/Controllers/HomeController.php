@@ -71,7 +71,7 @@ class HomeController extends Controller
 	   
        $freelancers = DB::table('users')
        ->join('profiles', 'profiles.user_id', '=', 'users.id')
-       ->selectRaw('users.id as id,users.slug, users.first_name, users.last_name, profiles.avater, profiles.tagline, profiles.hourly_rate, users.location_id as userlocation,users.is_agency as has_agency,users.agency_id')
+       ->selectRaw('users.id as id,users.slug, users.first_name, users.is_certified, users.last_name, profiles.avater, profiles.tagline, profiles.hourly_rate, users.location_id as userlocation,users.is_agency as has_agency,users.agency_id')
        ->where('users.is_featured',1)
        ->orderBy('users.id', 'DESC')->get()->toArray();
 			
@@ -80,6 +80,14 @@ class HomeController extends Controller
             foreach ($freelancers as $key => $freelancer) 
             {
                 // $skills = Skill::join('skill_user', 'skill_user.skill_id', '=', 'id')->selectRaw('skills.title,skills.slug')->get()->toArray();
+                $instructor = DB::table('cource_user')->where('seller_id',$freelancer->id)->where('status','posted')->count();
+                if(!empty($instructor) && $instructor > 0){
+                    $freelancer->is_instructor = 1;
+                }
+                else{
+                    $freelancer->is_instructor = 0;
+                }
+                
                 if($freelancer->has_agency==0){
                 
                     $agency_id= DB::table('agency_associated_users')->where('user_id',$freelancer->id)->first();

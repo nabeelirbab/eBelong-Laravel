@@ -20,6 +20,8 @@
 										<th>{{ trans('lang.course_title') }}</th>
 										<th>{{ 'Student' }}</th>
 										<th>{{ trans('lang.order_status') }}</th>
+										<th>{{ 'Payment Method' }}</th>
+										<th>{{ 'Order Placed' }}</th>
 										<th>{{ trans('lang.action') }}</th>
 									</tr>
 								</thead>
@@ -29,6 +31,7 @@
 											$course = App\Cource::find($order->cource_id);
 											$attachment = Helper::getUnserializeData($course->attachments); 
 											$employer = App\User::find($order->user_id);
+											$invoice = App\Invoice::find($order->invoice_id);
 										@endphp
 										<tr class="del-{{{ $course->status }}}">
 											<td data-th="Service Title">
@@ -73,6 +76,8 @@
 													<h4>{{{$order->status}}}</h4>
 												</span>
 											</td>
+											<td>{{{ $invoice['payment_mode'] }}}</td>
+											<td>{{{   $invoice['created_at']   }}}</td>
 											<td data-th="Action">
 												<span class="bt-content">
 													<div class="wt-actionbtn">

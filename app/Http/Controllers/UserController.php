@@ -529,19 +529,20 @@ class UserController extends Controller
     public function inviteToAgency(Request $request) {
 
         if(!empty($request->member_role)){
-            $user_id = User::select('id')->where('email', $request->invitation_email)->get();
-            $alreadyInvited = DB::table('agency_associated_users')->where('agency_id', $request->agency_id)->where('user_id',$user_id[0]['id'])->get();
-            // dd($alreadyInvited);
-            if(!empty($alreadyInvited[0])){
-                Session::flash('error', 'Invitation has already sent to this user.');
-                    return Redirect::back();
-
-            }
-            if (count($user_id) > 0) {
-
+            $user_id = User::select('id')->where('email', $request->invitation_email)->first();
+            // dd($user_id->id);
+           
+            if (!empty($user_id->id)) {
+                $alreadyInvited = DB::table('agency_associated_users')->where('agency_id', $request->agency_id)->where('user_id',$user_id->id)->get();
+                // dd($alreadyInvited);
+                if(!empty($alreadyInvited[0])){
+                    Session::flash('error', 'Invitation has already sent to this user.');
+                        return Redirect::back();
+    
+                }
 
                 $associate_user = DB::table('agency_associated_users')->insert(
-                    ['agency_id' => $request->agency_id, 'user_id' => $user_id[0]['id'], 'member_role' => $request->member_role, 'is_pending' => 1]
+                    ['agency_id' => $request->agency_id, 'user_id' => $user_id->id, 'member_role' => $request->member_role, 'is_pending' => 1]
                 );
 
                 if ($associate_user === true) {

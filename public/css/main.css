@@ -816,6 +816,13 @@ li.wt-rss a { background:#ff6600; }
     right: 35px;
 }
 
+#list-layout .find-talent-freelancers .find-talent a.instructor-badge {
+    position: absolute;
+    top: 15px;
+    right: 100px;
+	max-width: 70px;
+
+}
 #list-layout .ratingstarfordesktop .wt-starcontent {
     position: absolute;
     top: -15px;
@@ -1014,11 +1021,22 @@ li.wt-rss a { background:#ff6600; }
     top: 0px;
     right: 315px;
 }
+.profile-instructor-badge {
+	position: absolute;
+    top: -2px;
+    right: 380px;
+	max-width: 65px;
+}
 @media only screen and (max-width: 1199px){
 	.profile-certified-badge {
 		position: absolute;
 		top: 0px;
 		right: 30px;
+	}
+	.profile-certified-badge {
+		position: absolute;
+		top: 0px;
+		right: 70px;
 	}
 	.freelancerspage .find-talent-freelancers .wt-widgettag {
 		text-align: left !important;
