@@ -141,7 +141,7 @@
                                     @endif
                                 </div>
                                 <div class="form-group wt-btnarea">
-                                    <input type="submit" name="button" class="wt-btn" value="Pay {{ !empty($symbol['symbol']) ? $symbol['symbol'] : '$' }}{{$service->price}}{{$total_amount}}">
+                                    <input type="submit" name="button" class="wt-btn" value="Pay {{ !empty($symbol['symbol']) ? $symbol['symbol'] : '$' }}{{$service->price}}">
                                 </div>
                             </fieldset>
                         </form>

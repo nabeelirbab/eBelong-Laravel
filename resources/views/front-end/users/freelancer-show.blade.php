@@ -55,6 +55,24 @@
                                             @endif
                                             <br>
                                             <a href="{{url('profile/'.$user->slug)}}">{{ '@' }}{{{ $user->slug }}}</a>
+                                            @php $is_member_agency = DB::table('agency_associated_users')->where('user_id',$user->id)->where('is_pending',0)->where('is_accepted',1)->first(); @endphp
+                                        @if (!empty($user->is_agency))
+                                        @php $agencylogo = DB::table('agency_user')->where('id',$user->agency_id)->first();@endphp
+                                           
+                                                <span >
+                                                    <img style="max-width: 50px"src="{{ asset('uploads/agency_logos/' . $user->agency_id.'/'.$agencylogo->agency_logo) }}"> {{{ $agencylogo->agency_name }}}
+                                                </span>
+                                          
+                                        @elseif(!empty($is_member_agency))
+                                        @php $agencylogo = DB::table('agency_user')->where('id',$is_member_agency->agency_id)->first();@endphp
+                                     
+                                            <span>
+                                                <img src="{{ asset('uploads/agency_logos/' . $is_member_agency->agency_id.'/'.$agencylogo->agency_logo) }}" style="max-width: 50px"> <a href={{{  url('agency/'.$agencylogo->slug)  }}}> {{  $agencylogo->agency_name }}</a>
+                                            </span>
+                                       
+                                        
+
+                                        @endif
                                         </span>
                                     </div>
                                 </div>
@@ -63,9 +81,23 @@
                         <div class="col-12 col-sm-12 col-md-12 col-lg-9 float-left">
                             <div class="row">
                                 <div class="wt-proposalhead wt-userdetails">
-                                    @if ($profile->is_certified == 1)
+                                    @if ($user->is_certified == 1)
                                     <div class="profile-certified-badge">
+                                        {{-- <h1>im certified</h1> --}}
                                         <img src="/images/certified/Certified_Icon.svg" />
+                                    </div>
+                                    @endif
+                                    @php $instructor = DB::table('cource_user')->where('seller_id',$user->id)->where('status','posted')->count();
+                                    if(!empty($instructor) && $instructor > 0){
+                                        $is_instructor = 1;
+                                    }
+                                    else{
+                                        $is_instructor = 0;
+                                    }@endphp
+                                    @if ($is_instructor == 1)
+                                    <div class="profile-instructor-badge">
+                                        {{-- <h1>im certified</h1> --}}
+                                        <img src="/images/instructor/instructor_logo.png" />
                                     </div>
                                     @endif
                                     @if (!empty($profile->tagline))
@@ -82,6 +114,7 @@
                                                 </span>
                                             </li>
                                         @endif
+                                        
                                         @if (Auth::user())
                                         @if ($profile->user_id != Auth::user()->id)
                                         @if (in_array($profile->id, $save_freelancer))

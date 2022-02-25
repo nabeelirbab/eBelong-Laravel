@@ -125,7 +125,7 @@ class PaypalController extends Controller
     {
         $settings = SiteManagement::getMetaValue('payment_settings');
         $payment_mode = !empty($settings) && !empty($settings[0]['enable_sandbox']) ? $settings[0]['enable_sandbox'] : 'false';
-        $payment_mode = true;
+        // $payment_mode = true;
         if ($payment_mode == 'true') {
             if (empty(env('PAYPAL_SANDBOX_API_USERNAME'))
                 && empty(env('PAYPAL_SANDBOX_API_PASSWORD'))
@@ -163,7 +163,7 @@ class PaypalController extends Controller
                 }
                 return redirect($response['paypal_link']);
             } catch (\Exception $e) {
-                 dd($e);
+                //  dd($e);
                 $invoice = $this->createInvoice($cart, 'Invalid', $payment_detail);
                 session()->put(['code' => 'danger', 'message' => "Error processing PayPal payment for Order $invoice->id!"]);
             }

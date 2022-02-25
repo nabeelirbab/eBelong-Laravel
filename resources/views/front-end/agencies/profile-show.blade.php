@@ -119,6 +119,33 @@
                                                 <p>{{ trans('lang.no_skills') }}</p>
                                             @endif
                                         </div>
+                                        <div class="wt-widget">
+                                    <div class="wt-widgettitle">
+                                        <h2>Agency Members</h2>
+                                    </div>
+                                    <div class="wt-widgetcontent wt-comfollowers wt-verticalscrollbar">
+                                        @if ($members->count() > 0)
+                                            <ul>
+                                                @foreach ($members as $follower)
+                                                    @php
+                                                        $profile = \App\Profile::all()->where('user_id', $follower->user_id)->first();
+                                                        // $role_id = Helper::getRoleByUserID($follower->follower);
+                                                    @endphp
+                                                    {{-- @if (Helper::getRoleName($role_id) !== 'admin' && $follower->follower <> $user->id) --}}
+                                                        <li>
+                                                            <a href="{{{url('profile/'.$profile->user['slug'])}}}">
+                                                                <span><img src="{{{asset(Helper::getProfileImage($follower->user_id))}}}" alt="Member"></span>
+                                                                <span>{{{Helper::getUserName($follower->user_id)}}}</span>
+                                                            </a>
+                                                        </li>
+                                                    {{-- @endif --}}
+                                                @endforeach
+                                            </ul>
+                                        @else
+                                            <p class="la-no-follower">{{ trans('lang.no_followers') }}</p>
+                                        @endif
+                                    </div>
+                                </div>
                                     </aside>
                                 </div>
                             <!-- </div> -->
