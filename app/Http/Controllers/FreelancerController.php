@@ -1180,6 +1180,26 @@ else {
                     );
                 }
             }
+            else if (!empty($status) && $status === 'waiting') {
+                $courses = Helper::getFreelancerCourses('waiting', $freelancer_id);
+                if (file_exists(resource_path('views/extend/back-end/freelancer/courses/bought.blade.php'))) {
+                    return view(
+                        'extend.back-end.freelancer.courses.pending',
+                        compact(
+                            'courses',
+                            'symbol'
+                        )
+                    );
+                } else {
+                    return view(
+                        'back-end.freelancer.courses.pending',
+                        compact(
+                            'courses',
+                            'symbol'
+                        )
+                    );
+                }
+            }
             else if (!empty($status) && $status === 'bought') {
                 $courses = Helper::getFreelancerCourses('bought', $freelancer_id);
                 if (file_exists(resource_path('views/extend/back-end/freelancer/courses/bought.blade.php'))) {

@@ -36,7 +36,9 @@
                                     <tr>
                                         <th>{{{ trans('lang.user_name') }}}</th>
                                         <th>{{{ trans('lang.ph_email') }}}</th>
-                                        {{-- <th>{{{ trans('lang.is_featured') }}}</th> --}}
+                                        <th>{{{ 'Enrolled Date' }}}</th>
+
+                                        <th>{{{ 'Action'}}}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -44,47 +46,23 @@
                                         @php 
                                         $user = \App\User::find($user_data->id);
                                         $badges = \App\Badge::all();
+                                        $invoice = DB::table("cource_user")->where('cource_id',$course_id)->where('user_id',$user->id)->where('status','bought')->first();
+                                        $invoice_info = App\Invoice::find($invoice->invoice_id);
                                         @endphp
                                         @if ($user->getRoleNames()->first() != 'admin')
                                             <tr class="del-user-{{ $user->id }}">
                                                 <td>{{{ ucwords(\App\Helper::getUserName($user->id)) }}}</td>
                                                 <td>{{{ $user->email }}}</td>
-												{{-- <td>
-													@if($user->featured==0)
-                                                    {{ 'Featured' }}
-                                                    @else
-                                                    {{ 'Not Featured' }}
-                                                    @endif
-												</td> --}}
-                                                {{-- <td>
-													<select id="{{$user->id}}-is_certified" v-on:change.prevent='changeCertifiedStatus({{$user->id}})'>
-														<option value="0" {{ $user->is_certified == 0 ? "selected":"" }}>No</option>
-														<option value="1" {{ $user->is_certified == 1 ? "selected":"" }}>Yes</option>
-													</select>
-												</td>
-                                                <td>
-													<select id="{{$user->id}}-is_disabled" v-on:change.prevent='changeDisabledStatus({{$user->id}})'>
-														<option value="false" {{ $user->is_disabled == 'false' ? "selected":"" }}>No</option>
-														<option value="true" {{ $user->is_disabled == 'true' ? "selected":"" }}>Yes</option>
-													</select>
-												</td>
-                                                <td>
-													<select id="{{$user->id}}-assign_badge" v-on:change.prevent='changeBadge({{$user->id}})'>
-														<option value="null" {{ $user->badge_id == 'null' ? "selected":"" }}>No badge</option>
-                                                        @foreach ($badges as $badge)
-                                                        <option value="{{$badge->id}}" {{ $user->badge_id == $badge->id ? "selected":"" }}>{{$badge->title}}</option>
-                                                        @endforeach
-														
-													</select>
-												</td> --}}
+                                            @if (!empty($invoice_info['created_at']))
+                                            <td>{{ $invoice_info['created_at']->format('d-m-Y') }}</td>
+                                                @else
+                                            <td>-</td>
+                                                @endif
+												
                                                 <td>
                                                     <div class="wt-actionbtn">
 														<a href="{{ url('profile/'.$user->slug) }}" class="wt-addinfo wt-skillsaddinfo"><i class="lnr lnr-eye"></i></a>
-													 
-														{{-- <a href="{{ url('users/profile-edit/'.$user->id) }}" class="wt-addinfo wt-skillsaddinfo"><i class="fa fa-edit"></i></a> --}}
-														
-                                                        {{-- <a href="javascript:void()" v-on:click.prevent="deleteUser({{$user->id}})" class="wt-deleteinfo wt-skillsaddinfo"><i class="fa fa-trash"></i></a> --}}
-                                                    </div>
+													 </div>
                                                 </td>
                                             </tr>
                                         @endif

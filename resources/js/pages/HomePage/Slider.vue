@@ -44,7 +44,11 @@
                 <img class="e-freelancer__item-agency-image-area" :src="`${baseUrl}/uploads/agency_logos/${item.agency_id}/${item.agency_avatar}`"/>
               </div>
               <div class="e-freelancer__item-agency-text">
-                {{item.agency_name}}
+                <a :href = "`${window.location.hostname} 'agency/' ${item.agency_slug} `">
+
+
+                {{item.agency_slug}}
+                </a>
               </div>
             </div>
             <div v-if="item.has_agency == 1 && item.agency_avatar == null" class="e-freelancer__item-agency text-center">
@@ -52,7 +56,7 @@
                 <img class="e-freelancer__item-agency-image-area" :src="`${baseUrl}/uploads/settings/general/imgae-not-availabe.png`"/>
               </div>
               <div class="e-freelancer__item-agency-text">
-                {{item.agency_name}}
+                {{item.agency_slug}}
               </div>
             </div>
             
