@@ -689,9 +689,10 @@ class PublicController extends Controller
         //         abort(404);
         //     }
         // }
+        $search_skills = !empty($_GET['skill']) ? $_GET['skill'] : array();
         $search_categories = !empty($_GET['category']) ? $_GET['category'] : array();
         $search_locations = !empty($_GET['locations']) ? $_GET['locations'] : array();
-        $search_skill = !empty($_GET['skill']) ? $_GET['skill'] : array();
+        $search_skill = !empty($_GET['skills']) ? $_GET['skills'] : array();
         $search_project_lengths = !empty($_GET['project_lengths']) ? $_GET['project_lengths'] : array();
         $search_languages = !empty($_GET['languages']) ? $_GET['languages'] : array();
         $search_employees = !empty($_GET['employees']) ? $_GET['employees'] : array();

@@ -97,6 +97,7 @@ class HomeController extends Controller
                         $freelancer->agency_id=$agency_id->agency_id;
                         $freelancer->agency_name= DB::table('agency_user')->where('id',$agency_id->agency_id)->pluck('agency_name')->first();
                         $freelancer->agency_avatar= DB::table('agency_user')->where('id',$agency_id->agency_id)->pluck('agency_logo')->first();
+                        $freelancer->agency_slug= DB::table('agency_user')->where('id',$agency_id->agency_id)->pluck('slug')->first();
                         // dd($freelancer->agency_avatar);
                         // if(empty($freelancer->agency_avatar)){
                         //     $freelancer->is_null_logo = true;
@@ -105,6 +106,7 @@ class HomeController extends Controller
                     else{
                         $freelancer->agency_avatar = null;
                         $freelancer->agency_name = null;
+                        $freelancer->agency_slug = null;
                         // $freelancer->is_null_logo = null;
                     }
     
@@ -112,6 +114,8 @@ class HomeController extends Controller
                     else{
                         $freelancer->agency_name= DB::table('agency_user')->where('id',$freelancer->agency_id)->pluck('agency_name')->first();
                         $freelancer->agency_avatar= DB::table('agency_user')->where('id',$freelancer->agency_id)->pluck('agency_logo')->first();
+                        $freelancer->agency_slug= DB::table('agency_user')->where('id',$freelancer->agency_id)->pluck('slug')->first();
+                       
                         // if(empty($freelancer->agency_avatar)){
                         //     $freelancer->is_null_logo = true;
                         // }
