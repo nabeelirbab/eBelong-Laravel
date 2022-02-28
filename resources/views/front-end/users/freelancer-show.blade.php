@@ -60,7 +60,7 @@
                                         @php $agencylogo = DB::table('agency_user')->where('id',$user->agency_id)->first();@endphp
                                            
                                                 <span >
-                                                    <img style="max-width: 50px"src="{{ asset('uploads/agency_logos/' . $user->agency_id.'/'.$agencylogo->agency_logo) }}"> {{{ $agencylogo->agency_name }}}
+                                                    <img style="max-width: 50px;height: 50px;width: 50px;border-radius: 100%;"src="{{ asset('uploads/agency_logos/' . $user->agency_id.'/'.$agencylogo->agency_logo) }}"> {{{ $agencylogo->agency_name }}}
                                                 </span>
                                           
                                         @elseif(!empty($is_member_agency))
@@ -97,7 +97,7 @@
                                     @if ($is_instructor == 1)
                                     <div class="profile-instructor-badge">
                                         {{-- <h1>im certified</h1> --}}
-                                        <img src="/images/instructor/instructor_logo.png" />
+                                        <img class="fix-blury-image-issue" src="/images/instructor/instructor_logo.png" />
                                     </div>
                                     @endif
                                     @if (!empty($profile->tagline))

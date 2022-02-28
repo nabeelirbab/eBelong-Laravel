@@ -233,7 +233,7 @@ $show_f_banner = 'true'
                                                     }@endphp
                                                     @if($freelancer->is_instructor == 1)
                                                     <a href="{{{ url('profile/'.$freelancer->slug) }}}" class="instructor-badge">
-                                                        <img src="/images/instructor/instructor_logo.png" />
+                                                        <img class="fix-blury-image-issue" src="/images/instructor/instructor_logo.png" />
                                                     </a>
                                                     @endif
                                                     @if($freelancer->is_certified == 1)
