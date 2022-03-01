@@ -778,6 +778,12 @@ class User extends Authenticatable
         if($role=="name_desc"){
             $query = User::orderBy('first_name','desc')->paginate(10)->setpath('');
         }
+        if($role=="certified"){
+            $query =  User::select('*')->where('is_certified',1)->latest()->paginate(10)->setPath('');
+        }
+        if($role=="featured"){
+            $query =  User::select('*')->where('is_featured',1)->latest()->paginate(10)->setPath('');
+        }
         return $query;
 
         // if (!empty($role)) {

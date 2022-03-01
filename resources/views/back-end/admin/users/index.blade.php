@@ -40,6 +40,8 @@
                             "agency_member" => "Agency Members",
                             "new_members" => "New Members",
                             "old_members" => "Old Members",
+                            "certified"=> "Certfied Users",
+                            "featured"=> "Featured Users",
                             "name_asc" => "Name (A-Z)",
                             "name_desc" => "Name (Z-A)",
                             "Email_asc"=> "Email (A-Z)",
