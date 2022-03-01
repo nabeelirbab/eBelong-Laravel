@@ -178,7 +178,7 @@ class Payout extends Model
             if($info['http_code'] != 200 && $info['http_code'] != 201 ) {
                 //echo "Received error: " . $info['http_code']. "\n";
                 //echo "Raw response:".$response."\n";
-                $this -> _error = json_decode( $response , 1 );
+                $this->_error = json_decode( $response , 1 );
                 return false;
             }
         }

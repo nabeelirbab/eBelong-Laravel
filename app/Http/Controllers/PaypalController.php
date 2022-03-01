@@ -553,7 +553,7 @@ class PaypalController extends Controller
                     //     ['user_id' => $user_id, 'product_id'=>$id,'type'=>'course','cource_product_id' => $id, 'invoice_id' => $invoice_id, 'status' => 'pending', 'created_at' => \Carbon\Carbon::now(), 'updated_at' => \Carbon\Carbon::now()]
                     // );
                     $course = Cource::find($id);
-                    $course->users()->attach(Auth::user()->id, ['type' => 'employer', 'status' => 'waiting', 'seller_id' => $freelancer, 'paid' => 'completed','invoice_id' => $invoice_id,]);
+                    $course->users()->attach(Auth::user()->id, ['type' => 'employer', 'status' => 'waiting', 'seller_id' => $freelancer, 'paid' => 'pending','invoice_id' => $invoice_id,]);
                     $course->save();
                     // send message to freelancer
                     $message = new Message();

@@ -3053,6 +3053,7 @@ class UserController extends Controller
         $months = Helper::getMonthList();
         //$years = array_combine(range(date("Y"), 1970), range(date("Y"), 1970));
 		$years = array(date("Y"));
+        // Helper::updatePayouts();
         if (file_exists(resource_path('views/extend/back-end/admin/payouts.blade.php'))) {
             return view(
                 'extend.back-end.admin.payouts',
