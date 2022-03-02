@@ -76,6 +76,10 @@ class Category extends Model
     {
         return $this->morphedByMany('App\Service', 'catable');
     }
+    public function courses()
+    {
+        return $this->morphedByMany('App\Cource', 'catable');
+    }
 
     /**
      * Set slug before saving in DB

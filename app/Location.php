@@ -75,6 +75,11 @@ class Location extends Model
         return $this->hasMany('App\Service');
     }
 
+    public function courses()
+    {
+        return $this->hasMany('App\Cource');
+    }
+
     /**
      * Set slug before saving in DB
      *
