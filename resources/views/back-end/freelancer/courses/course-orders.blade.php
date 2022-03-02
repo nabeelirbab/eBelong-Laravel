@@ -20,6 +20,7 @@
 										<th>{{ trans('lang.course_title') }}</th>
 										<th>{{ 'Student Name' }}</th>
 										<th>{{ trans('lang.course_status') }}</th>
+										<th>{{ 'Placed Order On:' }}</th>
 										<th>Students Enrolled</th>
 									</tr>
 								</thead>
@@ -31,6 +32,7 @@
 											$seller = $course->seller_id;
 											$attachment = Helper::getUnserializeData($cource['attachments']); 
 											$total_orders = Helper::getcourceCount($cource['id'],'bought');
+											$order = App\Invoice::find($course->invoice_id);
 										@endphp
 										<tr class="del-{{{ $cource['status'] }}}">
 											<td data-th="Service Title">
@@ -46,6 +48,7 @@
 																@endif
 																<h3>{{{$cource['title']}}}</h3>
 																<span><strong>{{ !empty($symbol) ? $symbol['symbol'] : '$' }}{{{$cource['price']}}}</strong></span>
+																<span><b>Posted On: </b>{{$cource['created_at']->format('d-m-Y')}}</span>
 															</div>
 														</div>
 													</div>
@@ -66,6 +69,8 @@
 													</form>
 												</span>
 											</td>
+											
+											<td><b>{{ $order['created_at']->format('d-m-Y') }}</b></td>
 											<td data-th="In Queue">
 												<span class="bt-content">
 													<span>

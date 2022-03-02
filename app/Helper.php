@@ -2199,7 +2199,8 @@ class Helper extends Model
      * @return array
      */
     public static function updatePayouts()
-    {
+    { 
+       
         $payout_settings = SiteManagement::getMetaValue('commision');
         $min_payount = !empty($payout_settings) && !empty($payout_settings[0]['min_payout']) ? $payout_settings[0]['min_payout'] : '';
         $payment_settings = SiteManagement::getMetaValue('commision');
@@ -2227,7 +2228,21 @@ class Helper extends Model
                 GROUP BY service_user.seller_id"
             )
         );
-        $data = array_merge($job_payouts, $purchased_services);
+        $purchased_courses = DB::select(
+            DB::raw(
+                "SELECT SUM(cources.price) AS total, cource_user.seller_id AS user_id, GROUP_CONCAT(cource_user.id) AS ids
+                FROM cource_user 
+                INNER JOIN cources
+                WHERE cource_user.cource_id = cources.id
+                AND cource_user.type = 'employer'
+                AND cource_user.status = 'bought'
+                AND cource_user.paid = 'pending' 
+                GROUP BY cource_user.seller_id"
+            )
+        );
+        
+        $data = array_merge($job_payouts, $purchased_services,$purchased_courses);
+       
         $result=array();
         foreach ($data as $value) {
             if (isset($result[((array)$value)["user_id"]])) {
@@ -2239,14 +2254,16 @@ class Helper extends Model
         $totalPayouts = array();
         $totalPayouts = array_values($result);
         if (!empty($totalPayouts)) {
+            // dd($totalPayouts);
             foreach ($totalPayouts as $q) {
                 if ($q['total'] >= $min_payount) {
                     $user = User::find($q['user_id']);
-                    if ($user->profile->count() > 0) {
-                        $payout_id = !empty($user->profile->payout_id) ? $user->profile->payout_id : '';
-                        $payout_detail = !empty($user->profile->payout_settings) ? $user->profile->payout_settings : array();
+                    if ($user['profile']) {
+                        $payout_id = !empty($user['profile']->payout_id) ? $user['profile']->payout_id : '';
+                        $payout_detail = !empty($user['profile']->payout_settings) ? $user->profile->payout_settings : array();
                         if (!empty($payout_id) || !empty($payout_detail)) {
                             $total_earning = Self::deductAdminCommission($q['total']);
+                            // dd($total_earning);
                             $payout = new Payout();
                             $payout->user()->associate($q['user_id']);
                             $payout->amount = $total_earning;
@@ -2280,6 +2297,7 @@ class Helper extends Model
 							$employeeid = "";
 							if(!empty($job_payouts)) {
 								foreach ($job_payouts as $q) {
+                                    
 									$projectids .= $projectids == "" ? $q->ids : $projectids.','.$q->ids;
 								}
 								$job = DB::table('proposals')->select('jobs.user_id')
@@ -2307,6 +2325,21 @@ class Helper extends Model
 									}
 								}
 							} 
+                            if(!empty($purchased_courses)) {
+                               
+                                    
+									$projectids .= $projectids == "" ? $q['ids'] : $projectids.','.$q['ids'];
+								
+							
+								$course = DB::table('cource_user')->select('cource_user.user_id')
+									->whereIn('cource_user.id',explode(",",$projectids));
+								if($course->count() > 0 ){
+									$course= $course->get();
+									foreach($course as $empid){ 
+										$employeeid = $employeeid != "" ? $employeeid.",".$empid->user_id : $empid->user_id;
+									}
+								}
+							} 
 							/*========== end get project id & employee id ===========*/
 							
                             $payout->status = 'pending';
@@ -2324,6 +2357,16 @@ class Helper extends Model
                     $primary_records = explode(',', $q->ids);
                     foreach ($primary_records as $primary) {
                         DB::table('proposals')
+                            ->where('id', $primary)
+                            ->update(['paid' => 'completed']);
+                    }
+                }
+            }
+            if (!empty($purchased_courses)) {
+                foreach ($purchased_courses as $q) {
+                    $primary_records = explode(',', $q->ids);
+                    foreach ($primary_records as $primary) {
+                        DB::table('cource_user')
                             ->where('id', $primary)
                             ->update(['paid' => 'completed']);
                     }

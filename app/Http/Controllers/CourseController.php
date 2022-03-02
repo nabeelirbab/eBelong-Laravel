@@ -955,7 +955,7 @@ class CourseController extends Controller
             /* if (file_exists(resource_path('views/extend/back-end/admin/users/index.blade.php'))) {
                 return view('extend.back-end.admin.users.index', compact('users'));
             } else { */
-                return view('back-end.freelancer.courses.enrolled-students', compact('users'));
+                return view('back-end.freelancer.courses.enrolled-students', compact('users','course_id'));
            // }
         } else {
             abort(404);

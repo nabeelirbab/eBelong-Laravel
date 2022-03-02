@@ -322,17 +322,27 @@
                                         <li><hr><a href="{{{ route('ServiceListing', ['status'=>'cancelled']) }}}">{{ trans('lang.cancelled_services') }}</a></li>
                                     </ul>
                                 </li>
-                                 <li class="menu-item-has-children">
+                                <li class="menu-item-has-children">
                                     <span class="wt-dropdowarrow"><i class="lnr lnr-chevron-right"></i></span>
                                     <a href="javascript:void(0)">
                                         <i class="ti-briefcase"></i>
                                         <span>{{ trans('lang.manage_courses') }}</span>
                                     </a>
                                     <ul class="sub-menu">
-                                        <li><hr><a href="{{{ route('CourseListing', ['status'=>'posted']) }}}">{{ trans('lang.posted_courses') }}</a></li>
-                                        <li><hr><a href="{{{ route('CourseListing', ['status'=>'bought']) }}}">{{ trans('lang.bought_courses') }}</a></li>
-                                        <li><hr><a href="{{{ route('CourseOrders') }}}">{{ trans('lang.course_orders') }}</a></li>
-
+                                        <li class="menu-item-has-children">
+                                            <span class="wt-dropdowarrow"><i class="lnr lnr-chevron-right"></i></span>
+                                            <a href="javascript:void(0)">
+                                                {{-- <i class="ti-briefcase"></i> --}}
+                                                <span>{{ "My Offered Courses" }}</span>
+                                            </a>
+                                            <ul class="sub-menu">
+                                                <li><a href="{{{ route('CourseListing', ['status'=>'posted']) }}}">{{ 'My Courses' }}</a></li>
+                                                <li><a href="{{{ route('CourseOrders') }}}">{{ trans('lang.course_orders') }}</a></li>
+                                            </ul>
+                                        </li>
+                                       
+                                        <li><a href="{{{ route('CourseListing', ['status'=>'bought']) }}}">{{ 'Enrolled Courses' }}</a></li>
+                                        <li><a href="{{{ route('CourseListing', ['status'=>'waiting']) }}}">{{ 'Pending Courses' }}</a></li>
                                     </ul>
                                 </li>
                             @endif
