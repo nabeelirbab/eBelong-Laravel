@@ -58,11 +58,11 @@
                                             @php $is_member_agency = DB::table('agency_associated_users')->where('user_id',$user->id)->where('is_pending',0)->where('is_accepted',1)->first(); @endphp
                                         @if (!empty($user->is_agency))
                                         @php $agencylogo = DB::table('agency_user')->where('id',$user->agency_id)->first();@endphp
-                                           
-                                                <span >
-                                                    <img style="max-width: 50px"src="{{ asset('uploads/agency_logos/' . $user->agency_id.'/'.$agencylogo->agency_logo) }}"> {{{ $agencylogo->agency_name }}}
-                                                </span>
-                                          
+                                            @if (!empty($agencylogo))
+                                                    <span >
+                                                        <img style="max-width: 50px"src="{{ asset('uploads/agency_logos/' . $user->agency_id.'/'.$agencylogo->agency_logo) }}"> {{{ $agencylogo->agency_name }}}
+                                                    </span>
+                                            @endif
                                         @elseif(!empty($is_member_agency))
                                         @php $agencylogo = DB::table('agency_user')->where('id',$is_member_agency->agency_id)->first();@endphp
                                      

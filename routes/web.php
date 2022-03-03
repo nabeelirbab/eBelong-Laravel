@@ -120,6 +120,8 @@ Route::group(
         Route::get('user', ['uses'=>'UserController@records', 'as'=>'user.records']);
         // Article Category Routes
         Route::get('admin/article/categories', 'ArticleCategoryController@index')->name('articleCategories');
+        Route::post('admin/get-freelancer-skills', 'SkillController@getAdminFreelancerSkills');
+        Route::post('admin/get-admin-freelancer-skills', 'FreelancerController@getAdminFreelancerSkills');
         Route::get('admin/article/categories/edit-cats/{id}', 'ArticleCategoryController@edit')->name('editArticleCategories');
         Route::post('admin/article/store-category', 'ArticleCategoryController@store');
         Route::get('admin/article/categories/search', 'ArticleCategoryController@index');

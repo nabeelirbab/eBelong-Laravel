@@ -282,6 +282,39 @@ class SkillController extends Controller
         }
     }
 
+    public function getAdminFreelancerSkills(Request $request)
+    {          
+            $agencyid = $request['slug'];
+            $db_skills = Skill::select('id')->get()->pluck('id')->toArray();
+            $user_skills = Skill::getFreelancerSkill($agencyid);
+            if (!empty($agency_skills)) {
+                $result = array_diff($db_skills, $user_skills);
+                if (!empty($result)) {
+                    $skills = DB::table('skills')
+                        ->whereIn('id', $result)
+                        ->orderBy('title')->orderBy('title','asc')->get()->toArray();
+                } else {
+                    $skills = array();
+                }
+                $json['type'] = 'success';
+                $json['skills'] = $skills;
+                $json['message'] = trans('lang.skills_already_selected');
+                return $json;
+            } else {
+                $skills = Skill::select('title', 'id')->orderBy('title','asc')->get()->toArray();
+                if (!empty($skills)) {
+                    $json['type'] = 'success';
+                    $json['skills'] = $skills;
+                    return $json;
+                } else {
+                    $json['type'] = 'error';
+                    $json['message'] = trans('lang.something_wrong');
+                    return $json;
+                }
+            }
+        }
+    
+
     /**
      * Get Job Skills.
      *

@@ -305,7 +305,30 @@ class FreelancerController extends Controller
             return $json;
         }
     }
-
+    public function getAdminFreelancerSkills(Request $request)
+    {
+        $json = array();
+        if (!empty($request['id'])) {
+            // $course = $this->cource::where('slug', $request['slug'])->select('id')->first();
+            
+                // $agency = $this->cource::find($request['id']);
+                $user= User::find($request['id']);
+                if (!empty($user)) {
+                $skills = $user->skills->toArray();
+                if (!empty($skills)) {
+                    $json['type'] = 'success';
+                    $json['skills'] = $skills;
+                    return $json;
+                } else {
+                    $json['error'] = 'error';
+                    return $json;
+                }
+            } else {
+                $json['error'] = 'error';
+                return $json;
+            }
+      }
+    }
     /**
      * Get top freelancer
      *

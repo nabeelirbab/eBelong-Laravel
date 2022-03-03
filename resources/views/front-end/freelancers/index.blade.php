@@ -106,8 +106,8 @@ $show_f_banner = 'true'
                                 @if (!empty($users))
                                 @foreach ($users as $key => $freelancer)
                                 @php
-                                $user_image = !empty($freelancer->profile->avater) ?
-                                '/uploads/users/'.$freelancer->id.'/'.$freelancer->profile->avater :
+                                $user_image = !empty($freelancer->profile['avater']) ?
+                                '/uploads/users/'.$freelancer->id.'/'.$freelancer->profile['avater'] :
                                 '';
                                 $flag = !empty($freelancer->location->flag) ? Helper::getLocationFlag($freelancer->location->flag) :
                                 '/images/img-01.png';
@@ -149,7 +149,7 @@ $show_f_banner = 'true'
                                                     <div class="row samemargin">
                                                         <div class="col-lg-2 col-md-12 col-sm-12 removepaddingleft">
                                                             <figure class="wt-userlistingimg">
-                                                                <img src="{{{ asset(Helper::getImageWithSize('uploads/users/'.$freelancer->id, $freelancer->profile->avater, 'listing')) }}}" alt="{{ trans('lang.img') }}">
+                                                                <img src="{{{ asset(Helper::getImageWithSize('uploads/users/'.$freelancer->id, $freelancer->profile['avater'], 'listing')) }}}" alt="{{ trans('lang.img') }}">
                                                             </figure>
                                                         </div>
                                                         <div class="col-lg-10 col-md-12 col-sm-12 removepadding">
@@ -317,7 +317,7 @@ $show_f_banner = 'true'
                                         </div>
                                         <!-- ======================== Old script ============================== -->
                                         <!-- <figure class="wt-userlistingimg">
-                                                        <img src="{{{ asset(Helper::getImageWithSize('uploads/users/'.$freelancer->id, $freelancer->profile->avater, 'listing')) }}}" alt="{{ trans('lang.img') }}">
+                                                        <img src="{{{ asset(Helper::getImageWithSize('uploads/users/'.$freelancer->id, $freelancer->profile['avater'], 'listing')) }}}" alt="{{ trans('lang.img') }}">
                                                     </figure>
                                                     <div class="wt-userlistingcontent">
                                                         <div class="wt-contenthead">
@@ -438,8 +438,8 @@ $show_f_banner = 'true'
                                 @if (!empty($users))
                                 @foreach ($users as $key => $freelancer)
                                 @php
-                                $user_image = !empty($freelancer->profile->avater) ?
-                                '/uploads/users/'.$freelancer->id.'/'.$freelancer->profile->avater :
+                                $user_image = !empty($freelancer->profile['avater']) ?
+                                '/uploads/users/'.$freelancer->id.'/'.$freelancer->profile['avater']:
                                 '';
                                 $flag = !empty($freelancer->location->flag) ? Helper::getLocationFlag($freelancer->location->flag) :
                                 '/images/img-01.png';
@@ -482,7 +482,7 @@ $show_f_banner = 'true'
                                                     <div class="row samemargin">
                                                         <div class="col-lg-12 col-md-12 col-sm-12">
                                                             <figure class="wt-userlistingimg">
-                                                                <img src="{{{ asset(Helper::getImageWithSize('uploads/users/'.$freelancer->id, $freelancer->profile->avater, 'listing')) }}}" alt="{{ trans('lang.img') }}">
+                                                                <img src="{{{ asset(Helper::getImageWithSize('uploads/users/'.$freelancer->id, $freelancer->profile, 'listing')) }}}" alt="{{ trans('lang.img') }}">
                                                             </figure>
                                                         </div>
                                                         <div class="col-lg-12 col-md-12 col-sm-12 samemargin removepadding">
