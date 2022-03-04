@@ -2685,26 +2685,51 @@ class UserController extends Controller
         $avater = !empty($profile->avater) ? $profile->avater : '';
         $tagline = !empty($profile->tagline) ? $profile->tagline : '';
         $description = !empty($profile->description) ? $profile->description : '';
-        if (file_exists(resource_path('views/extend/back-end/admin/profile-settings/personal-detail/index.blade.php'))) {
-            return view(
-                'extend.back-end.admin.profile-settings.personal-detail.index',
-                compact(
-                    'banner',
-                    'avater',
-                    'tagline',
-                    'description'
-                )
-            );
-        } else {
-            return view(
-                'back-end.admin.profile-settings.personal-detail.index',
-                compact(
-                    'banner',
-                    'avater',
-                    'tagline',
-                    'description'
-                )
-            );
+        if(Helper::getAuthRoleName()=="Editor"){
+            if (file_exists(resource_path('views/extend/back-end/editor/profile-settings/personal-detail/index.blade.php'))) {
+                return view(
+                    'extend.back-end.editor.profile-settings.personal-detail.index',
+                    compact(
+                        'banner',
+                        'avater',
+                        'tagline',
+                        'description'
+                    )
+                );
+            } else {
+                return view(
+                    'back-end.editor.profile-settings.personal-detail.index',
+                    compact(
+                        'banner',
+                        'avater',
+                        'tagline',
+                        'description'
+                    )
+                );
+            }
+        }
+        else{
+            if (file_exists(resource_path('views/extend/back-end/admin/profile-settings/personal-detail/index.blade.php'))) {
+                return view(
+                    'extend.back-end.admin.profile-settings.personal-detail.index',
+                    compact(
+                        'banner',
+                        'avater',
+                        'tagline',
+                        'description'
+                    )
+                );
+            } else {
+                return view(
+                    'back-end.admin.profile-settings.personal-detail.index',
+                    compact(
+                        'banner',
+                        'avater',
+                        'tagline',
+                        'description'
+                    )
+                );
+            }
         }
     }
 
@@ -2970,7 +2995,7 @@ class UserController extends Controller
      */
     public function userListing()
     {
-        if (Auth::user() && Auth::user()->getRoleNames()->first() === 'admin') {
+        if (Auth::user() && Auth::user()->getRoleNames()->first() === 'admin'|| Auth::user() && Auth::user()->getRoleNames()->first() === 'editor') {
             if (!empty($_GET['keyword'])) {
                 $keyword = $_GET['keyword'];
                 $keyword_tokens = explode(' ', $keyword);
@@ -3345,7 +3370,7 @@ class UserController extends Controller
 	// For load employee / freelancer profile page in admin.
 	public function userProfileUpdate($id){
 		$role_id =  Helper::getRoleByUserID($id);
-		if($role_id == 3){ // For freelancer
+		if($role_id == 3||$role_id==4){ // For freelancer
 			$locations = Location::pluck('title', 'id');
 			$skills = Skill::pluck('title', 'id');
 			$profile = User::select(
@@ -3405,7 +3430,7 @@ class UserController extends Controller
                     'selectedcategories'
                 )
             );
-		}else{ // For employee
+		}elseif($role_id == 2){ // For employee
 			$profile = User::select(
 								'users.*',
 								'profiles.gender',

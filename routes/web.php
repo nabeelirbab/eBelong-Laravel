@@ -88,6 +88,7 @@ Route::get('profile/{slug}', 'PublicController@showUserProfile')->name('showUser
 Route::get('agency/{slug}', 'PublicController@agencyView')->name('agencyView');
 Route::get('categories', 'CategoryController@categoriesList')->name('categoriesList');
 Route::get('page/{slug}', 'PageController@show')->name('showPage');
+Route::get('wishlist', 'PublicController@GuestWishlist');
 Route::post('store/project-offer', 'UserController@storeProjectOffers');
 if (Helper::getAccessType() == 'both' || Helper::getAccessType() == 'jobs') {
     Route::get('jobs', 'JobController@listjobs')->name('jobs');
@@ -151,11 +152,10 @@ Route::group(
         Route::get('users-datatable', 'UserController@datatable')->name('users.datatable');
         Route::get('users-data', 'UserController@usersList')->name('users.data');
 		
-        Route::get('users', 'UserController@userListing')->name('userListing');
+        
         Route::get('admin/dashboard', 'StatsController@index')->name('adminDashboard');
-        Route::get('admin/invitation', 'UserController@newInviteForm')->name('inviteUser');
-        Route::post('admin/invitationsubmit', 'UserController@newInvite')->name('inviteUserSubmit');
-		Route::get('users/profile-edit/{id}','UserController@userProfileUpdate');
+        
+		
 		Route::post('admin/store-freelancer-profile-settings','UserController@storeFreelancerProfileSettings');
 		Route::post('admin/store-employer-profile-settings','UserController@storeEmployerProfileSettings');
 		
@@ -269,9 +269,9 @@ Route::group(
         Route::get('admin/email-templates/{id}', 'EmailTemplateController@edit')->name('editEmailTemplates');
         Route::post('admin/email-templates/update-content', 'EmailTemplateController@updateTemplateContent');
         Route::post('admin/email-templates/update-templates/{id}', 'EmailTemplateController@update');
-        
-        Route::get('admin/invite-people', 'InvitationController@index')->name('invitePeople');
-        Route::post('admin/invite-people', 'InvitationController@sendInvitation');
+        Route::get('admin/invitation', 'UserController@newInviteForm')->name('inviteUser');
+        Route::post('admin/invitationsubmit', 'UserController@newInvite')->name('inviteUserSubmit');
+       
         
         Route::post('admin/store/breadcrumbs-settings', 'SiteManagementController@storeBreadcrumbsSettings');
         Route::post('admin/get/breadcrumbs-settings', 'SiteManagementController@getBreadcrumbsSettings');
@@ -317,7 +317,7 @@ Route::group(
         Route::post('admin/order/change-status', 'UserController@changeOrderStatus');
         //rating to freelancer
 
-        Route::post('admin/submit-rating', 'FreelancerController@adminRating');
+       
         
         Route::get('/admin/login-notification', [
             'as' => 'UserData', 
@@ -326,15 +326,96 @@ Route::group(
         Route::get('/admin/send-notifications','UserController@viewNotificationData')->name('viewMobileNotification');
         Route::post('/admin/send-notifications-post','UserController@sendNotificationData')->name('sendMobileNotification');
         Route::post('/admin/login-notification-updated','UserController@updateNotificationData');
-		Route::post('/admin/update-user-is-featured-status','UserController@updateIsFeaturedStatus');
-        Route::post('/admin/update-user-is-certified-status','UserController@updateIsCertifiedStatus');
-        Route::post('/admin/update-user-is-disabled-status','UserController@updateIsDisabledStatus');
-        Route::post('/admin/update-user-badge','UserController@updateUserBadge');
+		
 
 
     }
 );
+Route::group(
+    ['middleware' => ['role:editor|admin']],
+    function () {
+        Route::get('admin/invite-people', 'InvitationController@index')->name('invitePeople');
+        Route::post('admin/invite-people', 'InvitationController@sendInvitation');
+        Route::get('editor/dashboard', 'StatsController@index')->name('editorDashboard');
+        Route::get('users', 'UserController@userListing')->name('userListing');
+        Route::get('users/profile-edit/{id}','UserController@userProfileUpdate');
+        Route::post('/admin/update-user-is-featured-status','UserController@updateIsFeaturedStatus');
+        Route::post('/admin/update-user-is-certified-status','UserController@updateIsCertifiedStatus');
+        Route::post('/admin/update-user-is-disabled-status','UserController@updateIsDisabledStatus');
+        Route::post('/admin/update-user-badge','UserController@updateUserBadge');
+        Route::post('admin/submit-rating', 'FreelancerController@adminRating');
+        // Skill Routes
+        Route::get('admin/skills', 'SkillController@index')->name('skills');
+        Route::get('admin/skills/edit-skills/{id}', 'SkillController@edit')->name('editSkill');
+        Route::post('admin/store-skill', 'SkillController@store');
+        Route::post('admin/skills/update-skills/{id}', 'SkillController@update');
+        Route::get('admin/skills/search', 'SkillController@index');
+        Route::post('admin/skills/delete-skills', 'SkillController@destroy');
+        Route::post('admin/delete-checked-skills', 'SkillController@deleteSelected');
+        // Department Routes
+        Route::get('admin/departments', 'DepartmentController@index')->name('departments');
+        Route::get('admin/departments/edit-dpts/{id}', 'DepartmentController@edit')->name('editDepartment');
+        Route::post('admin/store-department', 'DepartmentController@store');
+        Route::get('admin/departments/search', 'DepartmentController@index');
+        Route::post('admin/departments/delete-dpts', 'DepartmentController@destroy');
+        Route::post('admin/departments/update-dpts/{id}', 'DepartmentController@update');
+        Route::post('admin/delete-checked-dpts', 'DepartmentController@deleteSelected');
+        // Language Routes
+        Route::get('admin/languages', 'LanguageController@index')->name('languages');
+        Route::get('admin/languages/edit-langs/{id}', 'LanguageController@edit')->name('editLanguages');
+        Route::post('admin/store-language', 'LanguageController@store');
+        Route::get('admin/languages/search', 'LanguageController@index');
+        Route::post('admin/languages/delete-langs', 'LanguageController@destroy');
+        Route::post('admin/languages/update-langs/{id}', 'LanguageController@update');
+        Route::post('admin/delete-checked-langs', 'LanguageController@deleteSelected');
+        // Category Routes
+        Route::get('admin/categories', 'CategoryController@index')->name('categories');
+        Route::get('admin/categories/edit-cats/{id}', 'CategoryController@edit')->name('editCategories');
+        Route::post('admin/store-category', 'CategoryController@store');
+        Route::get('admin/categories/search', 'CategoryController@index');
+        Route::post('admin/categories/delete-cats', 'CategoryController@destroy');
+        Route::post('admin/categories/update-cats/{id}', 'CategoryController@update');
+        Route::post('admin/categories/upload-temp-image', 'CategoryController@uploadTempImage');
+        Route::post('admin/delete-checked-cats', 'CategoryController@deleteSelected');
+        // Badges Routes
+        Route::get('admin/badges', 'BadgeController@index')->name('badges');
+        Route::get('admin/badges/edit-badges/{id}', 'BadgeController@edit')->name('editbadges');
+        Route::post('admin/store-badge', 'BadgeController@store');
+        Route::get('admin/badges/search', 'BadgeController@index');
+        Route::post('admin/badges/delete-badges', 'BadgeController@destroy');
+        Route::post('admin/badges/update-badges/{id}', 'BadgeController@update');
+        Route::post('admin/badges/upload-temp-image', 'BadgeController@uploadTempImage');
+        Route::post('admin/delete-checked-badges', 'BadgeController@deleteSelected');
+        // Location Routes
+        Route::get('admin/locations', 'LocationController@index')->name('locations');
+        Route::get('admin/locations/edit-locations/{id}', 'LocationController@edit')->name('editLocations');
+        Route::post('admin/store-location', 'LocationController@store');
+        Route::post('admin/locations/delete-locations', 'LocationController@destroy');
+        Route::post('/admin/locations/update-location/{id}', 'LocationController@update');
+        Route::post('admin/get-location-flag', 'LocationController@getFlag');
+        Route::post('admin/locations/upload-temp-image', 'LocationController@uploadTempImage');
+        Route::post('admin/delete-checked-locs', 'LocationController@deleteSelected');
+        // Delivery Time Routes
+        Route::get('admin/delivery-time', 'DeliveryTimeController@index')->name('deliveryTime');
+        Route::get('admin/delivery-time/edit-delivery-time/{id}', 'DeliveryTimeController@edit')->name('editDeliveryTime');
+        Route::post('admin/store-delivery-time', 'DeliveryTimeController@store');
+        Route::post('admin/delivery-time/delete-delivery-time', 'DeliveryTimeController@destroy');
+        Route::post('admin/delivery-time/update-delivery-time/{id}', 'DeliveryTimeController@update');
+        Route::post('admin/delete-checked-delivery-time', 'DeliveryTimeController@deleteSelected');
+        // Response Time Routes
+        Route::get('admin/response-time', 'ResponseTimeController@index')->name('ResponseTime');
+        Route::get('admin/response-time/edit-response-time/{id}', 'ResponseTimeController@edit')->name('editResponseTime');
+        Route::post('admin/store-response-time', 'ResponseTimeController@store');
+        Route::post('admin/response-time/delete-response-time', 'ResponseTimeController@destroy');
+        Route::post('admin/response-time/update-response-time/{id}', 'ResponseTimeController@update');
+        Route::post('admin/delete-checked-response-time', 'ResponseTimeController@deleteSelected');
 
+        Route::get('editor/profile', 'UserController@adminProfileSettings')->name('adminProfile');
+        Route::post('editor/store-profile-settings', 'UserController@storeProfileSettings');
+        Route::post('editor/upload-temp-image', 'UserController@uploadTempImage');
+   
+    }
+);
 Route::group(
     ['middleware' => ['role:employer|admin']],
     function () {
@@ -399,8 +480,8 @@ Route::group(
         Route::get('employer/payout-settings', 'EmployerController@payoutSettings')->name('employerPayoutsSettings');
         Route::get('employer/payouts', 'EmployerController@getPayouts')->name('getEmployerPayouts');
 
-         Route::get('employer/bill/{slug}/{status}/workdiary/{id}', 'WorkDiaryController@showEmployerWorkDiary');
-         Route::get('employer/bill/workdiary/{id}/{start_date}/{end_date}', 'WorkDiaryController@EmployerWorkDiaryPayNow');
+        Route::get('employer/bill/{slug}/{status}/workdiary/{id}', 'WorkDiaryController@showEmployerWorkDiary');
+        Route::get('employer/bill/workdiary/{id}/{start_date}/{end_date}', 'WorkDiaryController@EmployerWorkDiaryPayNow');
     }
 );
 // Freelancer Routes
@@ -434,6 +515,7 @@ Route::group(
         Route::post('proposal/update-proposal', 'ProposalController@update');
         Route::get('freelancer/dashboard', 'FreelancerController@freelancerDashboard')->name('freelancerDashboard');
         Route::get('freelancer/profile', 'FreelancerController@index')->name('personalDetail');
+        
         Route::post('freelancer/upload-temp-image', 'FreelancerController@uploadTempImage');
         Route::get('freelancer/dashboard/post-service', 'ServiceController@create')->name('freelancerPostService');
         Route::get('freelancer/dashboard/post-course', 'CourseController@create')->name('freelancerPostCourse');
@@ -464,7 +546,7 @@ Route::group(
 );
 // Employer|Freelancer Routes
 Route::group(
-    ['middleware' => ['role:employer|freelancer|admin']],
+    ['middleware' => ['role:employer|freelancer|admin|editor']],
     function () {
         Route::post('proposal/upload-temp-image', 'ProposalController@uploadTempImage');
         Route::get('job/proposal/{job_slug}', 'ProposalController@createProposal')->name('createProposal');

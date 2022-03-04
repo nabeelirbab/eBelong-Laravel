@@ -11,7 +11,7 @@
 				<div class="container">
 					<div class="wt-dashboardbox">
 						<div class="wt-dashboardboxtitle wt-titlewithsearch">
-							<h2>Profile Update(Freelancer)</h2> 
+							<h2>Profile Update{{ Helper::getAuthRoleName() }}</h2> 
 							
 						</div>
 						<div class="wt-dashboardboxcontent wt-categoriescontentholder">
