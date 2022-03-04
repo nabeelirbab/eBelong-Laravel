@@ -52,10 +52,10 @@ class InvitationMailable extends Mailable
         $profile_link = $link;
         $signature = EmailHelper::getSignature();
         if($this->user_type == 4){
-        $app_content = $this->template->content;
+        $app_content = $this->template['content'];
         }
         else{
-            $app_content = $this->template['content'];
+            $app_content = $this->template->content;
         }
         $email_content_default =    "Hi %name%! Thanks for registering at eBelong. You can now login to manage your account using the following credentials:
 Password: %password%
