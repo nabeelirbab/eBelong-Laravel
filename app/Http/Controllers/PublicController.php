@@ -689,10 +689,10 @@ class PublicController extends Controller
         //         abort(404);
         //     }
         // }
-        $search_skills = !empty($_GET['skill']) ? $_GET['skill'] : array();
+        $search_skills = !empty($_GET['skills']) ? $_GET['skills'] : array();
         $search_categories = !empty($_GET['category']) ? $_GET['category'] : array();
         $search_locations = !empty($_GET['locations']) ? $_GET['locations'] : array();
-        $search_skill = !empty($_GET['skills']) ? $_GET['skills'] : array();
+        $search_skill = !empty($_GET['skill']) ? $_GET['skill'] : array();
         $search_project_lengths = !empty($_GET['project_lengths']) ? $_GET['project_lengths'] : array();
         $search_languages = !empty($_GET['languages']) ? $_GET['languages'] : array();
         $search_employees = !empty($_GET['employees']) ? $_GET['employees'] : array();
@@ -712,6 +712,7 @@ class PublicController extends Controller
         if (!empty($_GET['type'])) {
             if ($type == 'employer' || $type == 'freelancer') {
                 $users_total_records = User::count();
+                // dd($users_total_records);
                 $search =  User::getSearchResult(
                     $type,
                     $keyword,
@@ -784,6 +785,7 @@ class PublicController extends Controller
                     $f_list_meta_desc = !empty($inner_page) && !empty($inner_page[0]['f_list_meta_desc']) ? $inner_page[0]['f_list_meta_desc'] : trans('lang.freelancer_meta_desc');
                     $show_f_banner = !empty($inner_page) && !empty($inner_page[0]['show_f_banner']) ? $inner_page[0]['show_f_banner'] : 'true';
                     $f_inner_banner = !empty($inner_page) && !empty($inner_page[0]['f_inner_banner']) ? $inner_page[0]['f_inner_banner'] : null;
+                    
                     if (file_exists(resource_path('views/extend/front-end/freelancers/index.blade.php'))) {
                         return view(
                             'extend.front-end.freelancers.index',

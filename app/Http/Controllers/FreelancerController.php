@@ -305,7 +305,30 @@ class FreelancerController extends Controller
             return $json;
         }
     }
-
+    public function getAdminFreelancerSkills(Request $request)
+    {
+        $json = array();
+        if (!empty($request['id'])) {
+            // $course = $this->cource::where('slug', $request['slug'])->select('id')->first();
+            
+                // $agency = $this->cource::find($request['id']);
+                $user= User::find($request['id']);
+                if (!empty($user)) {
+                $skills = $user->skills->toArray();
+                if (!empty($skills)) {
+                    $json['type'] = 'success';
+                    $json['skills'] = $skills;
+                    return $json;
+                } else {
+                    $json['error'] = 'error';
+                    return $json;
+                }
+            } else {
+                $json['error'] = 'error';
+                return $json;
+            }
+      }
+    }
     /**
      * Get top freelancer
      *
@@ -1176,6 +1199,26 @@ else {
                             'cources',
                             'symbol',
                             'status_list'
+                        )
+                    );
+                }
+            }
+            else if (!empty($status) && $status === 'waiting') {
+                $courses = Helper::getFreelancerCourses('waiting', $freelancer_id);
+                if (file_exists(resource_path('views/extend/back-end/freelancer/courses/bought.blade.php'))) {
+                    return view(
+                        'extend.back-end.freelancer.courses.pending',
+                        compact(
+                            'courses',
+                            'symbol'
+                        )
+                    );
+                } else {
+                    return view(
+                        'back-end.freelancer.courses.pending',
+                        compact(
+                            'courses',
+                            'symbol'
                         )
                     );
                 }

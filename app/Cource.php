@@ -371,7 +371,7 @@ class Cource extends Model
         $services = Cource::select('*')->where('status','published')->orderBy('id','DESC');
         $service_id = array();
         $filters = array();
-        $filters['type'] = 'service';
+        $filters['type'] = 'instructors';
         if (!empty($keyword)) {
             $filters['s'] = $keyword;
             $services->where('title', 'like', '%' . $keyword . '%')->where('status','published')->get();

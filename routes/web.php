@@ -120,6 +120,8 @@ Route::group(
         Route::get('user', ['uses'=>'UserController@records', 'as'=>'user.records']);
         // Article Category Routes
         Route::get('admin/article/categories', 'ArticleCategoryController@index')->name('articleCategories');
+        Route::post('admin/get-freelancer-skills', 'SkillController@getAdminFreelancerSkills');
+        Route::post('admin/get-admin-freelancer-skills', 'FreelancerController@getAdminFreelancerSkills');
         Route::get('admin/article/categories/edit-cats/{id}', 'ArticleCategoryController@edit')->name('editArticleCategories');
         Route::post('admin/article/store-category', 'ArticleCategoryController@store');
         Route::get('admin/article/categories/search', 'ArticleCategoryController@index');
@@ -362,7 +364,7 @@ Route::group(
         Route::get('freelancer/dashboard/edit-course/{id}', 'CourseController@edit')->name('edit_course');
         Route::post('course/get-stored-course-skills', 'CourseController@getCourseSkills');
         Route::post('agency/get-stored-agency-skills', 'AgencyController@getAgencySkills');
-        Route::get('skills/get-course-skills', 'SkillController@getCourseSkills');
+        Route::post('skills/get-course-skills', 'SkillController@getCourseSkills');
         Route::post('skills/get-agency-skills', 'SkillController@getAgencySkills');
         Route::post('services/post-service', 'ServiceController@store');
         Route::post('courses/post-course', 'CourseController@store');

@@ -452,16 +452,24 @@ class User extends Authenticatable
     ) {
         $json = array();
         $user_id = array();
-        $user_by_role =  User::role($type)->select('id')->get()->pluck('id')->toArray();
+        $user_by_role =  User::role($type)->pluck('id')->toArray();
+        $picture = Profile::whereNotNull('avater')->whereIn('user_id', $user_by_role)->get();
+        $ids = null;
+        foreach ($picture as $id) {
+            $ids[] = $id->user_id;
+        }
+        $ids_ordered = implode(',', $ids);
         $users = !empty($user_by_role) ? User::whereIn('id', $user_by_role)->where('is_disabled', 'false')->where('status',1) : array();
+        // dd($users->paginate(20)->setPath('') );
         $filters = array();
-        if (!empty($users)) {
+        
+       
             $filters['type'] = $type;
             if (!empty($keyword)) {
                 $filters['s'] = $keyword;
-                $users->where(DB::raw('CONCAT(first_name," ",last_name)'),'like','%'.$keyword.'%');
-                //$users->whereIn('id', $user_by_role);
-                $users->where('is_disabled', 'false');
+                $users = !empty($user_by_role) ? User::whereIn('id', $user_by_role)->where(DB::raw('CONCAT(first_name," ",last_name)'),'like','%'.$keyword.'%')->where('is_disabled', 'false')->where('status',1) :array();
+                
+                
             }
 
             if (!empty($search_categories)) {
@@ -473,7 +481,8 @@ class User extends Authenticatable
                         $user_id[] = $freelancer->user_id;
                     }
                 }
-                $users->whereIn('id', $user_id)->get();
+                $users->whereIn('id', $user_id);
+               
             }
 
             if (!empty($search_locations)) {
@@ -481,18 +490,13 @@ class User extends Authenticatable
                 $locations = Location::select('id')->whereIn('slug', $search_locations)
                     ->get()->pluck('id')->toArray();
                 $users->whereIn('location_id', $locations);
+                
             }
 
-            $picture = Profile::whereNotNull('avater')->get();
-            $ids = null;
-            foreach ($picture as $id) {
-                $ids[] = $id->user_id;
-            }
-            $ids_ordered = implode(',', $ids);
-            $users->whereIn('id', $ids)
-                ->orderByRaw("FIELD(id, $ids_ordered)")
-                ->get();
-
+           
+            // $dp_users = !empty($user_by_role) ? User::whereIn('id', $ids)
+            // ->orderByRaw("FIELD(id, $ids_ordered)")->where('is_disabled', 'false')->where('status',1)->paginate(20)->setPath('') :array();
+            //     dd($dp_users);
 
             if (!empty($search_employees)) {
                 $filters['employees'] = $search_employees;
@@ -502,7 +506,8 @@ class User extends Authenticatable
                         $user_id[] = $employee->user_id;
                     }
                 }
-                $users->whereIn('id', $user_id)->get();
+                $users->whereIn('id', $user_id);
+                
             }
             if (!empty($search_skills)) {
                 $user_id = array();
@@ -518,6 +523,7 @@ class User extends Authenticatable
                     }
                 }
                 $users->whereIn('id', $user_id);
+                
             }
             if (!empty($search_hourly_rates)) {
                 $user_id = array();
@@ -547,7 +553,7 @@ class User extends Authenticatable
                         $user_id[] = $freelancer->user_id;
                     }
                 }
-                $users->whereIn('id', $user_id)->get();
+                $users->whereIn('id', $user_id);
             }
             if (!empty($search_english_levels)) {
                 $user_id = array();
@@ -558,7 +564,7 @@ class User extends Authenticatable
                         $user_id[] = $freelancer->user_id;
                     }
                 }
-                $users->whereIn('id', $user_id)->get();
+                $users->whereIn('id', $user_id);
             }
             /*  if (!empty($search_languages)) {
                  $user_id = array();
@@ -571,15 +577,23 @@ class User extends Authenticatable
                  }
                  $users->whereIn('id', $user_id);
              } */
-            if ($type = 'freelancer') {
-                $users = $users->orderByRaw('-badge_id DESC')->orderBy('expiry_date', 'DESC');
-            } else {
-                $users = $users->orderBy('created_at', 'DESC');
-            }
-            //DB::enableQueryLog();
-            $users = $users->paginate(20)->setPath('');
+            // if ($type = 'freelancer') {
+            //     $users = !empty($user_by_role) ? User::whereIn('id', $user_by_role)->paginate(20)->setPath('') : array();
+            // // $users = $users->orderByRaw('-badge_id DESC')->orderBy('expiry_date', 'DESC');
+         
+            // } else {
+            //     $users = !empty($user_by_role) ? User::where('created_at', 'DESC')->paginate(20)->setPath('') : array();
+            // }
+            // //DB::enableQueryLog();
+         
+           
             //dd(DB::getQueryLog());
-        }
+          $users = $users->orderByRaw('id',$ids_ordered)->orderBy('is_certified', 'DESC'); 
+        //   $users = $users->profile->orderByRaw('ISNULL(sortOrder), sortOrder ASC');
+          $users = $users->paginate(20)->setPath('');
+        //   $users = $dp_users->appends($users);
+
+     
         foreach ($filters as $key => $filter) {
             $pagination = $users->appends(
                 array(
@@ -588,6 +602,7 @@ class User extends Authenticatable
             );
         }
         $json['users'] = $users;
+      
         return $json;
     }
 
@@ -777,6 +792,12 @@ class User extends Authenticatable
         }
         if($role=="name_desc"){
             $query = User::orderBy('first_name','desc')->paginate(10)->setpath('');
+        }
+        if($role=="certified"){
+            $query =  User::select('*')->where('is_certified',1)->latest()->paginate(10)->setPath('');
+        }
+        if($role=="featured"){
+            $query =  User::select('*')->where('is_featured',1)->latest()->paginate(10)->setPath('');
         }
         return $query;
 

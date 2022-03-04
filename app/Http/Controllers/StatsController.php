@@ -125,14 +125,44 @@ class StatsController extends Controller
 
     public function index() 
     {
-    	$users = User::where(DB::raw("(DATE_FORMAT(created_at,'%Y'))"),date('Y'))
-    				->get();
-        $chart = Charts::database($users, 'bar', 'highcharts')
+        
+    // 	$users = User::whereBetween('created_at', 
+    //     [Carbon::now()->subMonth(6), Carbon::now()]
+    // )->get();
+    // dd(Carbon::now()->subMonth(6), Carbon::now()));
+    $data = [];
+foreach (range(0, 6) as $i) {
+    $date = now()->subMonths($i);
+    $dates[$date->format('m')] = User::where('created_at', '>=', $date->startOfMonth()->startOfDay()->toDateString())
+        ->where('created_at', '<=', $date->endOfMonth()->endOfDay()->toDateString())
+        ->count();
+}
+$data = array_values($dates);
+foreach ($dates as $key => $value) {
+    $_key = date('F', mktime(0, 0, 0, $key, 10));
+    $curr_month = date('m');
+    $curr_year = date('Y');
+    $previous_year = $curr_year-1;
+    if($key > $curr_month){
+        
+        $_key = $_key." ,".$previous_year;
+    }
+    else{
+       
+        $_key = $_key." ,".$curr_year;
+    }
+    unset($dates[$key]);
+    $dates[ucfirst($_key)] = $value;
+}
+// dd(array_keys($dates));
+
+        $chart = Charts::database($data,'bar', 'highcharts')
 			      ->title("Users Joining Stats")
 			      ->elementLabel("Users Joined - Monthly")
 			      ->dimensions(700, 400)
 			      ->responsive(true)
-			      ->groupByMonth(date('Y'), true);
+			      ->labels(array_keys($dates))
+                  ->values($data);
 
         $pie  =	 Charts::create('pie', 'highcharts')
                   ->title('Freelancers & Employee %')
