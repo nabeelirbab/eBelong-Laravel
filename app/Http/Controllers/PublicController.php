@@ -712,6 +712,7 @@ class PublicController extends Controller
         if (!empty($_GET['type'])) {
             if ($type == 'employer' || $type == 'freelancer') {
                 $users_total_records = User::count();
+                // dd($users_total_records);
                 $search =  User::getSearchResult(
                     $type,
                     $keyword,
@@ -784,6 +785,7 @@ class PublicController extends Controller
                     $f_list_meta_desc = !empty($inner_page) && !empty($inner_page[0]['f_list_meta_desc']) ? $inner_page[0]['f_list_meta_desc'] : trans('lang.freelancer_meta_desc');
                     $show_f_banner = !empty($inner_page) && !empty($inner_page[0]['show_f_banner']) ? $inner_page[0]['show_f_banner'] : 'true';
                     $f_inner_banner = !empty($inner_page) && !empty($inner_page[0]['f_inner_banner']) ? $inner_page[0]['f_inner_banner'] : null;
+                    
                     if (file_exists(resource_path('views/extend/front-end/freelancers/index.blade.php'))) {
                         return view(
                             'extend.front-end.freelancers.index',

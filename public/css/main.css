@@ -8375,9 +8375,9 @@ body.lang-ja .wt-loginfooterinfo a + a:before {
 	margin: 23px 0 0;
 }
 .wt-service-details .wt-description p{
-	font-size: 16px;
+	font-size: 16px !important;
 	margin: 0 0 26px;
-	line-height: 26px;
+	line-height: 26px !important;
 }
 .wt-service-details .wt-description p:last-child{margin: 0;}
 .wt-service-details .wt-description .wt-title h3{
@@ -9378,7 +9378,7 @@ body.lang-ja .wt-loginfooterinfo a + a:before {
 	padding: 0px 1px;
 }
 .wt-freelancers-content .dc-title a i{color: #9013F3;}
-.wt-freelancers-content .dc-title{float: left;width: 100%; height: 100px;}
+.wt-freelancers-content .dc-title{float: left;width: 100%; height: unset;}
 .wt-freelancers-content .dc-title h3{
 	font-size:16px;
 	margin: 0 0 6px;

@@ -99,11 +99,20 @@
                 return this.$toast.error(' ', error, this.notificationSystem.error);
             },
             getSkills(){
-                let self = this;
-                axios.get(APP_URL + '/skills/get-course-skills')
+               let self = this;
+                var segment_str = window.location.pathname;
+                var segment_array = segment_str.split( '/' );
+                var slug = segment_array[segment_array.length - 1];
+                console.log(slug)
+                axios.post(APP_URL + '/skills/get-course-skills',{
+                    slug: slug
+                })
                 .then(function (response) {
                     self.stored_skills = response.data.skills;
-                    console.log("jjj self.stored_skills", self.stored_skills)
+                    if(self.stored_skills.length == 0) {
+                        self.all_skills_selected = response.data.message;
+                        self.is_empty = true;
+                    }
                 });
             },
             getUserSkills(){
