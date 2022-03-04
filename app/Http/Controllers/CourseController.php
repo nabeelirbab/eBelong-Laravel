@@ -1208,10 +1208,11 @@ class CourseController extends Controller
                             );
                             if ($refund['status'] == 'succeeded') {
                                 $courseid = DB::table('cource_user')->where('id',$request['id'])->pluck('cource_id')->first();
+                                $invoice = DB::table('cource_user')->where('id',$request['id'])->pluck('invoice_id')->first();
                                 $userid = DB::table('cource_user')->where('id',$request['id'])->pluck('user_id')->first();
                                 $freelancer = User::find($userid);
                                 DB::table('cource_user')->where('id',$request['id'])->delete();
-                                DB::table('orders')->where('product_id',$courseid)->where('user_id',$userid)->delete();
+                                DB::table('orders')->where('product_id',$request['id'])->where('invoice_id',$invoice)->delete();
                                 $course = Cource::find($courseid);
                                 $user = User::find(intval(Auth::user()->id));
                                 // send message to student

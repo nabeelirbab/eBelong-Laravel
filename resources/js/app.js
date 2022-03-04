@@ -1785,6 +1785,33 @@ if (document.getElementById("user_profile")) {
                         }
                     });
             },
+            submitEditorProfile: function () {
+                var self = this;
+                var profile_data = document.getElementById('admin_data');
+                let form_data = new FormData(profile_data);
+                axios.post(APP_URL + '/editor/store-profile-settings', form_data)
+                    .then(function (response) {
+                        if (response.data.type == 'success') {
+                            self.showInfo(response.data.process);
+                            setTimeout(function () {
+                                window.location.replace(APP_URL + '/editor/profile');
+                            }, 4000);
+                        } else if (response.data.type == 'error') {
+                            self.showError(response.data.message);
+                        }
+                    })
+                    .catch(function (error) {
+                        if (error.response.data.errors.first_name) {
+                            self.showError(error.response.data.errors.first_name[0]);
+                        }
+                        if (error.response.data.errors.last_name) {
+                            self.showError(error.response.data.errors.last_name[0]);
+                        }
+                        if (error.response.data.errors.email) {
+                            self.showError(error.response.data.errors.email[0]);
+                        }
+                    });
+            },
             submitAdminProfile: function () {
                 var self = this;
                 var profile_data = document.getElementById('admin_data');

@@ -76,70 +76,144 @@ class FreelancerController extends Controller
      */
     public function index()
     {
-        $locations = Location::pluck('title', 'id');
-        $skills = Skill::pluck('title', 'id');
-        $profile = $this->freelancer::where('user_id', Auth::user()->id)
-            ->get()->first();
-        $gender = !empty($profile->gender) ? $profile->gender : '';
-        $hourly_rate = !empty($profile->hourly_rate) ? $profile->hourly_rate : '';
-        $tagline = !empty($profile->tagline) ? $profile->tagline : '';
-        $description = !empty($profile->description) ? $profile->description : '';
-        $address = !empty($profile->address) ? $profile->address : '';
-        $longitude = !empty($profile->longitude) ? $profile->longitude : '';
-        $latitude = !empty($profile->latitude) ? $profile->latitude : '';
-        $banner = !empty($profile->banner) ? $profile->banner : '';
-        $avater = !empty($profile->avater) ? $profile->avater : '';
-        $role_id =  Helper::getRoleByUserID(Auth::user()->id);
-        $packages = DB::table('items')->where('subscriber', Auth::user()->id)->count();
-        $package_options = Package::select('options')->where('role_id', $role_id)->first();
-        $options = !empty($package_options) ? unserialize($package_options['options']) : array();
-        $videos = !empty($profile->videos) ? Helper::getUnserializeData($profile->videos) : '';
-        $categories = Category::all();
-        $selectedcategories = !empty($profile->category_id) ? $profile->category_id : '';
-        if (file_exists(resource_path('views/extend/back-end/freelancer/profile-settings/personal-detail/index.blade.php'))) {
-            return view(
-                'extend.back-end.freelancer.profile-settings.personal-detail.index',
-                compact(
-                    'videos',
-                    'locations',
-                    'skills',
-                    'profile',
-                    'gender',
-                    'hourly_rate',
-                    'tagline',
-                    'description',
-                    'banner',
-                    'address',
-                    'longitude',
-                    'latitude',
-                    'avater',
-                    'options',
-                    'categories',
-                    'selectedcategories'
-                )
-            );
-        } else {
-            return view(
-                'back-end.freelancer.profile-settings.personal-detail.index',
-                compact(
-                    'videos',
-                    'locations',
-                    'skills',
-                    'profile',
-                    'gender',
-                    'hourly_rate',
-                    'tagline',
-                    'description',
-                    'banner',
-                    'address',
-                    'longitude',
-                    'latitude',
-                    'avater',
-                    'options',
-                    'categories',
-                    'selectedcategories'
-                )
-            );
+        if(Helper::getAuthRoleName()=='Freelancer')
+        {
+            $locations = Location::pluck('title', 'id');
+            $skills = Skill::pluck('title', 'id');
+            $profile = $this->freelancer::where('user_id', Auth::user()->id)
+                ->get()->first();
+            $gender = !empty($profile->gender) ? $profile->gender : '';
+            $hourly_rate = !empty($profile->hourly_rate) ? $profile->hourly_rate : '';
+            $tagline = !empty($profile->tagline) ? $profile->tagline : '';
+            $description = !empty($profile->description) ? $profile->description : '';
+            $address = !empty($profile->address) ? $profile->address : '';
+            $longitude = !empty($profile->longitude) ? $profile->longitude : '';
+            $latitude = !empty($profile->latitude) ? $profile->latitude : '';
+            $banner = !empty($profile->banner) ? $profile->banner : '';
+            $avater = !empty($profile->avater) ? $profile->avater : '';
+            $role_id =  Helper::getRoleByUserID(Auth::user()->id);
+            $packages = DB::table('items')->where('subscriber', Auth::user()->id)->count();
+            $package_options = Package::select('options')->where('role_id', $role_id)->first();
+            $options = !empty($package_options) ? unserialize($package_options['options']) : array();
+            $videos = !empty($profile->videos) ? Helper::getUnserializeData($profile->videos) : '';
+            $categories = Category::all();
+            $selectedcategories = !empty($profile->category_id) ? $profile->category_id : '';
+            if (file_exists(resource_path('views/extend/back-end/freelancer/profile-settings/personal-detail/index.blade.php'))) {
+                return view(
+                    'extend.back-end.freelancer.profile-settings.personal-detail.index',
+                    compact(
+                        'videos',
+                        'locations',
+                        'skills',
+                        'profile',
+                        'gender',
+                        'hourly_rate',
+                        'tagline',
+                        'description',
+                        'banner',
+                        'address',
+                        'longitude',
+                        'latitude',
+                        'avater',
+                        'options',
+                        'categories',
+                        'selectedcategories'
+                    )
+                );
+            } else {
+                return view(
+                    'back-end.freelancer.profile-settings.personal-detail.index',
+                    compact(
+                        'videos',
+                        'locations',
+                        'skills',
+                        'profile',
+                        'gender',
+                        'hourly_rate',
+                        'tagline',
+                        'description',
+                        'banner',
+                        'address',
+                        'longitude',
+                        'latitude',
+                        'avater',
+                        'options',
+                        'categories',
+                        'selectedcategories'
+                    )
+                );
+            }
+
+        }
+        elseif(Helper::getAuthRoleName()=="Editor"){
+            $locations = Location::pluck('title', 'id');
+            $skills = Skill::pluck('title', 'id');
+            $profile = $this->freelancer::where('user_id', Auth::user()->id)
+                ->get()->first();
+            $gender = !empty($profile->gender) ? $profile->gender : '';
+            $hourly_rate = !empty($profile->hourly_rate) ? $profile->hourly_rate : '';
+            $tagline = !empty($profile->tagline) ? $profile->tagline : '';
+            $description = !empty($profile->description) ? $profile->description : '';
+            $address = !empty($profile->address) ? $profile->address : '';
+            $longitude = !empty($profile->longitude) ? $profile->longitude : '';
+            $latitude = !empty($profile->latitude) ? $profile->latitude : '';
+            $banner = !empty($profile->banner) ? $profile->banner : '';
+            $avater = !empty($profile->avater) ? $profile->avater : '';
+            $role_id =  Helper::getRoleByUserID(Auth::user()->id);
+            $packages = DB::table('items')->where('subscriber', Auth::user()->id)->count();
+            $package_options = Package::select('options')->where('role_id', $role_id)->first();
+            $options = !empty($package_options) ? unserialize($package_options['options']) : array();
+            $videos = !empty($profile->videos) ? Helper::getUnserializeData($profile->videos) : '';
+            $categories = Category::all();
+            $selectedcategories = !empty($profile->category_id) ? $profile->category_id : '';
+            if (file_exists(resource_path('views/extend/back-end/freelancer/profile-settings/personal-detail/index.blade.php'))) {
+                return view(
+                    'extend.back-end.editor.profile-settings.personal-detail.index',
+                    compact(
+                        'videos',
+                        'locations',
+                        'skills',
+                        'profile',
+                        'gender',
+                        'hourly_rate',
+                        'tagline',
+                        'description',
+                        'banner',
+                        'address',
+                        'longitude',
+                        'latitude',
+                        'avater',
+                        'options',
+                        'categories',
+                        'selectedcategories'
+                    )
+                );
+            } else {
+                return view(
+                    'back-end.editor.profile-settings.personal-detail.index',
+                    compact(
+                        'videos',
+                        'locations',
+                        'skills',
+                        'profile',
+                        'gender',
+                        'hourly_rate',
+                        'tagline',
+                        'description',
+                        'banner',
+                        'address',
+                        'longitude',
+                        'latitude',
+                        'avater',
+                        'options',
+                        'categories',
+                        'selectedcategories'
+                    )
+                );
+            }
+        }
+        else{
+            return abort(404);
         }
     }
 

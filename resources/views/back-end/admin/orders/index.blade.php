@@ -18,8 +18,10 @@
 								<thead>
 									<tr>
 										<th>{{ trans('lang.order') }}</th>
-										<th>{{ trans('lang.user') }}</th>
+										<th>Order Type</th>
+										<th>Seller</th>
 										<th>{{ trans('lang.trans_detail') }}</th>
+										<th>Order Placed on </th>
 										<th>{{ trans('lang.action') }}</th>
 									</tr>
 								</thead>
@@ -41,15 +43,15 @@
 												$service = !empty($service_order->service_id) ? App\Service::find($service_order->service_id) : '';
 												$title = !empty($service) ? $service->title : '';
 												$amount = !empty($service) ? $service->price : '';
-												$attachment = !empty($service) ? Helper::getUnserializeData($service->attachments)[0] : '';
+												// $attachment = !empty($service) ? Helper::getUnserializeData($service->attachments)[0] : '';
 											} 
 											elseif ($order->type == 'package') {
 												$package = App\Package::find($order->product_id);
 												$title = $package->title;
 												$amount = $package->cost;
 											}
-											elseif ($order->type == 'cource') {
-												$course_order = !empty($order->cource_product_id) ? DB::table('cource_user')->select('cource_id')->where('id', $order->cource_product_id)->first() : '';
+											elseif ($order->type == 'course'|| $order->type ='cource') {
+												$course_order = !empty($order->product_id) ? DB::table('cource_user')->select('cource_id')->where('id', $order->product_id)->first() : '';
 												$course = !empty($course_order->cource_id) ? App\Cource::find($course_order->cource_id) : '';
 												$title = !empty($course) ? $course->title : '';
 												$amount = !empty($course) ? $course->price : '';
@@ -65,7 +67,7 @@
 														<div class="wt-service-tabel">
 															@if (!empty($attachment) && $order->type == 'service')
 																<figure class="service-feature-image"><img src="{{{asset( Helper::getImageWithSize('uploads/services/'.$service->seller[0]->id, $attachment, 'small' ))}}}" alt="{{{$service['title']}}}"></figure>
-															@elseif (!empty($attachment) && $order->type == 'course')
+															@elseif (!empty($attachment) && $order->type == 'course'||!empty($attachment) && $order->type == 'cource')
 																<figure class="service-feature-image"><img src="{{{asset( Helper::getImageWithSize('uploads/courses/'.$course->seller[0]->id, $attachment, 'small' ))}}}" alt="{{{$course['title']}}}"></figure>
 															@else
 															<figure class="service-feature-image"><img src="{{{asset('images/order-no-image.jpg')}}}" alt="no-image"></figure>
@@ -82,7 +84,7 @@
 														</div>
 													</span>
 												</td>
-												
+												<td><b>{{ $order->type }}</b></td>
 												<td>
 													<span class="bt-content">
 														<div class="wt-service-tabel">
@@ -113,7 +115,7 @@
 														@endif
 													</span>
 												</td>
-
+                                                <td><b>{{ $order->created_at->format('d-m-Y') }}</b></td>
 												<td data-th="Service Status">
 													<span class="bt-content">
 														<form class="wt-formtheme wt-formsearch">
