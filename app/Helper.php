@@ -3377,7 +3377,11 @@ class Helper extends Model
                 return trans('lang.freelancer');
             } elseif (Auth::user()->getRoleNames()->first() == 'employer') {
                 return trans('lang.employer');
-            } else {
+            } 
+            elseif (Auth::user()->getRoleNames()->first() == 'editor') {
+                return 'Editor';
+            } 
+            else {
                 return trans('lang.admin');
             }
         } else {

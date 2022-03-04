@@ -1385,4 +1385,9 @@ class PublicController extends Controller
             return $json;
         }
     }
+
+    public function Guestwishlist(){
+        return view(
+            'wishlist.index');
+    }
 }

@@ -70,6 +70,7 @@
                                 <span class="wt-checkbox">
                                     {!! Form::radio('user_type', '3' , true) !!} Freelancer
                                     {!! Form::radio('user_type', '2',  false) !!} Employer
+                                    {!! Form::radio('user_type', '4',  false) !!} Editor
                                 </span>
                             </div>
                             <!--        <div class="form-group">
