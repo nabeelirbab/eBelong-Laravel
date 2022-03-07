@@ -163,16 +163,16 @@ class InvitationController extends Controller {
                     DB::table('model_has_roles')->insert($hasRoleData);
                     if($request['user_type']== 3 ){
                     $admin_template = DB::table('email_types')->select('id')->where('email_type', 'invite_freelancer')->first();
-                    $template_data = EmailTemplate::getEmailTemplateByID($admin_template['id']);
+                    $template_data = EmailTemplate::getEmailTemplateByID($admin_template->id);
                     }
                     if($request['user_type']== 2 ){
                         $admin_template = DB::table('email_types')->select('id')->where('email_type', 'invite_employer')->first();
-                        $template_data = EmailTemplate::getEmailTemplateByID($admin_template['id']);
+                        $template_data = EmailTemplate::getEmailTemplateByID($admin_template->id);
                     }
                     if($request['user_type']== 4 ){
                         
                         $admin_template = DB::table('email_types')->select('id')->where('email_type', 'invite_editor')->first();
-                        $template_data = EmailTemplate::getEmailTemplateByID($admin_template->id);
+                        $template_data = EmailTemplate::getEmailTemplateByID($admin_template['id']);
                         
                     }
                     // dd($admin_template);
