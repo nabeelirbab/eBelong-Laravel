@@ -664,3 +664,31 @@
 	-ms-interpolation-mode: nearest-neighbor;  /* IE (non-standard property) */
 }
 
+@media only screen and (max-width: 575px)  {
+    .why_ebelong_tiles {
+        .col-xs-6 {
+            flex: 0 0 50%;
+            max-width: 50%;
+        }
+    }
+}
+@media only screen and (min-width: 992px)  {
+    .why_ebelong_tiles {
+        .col-lg-2 {
+            flex: 0 0 20%;
+            max-width: 20%;
+        }
+    }
+}
+.home-certified-logo {
+    position: absolute; 
+    top: 10px; 
+    right: 8px; 
+    max-width: 60px;
+}
+.home-instructor-logo {
+    position: absolute; 
+    top: 75px; 
+    right: 8px; 
+    max-width: 60px;
+}
