@@ -42,7 +42,7 @@
     <div class="why_ebelong_tiles">
       <div class="container">
         <div class="row">
-          <div class="col mb-3">
+          <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6 mb-3">
             <div class="card">
               <div class="card-body">
                 <div class="card-body-img">
@@ -65,7 +65,7 @@
               </div>
             </div>
           </div>
-          <div class="col mb-3">
+          <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6 mb-3">
             <div class="card">
               <div class="card-body">
                 <div class="card-body-img">
@@ -88,7 +88,7 @@
               </div>
             </div>
           </div>
-          <div class="col mb-3">
+          <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6 mb-3">
             <div class="card">
               <div class="card-body">
                 <div class="card-body-img">
@@ -111,7 +111,7 @@
               </div>
             </div>
           </div>
-          <div class="col mb-3">
+          <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6 mb-3">
             <div class="card">
               <div class="card-body">
                 <div class="card-body-img">
@@ -134,7 +134,7 @@
               </div>
             </div>
           </div>
-          <div class="col mb-3">
+          <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6 mb-3">
             <div class="card">
               <div class="card-body">
                 <div class="card-body-img">
