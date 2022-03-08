@@ -455,10 +455,25 @@ class User extends Authenticatable
         $user_by_role =  User::role($type)->pluck('id')->toArray();
         $picture = Profile::whereNotNull('avater')->whereIn('user_id', $user_by_role)->get();
         $ids = null;
+        $idss=null;
+        $idsss=null;
         foreach ($picture as $id) {
             $ids[] = $id->user_id;
         }
+        
         $ids_ordered = implode(',', $ids);
+        $users_certified_and_pics =  User::whereIn('id', $ids)->where('is_disabled', 'false')->where('status',1)->where('is_certified',1)->get();
+        foreach ($users_certified_and_pics as $id_) {
+            $idss[] = $id_->id;
+        }
+        // dd($idss);
+    //  dd($idss);
+        $users_not_certified_and_pics = !empty($user_by_role) ? User::whereIn('id', $user_by_role)->where('is_disabled', 'false')->where('status',1)->where('is_certified',0)->get() : array();
+        foreach ($users_not_certified_and_pics as $id__) {
+            $idsss[] = $id__->id;
+        }
+        // dd($idsss);
+        // dd($ids_ordered);
         $users = !empty($user_by_role) ? User::whereIn('id', $user_by_role)->where('is_disabled', 'false')->where('status',1) : array();
         // dd($users->paginate(20)->setPath('') );
         $filters = array();
@@ -522,7 +537,8 @@ class User extends Authenticatable
                         $user_id[] = $ui->user_id;
                     }
                 }
-                $users->whereIn('id', $user_id);
+                // dd($user_id);
+                $users->whereIn('id', $user_id)->get();
                 
             }
             if (!empty($search_hourly_rates)) {
@@ -588,7 +604,9 @@ class User extends Authenticatable
          
            
             //dd(DB::getQueryLog());
-          $users = $users->orderByRaw('id',$ids_ordered)->orderBy('is_certified', 'DESC'); 
+        // dd($idsss);
+        
+          $users = $users->orderBy('is_certified', 'DESC')->orderByRaw('id',$idss)->orderByRaw('id',$idsss); 
         //   $users = $users->profile->orderByRaw('ISNULL(sortOrder), sortOrder ASC');
           $users = $users->paginate(20)->setPath('');
         //   $users = $dp_users->appends($users);

@@ -254,10 +254,10 @@ $show_f_banner = 'true'
                                                     </div>
                                                     <div class="col-lg-2 col-md-12 col-sm-12">
                                                         <div>
-                                                            @if (!empty($freelancer->profile->hourly_rate))
+                                                            @if (!empty($freelancer->profile['hourly_rate']))
                                                             <span class="wt-hourlyrate">
                                                                 <span>
-                                                                    {{ (!empty($symbol['symbol'])) ? $symbol['symbol'] : '$' }}{{{ $freelancer->profile->hourly_rate }}} {{ trans('lang.per_hour') }}
+                                                                    {{ (!empty($symbol['symbol'])) ? $symbol['symbol'] : '$' }}{{{ $freelancer->profile['hourly_rate'] }}} {{ trans('lang.per_hour') }}
                                                                 </span>
                                                             </span>
                                                             @else
@@ -356,7 +356,7 @@ $show_f_banner = 'true'
                                                             @endforeach
                                                                     comment area start <li><span><i class="fas fa-th"></i>
                                                                         React Developer
-                                                                        {{ (!empty($symbol['symbol'])) ? $symbol['symbol'] : '$' }}{{{ $freelancer->profile->hourly_rate }}} {{ trans('lang.per_hour') }}</span>
+                                                                        {{ (!empty($symbol['symbol'])) ? $symbol['symbol'] : '$' }}{{{ $freelancer->profile['hourly_rate'] }}} {{ trans('lang.per_hour') }}</span>
                                                                     </li> comment area end
                                                                 @endif
                                                                 @if (!empty($freelancer->skills))
@@ -385,9 +385,9 @@ $show_f_banner = 'true'
                                                             </ul>
                                                         </div>
                                                         <div class="wt-rightarea">
-                                                        @if (!empty($freelancer->profile->hourly_rate))
+                                                        @if (!empty($freelancer->profile['hourly_rate']))
                                                                     <span class="wt-hourlyrate">
-                                                                        {{ (!empty($symbol['symbol'])) ? $symbol['symbol'] : '$' }}{{{ $freelancer->profile->hourly_rate }}} {{ trans('lang.per_hour') }}</span>
+                                                                        {{ (!empty($symbol['symbol'])) ? $symbol['symbol'] : '$' }}{{{ $freelancer->profile['hourly_rate'] }}} {{ trans('lang.per_hour') }}</span>
                                                                 @endif
                                                             <div class="rating-area">
                                                             comment area start  <span class="wt-starcontent">
@@ -570,10 +570,10 @@ $show_f_banner = 'true'
                                                     </div>
                                                     <div class="col-lg-12 col-md-12 col-sm-12">
                                                         <div>
-                                                            @if (!empty($freelancer->profile->hourly_rate))
+                                                            @if (!empty($freelancer->profile['hourly_rate']))
                                                             <span class="wt-hourlyrate">
                                                                 <span>
-                                                                    {{ (!empty($symbol['symbol'])) ? $symbol['symbol'] : '$' }}{{{ $freelancer->profile->hourly_rate }}} {{ trans('lang.per_hour') }}
+                                                                    {{ (!empty($symbol['symbol'])) ? $symbol['symbol'] : '$' }}{{{ $freelancer->profile['hourly_rate'] }}} {{ trans('lang.per_hour') }}
                                                                 </span>
                                                             </span>
                                                             @else
@@ -618,7 +618,7 @@ $show_f_banner = 'true'
                                                     @endif
                                                 @endif
                                                 <figure class="wt-userlistingimg">
-                                                    <img src="{{{ asset(Helper::getImageWithSize('uploads/users/'.$freelancer->id, $freelancer->profile->avater, 'listing')) }}}" alt="{{ trans('lang.img') }}">
+                                                    <img src="{{{ asset(Helper::getImageWithSize('uploads/users/'.$freelancer->id, $freelancer->profile['avater'], 'listing')) }}}" alt="{{ trans('lang.img') }}">
                                                 </figure>
                                                 <div class="wt-userlistingcontent">
                                                     <div class="wt-contenthead">
@@ -670,7 +670,7 @@ $show_f_banner = 'true'
                                                             
                                                                 comment start <li><span><i class="fas fa-th"></i>
                                                                     React Developer
-                                                                    {{ (!empty($symbol['symbol'])) ? $symbol['symbol'] : '$' }}{{{ $freelancer->profile->hourly_rate }}} {{ trans('lang.per_hour') }}</span>
+                                                                    {{ (!empty($symbol['symbol'])) ? $symbol['symbol'] : '$' }}{{{ $freelancer->profile['hourly_rate'] }}} {{ trans('lang.per_hour') }}</span>
                                                                 </li> comment end
                                                             @endif
                                                             @if (!empty($freelancer->skills))
@@ -711,9 +711,9 @@ $show_f_banner = 'true'
                                                 @endif
                                             </div>
                                             <div class="wt-bottom">
-                                                @if (!empty($freelancer->profile->hourly_rate))
+                                                @if (!empty($freelancer->profile['hourly_rate']))
                                                     <span class="wt-hourlyrate">
-                                                        {{ (!empty($symbol['symbol'])) ? $symbol['symbol'] : '$' }}{{{ $freelancer->profile->hourly_rate }}} {{ trans('lang.per_hour') }}
+                                                        {{ (!empty($symbol['symbol'])) ? $symbol['symbol'] : '$' }}{{{ $freelancer->profile['hourly_rate'] }}} {{ trans('lang.per_hour') }}
                                                     </span>
                                                 @endif
                                                 <div class="rating-area">
