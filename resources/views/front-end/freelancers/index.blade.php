@@ -149,7 +149,7 @@ $show_f_banner = 'true'
                                                     <div class="row samemargin">
                                                         <div class="col-lg-2 col-md-12 col-sm-12 removepaddingleft">
                                                             <figure class="wt-userlistingimg">
-                                                                <img src="{{{ asset(Helper::getImageWithSize('uploads/users/'.$freelancer->id, $freelancer->profile['avater'], 'listing')) }}}" alt="{{ trans('lang.img') }}">
+                                                                <img src="{{{ asset(Helper::getUserImageWithSize('uploads/users/'.$freelancer->id, $freelancer->profile['avater'], 'listing')) }}}" alt="{{ trans('lang.img') }}">
                                                             </figure>
                                                         </div>
                                                         <div class="col-lg-10 col-md-12 col-sm-12 removepadding">
