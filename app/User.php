@@ -538,7 +538,7 @@ class User extends Authenticatable
                     }
                 }
                 // dd($user_id);
-                dd($users->whereIn('id', $user_id)->get());
+                $users->whereIn('id', $user_id)->get();
                 
             }
             if (!empty($search_hourly_rates)) {
