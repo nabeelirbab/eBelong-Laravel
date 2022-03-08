@@ -59,14 +59,10 @@
                                         @if (!empty($user->is_agency))
                                         @php $agencylogo = DB::table('agency_user')->where('id',$user->agency_id)->first();@endphp
                                             @if (!empty($agencylogo))
-                                                    <span >
-                                                        <img style="max-width: 50px"src="{{ asset('uploads/agency_logos/' . $user->agency_id.'/'.$agencylogo->agency_logo) }}"> {{{ $agencylogo->agency_name }}}
-                                                    </span>
+                                            <span >
+                                                <img style="max-width: 50px;height: 50px;width: 50px;border-radius: 100%;"src="{{ asset('uploads/agency_logos/' . $user->agency_id.'/'.$agencylogo->agency_logo) }}"> {{{ $agencylogo->agency_name }}}
+                                            </span>
                                             @endif
-                                           
-                                                <span >
-                                                    <img style="max-width: 50px;height: 50px;width: 50px;border-radius: 100%;"src="{{ asset('uploads/agency_logos/' . $user->agency_id.'/'.$agencylogo->agency_logo) }}"> {{{ $agencylogo->agency_name }}}
-                                                </span>
                                           
                                         @elseif(!empty($is_member_agency))
                                         @php $agencylogo = DB::table('agency_user')->where('id',$is_member_agency->agency_id)->first();@endphp

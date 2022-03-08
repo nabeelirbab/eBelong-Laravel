@@ -89,6 +89,7 @@ Route::get('agency/{slug}', 'PublicController@agencyView')->name('agencyView');
 Route::get('categories', 'CategoryController@categoriesList')->name('categoriesList');
 Route::get('page/{slug}', 'PageController@show')->name('showPage');
 Route::get('wishlist', 'PublicController@GuestWishlist');
+// Route::get('get-related-freelancers/{user_id}','PublicController@getUserRelatedFreelancers');
 Route::post('store/project-offer', 'UserController@storeProjectOffers');
 if (Helper::getAccessType() == 'both' || Helper::getAccessType() == 'jobs') {
     Route::get('jobs', 'JobController@listjobs')->name('jobs');
@@ -334,6 +335,10 @@ Route::group(
 Route::group(
     ['middleware' => ['role:editor|admin']],
     function () {
+        Route::post('admin/store-freelancer-profile-settings','UserController@storeFreelancerProfileSettings');
+	
+        Route::post('admin/get-freelancer-skills', 'SkillController@getAdminFreelancerSkills');
+        Route::post('admin/get-admin-freelancer-skills', 'FreelancerController@getAdminFreelancerSkills');
         Route::get('admin/invite-people', 'InvitationController@index')->name('invitePeople');
         Route::post('admin/invite-people', 'InvitationController@sendInvitation');
         Route::get('editor/dashboard', 'StatsController@index')->name('editorDashboard');
