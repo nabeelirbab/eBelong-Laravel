@@ -496,7 +496,7 @@ class User extends Authenticatable
                         $user_id[] = $freelancer->user_id;
                     }
                 }
-                $users->whereIn('id', $user_id);
+                $users->whereIn('id', $user_id)->orderBy('is_certified', 'DESC');
                
             }
 
@@ -538,7 +538,7 @@ class User extends Authenticatable
                     }
                 }
                 // dd($user_id);
-                $users->whereIn('id', $user_id)->get();
+                $users->whereIn('id', $user_id)->orderBy('is_certified', 'DESC');
                 
             }
             if (!empty($search_hourly_rates)) {
@@ -582,33 +582,30 @@ class User extends Authenticatable
                 }
                 $users->whereIn('id', $user_id);
             }
-            /*  if (!empty($search_languages)) {
-                 $user_id = array();
-                 $filters['languages'] = $search_languages;
-                 $languages = Language::whereIn('slug', $search_languages)->get();
-                 foreach ($languages as $key => $language) {
-                     if (!empty($language->users[$key]->id)) {
-                         $user_id[] = $language->users[$key]->id;
-                     }
-                 }
-                 $users->whereIn('id', $user_id);
-             } */
-            // if ($type = 'freelancer') {
-            //     $users = !empty($user_by_role) ? User::whereIn('id', $user_by_role)->paginate(20)->setPath('') : array();
-            // // $users = $users->orderByRaw('-badge_id DESC')->orderBy('expiry_date', 'DESC');
-         
-            // } else {
-            //     $users = !empty($user_by_role) ? User::where('created_at', 'DESC')->paginate(20)->setPath('') : array();
-            // }
-            // //DB::enableQueryLog();
-         
-           
-            //dd(DB::getQueryLog());
-        // dd($idsss);
+            
+        if(
+        empty($keyword)&&
+        empty($search_locations)&&
+        empty($search_employees)&&
+        empty($search_skills)&&
+        empty($search_hourly_rates)&&
+        empty($search_freelaner_types)&&
+        empty($search_english_levels)&&
+        empty($search_languages)&&
+        empty($search_categories)){
+        $users = User::join('profiles', 'users.id', '=', 'profiles.user_id')
+            ->select('users.*')
+             ->whereIn('users.id', $user_by_role)->where('users.is_disabled', 'false')->where('users.status',1)
+             ->orderBy('users.is_certified','DESC')
+             ->orderBy('profiles.avater', 'DESC');
+        }
+        // dd($users->get());
         
-          $users = $users->orderBy('is_certified', 'DESC')->orderByRaw('id',$idss)->orderByRaw('id',$idsss); 
+        //   $users = $users->orderBy('is_certified', 'DESC')->orderByRaw('id',$idss)->orderByRaw('id',$idsss); 
+        //   dd($users->get());
         //   $users = $users->profile->orderByRaw('ISNULL(sortOrder), sortOrder ASC');
           $users = $users->paginate(20)->setPath('');
+        //   dd($users);
         //   $users = $dp_users->appends($users);
 
      
@@ -620,7 +617,6 @@ class User extends Authenticatable
             );
         }
         $json['users'] = $users;
-      
         return $json;
     }
 
