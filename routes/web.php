@@ -61,6 +61,13 @@ Route::get('/theme5', 'HomeController@theme5');
 Route::get('/auth/linkedin/redirect', 'Auth\LinkedinController@handleLinkedinRedirect');
 Route::get('/auth/linkedin/callback', 'Auth\LinkedinController@handleLinkedinCallback');
 
+//SiteMap
+Route::get('/sitemap','SiteMapController@index');
+
+//whishlist
+Route::post('get-wishlist-freelancers','PublicController@getWishlistFreelancers');
+Route::get('wishlist', 'PublicController@GuestWishlist');
+
 /*Route::get('/sendemail', 'SendMailController@index');
 Route::post('/sendemail/send', 'SendMailController@send'); */
 
@@ -88,8 +95,8 @@ Route::get('profile/{slug}', 'PublicController@showUserProfile')->name('showUser
 Route::get('agency/{slug}', 'PublicController@agencyView')->name('agencyView');
 Route::get('categories', 'CategoryController@categoriesList')->name('categoriesList');
 Route::get('page/{slug}', 'PageController@show')->name('showPage');
-Route::get('wishlist', 'PublicController@GuestWishlist');
-// Route::get('get-related-freelancers/{user_id}','PublicController@getUserRelatedFreelancers');
+
+Route::get('get-related-freelancers/{user_id}','PublicController@getUserRelatedFreelancers');
 Route::post('store/project-offer', 'UserController@storeProjectOffers');
 if (Helper::getAccessType() == 'both' || Helper::getAccessType() == 'jobs') {
     Route::get('jobs', 'JobController@listjobs')->name('jobs');
