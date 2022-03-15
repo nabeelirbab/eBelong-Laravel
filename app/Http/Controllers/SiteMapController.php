@@ -13,9 +13,9 @@ class SiteMapController extends Controller
 {
     public function index(){
         $path = public_path();
-        $file = 'sitemap.xml';
-        SitemapGenerator::create('https://ebelong.com')
+        $file = '/sitemap.xml';
+        SitemapGenerator::create(env('APP_URL'))
         ->writeToFile($path.$file);
-        return redirect("http://127.0.0.1:8000/sitemap.xml");
+        return redirect(env('APP_URL')."/sitemap.xml");
     }
 }
