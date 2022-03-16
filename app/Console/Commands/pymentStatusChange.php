@@ -96,6 +96,11 @@ class pymentStatusChange extends Command
                                                 ->where('id', $id)
                                                 ->update(['paid_progress' => 'completed']);
                                         }
+                                        elseif ($ipp->type  == 'course') {
+                                            DB::table('cource_user')
+                                                ->where('id', $id)
+                                                ->update(['paid_progress' => 'completed']);
+                                        }
                                     }
                                 }
                             }
