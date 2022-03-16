@@ -662,6 +662,45 @@ class PublicController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function getUserRelatedFreelancers($user_id)
+
+    {
+        $json = array();
+        $user = User::find($user_id);
+        if(!empty($user)){
+        $profile = Profile::where('user_id',$user_id)->first();
+        $skills = $user->skills()->get();
+        $selectedcategories = !empty($profile->category_id) ? $profile->category_id : '';
+        $cat_user_id = array();
+        $freelancers = Profile::where('category_id', $selectedcategories)->get();
+        foreach ($freelancers as $key => $freelancer) {
+            if (!empty($freelancer->user_id)) {
+                $cat_user_id[] = $freelancer->user_id;
+            }
+        }
+        foreach ($skills as $key => $skill) {
+            $skill_slugs[] = $skill->slug;
+        }
+        $user_id = array();
+        $search_skills = $skill_slugs;
+        $user_by_role =  User::role(3)->pluck('id')->toArray();
+        $skills = Skill::whereIn('slug', $search_skills)->get();
+                foreach ($skills as $key => $skill) {
+                    $userid = DB::table('skill_user')->select('user_id')->where('skill_id',$skill->id)->get();
+                    foreach($userid as $ui){
+                        $user_id[] = $ui->user_id;
+                    }
+                }
+                // dd($cat_user_id);
+        $users = User::whereIn('id', $user_by_role)->whereIn('id', $user_id)->orwhereIn('id',$cat_user_id)->where('is_disabled', 'false')->where('status',1)->get();
+        $json['users']=$users;
+        return $json;
+
+    }
+    else{
+    abort(404);
+    }
+}
     public function getSearchResult($search_type = "")
     {
 
@@ -1389,5 +1428,47 @@ class PublicController extends Controller
     public function Guestwishlist(){
         return view(
             'wishlist.index');
+    }
+    public function getWishlistFreelancers(Request $request){
+        $data = array();
+        $json = array();
+        if(!empty($request->ids)){
+          
+                $freelancer = User::whereIn('id',$request->ids)->get();
+                foreach ($freelancer as $key => $data) {
+                    $freelancer_profile = Profile::where('user_id',$data->id)->first();
+                    $data->avater = $freelancer_profile->avater;
+                    $data->hourly_rates = $freelancer_profile->hourly_rate;
+                    $instructor = DB::table('cource_user')->where('seller_id',$data->id)->where('status','posted')->first();
+                    if(!empty($data->skills[0])){
+                        foreach ($data->skills as $key => $skill) {
+                            if($key==0){
+                                $data->skill = $skill->title;
+                            }
+                        }
+                    }
+                    else{
+                        $data->skill = null;
+                    }
+                    if(!empty($instructor))
+                    {
+                        $data->instructor = 1;
+                    }
+                    else
+                    {
+                        $data->instructor = 0;
+                    }
+                 
+                }
+              
+            
+            $json['type']="success";
+            $json['data'] = $freelancer;
+            return $json;
+        }
+        else{
+            $json['type']="error";
+            return $json;
+        }
     }
 }
