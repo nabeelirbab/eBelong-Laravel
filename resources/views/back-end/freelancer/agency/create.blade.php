@@ -166,7 +166,7 @@
                                           <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="exampleModalLabel">Agency Logo</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <button type="button" id="cancel" class="close" data-dismiss="modal" aria-label="Close">
                                                   <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
@@ -242,6 +242,13 @@ console.log($modaal)
             $('#model').hide();
             cropper.destroy();
             cropper = null;
+            $("#imageupld").val(null);
+            });
+            $("body").on("click", "#cancel", function() {
+            $('#model').hide();
+            cropper.destroy();
+            cropper = null;
+            $("#imageupld").val(null);
             });
         $("body").on("click", "#crop", function() {
             canvas = cropper.getCroppedCanvas({
@@ -259,6 +266,8 @@ console.log($modaal)
                      $('#base64image').val(base64data);
                     //  document.getElementById('imagePreview').style.backgroundImage = "url("+base64data+")";
                     $('#model').hide();
+                    cropper.destroy();
+                    cropper = null;
                 }
             });
         })
