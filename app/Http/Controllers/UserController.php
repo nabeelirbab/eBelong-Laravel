@@ -13,9 +13,10 @@
  */
 
 namespace App\Http\Controllers;
-
+use Illuminate\Filesystem\Filesystem;
 use App\EmailTemplate;
 use App\Mail\InvitationToUser;
+use Intervention\Image\Facades\Image;
 use App\Helper;
 use App\Invoice;
 use App\Cource;
@@ -340,19 +341,44 @@ class UserController extends Controller
                                 
                             }
                         }
+                        $folderPath = public_path('uploads/agency_logos/'.$agencyid);
+                        $image_parts = explode(";base64,", $request->agency_logo_64);
+                        $image_type_aux = explode("image/", $image_parts[0]);
+                        $image_type = $image_type_aux[1];
+                        $image_base64 = base64_decode($image_parts[1]);
+                        $file = new Filesystem();
+   
+                        $directory = 'uploads/agency_logos/' . $agencyid;
+                        if ( $file->isDirectory(public_path($directory)) )
+                        {
+                            // return 'Directory already exists';
+                        }
+                        else
+                        {
+                            $file->makeDirectory(public_path($directory), 755, true, true);
+                            // return 'Directory has been created!';
+                        }
+                        // $file = $folderPath . uniqid() . '.png';
+                        $filename = $agencyid."_".time() . '.'. $image_type;
+                        $filepath =$folderPath.'/'.$filename;
+                        $img = Image::make($image_base64)->save(public_path('uploads/agency_logos/'.$agencyid.'/'.$filename));  
+                        // Storage::disk($folderPath)->put($filename, $image_base64);
+                        // File::put($folderPath, $image_base64);
+                        // $image_base64->move($folderPath, $filename);
+                        // file_put_contents($file, $image_base64);
 
-                            if ($files = $request->file('agency_logo')) {
-                                // Define upload path
-                                $destinationPath = public_path( '/uploads/agency_logos/' .$agencyid ); // upload path
-                                // Upload Orginal Image
-                                $profileImage = date('YmdHis') . "." . $files->getClientOriginalExtension();
-                                $files->move($destinationPath, $profileImage);
+                            // if ($files = $request->file('agency_logo')) {
+                            //     // Define upload path
+                            //     $destinationPath = public_path( '/uploads/agency_logos/' .$agencyid ); // upload path
+                            //     // Upload Orginal Image
+                            //     $profileImage = date('YmdHis') . "." . $files->getClientOriginalExtension();
+                            //     $files->move($destinationPath, $profileImage);
 
-                                $insert['image'] = "$profileImage";
-                                $agency['agency_logo'] = "$profileImage";
-                            }
+                            //     $insert['image'] = "$profileImage";
+                            //     $agency['agency_logo'] = "$profileImage";
+                            // }
 
-                            DB::table('agency_user')->where('id',$agencyid)->update(array('agency_logo'=> $agency['agency_logo']));
+                            DB::table('agency_user')->where('id',$agencyid)->update(array('agency_logo'=> $filename));
 
                             $updateUserAgencyStatus = DB::table('users')->where('id',$agency['user_id'])->update(array('is_agency'=>1,'agency_id'=>$agencyid));
 
@@ -478,17 +504,20 @@ class UserController extends Controller
                                 request()->validate([
                                     'agency_logo' => 'file|mimes:jpeg,png,jpg,gif,svg|max:2048',
                                 ]);
-                                // Define upload path
-                                $destinationPath = public_path( '/uploads/agency_logos/' .$data['agency_id'] ); // upload path
-                                // Upload Orginal Image
-                                $profileImage = date('YmdHis') . "." . $files->getClientOriginalExtension();
-                                $files->move($destinationPath, $profileImage);
-
-                                $insert['image'] = "$profileImage";
-                                $agency['agency_logo'] = "$profileImage";
-                                $updated = DB::table('agency_user')->where('id',$data['agency_id'])->update(array('agency_logo'=> $agency['agency_logo']));
+                                $folderPath = public_path('uploads/agency_logos/'.$data['agency_id']);
+                                $image_parts = explode(";base64,", $request->agency_logo_64);
+                                $image_type_aux = explode("image/", $image_parts[0]);
+                                $image_type = $image_type_aux[1];
+                                $image_base64 = base64_decode($image_parts[1]);
+                                $file = new Filesystem();
+        
+                                $directory = 'uploads/agency_logos/' . $data['agency_id'];
                                 
-                            
+                                $filename = $data['agency_id']."_".time() . '.'. $image_type;
+                                $filepath =$folderPath.'/'.$filename;
+                                $img = Image::make($image_base64)->save(public_path('uploads/agency_logos/'.$data['agency_id'].'/'.$filename));  
+                                $updated = DB::table('agency_user')->where('id',$data['agency_id'])->update(array('agency_logo'=> $filename));
+                                
                             }
                                 if($updated){
                                 Session::flash('message', 'Your new Agency has been successfully updated.');

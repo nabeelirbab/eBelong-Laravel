@@ -3286,6 +3286,7 @@ class Helper extends Model
                 } elseif (file_exists($path . '/' . $image)) {
                     return $path . '/' . $requested_file;
                 } else {
+                    
                     return '/uploads/settings/general/imgae-not-availabe.png';
                 }
             } elseif (file_exists($path . '/' . $image)) {
@@ -3295,6 +3296,34 @@ class Helper extends Model
             }
         } else {
             return '/uploads/settings/general/imgae-not-availabe.png';
+        }
+    }
+    public static function getUserImageWithSize($path, $image, $size = "", $space_encode = false)
+    {
+        $requested_file = $image;
+        if (!empty($path) && !empty($image)) {
+            if ($space_encode == true) {
+                if ($image == trim($image) && strpos($image, ' ') !== false) {
+                    $requested_file = str_replace(' ', '%20', $image);
+                }
+            }
+            if (!empty($size)) {
+                $file = $path . '/' . $size . '-' . $image;
+                if (file_exists($file)) {
+                    return $path . '/' . $size . '-' . $requested_file;
+                } elseif (file_exists($path . '/' . $image)) {
+                    return $path . '/' . $requested_file;
+                } else {
+                    
+                    return '/uploads/settings/general/user.jpg';
+                }
+            } elseif (file_exists($path . '/' . $image)) {
+                return $path . '/' . $requested_file;
+            } else {
+                return '/uploads/settings/general/user.jpg';
+            }
+        } else {
+            return '/uploads/settings/general/user.jpg';
         }
     }
 
