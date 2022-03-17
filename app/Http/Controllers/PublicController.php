@@ -1440,6 +1440,17 @@ class PublicController extends Controller
                     $data->avater = $freelancer_profile->avater;
                     $data->hourly_rates = $freelancer_profile->hourly_rate;
                     $instructor = DB::table('cource_user')->where('seller_id',$data->id)->where('status','posted')->first();
+                    $location = DB::table('locations')->where('id',$data->location_id)->first();
+                    if(!empty($location)){
+                        
+                            $data->location_flag = $location->flag;
+                            $data->location_title = $location->title;
+                        
+                    }
+                    else{
+                        $data->location_flag = null;
+                            $data->location_title = null;
+                    }
                     if(!empty($data->skills[0])){
                         foreach ($data->skills as $key => $skill) {
                             if($key==0){
