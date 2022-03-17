@@ -6,6 +6,7 @@
     <link href="{{ asset('css/dbresponsive.css') }}" rel="stylesheet">
     <link href="{{ asset('css/emojionearea.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/basictable.css') }}" rel="stylesheet"> 
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.6/cropper.css"/>
 @endpush
 @section('header')
     @if (file_exists(resource_path('views/extend/includes/header.blade.php')))

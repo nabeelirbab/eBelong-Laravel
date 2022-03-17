@@ -16,6 +16,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         Commands\pymentStatusChange::class,
+        Commands\SitemapCommand::class,
     ];
 
     /**
@@ -27,10 +28,10 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
        $schedule->command('payment:statuschange')->hourly();
-
+       $schedule->command('generate:sitemap')->daily();
        $schedule->call( 
            function () {
-                \Log::info("Updating Payouts");
+                info("Updating Payouts");
                Helper::updatePayouts();
            }
        )->everyMinute();
