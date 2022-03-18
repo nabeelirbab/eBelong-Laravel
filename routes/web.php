@@ -427,6 +427,7 @@ Route::group(
         Route::get('editor/profile', 'UserController@adminProfileSettings')->name('adminProfile');
         Route::post('editor/store-profile-settings', 'UserController@storeProfileSettings');
         Route::post('editor/upload-temp-image', 'UserController@uploadTempImage');
+        Route::post('admin/upload-temp-image', 'UserController@uploadTempImage');
    
     }
 );
