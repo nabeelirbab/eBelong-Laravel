@@ -1426,8 +1426,10 @@ class PublicController extends Controller
     }
 
     public function Guestwishlist(){
+        $skills = Skill::all();
+        $categories = Category::all();
         return view(
-            'wishlist.index');
+            'wishlist.index',compact('skills','categories'));
     }
     public function getWishlistFreelancers(Request $request){
         $data = array();
