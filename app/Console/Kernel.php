@@ -6,6 +6,12 @@ use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\Helper;
 use App\WorkDiary;
+use App\SiteManagement;
+use DB;
+use App\Payout;
+use Illuminate\Support\Facades\Schema;
+use App\User;
+use Illuminate\Database\Eloquent\Model;
 
 class Kernel extends ConsoleKernel
 {
@@ -32,9 +38,11 @@ class Kernel extends ConsoleKernel
        $schedule->call( 
            function () {
                 info("Updating Payouts");
-               Helper::updatePayouts();
-           }
-       )->everyMinute();
+                Helper::updatePayouts();
+            }
+            
+           
+       )->hourly();
        
        $schedule->call(  
             function () {
