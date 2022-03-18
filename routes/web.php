@@ -67,6 +67,8 @@ Route::get('/sitemap','SiteMapController@index');
 //whishlist
 Route::post('get-wishlist-freelancers','PublicController@getWishlistFreelancers');
 Route::get('wishlist', 'PublicController@GuestWishlist');
+Route::get('get-skills-for-wishlist', 'SkillController@getWhishlistSkills');
+Route::get('get-categories-for-whishlist', 'CategoryController@getWishlistCategories');
 
 /*Route::get('/sendemail', 'SendMailController@index');
 Route::post('/sendemail/send', 'SendMailController@send'); */

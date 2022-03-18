@@ -268,4 +268,17 @@ class CategoryController extends Controller
             return $json;
         }
     }
+    public function getWishlistCategories()
+    {
+        $json = array();
+        $categories = $this->category::all();
+        if (!empty($categories)) {
+            $json['type'] = 'success';
+            $json['categories'] = $categories;
+            return $json;
+        } else {
+            $json['type'] = 'error';
+            return $json;
+        }
+    }
 }

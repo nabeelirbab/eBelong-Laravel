@@ -486,6 +486,21 @@ class SkillController extends Controller
         }
     }
 
+    public function getWhishlistSkills()
+    {
+        $json = array();
+        $skills = Skill::all();
+        if (!empty($skills)) {
+            $json['type'] = 'success';
+            $json['skills'] = $skills;
+            return $json;
+        } else {
+            $json['type'] = 'error';
+            $json['message'] = trans('lang.something_wrong');
+            return $json;
+        }
+    }
+
     /**
      * Remove the specified resource from storage.
      *
