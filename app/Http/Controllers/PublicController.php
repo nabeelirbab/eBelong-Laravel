@@ -1426,8 +1426,10 @@ class PublicController extends Controller
     }
 
     public function Guestwishlist(){
+        $skills = Skill::all();
+        $categories = Category::all();
         return view(
-            'wishlist.index');
+            'wishlist.index',compact('skills','categories'));
     }
     public function getWishlistFreelancers(Request $request){
         $data = array();
@@ -1438,8 +1440,22 @@ class PublicController extends Controller
                 foreach ($freelancer as $key => $data) {
                     $freelancer_profile = Profile::where('user_id',$data->id)->first();
                     $data->avater = $freelancer_profile->avater;
+                    $data->avater_imagePath = asset(!empty($freelancer_profile->avater) ? '/uploads/users/' . $data->id . '/' . $freelancer_profile->avater : '/images/user.jpg');
                     $data->hourly_rates = $freelancer_profile->hourly_rate;
                     $instructor = DB::table('cource_user')->where('seller_id',$data->id)->where('status','posted')->first();
+                    $location = DB::table('locations')->where('id',$data->location_id)->first();
+                    if(!empty($location)){
+                        
+                            $data->location_flag = $location->flag;
+                            $data->location_title = $location->title;
+                            $data->location_imagePath = asset(Helper::getLocationFlag($location->flag));
+                        
+                    }
+                    else{
+                        $data->location_flag = null;
+                            $data->location_title = null;
+                            $data->location_imagePath = null;
+                    }
                     if(!empty($data->skills[0])){
                         foreach ($data->skills as $key => $skill) {
                             if($key==0){

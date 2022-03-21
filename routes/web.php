@@ -67,6 +67,8 @@ Route::get('/sitemap','SiteMapController@index');
 //whishlist
 Route::post('get-wishlist-freelancers','PublicController@getWishlistFreelancers');
 Route::get('wishlist', 'PublicController@GuestWishlist');
+Route::get('get-skills-for-wishlist', 'SkillController@getWhishlistSkills');
+Route::get('get-categories-for-whishlist', 'CategoryController@getWishlistCategories');
 
 /*Route::get('/sendemail', 'SendMailController@index');
 Route::post('/sendemail/send', 'SendMailController@send'); */
@@ -425,6 +427,7 @@ Route::group(
         Route::get('editor/profile', 'UserController@adminProfileSettings')->name('adminProfile');
         Route::post('editor/store-profile-settings', 'UserController@storeProfileSettings');
         Route::post('editor/upload-temp-image', 'UserController@uploadTempImage');
+        Route::post('admin/upload-temp-image', 'UserController@uploadTempImage');
    
     }
 );
