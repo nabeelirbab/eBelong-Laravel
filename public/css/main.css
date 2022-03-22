@@ -10293,3 +10293,177 @@ a:focus{text-decoration: none !important;}
 	image-rendering: crisp-edges;
 	-ms-interpolation-mode: nearest-neighbor;  /* IE (non-standard property) */
 }
+
+/* =================== Candidate Wishlist =================== */
+.candidate_wishlist {
+    text-align: center;
+    width: 100%;
+    margin: 30px 0px;
+}
+
+.candidate_wishlist h1{
+	font-weight: 500;
+	font-size: 30px;
+}
+
+.candidate_wishlist h5 {
+	font-weight: 500;
+}
+
+.candidate_wishlist h5 a{
+	text-decoration: underline;
+    color: #9013F3;
+}
+.candidate_wishlist h5 a:hover{
+	text-decoration: unset;
+}
+
+.candidate_wishlist_no_data {
+    margin-top: 70px;
+}
+
+.candidate_wishlist_no_data h5 {
+    font-size: 20px;
+}
+
+.candidate_wishlist_no_data a{
+	font-size: 20px;
+    text-decoration: underline;
+}
+.candidate_wishlist_no_data a:hover{
+    text-decoration: unset
+}
+
+.candidate_wishlist_data .find-talent-freelancers .wt-userlistingimg{
+	float: right;
+}
+
+.candidate_wishlist_data .find-talent-freelancers .find-talent-info {
+	text-align: left;
+}
+
+.candidate_wishlist_data .find-talent-freelancers .instructor-badge img {
+	width: 65px;
+	height: 65px;
+}
+
+.candidate_wishlist_data .find-talent-freelancers .verticlealign {
+	flex-direction: row;
+    align-items: center;
+}
+.candidate_wishlist_data .find-talent-freelancers .wt-hourlyrate {
+	margin-top: unset;
+	margin: auto;
+	width: 70%;
+}
+
+.candidate_wishlist_data .find-talent-freelancers .esthours {
+	width: 70%;
+    padding: 12px 6px;
+    margin: auto;
+    border: 2px solid #3A0B5F;
+	font-size: 14px;
+    color: #3A0B5F;
+}
+
+.candidate_wishlist_data .find-talent-freelancers .equalsign {
+	font-size: 20px;
+	color: #3A0B5F;
+	font-weight: 600;
+}
+
+.candidate_wishlist_data .find-talent-freelancers .individualresult {
+	font-size: 20px;
+	font-weight: 600;
+	color: #3A0B5F;
+}
+
+.candidate_wishlist_data .find-talent{
+	margin: 20px 0px;
+}
+
+.candidate_wishlist_data .find-talent-freelancers-total-est-cost {
+	margin: 20px 0px;
+	border: 2px solid #3A0B5F;
+    padding: 20px 0px;
+}
+
+.candidate_wishlist_data .find-talent-freelancers-total-est-cost .est-cost-heading {
+    font-size: 18px;
+    font-weight: 600;
+    color: #3A0B5F;
+}
+.candidate_wishlist_data .find-talent-freelancers-total-est-cost .est-cost-totle {
+    font-size: 20px;
+    font-weight: 600;
+    color: #3A0B5F;
+	text-align: center;
+}
+.candidate_count img{
+	width: 35px;
+    margin-left: 10px;
+}
+
+@media only screen and (max-width: 768px){
+	.candidate_count img{
+		width: 25px;
+		margin-left: 0px;
+		margin-right: 10px;
+	}
+	.wt-loginarea .wt-loginbtn {
+		margin-right: 10px;
+	}
+}
+#candidate_count {
+	position: relative;
+}
+#candidate_count .count {
+    align-self: center;
+    top: 12px;
+    right: -12px;
+    background: white;
+    width: 18px;
+    text-align: center;
+    border-radius: 100%;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    position: absolute;
+}
+
+#candidate_count .count h5 {
+	line-height: 1.3;
+}
+
+.countinue-btn .e-button {
+	color: #fff;
+    padding: 0 50px;
+    background: #3A0B5F;
+    position: relative;
+    text-align: center;
+    border-radius: 5px;
+    display: inline-block;
+    vertical-align: middle;
+    text-transform: uppercase;
+    font: 700 13px/50px 'Poppins', Arial, Helvetica, sans-serif;
+}
+
+.countinue-btn {
+	margin: 50px 0px;
+}
+
+.find-talent .find-talent-candidate .verticlealign:hover .removeCandidate {
+    position: absolute;
+	display: block;
+	z-index: 20;
+}
+.find-talent .find-talent-candidate .verticlealign .removeCandidate {
+    position: absolute;
+	display: none;
+}
+
+.find-talent .find-talent-candidate .verticlealign .removeCandidate .e-button {
+    padding: 0.3rem 1rem;
+}
+

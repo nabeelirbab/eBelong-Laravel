@@ -1035,6 +1035,7 @@ return [
     'btn_login_now' => 'Login Now',
     'btn_save_update' => 'Save & Update',
     'btn_send_offer' => 'Send Offer',
+    'btn_add_candidate' => 'Add Candidate',
     'btn_load_more' => 'Load More',
     'btn_submit' => 'Submit',
     'btn_gotit' => 'Got It',

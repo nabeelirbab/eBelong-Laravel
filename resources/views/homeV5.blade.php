@@ -324,7 +324,11 @@
 												</div>
 											</div>
 											<a href="{{{ route('register') }}}" class="wt-btn join-now-nav">{{{ trans('lang.join_now') }}}</a>
-										</div>
+											<!-- <div id='candidate_count'>
+												<candidate_count></candidate_count>
+											</div> -->
+											<div data-component="CandidateCountt" data-vue='{}'  id="candidate_count"></div>
+										</div> 
 										@endguest
 										@auth
 											@php

@@ -100,7 +100,8 @@ Vue.component('second-slider', require('./components/pages/show/sections/sliders
 Vue.component('third-slider', require('./components/pages/show/sections/sliders/style3.vue').default);
 Vue.component('page-media', require('./components/PageAttachmentComponent.vue').default);
 Vue.component('search-theme5-form', require('./components/SearchComponent2.vue').default);
-
+Vue.component('candidate_wishlist', require('./components/CandidateWishlist.vue').default);
+Vue.component('candidate_count', require('./components/CandidateCount.vue').default);
 
 // New page Builder
 Vue.component('create-new-page', require('./components/pages/create.vue').default);
@@ -1860,6 +1861,8 @@ if (document.getElementById("user_profile")) {
         }
     });
 }
+
+
 
 //Settings
 if (document.getElementById("settings")) {
@@ -4845,6 +4848,16 @@ if (document.getElementById("services")) {
         }
     });
 }
+// if (document.getElementById("candidate_wislist")) {
+//     const candidatesWishlist = new Vue({
+//         el: '#candidate_wislist',
+//     })
+// }
+// if (document.getElementById("candidate_count")) {
+//     const candidatesCount = new Vue({
+//         el: '#candidate_count',
+//     })
+// }
 if (document.getElementById("article-cat")) {
     const vmcatList = new Vue({
         el: '#article-cat',

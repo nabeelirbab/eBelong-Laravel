@@ -91,6 +91,9 @@
                                                 </div>
                                             </div>
                                             <a href="{{{ route('register') }}}" class="wt-btn">{{{ trans('lang.join_now') }}}</a>
+                                            <div id='candidate_count'>
+                                                <candidate_count></candidate_count>
+                                            </div>
                                         </div>
                                     @endguest
                                     @auth
@@ -218,6 +221,9 @@
                                                 </div>
                                             </div>
                                             <a href="{{{ route('register') }}}" class="wt-btn">{{{ trans('lang.join_now') }}}</a>
+                                            <div id='candidate_count'>
+                                                <candidate_count></candidate_count>
+                                            </div>
                                         </div>
                                     @endguest
                                     @auth
@@ -347,6 +353,9 @@
                                             </div>
                                         </div>
                                         <a href="{{{ route('register') }}}" class="wt-btn join-now-nav">{{{ trans('lang.join_now') }}}</a>
+                                        <div id='candidate_count'>
+                                            <candidate_count></candidate_count>
+                                        </div>
                                     </div>
                                 @endguest
                                 @auth

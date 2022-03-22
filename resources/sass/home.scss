@@ -692,3 +692,38 @@
     right: 8px; 
     max-width: 60px;
 }
+.candidate_count img{
+	width: 35px;
+    margin-left: 10px;
+}
+
+@media only screen and (max-width: 768px){
+	.candidate_count img{
+		width: 25px;
+		margin-left: 0px;
+		margin-right: 10px;
+	}
+	.wt-loginarea .wt-loginbtn {
+		margin-right: 10px;
+	}
+}
+#candidate_count {
+	position: relative;
+}
+#candidate_count .count {
+    align-self: center;
+    top: 12px;
+    right: -12px;
+    background: white;
+    width: 18px;
+    text-align: center;
+    border-radius: 100%;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    position: absolute;
+}
+#candidate_count .count h5 {
+	line-height: 1.3;
+}
