@@ -165,7 +165,8 @@
                                     <?php if($user_role !== 'freelancer'): ?>
                                     <div class="wt-description">
                                         <p>{{ trans('lang.send_offer_note') }}</p>
-                                        <a href="javascript:void(0);" @click.prevent='sendOffer("{{$auth_user}}")' class="wt-btn">{{{ trans('lang.btn_send_offer') }}}</a>
+                                        <!-- <a href="javascript:void(0);" @click.prevent='sendOffer("{{$auth_user}}")' class="wt-btn">{{{ trans('lang.btn_send_offer') }}}</a> -->
+                                        <a href="javascript:void(0);" @click.prevent='addcandidate("{{$user->id}}")' class="wt-btn">{{{ trans('lang.btn_add_candidate') }}}</a>
                                     </div>
                                     <?php endif;  ?>
                                 </div>
