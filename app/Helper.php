@@ -1315,6 +1315,15 @@ class Helper extends Model
               
             $json = $cources;
         }
+        if ($type == 'blogs') {
+            $blogs = DB::table("blogs")
+                ->select(
+                    "title AS name",
+                    "slug"
+                )->get()->toArray();
+              
+            $json = $blogs;
+        }
         return $json;
     }
     
@@ -3079,6 +3088,23 @@ class Helper extends Model
         $output = "";
         $output .= "Hello %creator_name%,<br>";
         $output .= " Your Invation Request is accepted successfully by <strong><a href='%member_link%'>'%member_name%'</a> for %agency_name%";
+        $output .= "%signature%";
+        return $output;
+    }
+    public static function getAgencyInvitationDeclineEmailContent()
+    {
+        $output = "";
+        $output .= "Hello %creator_name%,<br>";
+        $output .= " Your Invation Request is Declined by <strong><a href='%member_link%'>'%member_name%'</a> for %agency_name%";
+        $output .= "%signature%";
+        return $output;
+    }
+
+    public static function getAgencyInvitationEmailContent()
+    {
+        $output = "";
+        $output .= "Hello %member_name%,<br>";
+        $output .= " You are Invited by <strong><a href='%creator_link%'>'%creator_name%'</a> for %agency_name%";
         $output .= "%signature%";
         return $output;
     }

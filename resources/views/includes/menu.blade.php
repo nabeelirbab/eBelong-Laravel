@@ -10,7 +10,7 @@
 
         <?php if($user_role): ?>
 
-            <?php if($user_role == 'guest'): ?>
+            <?php if($user_role == 'guest'||$user_role == 'editor'): ?>
             <li style="order: 1;">
                 <a href="{{url('search-results?type=instructors')}}">
                     {{{ trans('lang.browse_instructors') }}}
@@ -31,6 +31,12 @@
                     {{{ trans('lang.browse_services') }}}
                 </a>
                 </li>
+                <li style="order: 5;">
+                    <a href="{{url('search-results?type=blogs')}}">
+                        {{{ trans('lang.browse_blogs') }}}
+                    </a>
+                </li>
+                <?php elseif($user_role == 'editor'): ?>
                 <li style="order: 6;" class="join-now-menu">
 					<a href="{{{ route('register') }}}" class="">
 						{{{ trans('lang.join_now') }}}
