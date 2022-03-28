@@ -61,7 +61,7 @@ class Blog extends Model
     public function skills()
     {
 
-        return $this->belongsToMany('App\Skill');
+        return $this->belongsToMany('App\Skill')->withPivot('skill_rating');
     }
 
     /**
@@ -143,7 +143,7 @@ class Blog extends Model
             if ($request['skills']) {
                 $skills = $request['skills'];
                 foreach ($skills as $skill) {
-                    $blog->skills()->attach($skill['id']);
+                    $blog->skills()->attach($skill['id'],['skill_rating' => $skill['rating']]);
                 }
             }
             // $cource->skills()->attach($request['skills']);
@@ -225,7 +225,7 @@ class Blog extends Model
                 $blog->skills()->detach();
                 if (!empty($skills)) {
                     foreach ($skills as $skill) {
-                        $blog->skills()->attach($skill['id']);
+                        $blog->skills()->attach($skill['id'],['skill_rating' => $skill['rating']]);
                     }
                 }
             }
