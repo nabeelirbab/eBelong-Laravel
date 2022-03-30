@@ -48,6 +48,8 @@
                         @else
                             <div class="wt-btnarea"><a href="{{{ url(route('showUserProfile', ['slug' => Auth::user()->slug])) }}}" class="wt-btn">{{{ trans('lang.view_profile') }}}</a></div>
                         @endif
+                        @elseif ($role === 'editor')
+                            <div class="wt-btnarea course-btn"><a href="{{{ url(route('PostBlog')) }}}" class="wt-btn">{{{ trans('lang.post_Blog') }}}</a></div>
                     @endif
                 </div>
             </div>
@@ -205,6 +207,19 @@
                                 <i class="ti-desktop" aria-hidden="true"></i>
                                 <span>Editor Dashboard</span>
                             </a>
+                        </li>
+
+                        <li class="menu-item-has-children">
+                            <span class="wt-dropdowarrow"><i class="lnr lnr-chevron-right"></i></span>
+                            <a href="javascript:void(0)">
+                                <i class="ti-layers"></i>
+                                <span>{{ trans('lang.Blogs') }}</span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li><hr><a href="{{{ route('manageBlogs') }}}">{{ trans('lang.manage_blogs') }}</a></li>
+                                <li><hr><a href="{{{ route('editorBlogs') }}}">{{ trans('lang.my_blogs') }}</a></li>
+                                
+                            </ul>
                         </li>
                     
                     <li class="menu-item-has-children">

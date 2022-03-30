@@ -559,8 +559,7 @@ class UserController extends Controller
 
         if(!empty($request->member_role)){
             $user_id = User::select('id')->where('email', $request->invitation_email)->first();
-            // dd($user_id->id);
-           
+            
             if (!empty($user_id->id)) {
                 $alreadyInvited = DB::table('agency_associated_users')->where('agency_id', $request->agency_id)->where('user_id',$user_id->id)->get();
                 // dd($alreadyInvited);
@@ -573,7 +572,56 @@ class UserController extends Controller
                 $associate_user = DB::table('agency_associated_users')->insert(
                     ['agency_id' => $request->agency_id, 'user_id' => $user_id->id, 'member_role' => $request->member_role, 'is_pending' => 1]
                 );
-
+       $agency_name = DB::table('agency_user')->select('agency_name')->where('id',$request->agency_id)->first();
+        $creator = DB::table('agency_user')->select('user_id')->where('id',$request->agency_id)->first();
+        $member_email = $request->invitation_email;
+        // dd(config('mail.password'));
+        if (trim(config('mail.username')) != "" && trim(config('mail.password')) != "") {
+            
+            $email_params = array();
+            $template_data = (object)array();
+            $template_data->content = Helper::getAgencyInvitationEmailContent();
+            $template_data->title =  "Agency Invitation ";
+            $template_data->subject = "Agency Invitation";
+            // dd($template_data->content);
+            $email_params['agency_creator_name'] = Helper::getUserName($creator->user_id);
+            $email_params['agency_member_name'] = Helper::getUserName($user_id->id);
+            // $agency_info =  Helper::getAgencyList($data['agency_id']);
+            $email_params['agency_name'] = $agency_name->agency_name;
+                Mail::to($member_email)
+                    ->send(
+                        new FreelancerEmailMailable(
+                            'agency_invitation',
+                            $template_data,
+                            $email_params
+                        )
+                    );
+            
+        }
+        if (trim(config('mail.username')) != "" && trim(config('mail.password')) != "") {
+            
+            $email_params = array();
+            $template_data = (object)array();
+            $template_data->content = '';
+            $template_data->title =  "Agency Invitation Sent ";
+            $template_data->subject = "Agency Invitation Sent";
+            // dd($template_data->content);
+            $email_params['agency_creator_name'] = Helper::getUserName($creator->user_id);
+            $email_params['agency_member_name'] = Helper::getUserName($user_id->id);
+            $user = User::find($user_id->id);
+            $email_params['agency_member_link'] = 'http://dev.ebelong.com/profile/'.$user->slug;
+            // $agency_info =  Helper::getAgencyList($data['agency_id']);
+            $email_params['agency_name'] = $agency_name->agency_name;
+                Mail::to($member_email)
+                    ->send(
+                        new FreelancerEmailMailable(
+                            'join_agency',
+                            $template_data,
+                            $email_params
+                        )
+                    );
+            
+        }
                 if ($associate_user === true) {
                     Session::flash('message', 'Invitation has sent.');
                     return Redirect::back();

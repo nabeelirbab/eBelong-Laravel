@@ -87,7 +87,7 @@
 </template>
 <script>
  export default{
-    props: ['widget_type', 'no_record_message', 'placeholder', 'freelancer_placeholder', 'employer_placeholder', 'job_placeholder', 'service_placeholder','instructor_placeholder'],
+    props: ['widget_type', 'no_record_message', 'placeholder', 'freelancer_placeholder', 'employer_placeholder', 'job_placeholder', 'service_placeholder','instructor_placeholder','blog_placeholder'],
         data(){
             return {
                 filters:[],
@@ -126,6 +126,9 @@
                 else if(type == 'instructors') {
                     this.selected_type = this.instructor_placeholder;
                 }
+                 else if(type == 'blogs') {
+                    this.selected_type = this.blog_placeholder;
+                }
             },
             getFilters(){
                 
@@ -160,6 +163,9 @@
                         self.searchable_data = response.data.searchables;
                     }
                     else if (type == 'instructors') {
+                        self.searchable_data = response.data.searchables;
+                    }
+                     else if (type == 'blogs') {
                         self.searchable_data = response.data.searchables;
                     }
                 });
@@ -198,6 +204,9 @@
                         type = 'job';
                     } else if(type == 'Services') {
                         type = 'service';
+                    } 
+                     else if(type == 'Blogs') {
+                        type = 'blog';
                     }       
                     jQuery('.search-field').parents('.form-group').find('span.no-record-span').css("display", "none");
                     jQuery('.wt-related-result').remove();
@@ -239,6 +248,9 @@
                      else if(type == 'Instructors') {
                             type = 'instructor';
                     }
+                    else if(type == 'Blogs') {
+                            type = 'blogs';
+                    }
                 }
                 if (this.$refs.searchfield.inputValue != '') {
                     let slug = document.getElementById('hidden_field').value;
@@ -256,6 +268,9 @@
                     }
                      else if (type == 'instructors'){
                         window.location.replace(APP_URL+'/instructor/'+slug);
+                    }
+                     else if (type == 'blogs'){
+                        window.location.replace(APP_URL+'/blog/'+slug);
                     }
                     else if(type == 'freelancer')
                     {

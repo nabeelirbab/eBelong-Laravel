@@ -428,6 +428,22 @@ Route::group(
         Route::post('editor/store-profile-settings', 'UserController@storeProfileSettings');
         Route::post('editor/upload-temp-image', 'UserController@uploadTempImage');
         Route::post('admin/upload-temp-image', 'UserController@uploadTempImage');
+
+        //blogs
+        Route::get('editor/dashboard/post-blog', 'BlogController@create')->name('PostBlog');
+        Route::post('blog/get-stored-blog-skills', 'BlogController@getBlogSkills');
+        Route::post('skills/get-blog-skills', 'SkillController@getBlogSkills');
+        Route::post('blogs/post-blog', 'BlogController@store');
+        Route::post('blog/upload-temp-image', 'BlogController@uploadTempImage');
+        Route::get('editor/manage-blogs', 'BlogController@manageBlogs')->name('manageBlogs');
+        Route::get('editor/blogs', 'BlogController@editorBlogs')->name('editorBlogs');
+        Route::get('blog/{slug}', 'BlogController@show')->name('BlogDetail');
+        Route::post('editor/dashboard/delete-blog', 'BlogController@destroy');
+        Route::get('editor/dashboard/edit-blog/{id}', 'BlogController@edit')->name('edit_blog');
+        Route::get('get/{type}/{filename}/{id}', 'PublicController@getFile')->name('getfile');
+        Route::post('blog/update-blog', 'BlogController@update');
+        Route::post('blog/change-status', 'BlogController@changeStatus');
+   
    
     }
 );
@@ -603,7 +619,6 @@ Route::group(
         Route::get('user/get-payout-detail', 'UserController@getPayoutDetail');
         Route::post('user/upload-temp-image/{type?}', 'UserController@uploadTempImage');
         Route::post('user/submit/transection', 'UserController@submitTransection');
-
 
         
       

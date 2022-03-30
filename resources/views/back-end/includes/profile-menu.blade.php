@@ -155,12 +155,25 @@
             @endif
             @if ($role === 'editor')
                     <li>
-                            <a href="{{{ route('editorDashboard') }}}">
-                                <i class="ti-desktop" aria-hidden="true"></i>
-                                <span>Editor Dashboard</span>
-                            </a>
+                        <a href="{{{ route('editorDashboard') }}}">
+                            <i class="ti-desktop" aria-hidden="true"></i>
+                            <span>Editor Dashboard</span>
+                        </a>
                         </li>
-                    <li><a href="{{{ url($role.'/profile') }}}"><i class="ti-settings"></i>{{ trans('lang.profile_settings') }}</a></li>
+                    <li><a href="{{{ url($role.'/profile') }}}"><i class="ti-settings"></i>{{ trans('lang.profile_settings') }}</a>
+                    </li>
+                    <li class="menu-item-has-children">
+                        <span class="wt-dropdowarrow"><i class="lnr lnr-chevron-right"></i></span>
+                        <a href="javascript:void(0)">
+                            <i class="ti-layers"></i>
+                            <span>{{ trans('lang.Blogs') }}</span>
+                        </a>
+                        <ul class="sub-menu">
+                            <li><hr><a href="{{{ route('manageBlogs') }}}">{{ trans('lang.manage_blogs') }}</a></li>
+                            <li><hr><a href="{{{ route('editorBlogs') }}}">{{ trans('lang.my_blogs') }}</a></li>
+                            
+                        </ul>
+                    </li>
                     <li class="menu-item-has-children">
                         <span class="wt-dropdowarrow"><i class="lnr lnr-chevron-right"></i></span>
                         <a href="javascript:void(0)">

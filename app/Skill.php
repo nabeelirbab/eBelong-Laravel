@@ -169,6 +169,12 @@ class Skill extends Model
             ->where('agency_user_id', $agency_id)
             ->get()->pluck('skill_id')->toArray();
     }
+    public static function getBlogSkill($blog_id)
+    {
+        return DB::table('blog_skill')->select('skill_id')
+            ->where('blog_id', $blog_id)
+            ->get()->pluck('skill_id')->toArray();
+    }
     public static function getCourseSkill($course_id)
     {
         return DB::table('cource_skill')->select('skill_id')

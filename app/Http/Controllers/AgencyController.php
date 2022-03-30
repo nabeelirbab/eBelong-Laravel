@@ -301,28 +301,28 @@ class AgencyController extends Controller
         $creator = DB::table('agency_user')->select('user_id')->where('id',$agencyid)->first();
         $creator_email = User::find($creator->user_id);
         // dd(config('mail.password'));
-        // if (trim(config('mail.username')) != "" && trim(config('mail.password')) != "") {
+        if (trim(config('mail.username')) != "" && trim(config('mail.password')) != "") {
             
-        //     $email_params = array();
-        //     $template_data = (object)array();
-        //     $template_data->content = Helper::getAgencyInvitationAcceptEmailContent();
-        //     $template_data->title =  "Agency Invitation Approval";
-        //     $template_data->subject = "Agency Invitation Approval";
-        //     // dd($template_data->content);
-        //     $email_params['agency_creator_name'] = Helper::getUserName($creator->user_id);
-        //     $email_params['agency_member_name'] = Helper::getUserName(Auth::user()->id);
-        //     // $agency_info =  Helper::getAgencyList($data['agency_id']);
-        //     $email_params['agency_name'] = $agency_name->agency_name;
-        //         Mail::to($creator_email->email)
-        //             ->send(
-        //                 new FreelancerEmailMailable(
-        //                     'accept_agency',
-        //                     $template_data,
-        //                     $email_params
-        //                 )
-        //             );
+            $email_params = array();
+            $template_data = (object)array();
+            $template_data->content = Helper::getAgencyInvitationAcceptEmailContent();
+            $template_data->title =  "Agency Invitation Approval";
+            $template_data->subject = "Agency Invitation Approval";
+            // dd($template_data->content);
+            $email_params['agency_creator_name'] = Helper::getUserName($creator->user_id);
+            $email_params['agency_member_name'] = Helper::getUserName(Auth::user()->id);
+            // $agency_info =  Helper::getAgencyList($data['agency_id']);
+            $email_params['agency_name'] = $agency_name->agency_name;
+                Mail::to($creator_email->email)
+                    ->send(
+                        new FreelancerEmailMailable(
+                            'accept_agency',
+                            $template_data,
+                            $email_params
+                        )
+                    );
             
-        // }
+        }
         Session::flash('message', "Invitation Sucessfully Accepted");
         return Redirect::back();
     }
@@ -335,6 +335,32 @@ class AgencyController extends Controller
     public function DeclineInvitation($agencyid){
 
         DB::table('agency_associated_users')->where('agency_id',$agencyid)->where('user_id',Auth::user()->id)->update(array('is_pending'=>0, 'is_accepted'=>0));
+        $agency_name = DB::table('agency_user')->select('agency_name')->where('id',$agencyid)->first();
+        $creator = DB::table('agency_user')->select('user_id')->where('id',$agencyid)->first();
+        $creator_email = User::find($creator->user_id);
+        if (trim(config('mail.username')) != "" && trim(config('mail.password')) != "") {
+            
+            $email_params = array();
+            $template_data = (object)array();
+            $template_data->content = Helper::getAgencyInvitationDeclineEmailContent();
+            $template_data->title =  "Agency Invitation Declined";
+            $template_data->subject = "Agency Invitation Declined";
+            // dd($template_data->content);
+            $email_params['agency_creator_name'] = Helper::getUserName($creator->user_id);
+            $email_params['agency_member_name'] = Helper::getUserName(Auth::user()->id);
+            // $agency_info =  Helper::getAgencyList($data['agency_id']);
+            $email_params['agency_name'] = $agency_name->agency_name;
+                Mail::to($creator_email->email)
+                    ->send(
+                        new FreelancerEmailMailable(
+                            'decline_agency',
+                            $template_data,
+                            $email_params
+                        )
+                    );
+            
+        }
+        
         Session::flash('message', "Invitation Sucessfully Declined");
         return Redirect::back();
     }

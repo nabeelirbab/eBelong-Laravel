@@ -19,6 +19,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\AgencyUser;
 use App\Cource;
+use App\Blog;
 use App\Language;
 use App\FindMatchRequest;
 use Illuminate\Support\Facades\Mail;
@@ -999,6 +1000,42 @@ class PublicController extends Controller
                             'show_service_banner',
                             'service_inner_banner',
                             'show_breadcrumbs',
+                            'skills'
+                        )
+                    );
+                }
+            }
+            elseif ($type == 'blogs') {
+                
+                $blogs_total_records = Blog::count();
+                $results = Blog::getSearchResult(
+                    $keyword,
+                    $search_categories,
+                    $search_skill
+                );
+                $blogs= $results['blogs'];
+                
+                if (file_exists(resource_path('views/extend/front-end/blogs/index.blade.php'))) {
+                    return view(
+                        'extend.front-end.blogs.index',
+                        compact(
+                            'blogs_total_records',
+                            'type',
+                            'blogs',
+                            'keyword',
+                            'categories',
+                            'skills'
+                        )
+                    );
+                } else {
+                    return view(
+                        'front-end.blogs.index',
+                        compact(
+                            'blogs_total_records',
+                            'type',
+                            'blogs',
+                            'keyword',
+                            'categories',
                             'skills'
                         )
                     );
