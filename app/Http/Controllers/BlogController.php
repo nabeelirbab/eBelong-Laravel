@@ -37,24 +37,14 @@ class BlogController extends Controller
         $languages = Language::pluck('title', 'id');
         $locations = Location::pluck('title', 'id');
         $categories = Category::pluck('title', 'id');
-        if (file_exists(resource_path('views/extend/back-end/editor/blogs/create.blade.php'))) {
-            return view(
-                'extend.back-end.editor.blogs.create',
-                compact(
-                   
-                    'languages',
-                    'categories',
-                )
-            );
-        } else {
+        // if (file_exists(resource_path('views/back-end/editor/blogs/create.blade.php'))) {
             return view(
                 'back-end.editor.blogs.create',
                 compact(
                     'languages',
-                    'categories',
-                )
+                    'categories')
             );
-        }
+        // } 
     }
 
     public function getBlogSkills(Request $request)
