@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
+use App\Skill;
 use App\Language;
 use App\Category;
 use App\Location;
@@ -59,6 +60,7 @@ class ServiceController extends Controller
         $categories = Category::all();
         $locations  = Location::all();
         $languages  = Language::all();
+        $skills     = Skill::orderBy('title')->get();
         $inner_page  = SiteManagement::getMetaValue('inner_page_data');
         $service_list_meta_title = !empty($inner_page) && !empty($inner_page[0]['service_list_meta_title']) ? $inner_page[0]['service_list_meta_title'] : trans('lang.service_listing');
         $service_list_meta_desc = !empty($inner_page) && !empty($inner_page[0]['service_list_meta_desc']) ? $inner_page[0]['service_list_meta_desc'] : trans('lang.service_meta_desc');
@@ -75,8 +77,8 @@ class ServiceController extends Controller
                 compact(
                     'services_total_records',
                     'type',
+                    'skills',
                     'services',
-                    'symbol',
                     'keyword',
                     'categories',
                     'locations',
@@ -95,8 +97,8 @@ class ServiceController extends Controller
                 compact(
                     'services_total_records',
                     'type',
+                    'skills',
                     'services',
-                    'symbol',
                     'keyword',
                     'categories',
                     'locations',
@@ -837,6 +839,190 @@ class ServiceController extends Controller
         } else {
             $json['type'] = 'error';
             return $json;
+        }
+    }
+
+    public function Servicelist($type,$slug){
+        
+        // $blogs = Blog::select('*')->where('status','published')->orderBy('id','DESC');
+        $inner_page  = SiteManagement::getMetaValue('inner_page_data');
+        $service_list_meta_title = !empty($inner_page) && !empty($inner_page[0]['service_list_meta_title']) ? $inner_page[0]['service_list_meta_title'] : trans('lang.service_listing');
+        $service_list_meta_desc = !empty($inner_page) && !empty($inner_page[0]['service_list_meta_desc']) ? $inner_page[0]['service_list_meta_desc'] : trans('lang.service_meta_desc');
+        $show_service_banner = !empty($inner_page) && !empty($inner_page[0]['show_service_banner']) ? $inner_page[0]['show_service_banner'] : 'true';
+        $service_inner_banner = !empty($inner_page) && !empty($inner_page[0]['service_inner_banner']) ? $inner_page[0]['service_inner_banner'] : null;
+        $locations  = Location::all();
+        $languages  = Language::all();
+        $categories = Category::all();
+        $delivery_time = DeliveryTime::all();
+        $response_time = ResponseTime::all();
+        $skills     = Skill::orderBy('title')->get();
+        $service_id = array();
+        $services= array();
+        if($type=='category'){
+            $categor_obj = Category::where('slug', $slug)->first();
+            if(!empty($categor_obj->id)){
+                $category = Category::find($categor_obj->id);
+               
+                if (!empty($category->services)) {
+                    $category_services = $category->services->pluck('id')->toArray();
+                    foreach ($category_services as $id) {
+                        $service_id[] = $id;
+                    }
+                }
+                $services = Service::where('status','published')->whereIn('id', $service_id)->orderBy('id','DESC')->paginate(10)->setPath('');
+            }
+        }
+        if($type=='skill'){
+                $skill_obj = Skill::where('slug', $slug)->first();
+                if(!empty($skill_obj->id)){
+                $skill= Skill::find($skill_obj->id);
+                if (!empty($skill->services)) {
+                    $skill_services = $skill->services->pluck('id')->toArray();
+                    foreach ($skill_services as $id) {
+                        $service_id[] = $id;
+                    }
+                }
+            
+            $services=Service::where('status','published')->whereIn('id', $service_id)->orderBy('id','DESC')->paginate(10)->setPath('');
+            }
+        }
+        if($type=='location'){
+            $location = Location::select('id')->where('slug', $slug)->get()->pluck('id')->toArray();
+            $services=Service::where('status','published')->whereIn('location_id', $location)->paginate(10)->setPath('');
+       
+        }
+        if($type=='language'){
+            $language = Language::where('slug', $slug)->first();
+            $lang = Language::find($language['id']);
+                if (!empty($lang->services)) {
+                    $lang_services = $lang->services->pluck('id')->toArray();
+                    foreach ($lang_services as $id) {
+                        $service_id[] = $id;
+                    }
+                }
+            $services=Service::where('status','published')->whereIn('id', $service_id)->orderBy('id','DESC')->paginate(10)->setPath('');
+        }
+        if ($type=='delivery-time') {
+            $deliverytime = DeliveryTime::select('id')->where('slug', $slug)->get()->pluck('id')->toArray();
+            $services = Service::where('status','published')->whereIn('delivery_time_id', $deliverytime)->paginate(10)->setPath('');
+        }
+        if ($type=='response-time') {
+            $responsetime = ResponseTime::select('id')->where('slug', $slug)->get()->pluck('id')->toArray();
+            $services= Service::where('status','published')->whereIn('response_time_id', $responsetime)->paginate(10)->setPath('');
+        }
+        $type = "service";
+        if (file_exists(resource_path('views/extend/front-end/services/serviceList.blade.php'))) {
+            return view(
+                'extend.front-end.services.serviceList',
+                compact(
+                    'locations',
+                    'languages',
+                    'categories',
+                    'skills',
+                    'type',
+                    'delivery_time',
+                    'response_time',
+                    'services',
+                    'service_list_meta_title',
+                    'service_list_meta_desc',
+                    'show_service_banner',
+                    'service_inner_banner'
+                )
+            );
+        } else {
+            return view(
+                'front-end.services.serviceList',
+                compact(
+                    'locations',
+                    'languages',
+                    'categories',
+                    'skills',
+                    'type',
+                    'delivery_time',
+                    'response_time',
+                    'services',
+                    'service_list_meta_title',
+                    'service_list_meta_desc',
+                    'show_service_banner',
+                    'service_inner_banner'
+                )
+            );
+        }
+    }
+    public function getServiceSkills(Request $request)
+    {
+        $json = array();
+        if (!empty($request['id'])) {
+            // $service = $this->cource::where('slug', $request['slug'])->select('id')->first();
+            
+                $service = $this->service::find($request['id']);
+                if (!empty($service)) {
+                $skills = $service->skills->toArray();
+                if (!empty($skills)) {
+                    $json['type'] = 'success';
+                    $json['skills'] = $skills;
+                    return $json;
+                } else {
+                    $json['error'] = 'error';
+                    return $json;
+                }
+            } else {
+                $json['error'] = 'error';
+                return $json;
+            }
+      }
+    }
+    public function servicesListing(){
+        $inner_page  = SiteManagement::getMetaValue('inner_page_data');
+        $service_list_meta_title = !empty($inner_page) && !empty($inner_page[0]['service_list_meta_title']) ? $inner_page[0]['service_list_meta_title'] : trans('lang.service_listing');
+        $service_list_meta_desc = !empty($inner_page) && !empty($inner_page[0]['service_list_meta_desc']) ? $inner_page[0]['service_list_meta_desc'] : trans('lang.service_meta_desc');
+        $show_service_banner = !empty($inner_page) && !empty($inner_page[0]['show_service_banner']) ? $inner_page[0]['show_service_banner'] : 'true';
+        $service_inner_banner = !empty($inner_page) && !empty($inner_page[0]['service_inner_banner']) ? $inner_page[0]['service_inner_banner'] : null;
+        $locations  = Location::all();
+        $languages  = Language::all();
+        $categories = Category::orderBy('title')->get();
+        $skills     = Skill::orderBy('title')->get();
+        $delivery_time = DeliveryTime::all();
+        $response_time = ResponseTime::all();
+        $services= array();
+        $services=Service::where('status','published')->orderByRaw("is_featured DESC, updated_at DESC")->paginate(10)->setPath('');
+        $type = "service";
+        if (file_exists(resource_path('views/extend/front-end/services/serviceList.blade.php'))) {
+            return view(
+                'extend.front-end.services.serviceList',
+                compact(
+                    'locations',
+                    'languages',
+                    'categories',
+                    'skills',
+                    'type',
+                    'delivery_time',
+                    'response_time',
+                    'services',
+                    'service_list_meta_title',
+                    'service_list_meta_desc',
+                    'show_service_banner',
+                    'service_inner_banner'
+                )
+            );
+        } else {
+            return view(
+                'front-end.services.serviceList',
+                compact(
+                    'locations',
+                    'languages',
+                    'categories',
+                    'skills',
+                    'type',
+                    'delivery_time',
+                    'response_time',
+                    'services',
+                    'service_list_meta_title',
+                    'service_list_meta_desc',
+                    'show_service_banner',
+                    'service_inner_banner'
+                )
+            );
         }
     }
 }

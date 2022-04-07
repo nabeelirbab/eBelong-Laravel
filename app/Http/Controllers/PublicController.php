@@ -708,10 +708,10 @@ class PublicController extends Controller
         $categories = array();
         $locations  = array();
         $languages  = array();
-        $categories = Category::all();
+        $categories = Category::orderBy('title')->get();
         $locations  = Location::all();
         $languages  = Language::all();
-        $skills     = Skill::all();
+        $skills     = Skill::orderBy('title')->get();
         $currency   = SiteManagement::getMetaValue('commision');
         $symbol     = !empty($currency) && !empty($currency[0]['currency']) ? Helper::currencyList($currency[0]['currency']) : array();
         $freelancer_skills = Helper::getFreelancerLevelList();
@@ -893,7 +893,8 @@ class PublicController extends Controller
                     $search_locations,
                     $search_languages,
                     $search_delivery_time,
-                    $search_response_time
+                    $search_response_time,
+                    $search_skill
                 );
                 $services = $results['services'];
                 if (file_exists(resource_path('views/extend/front-end/services/index.blade.php'))) {
@@ -903,6 +904,7 @@ class PublicController extends Controller
                             'services_total_records',
                             'type',
                             'services',
+                            'skills',
                             'symbol',
                             'keyword',
                             'categories',
@@ -924,6 +926,7 @@ class PublicController extends Controller
                             'services_total_records',
                             'type',
                             'services',
+                            'skills',
                             'symbol',
                             'keyword',
                             'categories',

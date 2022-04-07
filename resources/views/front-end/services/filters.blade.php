@@ -38,6 +38,34 @@
         </div>
         <div class="wt-widget wt-effectiveholder">
             <div class="wt-widgettitle">
+                <h2>{{ trans('lang.skills') }}</h2>
+            </div>
+        <fieldset>
+            <div class="wt-widgetcontent">
+                <fieldset>
+                    <div class="form-group">
+                        <input type="text" class="form-control filter-records" placeholder="{{ trans('lang.ph_search_skills') }}">
+                        <a href="javascrip:void(0);" class="wt-searchgbtn"><i class="lnr lnr-magnifier"></i></a>
+                    </div>
+                </fieldset>
+            @if (!empty($skills))
+           
+                <div class="wt-checkboxholder wt-verticalscrollbar">
+                    @foreach ($skills as $skill)
+                        @php $checked = ( !empty($_GET['skill']) && in_array($skill->slug, $_GET['skill'] )) ? 'checked' : ''; @endphp
+                        <span class="wt-checkbox">
+                            <input id="skill-{{{ $skill->slug }}}" type="checkbox" name="skill[]" value="{{{ $skill->slug }}}" {{$checked}} >
+                            <label for="skill-{{{ $skill->slug }}}"> {{{ $skill->title }}}</label>
+                        </span>
+                    @endforeach
+                </div>
+            @endif
+            </div>
+        </fieldset>
+    </div>
+
+        <div class="wt-widget wt-effectiveholder">
+            <div class="wt-widgettitle">
                 <h2>{{ trans('lang.locations') }}</h2>
             </div>
             <div class="wt-widgetcontent">

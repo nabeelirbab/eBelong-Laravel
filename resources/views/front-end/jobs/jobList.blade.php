@@ -74,7 +74,7 @@
                                         <span>{{ trans('lang.01') }}  results for <em>"{{{$keyword}}}"</em></span>
                                     </div>
                                 @endif
-                                @if (!empty($jobs && $jobs->count() > 0)))
+                                @if (!empty($jobs && $jobs->count() > 0))
                                     @foreach ($jobs as $job)
                                         @if (\Schema::hasColumn('jobs', 'expiry_date') && !empty($job->expiry_date))
                                             @php $expiry = Carbon\Carbon::parse($job->expiry_date); @endphp

@@ -47,6 +47,17 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="wt-courses wt-tabsinfo">
+                                <div class="wt-skills la-skills-holder wt-tabsinfo" id="wt-skills">
+                                    <div class="wt-tabscontenttitle">
+                                        <h2>{{ trans('lang.skills_req') }}</h2>
+                                    </div>
+                                    <div class="wt-formtheme wt-userform">
+                                        {{-- add Course Skills --}}
+                                        <services_skills :ph_rate_skills="'{{ trans('lang.ph_rate_skills') }}'"></services_skills>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="wt-languages-holder wt-tabsinfo">
                                 <div class="wt-tabscontenttitle">
                                     <h2>{{ trans('lang.service_response_time') }}</h2>

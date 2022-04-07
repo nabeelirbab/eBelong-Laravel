@@ -105,11 +105,11 @@
         </div>
       </div>
       <div class="row find-talent-freelancers-total-est-cost">
-        <div class="col-lg-1 col-md-12 col-sm-12"></div>
-        <div class="col-lg-10 col-md-12 col-sm-12">
+        <div class="col-lg-2 col-md-12 col-sm-12"></div>
+        <div class="col-lg-8 col-md-12 col-sm-12">
           <div class="est-cost-heading">Total Est. Project Cost</div>
         </div>
-        <div class="col-lg-1 col-md-12 col-sm-12">
+        <div class="col-lg-2 col-md-12 col-sm-12">
           <div class="est-cost-totle">$ {{ totalAmount }}</div>
         </div>
       </div>
@@ -204,6 +204,30 @@ export default {
   },
   methods: {
     subTotalAmount(index) {
+      var numArray = [];
+      this.selectedCandidate.map((person) =>
+        numArray.push(parseInt(person.hours))
+      );
+      this.$cookies.set("candidateIdsHours", JSON.stringify(numArray));
+      // console.log("get candidate index", numArray);
+      console.log(
+        "get candidate index",
+        JSON.parse(this.$cookies.get("candidateIdsHours"))
+      );
+      console.log(
+        "get candidate index",
+        JSON.parse(this.$cookies.get("candidateIds"))
+      );
+      // var r = {},
+      //   keys = JSON.parse(this.$cookies.get("candidateIds")),
+      //   values = JSON.parse(this.$cookies.get("candidateIdsHours"));
+
+      // for (let i = 0; i < keys.length; i++) {
+      //   r[keys[i]] = values[i];
+      // }
+
+      // console.log("get candidate index rrrrrr", r);
+
       const hours = parseInt(this.selectedCandidate[index].hours);
       const rate = parseInt(this.selectedCandidate[index].hourly_rates);
       return hours ? hours * rate : 0;

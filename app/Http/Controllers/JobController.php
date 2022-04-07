@@ -745,6 +745,209 @@ class JobController extends Controller
         }
     }
     
+   public function jobsList($type,$slug){
+        $locations  = Location::all();
+        $languages  = Language::all();
+        $categories = Category::orderBy('title')->get();
+        $skills     = Skill::orderBy('title')->get();
+        $symbol   = !empty($currency) && !empty($currency[0]['currency']) ? Helper::currencyList($currency[0]['currency']) : array();
+        
+        $inner_page  = SiteManagement::getMetaValue('inner_page_data');
+        $Jobs_total_records = Job::count();
+        $job_list_meta_title = !empty($inner_page) && !empty($inner_page[0]['job_list_meta_title']) ? $inner_page[0]['job_list_meta_title'] : trans('lang.job_listing');
+        $job_list_meta_desc = !empty($inner_page) && !empty($inner_page[0]['job_list_meta_desc']) ? $inner_page[0]['job_list_meta_desc'] : trans('lang.job_meta_desc');
+        $show_job_banner = !empty($inner_page) && !empty($inner_page[0]['show_job_banner']) ? $inner_page[0]['show_job_banner'] : 'true';
+        $job_inner_banner = !empty($inner_page) && !empty($inner_page[0]['job_inner_banner']) ? $inner_page[0]['job_inner_banner'] : null;
+        $currency   = SiteManagement::getMetaValue('commision');
+        $symbol     = !empty($currency) && !empty($currency[0]['currency']) ? Helper::currencyList($currency[0]['currency']) : array();
+        $freelancer_skills = Helper::getFreelancerLevelList();
+        $project_length = Helper::getJobDurationList();
+        $breadcrumbs_settings = SiteManagement::getMetaValue('show_breadcrumb');
+        $show_breadcrumbs = !empty($breadcrumbs_settings) ? $breadcrumbs_settings : 'true';
+        $current_date = Carbon::now()->toDateTimeString();
+        $jobs = Job::select('*');
+        $job_id = array();
 
+        if($type=='category'){
+            $categor_obj = Category::where('slug', $slug)->first();
+            $category = Category::find($categor_obj->id);
+            if (!empty($category->jobs)) {
+                $category_jobs = $category->jobs->toArray();
+                foreach ($category_jobs as $job) {
+                    if($job['status'] == "posted"){
+                        $job_id[] = $job['id'];
+                    }
+                }
+            }
+            if(!empty($job_id)){
+                $jobs->whereIn('id', $job_id);
+            }
+        }  
+        if ($type=='location') {
+            $location = Location::select('id')->where('slug', $slug)->get()->pluck('id')->toArray();
+            $jobs->whereIn('location_id', $location);
+
+        }
+        if ($type=='skill') {
+            $job_id = array();
+                $skill_obj = Skill::where('slug', $slug)->first();
+                $skill = Skill::find($skill_obj->id);
+                if (!empty($skill->jobs)) {   
+                    $skill_jobs = $skill->jobs->pluck('id')->toArray();
+                    foreach ($skill_jobs as $id) {
+                        $job_id[] = $id;
+                    }
+                }
+            } 
+            if(!empty($job_id)){ 
+                $jobs->whereIn('id', $job_id);
+            }
+        
+      
+        if ($type=='project-length') {
+            $jobs->whereIn('duration', $slug);
+        }
+
+        if ($type=='language') { 
+            $job_id = array();
+            $langs = Language::where('slug', $slug)->get()->toArray();
+            foreach ($langs as $key => $language) {
+                $jobids = DB::table('langables')->select('langable_id')->where('language_id',$language['id'])->get()->toArray();
+                if(!empty($jobids)){
+                    foreach($jobids as $jid){
+                        $job_id[] = $jid->langable_id;
+                    }
+                }
+            }
+            if(!empty($job_id)){
+                $jobs->whereIn('id', $job_id);
+            }
+        }
+           
+        $jobs = $jobs->where('expiry_date', '>', date('Y-m-d'));
+        $jobs = $jobs->orderByRaw("id DESC")->paginate(20)->setPath('');
+      
+        $type='job';
+        if (file_exists(resource_path('views/extend/front-end/jobs/jobList.blade.php'))) {
+            return view(
+                'extend.front-end.jobs.jobList',
+                compact(
+                    'jobs',
+                    'categories',
+                    'locations',
+                    'languages',
+                    'freelancer_skills',
+                    'project_length',
+                    'Jobs_total_records',
+                    'skills',
+                    'type',
+                    'current_date',
+                    'symbol',
+                    'job_list_meta_title',
+                    'job_list_meta_desc',
+                    'show_job_banner',
+                    'job_inner_banner',
+                    'show_breadcrumbs'
+                    
+                )
+            );
+        } else {
+            return view(
+                'front-end.jobs.jobList',
+                compact(
+                    'jobs',
+                    'categories',
+                    'locations',
+                    'languages',
+                    'freelancer_skills',
+                    'project_length',
+                    'Jobs_total_records',
+                    'skills',
+                    'type',
+                    'current_date',
+                    'symbol',
+                    'job_list_meta_title',
+                    'job_list_meta_desc',
+                    'show_job_banner',
+                    'job_inner_banner',
+                    'show_breadcrumbs'
+                )
+            );
+        }
+    }
+
+
+    
+   public function jobsListing(){
+    $locations  = Location::all();
+    $languages  = Language::all();
+    $categories = Category::orderBy('title')->get();
+    $skills     = Skill::orderBy('title')->get();
+    $symbol   = !empty($currency) && !empty($currency[0]['currency']) ? Helper::currencyList($currency[0]['currency']) : array();
+    $inner_page  = SiteManagement::getMetaValue('inner_page_data');
+    $Jobs_total_records = Job::count();
+    $job_list_meta_title = !empty($inner_page) && !empty($inner_page[0]['job_list_meta_title']) ? $inner_page[0]['job_list_meta_title'] : trans('lang.job_listing');
+    $job_list_meta_desc = !empty($inner_page) && !empty($inner_page[0]['job_list_meta_desc']) ? $inner_page[0]['job_list_meta_desc'] : trans('lang.job_meta_desc');
+    $show_job_banner = !empty($inner_page) && !empty($inner_page[0]['show_job_banner']) ? $inner_page[0]['show_job_banner'] : 'true';
+    $job_inner_banner = !empty($inner_page) && !empty($inner_page[0]['job_inner_banner']) ? $inner_page[0]['job_inner_banner'] : null;
+    $currency   = SiteManagement::getMetaValue('commision');
+    $symbol     = !empty($currency) && !empty($currency[0]['currency']) ? Helper::currencyList($currency[0]['currency']) : array();
+    $freelancer_skills = Helper::getFreelancerLevelList();
+    $project_length = Helper::getJobDurationList();
+    $breadcrumbs_settings = SiteManagement::getMetaValue('show_breadcrumb');
+    $show_breadcrumbs = !empty($breadcrumbs_settings) ? $breadcrumbs_settings : 'true';
+    $current_date = Carbon::now()->toDateTimeString();
+    $jobs = Job::select('*');
+    $jobs = $jobs->where('expiry_date', '>', date('Y-m-d'));
+    $jobs = $jobs->orderByRaw("id DESC")->paginate(20)->setPath('');
+    $type='job';
+    if (file_exists(resource_path('views/extend/front-end/jobs/jobList.blade.php'))) {
+        return view(
+            'extend.front-end.jobs.jobList',
+            compact(
+                'jobs',
+                'categories',
+                'locations',
+                'languages',
+                'freelancer_skills',
+                'project_length',
+                'Jobs_total_records',
+                'skills',
+                'type',
+                'current_date',
+                'symbol',
+                'job_list_meta_title',
+                'job_list_meta_desc',
+                'show_job_banner',
+                'job_inner_banner',
+                'show_breadcrumbs'
+                
+            )
+        );
+    } else {
+        return view(
+            'front-end.jobs.jobList',
+            compact(
+                'jobs',
+                'categories',
+                'locations',
+                'languages',
+                'freelancer_skills',
+                'project_length',
+                'Jobs_total_records',
+                'skills',
+                'type',
+                'current_date',
+                'symbol',
+                'job_list_meta_title',
+                'job_list_meta_desc',
+                'show_job_banner',
+                'job_inner_banner',
+                'show_breadcrumbs'
+            )
+        );
+    }
+
+   }
 
 }

@@ -8,6 +8,7 @@ use App\Category;
 use App\Location;
 use App\Blog;
 use App\Helper;
+use App\Skill;
 use App\SiteManagement;
 use Auth;
 
@@ -331,8 +332,104 @@ class BlogController extends Controller
             $json['message'] = trans('lang.something_wrong');
             return $json;
         }
+       
     }
+    public function bloglist($type,$slug){
+        
+        // $blogs = Blog::select('*')->where('status','published')->orderBy('id','DESC');
+        $categories = Category::orderBy('title')->get();
+        $skills     = Skill::orderBy('title')->get();
+        $blog_id = array();
+        $blogs= array();
+        if($type=='category'){
+            $categor_obj = Category::where('slug', $slug)->first();
+            if(!empty($categor_obj->id)){
+                $category = Category::find($categor_obj->id);
+               
+                if (!empty($category->blogs)) {
+                    $category_blogs = $category->blogs->pluck('id')->toArray();
+                    foreach ($category_blogs as $id) {
+                        $blog_id[] = $id;
+                    }
+                }
+                $blogs = Blog::where('status','published')->whereIn('id', $blog_id)->orderBy('id','DESC')->get();
+            }
+        }
+        if($type='skill'){
+                $skill_obj = Skill::where('slug', $slug)->first();
+                if(!empty($skill_obj->id)){
+                $skill= Skill::find($skill_obj->id);
+                if (!empty($skill->blogs)) {
+                    $skill_blogs = $skill->blogs->pluck('id')->toArray();
+                    foreach ($skill_blogs as $id) {
+                        $blog_id[] = $id;
+                    }
+                }
+            
+            $blogs=Blog::where('status','published')->whereIn('id', $blog_id)->orderBy('id','DESC')->get();
+            }
+        }
+        $type = "Blogs";
+        if (file_exists(resource_path('views/extend/front-end/blogs/blogList.blade.php'))) {
+            return view(
+                'extend.front-end.blogs.BlogList',
+                compact(
+                    'categories',
+                    'skills',
+                    'type',
+                    'blogs',
+                )
+            );
+        } else {
+            return view(
+                'front-end.blogs.blogList',
+                compact(
+                    'categories',
+                    'skills',
+                    'type',
+                    'blogs',
+                )
+            );
+        }
+    }
+    public function blogslist(){
+        
+        // $blogs = Blog::select('*')->where('status','published')->orderBy('id','DESC');
+        $locations  = Location::all();
+        $languages  = Language::all();
+        $categories = Category::orderBy('title')->get();
+        $skills     = Skill::orderBy('title')->get();
+        $blog_id = array();
+        $blogs= array();
+        $blogs=Blog::where('status','published')->orderByRaw("updated_at DESC")->paginate(10)->setPath('');
+        $type = "blogs";
+        if (file_exists(resource_path('views/extend/front-end/blogs/blogList.blade.php'))) {
+            return view(
+                'extend.front-end.blogs.BlogList',
+                compact(
+                    'locations',
+                    'languages',
+                    'categories',
+                    'skills',
+                    'type',
+                    'blogs',
+                )
+            );
+        } else {
+            return view(
+                'front-end.blogs.blogList',
+                compact(
+                    'categories',
+                    'skills',
+                    'type',
+                    'blogs',
+                )
+            );
+        }
+    }
+ }
 
-    }
+
+   
 
 
