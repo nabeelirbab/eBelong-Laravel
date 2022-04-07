@@ -1,7 +1,9 @@
 <template>
   <div v-if="isShow">
     <div class="candidate_count">
-      <img :src="`${baseUrl}/uploads/candidates.png`" alt="candidate count" />
+      <a :href="baseUrl + '/wishlist'">
+        <img :src="`${baseUrl}/uploads/candidates.png`" alt="candidate count" />
+      </a>
     </div>
     <div class="count">
       <h5>{{ countValue }}</h5>
