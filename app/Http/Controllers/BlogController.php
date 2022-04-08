@@ -37,14 +37,14 @@ class BlogController extends Controller
         $languages = Language::pluck('title', 'id');
         $locations = Location::pluck('title', 'id');
         $categories = Category::pluck('title', 'id');
-        // if (file_exists(resource_path('views/back-end/editor/blogs/create.blade.php'))) {
+        if (file_exists(resource_path('views/back-end/editor/blogs/create.blade.php'))) {
             return view(
                 'back-end.editor.blogs.create',
                 compact(
                     'languages',
                     'categories')
             );
-        // } 
+        } 
     }
 
     public function getBlogSkills(Request $request)
@@ -153,25 +153,25 @@ class BlogController extends Controller
                     $blog->save();
                 }
                 if (!empty($blog)) {
-                    if (file_exists(resource_path('views/extend/front-end/blogs/show.blade.php'))) {
-                        return view(
-                            'extend.front-end.blogs.show',
-                            compact(
-                                'blog',
-                                'attachments',
-                                'show_breadcrumbs',
-                            )
-                        );
-                    } else {
+                    // if (file_exists(resource_path('views/extend/front-end/blogs/show.blade.php'))) {
+                    //     return view(
+                    //         'extend.front-end.blogs.show',
+                    //         compact(
+                    //             'blog',
+                    //             'attachments',
+                    //             'show_breadcrumbs'
+                    //         )
+                    //     );
+                    // } else {
                         return view(
                             'front-end.blogs.show',
                             compact(
                                 'blog',
                                 'attachments',
-                                'show_breadcrumbs',
+                                'show_breadcrumbs'
                             )
                         );
-                    }
+                    // }
                 } else {
                     abort(404);
                 }
@@ -197,8 +197,7 @@ class BlogController extends Controller
                     'back-end.editor.blogs.index',
                     compact(
                         'blogs',
-                        'status_list'
-                        
+                        'status_list'  
                     )
                 );
             }
@@ -214,7 +213,6 @@ class BlogController extends Controller
                     compact(
                         'blogs',
                         'status_list'
-                      
                     )
                 );
             } else {
@@ -223,7 +221,6 @@ class BlogController extends Controller
                     compact(
                         'blogs',
                         'status_list'
-                        
                     )
                 );
             }
@@ -261,10 +258,9 @@ class BlogController extends Controller
             return view(
                 'extend.back-end.editor.blogs.edit',
                 compact(
-                    
                     'categories',
                     'blogs',
-                    'attachments',
+                    'attachments'
                 )
             );
         } else {
