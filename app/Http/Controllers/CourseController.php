@@ -6,6 +6,7 @@ use Srmklive\PayPal\Services\ExpressCheckout;
 use Stripe\Error\Card;
 use Illuminate\Http\Request;
 use App\Language;
+use App\Skill;
 use App\Category;
 use App\Location;
 use App\Helper;
@@ -1492,4 +1493,139 @@ class CourseController extends Controller
         return $json;
 
     }     
+
+    public function courseList($type,$slug){
+        
+        // $blogs = Blog::select('*')->where('status','published')->orderBy('id','DESC');
+        $locations  = Location::all();
+        $languages  = Language::all();
+        $categories = Category::all();
+        $delivery_time = DeliveryTime::all();
+        $response_time = ResponseTime::all();
+        $skills     = Skill::orderBy('title')->get();
+        $course_id = array();
+        $services= array();
+        if($type=='category'){
+            $categor_obj = Category::where('slug', $slug)->first();
+            if(!empty($categor_obj->id)){
+                $category = Category::find($categor_obj->id);
+               
+                if (!empty($category->courses)) {
+                    $category_courses = $category->courses->pluck('id')->toArray();
+                    foreach ($category_courses as $id) {
+                        $course_id[] = $id;
+                    }
+                }
+                $services = Cource::where('status','published')->whereIn('id', $course_id)->orderBy('id','DESC')->paginate(10)->setPath('');
+            }
+        }
+        if($type=='skill'){
+                $skill_obj = Skill::where('slug', $slug)->first();
+                if(!empty($skill_obj->id)){
+                $skill= Skill::find($skill_obj->id);
+                if (!empty($skill->courses)) {
+                    $skill_courses = $skill->courses->pluck('id')->toArray();
+                    foreach ($skill_courses as $id) {
+                        $course_id[] = $id;
+                    }
+                }
+            
+            $services=Cource::where('status','published')->whereIn('id', $course_id)->orderBy('id','DESC')->paginate(10)->setPath('');
+            }
+        }
+        if($type=='location'){
+            $location = Location::select('id')->where('slug', $slug)->get()->pluck('id')->toArray();
+            $services=Cource::where('status','published')->whereIn('location_id', $location)->paginate(10)->setPath('');
+       
+        }
+        if($type=='language'){
+            $language = Language::where('slug', $slug)->first();
+            $lang = Language::find($language['id']);
+                if (!empty($lang->courses)) {
+                    $lang_courses = $lang->courses->pluck('id')->toArray();
+                    foreach ($lang_courses as $id) {
+                        $course_id[] = $id;
+                    }
+                }
+            $services=Cource::where('status','published')->whereIn('id', $course_id)->orderBy('id','DESC')->paginate(10)->setPath('');
+        }
+        if ($type=='delivery-time') {
+            $deliverytime = DeliveryTime::select('id')->where('slug', $slug)->get()->pluck('id')->toArray();
+            $services = Cource::where('status','published')->whereIn('delivery_time_id', $deliverytime)->paginate(10)->setPath('');
+        }
+        if ($type=='response-time') {
+            $responsetime = ResponseTime::select('id')->where('slug', $slug)->get()->pluck('id')->toArray();
+            $services= Cource::where('status','published')->whereIn('response_time_id', $responsetime)->paginate(10)->setPath('');
+        }
+        $type = "instructors";
+        if (file_exists(resource_path('views/extend/front-end/cources/courseList.blade.php'))) {
+            return view(
+                'extend.front-end.cources.courseList',
+                compact(
+                    'locations',
+                    'languages',
+                    'categories',
+                    'skills',
+                    'type',
+                    'delivery_time',
+                    'response_time',
+                    'services',
+                )
+            );
+        } else {
+            return view(
+                'front-end.cources.courseList',
+                compact(
+                    'locations',
+                    'languages',
+                    'categories',
+                    'skills',
+                    'type',
+                    'delivery_time',
+                    'response_time',
+                    'services',
+                )
+            );
+        }
+    }
+    public function coursesListing(){
+        $locations  = Location::all();
+        $languages  = Language::all();
+        $categories = Category::orderBy('title')->get();;
+        $skills     = Skill::orderBy('title')->get();
+        $delivery_time = DeliveryTime::all();
+        $response_time = ResponseTime::all();
+        $services= array();
+        $services=Cource::where('status','published')->orderByRaw("is_featured DESC, updated_at DESC")->paginate(10)->setPath('');
+        $type = "instructors";
+        if (file_exists(resource_path('views/extend/front-end/cources/courseList.blade.php'))) {
+            return view(
+                'extend.front-end.cources.courseList',
+                compact(
+                    'locations',
+                    'languages',
+                    'categories',
+                    'skills',
+                    'type',
+                    'delivery_time',
+                    'response_time',
+                    'services',
+                )
+            );
+        } else {
+            return view(
+                'front-end.cources.courseList',
+                compact(
+                    'locations',
+                    'languages',
+                    'categories',
+                    'skills',
+                    'type',
+                    'delivery_time',
+                    'response_time',
+                    'services',
+                )
+            );
+        }
+    }
     }  

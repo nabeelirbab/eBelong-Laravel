@@ -266,7 +266,7 @@ class Blog extends Model
                 $categor_obj = Category::where('slug', $search_category)->first();
                 $category = Category::find($categor_obj->id);
                
-                if (!empty($category->courses)) {
+                if (!empty($category->blogs)) {
                     $category_blogs = $category->blogs->pluck('id')->toArray();
                     foreach ($category_blogs as $id) {
                         $blog_id[] = $id;

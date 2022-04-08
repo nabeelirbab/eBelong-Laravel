@@ -4,21 +4,21 @@
 @push('stylesheets')
     <link href="{{ asset('css/owl.carousel.min.css') }}" rel="stylesheet">
 @endpush
-@section('title'){{ $service_list_meta_title }} @stop
-@section('description', $service_list_meta_desc)
+@section('title'){{'Course Listing' }} @stop
+@section('description', 'Course Listing')
 @section('content')
 @php
     $show_service_banner = 'true'
 @endphp
     @if ($show_service_banner == 'true')
         @php $breadcrumbs = Breadcrumbs::generate('searchResults'); @endphp
-        <div class="wt-haslayout wt-innerbannerholder" style="background-image:url({{{ asset(Helper::getBannerImage($service_inner_banner, 'uploads/settings/general')) }}})">
+        {{-- <div class="wt-haslayout wt-innerbannerholder" style="background-image:url({{{ asset(Helper::getBannerImage($service_inner_banner, 'uploads/settings/general')) }}})"> --}}
             <div class="container">
                 <div class="row justify-content-md-center">
                     <div class="col-xs-12 col-sm-12 col-md-8 push-md-2 col-lg-6 push-lg-3">
                         <div class="wt-innerbannercontent">
                             <div class="wt-title">
-                                <h2>Services</h2>
+                                <h2>Courses</h2>
                             </div>
                             @if (!empty($show_breadcrumbs) && $show_breadcrumbs === 'true')
                                 @if (count($breadcrumbs))
@@ -41,18 +41,19 @@
     @endif
     <div class="wt-haslayout wt-main-section" id="services">
     <div class="search-form">
-              <search-form
+              {{-- <search-form
                 :placeholder="'{{ trans('lang.looking_for') }}'"
                 :freelancer_placeholder="'{{ trans('lang.search_filter_list.freelancer') }}'"
                 :employer_placeholder="'{{ trans('lang.search_filter_list.employers') }}'"
                 :job_placeholder="'{{ trans('lang.search_filter_list.jobs') }}'"
                 :service_placeholder="'{{ trans('lang.search_filter_list.services') }}'"
+                :instructor_placeholder="'{{ trans('lang.search_filter_list.courses') }}'"
                 :no_record_message="'{{ trans('lang.no_record') }}'"
                 >
-                </search-form>
+                </search-form> --}}
         </div>
         @if (Session::has('payment_message'))
-            @php $response = Session::get('payment_message') ;@endphp
+            @php $response = Session::get('payment_message') @endphp
             <div class="flash_msg">
                 <flash_messages :message_class="'{{{$response['code']}}}'" :time ='5' :message="'{{{ $response['message'] }}}'" v-cloak></flash_messages>
             </div>
@@ -63,10 +64,10 @@
                     <div id="wt-twocolumns" class="wt-twocolumns wt-haslayout">
 						<div class="filter_icon btn btn-success"><i class="fa fa-filter"></i>Filter</div> 
                         <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 col-xl-4 filter-page float-left">
-                            @if (file_exists(resource_path('views/extend/front-end/services/filters.blade.php'))) 
-                                @include('extend.front-end.services.filters')
+                            @if (file_exists(resource_path('views/extend/front-end/cources/filters.blade.php'))) 
+                                @include('extend.front-end.cources.filters')
                             @else 
-                                @include('front-end.services.filters')
+                                @include('front-end.cources.filters')
                             @endif
                         </div>
                         <div class="col-12 col-sm-12 col-md-7 col-lg-7 col-xl-8 float-left">
@@ -80,7 +81,7 @@
                                     @if (!empty($services) && $services->count() > 0)
                                         @foreach ($services as $service)
                                             @php 
-                                                $service_reviews = $service->seller->count() > 0 ? Helper::getServiceReviews($service->seller[0]->id, $service->id) : ''; 
+                                                $service_reviews = $service->seller->count() > 0 ? Helper::getCourceReviews($service->seller[0]->id, $service->id) : ''; 
                                                 $service_rating=0;
                                                 if(!empty($service_reviews)) {
                                                     $service_rating = $service_reviews->sum('avg_rating') != 0 ? round($service_reviews->sum('avg_rating') / $service_reviews->count()) : 0;
@@ -88,7 +89,7 @@
                                                 $attachments = Helper::getUnserializeData($service->attachments);
                                                 $no_attachments = empty($attachments) ? 'la-service-info' : '';
                                                 $enable_slider = !empty($attachments) ? 'wt-servicesslider' : '';
-                                                $total_orders = Helper::getServiceCount($service->id, 'hired');
+                                                $total_orders = Helper::getCourceCount($service->id,'bought');
                                             @endphp
                                             <div class="col-12 col-sm-12 col-md-6 col-lg-6 float-left">
                                                 <div class="wt-freelancers-info {{$no_attachments}}">
@@ -98,14 +99,14 @@
                                                             <div class="wt-freelancers {{{$enable_slider}}}">
                                                                 @foreach ($attachments as $attachment)
                                                                     <figure class="item">
-                                                                        <a href="{{{url('service/'.$service->slug)}}}"><img src="{{{asset(Helper::getImageWithSize('uploads/services/'.$service->seller[0]->id, $attachment, 'medium'))}}}" alt="img descriptions" class="item"></a>
+                                                                        <a href="{{{ url('instructor/'.$service->slug) }}}"><img src="{{{asset(Helper::getImageWithSize('uploads/courses/'.$service->seller[0]->id, $attachment, 'medium'))}}}" alt="img descriptions" class="item"></a>
                                                                     </figure>
                                                                 @endforeach
                                                             </div>
                                                         @else
                                                             <div class="wt-freelancers">
                                                                 <figure class="item">
-                                                                    <a href="javascript:void(0)"><img src="{{ asset('uploads/settings/general/imgae-not-availabe.png') }}" alt="img description" class="item"></a>
+                                                                    <a href="{{{ url('instructor/'.$service->slug) }}}"><img src="{{ asset('uploads/settings/general/imgae-not-availabe.png') }}" alt="img description" class="item"></a>
                                                                 </figure>
                                                             </div>
                                                         @endif
@@ -134,8 +135,8 @@
                                                                 @if ($service->seller->count() > 0)
                                                                     <a href="{{{ url('profile/'.$service->seller[0]->slug) }}}"><i class="fa fa-check-circle"></i> {{{Helper::getUserName($service->seller[0]->id)}}}</a>
                                                                 @endif
-                                                                <a href="{{{url('service/'.$service->slug)}}}"><h3>{{{$service->title}}}</h3></a>
-                                                                <span><strong>{{ (!empty($symbol['symbol'])) ? $symbol['symbol'] : '$' }}{{{$service->price}}}</strong> {{trans('lang.starting_from')}}</span>
+                                                                <a href="{{{url('instructor/'.$service->slug)}}}"><h3>{{{$service->title}}}</h3></a>
+                                                                <span><strong>{{ (!empty($symbol['symbol'])) ? $symbol['symbol'] : '$' }}{{{$service->price}}}</strong> </span>
                                                             </div>
                                                         </div>
                                                         <div class="wt-freelancers-rating">

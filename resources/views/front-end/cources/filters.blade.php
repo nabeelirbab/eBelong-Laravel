@@ -81,8 +81,8 @@
                             @foreach ($locations as $location)
                                 @php $checked = ( !empty($_GET['locations']) && in_array($location->slug, $_GET['locations'])) ? 'checked' : '' @endphp
                                 <span class="wt-checkbox">
-                                    <input id="location-{{{ $location->slug }}}" type="checkbox" name="locations[]" value="{{{$location->slug}}}" {{$checked}} >
-                                    <label for="location-{{{ $location->slug }}}"> <img src="{{{asset(Helper::getLocationFlag($location->flag))}}}" alt="{{ trans('lang.img') }}" style="width:18px;height:11px"> {{{ $location->title }}}</label>
+                                    <input id="location-{{{ $location['slug'] }}}" type="checkbox" name="locations[]" value="{{{$location['slug']}}}" {{$checked}} >
+                                    <label for="location-{{{ $location['slug'] }}}"> <img src="{{{asset(Helper::getLocationFlag($location['flag']))}}}" alt="{{ trans('lang.img') }}" style="width:18px;height:11px"> {{{ $location['title'] }}}</label>
                                 </span>
                             @endforeach
                         </div>

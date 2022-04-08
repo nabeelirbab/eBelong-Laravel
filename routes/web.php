@@ -70,6 +70,26 @@ Route::get('wishlist', 'PublicController@GuestWishlist');
 Route::get('get-skills-for-wishlist', 'SkillController@getWhishlistSkills');
 Route::get('get-categories-for-whishlist', 'CategoryController@getWishlistCategories');
 
+//seo-blogs
+Route::get('blogs/{type}/{slug}', 'BlogController@BlogList');
+Route::get('blogs', 'BlogController@BlogsList');
+
+//seo-courses
+Route::get('courses/{type}/{slug}', 'CourseController@courseList');
+Route::get('courses', 'CourseController@coursesListing');
+
+//seo-services
+Route::get('services/{type}/{slug}', 'ServiceController@ServiceList');
+Route::get('services', 'ServiceController@servicesListing')->name('services');
+
+//seo-freelancers
+Route::get('freelancers/{type}/{slug}', 'FreelancerController@freelancerList');
+Route::get('freelancers', 'FreelancerController@freelancersListing');
+
+//seo-jobs
+Route::get('jobs/{type}/{slug}', 'JobController@jobsList');
+Route::get('jobs', 'JobController@jobsListing')->name('jobs');
+
 /*Route::get('/sendemail', 'SendMailController@index');
 Route::post('/sendemail/send', 'SendMailController@send'); */
 
@@ -101,12 +121,12 @@ Route::get('page/{slug}', 'PageController@show')->name('showPage');
 Route::get('get-related-freelancers/{user_id}','PublicController@getUserRelatedFreelancers');
 Route::post('store/project-offer', 'UserController@storeProjectOffers');
 if (Helper::getAccessType() == 'both' || Helper::getAccessType() == 'jobs') {
-    Route::get('jobs', 'JobController@listjobs')->name('jobs');
+    // Route::get('jobs', 'JobController@listjobs')->name('jobs');
     Route::get('job/{slug}', 'JobController@show')->name('jobDetail');
 }
 
 if (Helper::getAccessType() == 'both' || Helper::getAccessType() == 'services') {
-    Route::get('services', 'ServiceController@index')->name('services');
+    // Route::get('services', 'ServiceController@index')->name('services');
     Route::get('service/{slug}', 'ServiceController@show')->name('serviceDetail');
 }
 if (Helper::getAccessType() == 'both' || Helper::getAccessType() == 'instructor') {
@@ -443,6 +463,8 @@ Route::group(
         Route::get('get/{type}/{filename}/{id}', 'PublicController@getFile')->name('getfile');
         Route::post('blog/update-blog', 'BlogController@update');
         Route::post('blog/change-status', 'BlogController@changeStatus');
+        
+
    
    
     }
@@ -475,8 +497,10 @@ Route::group(
         Route::get('freelancer/dashboard/edit-service/{id}', 'ServiceController@edit')->name('edit_service');
         Route::get('freelancer/dashboard/edit-course/{id}', 'CourseController@edit')->name('edit_course');
         Route::post('course/get-stored-course-skills', 'CourseController@getCourseSkills');
+        Route::post('service/get-stored-service-skills', 'ServiceController@getServiceSkills');
         Route::post('agency/get-stored-agency-skills', 'AgencyController@getAgencySkills');
         Route::post('skills/get-course-skills', 'SkillController@getCourseSkills');
+        Route::post('skills/get-service-skills', 'SkillController@getServiceSkills');
         Route::post('skills/get-agency-skills', 'SkillController@getAgencySkills');
         Route::post('services/post-service', 'ServiceController@store');
         Route::post('courses/post-course', 'CourseController@store');

@@ -14,6 +14,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Schema;
 use App\Freelancer;
 use App\Cource;
+use App\Language;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use App\Helper;
@@ -1397,6 +1398,221 @@ public function adminRating(Request $request){
             }
         } else {
             abort(404);
+        }
+    }
+
+    public function freelancerList($type,$slug){
+        $locations  = Location::all();
+        $languages  = Language::all();
+        $categories = Category::all();
+        $skills     = Skill::orderBy('title')->get();
+        $user_by_role =  User::role('freelancer')->pluck('id')->toArray();
+        // $users = !empty($user_by_role) ? User::whereIn('id', $user_by_role)->where('is_disabled', 'false')->where('status',1) : array();
+        $users = !empty($user_by_role) ? User::whereIn('id', $user_by_role)->where('is_disabled', 'false')->where('status',1) : array();
+        
+        $inner_page  = SiteManagement::getMetaValue('inner_page_data');
+        $project_length = Helper::getJobDurationList();
+        $symbol   = !empty($currency) && !empty($currency[0]['currency']) ? Helper::currencyList($currency[0]['currency']) : array();
+        $save_freelancer = !empty(auth()->user()->profile->saved_freelancer) ?
+                    unserialize(auth()->user()->profile->saved_freelancer) : array();
+        $f_list_meta_title = !empty($inner_page) && !empty($inner_page[0]['f_list_meta_title']) ? $inner_page[0]['f_list_meta_title'] : trans('lang.freelancer_listing');
+        $f_list_meta_desc = !empty($inner_page) && !empty($inner_page[0]['f_list_meta_desc']) ? $inner_page[0]['f_list_meta_desc'] : trans('lang.freelancer_meta_desc');
+        $show_f_banner = !empty($inner_page) && !empty($inner_page[0]['show_f_banner']) ? $inner_page[0]['show_f_banner'] : 'true';
+        $f_inner_banner = !empty($inner_page) && !empty($inner_page[0]['f_inner_banner']) ? $inner_page[0]['f_inner_banner'] : null;
+        $users_total_records = User::count();
+        $current_date = Carbon::now()->toDateTimeString();
+        $payment_settings = SiteManagement::getMetaValue('commision');
+        $enable_package = !empty($payment_settings) && !empty($payment_settings[0]['enable_packages']) ? $payment_settings[0]['enable_packages'] : 'true';
+        $breadcrumbs_settings = SiteManagement::getMetaValue('show_breadcrumb');
+        $show_breadcrumbs = !empty($breadcrumbs_settings) ? $breadcrumbs_settings : 'true';
+        
+        $user_id = array();
+        if ($type=='category') {
+            $user_id = array();
+            $category_obj = Category::where('slug',$slug)->first();
+            if(!empty($category_obj->id)){
+            $freelancers = Profile::where('category_id', $category_obj->id)->get();
+            foreach ($freelancers as $key => $freelancer) {
+                if (!empty($freelancer->user_id)) {
+                    $user_id[] = $freelancer->user_id;
+                }
+            }
+        }
+        $users->whereIn('id', $user_id)->orderBy('is_certified', 'DESC'); 
+        }
+        if ($type=='location') {
+            $location = Location::select('id')->where('slug', $slug)
+                ->get()->pluck('id')->toArray();
+            $users->whereIn('location_id', $location)->orderBy('is_certified', 'DESC');
+            
+        }
+        if($type=='skill'){
+    
+            $user_id = array();
+                $skills = Skill::where('slug', $slug)->get();
+                foreach ($skills as $key => $skill) {
+                    $userid = DB::table('skill_user')->select('user_id')->where('skill_id',$skill->id)->get();
+                    foreach($userid as $ui){
+                        $user_id[] = $ui->user_id;
+                    }
+                }
+                $users->whereIn('id', $user_id)->orderBy('is_certified', 'DESC'); 
+
+        }
+        if ($type=='english-level') {
+           
+            $freelancers = Profile::where('english_level', $slug)->get();
+            foreach ($freelancers as $key => $freelancer) {
+                if (!empty($freelancer->user_id)) {
+                    $user_id[] = $freelancer->user_id;
+                }
+            }
+            $users->whereIn('id', $user_id)->orderBy('is_certified', 'DESC');
+        }
+       
+        if ($type=='hourly-rate') {
+           
+            $min = '';
+            $max = '';
+           
+                $hourly_rates = explode("-", $slug);
+                $min = $hourly_rates[0];
+                if (!empty($hourly_rates[1])) {
+                    $max = $hourly_rates[1];
+                }
+                $userid = Profile::select('user_id')->whereIn('user_id', $user_by_role)
+                    ->whereBetween('hourly_rate', [$min, $max])->get()->pluck('user_id')->toArray();
+                foreach($userid as $ui){
+                    $user_id[] = $ui;
+                }
+            
+            $users->whereIn('id', $user_id)->orderBy('is_certified', 'DESC');;
+        }
+
+        $users = $users->paginate(20)->setPath('');
+
+        $type="freelancer";
+        if (file_exists(resource_path('views/extend/front-end/freelancers/freelancersList.blade.php'))) {
+            return view(
+                'extend.front-end.freelancers.freelancersList',
+                compact(
+                                'type',
+                                'users',
+                                'categories',
+                                'locations',
+                                'languages',
+                                'skills',
+                                'project_length',
+                                'users_total_records',
+                                'save_freelancer',
+                                'symbol',
+                                'current_date',
+                                'f_list_meta_title',
+                                'f_list_meta_desc',
+                                'show_f_banner',
+                                'f_inner_banner',
+                                'enable_package',
+                                'show_breadcrumbs'
+                )
+            );
+        } else {
+            return view(
+                'front-end.freelancers.freelancersList',
+                compact(
+                    'type',
+                    'users',
+                    'categories',
+                    'locations',
+                    'languages',
+                    'skills',
+                    'project_length',
+                    'users_total_records',
+                    'save_freelancer',
+                    'symbol',
+                    'current_date',
+                    'f_list_meta_title',
+                    'f_list_meta_desc',
+                    'show_f_banner',
+                    'f_inner_banner',
+                    'enable_package',
+                    'show_breadcrumbs'
+                )
+            );
+        }
+        
+    }
+    public function freelancersListing(){
+        $locations  = Location::all();
+        $languages  = Language::all();
+        $categories = Category::orderBy('title')->get();
+        $skills     = Skill::orderBy('title')->get();
+        $user_by_role =  User::role('freelancer')->pluck('id')->toArray();
+        // $users = !empty($user_by_role) ? User::whereIn('id', $user_by_role)->where('is_disabled', 'false')->where('status',1) : array();
+        $users = User::join('profiles', 'users.id', '=', 'profiles.user_id')
+        ->select('users.*')
+         ->whereIn('users.id', $user_by_role)->where('users.is_disabled', 'false')->where('users.status',1)
+         ->orderBy('users.is_certified','DESC')
+         ->orderBy('profiles.avater', 'DESC')->paginate(20)->setPath('');
+        $type = "freelancer";
+        $project_length = Helper::getJobDurationList();
+        $symbol   = !empty($currency) && !empty($currency[0]['currency']) ? Helper::currencyList($currency[0]['currency']) : array();
+        $save_freelancer = !empty(auth()->user()->profile->saved_freelancer) ?
+                    unserialize(auth()->user()->profile->saved_freelancer) : array();
+        $f_list_meta_title = !empty($inner_page) && !empty($inner_page[0]['f_list_meta_title']) ? $inner_page[0]['f_list_meta_title'] : trans('lang.freelancer_listing');
+        $f_list_meta_desc = !empty($inner_page) && !empty($inner_page[0]['f_list_meta_desc']) ? $inner_page[0]['f_list_meta_desc'] : trans('lang.freelancer_meta_desc');
+        $show_f_banner = !empty($inner_page) && !empty($inner_page[0]['show_f_banner']) ? $inner_page[0]['show_f_banner'] : 'true';
+        $f_inner_banner = !empty($inner_page) && !empty($inner_page[0]['f_inner_banner']) ? $inner_page[0]['f_inner_banner'] : null;
+        $users_total_records = User::count();
+        $current_date = Carbon::now()->toDateTimeString();
+        $enable_package = !empty($payment_settings) && !empty($payment_settings[0]['enable_packages']) ? $payment_settings[0]['enable_packages'] : 'true';
+        $breadcrumbs_settings = SiteManagement::getMetaValue('show_breadcrumb');
+        $show_breadcrumbs = !empty($breadcrumbs_settings) ? $breadcrumbs_settings : 'true';
+        if (file_exists(resource_path('views/extend/front-end/freelancers/freelancersList.blade.php'))) {
+            return view(
+                'extend.front-end.freelancers.freelancersList',
+                compact(
+                                'type',
+                                'users',
+                                'categories',
+                                'locations',
+                                'languages',
+                                'skills',
+                                'project_length',
+                                'users_total_records',
+                                'save_freelancer',
+                                'symbol',
+                                'current_date',
+                                'f_list_meta_title',
+                                'f_list_meta_desc',
+                                'show_f_banner',
+                                'f_inner_banner',
+                                'enable_package',
+                                'show_breadcrumbs'
+                )
+            );
+        } else {
+            return view(
+                'front-end.freelancers.freelancersList',
+                compact(
+                    'type',
+                    'users',
+                    'categories',
+                    'locations',
+                    'languages',
+                    'skills',
+                    'project_length',
+                    'users_total_records',
+                    'save_freelancer',
+                    'symbol',
+                    'current_date',
+                    'f_list_meta_title',
+                    'f_list_meta_desc',
+                    'show_f_banner',
+                    'f_inner_banner',
+                    'enable_package',
+                    'show_breadcrumbs'
+                )
+            );
         }
     }
 }

@@ -65,6 +65,51 @@ Vue.use(BootstrapVue);
 Vue.prototype.$bus = new Vue();
 
 Vue.component("multiselect", Multiselect);
+Vue.component('verte', Verte);
+Vue.component('upload-file', require('./components/UploadFileComponent.vue').default);
+Vue.component('upload-image', require('./components/UploadImageComponent.vue').default);
+Vue.component('flash_messages', require('./components/FlashMessages.vue').default);
+Vue.component('switch_button', require('./components/SwitchButton.vue').default);
+Vue.component('user_skills', require('./components/ProfileSkillComponent.vue').default);
+Vue.component('cources_skills', require('./components/CourcesSkillComponent.vue').default);
+Vue.component('services_skills', require('./components/servicesSkillComponent.vue').default);
+Vue.component('agency_skills', require('./components/AgencySkillComponent.vue').default);
+Vue.component('blog_skills', require('./components/BlogSkillComponent.vue').default);
+Vue.component('freelancer_experience', require('./components/ProfileExperienceComponent.vue').default);
+Vue.component('freelancer_education', require('./components/ProfileEducationComponent.vue').default);
+Vue.component('freelancer_project', require('./components/ProfileProjectComponent.vue').default);
+Vue.component('freelancer_award', require('./components/ProfileAwardComponent.vue').default);
+Vue.component('job_attachments', require('./components/UploadJobAttachmentComponent.vue').default);
+Vue.component('job_multiple-attachments', require('./components/JobMultipleAttachmentComponent.vue').default);
+Vue.component('job_skills', require('./components/JobSkillComponent.vue').default);
+Vue.component('private-message', require('./components/PrivateMessageComponent.vue').default);
+Vue.component('rating', require('./components/RatingComponent.vue').default);
+Vue.component('search-form', require('./components/SearchComponent.vue').default);
+require('./components/FlashMessageComponent.vue').default
+Vue.component("vue-stars", VueStars)
+Vue.component('vue-bootstrap-typeahead', VueBootstrapTypeahead)
+Vue.component('chat', require('./components/Chat.vue').default);
+Vue.component('chat-users', require('./components/ChatUserComponent.vue').default);
+Vue.component('chat-messages', require('./components/ChatMessageComponent.vue').default);
+Vue.component('chat-area', require('./components/ChatAreaComponent.vue').default);
+Vue.component('message-center', require('./components/ChatComponent.vue').default);
+Vue.component('emoji-textarea', require('./components/emojiTexeareaComponent.vue').default);
+Vue.component('delete', require('./components/DeleteRecordComponent.vue').default);
+Vue.component('countdown', require('./components/CountDownComponent.vue').default);
+Vue.component('experience', require('./components/FreelancerExperienceComponent.vue').default);
+Vue.component('education', require('./components/FreelancerEducationComponent.vue').default);
+Vue.component('crafted_project', require('./components/FreelancerCraftedProjetcsComponent.vue').default);
+Vue.component('custom-map', require('./components/map.vue').default);
+Vue.component('dashboard-icon', require('./components/DashboardIconUploadComponent.vue').default);
+Vue.component('image-attachments', require('./components/UploadServiceAttachmentComponent.vue').default);
+Vue.component('freelancer-reviews', require('./components/FreelancerReviewsComponent.vue').default);
+Vue.component('job-expiry', require('./components/JobExperyComponent.vue').default);
+Vue.component('create-page', require('./components/pageBuilder/create.vue').default);
+Vue.component('edit-page', require('./components/pageBuilder/edit.vue').default);
+Vue.component('show-page', require('./components/pageBuilder/show/index.vue').default);
+Vue.component('second-slider', require('./components/pageBuilder/show/sliders/style2.vue').default);
+Vue.component('third-slider', require('./components/pageBuilder/show/sliders/style3.vue').default);
+Vue.component('search-theme5-form', require('./components/SearchComponent2.vue').default);
 Vue.component("verte", Verte);
 Vue.component(
   "upload-file",
@@ -5798,6 +5843,529 @@ if (document.getElementById("candidate_wislist")) {
 if (document.getElementById("candidate_count")) {
   const candidatesCount = new Vue({
     el: "#candidate_count",
+  });
+}
+if (document.getElementById("blog")) {
+  const vservices = new Vue({
+      el: '#blog',
+      mounted: function () {
+          if (document.getElementsByClassName("flash_msg") != null) {
+              flashVue.$emit('showFlashMessage');
+          }
+      },
+      created: function () {
+          this.getSettings();
+      },
+      data: {
+          report: {
+              reason: '',
+              description: '',
+              id: '',
+              model: 'App\\Blog',
+              report_type: '',
+          },
+          title: '',
+          delivery_time: '',
+          price: '',
+          response_time: '',
+          english_level: '',
+          message: '',
+          form_errors: [],
+          custom_error: false,
+          is_show: false,
+          loading: false,
+          show_attachments: false,
+          is_featured: false,
+          is_progress: false,
+          is_completed: false,
+          redirect_url: '',
+          errors: '',
+          disable_btn: '',
+          saved_class: '',
+          heart_class: 'fa fa-heart',
+          text: Vue.prototype.trans('lang.click_to_save'),
+          follow_text: Vue.prototype.trans('lang.click_to_follow'),
+          disable_follow: '',
+          refundable_user: '',
+          refundable_payment_method: '',
+          notificationSystem: {
+              options: {
+                  success: {
+                      position: "center",
+                      timeout: 4000
+                  },
+                  error: {
+                      position: "topRight",
+                      timeout: 7000
+                  },
+                  completed: {
+                      overlay: true,
+                      zindex: 999,
+                      position: 'center',
+                      progressBar: false,
+                  },
+                  info: {
+                      overlay: true,
+                      zindex: 999,
+                      position: 'center',
+                      timeout: 3000,
+                      class: 'iziToast-info',
+                      id: 'info_notify',
+                  }
+              }
+          }
+      },
+      methods: {
+          showCompleted(message) {
+              return this.$toast.success(' ', message, this.notificationSystem.options.completed);
+          },
+          showInfo(message) {
+              return this.$toast.info(' ', message, this.notificationSystem.options.info);
+          },
+          showMessage(message) {
+              return this.$toast.success(' ', message, this.notificationSystem.options.success);
+          },
+          showError(error) {
+              return this.$toast.error(' ', error, this.notificationSystem.options.error);
+          },
+          submitBlog: function () {
+              this.loading = true;
+              let Form = document.getElementById('post_blog_form');
+              let form_data = new FormData(Form);
+              var description = tinyMCE.get('wt-tinymceeditor').getContent();
+              form_data.append('content', description);
+              var self = this;
+              axios.post(APP_URL + '/blogs/post-blog', form_data)
+                  .then(function (response) {
+                      if (response.data.type == 'success') {
+                          self.loading = false;
+                          self.showInfo(response.data.progress);
+                          document.addEventListener('iziToast-closing', function (data) {
+                              if (data.detail.id == 'info_notify') {
+                                  self.showCompleted(response.data.message);
+                                  window.location.replace(APP_URL + '/search-results?type=blogs');
+                              }
+                          });
+                      } else {
+                          self.loading = false;
+                          self.showError(response.data.message);
+                      }
+                  })
+                  .catch(function (error) {
+                      self.loading = false;
+                      if (error.response.data.errors.title) {
+                          self.showError(error.response.data.errors.title[0]);
+                      }
+                     
+                      if (error.response.data.errors.description) {
+                          self.showError(error.response.data.errors.description[0]);
+                      }
+                      
+                  });
+          },
+          changeStatus: function (id) {
+              this.loading = true;
+              var status = document.getElementById(id + '-blog_status').value;
+              var self = this;
+              axios.post(APP_URL + '/blog/change-status', {
+                  status: status,
+                  id: id,
+              })
+                  .then(function (response) {
+                      if (response.data.type == 'success') {
+                          self.loading = false;
+                          self.showMessage(response.data.message);
+                      } else {
+                          self.loading = false;
+                          self.showError(response.data.message);
+                      }
+                  })
+                  .catch(function (error) {
+                      self.loading = false;
+                  });
+          },
+          getSettings: function () {
+              let self = this;
+              var segment_str = window.location.pathname;
+              var segment_array = segment_str.split('/');
+              var id = segment_array[segment_array.length - 1];
+              if (segment_str == '/freelancer/dashboard/edit-service/' + id) {
+                  axios.post(APP_URL + '/service/get-service-settings', {
+                      id: id
+                  })
+                      .then(function (response) {
+                          if (response.data.type == 'success') {
+                              if ((response.data.is_featured == 'true')) {
+                                  self.is_featured = true;
+                              } else {
+                                  self.is_featured = false;
+                              }
+                              if ((response.data.show_attachments == 'true')) {
+                                  self.show_attachments = true;
+                              } else {
+                                  self.show_attachments = false;
+                              }
+                          }
+                      });
+              }
+          },
+          updateBlog: function (id) {
+              this.loading = true;
+              let register_Form = document.getElementById('update_blog_form');
+              let form_data = new FormData(register_Form);
+              var description = tinyMCE.get('wt-tinymceeditor').getContent();
+              form_data.append('content', description);
+              form_data.append('id', id);
+              var self = this;
+              axios.post(APP_URL + '/blog/update-blog', form_data)
+                  .then(function (response) {
+                      self.loading = false;
+                      if (response.data.type == 'success') {
+                          self.showInfo(response.data.progress);
+                          document.addEventListener('iziToast-closing', function (data) {
+                              if (data.detail.id == 'info_notify') {
+                                  self.showCompleted(response.data.message);
+                                      window.location.replace(APP_URL + '/editor/manage-blogs')
+                              }
+                          });
+                      } else {
+                          self.loading = false;
+                          self.showError(response.data.message);
+                      }
+                  })
+                  .catch(function (error) {
+                      self.loading = false;
+                      if (error.response.data.errors.title) {
+                          self.showError(error.response.data.errors.title[0]);
+                      }
+                      if (error.response.data.errors.delivery_time) {
+                          self.showError(error.response.data.errors.delivery_time[0]);
+                      }
+                      if (error.response.data.errors.service_price) {
+                          self.showError(error.response.data.errors.service_price[0]);
+                      }
+                      if (error.response.data.errors.response_time) {
+                          self.showError(error.response.data.errors.response_time[0]);
+                      }
+                      if (error.response.data.errors.description) {
+                          self.showError(error.response.data.errors.description[0]);
+                      }
+                      if (error.response.data.errors.english_level) {
+                          self.showError(error.response.data.errors.english_level[0]);
+                      }
+                      if (error.response.data.errors.latitude) {
+                          self.showError(error.response.data.errors.latitude[0]);
+                      }
+                      if (error.response.data.errors.longitude) {
+                          self.showError(error.response.data.errors.longitude[0]);
+                      }
+                  });
+          },
+          deleteAttachment: function (id) {
+              jQuery('#' + id).remove();
+          },
+          submitReport: function (id, report_type) {
+              this.report.report_type = report_type;
+              this.report.id = id;
+              var self = this;
+              axios.post(APP_URL + '/submit-report', self.report)
+                  .then(function (response) {
+                      if (response.data.type == 'success') {
+                          self.showMessage(response.data.message);
+                      } else if (response.data.type == 'error') {
+                          self.showError(response.data.message);
+                      }
+                  })
+                  .catch(error => {
+                      if (error.response.status == 422) {
+                          if (error.response.data.errors.description) {
+                              self.showError(error.response.data.errors.description[0]);
+                          }
+                          if (error.response.data.errors.reason) {
+                              self.showError(error.response.data.errors.reason[0]);
+                          }
+                      }
+                  });
+          },
+          add_wishlist: function (element_id, id, column, seller_id, saved_text,hidable_element_id) {
+              var self = this;
+              axios.post(APP_URL + '/user/add-wishlist', {
+                  id: id,
+                  column: column,
+                  seller_id: seller_id,
+              })
+                  .then(function (response) {
+                      if (response.data.authentication == true) {
+                          if (response.data.type == 'success') {
+                              if (column == 'saved_freelancer') {
+                                  jQuery('#' + element_id).parents('li').addClass('wt-btndisbaled');
+                                  jQuery('#' + element_id).addClass('wt-clicksave');
+                                  jQuery('#' + element_id).find('.save_text').text(saved_text);
+                                  self.disable_btn = 'wt-btndisbaled';
+                                  self.text = 'Save';
+                                  self.saved_class = 'fa fa-heart';
+                                  self.click_to_save = 'wt-clicksave'
+                              }
+                              else if (column == 'saved_employers') {
+                                  jQuery('#' + element_id).addClass('wt-btndisbaled wt-clicksave');
+                                  jQuery('#' + element_id).text(saved_text);
+                                  jQuery('#' + element_id).parents('.wt-clicksavearea').find('i').addClass('fa fa-heart');
+                                  self.disable_follow = 'wt-btndisbaled';
+                                  self.follow_text = saved_text;
+                              }
+                              else if (column == 'saved_services') {
+                                  jQuery('#' + hidable_element_id).show();
+                                  jQuery('#' + element_id).hide();
+                                  
+                              }
+                              self.showMessage(response.data.message);
+                          } else {
+                              self.showError(response.data.message);
+                          }
+                      } else {
+                          self.showError(response.data.message);
+                      }
+                  })
+                  .catch(function (error) {
+                      console.log(error);
+                  });
+          },
+          remove_wishlist: function (element_id, id, column, seller_id, saved_text,hidable_element_id) {
+              var self = this;
+              axios.post(APP_URL + '/user/remove-wishlist', {
+                  id: id,
+                  column: column,
+                  seller_id: seller_id,
+              })
+                  .then(function (response) {
+                      if (response.data.authentication == true) {
+                          if (response.data.type == 'success') {
+                              if (column == 'saved_freelancer') {
+                                  jQuery('#' + element_id).parents('li').addClass('wt-btndisbaled');
+                                  jQuery('#' + element_id).addClass('wt-clicksave');
+                                  jQuery('#' + element_id).find('.save_text').text(saved_text);
+                                  self.disable_btn = 'wt-btndisbaled';
+                                  self.text = 'Save';
+                                  self.saved_class = 'fa fa-heart';
+                                  self.click_to_save = 'wt-clicksave'
+                              }
+                              else if (column == 'saved_employers') {
+                                  jQuery('#' + element_id).addClass('wt-btndisbaled wt-clicksave');
+                                  jQuery('#' + element_id).text(saved_text);
+                                  jQuery('#' + element_id).parents('.wt-clicksavearea').find('i').addClass('fa fa-heart');
+                                  self.disable_follow = 'wt-btndisbaled';
+                                  self.follow_text = saved_text;
+                              }
+                              else if (column == 'saved_services') {
+                                  jQuery('#' + hidable_element_id).show();
+                                  jQuery('#' + element_id).hide();
+                              }
+                              else if (column == 'saved_cources') {
+                                  // jQuery('#' + element_id).removeClass('wt-clicksave');
+                                  // self.saved_class = 'wt-clicksave';
+                                  jQuery('#' + hidable_element_id).show();
+                                  jQuery('#' + element_id).hide();
+                              }
+                              self.showMessage(response.data.message);
+                          } else {
+                              self.showError(response.data.message);
+                          }
+                      } else {
+                          self.showError(response.data.message);
+                      }
+                  })
+                  .catch(function (error) {
+                      console.log(error);
+                  });
+          },
+          hireFreelancer: function (id, title, text, mode) {
+              this.$swal({
+                  title: title,
+                  text: text,
+                  type: "warning",
+                  customContainerClass: 'hire_popup',
+                  showCancelButton: true,
+                  confirmButtonClass: "btn-danger",
+                  confirmButtonText: "Yes",
+                  cancelButtonText: "No",
+                  closeOnConfirm: true,
+                  closeOnCancel: true,
+                  showLoaderOnConfirm: false
+              }).then((result) => {
+                  if (result.value) {
+                      if (mode == 'false') {
+                          axios.post(APP_URL + '/user/generate-order/bacs/'+id+'/service')
+                          .then(function (response) {
+                              if (response.data.type == 'success') {
+                                  window.location.replace(APP_URL+'/user/order/bacs/'+response.data.service_order+'/'+response.data.order_id+'/project/service');
+                              }
+                          })
+                          .catch(function (error) {
+                              console.log(error);
+                          });
+                      } else {
+                          window.location.replace(APP_URL + '/service/payment-process/' + id);
+                      }
+                  } else {
+                      this.$swal.close()
+                  }
+              })
+          },
+          serviceStatus: function (id, pivot_id, employer_id, cancel_text, confirm_button, validation_error, popup_title) {
+              var job_status = document.getElementById("employer_service_status");
+              var status = job_status.options[job_status.selectedIndex].value;
+              if (status == "cancelled") {
+                  this.$swal({
+                      title: popup_title,
+                      text: cancel_text,
+                      type: 'info',
+                      input: 'textarea',
+                      confirmButtonText: confirm_button,
+                      showCancelButton: true,
+                      showLoaderOnConfirm: true,
+                      inputValidator: (textarea) => {
+                          return new Promise((resolve) => {
+                              if (textarea != '') {
+                                  resolve()
+                              } else {
+                                  resolve(validation_error)
+                              }
+                          })
+                      },
+                      preConfirm: (textarea) => {
+                          var self = this;
+                          return axios.post(APP_URL + '/submit-report', {
+                              reason: 'service cancel',
+                              report_type: 'service_cancel',
+                              description: textarea,
+                              id: id,
+                              pivot_id: pivot_id,
+                              model: 'App\\Service',
+                              employer_id: employer_id
+                          })
+                              .then(function (response) {
+                                  if (response.data.type == 'success') {
+                                      self.loading = false;
+                                      self.showInfo(response.data.progress);
+                                      document.addEventListener('iziToast-closing', function (data) {
+                                          if (data.detail.id == 'info_notify') {
+                                              self.showCompleted(response.data.message);
+                                              window.location.replace(APP_URL + '/employer/services/cancelled');
+                                          }
+                                      });
+                                  } else if (response.data.type == 'error') {
+                                      self.showError(response.data.message);
+                                  }
+                              })
+                              .catch(error => {
+                                  if (error.response.status == 422) {
+                                      if (error.response.data.errors.description) {
+                                          self.$swal.showValidationMessage(
+                                              error.response.data.errors.description[0]
+                                          )
+                                      }
+                                  }
+                              })
+                      },
+                      allowOutsideClick: () => !this.$swal.isLoading()
+                  }).then((result) => { })
+              } else if (status == "completed") {
+                  this.$refs.myModalRef.show()
+              }
+          },
+          submitFeedback: function (id, job_id) {
+              this.loading = true;
+              let review_form = document.getElementById('submit-review-form');
+              let form_data = new FormData(review_form);
+              form_data.append('freelancer_id', id);
+              form_data.append('job_id', job_id);
+              form_data.append('type', 'service');
+              var self = this;
+              axios.post(APP_URL + '/user/submit-review', form_data)
+                  .then(function (response) {
+                      if (response.data.type == 'success') {
+                          self.loading = false;
+                          var message = response.data.message;
+                          self.showMessage(message);
+                          setTimeout(function () {
+                              self.$refs.myModalRef.hide()
+                              window.location.replace(APP_URL + '/employer/services/completed');
+                          }, 1000);
+                      } else {
+                          self.loading = false;
+                          self.showError(response.data.message);
+                      }
+                  })
+                  .catch(function (error) {
+                      self.loading = false;
+                  });
+          },
+          check_auth: function (url) {
+              var self = this;
+              axios.get(APP_URL + '/check-service-auth-user')
+                  .then(function (response) {
+                      if (response.data.auth == 1) {
+                          window.location.replace(url);
+                      } else {
+                          self.showError(response.data.message);
+                      }
+                  })
+                  .catch(function (error) {
+
+                  });
+          },
+          showReview: function (id) {
+              var modal_ref = 'myModalRef-' + id;
+              if (this.$refs[modal_ref]) {
+                  this.$refs[modal_ref].show();
+              } else {
+                  this.showError(Vue.prototype.trans('lang.review_not_found'),);
+              }
+          },
+          showReason: function (id) {
+              var modal_ref = 'myModalRef-' + id;
+              this.$refs[modal_ref].show();
+          },
+          showRefoundForm: function (id) {
+              var modal_ref = 'myModalRef-' + id;
+              this.$refs[modal_ref].show();
+          },
+          submitRefund: function (order_id) {
+              this.loading = true;
+              var self = this;
+              var refundable_amount = $('#refundable-amount-'+order_id).val();
+              var selected_user = $("#refundable_user_id-"+order_id).val();
+              let form = document.getElementById('submit_refund_' + order_id);
+              let form_data = new FormData(form);
+              form_data.append('amount', refundable_amount);
+              form_data.append('refundable_user_id', selected_user);
+              form_data.append('order_id', order_id);
+              form_data.append('type', 'service');
+              axios.post(APP_URL + '/admin/submit-user-refund', form_data)
+                  .then(function (response) {
+                      if (response.data.type == 'success') {
+                          self.loading = false;
+                          self.showMessage(response.data.message);
+                          window.location.replace(APP_URL + '/admin/service-orders');
+                      } else if (response.data.type == 'error') {
+                          var modal_ref = 'myModalRef-' + order_id;
+                          self.$refs[modal_ref].hide();
+                          self.loading = false;
+                          self.showError(response.data.message);
+                      }
+                  })
+                  .catch(error => {
+                      if (error.response.status == 422) {
+                          self.loading = false;
+                          var modal_ref = 'myModalRef-' + order_id;
+                          self.$refs[modal_ref].hide();
+                          if (error.response.data.errors.refundable_user_id) {
+                              self.showError(error.response.data.errors.refundable_user_id[0]);
+                          }
+                      }
+                  });
+          },
+      }
   });
 }
 if (document.getElementById("agency")) {

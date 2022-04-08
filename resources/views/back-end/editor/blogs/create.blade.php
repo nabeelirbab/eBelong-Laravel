@@ -62,12 +62,12 @@
                                 <div class="lara-attachment-files">
                                     <div class="wt-tabscontenttitle">
                                         <h2>{{ trans('lang.attachments') }}</h2>
-                                        <div class="wt-rightarea">
+                                        {{-- <div class="wt-rightarea">
                                             <div class="wt-on-off float-right">
                                                 <switch_button v-model="show_attachments">{{{ trans('lang.attachments_note') }}}</switch_button>
                                                 <input type="hidden" :value="show_attachments" name="show_attachments">
                                             </div>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                     <image-attachments :temp_url="'{{url('blog/upload-temp-image')}}'" :type="'image'"></image-attachments>
                                     <div class="form-group input-preview">

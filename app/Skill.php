@@ -56,6 +56,14 @@ class Skill extends Model
     {
         return $this->belongsToMany('App\Cource');
     }
+    public function blogs()
+    {
+        return $this->belongsToMany('App\Blog');
+    }
+    public function services()
+    {
+        return $this->belongsToMany('App\Service');
+    }
     /**
      * The job that belong to the skill.
      *
@@ -179,6 +187,12 @@ class Skill extends Model
     {
         return DB::table('cource_skill')->select('skill_id')
             ->where('cource_id', $course_id)
+            ->get()->pluck('skill_id')->toArray();
+    }
+    public static function getServiceSkill($service_id)
+    {
+        return DB::table('service_skill')->select('skill_id')
+            ->where('service_id', $service_id)
             ->get()->pluck('skill_id')->toArray();
     }
     public static function getJob($skill_id)
