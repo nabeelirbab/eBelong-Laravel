@@ -597,6 +597,9 @@ class PublicController extends Controller
         // $findmatchRequest->selected_categories= $request['selectedCategories'];
         // $findmatchRequest->selected_skills= $request['selectedSkills'];
         // $findmatchRequest->save();
+        // if($request['selectedCandidateHours']){
+        //     foreach($request['selectedCandidateHours'])
+        // }
 
         $data = [
             'email' => $request['email'],
@@ -616,7 +619,8 @@ class PublicController extends Controller
             'vocal_blunt' => $request['vocal_blunt'],
             'waterfall_approach' => $request['waterfall_approach'],
             'selected_categories' => $request['selectedCategories'],
-            'selected_skills' => $request['selectedSkills']
+            'selected_skills' => $request['selectedSkills'],
+            'selected_freelancers' => $request['selectedCandidateHours'],
 
         ];
 

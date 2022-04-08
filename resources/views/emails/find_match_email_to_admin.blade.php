@@ -22,5 +22,23 @@
     <li><strong>Waterfall Approach:</strong>  {{ $data['waterfall_approach'] }}</li>
     <li><strong>Selected Categories:</strong>  {{ $data['selected_categories'] }}</li>
     <li><strong>Selected Skills:</strong>  {{ $data['selected_skills'] }}</li>
+    <li><h4>Hired Candidates</h4>
 
+<table>
+  <tr>
+    <th>Candidate Name</th>
+    <th>Hired Hours</th>
+  </tr>
+  @if(!isset($data['selected_freelancers']))
+  @foreach ($data['selected_freelancers'] as $key=>$item)
+  <tr>
+    <td>{{{ ucwords(\App\Helper::getUserName($key)) }}}</td>
+  <td>{{ $item }}</td>
+</tr>
+    @endforeach
+@else
+<td> No selected Candidates </td>
+@endif
+</table>
+    </li>
 </ul>
