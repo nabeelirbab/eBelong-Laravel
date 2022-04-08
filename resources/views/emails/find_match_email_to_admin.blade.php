@@ -22,6 +22,7 @@
     <li><strong>Waterfall Approach:</strong>  {{ $data['waterfall_approach'] }}</li>
     <li><strong>Selected Categories:</strong>  {{ $data['selected_categories'] }}</li>
     <li><strong>Selected Skills:</strong>  {{ $data['selected_skills'] }}</li>
+    @if($data['selected_freelancers'])
     <li><h4>Hired Candidates</h4>
 
 <table>
@@ -29,16 +30,16 @@
     <th>Candidate Name</th>
     <th>Hired Hours</th>
   </tr>
-  @if(!isset($data['selected_freelancers']))
+ 
   @foreach ($data['selected_freelancers'] as $key=>$item)
+  @php $user = \App\User::find($key);@endphp
   <tr>
-    <td>{{{ ucwords(\App\Helper::getUserName($key)) }}}</td>
+    <td><a href="https://ebelong.com/profile/{{ $user->slug }}"> {{{  ucwords(\App\Helper::getUserName($key))  }}}</td>
   <td>{{ $item }}</td>
 </tr>
     @endforeach
-@else
-<td> No selected Candidates </td>
-@endif
+
 </table>
     </li>
+    @endif
 </ul>

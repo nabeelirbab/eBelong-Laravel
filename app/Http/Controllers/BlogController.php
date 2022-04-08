@@ -270,7 +270,7 @@ class BlogController extends Controller
                 compact(
                     'categories',
                     'blog',
-                    'attachments',
+                    'attachments'
                 )
             );
         }
@@ -377,7 +377,7 @@ class BlogController extends Controller
                     'categories',
                     'skills',
                     'type',
-                    'blogs',
+                    'blogs'
                 )
             );
         } else {
@@ -387,7 +387,7 @@ class BlogController extends Controller
                     'categories',
                     'skills',
                     'type',
-                    'blogs',
+                    'blogs'
                 )
             );
         }
@@ -412,7 +412,7 @@ class BlogController extends Controller
                     'categories',
                     'skills',
                     'type',
-                    'blogs',
+                    'blogs'
                 )
             );
         } else {
@@ -422,7 +422,7 @@ class BlogController extends Controller
                     'categories',
                     'skills',
                     'type',
-                    'blogs',
+                    'blogs'
                 )
             );
         }
