@@ -26,19 +26,109 @@
               >
                 <div class="removeCandidate">
                   <button
-                    v-if="isHidden"
                     @click="getCandidateId(index)"
                     class="e-button e-button-primary"
                   >
                     X
                   </button>
                 </div>
-                <div class="col-lg-2 col-md-12 col-sm-12 removepaddingleft">
-                  <figure class="wt-userlistingimg">
-                    <img :src="ca.avater_imagePath" alt="candidate img" />
-                  </figure>
+                <div class="wishlistDesktopView">
+                  <div class="col-lg-2 col-md-12 col-sm-12 removepaddingleft">
+                    <figure class="wt-userlistingimg">
+                      <img :src="ca.avater_imagePath" alt="candidate img" />
+                    </figure>
+                  </div>
+                  <div class="col-lg-2 col-md-12 col-sm-12 removepadding">
+                    <div class="find-talent-info">
+                      <div class="wt-title">
+                        <a :href="baseUrl + '/profile/' + ca.slug">
+                          <i class="fa fa-check-circle"></i>
+                          {{ ca.first_name }} {{ ca.last_name }}
+                        </a>
+                      </div>
+                      <div class="wt-talent-skill">
+                        <a href="#">{{ ca.skill }}</a>
+                      </div>
+                      <div class="wt-talent-location">
+                        <span class="wt-locationarea" v-if="ca.location_title">
+                          <img :src="ca.location_imagePath" alt="US" />
+                          {{ ca.location_title }}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-md-12 col-sm-12 removepadding">
+                    <a
+                      href="#"
+                      class="instructor-badge"
+                      v-if="ca.instructor == 1"
+                    >
+                      <img
+                        class="fix-blury-image-issue"
+                        :src="`${baseUrl}/images/instructor/instructor_logo.png`"
+                      />
+                    </a>
+
+                    <a
+                      href="#"
+                      class="certified-badge"
+                      v-if="ca.is_certified == 1"
+                    >
+                      <img
+                        :src="`${baseUrl}/images/certified/Certified_Icon.svg`"
+                      />
+                    </a>
+                  </div>
+                  <div class="col-lg-2 col-md-12 col-sm-12 removepadding">
+                    <span class="wt-hourlyrate">
+                      <span> ${{ ca.hourly_rates }} / hr </span>
+                    </span>
+                  </div>
+                  <div class="col-lg-2 col-md-12 col-sm-12 removepadding">
+                    <input
+                      v-model="selectedCandidate[index].hours"
+                      class="esthours"
+                      placeholder="est. No of hours"
+                    />
+                  </div>
+                  <div class="col-lg-1 col-md-12 col-sm-12 removepadding">
+                    <div class="equalsign">=</div>
+                  </div>
+                  <div class="col-lg-1 col-md-12 col-sm-12 removepadding">
+                    <div class="individualresult">
+                      $ {{ subTotalAmount(index) }}
+                    </div>
+                  </div>
                 </div>
-                <div class="col-lg-2 col-md-12 col-sm-12 removepadding">
+                <div class="wishlistMobileView">
+                  <div class="imgBadges">
+                    <figure class="wt-userlistingimg">
+                      <img :src="ca.avater_imagePath" alt="candidate img" />
+                    </figure>
+                    <div class="wishlistBadges">
+                      <a
+                        href="#"
+                        class="instructor-badge"
+                        v-if="ca.instructor == 1"
+                      >
+                        <img
+                          class="fix-blury-image-issue"
+                          :src="`${baseUrl}/images/instructor/instructor_logo.png`"
+                        />
+                      </a>
+
+                      <a
+                        href="#"
+                        class="certified-badge"
+                        v-if="ca.is_certified == 1"
+                      >
+                        <img
+                          :src="`${baseUrl}/images/certified/Certified_Icon.svg`"
+                        />
+                      </a>
+                    </div>
+                  </div>
+
                   <div class="find-talent-info">
                     <div class="wt-title">
                       <a :href="baseUrl + '/profile/' + ca.slug">
@@ -56,47 +146,19 @@
                       </span>
                     </div>
                   </div>
-                </div>
-                <div class="col-lg-2 col-md-12 col-sm-12 removepadding">
-                  <a
-                    href="#"
-                    class="instructor-badge"
-                    v-if="ca.instructor == 1"
-                  >
-                    <img
-                      class="fix-blury-image-issue"
-                      :src="`${baseUrl}/images/instructor/instructor_logo.png`"
+                  <div class="mobileHoursRate">
+                    <span class="wt-hourlyrate">
+                      <span> ${{ ca.hourly_rates }} / hr </span>
+                    </span>
+                    <input
+                      v-model="selectedCandidate[index].hours"
+                      class="esthours"
+                      placeholder="est. No of hours"
                     />
-                  </a>
-
-                  <a
-                    href="#"
-                    class="certified-badge"
-                    v-if="ca.is_certified == 1"
-                  >
-                    <img
-                      :src="`${baseUrl}/images/certified/Certified_Icon.svg`"
-                    />
-                  </a>
-                </div>
-                <div class="col-lg-2 col-md-12 col-sm-12 removepadding">
-                  <span class="wt-hourlyrate">
-                    <span> ${{ ca.hourly_rates }} / hr </span>
-                  </span>
-                </div>
-                <div class="col-lg-2 col-md-12 col-sm-12 removepadding">
-                  <input
-                    v-model="selectedCandidate[index].hours"
-                    class="esthours"
-                    placeholder="est. No of hours"
-                  />
-                </div>
-                <div class="col-lg-1 col-md-12 col-sm-12 removepadding">
-                  <div class="equalsign">=</div>
-                </div>
-                <div class="col-lg-1 col-md-12 col-sm-12 removepadding">
-                  <div class="individualresult">
-                    $ {{ subTotalAmount(index) }}
+                    <div class="equalsign">=</div>
+                    <div class="individualresult">
+                      $ {{ subTotalAmount(index) }}
+                    </div>
                   </div>
                 </div>
               </div>
