@@ -10467,3 +10467,81 @@ a:focus{text-decoration: none !important;}
     padding: 0.3rem 1rem;
 }
 
+.wishlistDesktopView {
+	display: contents;
+}
+.wishlistMobileView {
+	display: none;
+}
+@media only screen and (max-width: 768px){
+	.wishlistDesktopView {
+		display: none;
+	}
+	.wishlistMobileView {
+		display: block;
+		margin-bottom: 10px;
+	}
+	.find-talent-freelancers .wishlistMobileView .wt-userlistingimg {
+		max-height: 100% !important;
+		max-width: 100% !important;
+		margin: unset !important;
+	}
+	.find-talent-freelancers .wishlistMobileView .wt-userlistingimg img {
+		width: 65px;
+		height: 66px;
+	}
+
+	.find-talent-freelancers .wishlistMobileView .find-talent-info .wt-title a {
+		font-size: 16px !important;
+	}
+	.find-talent-freelancers .wishlistMobileView .find-talent-info .wt-talent-skill a {
+		font-size: 16px !important;
+	}
+	.find-talent-freelancers .wishlistMobileView .find-talent-info .wt-talent-location .wt-locationarea {
+		font-size: 13px !important;
+	}
+	.candidate_wishlist_data .find-talent-freelancers .wishlistMobileView .instructor-badge img {
+		width: 53px;
+		height: 53px;
+	}
+	.candidate_wishlist_data .find-talent-freelancers .wishlistMobileView .certified-badge img {
+		width: 53px;
+		height: 53px;
+	}
+	.mobileHoursRate {
+		display: flex;
+		width: 100%;
+		overflow-x: auto;
+	}
+	.candidate_wishlist_data .find-talent-freelancers .mobileHoursRate .wt-hourlyrate {
+		width: 30%;
+	}
+	.candidate_wishlist_data .find-talent-freelancers .mobileHoursRate .esthours {
+		width: 30%;
+	}
+	.candidate_wishlist_data .find-talent-freelancers .mobileHoursRate .equalsign {
+		width: 10%;
+		padding: 12px 6px;
+	}
+	.candidate_wishlist_data .find-talent-freelancers .mobileHoursRate .individualresult {
+		width: 30%;
+		padding: 12px 6px;
+	}
+	.wishlistMobileView .imgBadges {
+		display: flex;
+		justify-content: space-between;
+		margin-bottom: 10px;
+	}
+	.candidate_wishlist_data .find-talent-freelancers .wishlistMobileView .find-talent-info {
+		margin-bottom: 10px;
+	}
+	.find-talent .find-talent-candidate .verticlealign .removeCandidate .e-button {
+		padding: 0rem 0.5rem;
+	}
+	.find-talent .find-talent-candidate .verticlealign:hover .removeCandidate {
+		right: 35px !important;
+	}
+	.candidate_wishlist_data .find-talent-freelancers-total-est-cost .est-cost-totle {
+		font-weight: 800;
+	}
+}
