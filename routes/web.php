@@ -71,23 +71,23 @@ Route::get('get-skills-for-wishlist', 'SkillController@getWhishlistSkills');
 Route::get('get-categories-for-whishlist', 'CategoryController@getWishlistCategories');
 
 //seo-blogs
-Route::get('blogs/{type}/{slug}', 'BlogController@BlogList');
-Route::get('blogs', 'BlogController@BlogsList');
+Route::get('blogs/{type}/{slug}', 'BlogController@BlogList')->name('FilteredBlogs');
+Route::get('blogs', 'BlogController@BlogsList')->name('blogs');
 
 //seo-courses
-Route::get('courses/{type}/{slug}', 'CourseController@courseList');
-Route::get('courses', 'CourseController@coursesListing');
+Route::get('courses/{type}/{slug}', 'CourseController@courseList')->name('FilteredCourses');
+Route::get('courses', 'CourseController@coursesListing')->name('courses');
 
 //seo-services
-Route::get('services/{type}/{slug}', 'ServiceController@ServiceList');
+Route::get('services/{type}/{slug}', 'ServiceController@ServiceList')->name('FilteredServices');
 Route::get('services', 'ServiceController@servicesListing')->name('services');
 
 //seo-freelancers
-Route::get('freelancers/{type}/{slug}', 'FreelancerController@freelancerList');
-Route::get('freelancers', 'FreelancerController@freelancersListing');
+Route::get('freelancers/{type}/{slug}', 'FreelancerController@freelancerList')->name('FilteredFreelancers');
+Route::get('freelancers', 'FreelancerController@freelancersListing')->name('freelancers');
 
 //seo-jobs
-Route::get('jobs/{type}/{slug}', 'JobController@jobsList');
+Route::get('jobs/{type}/{slug}', 'JobController@jobsList')->name('FilteredJobs');
 Route::get('jobs', 'JobController@jobsListing')->name('jobs');
 
 /*Route::get('/sendemail', 'SendMailController@index');
@@ -124,7 +124,7 @@ if (Helper::getAccessType() == 'both' || Helper::getAccessType() == 'jobs') {
     // Route::get('jobs', 'JobController@listjobs')->name('jobs');
     Route::get('job/{slug}', 'JobController@show')->name('jobDetail');
 }
-
+Route::get('blog/{slug}', 'BlogController@show')->name('BlogDetail');
 if (Helper::getAccessType() == 'both' || Helper::getAccessType() == 'services') {
     // Route::get('services', 'ServiceController@index')->name('services');
     Route::get('service/{slug}', 'ServiceController@show')->name('serviceDetail');
@@ -457,7 +457,7 @@ Route::group(
         Route::post('blog/upload-temp-image', 'BlogController@uploadTempImage');
         Route::get('editor/manage-blogs', 'BlogController@manageBlogs')->name('manageBlogs');
         Route::get('editor/blogs', 'BlogController@editorBlogs')->name('editorBlogs');
-        Route::get('blog/{slug}', 'BlogController@show')->name('BlogDetail');
+        
         Route::post('editor/dashboard/delete-blog', 'BlogController@destroy');
         Route::get('editor/dashboard/edit-blog/{id}', 'BlogController@edit')->name('edit_blog');
         Route::get('get/{type}/{filename}/{id}', 'PublicController@getFile')->name('getfile');

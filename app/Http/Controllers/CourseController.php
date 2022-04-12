@@ -1569,7 +1569,7 @@ class CourseController extends Controller
                     'type',
                     'delivery_time',
                     'response_time',
-                    'services',
+                    'services'
                 )
             );
         } else {
@@ -1583,7 +1583,7 @@ class CourseController extends Controller
                     'type',
                     'delivery_time',
                     'response_time',
-                    'services',
+                    'services'
                 )
             );
         }
@@ -1609,7 +1609,7 @@ class CourseController extends Controller
                     'type',
                     'delivery_time',
                     'response_time',
-                    'services',
+                    'services'
                 )
             );
         } else {
@@ -1623,7 +1623,7 @@ class CourseController extends Controller
                     'type',
                     'delivery_time',
                     'response_time',
-                    'services',
+                    'services'
                 )
             );
         }

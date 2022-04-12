@@ -898,6 +898,8 @@ return [
     'search_results' => 'Search Result',
     'jobs' => 'Jobs',
     'job_detail' => 'Job Detail',
+    'course_detail'=>'Course Detail',
+    'blog_detail' => 'Blog Detail',
     'details' => 'Details',
     'job_proposal' => 'Job Proposal',
     'employers' => 'Employers',

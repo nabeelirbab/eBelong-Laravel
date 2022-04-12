@@ -167,6 +167,11 @@
 																{{{ trans('lang.browse_services') }}}
 															</a>
 														</li>
+														<li style="order: 6;">
+															<a href="{{url('search-results?type=blogs')}}">
+																{{{ trans('lang.Blogs') }}}
+															</a>
+														</li>
 														<li style="order: 6;" class="join-now-menu">
 															<a href="{{{ route('register') }}}" class="">
 																{{{ trans('lang.join_now') }}}
@@ -191,6 +196,11 @@
 														<li style="order: 5;">
 															<a href="{{url('search-results?type=service')}}">
 																{{{ trans('lang.browse_services') }}}
+															</a>
+														</li>
+														<li style="order: 6;">
+															<a href="{{url('search-results?type=blogs')}}">
+																{{{ trans('lang.Blogs') }}}
 															</a>
 														</li>
 														<?php elseif($user_role == 'employer'): ?>
