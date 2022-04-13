@@ -1254,7 +1254,7 @@ class Helper extends Model
     public static function getSearchableList($type)
     {
         $json = array();
-        if ($type == 'freelancer') {
+        if ($type == 'freelancer'||$type=='hire') {
             $freelancs  = DB::table("skills")
                 ->select(
                     "title AS name",

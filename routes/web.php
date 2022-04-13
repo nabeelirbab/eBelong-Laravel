@@ -83,8 +83,8 @@ Route::get('services/{type}/{slug}', 'ServiceController@ServiceList')->name('Fil
 Route::get('services', 'ServiceController@servicesListing')->name('services');
 
 //seo-freelancers
-Route::get('freelancers/{type}/{slug}', 'FreelancerController@freelancerList')->name('FilteredFreelancers');
-Route::get('freelancers', 'FreelancerController@freelancersListing')->name('freelancers');
+Route::get('hire/{slug}', 'FreelancerController@freelancerList')->name('FilteredFreelancers');
+Route::get('hire', 'FreelancerController@freelancersListing')->name('freelancers');
 
 //seo-jobs
 Route::get('jobs/{type}/{slug}', 'JobController@jobsList')->name('FilteredJobs');

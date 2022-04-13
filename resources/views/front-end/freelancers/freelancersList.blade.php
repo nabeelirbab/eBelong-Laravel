@@ -12,7 +12,7 @@
 $show_f_banner = 'true'
 @endphp
 @if ($show_f_banner == 'true')
-@php $breadcrumbs = Breadcrumbs::generate('searchResults'); @endphp
+@php $breadcrumbs = Breadcrumbs::generate('freelancers'); @endphp
 <style>
     .d-flex.agency-box-logo-name img {
         border-radius: 100%;
@@ -74,8 +74,8 @@ $show_f_banner = 'true'
 @endif--}}
 <div class="wt-haslayout wt-main-section" id="user_profile">
     <div class="search-form">
-        <search-form :placeholder="'{{ trans('lang.looking_for') }}'" :freelancer_placeholder="'{{ trans('lang.search_filter_list.freelancer') }}'" :employer_placeholder="'{{ trans('lang.search_filter_list.employers') }}'" :job_placeholder="'{{ trans('lang.search_filter_list.jobs') }}'" :service_placeholder="'{{ trans('lang.search_filter_list.services') }}'" :no_record_message="'{{ trans('lang.no_record') }}'">
-        </search-form>
+        <search-form-home :placeholder="'{{ trans('lang.looking_for') }}'" :freelancer_placeholder="'{{ trans('lang.search_filter_list.freelancer') }}'" :employer_placeholder="'{{ trans('lang.search_filter_list.employers') }}'" :job_placeholder="'{{ trans('lang.search_filter_list.jobs') }}'" :service_placeholder="'{{ trans('lang.search_filter_list.services') }}'" :no_record_message="'{{ trans('lang.no_record') }}'">
+        </search-form-home>
     </div>
     @if (Session::has('payment_message'))
     @php $response = Session::get('payment_message') @endphp
@@ -103,7 +103,7 @@ $show_f_banner = 'true'
                                     <span>{{ trans('lang.01') }} {{$users->count()}} of {{\App\User::role('freelancer')->count()}} results @if (!empty($keyword)) for <em>"{{{$keyword}}}"</em> @endif</span>
                                     @endif
                                 </div>
-                                @if (!empty($users))
+                                @if (!empty($users  && $users->count()>0))
                                 @foreach ($users as $key => $freelancer)
                                 @php
                                 $user_image = !empty($freelancer->profile['avater']) ?

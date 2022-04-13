@@ -153,7 +153,7 @@
 															</a>
 														</li>
 														<li style="order: 2;">
-															<a href="{{url('search-results?type=freelancer')}}">
+															<a href="{{url('hire')}}">
 																{{{ trans('lang.view_freelancers') }}}
 															</a>
 														</li>
@@ -184,7 +184,7 @@
 															</a>
 														</li>
 														<li style="order: 2;">
-															<a href="{{url('search-results?type=freelancer')}}">
+															<a href="{{url('hire')}}">
 																{{{ trans('lang.view_freelancers') }}}
 															</a>
 														</li>
@@ -205,7 +205,7 @@
 														</li>
 														<?php elseif($user_role == 'employer'): ?>
 														<li style="order: 2;">
-															<a href="{{url('search-results?type=freelancer')}}">
+															<a href="{{url('hire')}}">
 																{{{ trans('lang.view_freelancers') }}}
 															</a>
 														</li>
@@ -571,7 +571,7 @@
 										<p>Freelancing talent partner</p>
 									</div>
 								</div>
-								<button onclick="location.href='/search-results?type=freelancer'" class="e-button e-button-primary">Hire Now</button>
+								<button onclick="location.href='/hire'" class="e-button e-button-primary">Hire Now</button>
 								<button onclick="location.href='/search-results?type=job'" class="e-button e-button-primary my-3">Get Work</a></button>
 							</div>
 					

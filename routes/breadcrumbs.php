@@ -100,26 +100,26 @@ Breadcrumbs::for(
 );
 Breadcrumbs::for(
     'freelancers', function ($trail) {
-        $trail->parent('freelancers');
+        $trail->parent('home');
         $trail->push('Freelancers', route('freelancers'));
     }
 );
 Breadcrumbs::for(
-    'FilteredFreelancers', function ($trail, $type, $slug) {
+    'FilteredFreelancers', function ($trail, $slug) {
         $trail->parent('freelancers');
-        $trail->push('Freelancers', route('FilteredFreelancers', ['type'=>$type,'slug' => $slug]));
+        $trail->push('Freelancers', route('FilteredFreelancers', ['slug' => $slug]));
     }
 );
 Breadcrumbs::for(
     'blogs', function ($trail) {
-        $trail->parent('blogs');
+        $trail->parent('home');
         $trail->push(trans('lang.Blogs'), route('blogs'));
     }
 );
 Breadcrumbs::for(
-    'blogDetail', function ($trail, $slug) {
+    'BlogDetail', function ($trail, $slug) {
         $trail->parent('blogs');
-        $trail->push(trans('lang.blog_detail'), route('blogDetail', ['slug' => $slug]));
+        $trail->push(trans('lang.blog_detail'), route('BlogDetail', ['slug' => $slug]));
     }
 );
 Breadcrumbs::for(
@@ -131,12 +131,12 @@ Breadcrumbs::for(
 
 Breadcrumbs::for(
     'courses', function ($trail) {
-        $trail->parent('courses');
+        $trail->parent('home');
         $trail->push(trans('lang.courses'), route('courses'));
     }
 );
 Breadcrumbs::for(
-    'CourceDetail', function ($trail, $type,$slug) {
+    'CourceDetail', function ($trail,$slug) {
         $trail->parent('courses');
         $trail->push(trans('lang.course_detail'), route('CourceDetail', ['slug' => $slug]));
     }
