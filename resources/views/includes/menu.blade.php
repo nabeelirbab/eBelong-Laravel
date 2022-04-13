@@ -17,7 +17,7 @@
                 </a>
             </li>
                 <li style="order: 2;">
-                <a href="{{url('search-results?type=freelancer')}}">
+                <a href="{{url('hire')}}">
                     {{{ trans('lang.view_freelancers') }}}
                 </a>
                 </li>
@@ -50,7 +50,7 @@
                 </a>
             </li>
                 <li style="order: 2;">
-                <a href="{{url('search-results?type=freelancer')}}">
+                <a href="{{url('hire')}}">
                     {{{ trans('lang.view_freelancers') }}}
                 </a>
                 </li>
@@ -64,10 +64,15 @@
                     {{{ trans('lang.browse_services') }}}
                 </a>
                 </li>
+                <li style="order: 6;">
+                    <a href="{{url('search-results?type=blogs')}}">
+                        {{{ trans('lang.browse_blogs') }}}
+                    </a>
+                </li>
             <?php elseif($user_role == 'employer'): ?>
 
                 <li style="order: 2;">
-                <a href="{{url('search-results?type=freelancer')}}">
+                <a href="{{url('hire')}}">
                     {{{ trans('lang.view_freelancers') }}}
                 </a>
                 </li>
@@ -85,7 +90,7 @@
                 </a>
             </li>
                 <li style="order: 4;">
-                <a href="{{url('search-results?type=freelancerjobs')}}">
+                    <a href="{{url('search-results?type=freelancerjobs')}}">
                     {{{ trans('lang.browse_jobs') }}}
                 </a>
                 </li>

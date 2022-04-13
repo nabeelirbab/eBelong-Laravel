@@ -1401,12 +1401,44 @@ public function adminRating(Request $request){
         }
     }
 
-    public function freelancerList($type,$slug){
+    public function freelancerList($slug){
+        $type='category';
         $locations  = Location::all();
         $languages  = Language::all();
-        $categories = Category::all();
+        $categories = Category::orderBy('title')->get();
         $skills     = Skill::orderBy('title')->get();
         $user_by_role =  User::role('freelancer')->pluck('id')->toArray();
+        foreach ($categories as $key => $cat) {
+            if($cat->slug=='slug'){
+                $type='category';
+            }
+        }
+        foreach ($skills as $key => $skill) {
+            if($skill->slug==$slug){
+                $type='skill';
+            }
+        }
+        foreach ($locations as $key => $loc) {
+            if($loc->slug==$slug){
+                $type='location';
+            }
+        }
+        
+        foreach (Helper::getHourlyRate() as $key => $hourly_rate){
+            if($key==$slug){
+                $type='hourly-rate';
+            }
+        }
+        foreach (Helper::getEnglishLevelList() as $freelancer_level => $f){
+            if($freelancer_level==$slug){
+                $type='english-level';
+            }
+        }
+        foreach (Helper::getFreelancerLevelList() as $freelancer_level => $freelancer){
+            if($freelancer==$slug){
+                $type='type';
+            }
+        }
         // $users = !empty($user_by_role) ? User::whereIn('id', $user_by_role)->where('is_disabled', 'false')->where('status',1) : array();
         $users = !empty($user_by_role) ? User::whereIn('id', $user_by_role)->where('is_disabled', 'false')->where('status',1) : array();
         
@@ -1441,16 +1473,15 @@ public function adminRating(Request $request){
         $users->whereIn('id', $user_id)->orderBy('is_certified', 'DESC'); 
         }
         if ($type=='location') {
-            $location = Location::select('id')->where('slug', $slug)
+            $location_obj = Location::select('id')->where('slug', $slug)
                 ->get()->pluck('id')->toArray();
-            $users->whereIn('location_id', $location)->orderBy('is_certified', 'DESC');
+            $users->whereIn('location_id', $location_obj)->orderBy('is_certified', 'DESC');
             
         }
         if($type=='skill'){
-    
             $user_id = array();
-                $skills = Skill::where('slug', $slug)->get();
-                foreach ($skills as $key => $skill) {
+                $skill_obj = Skill::where('slug', $slug)->get();
+                foreach ($skill_obj as $key => $skill) {
                     $userid = DB::table('skill_user')->select('user_id')->where('skill_id',$skill->id)->get();
                     foreach($userid as $ui){
                         $user_id[] = $ui->user_id;
@@ -1487,6 +1518,16 @@ public function adminRating(Request $request){
                 }
             
             $users->whereIn('id', $user_id)->orderBy('is_certified', 'DESC');;
+        }
+        
+        if($type=='type'){
+            $freelancers = Profile::where('freelancer_type', $slug)->get();
+            foreach ($freelancers as $key => $freelancer) {
+                if (!empty($freelancer->user_id)) {
+                    $user_id[] = $freelancer->user_id;
+                }
+            }
+            $users->whereIn('id', $user_id);
         }
 
         $users = $users->paginate(20)->setPath('');

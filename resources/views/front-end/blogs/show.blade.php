@@ -7,7 +7,7 @@
 @section('title'){{ $blog->title }} @stop
 @section('description', "$blog->content")
 @section('content')
-    @php $breadcrumbs = Breadcrumbs::generate('serviceDetail', $blog->slug); @endphp
+    @php $breadcrumbs = Breadcrumbs::generate('BlogDetail', $blog->slug); @endphp
     <div class="wt-haslayout wt-innerbannerholder">
         <div class="container">
             <div class="row justify-content-md-center">

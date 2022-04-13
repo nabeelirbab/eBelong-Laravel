@@ -85,6 +85,7 @@ Vue.component('job_skills', require('./components/JobSkillComponent.vue').defaul
 Vue.component('private-message', require('./components/PrivateMessageComponent.vue').default);
 Vue.component('rating', require('./components/RatingComponent.vue').default);
 Vue.component('search-form', require('./components/SearchComponent.vue').default);
+Vue.component('search-form-home', require('./components/SearchComponent3.vue').default);
 require('./components/FlashMessageComponent.vue').default
 Vue.component("vue-stars", VueStars)
 Vue.component('vue-bootstrap-typeahead', VueBootstrapTypeahead)
@@ -175,6 +176,10 @@ Vue.component("rating", require("./components/RatingComponent.vue").default);
 Vue.component(
   "search-form",
   require("./components/SearchComponent.vue").default
+);
+Vue.component(
+  "search-form-home",
+  require("./components/SearchComponent3.vue").default
 );
 require("./components/FlashMessageComponent.vue").default;
 Vue.component("vue-stars", VueStars);
@@ -5963,6 +5968,56 @@ if (document.getElementById("blog")) {
                       
                   });
           },
+          FilterBlog: function (typ) {
+            this.loading = true;
+            console.log(typ)
+            if(typ=='category'){
+            let Form = document.getElementById('filter_blog_form');
+            let form_data = new FormData(Form);
+            var self = this;
+            console.log(form_data)
+            var type = form_data.get('type')
+            let cat = form_data.get('category')
+            console.log("in scat")
+            window.location.replace(APP_URL + '/blogs/'+type+'/'+cat);
+            }
+            else{
+              let Form = document.getElementById('filter_blog_skill_form');
+              let form_data = new FormData(Form);
+              var self = this;
+              console.log(form_data)
+              var type = form_data.get('type')
+              let skill = form_data.get('skill')
+            console.log('in skill')
+              window.location.replace(APP_URL + '/blogs/'+type+'/'+skill);
+            }
+            //     .then(function (response) {
+            //         if (response.data.type == 'success') {
+            //             self.loading = false;
+            //             self.showInfo(response.data.progress);
+            //             document.addEventListener('iziToast-closing', function (data) {
+            //                 if (data.detail.id == 'info_notify') {
+            //                     self.showCompleted(response.data.message);
+            //                     window.location.replace(APP_URL + '/search-results?type=blogs');
+            //                 }
+            //             });
+            //         } else {
+            //             self.loading = false;
+            //             self.showError(response.data.message);
+            //         }
+            //     })
+            //     .catch(function (error) {
+            //         self.loading = false;
+            //         if (error.response.data.errors.title) {
+            //             self.showError(error.response.data.errors.title[0]);
+            //         }
+                   
+            //         if (error.response.data.errors.description) {
+            //             self.showError(error.response.data.errors.description[0]);
+            //         }
+                    
+            //     });
+        },
           changeStatus: function (id) {
               this.loading = true;
               var status = document.getElementById(id + '-blog_status').value;
