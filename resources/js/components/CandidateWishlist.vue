@@ -184,18 +184,30 @@
           >
             Continue
           </button>
-          <div class="postskillcomponent" v-if="isSpeedupProcessing">
+          <div
+            class="postskillcomponent"
+            v-if="isSpeedupProcessing || isSpeedupProcessing2"
+          >
             <PostSkill :items="items" />
           </div>
         </div>
       </div>
     </div>
     <div v-else class="candidate_wishlist_no_data">
-      <div class="candidate_wishlist_no_data_heading">
+      <div
+        v-if="isHidden2"
+        class="candidate_wishlist_no_data_heading countinue-btn"
+      >
         <h5>Cannot find what you are looking for?</h5>
-        <a :href="baseUrl">Skip this Step </a>
+        <!-- <a :href="baseUrl">Skip this Step</a> -->
+        <button @click="speedUpProcessing2" class="e-button e-button-primary">
+          Skip this Step
+        </button>
         <h5>and let us find the right candidates for you</h5>
       </div>
+    </div>
+    <div class="postskillcomponent" v-if="isSpeedupProcessing2">
+      <PostSkill :items="items" />
     </div>
   </div>
 </template>
@@ -216,7 +228,9 @@ export default {
       // baseURL: APP_URL,
       isCandidates: false,
       isSpeedupProcessing: false,
+      isSpeedupProcessing2: false,
       isHidden: true,
+      isHidden2: true,
       selectedCandidate: [],
       // selectedCandidate: [
       //   { name: 'apple', hourly_rates: '255', location: 'USA', skill: 'eCommerce', hours: 0 },
@@ -248,21 +262,21 @@ export default {
             }));
           }
         });
-      axios.get(APP_URL + "/get-skills-for-wishlist").then(function (response) {
+    }
+    axios.get(APP_URL + "/get-skills-for-wishlist").then(function (response) {
+      if (response.data.type == "success") {
+        console.log("skillssss", response);
+        self.items.skills = response.data.skills;
+      }
+    });
+    axios
+      .get(APP_URL + "/get-categories-for-whishlist")
+      .then(function (response) {
         if (response.data.type == "success") {
           console.log("skillssss", response);
-          self.items.skills = response.data.skills;
+          self.items.categories = response.data.categories;
         }
       });
-      axios
-        .get(APP_URL + "/get-categories-for-whishlist")
-        .then(function (response) {
-          if (response.data.type == "success") {
-            console.log("skillssss", response);
-            self.items.categories = response.data.categories;
-          }
-        });
-    }
   },
   methods: {
     subTotalAmount(index) {
@@ -296,6 +310,9 @@ export default {
     },
     speedUpProcessing: function (event) {
       (this.isSpeedupProcessing = true), (this.isHidden = false);
+    },
+    speedUpProcessing2: function (event) {
+      (this.isSpeedupProcessing2 = true), (this.isHidden2 = false);
     },
     getCandidateId: function (index) {
       const candidateArray = this.selectedCandidate.splice(index, 1);
