@@ -6,6 +6,8 @@ use Illuminate\Console\Command;
 use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\SitemapGenerator;
 use Spatie\Sitemap\Tags\Url;
+use App\Category;
+use App\Skill;
 
 class SitemapCommand extends Command
 {
@@ -43,7 +45,16 @@ class SitemapCommand extends Command
         // log('generating Sitemap');
         $path = public_path();
         $file = '/sitemap.xml';
-        SitemapGenerator::create(env('APP_URL'))
+        $sitemap = SitemapGenerator::create(env('APP_URL'))
+        ->getSitemap();
+        Category::all()->each(function (Category $Item) use ($sitemap) {
+            $sitemap->add(Url::create("/hire/{$Item->slug}"));
+        });
+        Skill::all()->each(function (Skill $Item) use ($sitemap) {
+            $sitemap->add(Url::create("/hire/{$Item->slug}"));
+        });
+        $sitemap->add(Url::create('/hire'))
         ->writeToFile($path.$file);
+        
     }
 }
