@@ -1023,6 +1023,7 @@ return [
     'show_history' => 'Show History',
     'select_blog_cats' => ' Select Blog Categories',
     'blog_title' => 'Blog Title',
+    'blog_slug' => 'Blog Slug',
     'blog_content' => 'Blog Content',
     'blog_desc_note' => 'Enter Blog Content',
     'blog_publishing' => 'Blog publishing',

@@ -179,11 +179,11 @@ class Blog extends Model
             if ($role === 'editor'){
             $blog = Blog::find($id);
             $user_id=Auth::user()->id;
-            if ($blog->title != $request['title']) {
-                $blog->slug = filter_var($request['title'], FILTER_SANITIZE_STRING);
+            if ($blog->slug != $request['blog_slug']) {
+                $blog->slug = filter_var($request['blog_slug'], FILTER_SANITIZE_STRING);
             }
             $blog->title = filter_var($request['title'], FILTER_SANITIZE_STRING);
-            $blog->slug = filter_var($request['title'], FILTER_SANITIZE_STRING);  
+            // $blog->slug = filter_var($request['title'], FILTER_SANITIZE_STRING);  
             $blog->content = $request['content'];
             $blog->editor_id = Auth::user()->id;
             $blog_attachments = array();

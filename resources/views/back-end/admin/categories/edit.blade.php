@@ -27,6 +27,10 @@
                                         <span class="form-group-description">{{{ trans('lang.desc') }}}</span>
                                     </div>
                                     <div class="form-group">
+                                        {!! Form::text( 'category_slug', e($cats['slug']), ['class' =>'form-control'] ) !!}
+                                        <span class="form-group-description">{{{ trans('lang.desc') }}}</span>
+                                    </div>
+                                    <div class="form-group">
                                         {!! Form::textarea( 'category_abstract', e($cats['abstract']), ['class' =>'form-control',
                                         'placeholder' => trans('lang.ph_desc')] )
                                         !!}

@@ -22,7 +22,19 @@
                                 <div class="wt-formtheme wt-userform wt-userformvtwo">
                                     <fieldset>
                                         <div class="form-group">
-                                            {!! Form::text('title', e($blog->title), array('class' => 'form-control', 'placeholder' => trans('lang.course_title'))) !!}
+                                            {!! Form::text('title', e($blog->title), array('class' => 'form-control', 'placeholder' => trans('lang.blog_title'))) !!}
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
+                            <div class="wt-jobdescription wt-tabsinfo">
+                                <div class="wt-tabscontenttitle">
+                                    <h2>{{ trans('lang.blog_slug') }}</h2>
+                                </div>
+                                <div class="wt-formtheme wt-userform wt-userformvtwo">
+                                    <fieldset>
+                                        <div class="form-group">
+                                            {!! Form::text('blog_slug', e($blog->slug), array('class' => 'form-control', 'placeholder' => trans('lang.blog_slug'))) !!}
                                         </div>
                                     </fieldset>
                                 </div>
@@ -34,7 +46,7 @@
                                 <div class="wt-divtheme wt-userform wt-userformvtwo">
                                     <div class="form-group">
                                         <span class="wt-select">
-                                            {!! Form::select('categories[]', $categories, $blog->categories, array('class' => 'chosen-select', 'multiple', 'data-placeholder' => trans('lang.select_course_cats'))) !!}
+                                            {!! Form::select('categories[]', $categories, $blog->categories, array('class' => 'chosen-select', 'multiple', 'data-placeholder' => trans('lang.select_blog_cats'))) !!}
                                         </span>
                                     </div>
                                 </div>

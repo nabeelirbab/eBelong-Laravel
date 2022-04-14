@@ -1408,14 +1408,15 @@ public function adminRating(Request $request){
         $categories = Category::orderBy('title')->get();
         $skills     = Skill::orderBy('title')->get();
         $user_by_role =  User::role('freelancer')->pluck('id')->toArray();
-        foreach ($categories as $key => $cat) {
-            if($cat->slug=='slug'){
-                $type='category';
-            }
-        }
+       
         foreach ($skills as $key => $skill) {
             if($skill->slug==$slug){
                 $type='skill';
+            }
+        }
+        foreach ($categories as $key => $cat) {
+            if($cat->slug==$slug){
+                $type='category';
             }
         }
         foreach ($locations as $key => $loc) {
@@ -1457,7 +1458,7 @@ public function adminRating(Request $request){
         $enable_package = !empty($payment_settings) && !empty($payment_settings[0]['enable_packages']) ? $payment_settings[0]['enable_packages'] : 'true';
         $breadcrumbs_settings = SiteManagement::getMetaValue('show_breadcrumb');
         $show_breadcrumbs = !empty($breadcrumbs_settings) ? $breadcrumbs_settings : 'true';
-        
+      
         $user_id = array();
         if ($type=='category') {
             $user_id = array();
