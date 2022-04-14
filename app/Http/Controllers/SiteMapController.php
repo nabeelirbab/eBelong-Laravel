@@ -29,3 +29,4 @@ class SiteMapController extends Controller
         return redirect(env('APP_URL')."/sitemap.xml");
     }
 }
+
