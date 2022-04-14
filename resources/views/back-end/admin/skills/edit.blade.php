@@ -32,6 +32,15 @@
                                         </span>
                                     @endif
                                 </div>
+                                <div class="form-group">
+                                    {!! Form::text( 'skill_slug', e($skills['slug']), ['class' =>'form-control'.($errors->has('skill_slug') ? ' is-invalid' : '')] ) !!}
+                                    <span class="form-group-description">{{{ trans('lang.desc') }}}</span>
+                                    @if ($errors->has('skill_slug'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('skill_slug') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
                                 <label for="imageInput"><strong>Skill Logo</strong></label>
                                 <div class="col-md-12">
                                     <div class="row">

@@ -160,8 +160,8 @@ class Category extends Model
     {
         if (!empty($request)) {
             $cats = self::find($id);
-            if ($cats->title != $request['category_title']) {
-                $cats->slug  =  filter_var($request['category_title'], FILTER_SANITIZE_STRING);
+            if ($cats->slug != $request['category_slug']) {
+                $cats->slug  =  filter_var($request['category_slug'], FILTER_SANITIZE_STRING);
             }
             $cats->title = filter_var($request['category_title'], FILTER_SANITIZE_STRING);
             $cats->abstract = filter_var($request['category_abstract'], FILTER_SANITIZE_STRING);

@@ -84,9 +84,10 @@ class Skill extends Model
      * @return string
      */
     public function setSlugAttribute($value)
-    {
+    { 
         if (!empty($value)) {
             $temp = str_slug($value, '-');
+            
             if (!Skill::all()->where('slug', $temp)->isEmpty()) {
                 $i = 1;
                 $new_slug = $temp . '-' . $i;
@@ -133,8 +134,8 @@ class Skill extends Model
 
         if (!empty($request)) {
             $skills = self::find($id);
-            if ($skills->title != filter_var($request['skill_title'], FILTER_SANITIZE_STRING)) {
-                $skills->slug = filter_var($request['skill_title'], FILTER_SANITIZE_STRING);
+            if ($skills->slug != $request['skill_slug']) {
+             $skills->slug = $request['skill_slug'];
             }
             $skills->title = filter_var($request['skill_title'], FILTER_SANITIZE_STRING);
             $skills->logo = filter_var($request['logo'], FILTER_SANITIZE_STRING);
