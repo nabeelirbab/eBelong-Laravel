@@ -26,20 +26,21 @@
             </div>
         </div>
     </div>
-    <div class="wt-haslayout wt-main-section">
+    <div class="wt-haslayout wt-main-section error-remove-padding">
         <div class="container">
             <div class="row justify-content-md-center">
                 <div class="col-xs-12 col-sm-12 col-md-10 push-md-1 col-lg-8 push-lg-2">
                     <div class="wt-404errorpage">
-                        <figure class="wt-404errorimg"><img src="{{{ asset('images/404-img.jpg') }}}" alt="{{ trans('lang.404_img') }}"></figure>
                         <div class="wt-404errorcontent">
                             <div class="wt-title">
                                 <h3>{{ trans('lang.link_crashed') }}</h3>
                             </div>
                             <div class="wt-description">
-                                <p>{{ trans('lang.crashed_note') }} <a href="{{{ url('/') }}}">{{ trans('lang.homepage') }}</a></p>
+                                <p>{{ trans('lang.crashed_note') }} <a class="e-button e-button-primary" href="{{{ url('/') }}}">{{ trans('lang.homepage') }}</a></p>
                             </div>
                         </div>
+                        <figure class="wt-404errorimg"><img src="{{{ asset('images/404-img.jpg') }}}" alt="{{ trans('lang.404_img') }}"></figure>
+                        
                     </div>
                 </div>
             </div>

@@ -5460,10 +5460,17 @@ body.wt-login .wt-userlogedin{display: block;}
 .wt-404errorcontent{
 	float: left;
 	width: 100%;
-	padding: 60px;
+	padding: 0px 60px 60px 60px ;
 	background: #fff;
 	text-align: center;
 	border-radius: 0 0 4px 4px;
+}
+.wt-404errorcontent .e-button {
+    font-size: 20px;
+    font-weight: 700;
+}
+.error-remove-padding {
+	padding-top: unset;
 }
 .wt-404errorcontent .wt-title h3{
 	margin: 0;
