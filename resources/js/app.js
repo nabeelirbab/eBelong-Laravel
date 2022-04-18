@@ -5962,8 +5962,8 @@ if (document.getElementById("blog")) {
                           self.showError(error.response.data.errors.title[0]);
                       }
                      
-                      if (error.response.data.errors.description) {
-                          self.showError(error.response.data.errors.description[0]);
+                      if (error.response.data.errors.content) {
+                          self.showError(error.response.data.errors.content[0]);
                       }
                       
                   });
@@ -6102,8 +6102,8 @@ if (document.getElementById("blog")) {
                       if (error.response.data.errors.response_time) {
                           self.showError(error.response.data.errors.response_time[0]);
                       }
-                      if (error.response.data.errors.description) {
-                          self.showError(error.response.data.errors.description[0]);
+                      if (error.response.data.errors.content) {
+                          self.showError(error.response.data.errors.content[0]);
                       }
                       if (error.response.data.errors.english_level) {
                           self.showError(error.response.data.errors.english_level[0]);
