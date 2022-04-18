@@ -201,11 +201,11 @@
                                         </div>
                                         @if(!empty($roles))
                                             <ul class="wt-accordionhold wt-formaccordionhold accordion">
-
-                                            <?php unset($roles[1]); ?>
-                                                
+                                            @php unset($roles[1]); @endphp
+                                           
                                                 @foreach ($roles as $key => $role)
-                                                    @if (!in_array($role['id'] == 1, $roles))
+                                               
+                                                    @if (!in_array($role['id'] == 1, $roles) && !in_array($role['id'] == 4, $roles))
                                                         <li>
                                                             <div class="wt-accordiontitle" id="headingOne" data-toggle="collapse" data-target="#collapseOne">
                                                                 <span class="wt-radio">
@@ -219,6 +219,7 @@
                                                                 </span>
                                                             </div>
                                                             @if ($role['role_type'] === 'employer')
+
                                                                 @if ($show_emplyr_inn_sec === 'true')
                                                                     <div class="wt-accordiondetails collapse show" id="collapseOne" aria-labelledby="headingOne" v-if="is_show">
                                                                         <div class="wt-radioboxholder">
