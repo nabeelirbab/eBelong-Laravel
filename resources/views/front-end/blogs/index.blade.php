@@ -72,7 +72,16 @@
                                                 $attachments = Helper::getUnserializeData($blog->attachments);
                                                 $no_attachments = empty($attachments) ? 'la-service-info' : '';
                                                 $enable_slider = !empty($attachments) ? 'wt-blogsslider' : '';
-                                                
+                                                $num_words = 41;
+                                                $words = array();
+                                                $words = explode(" ", $blog->content, $num_words);
+                                                $shown_string = "";
+
+                                                if(count($words) == 41){
+                                                $words[40] = " ... ";
+                                                }
+
+                                                $shown_string = implode(" ", $words);
                                             @endphp
                                             <div class="col-12 col-sm-12 col-md-6 col-lg-6 float-left">
                                                 <div class="wt-freelancers-info {{$no_attachments}}">
@@ -84,8 +93,14 @@
                                                                     <figure class="item">
                                                                         <a href="{{{ url('blog/'.$blog['slug']) }}}">
                                                                             <img src="{{{asset(Helper::getImageWithSize('uploads/blogs/'.$blog->id, $attachment, 'medium'))}}}" alt="img descriptions" class="item">
-                                                                            <div class="blog-date"><h6> add blog date </h6></div>
-                                                                            <div class="blog-category"><h6> add catagory </h6></div>
+                                                                            <div class="blog-date"><h6> {{ Carbon\Carbon::parse($blog->created_at)->format('M Y') }} </h6></div>
+                                                                            @if(!empty($blog->categories))
+                                                                            @foreach ( $blog->categories as $key=>$cat )
+                                                                            @if($key==0)
+                                                                            <div class="blog-category"><h6> {{ $cat->title }} </h6></div>
+                                                                            @endif
+                                                                            @endforeach
+                                                                            @endif
                                                                         </a>
                                                                     </figure>
                                                                 @endforeach
@@ -124,7 +139,7 @@
                                                                 {{-- <span><strong>{{ (!empty($symbol['symbol'])) ? $symbol['symbol'] : '$' }}{{{$blog->price}}}</strong> </span> --}}
                                                             </div>
                                                             <div class="dc-discription">
-                                                                <h6>Add description here</h6>
+                                                                @php echo htmlspecialchars_decode(stripslashes($shown_string)); @endphp
                                                             </div>
                                                         </div>
                                                         <div class="wt-freelancers-rating">
