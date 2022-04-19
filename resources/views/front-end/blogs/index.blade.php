@@ -109,6 +109,14 @@
                                                             <div class="wt-freelancers">
                                                                 <figure class="item">
                                                                     <a href="{{{ url('blog/'.$blog->slug) }}}"><img src="{{ asset('uploads/settings/general/imgae-not-availabe.png') }}" alt="img description" class="item"></a>
+                                                                    <div class="blog-date"><h6> {{ Carbon\Carbon::parse($blog->created_at)->format('M Y') }} </h6></div>
+                                                                    @if(!empty($blog->categories))
+                                                                    @foreach ( $blog->categories as $key=>$cat )
+                                                                    @if($key==0)
+                                                                    <div class="blog-category"><h6> {{ $cat->title }} </h6></div>
+                                                                    @endif
+                                                                    @endforeach
+                                                                    @endif
                                                                 </figure>
                                                             </div>
                                                         @endif
