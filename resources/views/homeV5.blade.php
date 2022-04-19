@@ -146,7 +146,7 @@
 												<ul class="navbar-nav">
 													<?php $user_role = Helper::getSessionUserRole(); ?>
 													<?php if($user_role): ?>
-														<?php if($user_role == 'guest'): ?>
+														<?php if($user_role == 'guest'||$user_role == 'editor'): ?>
 														<li style="order: 1;">
 															<a href="{{url('search-results?type=instructors')}}">
 																{{{ trans('lang.browse_instructors') }}}
