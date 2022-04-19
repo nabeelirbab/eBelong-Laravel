@@ -82,7 +82,11 @@
                                                             <div class="wt-freelancers {{{$enable_slider}}}">
                                                                 @foreach ($attachments as $attachment)
                                                                     <figure class="item">
-                                                                        <a href="{{{ url('blog/'.$blog['slug']) }}}"><img src="{{{asset(Helper::getImageWithSize('uploads/blogs/'.$blog->id, $attachment, 'medium'))}}}" alt="img descriptions" class="item"></a>
+                                                                        <a href="{{{ url('blog/'.$blog['slug']) }}}">
+                                                                            <img src="{{{asset(Helper::getImageWithSize('uploads/blogs/'.$blog->id, $attachment, 'medium'))}}}" alt="img descriptions" class="item">
+                                                                            <div class="blog-date"><h6> add blog date </h6></div>
+                                                                            <div class="blog-category"><h6> add catagory </h6></div>
+                                                                        </a>
                                                                     </figure>
                                                                 @endforeach
                                                             </div>
@@ -102,7 +106,7 @@
                                                     @endif
                                                    
                                                     <div class="wt-freelancers-details">
-                                                        @if (empty($blog->editor_id))
+                                                        <!-- @if (empty($blog->editor_id))
                                                             <figure class="wt-freelancers-img">
                                                                 <img src="{{ asset(Helper::getProfileImage($blog->editor_id)) }}" alt="img description">
                                                             </figure>
@@ -110,7 +114,7 @@
                                                             <figure class="wt-freelancers-img">
                                                                 <img src="{{ asset('uploads/settings/general/user.jpg') }}" alt="user-img">
                                                             </figure>
-                                                        @endif
+                                                        @endif -->
                                                         <div class="wt-freelancers-content">
                                                             <div class="dc-title">
                                                                 @if ($blog->editor_id)
@@ -119,12 +123,16 @@
                                                                 <a href="{{{url('blog/'.$blog->slug)}}}"><h3>{{{$blog->title}}}</h3></a>
                                                                 {{-- <span><strong>{{ (!empty($symbol['symbol'])) ? $symbol['symbol'] : '$' }}{{{$blog->price}}}</strong> </span> --}}
                                                             </div>
+                                                            <div class="dc-discription">
+                                                                <h6>Add description here</h6>
+                                                            </div>
                                                         </div>
                                                         <div class="wt-freelancers-rating">
-                                                            <ul>
+                                                            <button onclick="location.href='{{{url('blog/'.$blog->slug)}}}'" class="e-button e-button-primary blogs-read-more">READ MORE</button>
+                                                            <!-- <ul>
                                                                 <li><span><i class="fa fa-star"></i>Read More</span></li>
                                                                 
-                                                            </ul>
+                                                            </ul> -->
                                                         </div>
                                                     </div>
                                                 </div>
