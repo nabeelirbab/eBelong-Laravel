@@ -88,7 +88,7 @@
                                                     @if (!empty($blog->editor_id))
                                                         @if (!empty($attachments))
                                                             @php $enable_slider = count($attachments) > 1 ? 'wt-freelancerslider owl-carousel' : ''; @endphp
-                                                            <div class="wt-freelancers {{{$enable_slider}}}">
+                                                            <div class="wt-freelancers wt-freelancers-blogs {{{$enable_slider}}}">
                                                                 @foreach ($attachments as $attachment)
                                                                     <figure class="item">
                                                                         <a href="{{{ url('blog/'.$blog['slug']) }}}">
@@ -106,7 +106,7 @@
                                                                 @endforeach
                                                             </div>
                                                         @else
-                                                            <div class="wt-freelancers">
+                                                            <div class="wt-freelancers wt-freelancers-blogs">
                                                                 <figure class="item">
                                                                     <a href="{{{ url('blog/'.$blog->slug) }}}"><img src="{{ asset('uploads/settings/general/imgae-not-availabe.png') }}" alt="img description" class="item"></a>
                                                                     <div class="blog-date"><h6> {{ Carbon\Carbon::parse($blog->created_at)->format('M Y') }} </h6></div>

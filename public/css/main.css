@@ -10599,9 +10599,20 @@ a:focus{text-decoration: none !important;}
 	color: #ffffff;
 }
 
-.wt-freelancers-info .wt-freelancers {
+.wt-freelancers-blogs.wt-freelancers figure {
 	overflow: unset;
 }
-.wt-freelancers-info .wt-freelancers figure {
-	overflow: unset;
+.wt-freelancers.wt-freelancers-blogs {
+    overflow: unset;
+}
+
+.dc-discription {
+    height: 60px;
+}
+.dc-discription p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 }
