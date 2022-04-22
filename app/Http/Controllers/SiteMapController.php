@@ -11,6 +11,10 @@ use Spatie\Sitemap\Tags\Url;
 use App\Category;
 use App\Skill;
 use App\Blog;
+use App\User;
+use App\Service;
+use App\Cource;
+use App\Job;
 
 class SiteMapController extends Controller
 {
@@ -24,14 +28,23 @@ class SiteMapController extends Controller
         Skill::all()->each(function (Skill $Item) use ($sitemap) {
             $sitemap->add(Url::create("/hire/{$Item->slug}"));
         });
+        User::all()->each(function (User $Item) use ($sitemap) {
+            $sitemap->add(Url::create("/profile/{$Item->slug}"));
+        });
         Category::all()->each(function (Category $Item) use ($sitemap) {
             $sitemap->add(Url::create("/services/{$Item->slug}"));
         });
         Skill::all()->each(function (Skill $Item) use ($sitemap) {
             $sitemap->add(Url::create("/services/{$Item->slug}"));
         });
+        Service::all()->each(function (Service $Item) use ($sitemap) {
+            $sitemap->add(Url::create("/service/{$Item->slug}"));
+        });
         Category::all()->each(function (Category $Item) use ($sitemap) {
             $sitemap->add(Url::create("/jobs/{$Item->slug}"));
+        });
+        Job::all()->each(function (Job $Item) use ($sitemap) {
+            $sitemap->add(Url::create("/job/{$Item->slug}"));
         });
         Skill::all()->each(function (Skill $Item) use ($sitemap) {
             $sitemap->add(Url::create("/jobs/{$Item->slug}"));
@@ -41,6 +54,9 @@ class SiteMapController extends Controller
         });
         Skill::all()->each(function (Skill $Item) use ($sitemap) {
             $sitemap->add(Url::create("/courses/{$Item->slug}"));
+        });
+        Cource::all()->each(function (Cource $Item) use ($sitemap) {
+            $sitemap->add(Url::create("/course/{$Item->slug}"));
         });
         Category::all()->each(function (Category $Item) use ($sitemap) {
             $sitemap->add(Url::create("/blogs/{$Item->slug}"));
@@ -51,6 +67,10 @@ class SiteMapController extends Controller
         Blog::all()->each(function (Blog $Item) use ($sitemap) {
             $sitemap->add(Url::create("/blog/{$Item->slug}"));
         });
+        
+        $sitemap->add(Url::create("page/about-us"));
+        $sitemap->add(Url::create("page/privacy-policy"));
+        $sitemap->add(Url::create("/"));
         // $sitemap->add(Url::create('/hire'));
         // $sitemap->shouldCrawl(function (Url $url) {
         //     $result = substr($url->segment(1), 0, 13);
