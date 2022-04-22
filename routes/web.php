@@ -71,7 +71,7 @@ Route::get('get-skills-for-wishlist', 'SkillController@getWhishlistSkills');
 Route::get('get-categories-for-whishlist', 'CategoryController@getWishlistCategories');
 
 //seo-blogs
-Route::get('blogs/{type}/{slug}', 'BlogController@BlogList')->name('FilteredBlogs');
+Route::get('blogs/{slug}', 'BlogController@BlogList')->name('FilteredBlogs');
 Route::get('blogs', 'BlogController@BlogsList')->name('blogs');
 
 //seo-courses

@@ -28,7 +28,7 @@
                                 @php $checked = ( !empty($_GET['category']) && in_array($category->slug, $_GET['category'] )) ? 'checked' : ''; @endphp
                                 <span class="wt-checkbox">
                                     <input id="cat-{{{ $category->slug }}}" type="checkbox" name="category[]" value="{{{ $category->slug }}}" {{$checked}} >
-                                    <label for="cat-{{{ $category->slug }}}"> {{{ $category->title }}}</label>
+                                    <label for="cat-{{{ $category->slug }}}"> <a href="{{ url('blogs/'.$category->slug) }}"  >{{{ $category->title }}}</a></label>
                                 </span>
                             @endforeach
                         </div>
@@ -55,7 +55,7 @@
                                 @php $checked = ( !empty($_GET['skill']) && in_array($skill->slug, $_GET['skill'] )) ? 'checked' : ''; @endphp
                                 <span class="wt-checkbox">
                                     <input id="skill-{{{ $skill->slug }}}" type="checkbox" name="skill[]" value="{{{ $skill->slug }}}" {{$checked}} >
-                                    <label for="skill-{{{ $skill->slug }}}"> {{{ $skill->title }}}</label>
+                                    <label for="skill-{{{ $skill->slug }}}"> <a href="{{ url('blogs/'.$skill->slug) }}"  >{{{ $skill->title }}}</a></label>
                                 </span>
                             @endforeach
                         </div>

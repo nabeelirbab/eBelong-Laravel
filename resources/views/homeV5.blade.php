@@ -168,7 +168,7 @@
 															</a>
 														</li>
 														<li style="order: 6;">
-															<a href="{{url('search-results?type=blogs')}}">
+															<a href="{{url('/blogs')}}">
 																{{{ trans('lang.Blogs') }}}
 															</a>
 														</li>
@@ -199,7 +199,7 @@
 															</a>
 														</li>
 														<li style="order: 6;">
-															<a href="{{url('search-results?type=blogs')}}">
+															<a href="{{url('/blogs')}}">
 																{{{ trans('lang.Blogs') }}}
 															</a>
 														</li>
