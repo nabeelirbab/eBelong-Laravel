@@ -170,7 +170,7 @@ $show_f_banner = 'true'
                                                                     @foreach($freelancer->skills as $i => $skill)
                                                                     @if($i==0)
                                                                     <!-- <img style="width: 16px" src="/uploads/logos/{{{ $skill->logo }}}" alt=""> -->
-                                                                    <a href="{{{url('search-results?type=job&skills%5B%5D='.$skill->slug)}}}">{{{ $skill->title }}}</a>
+                                                                    <a href="{{{url('jobs/'.$skill->slug)}}}">{{{ $skill->title }}}</a>
                                                                     @endif
                                                                     @endforeach
                                                                     @endif
@@ -213,7 +213,7 @@ $show_f_banner = 'true'
                                                                 <?php $count = 0; ?>
                                                                 @foreach($freelancer->skills as $skill)
                                                                     <?php if($count == 4) break; ?>
-                                                                        <a href="{{{url('search-results?type=job&skills%5B%5D='.$skill->slug)}}}">{{{ $skill->title }}}</a>
+                                                                        <a href="{{{url('jobs/'.$skill->slug)}}}">{{{ $skill->title }}}</a>
                                                                     <?php $count++; ?>
                                                                 @endforeach
 
@@ -350,7 +350,7 @@ $show_f_banner = 'true'
                                                                 @foreach($freelancer->skills as $i =>  $skill)
                                                                 @if($i==0)
                                                                 <img style="width: 16px" src="/uploads/logos/{{{ $skill->logo }}}" alt="">
-                                                                <a style="color: #2B2B2B" href="{{{url('search-results?type=job&skills%5B%5D='.$skill->slug)}}}">{{{ $skill->title }}}</a>
+                                                                <a style="color: #2B2B2B" href="{{{url('jobs/'.$skill->slug)}}}">{{{ $skill->title }}}</a>
                                                                 
                                                                 @endif
                                                             @endforeach
@@ -362,7 +362,7 @@ $show_f_banner = 'true'
                                                                 @if (!empty($freelancer->skills))
                                                                 <div class="wt-tag wt-widgettag">
                                                             comment area start @foreach($freelancer->skills as $skill)
-                                                                <a href="{{{url('search-results?type=job&skills%5B%5D='.$skill->slug)}}}">{{{ $skill->title }}}</a>
+                                                                <a href="{{{url('jobs/'.$skill->slug)}}}">{{{ $skill->title }}}</a>
                                                                 <img src="/uploads/logos/{{{ $skill->logo }}}" alt="">
                                                             @endforeach comment area end
                                                                 </div>
@@ -406,7 +406,7 @@ $show_f_banner = 'true'
                                                         <div class="wt-tag wt-widgettag">
                                                             @foreach($freelancer->skills as $skill)
                                                             
-                                                                <a href="{{{url('search-results?type=job&skills%5B%5D='.$skill->slug)}}}">{{{ $skill->title }}}</a>
+                                                                <a href="{{{url('jobs/'.$skill->slug)}}}">{{{ $skill->title }}}</a>
                                                         
                                                             @endforeach
                                                         </div>
@@ -503,7 +503,7 @@ $show_f_banner = 'true'
                                                                     @foreach($freelancer->skills as $i => $skill)
                                                                     @if($i==0)
                                                                     <!-- <img style="width: 16px" src="/uploads/logos/{{{ $skill->logo }}}" alt=""> -->
-                                                                    <a href="{{{url('search-results?type=job&skills%5B%5D='.$skill->slug)}}}">{{{ $skill->title }}}</a>
+                                                                    <a href="{{{url('jobs/'.$skill->slug)}}}">{{{ $skill->title }}}</a>
                                                                     @endif
                                                                     @endforeach
                                                                     @endif
@@ -541,7 +541,7 @@ $show_f_banner = 'true'
                                                                 <?php $count = 0; ?>
                                                                 @foreach($freelancer->skills as $skill)
                                                                     <?php if($count == 2) break; ?>
-                                                                        <a href="{{{url('search-results?type=job&skills%5B%5D='.$skill->slug)}}}">{{{ $skill->title }}}</a>
+                                                                        <a href="{{{url('jobs/'.$skill->slug)}}}">{{{ $skill->title }}}</a>
                                                                     <?php $count++; ?>
                                                                 @endforeach
 
@@ -659,7 +659,7 @@ $show_f_banner = 'true'
                                                                 @foreach($freelancer->skills as $i =>  $skill)
                                                                     @if($i==0)
                                                                         <img style="width: 16px" src="/uploads/logos/{{{ $skill->logo }}}" alt="">
-                                                                        <a style="color: #2B2B2B" href="{{{url('search-results?type=job&skills%5B%5D='.$skill->slug)}}}">{{{ $skill->title }}}</a>
+                                                                        <a style="color: #2B2B2B" href="{{{url('jobs/'.$skill->slug)}}}">{{{ $skill->title }}}</a>
                                                                     @endif
                                                                 @endforeach
                                                                 @if (!empty($freelancer->location))
@@ -676,7 +676,7 @@ $show_f_banner = 'true'
                                                             @if (!empty($freelancer->skills))
                                                                 <div class="wt-tag wt-widgettag">
                                                                 comment start @foreach($freelancer->skills as $skill)
-                                                                    <a href="{{{url('search-results?type=job&skills%5B%5D='.$skill->slug)}}}">{{{ $skill->title }}}</a>
+                                                                    <a href="{{{url('jobs/'.$skill->slug)}}}">{{{ $skill->title }}}</a>
                                                                     <img src="/uploads/logos/{{{ $skill->logo }}}" alt="">
                                                                 @endforeach comment end
                                                                 </div>
@@ -704,7 +704,7 @@ $show_f_banner = 'true'
                                                     <div class="wt-tag wt-widgettag">
                                                         @foreach($freelancer->skills as $i => $skill)
                                                             @if ($i <= 3)
-                                                                <a href="{{{url('search-results?type=job&skills%5B%5D='.$skill->slug)}}}">{{{ $skill->title }}}</a>
+                                                                <a href="{{{url('jobs/'.$skill->slug)}}}">{{{ $skill->title }}}</a>
                                                             @endif
                                                         @endforeach
                                                     </div>

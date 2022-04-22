@@ -120,10 +120,10 @@
                     this.selected_type = this.job_placeholder;
                 } else if(type == 'employer') {
                     this.selected_type = this.employer_placeholder;
-                } else if(type == 'service') {
+                } else if(type == 'services') {
                     this.selected_type = this.service_placeholder;
                 }
-                else if(type == 'instructors') {
+                else if(type == 'courses') {
                     this.selected_type = this.instructor_placeholder;
                 }
                  else if(type == 'blogs') {
@@ -159,10 +159,10 @@
                         self.searchable_data = response.data.searchables;
                     } else if (type == 'job') {
                         self.searchable_data = response.data.searchables;
-                    } else if (type == 'service') {
+                    } else if (type == 'services') {
                         self.searchable_data = response.data.searchables;
                     }
-                    else if (type == 'instructors') {
+                    else if (type == 'courses') {
                         self.searchable_data = response.data.searchables;
                     }
                      else if (type == 'blogs') {
@@ -205,8 +205,8 @@
                         type = 'employer';
                     } else if(type == 'Jobs') {
                         type = 'job';
-                    } else if(type == 'Services') {
-                        type = 'service';
+                    } else if(type == 'services') {
+                        type = 'services';
                     } 
                      else if(type == 'Blogs') {
                         type = 'blog';
@@ -247,11 +247,11 @@
                             type = 'employer';
                     }   else if(type == 'Jobs') {
                             type = 'job';
-                    } else if(type == 'Services') {
-                            type = 'service';
+                    } else if(type == 'services') {
+                            type = 'services';
                     }
-                     else if(type == 'Instructors') {
-                            type = 'instructor';
+                     else if(type == 'courses') {
+                            type = 'courses';
                     }
                     else if(type == 'Blogs') {
                             type = 'blogs';
@@ -267,12 +267,12 @@
                         else if(url_type == 2)
                             window.location.replace(APP_URL+'/search-results?type=job&s=&skills[]='+slug);
                         else
-                            window.location.replace(APP_URL+'/search-results?type=job&s=&category[]='+slug);
-                    } else if (type == 'service'){
+                            window.location.replace(APP_URL+'/jobs/'+slug);
+                    } else if (type == 'services'){
                         window.location.replace(APP_URL+'/service/'+slug);
                     }
-                     else if (type == 'instructors'){
-                        window.location.replace(APP_URL+'/instructor/'+slug);
+                     else if (type == 'courses'){
+                        window.location.replace(APP_URL+'/course/'+slug);
                     }
                      else if (type == 'blogs'){
                         window.location.replace(APP_URL+'/blog/'+slug);
@@ -322,7 +322,7 @@
             });
 
             $('form input').keydown(function (e) {
-
+             
                 if( document.getElementById('hidden_field'))
                     {  
                         var slug = document.getElementById('hidden_field').value;
@@ -342,7 +342,7 @@
                             else if( types == 'Work ') {
                                 types = 'job';
                                 if(slug == "") 
-                                    window.location.replace(APP_URL+'/search-results?type='+types);   
+                                    window.location.replace(APP_URL+'/'+types);   
                                 else 
                                 {
                                     let url_type = document.getElementById('url_type').value;
@@ -350,15 +350,15 @@
                                     if(url_type == 1)
                                     window.location.replace(APP_URL+'/job/'+slug);
                                     else if(url_type == 2)
-                                        window.location.replace(APP_URL+'/search-results?type=job&s=&skills[]='+slug);
+                                        window.location.replace(APP_URL+'/jobs/'+slug);
                                     else
-                                        window.location.replace(APP_URL+'/search-results?type=job&s=&category[]='+slug);
+                                        window.location.replace(APP_URL+'/jobs/'+slug);
                                 }
                             }
-                            else if (types == 'Services '){
-                                types = 'service';
+                            else if (types == 'services '){
+                                types = 'services';
                                 if(slug == "") 
-                                    window.location.replace(APP_URL+'/search-results?type='+types);   
+                                    window.location.replace(APP_URL+'/services');   
                                 else
                                     window.location.replace(APP_URL+'/service/'+slug);
                             } 

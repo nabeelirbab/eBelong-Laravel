@@ -745,7 +745,7 @@ class JobController extends Controller
         }
     }
     
-   public function jobsList($type,$slug){
+   public function jobsList($slug){
         $locations  = Location::all();
         $languages  = Language::all();
         $categories = Category::orderBy('title')->get();
@@ -767,21 +767,50 @@ class JobController extends Controller
         $current_date = Carbon::now()->toDateTimeString();
         $jobs = Job::select('*');
         $job_id = array();
-
+        $type="category";
+        foreach ($skills as $key => $skill) {
+            if($skill->slug==$slug){
+                $type='skill';
+            }
+        }
+        foreach ($categories as $key => $cat) {
+            if($cat->slug==$slug){
+                $type='category';
+            }
+        }
+        foreach ($locations as $key => $loc) {
+            if($loc->slug==$slug){
+                $type='location';
+            }
+        }
+       
+        foreach ($languages as $key => $lang) {
+            if($lang->slug==$slug){
+                $type='language';
+            }
+        }
+        foreach ($project_length as $key => $length) {
+            if($key==$slug){
+                $type='project-length';
+            }
+        }
         if($type=='category'){
             $categor_obj = Category::where('slug', $slug)->first();
-            $category = Category::find($categor_obj->id);
-            if (!empty($category->jobs)) {
-                $category_jobs = $category->jobs->toArray();
-                foreach ($category_jobs as $job) {
-                    if($job['status'] == "posted"){
-                        $job_id[] = $job['id'];
+            if(!empty($categor_obj->id)){
+                $category = Category::find($categor_obj->id);
+                if (!empty($category->jobs)) {
+                    $category_jobs = $category->jobs->toArray();
+                    foreach ($category_jobs as $job) {
+                        if($job['status'] == "posted"){
+                            $job_id[] = $job['id'];
+                        }
                     }
                 }
             }
-            if(!empty($job_id)){
+            
                 $jobs->whereIn('id', $job_id);
-            }
+            
+            
         }  
         if ($type=='location') {
             $location = Location::select('id')->where('slug', $slug)->get()->pluck('id')->toArray();
@@ -805,7 +834,7 @@ class JobController extends Controller
         
       
         if ($type=='project-length') {
-            $jobs->whereIn('duration', $slug);
+            $jobs->where('duration', $slug);
         }
 
         if ($type=='language') { 

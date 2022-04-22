@@ -41,7 +41,7 @@
     @endif
     <div class="wt-haslayout wt-main-section" id="services">
     <div class="search-form">
-              {{-- <search-form
+              <search-form-home
                 :placeholder="'{{ trans('lang.looking_for') }}'"
                 :freelancer_placeholder="'{{ trans('lang.search_filter_list.freelancer') }}'"
                 :employer_placeholder="'{{ trans('lang.search_filter_list.employers') }}'"
@@ -49,7 +49,7 @@
                 :service_placeholder="'{{ trans('lang.search_filter_list.services') }}'"
                 :no_record_message="'{{ trans('lang.no_record') }}'"
                 >
-                </search-form> --}}
+                </search-form-home>
         </div>
         @if (Session::has('payment_message'))
             @php $response = Session::get('payment_message') @endphp

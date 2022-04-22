@@ -296,7 +296,7 @@
                                                             <div class="wt-freelancers-content">
                                                                 <div class="dc-title">
                                                                     <a href="{{{ url('profile/'.$user->slug) }}}"><i class="fa fa-check-circle"></i> {{{Helper::getUserName($user->id)}}}</a>
-                                                                    <a href="{{{url('instructor/'.$cource->slug)}}}"><h3>{{{$cource->title}}}</h3></a>
+                                                                    <a href="{{{url('course/'.$cource->slug)}}}"><h3>{{{$cource->title}}}</h3></a>
                                                                     <span><strong>{{ $symbol }}{{{$cource->price}}}</strong> {{trans('lang.starting_from')}}</span>
                                                                 </div>
                                                             </div>

@@ -305,7 +305,7 @@ class StripeController extends Controller
                                         $template_data->content = Helper::getFreelancerNewCourseOrderEmailContent();
                                         $template_data->subject = "Course Order";
                                         $email_params['title'] = $course->title;
-                                        $email_params['course_link'] = url('instructor/' . $course->slug);
+                                        $email_params['course_link'] = url('course/' . $course->slug);
                                         $email_params['amount'] = $course->price;
                                         $email_params['freelancer_name'] = Helper::getUserName($freelancer);
                                         $email_params['employer_profile'] = url('profile/' . $user->slug);
@@ -463,7 +463,7 @@ class StripeController extends Controller
                 if ($project_type == 'course') {
                     $json['type'] = 'success';
                     $json['message'] = trans('lang.course_payment_msg');
-                    $json['url'] = url('search-results?type=instructors');
+                    $json['url'] = url('/courses');
                     session()->forget('type');
                     return $json;
                 }

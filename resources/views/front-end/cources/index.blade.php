@@ -99,14 +99,14 @@
                                                             <div class="wt-freelancers {{{$enable_slider}}}">
                                                                 @foreach ($attachments as $attachment)
                                                                     <figure class="item">
-                                                                        <a href="{{{ url('instructor/'.$service->slug) }}}"><img src="{{{asset(Helper::getImageWithSize('uploads/courses/'.$service->seller[0]->id, $attachment, 'medium'))}}}" alt="img descriptions" class="item"></a>
+                                                                        <a href="{{{ url('course/'.$service->slug) }}}"><img src="{{{asset(Helper::getImageWithSize('uploads/courses/'.$service->seller[0]->id, $attachment, 'medium'))}}}" alt="img descriptions" class="item"></a>
                                                                     </figure>
                                                                 @endforeach
                                                             </div>
                                                         @else
                                                             <div class="wt-freelancers">
                                                                 <figure class="item">
-                                                                    <a href="{{{ url('instructor/'.$service->slug) }}}"><img src="{{ asset('uploads/settings/general/imgae-not-availabe.png') }}" alt="img description" class="item"></a>
+                                                                    <a href="{{{ url('course/'.$service->slug) }}}"><img src="{{ asset('uploads/settings/general/imgae-not-availabe.png') }}" alt="img description" class="item"></a>
                                                                 </figure>
                                                             </div>
                                                         @endif
@@ -135,7 +135,7 @@
                                                                 @if ($service->seller->count() > 0)
                                                                     <a href="{{{ url('profile/'.$service->seller[0]->slug) }}}"><i class="fa fa-check-circle"></i> {{{Helper::getUserName($service->seller[0]->id)}}}</a>
                                                                 @endif
-                                                                <a href="{{{url('instructor/'.$service->slug)}}}"><h3>{{{$service->title}}}</h3></a>
+                                                                <a href="{{{url('course/'.$service->slug)}}}"><h3>{{{$service->title}}}</h3></a>
                                                                 <span><strong>{{ (!empty($symbol['symbol'])) ? $symbol['symbol'] : '$' }}{{{$service->price}}}</strong> </span>
                                                             </div>
                                                         </div>
