@@ -10616,3 +10616,32 @@ a:focus{text-decoration: none !important;}
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
 }
+
+.blog-detail-section {
+	padding: 0px 0px;
+}
+.blog-detail-section .wt-servicesingle {
+    margin: 0 0 0px;
+	background: unset;
+	padding: 28px 0px 0px;
+}
+.blog-detail-section .blog-first-div {
+	display: block;
+	
+}
+.blog-detail-section .blog-second-div {
+	display: none;
+}
+
+@media only screen and (max-width: 768px){
+	.blog-detail-section .blog-first-div {
+		display: none;
+	}
+	.blog-detail-section .blog-second-div {
+		display: block;
+	}
+	.blog-detail-section .wt-servicesingle {
+		padding: unset;
+	}
+}
+
