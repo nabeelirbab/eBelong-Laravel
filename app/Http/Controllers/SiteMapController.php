@@ -10,22 +10,61 @@ use Spatie\Sitemap\SitemapGenerator;
 use Spatie\Sitemap\Tags\Url;
 use App\Category;
 use App\Skill;
+use App\Blog;
 
 class SiteMapController extends Controller
 {
     public function index(){
         $path = public_path();
         $file = '/sitemap.xml';
-        $sitemap = SitemapGenerator::create(env('APP_URL'))
-        ->getSitemap();
+        $sitemap = Sitemap::create();
         Category::all()->each(function (Category $Item) use ($sitemap) {
             $sitemap->add(Url::create("/hire/{$Item->slug}"));
         });
         Skill::all()->each(function (Skill $Item) use ($sitemap) {
             $sitemap->add(Url::create("/hire/{$Item->slug}"));
         });
-        $sitemap->add(Url::create('/hire'))
-        ->writeToFile($path.$file);
+        Category::all()->each(function (Category $Item) use ($sitemap) {
+            $sitemap->add(Url::create("/services/{$Item->slug}"));
+        });
+        Skill::all()->each(function (Skill $Item) use ($sitemap) {
+            $sitemap->add(Url::create("/services/{$Item->slug}"));
+        });
+        Category::all()->each(function (Category $Item) use ($sitemap) {
+            $sitemap->add(Url::create("/jobs/{$Item->slug}"));
+        });
+        Skill::all()->each(function (Skill $Item) use ($sitemap) {
+            $sitemap->add(Url::create("/jobs/{$Item->slug}"));
+        });
+        Category::all()->each(function (Category $Item) use ($sitemap) {
+            $sitemap->add(Url::create("/courses/{$Item->slug}"));
+        });
+        Skill::all()->each(function (Skill $Item) use ($sitemap) {
+            $sitemap->add(Url::create("/courses/{$Item->slug}"));
+        });
+        Category::all()->each(function (Category $Item) use ($sitemap) {
+            $sitemap->add(Url::create("/blogs/{$Item->slug}"));
+        });
+        Skill::all()->each(function (Skill $Item) use ($sitemap) {
+            $sitemap->add(Url::create("/blogs/{$Item->slug}"));
+        });
+        Blog::all()->each(function (Blog $Item) use ($sitemap) {
+            $sitemap->add(Url::create("/blog/{$Item->slug}"));
+        });
+        // $sitemap->add(Url::create('/hire'));
+        // $sitemap->shouldCrawl(function (Url $url) {
+        //     $result = substr($url->segment(1), 0, 13);
+        // if ($result === 'search-results') {
+        //     return;
+        // }
+        // Location::all()->each(function (Location $Item) use ($sitemap) {
+        //     if ($url->segment(1) === "/hire/{$Item->slug}") {
+        //         return;
+        //     }
+        // });
+        // });
+
+        $sitemap->writeToFile($path.$file);
         return redirect(env('APP_URL')."/sitemap.xml");
     }
 }
