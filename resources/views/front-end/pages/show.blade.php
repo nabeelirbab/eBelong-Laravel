@@ -126,7 +126,7 @@
                                         @if (!empty($skills))
                                             <ul class="wt-fwidgetcontent">
                                                 @foreach ($skills as $skill)
-                                                    <li><a href="{{{url('search-results?type=job&skills%5B%5D='.$skill->slug)}}}">{{{ $skill->title }}}</a></li>
+                                                    <li><a href="{{{url('jobs/'.$skill->slug)}}}">{{{ $skill->title }}}</a></li>
                                                 @endforeach
                                             </ul>
                                         @endif
@@ -143,7 +143,7 @@
                                     @if (!empty($categories))
                                         <ul class="wt-fwidgetcontent">
                                             @foreach ($categories as $category)
-                                                <li><a href="{{{url('search-results?type=job&category%5B%5D='.$category->slug)}}}">{{{ $category->title }}}</a></li>
+                                                <li><a href="{{{url('jobs/'.$category->slug)}}}">{{{ $category->title }}}</a></li>
                                             @endforeach
                                         </ul>
                                     @endif
@@ -159,7 +159,7 @@
                                     @if (!empty($locations))
                                         <ul class="wt-fwidgetcontent">
                                             @foreach ($locations as $location)
-                                                <li><a href="{{{url('search-results?type=job&locations%5B%5D='.$location->slug)}}}">{{{ $location->title }}}</a></li>
+                                                <li><a href="{{{url('jobs/'.$location->slug)}}}">{{{ $location->title }}}</a></li>
                                             @endforeach
                                         </ul>
                                     @endif
@@ -175,7 +175,7 @@
                                     @if (!empty($languages))
                                         <ul class="wt-fwidgetcontent">
                                             @foreach ($languages as $language)
-                                                <li><a href="{{{url('search-results?type=job&languages%5B%5D='.$language->slug)}}}">{{{ $language->title }}}</a></li>
+                                                <li><a href="{{{url('jobs/'.$language->slug)}}}">{{{ $language->title }}}</a></li>
                                             @endforeach
                                         </ul>
                                     @endif

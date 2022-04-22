@@ -334,13 +334,24 @@ class BlogController extends Controller
         }
        
     }
-    public function bloglist($type,$slug){
+    public function bloglist($slug){
         
         // $blogs = Blog::select('*')->where('status','published')->orderBy('id','DESC');
         $categories = Category::orderBy('title')->get();
         $skills     = Skill::orderBy('title')->get();
         $blog_id = array();
         $blogs= array();
+        $type="category";
+        foreach ($skills as $key => $skill) {
+            if($skill->slug==$slug){
+                $type='skill';
+            }
+        }
+        foreach ($categories as $key => $cat) {
+            if($cat->slug==$slug){
+                $type='category';
+            }
+        }
         if($type=='category'){
             $categor_obj = Category::where('slug', $slug)->first();
             if(!empty($categor_obj->id)){
@@ -355,7 +366,8 @@ class BlogController extends Controller
                 $blogs = Blog::where('status','published')->whereIn('id', $blog_id)->orderBy('id','DESC')->get();
             }
         }
-        if($type='skill'){
+        
+        if($type=='skill'){
                 $skill_obj = Skill::where('slug', $slug)->first();
                 if(!empty($skill_obj->id)){
                 $skill= Skill::find($skill_obj->id);

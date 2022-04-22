@@ -842,7 +842,7 @@ class ServiceController extends Controller
         }
     }
 
-    public function Servicelist($type,$slug){
+    public function Servicelist($slug){
         
         // $blogs = Blog::select('*')->where('status','published')->orderBy('id','DESC');
         $inner_page  = SiteManagement::getMetaValue('inner_page_data');
@@ -858,11 +858,42 @@ class ServiceController extends Controller
         $skills     = Skill::orderBy('title')->get();
         $service_id = array();
         $services= array();
+        $type="category";
+        foreach ($skills as $key => $skill) {
+            if($skill->slug==$slug){
+                $type='skill';
+            }
+        }
+        foreach ($categories as $key => $cat) {
+            if($cat->slug==$slug){
+                $type='category';
+            }
+        }
+        foreach ($locations as $key => $loc) {
+            if($loc->slug==$slug){
+                $type='location';
+            }
+        }
+        foreach ($delivery_time as $key => $time) {
+            if($time->slug==$slug){
+                $type='delivery-time';
+            }
+        }
+        foreach ($response_time as $key => $time) {
+            if($time->slug==$slug){
+                $type='response-time';
+            }
+        }
+        foreach ($languages as $key => $lang) {
+            if($lang->slug==$slug){
+                $type='language';
+            }
+        }
+
         if($type=='category'){
             $categor_obj = Category::where('slug', $slug)->first();
             if(!empty($categor_obj->id)){
                 $category = Category::find($categor_obj->id);
-               
                 if (!empty($category->services)) {
                     $category_services = $category->services->pluck('id')->toArray();
                     foreach ($category_services as $id) {

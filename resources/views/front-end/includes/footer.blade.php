@@ -21,7 +21,7 @@
 						</div>
 						<div>
 						<button onclick="location.href='/hire'" class="e-button e-button-primary">Hire Now</button>
-						<button onclick="location.href='/search-results?type=job'" class="e-button e-button-primary my-3">Get Work</a></button>
+						<button onclick="location.href='/jobs'" class="e-button e-button-primary my-3">Get Work</a></button>
 						</div>
 					</div>
 				</div>

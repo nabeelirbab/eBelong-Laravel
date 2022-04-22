@@ -26,8 +26,8 @@
         </div>
     @endif
     <div class="wt-haslayout wt-main-section" id="blog">
-    {{-- <div class="search-form">
-              <search-form
+    <div class="search-form">
+              <search-form-home
                 :placeholder="'{{ trans('lang.looking_for') }}'"
                 :freelancer_placeholder="'{{ trans('lang.search_filter_list.freelancer') }}'"
                 :employer_placeholder="'{{ trans('lang.search_filter_list.employers') }}'"
@@ -37,8 +37,8 @@
                 :blog_placeholder="'{{ trans('lang.search_filter_list.blogs') }}'"
                 :no_record_message="'{{ trans('lang.no_record') }}'"
                 >
-                </search-form>
-        </div> --}}
+                </search-form-home>
+        </div>
         @if (Session::has('payment_message'))
             @php $response = Session::get('payment_message') @endphp
             <div class="flash_msg">
@@ -49,7 +49,7 @@
             <div class="container">
                 <div class="row">
                     <div id="wt-twocolumns" class="wt-twocolumns wt-haslayout">
-                        <div class="filter_icon btn btn-success"><i class="fa fa-filter"></i>Filter</div> 
+						<div class="filter_icon btn btn-success"><i class="fa fa-filter"></i>Filter</div> 
                         <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 col-xl-4 filter-page float-left">
                             @if (file_exists(resource_path('views/extend/front-end/blogs/filters.blade.php'))) 
                                 @include('extend.front-end.blogs.filters')
@@ -72,24 +72,51 @@
                                                 $attachments = Helper::getUnserializeData($blog->attachments);
                                                 $no_attachments = empty($attachments) ? 'la-service-info' : '';
                                                 $enable_slider = !empty($attachments) ? 'wt-blogsslider' : '';
-                                                
+                                                $num_words = 41;
+                                                $words = array();
+                                                $words = explode(" ", $blog->content, $num_words);
+                                                $shown_string = "";
+
+                                                if(count($words) == 41){
+                                                $words[40] = " ... ";
+                                                }
+
+                                                $shown_string = implode(" ", $words);
                                             @endphp
                                             <div class="col-12 col-sm-12 col-md-6 col-lg-6 float-left">
                                                 <div class="wt-freelancers-info {{$no_attachments}}">
                                                     @if (!empty($blog->editor_id))
                                                         @if (!empty($attachments))
                                                             @php $enable_slider = count($attachments) > 1 ? 'wt-freelancerslider owl-carousel' : ''; @endphp
-                                                            <div class="wt-freelancers {{{$enable_slider}}}">
+                                                            <div class="wt-freelancers wt-freelancers-blogs {{{$enable_slider}}}">
                                                                 @foreach ($attachments as $attachment)
                                                                     <figure class="item">
-                                                                        <a href="{{{ url('blog/'.$blog['slug']) }}}"><img src="{{{asset(Helper::getImageWithSize('uploads/blogs/'.$blog->id, $attachment, 'medium'))}}}" alt="img descriptions" class="item"></a>
+                                                                        <a href="{{{ url('blog/'.$blog['slug']) }}}">
+                                                                            <img src="{{{asset(Helper::getImageWithSize('uploads/blogs/'.$blog->id, $attachment, 'medium'))}}}" alt="img descriptions" class="item">
+                                                                            <div class="blog-date"><h6> {{ Carbon\Carbon::parse($blog->created_at)->format('M Y') }} </h6></div>
+                                                                            @if(!empty($blog->categories))
+                                                                            @foreach ( $blog->categories as $key=>$cat )
+                                                                            @if($key==0)
+                                                                            <div class="blog-category"><h6> {{ $cat->title }} </h6></div>
+                                                                            @endif
+                                                                            @endforeach
+                                                                            @endif
+                                                                        </a>
                                                                     </figure>
                                                                 @endforeach
                                                             </div>
                                                         @else
-                                                            <div class="wt-freelancers">
+                                                            <div class="wt-freelancers wt-freelancers-blogs">
                                                                 <figure class="item">
                                                                     <a href="{{{ url('blog/'.$blog->slug) }}}"><img src="{{ asset('uploads/settings/general/imgae-not-availabe.png') }}" alt="img description" class="item"></a>
+                                                                    <div class="blog-date"><h6> {{ Carbon\Carbon::parse($blog->created_at)->format('M Y') }} </h6></div>
+                                                                    @if(!empty($blog->categories))
+                                                                    @foreach ( $blog->categories as $key=>$cat )
+                                                                    @if($key==0)
+                                                                    <div class="blog-category"><h6> {{ $cat->title }} </h6></div>
+                                                                    @endif
+                                                                    @endforeach
+                                                                    @endif
                                                                 </figure>
                                                             </div>
                                                         @endif
@@ -102,7 +129,7 @@
                                                     @endif
                                                    
                                                     <div class="wt-freelancers-details">
-                                                        @if (empty($blog->editor_id))
+                                                        <!-- @if (empty($blog->editor_id))
                                                             <figure class="wt-freelancers-img">
                                                                 <img src="{{ asset(Helper::getProfileImage($blog->editor_id)) }}" alt="img description">
                                                             </figure>
@@ -110,7 +137,7 @@
                                                             <figure class="wt-freelancers-img">
                                                                 <img src="{{ asset('uploads/settings/general/user.jpg') }}" alt="user-img">
                                                             </figure>
-                                                        @endif
+                                                        @endif -->
                                                         <div class="wt-freelancers-content">
                                                             <div class="dc-title">
                                                                 @if ($blog->editor_id)
@@ -119,12 +146,16 @@
                                                                 <a href="{{{url('blog/'.$blog->slug)}}}"><h3>{{{$blog->title}}}</h3></a>
                                                                 {{-- <span><strong>{{ (!empty($symbol['symbol'])) ? $symbol['symbol'] : '$' }}{{{$blog->price}}}</strong> </span> --}}
                                                             </div>
+                                                            <div class="dc-discription">
+                                                                @php echo htmlspecialchars_decode(stripslashes($shown_string)); @endphp
+                                                            </div>
                                                         </div>
                                                         <div class="wt-freelancers-rating">
-                                                            <ul>
+                                                            <button onclick="location.href='{{{url('blog/'.$blog->slug)}}}'" class="e-button e-button-primary blogs-read-more">READ MORE</button>
+                                                            <!-- <ul>
                                                                 <li><span><i class="fa fa-star"></i>Read More</span></li>
                                                                 
-                                                            </ul>
+                                                            </ul> -->
                                                         </div>
                                                     </div>
                                                 </div>

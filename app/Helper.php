@@ -1298,7 +1298,7 @@ class Helper extends Model
             
             $json = array_merge($categories,$skills,$jobs);
         }
-        if ($type == 'service') {
+        if ($type == 'service'||$type=='services') {
             $services = DB::table("services")
                 ->select(
                     "title AS name",
@@ -1306,7 +1306,8 @@ class Helper extends Model
                 )->get()->toArray();
             $json = $services;
         }
-        if ($type == 'instructors') {
+       
+        if ($type == 'instructors'||$type=='courses') {
             $cources = DB::table("cources")
                 ->select(
                     "title AS name",

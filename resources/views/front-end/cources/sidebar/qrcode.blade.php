@@ -1,7 +1,7 @@
 <div class="wt-proposalsr">
     <div class="tg-authorcodescan">
         <figure class="tg-qrcodeimg">
-            {!! QrCode::size(100)->generate(Request::url('instructor/'.$cource->slug)); !!}
+            {!! QrCode::size(100)->generate(Request::url('course/'.$cource->slug)); !!}
         </figure>
         <div class="tg-qrcodedetail">
             <span class="lnr lnr-laptop-phone"></span>

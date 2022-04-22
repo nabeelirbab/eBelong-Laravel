@@ -1336,8 +1336,14 @@ class UserController extends Controller
         if (Auth::user()) {
             $user = $this->user::find(Auth::user()->id);
             $profile = $user->profile;
+            $user_id=array();
             $saved_jobs        = !empty($profile->saved_jobs) ? unserialize($profile->saved_jobs) : array();
             $saved_freelancers = !empty($profile->saved_freelancer) ? unserialize($profile->saved_freelancer) : array();
+        //     foreach ($saved_freelancers as $key => $value) {
+        //         $user_id[] = $value;
+        //     }
+        //    $h=User::whereIn('id',$user_id)->get();
+        //    dd($h);
             $saved_employers   = !empty($profile->saved_employers) ? unserialize($profile->saved_employers) : array();
             $currency          = SiteManagement::getMetaValue('commision');
             $symbol            = !empty($currency) && !empty($currency[0]['currency']) ? Helper::currencyList($currency[0]['currency']) : array();
@@ -1646,7 +1652,7 @@ class UserController extends Controller
                     else if ($project_type == 'course') {
                         $course = Cource::find($request['course_id']);
                         $email_params['project_title'] = $course->title;
-                        $email_params['completed_project_link'] = url('instructor/' . $course->slug);
+                        $email_params['completed_project_link'] = url('course/' . $course->slug);
                         $template_data = Helper::getFreelancerCompletedServiceEmailContent();
                         Mail::to($freelancer->email)
                             ->send(
@@ -1866,7 +1872,7 @@ class UserController extends Controller
                             $course = Cource::find($request['id']);
                             $freelancer = $course->seller->first();
                             $email_params['project_title'] = $course->title;
-                            $email_params['cancelled_project_link'] = url('instructor/' . $course->slug);
+                            $email_params['cancelled_project_link'] = url('course/' . $course->slug);
                             $email_params['name'] = Helper::getUserName($freelancer->id);
                             $email_params['link'] = url('profile/' . $freelancer->slug);
                             $email_params['employer_profile'] = url('profile/' . Auth::user()->slug);
@@ -2178,6 +2184,12 @@ class UserController extends Controller
             return $response;
         }
         $json = array();
+        if (Helper::getAuthRoleName()=='Freelancer') {
+            $json['type'] = 'error';
+            $json['process'] = trans('You are not permited to buy Services');
+            return $json;
+        }
+
         if (!empty($id)) {
             $order = new Order();
             $new_order = $order->saveOrder(Auth::user()->id, $id, $type);
@@ -2190,7 +2202,9 @@ class UserController extends Controller
             $json['type'] = 'success';
             $json['order_id'] = $new_order['id'];
             $json['process'] = trans('lang.saving_profile');
+         
             return $json;
+            
         } else {
             $json['type'] = 'error';
             $json['process'] = trans('lang.something_wrong');

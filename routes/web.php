@@ -71,15 +71,15 @@ Route::get('get-skills-for-wishlist', 'SkillController@getWhishlistSkills');
 Route::get('get-categories-for-whishlist', 'CategoryController@getWishlistCategories');
 
 //seo-blogs
-Route::get('blogs/{type}/{slug}', 'BlogController@BlogList')->name('FilteredBlogs');
+Route::get('blogs/{slug}', 'BlogController@BlogList')->name('FilteredBlogs');
 Route::get('blogs', 'BlogController@BlogsList')->name('blogs');
 
 //seo-courses
-Route::get('courses/{type}/{slug}', 'CourseController@courseList')->name('FilteredCourses');
+Route::get('courses/{slug}', 'CourseController@courseList')->name('FilteredCourses');
 Route::get('courses', 'CourseController@coursesListing')->name('courses');
 
 //seo-services
-Route::get('services/{type}/{slug}', 'ServiceController@ServiceList')->name('FilteredServices');
+Route::get('services/{slug}', 'ServiceController@ServiceList')->name('FilteredServices');
 Route::get('services', 'ServiceController@servicesListing')->name('services');
 
 //seo-freelancers
@@ -87,7 +87,7 @@ Route::get('hire/{slug}', 'FreelancerController@freelancerList')->name('Filtered
 Route::get('hire', 'FreelancerController@freelancersListing')->name('freelancers');
 
 //seo-jobs
-Route::get('jobs/{type}/{slug}', 'JobController@jobsList')->name('FilteredJobs');
+Route::get('jobs/{slug}', 'JobController@jobsList')->name('FilteredJobs');
 Route::get('jobs', 'JobController@jobsListing')->name('jobs');
 
 /*Route::get('/sendemail', 'SendMailController@index');
@@ -131,7 +131,7 @@ if (Helper::getAccessType() == 'both' || Helper::getAccessType() == 'services') 
 }
 if (Helper::getAccessType() == 'both' || Helper::getAccessType() == 'instructor') {
    
-    Route::get('instructor/{slug}', 'CourseController@show')->name('CourceDetail');
+    Route::get('course/{slug}', 'CourseController@show')->name('CourceDetail');
 }
 Route::get('user/password/reset/{verify_code}', 'PublicController@resetPasswordView')->name('getResetPassView');
 Route::post('user/update/password', 'PublicController@resetUserPassword')->name('resetUserPassword');

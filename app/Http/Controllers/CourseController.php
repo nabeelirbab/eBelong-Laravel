@@ -254,7 +254,7 @@ class CourseController extends Controller
                         $cource = $this->cource::where('id', $cource_post['new_course'])->first();
                         $email_params = array();
                         $email_params['cource_title'] = $cource->title;
-                        $email_params['posted_cource_link'] = url('/instructor/' . $cource->slug);
+                        $email_params['posted_cource_link'] = url('/course/' . $cource->slug);
                         $email_params['name'] = Helper::getUserName(Auth::user()->id);
                         $email_params['link'] = url('profile/' . $user->slug);
                         $template_data = (object)array();
@@ -274,7 +274,7 @@ class CourseController extends Controller
                         $cource = $this->cource::where('id', $cource_post['new_course'])->first();
                         $email_params = array();
                         $email_params['cource_title'] = $cource->title;
-                        $email_params['posted_cource_link'] = url('/instructor/' . $cource->slug);
+                        $email_params['posted_cource_link'] = url('/course/' . $cource->slug);
                         $email_params['name'] = Helper::getUserName(Auth::user()->id);
                         $email_params['link'] = url('profile/' . $user->slug);
                         $template_data = Helper::getFreelancerCoursePostedEmailContent();
@@ -318,7 +318,7 @@ class CourseController extends Controller
                     $cource = $this->cource::where('id', $cource_post['new_cource'])->first();
                     $email_params = array();
                     $email_params['cource_title'] = $cource->title;
-                    $email_params['posted_cource_link'] = url('/instructor/' . $cource->slug);
+                    $email_params['posted_cource_link'] = url('/course/' . $cource->slug);
                     $email_params['name'] = Helper::getUserName(Auth::user()->id);
                     $email_params['link'] = url('profile/' . $user->slug);
                     $template_data = (object)array();
@@ -338,7 +338,7 @@ class CourseController extends Controller
                     $cource = $this->cource::where('id', $cource_post['new_cource'])->first();
                     $email_params = array();
                     $email_params['cource_title'] = $cource->title;
-                    $email_params['posted_cource_link'] = url('/instructor/' . $cource->slug);
+                    $email_params['posted_cource_link'] = url('/course/' . $cource->slug);
                     $email_params['name'] = Helper::getUserName(Auth::user()->id);
                     $email_params['link'] = url('profile/' . $user->slug);
                     $template_data = Helper::getFreelancerCoursePostedEmailContent();
@@ -1045,7 +1045,7 @@ class CourseController extends Controller
                                 $template_data->content = Helper::getFreelancerCourseEnrollEmailContent();
                                 $template_data->subject = "Course Enrollment Confirmed";
                                 $email_params['title'] = $course->title;
-                                $email_params['course_link'] = url('instructor/' . $course->slug);
+                                $email_params['course_link'] = url('course/' . $course->slug);
                                 $email_params['amount'] = $course->price;
                                 $email_params['freelancer_name'] = Helper::getUserName($userid);
                                 $email_params['employer_profile'] = url('profile/' . $user->slug);
@@ -1110,7 +1110,7 @@ class CourseController extends Controller
                         $template_data->content = Helper::getFreelancerCourseEnrollEmailContent();
                         $template_data->subject = "Course Enrollment Confirmed";
                         $email_params['title'] = $course->title;
-                        $email_params['course_link'] = url('instructor/' . $course->slug);
+                        $email_params['course_link'] = url('course/' . $course->slug);
                         $email_params['amount'] = $course->price;
                         $email_params['freelancer_name'] = Helper::getUserName($userid);
                         $email_params['employer_profile'] = url('profile/' . $user->slug);
@@ -1160,7 +1160,7 @@ class CourseController extends Controller
                         $template_data->content = Helper::getFreelancerCourseEnrollEmailContent();
                         $template_data->subject = "Course Enrollment Confirmed";
                         $email_params['title'] = $course->title;
-                        $email_params['course_link'] = url('instructor/' . $course->slug);
+                        $email_params['course_link'] = url('course/' . $course->slug);
                         $email_params['amount'] = $course->price;
                         $email_params['freelancer_name'] = Helper::getUserName($userid);
                         $email_params['employer_profile'] = url('profile/' . $user->slug);
@@ -1231,7 +1231,7 @@ class CourseController extends Controller
                                     $template_data->subject = "Course Order Cancelled";
                                     // $template_data = Helper::getFreelancerCoursePaymentRefundEmailContent();
                                     $email_params['title'] = $course->title;
-                                    $email_params['course_link'] = url('instructor/' . $course->slug);
+                                    $email_params['course_link'] = url('course/' . $course->slug);
                                     $email_params['amount'] = $course->price;
                                     $email_params['freelancer_name'] = Helper::getUserName($userid);
                                     $email_params['employer_profile'] = url('profile/' . $user->slug);
@@ -1304,7 +1304,7 @@ class CourseController extends Controller
                                     $template_data->subject = "Course Order Cancelled";
                                     // $template_data = Helper::getFreelancerCoursePaymentRefundEmailContent();
                                     $email_params['title'] = $course->title;
-                                    $email_params['course_link'] = url('instructor/' . $course->slug);
+                                    $email_params['course_link'] = url('course/' . $course->slug);
                                     $email_params['amount'] = $course->price;
                                     $email_params['freelancer_name'] = Helper::getUserName($userid);
                                     $email_params['employer_profile'] = url('profile/' . $user->slug);
@@ -1351,7 +1351,7 @@ class CourseController extends Controller
                                 $template_data->subject = "Course Order Cancelled";
                                 // $template_data = Helper::getFreelancerCoursePaymentRefundEmailContent();
                                 $email_params['title'] = $course->title;
-                                $email_params['course_link'] = url('instructor/' . $course->slug);
+                                $email_params['course_link'] = url('course/' . $course->slug);
                                 $email_params['amount'] = $course->price;
                                 $email_params['freelancer_name'] = Helper::getUserName($userid);
                                 $email_params['employer_profile'] = url('profile/' . $user->slug);
@@ -1427,7 +1427,7 @@ class CourseController extends Controller
                 $template_data->content = Helper::getFreelancerNewCourseOrderEmailContent();
                 $template_data->subject = "Course Order";
                 $email_params['title'] = $course->title;
-                $email_params['course_link'] = url('instructor/' . $course->slug);
+                $email_params['course_link'] = url('course/' . $course->slug);
                 $email_params['amount'] = $course->price;
                 $email_params['freelancer_name'] = Helper::getUserName($freelancer);
                 $email_params['employer_profile'] = url('profile/' . $user->slug);
@@ -1494,7 +1494,7 @@ class CourseController extends Controller
 
     }     
 
-    public function courseList($type,$slug){
+    public function courseList($slug){
         
         // $blogs = Blog::select('*')->where('status','published')->orderBy('id','DESC');
         $locations  = Location::all();
@@ -1505,6 +1505,37 @@ class CourseController extends Controller
         $skills     = Skill::orderBy('title')->get();
         $course_id = array();
         $services= array();
+        $type="category";
+        foreach ($skills as $key => $skill) {
+            if($skill->slug==$slug){
+                $type='skill';
+            }
+        }
+        foreach ($categories as $key => $cat) {
+            if($cat->slug==$slug){
+                $type='category';
+            }
+        }
+        foreach ($locations as $key => $loc) {
+            if($loc->slug==$slug){
+                $type='location';
+            }
+        }
+        foreach ($delivery_time as $key => $time) {
+            if($time->slug==$slug){
+                $type='delivery-time';
+            }
+        }
+        foreach ($response_time as $key => $time) {
+            if($time->slug==$slug){
+                $type='response-time';
+            }
+        }
+        foreach ($languages as $key => $lang) {
+            if($lang->slug==$slug){
+                $type='language';
+            }
+        }
         if($type=='category'){
             $categor_obj = Category::where('slug', $slug)->first();
             if(!empty($categor_obj->id)){

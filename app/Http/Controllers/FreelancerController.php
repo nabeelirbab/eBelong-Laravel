@@ -1494,11 +1494,11 @@ public function adminRating(Request $request){
         if ($type=='english-level') {
            
             $freelancers = Profile::where('english_level', $slug)->get();
-            foreach ($freelancers as $key => $freelancer) {
-                if (!empty($freelancer->user_id)) {
-                    $user_id[] = $freelancer->user_id;
+                foreach ($freelancers as $key => $freelancer) {
+                    if (!empty($freelancer->user_id)) {
+                        $user_id[] = $freelancer->user_id;
+                    }
                 }
-            }
             $users->whereIn('id', $user_id)->orderBy('is_certified', 'DESC');
         }
        

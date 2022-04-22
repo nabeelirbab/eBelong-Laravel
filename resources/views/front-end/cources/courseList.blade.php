@@ -12,7 +12,7 @@
 @endphp
     @if ($show_service_banner == 'true')
         @php $breadcrumbs = Breadcrumbs::generate('searchResults'); @endphp
-        {{-- <div class="wt-haslayout wt-innerbannerholder" style="background-image:url({{{ asset(Helper::getBannerImage($service_inner_banner, 'uploads/settings/general')) }}})"> --}}
+        <div class="wt-haslayout wt-innerbannerholder" >
             <div class="container">
                 <div class="row justify-content-md-center">
                     <div class="col-xs-12 col-sm-12 col-md-8 push-md-2 col-lg-6 push-lg-3">
@@ -41,7 +41,7 @@
     @endif
     <div class="wt-haslayout wt-main-section" id="services">
     <div class="search-form">
-              {{-- <search-form
+              <search-form-home
                 :placeholder="'{{ trans('lang.looking_for') }}'"
                 :freelancer_placeholder="'{{ trans('lang.search_filter_list.freelancer') }}'"
                 :employer_placeholder="'{{ trans('lang.search_filter_list.employers') }}'"
@@ -50,7 +50,7 @@
                 :instructor_placeholder="'{{ trans('lang.search_filter_list.courses') }}'"
                 :no_record_message="'{{ trans('lang.no_record') }}'"
                 >
-                </search-form> --}}
+              </search-form-home>
         </div>
         @if (Session::has('payment_message'))
             @php $response = Session::get('payment_message') @endphp
@@ -99,14 +99,14 @@
                                                             <div class="wt-freelancers {{{$enable_slider}}}">
                                                                 @foreach ($attachments as $attachment)
                                                                     <figure class="item">
-                                                                        <a href="{{{ url('instructor/'.$service->slug) }}}"><img src="{{{asset(Helper::getImageWithSize('uploads/courses/'.$service->seller[0]->id, $attachment, 'medium'))}}}" alt="img descriptions" class="item"></a>
+                                                                        <a href="{{{ url('course/'.$service->slug) }}}"><img src="{{{asset(Helper::getImageWithSize('uploads/courses/'.$service->seller[0]->id, $attachment, 'medium'))}}}" alt="img descriptions" class="item"></a>
                                                                     </figure>
                                                                 @endforeach
                                                             </div>
                                                         @else
                                                             <div class="wt-freelancers">
                                                                 <figure class="item">
-                                                                    <a href="{{{ url('instructor/'.$service->slug) }}}"><img src="{{ asset('uploads/settings/general/imgae-not-availabe.png') }}" alt="img description" class="item"></a>
+                                                                    <a href="{{{ url('course/'.$service->slug) }}}"><img src="{{ asset('uploads/settings/general/imgae-not-availabe.png') }}" alt="img description" class="item"></a>
                                                                 </figure>
                                                             </div>
                                                         @endif
@@ -135,7 +135,7 @@
                                                                 @if ($service->seller->count() > 0)
                                                                     <a href="{{{ url('profile/'.$service->seller[0]->slug) }}}"><i class="fa fa-check-circle"></i> {{{Helper::getUserName($service->seller[0]->id)}}}</a>
                                                                 @endif
-                                                                <a href="{{{url('instructor/'.$service->slug)}}}"><h3>{{{$service->title}}}</h3></a>
+                                                                <a href="{{{url('course/'.$service->slug)}}}"><h3>{{{$service->title}}}</h3></a>
                                                                 <span><strong>{{ (!empty($symbol['symbol'])) ? $symbol['symbol'] : '$' }}{{{$service->price}}}</strong> </span>
                                                             </div>
                                                         </div>

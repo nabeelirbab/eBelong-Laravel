@@ -267,7 +267,7 @@
                         window.location.replace(APP_URL+'/service/'+slug);
                     }
                      else if (type == 'instructors'){
-                        window.location.replace(APP_URL+'/instructor/'+slug);
+                        window.location.replace(APP_URL+'/course/'+slug);
                     }
                      else if (type == 'blogs'){
                         window.location.replace(APP_URL+'/blog/'+slug);

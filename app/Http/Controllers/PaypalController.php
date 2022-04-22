@@ -571,7 +571,7 @@ class PaypalController extends Controller
                         $template_data->subject = "Course Order";
                       
                         $email_params['title'] = $course->title;
-                        $email_params['course_link'] = url('instructor/' . $course->slug);
+                        $email_params['course_link'] = url('course/' . $course->slug);
                         $email_params['amount'] = $course->price;
                         $email_params['freelancer_name'] = Helper::getUserName($freelancer);
                         $email_params['employer_profile'] = url('profile/' . $user->slug);
