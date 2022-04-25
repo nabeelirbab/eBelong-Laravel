@@ -13,9 +13,10 @@
  */
 
 namespace App\Http\Controllers;
-
+use Illuminate\Filesystem\Filesystem;
 use App\EmailTemplate;
 use App\Mail\InvitationToUser;
+use Intervention\Image\Facades\Image;
 use App\Helper;
 use App\Invoice;
 use App\Cource;
@@ -340,19 +341,44 @@ class UserController extends Controller
                                 
                             }
                         }
+                        $folderPath = public_path('uploads/agency_logos/'.$agencyid);
+                        $image_parts = explode(";base64,", $request->agency_logo_64);
+                        $image_type_aux = explode("image/", $image_parts[0]);
+                        $image_type = $image_type_aux[1];
+                        $image_base64 = base64_decode($image_parts[1]);
+                        $file = new Filesystem();
+   
+                        $directory = 'uploads/agency_logos/' . $agencyid;
+                        if ( $file->isDirectory(public_path($directory)) )
+                        {
+                            // return 'Directory already exists';
+                        }
+                        else
+                        {
+                            $file->makeDirectory(public_path($directory), 755, true, true);
+                            // return 'Directory has been created!';
+                        }
+                        // $file = $folderPath . uniqid() . '.png';
+                        $filename = $agencyid."_".time() . '.'. $image_type;
+                        $filepath =$folderPath.'/'.$filename;
+                        $img = Image::make($image_base64)->save(public_path('uploads/agency_logos/'.$agencyid.'/'.$filename));  
+                        // Storage::disk($folderPath)->put($filename, $image_base64);
+                        // File::put($folderPath, $image_base64);
+                        // $image_base64->move($folderPath, $filename);
+                        // file_put_contents($file, $image_base64);
 
-                            if ($files = $request->file('agency_logo')) {
-                                // Define upload path
-                                $destinationPath = public_path( '/uploads/agency_logos/' .$agencyid ); // upload path
-                                // Upload Orginal Image
-                                $profileImage = date('YmdHis') . "." . $files->getClientOriginalExtension();
-                                $files->move($destinationPath, $profileImage);
+                            // if ($files = $request->file('agency_logo')) {
+                            //     // Define upload path
+                            //     $destinationPath = public_path( '/uploads/agency_logos/' .$agencyid ); // upload path
+                            //     // Upload Orginal Image
+                            //     $profileImage = date('YmdHis') . "." . $files->getClientOriginalExtension();
+                            //     $files->move($destinationPath, $profileImage);
 
-                                $insert['image'] = "$profileImage";
-                                $agency['agency_logo'] = "$profileImage";
-                            }
+                            //     $insert['image'] = "$profileImage";
+                            //     $agency['agency_logo'] = "$profileImage";
+                            // }
 
-                            DB::table('agency_user')->where('id',$agencyid)->update(array('agency_logo'=> $agency['agency_logo']));
+                            DB::table('agency_user')->where('id',$agencyid)->update(array('agency_logo'=> $filename));
 
                             $updateUserAgencyStatus = DB::table('users')->where('id',$agency['user_id'])->update(array('is_agency'=>1,'agency_id'=>$agencyid));
 
@@ -478,17 +504,20 @@ class UserController extends Controller
                                 request()->validate([
                                     'agency_logo' => 'file|mimes:jpeg,png,jpg,gif,svg|max:2048',
                                 ]);
-                                // Define upload path
-                                $destinationPath = public_path( '/uploads/agency_logos/' .$data['agency_id'] ); // upload path
-                                // Upload Orginal Image
-                                $profileImage = date('YmdHis') . "." . $files->getClientOriginalExtension();
-                                $files->move($destinationPath, $profileImage);
-
-                                $insert['image'] = "$profileImage";
-                                $agency['agency_logo'] = "$profileImage";
-                                $updated = DB::table('agency_user')->where('id',$data['agency_id'])->update(array('agency_logo'=> $agency['agency_logo']));
+                                $folderPath = public_path('uploads/agency_logos/'.$data['agency_id']);
+                                $image_parts = explode(";base64,", $request->agency_logo_64);
+                                $image_type_aux = explode("image/", $image_parts[0]);
+                                $image_type = $image_type_aux[1];
+                                $image_base64 = base64_decode($image_parts[1]);
+                                $file = new Filesystem();
+        
+                                $directory = 'uploads/agency_logos/' . $data['agency_id'];
                                 
-                            
+                                $filename = $data['agency_id']."_".time() . '.'. $image_type;
+                                $filepath =$folderPath.'/'.$filename;
+                                $img = Image::make($image_base64)->save(public_path('uploads/agency_logos/'.$data['agency_id'].'/'.$filename));  
+                                $updated = DB::table('agency_user')->where('id',$data['agency_id'])->update(array('agency_logo'=> $filename));
+                                
                             }
                                 if($updated){
                                 Session::flash('message', 'Your new Agency has been successfully updated.');
@@ -530,8 +559,7 @@ class UserController extends Controller
 
         if(!empty($request->member_role)){
             $user_id = User::select('id')->where('email', $request->invitation_email)->first();
-            // dd($user_id->id);
-           
+            
             if (!empty($user_id->id)) {
                 $alreadyInvited = DB::table('agency_associated_users')->where('agency_id', $request->agency_id)->where('user_id',$user_id->id)->get();
                 // dd($alreadyInvited);
@@ -544,7 +572,56 @@ class UserController extends Controller
                 $associate_user = DB::table('agency_associated_users')->insert(
                     ['agency_id' => $request->agency_id, 'user_id' => $user_id->id, 'member_role' => $request->member_role, 'is_pending' => 1]
                 );
-
+       $agency_name = DB::table('agency_user')->select('agency_name')->where('id',$request->agency_id)->first();
+        $creator = DB::table('agency_user')->select('user_id')->where('id',$request->agency_id)->first();
+        $member_email = $request->invitation_email;
+        // dd(config('mail.password'));
+        if (trim(config('mail.username')) != "" && trim(config('mail.password')) != "") {
+            
+            $email_params = array();
+            $template_data = (object)array();
+            $template_data->content = Helper::getAgencyInvitationEmailContent();
+            $template_data->title =  "Agency Invitation ";
+            $template_data->subject = "Agency Invitation";
+            // dd($template_data->content);
+            $email_params['agency_creator_name'] = Helper::getUserName($creator->user_id);
+            $email_params['agency_member_name'] = Helper::getUserName($user_id->id);
+            // $agency_info =  Helper::getAgencyList($data['agency_id']);
+            $email_params['agency_name'] = $agency_name->agency_name;
+                Mail::to($member_email)
+                    ->send(
+                        new FreelancerEmailMailable(
+                            'agency_invitation',
+                            $template_data,
+                            $email_params
+                        )
+                    );
+            
+        }
+        if (trim(config('mail.username')) != "" && trim(config('mail.password')) != "") {
+            
+            $email_params = array();
+            $template_data = (object)array();
+            $template_data->content = '';
+            $template_data->title =  "Agency Invitation Sent ";
+            $template_data->subject = "Agency Invitation Sent";
+            // dd($template_data->content);
+            $email_params['agency_creator_name'] = Helper::getUserName($creator->user_id);
+            $email_params['agency_member_name'] = Helper::getUserName($user_id->id);
+            $user = User::find($user_id->id);
+            $email_params['agency_member_link'] = 'http://dev.ebelong.com/profile/'.$user->slug;
+            // $agency_info =  Helper::getAgencyList($data['agency_id']);
+            $email_params['agency_name'] = $agency_name->agency_name;
+                Mail::to($member_email)
+                    ->send(
+                        new FreelancerEmailMailable(
+                            'join_agency',
+                            $template_data,
+                            $email_params
+                        )
+                    );
+            
+        }
                 if ($associate_user === true) {
                     Session::flash('message', 'Invitation has sent.');
                     return Redirect::back();
@@ -1259,8 +1336,14 @@ class UserController extends Controller
         if (Auth::user()) {
             $user = $this->user::find(Auth::user()->id);
             $profile = $user->profile;
+            $user_id=array();
             $saved_jobs        = !empty($profile->saved_jobs) ? unserialize($profile->saved_jobs) : array();
             $saved_freelancers = !empty($profile->saved_freelancer) ? unserialize($profile->saved_freelancer) : array();
+        //     foreach ($saved_freelancers as $key => $value) {
+        //         $user_id[] = $value;
+        //     }
+        //    $h=User::whereIn('id',$user_id)->get();
+        //    dd($h);
             $saved_employers   = !empty($profile->saved_employers) ? unserialize($profile->saved_employers) : array();
             $currency          = SiteManagement::getMetaValue('commision');
             $symbol            = !empty($currency) && !empty($currency[0]['currency']) ? Helper::currencyList($currency[0]['currency']) : array();
@@ -1569,7 +1652,7 @@ class UserController extends Controller
                     else if ($project_type == 'course') {
                         $course = Cource::find($request['course_id']);
                         $email_params['project_title'] = $course->title;
-                        $email_params['completed_project_link'] = url('instructor/' . $course->slug);
+                        $email_params['completed_project_link'] = url('course/' . $course->slug);
                         $template_data = Helper::getFreelancerCompletedServiceEmailContent();
                         Mail::to($freelancer->email)
                             ->send(
@@ -1789,7 +1872,7 @@ class UserController extends Controller
                             $course = Cource::find($request['id']);
                             $freelancer = $course->seller->first();
                             $email_params['project_title'] = $course->title;
-                            $email_params['cancelled_project_link'] = url('instructor/' . $course->slug);
+                            $email_params['cancelled_project_link'] = url('course/' . $course->slug);
                             $email_params['name'] = Helper::getUserName($freelancer->id);
                             $email_params['link'] = url('profile/' . $freelancer->slug);
                             $email_params['employer_profile'] = url('profile/' . Auth::user()->slug);
@@ -2101,6 +2184,12 @@ class UserController extends Controller
             return $response;
         }
         $json = array();
+        if (Helper::getAuthRoleName()=='Freelancer') {
+            $json['type'] = 'error';
+            $json['process'] = trans('You are not permited to buy Services');
+            return $json;
+        }
+
         if (!empty($id)) {
             $order = new Order();
             $new_order = $order->saveOrder(Auth::user()->id, $id, $type);
@@ -2113,7 +2202,9 @@ class UserController extends Controller
             $json['type'] = 'success';
             $json['order_id'] = $new_order['id'];
             $json['process'] = trans('lang.saving_profile');
+         
             return $json;
+            
         } else {
             $json['type'] = 'error';
             $json['process'] = trans('lang.something_wrong');
@@ -2685,26 +2776,51 @@ class UserController extends Controller
         $avater = !empty($profile->avater) ? $profile->avater : '';
         $tagline = !empty($profile->tagline) ? $profile->tagline : '';
         $description = !empty($profile->description) ? $profile->description : '';
-        if (file_exists(resource_path('views/extend/back-end/admin/profile-settings/personal-detail/index.blade.php'))) {
-            return view(
-                'extend.back-end.admin.profile-settings.personal-detail.index',
-                compact(
-                    'banner',
-                    'avater',
-                    'tagline',
-                    'description'
-                )
-            );
-        } else {
-            return view(
-                'back-end.admin.profile-settings.personal-detail.index',
-                compact(
-                    'banner',
-                    'avater',
-                    'tagline',
-                    'description'
-                )
-            );
+        if(Helper::getAuthRoleName()=="Editor"){
+            if (file_exists(resource_path('views/extend/back-end/editor/profile-settings/personal-detail/index.blade.php'))) {
+                return view(
+                    'extend.back-end.editor.profile-settings.personal-detail.index',
+                    compact(
+                        'banner',
+                        'avater',
+                        'tagline',
+                        'description'
+                    )
+                );
+            } else {
+                return view(
+                    'back-end.editor.profile-settings.personal-detail.index',
+                    compact(
+                        'banner',
+                        'avater',
+                        'tagline',
+                        'description'
+                    )
+                );
+            }
+        }
+        else{
+            if (file_exists(resource_path('views/extend/back-end/admin/profile-settings/personal-detail/index.blade.php'))) {
+                return view(
+                    'extend.back-end.admin.profile-settings.personal-detail.index',
+                    compact(
+                        'banner',
+                        'avater',
+                        'tagline',
+                        'description'
+                    )
+                );
+            } else {
+                return view(
+                    'back-end.admin.profile-settings.personal-detail.index',
+                    compact(
+                        'banner',
+                        'avater',
+                        'tagline',
+                        'description'
+                    )
+                );
+            }
         }
     }
 
@@ -2970,7 +3086,7 @@ class UserController extends Controller
      */
     public function userListing()
     {
-        if (Auth::user() && Auth::user()->getRoleNames()->first() === 'admin') {
+        if (Auth::user() && Auth::user()->getRoleNames()->first() === 'admin'|| Auth::user() && Auth::user()->getRoleNames()->first() === 'editor') {
             if (!empty($_GET['keyword'])) {
                 $keyword = $_GET['keyword'];
                 $keyword_tokens = explode(' ', $keyword);
@@ -3053,6 +3169,7 @@ class UserController extends Controller
         $months = Helper::getMonthList();
         //$years = array_combine(range(date("Y"), 1970), range(date("Y"), 1970));
 		$years = array(date("Y"));
+        // Helper::updatePayouts();
         if (file_exists(resource_path('views/extend/back-end/admin/payouts.blade.php'))) {
             return view(
                 'extend.back-end.admin.payouts',
@@ -3344,7 +3461,7 @@ class UserController extends Controller
 	// For load employee / freelancer profile page in admin.
 	public function userProfileUpdate($id){
 		$role_id =  Helper::getRoleByUserID($id);
-		if($role_id == 3){ // For freelancer
+		if($role_id == 3||$role_id==4){ // For freelancer
 			$locations = Location::pluck('title', 'id');
 			$skills = Skill::pluck('title', 'id');
 			$profile = User::select(
@@ -3404,7 +3521,7 @@ class UserController extends Controller
                     'selectedcategories'
                 )
             );
-		}else{ // For employee
+		}elseif($role_id == 2){ // For employee
 			$profile = User::select(
 								'users.*',
 								'profiles.gender',

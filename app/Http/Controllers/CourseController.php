@@ -6,6 +6,7 @@ use Srmklive\PayPal\Services\ExpressCheckout;
 use Stripe\Error\Card;
 use Illuminate\Http\Request;
 use App\Language;
+use App\Skill;
 use App\Category;
 use App\Location;
 use App\Helper;
@@ -253,7 +254,7 @@ class CourseController extends Controller
                         $cource = $this->cource::where('id', $cource_post['new_course'])->first();
                         $email_params = array();
                         $email_params['cource_title'] = $cource->title;
-                        $email_params['posted_cource_link'] = url('/instructor/' . $cource->slug);
+                        $email_params['posted_cource_link'] = url('/course/' . $cource->slug);
                         $email_params['name'] = Helper::getUserName(Auth::user()->id);
                         $email_params['link'] = url('profile/' . $user->slug);
                         $template_data = (object)array();
@@ -273,7 +274,7 @@ class CourseController extends Controller
                         $cource = $this->cource::where('id', $cource_post['new_course'])->first();
                         $email_params = array();
                         $email_params['cource_title'] = $cource->title;
-                        $email_params['posted_cource_link'] = url('/instructor/' . $cource->slug);
+                        $email_params['posted_cource_link'] = url('/course/' . $cource->slug);
                         $email_params['name'] = Helper::getUserName(Auth::user()->id);
                         $email_params['link'] = url('profile/' . $user->slug);
                         $template_data = Helper::getFreelancerCoursePostedEmailContent();
@@ -317,7 +318,7 @@ class CourseController extends Controller
                     $cource = $this->cource::where('id', $cource_post['new_cource'])->first();
                     $email_params = array();
                     $email_params['cource_title'] = $cource->title;
-                    $email_params['posted_cource_link'] = url('/instructor/' . $cource->slug);
+                    $email_params['posted_cource_link'] = url('/course/' . $cource->slug);
                     $email_params['name'] = Helper::getUserName(Auth::user()->id);
                     $email_params['link'] = url('profile/' . $user->slug);
                     $template_data = (object)array();
@@ -337,7 +338,7 @@ class CourseController extends Controller
                     $cource = $this->cource::where('id', $cource_post['new_cource'])->first();
                     $email_params = array();
                     $email_params['cource_title'] = $cource->title;
-                    $email_params['posted_cource_link'] = url('/instructor/' . $cource->slug);
+                    $email_params['posted_cource_link'] = url('/course/' . $cource->slug);
                     $email_params['name'] = Helper::getUserName(Auth::user()->id);
                     $email_params['link'] = url('profile/' . $user->slug);
                     $template_data = Helper::getFreelancerCoursePostedEmailContent();
@@ -955,7 +956,7 @@ class CourseController extends Controller
             /* if (file_exists(resource_path('views/extend/back-end/admin/users/index.blade.php'))) {
                 return view('extend.back-end.admin.users.index', compact('users'));
             } else { */
-                return view('back-end.freelancer.courses.enrolled-students', compact('users'));
+                return view('back-end.freelancer.courses.enrolled-students', compact('users','course_id'));
            // }
         } else {
             abort(404);
@@ -1044,7 +1045,7 @@ class CourseController extends Controller
                                 $template_data->content = Helper::getFreelancerCourseEnrollEmailContent();
                                 $template_data->subject = "Course Enrollment Confirmed";
                                 $email_params['title'] = $course->title;
-                                $email_params['course_link'] = url('instructor/' . $course->slug);
+                                $email_params['course_link'] = url('course/' . $course->slug);
                                 $email_params['amount'] = $course->price;
                                 $email_params['freelancer_name'] = Helper::getUserName($userid);
                                 $email_params['employer_profile'] = url('profile/' . $user->slug);
@@ -1109,7 +1110,7 @@ class CourseController extends Controller
                         $template_data->content = Helper::getFreelancerCourseEnrollEmailContent();
                         $template_data->subject = "Course Enrollment Confirmed";
                         $email_params['title'] = $course->title;
-                        $email_params['course_link'] = url('instructor/' . $course->slug);
+                        $email_params['course_link'] = url('course/' . $course->slug);
                         $email_params['amount'] = $course->price;
                         $email_params['freelancer_name'] = Helper::getUserName($userid);
                         $email_params['employer_profile'] = url('profile/' . $user->slug);
@@ -1159,7 +1160,7 @@ class CourseController extends Controller
                         $template_data->content = Helper::getFreelancerCourseEnrollEmailContent();
                         $template_data->subject = "Course Enrollment Confirmed";
                         $email_params['title'] = $course->title;
-                        $email_params['course_link'] = url('instructor/' . $course->slug);
+                        $email_params['course_link'] = url('course/' . $course->slug);
                         $email_params['amount'] = $course->price;
                         $email_params['freelancer_name'] = Helper::getUserName($userid);
                         $email_params['employer_profile'] = url('profile/' . $user->slug);
@@ -1208,10 +1209,11 @@ class CourseController extends Controller
                             );
                             if ($refund['status'] == 'succeeded') {
                                 $courseid = DB::table('cource_user')->where('id',$request['id'])->pluck('cource_id')->first();
+                                $invoice = DB::table('cource_user')->where('id',$request['id'])->pluck('invoice_id')->first();
                                 $userid = DB::table('cource_user')->where('id',$request['id'])->pluck('user_id')->first();
                                 $freelancer = User::find($userid);
                                 DB::table('cource_user')->where('id',$request['id'])->delete();
-                                DB::table('orders')->where('product_id',$courseid)->where('user_id',$userid)->delete();
+                                DB::table('orders')->where('product_id',$request['id'])->where('invoice_id',$invoice)->delete();
                                 $course = Cource::find($courseid);
                                 $user = User::find(intval(Auth::user()->id));
                                 // send message to student
@@ -1229,7 +1231,7 @@ class CourseController extends Controller
                                     $template_data->subject = "Course Order Cancelled";
                                     // $template_data = Helper::getFreelancerCoursePaymentRefundEmailContent();
                                     $email_params['title'] = $course->title;
-                                    $email_params['course_link'] = url('instructor/' . $course->slug);
+                                    $email_params['course_link'] = url('course/' . $course->slug);
                                     $email_params['amount'] = $course->price;
                                     $email_params['freelancer_name'] = Helper::getUserName($userid);
                                     $email_params['employer_profile'] = url('profile/' . $user->slug);
@@ -1302,7 +1304,7 @@ class CourseController extends Controller
                                     $template_data->subject = "Course Order Cancelled";
                                     // $template_data = Helper::getFreelancerCoursePaymentRefundEmailContent();
                                     $email_params['title'] = $course->title;
-                                    $email_params['course_link'] = url('instructor/' . $course->slug);
+                                    $email_params['course_link'] = url('course/' . $course->slug);
                                     $email_params['amount'] = $course->price;
                                     $email_params['freelancer_name'] = Helper::getUserName($userid);
                                     $email_params['employer_profile'] = url('profile/' . $user->slug);
@@ -1349,7 +1351,7 @@ class CourseController extends Controller
                                 $template_data->subject = "Course Order Cancelled";
                                 // $template_data = Helper::getFreelancerCoursePaymentRefundEmailContent();
                                 $email_params['title'] = $course->title;
-                                $email_params['course_link'] = url('instructor/' . $course->slug);
+                                $email_params['course_link'] = url('course/' . $course->slug);
                                 $email_params['amount'] = $course->price;
                                 $email_params['freelancer_name'] = Helper::getUserName($userid);
                                 $email_params['employer_profile'] = url('profile/' . $user->slug);
@@ -1425,7 +1427,7 @@ class CourseController extends Controller
                 $template_data->content = Helper::getFreelancerNewCourseOrderEmailContent();
                 $template_data->subject = "Course Order";
                 $email_params['title'] = $course->title;
-                $email_params['course_link'] = url('instructor/' . $course->slug);
+                $email_params['course_link'] = url('course/' . $course->slug);
                 $email_params['amount'] = $course->price;
                 $email_params['freelancer_name'] = Helper::getUserName($freelancer);
                 $email_params['employer_profile'] = url('profile/' . $user->slug);
@@ -1491,4 +1493,170 @@ class CourseController extends Controller
         return $json;
 
     }     
+
+    public function courseList($slug){
+        
+        // $blogs = Blog::select('*')->where('status','published')->orderBy('id','DESC');
+        $locations  = Location::all();
+        $languages  = Language::all();
+        $categories = Category::all();
+        $delivery_time = DeliveryTime::all();
+        $response_time = ResponseTime::all();
+        $skills     = Skill::orderBy('title')->get();
+        $course_id = array();
+        $services= array();
+        $type="category";
+        foreach ($skills as $key => $skill) {
+            if($skill->slug==$slug){
+                $type='skill';
+            }
+        }
+        foreach ($categories as $key => $cat) {
+            if($cat->slug==$slug){
+                $type='category';
+            }
+        }
+        foreach ($locations as $key => $loc) {
+            if($loc->slug==$slug){
+                $type='location';
+            }
+        }
+        foreach ($delivery_time as $key => $time) {
+            if($time->slug==$slug){
+                $type='delivery-time';
+            }
+        }
+        foreach ($response_time as $key => $time) {
+            if($time->slug==$slug){
+                $type='response-time';
+            }
+        }
+        foreach ($languages as $key => $lang) {
+            if($lang->slug==$slug){
+                $type='language';
+            }
+        }
+        if($type=='category'){
+            $categor_obj = Category::where('slug', $slug)->first();
+            if(!empty($categor_obj->id)){
+                $category = Category::find($categor_obj->id);
+               
+                if (!empty($category->courses)) {
+                    $category_courses = $category->courses->pluck('id')->toArray();
+                    foreach ($category_courses as $id) {
+                        $course_id[] = $id;
+                    }
+                }
+                $services = Cource::where('status','published')->whereIn('id', $course_id)->orderBy('id','DESC')->paginate(10)->setPath('');
+            }
+        }
+        if($type=='skill'){
+                $skill_obj = Skill::where('slug', $slug)->first();
+                if(!empty($skill_obj->id)){
+                $skill= Skill::find($skill_obj->id);
+                if (!empty($skill->courses)) {
+                    $skill_courses = $skill->courses->pluck('id')->toArray();
+                    foreach ($skill_courses as $id) {
+                        $course_id[] = $id;
+                    }
+                }
+            
+            $services=Cource::where('status','published')->whereIn('id', $course_id)->orderBy('id','DESC')->paginate(10)->setPath('');
+            }
+        }
+        if($type=='location'){
+            $location = Location::select('id')->where('slug', $slug)->get()->pluck('id')->toArray();
+            $services=Cource::where('status','published')->whereIn('location_id', $location)->paginate(10)->setPath('');
+       
+        }
+        if($type=='language'){
+            $language = Language::where('slug', $slug)->first();
+            $lang = Language::find($language['id']);
+                if (!empty($lang->courses)) {
+                    $lang_courses = $lang->courses->pluck('id')->toArray();
+                    foreach ($lang_courses as $id) {
+                        $course_id[] = $id;
+                    }
+                }
+            $services=Cource::where('status','published')->whereIn('id', $course_id)->orderBy('id','DESC')->paginate(10)->setPath('');
+        }
+        if ($type=='delivery-time') {
+            $deliverytime = DeliveryTime::select('id')->where('slug', $slug)->get()->pluck('id')->toArray();
+            $services = Cource::where('status','published')->whereIn('delivery_time_id', $deliverytime)->paginate(10)->setPath('');
+        }
+        if ($type=='response-time') {
+            $responsetime = ResponseTime::select('id')->where('slug', $slug)->get()->pluck('id')->toArray();
+            $services= Cource::where('status','published')->whereIn('response_time_id', $responsetime)->paginate(10)->setPath('');
+        }
+        $type = "instructors";
+        if (file_exists(resource_path('views/extend/front-end/cources/courseList.blade.php'))) {
+            return view(
+                'extend.front-end.cources.courseList',
+                compact(
+                    'locations',
+                    'languages',
+                    'categories',
+                    'skills',
+                    'type',
+                    'delivery_time',
+                    'response_time',
+                    'services'
+                )
+            );
+        } else {
+            return view(
+                'front-end.cources.courseList',
+                compact(
+                    'locations',
+                    'languages',
+                    'categories',
+                    'skills',
+                    'type',
+                    'delivery_time',
+                    'response_time',
+                    'services'
+                )
+            );
+        }
+    }
+    public function coursesListing(){
+        $locations  = Location::all();
+        $languages  = Language::all();
+        $categories = Category::orderBy('title')->get();;
+        $skills     = Skill::orderBy('title')->get();
+        $delivery_time = DeliveryTime::all();
+        $response_time = ResponseTime::all();
+        $services= array();
+        $services=Cource::where('status','published')->orderByRaw("is_featured DESC, updated_at DESC")->paginate(10)->setPath('');
+        $type = "instructors";
+        if (file_exists(resource_path('views/extend/front-end/cources/courseList.blade.php'))) {
+            return view(
+                'extend.front-end.cources.courseList',
+                compact(
+                    'locations',
+                    'languages',
+                    'categories',
+                    'skills',
+                    'type',
+                    'delivery_time',
+                    'response_time',
+                    'services'
+                )
+            );
+        } else {
+            return view(
+                'front-end.cources.courseList',
+                compact(
+                    'locations',
+                    'languages',
+                    'categories',
+                    'skills',
+                    'type',
+                    'delivery_time',
+                    'response_time',
+                    'services'
+                )
+            );
+        }
+    }
     }  

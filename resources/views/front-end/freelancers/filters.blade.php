@@ -29,8 +29,9 @@
                             @foreach($categories as $category)
                                 @php $checked = ( !empty($_GET['category']) && in_array($category->id, $_GET['category'] )) ? 'checked' : ''; @endphp
                                 <span class="wt-checkbox">
+                                    
                                     <input id="cat-{{{ $category->slug }}}" type="checkbox" name="category[]" value="{{{ $category->id }}}" {{$checked}} >
-                                    <label for="cat-{{{ $category->slug }}}"> {{{ $category->title }}}</label>
+                                  <label for="cat-{{{ $category->slug }}}"> <a href="{{ url('hire/'.$category->slug) }}"  >{{{ $category->title }}}</a></label>
                                 </span>
                             @endforeach
                         </div>
@@ -52,7 +53,7 @@
                                 @php $checked = ( !empty($_GET['skills']) && in_array($skill->slug, $_GET['skills'])) ? 'checked' : '' @endphp
                                 <span class="wt-checkbox">
                                     <input id="skill-{{{ $key }}}" type="checkbox" name="skills[]" value="{{{$skill->slug}}}" {{$checked}} >
-                                    <label for="skill-{{{ $key }}}">{{{ $skill->title }}}</label>
+                                    <label for="skill-{{{ $key }}}"><a href="{{ url('hire/'.$skill->slug) }}"  >{{{ $skill->title }}}</a></label>
                                 </span>
                             @endforeach
                         </div>
@@ -78,7 +79,7 @@
                                 @php $checked = ( !empty($_GET['locations']) && in_array($location->slug, $_GET['locations'])) ? 'checked' : '' @endphp
                                 <span class="wt-checkbox">
                                     <input id="location-{{{ $location->slug }}}" type="checkbox" name="locations[]" value="{{{$location->slug}}}" {{$checked}} >
-                                    <label for="location-{{{ $location->slug }}}"> <img src="{{{asset(App\Helper::getLocationFlag($location->flag))}}}" alt="{{ trans('lang.img') }}" style="width:18px;height:11px"> {{{ $location->title }}}</label>
+                                    <label for="location-{{{ $location->slug }}}"><a href="{{ url('hire/'.$location->slug) }}"  > <img src="{{{asset(App\Helper::getLocationFlag($location->flag))}}}" alt="{{ trans('lang.img') }}" style="width:18px;height:11px"> {{{ $location->title }}}</a></label>
                                 </span>
                             @endforeach
                         </div>
@@ -104,7 +105,7 @@
                                 @php $checked = ( !empty($_GET['hourly_rate']) && in_array($key, $_GET['hourly_rate'])) ? 'checked' : '' @endphp
                                 <span class="wt-checkbox">
                                     <input id="rate-{{ $key }}" type="checkbox" name="hourly_rate[]" value="{{ $key }}" {{ $checked }}>
-                                    <label for="rate-{{ $key }}">{{ $hourly_rate }}</label>
+                                    <label for="rate-{{ $key }}"><a href="{{ url('hire/'.$key) }}"  >{{ $hourly_rate }}</a></label>
                                 </span>
                             @endforeach
                         </div>
@@ -125,7 +126,7 @@
                         @php $checked = ( !empty($_GET['freelaner_type']) && in_array($freelancer, $_GET['freelaner_type'])) ? 'checked' : '' @endphp
                             <span class="wt-checkbox">
                                 <input id="freelancer-{{  $freelancer_level.$i  }}" type="checkbox" name="freelaner_type[]" value="{{ $freelancer }}" {{ $checked }}>
-                                <label for="freelancer-{{ $freelancer_level.$i++ }}">{{ $freelancer }}</label>
+                                <label for="freelancer-{{ $freelancer_level.$i++ }}"><a href="{{ url('hire/'.$freelancer) }}"  >{{ $freelancer }}</a></label>
                             </span>
                         @endforeach
                     </div>
@@ -145,7 +146,7 @@
                                 @php $checked = ( !empty($_GET['english_level']) && in_array($key, $_GET['english_level'])) ? 'checked' : '' @endphp
                                 <span class="wt-checkbox">
                                     <input id="englishlevel-{{ $key.$i }}" type="checkbox" name="english_level[]" value="{{ $key }}" {{ $checked }}>
-                                    <label for="englishlevel-{{ $key.$i++ }}">{{ $english_level }}</label>
+                                    <label for="englishlevel-{{ $key.$i++ }}"><a href="{{ url('hire/'.$key) }}"  >{{ $english_level }}</a></label>
                                 </span>
                             @endforeach
                         </div>

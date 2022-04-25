@@ -16,11 +16,12 @@ class InvitationMailable extends Mailable
      *
      * @return void
      */
-    public function __construct($type, $template, $email_params = array())
+    public function __construct($type, $template, $email_params = array(),$user_type)
     {
         $this->type = $type;
         $this->template = $template;
         $this->email_params = $email_params;
+        $this->user_type = $user_type;
     }
 
     /**
@@ -50,7 +51,12 @@ class InvitationMailable extends Mailable
         $user_password = $password;
         $profile_link = $link;
         $signature = EmailHelper::getSignature();
-        $app_content = $this->template->content;
+        if($this->user_type == 4){
+        $app_content = $this->template['content'];
+        }
+        else{
+            $app_content = $this->template->content;
+        }
         $email_content_default =    "Hi %name%! Thanks for registering at eBelong. You can now login to manage your account using the following credentials:
 Password: %password%
 Email: %email%

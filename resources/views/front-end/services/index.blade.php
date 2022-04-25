@@ -52,7 +52,7 @@
                 </search-form>
         </div>
         @if (Session::has('payment_message'))
-            @php $response = Session::get('payment_message') @endphp
+            @php $response = Session::get('payment_message') ;@endphp
             <div class="flash_msg">
                 <flash_messages :message_class="'{{{$response['code']}}}'" :time ='5' :message="'{{{ $response['message'] }}}'" v-cloak></flash_messages>
             </div>
@@ -98,7 +98,7 @@
                                                             <div class="wt-freelancers {{{$enable_slider}}}">
                                                                 @foreach ($attachments as $attachment)
                                                                     <figure class="item">
-                                                                        <a href="{{{ url('profile/'.$service->seller[0]->slug) }}}"><img src="{{{asset(Helper::getImageWithSize('uploads/services/'.$service->seller[0]->id, $attachment, 'medium'))}}}" alt="img descriptions" class="item"></a>
+                                                                        <a href="{{{url('service/'.$service->slug)}}}"><img src="{{{asset(Helper::getImageWithSize('uploads/services/'.$service->seller[0]->id, $attachment, 'medium'))}}}" alt="img descriptions" class="item"></a>
                                                                     </figure>
                                                                 @endforeach
                                                             </div>

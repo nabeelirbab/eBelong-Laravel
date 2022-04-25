@@ -58,10 +58,11 @@
                                             @php $is_member_agency = DB::table('agency_associated_users')->where('user_id',$user->id)->where('is_pending',0)->where('is_accepted',1)->first(); @endphp
                                         @if (!empty($user->is_agency))
                                         @php $agencylogo = DB::table('agency_user')->where('id',$user->agency_id)->first();@endphp
-                                           
-                                                <span >
-                                                    <img style="max-width: 50px"src="{{ asset('uploads/agency_logos/' . $user->agency_id.'/'.$agencylogo->agency_logo) }}"> {{{ $agencylogo->agency_name }}}
-                                                </span>
+                                            @if (!empty($agencylogo))
+                                            <span >
+                                                <img style="max-width: 50px;height: 50px;width: 50px;border-radius: 100%;"src="{{ asset('uploads/agency_logos/' . $user->agency_id.'/'.$agencylogo->agency_logo) }}"> {{{ $agencylogo->agency_name }}}
+                                            </span>
+                                            @endif
                                           
                                         @elseif(!empty($is_member_agency))
                                         @php $agencylogo = DB::table('agency_user')->where('id',$is_member_agency->agency_id)->first();@endphp
@@ -97,7 +98,7 @@
                                     @if ($is_instructor == 1)
                                     <div class="profile-instructor-badge">
                                         {{-- <h1>im certified</h1> --}}
-                                        <img src="/images/instructor/instructor_logo.png" />
+                                        <img class="fix-blury-image-issue" src="/images/instructor/instructor_logo.png" />
                                     </div>
                                     @endif
                                     @if (!empty($profile->tagline))
@@ -164,7 +165,8 @@
                                     <?php if($user_role !== 'freelancer'): ?>
                                     <div class="wt-description">
                                         <p>{{ trans('lang.send_offer_note') }}</p>
-                                        <a href="javascript:void(0);" @click.prevent='sendOffer("{{$auth_user}}")' class="wt-btn">{{{ trans('lang.btn_send_offer') }}}</a>
+                                        <!-- <a href="javascript:void(0);" @click.prevent='sendOffer("{{$auth_user}}")' class="wt-btn">{{{ trans('lang.btn_send_offer') }}}</a> -->
+                                        <a href="javascript:void(0);" @click.prevent='addcandidate("{{$user->id}}")' class="wt-btn">{{{ trans('lang.btn_add_candidate') }}}</a>
                                     </div>
                                     <?php endif;  ?>
                                 </div>
@@ -294,7 +296,7 @@
                                                             <div class="wt-freelancers-content">
                                                                 <div class="dc-title">
                                                                     <a href="{{{ url('profile/'.$user->slug) }}}"><i class="fa fa-check-circle"></i> {{{Helper::getUserName($user->id)}}}</a>
-                                                                    <a href="{{{url('instructor/'.$cource->slug)}}}"><h3>{{{$cource->title}}}</h3></a>
+                                                                    <a href="{{{url('course/'.$cource->slug)}}}"><h3>{{{$cource->title}}}</h3></a>
                                                                     <span><strong>{{ $symbol }}{{{$cource->price}}}</strong> {{trans('lang.starting_from')}}</span>
                                                                 </div>
                                                             </div>

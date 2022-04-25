@@ -19,6 +19,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\AgencyUser;
 use App\Cource;
+use App\Blog;
 use App\Language;
 use App\FindMatchRequest;
 use Illuminate\Support\Facades\Mail;
@@ -596,6 +597,9 @@ class PublicController extends Controller
         // $findmatchRequest->selected_categories= $request['selectedCategories'];
         // $findmatchRequest->selected_skills= $request['selectedSkills'];
         // $findmatchRequest->save();
+        // if($request['selectedCandidateHours']){
+        //     foreach($request['selectedCandidateHours'])
+        // }
 
         $data = [
             'email' => $request['email'],
@@ -615,7 +619,8 @@ class PublicController extends Controller
             'vocal_blunt' => $request['vocal_blunt'],
             'waterfall_approach' => $request['waterfall_approach'],
             'selected_categories' => $request['selectedCategories'],
-            'selected_skills' => $request['selectedSkills']
+            'selected_skills' => $request['selectedSkills'],
+            'selected_freelancers' => $request['selectedCandidateHours'],
 
         ];
 
@@ -662,16 +667,55 @@ class PublicController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function getUserRelatedFreelancers($user_id)
+
+    {
+        $json = array();
+        $user = User::find($user_id);
+        if(!empty($user)){
+        $profile = Profile::where('user_id',$user_id)->first();
+        $skills = $user->skills()->get();
+        $selectedcategories = !empty($profile->category_id) ? $profile->category_id : '';
+        $cat_user_id = array();
+        $freelancers = Profile::where('category_id', $selectedcategories)->get();
+        foreach ($freelancers as $key => $freelancer) {
+            if (!empty($freelancer->user_id)) {
+                $cat_user_id[] = $freelancer->user_id;
+            }
+        }
+        foreach ($skills as $key => $skill) {
+            $skill_slugs[] = $skill->slug;
+        }
+        $user_id = array();
+        $search_skills = $skill_slugs;
+        $user_by_role =  User::role(3)->pluck('id')->toArray();
+        $skills = Skill::whereIn('slug', $search_skills)->get();
+                foreach ($skills as $key => $skill) {
+                    $userid = DB::table('skill_user')->select('user_id')->where('skill_id',$skill->id)->get();
+                    foreach($userid as $ui){
+                        $user_id[] = $ui->user_id;
+                    }
+                }
+                // dd($cat_user_id);
+        $users = User::whereIn('id', $user_by_role)->whereIn('id', $user_id)->orwhereIn('id',$cat_user_id)->where('is_disabled', 'false')->where('status',1)->get();
+        $json['users']=$users;
+        return $json;
+
+    }
+    else{
+    abort(404);
+    }
+}
     public function getSearchResult($search_type = "")
     {
 
         $categories = array();
         $locations  = array();
         $languages  = array();
-        $categories = Category::all();
+        $categories = Category::orderBy('title')->get();
         $locations  = Location::all();
         $languages  = Language::all();
-        $skills     = Skill::all();
+        $skills     = Skill::orderBy('title')->get();
         $currency   = SiteManagement::getMetaValue('commision');
         $symbol     = !empty($currency) && !empty($currency[0]['currency']) ? Helper::currencyList($currency[0]['currency']) : array();
         $freelancer_skills = Helper::getFreelancerLevelList();
@@ -689,9 +733,10 @@ class PublicController extends Controller
         //         abort(404);
         //     }
         // }
+        $search_skills = !empty($_GET['skills']) ? $_GET['skills'] : array();
         $search_categories = !empty($_GET['category']) ? $_GET['category'] : array();
         $search_locations = !empty($_GET['locations']) ? $_GET['locations'] : array();
-        $search_skills = !empty($_GET['skills']) ? $_GET['skills'] : array();
+        $search_skill = !empty($_GET['skill']) ? $_GET['skill'] : array();
         $search_project_lengths = !empty($_GET['project_lengths']) ? $_GET['project_lengths'] : array();
         $search_languages = !empty($_GET['languages']) ? $_GET['languages'] : array();
         $search_employees = !empty($_GET['employees']) ? $_GET['employees'] : array();
@@ -711,6 +756,7 @@ class PublicController extends Controller
         if (!empty($_GET['type'])) {
             if ($type == 'employer' || $type == 'freelancer') {
                 $users_total_records = User::count();
+                // dd($users_total_records);
                 $search =  User::getSearchResult(
                     $type,
                     $keyword,
@@ -783,6 +829,7 @@ class PublicController extends Controller
                     $f_list_meta_desc = !empty($inner_page) && !empty($inner_page[0]['f_list_meta_desc']) ? $inner_page[0]['f_list_meta_desc'] : trans('lang.freelancer_meta_desc');
                     $show_f_banner = !empty($inner_page) && !empty($inner_page[0]['show_f_banner']) ? $inner_page[0]['show_f_banner'] : 'true';
                     $f_inner_banner = !empty($inner_page) && !empty($inner_page[0]['f_inner_banner']) ? $inner_page[0]['f_inner_banner'] : null;
+                    
                     if (file_exists(resource_path('views/extend/front-end/freelancers/index.blade.php'))) {
                         return view(
                             'extend.front-end.freelancers.index',
@@ -850,7 +897,8 @@ class PublicController extends Controller
                     $search_locations,
                     $search_languages,
                     $search_delivery_time,
-                    $search_response_time
+                    $search_response_time,
+                    $search_skill
                 );
                 $services = $results['services'];
                 if (file_exists(resource_path('views/extend/front-end/services/index.blade.php'))) {
@@ -860,6 +908,7 @@ class PublicController extends Controller
                             'services_total_records',
                             'type',
                             'services',
+                            'skills',
                             'symbol',
                             'keyword',
                             'categories',
@@ -881,6 +930,7 @@ class PublicController extends Controller
                             'services_total_records',
                             'type',
                             'services',
+                            'skills',
                             'symbol',
                             'keyword',
                             'categories',
@@ -911,7 +961,8 @@ class PublicController extends Controller
                     $search_locations,
                     $search_languages,
                     $search_delivery_time,
-                    $search_response_time
+                    $search_response_time,
+                    $search_skill
                 );
                 $services = $results['services'];
                 
@@ -933,7 +984,8 @@ class PublicController extends Controller
                             'service_list_meta_desc',
                             'show_service_banner',
                             'service_inner_banner',
-                            'show_breadcrumbs'
+                            'show_breadcrumbs',
+                            'skills'
                         )
                     );
                 } else {
@@ -954,7 +1006,44 @@ class PublicController extends Controller
                             'service_list_meta_desc',
                             'show_service_banner',
                             'service_inner_banner',
-                            'show_breadcrumbs'
+                            'show_breadcrumbs',
+                            'skills'
+                        )
+                    );
+                }
+            }
+            elseif ($type == 'blogs') {
+                
+                $blogs_total_records = Blog::count();
+                $results = Blog::getSearchResult(
+                    $keyword,
+                    $search_categories,
+                    $search_skill
+                );
+                $blogs= $results['blogs'];
+                
+                if (file_exists(resource_path('views/extend/front-end/blogs/index.blade.php'))) {
+                    return view(
+                        'extend.front-end.blogs.index',
+                        compact(
+                            'blogs_total_records',
+                            'type',
+                            'blogs',
+                            'keyword',
+                            'categories',
+                            'skills'
+                        )
+                    );
+                } else {
+                    return view(
+                        'front-end.blogs.index',
+                        compact(
+                            'blogs_total_records',
+                            'type',
+                            'blogs',
+                            'keyword',
+                            'categories',
+                            'skills'
                         )
                     );
                 }
@@ -1376,6 +1465,69 @@ class PublicController extends Controller
             }
         } else {
             $json['type'] = 'error';
+            return $json;
+        }
+    }
+
+    public function Guestwishlist(){
+        $skills = Skill::all();
+        $categories = Category::all();
+        return view(
+            'wishlist.index',compact('skills','categories'));
+    }
+    public function getWishlistFreelancers(Request $request){
+        $data = array();
+        $json = array();
+        if(!empty($request->ids)){
+          
+                $freelancer = User::whereIn('id',$request->ids)->get();
+                foreach ($freelancer as $key => $data) {
+                    $freelancer_profile = Profile::where('user_id',$data->id)->first();
+                    $data->avater = $freelancer_profile->avater;
+                    $data->avater_imagePath = asset(!empty($freelancer_profile->avater) ? '/uploads/users/' . $data->id . '/' . $freelancer_profile->avater : '/images/user.jpg');
+                    $data->hourly_rates = $freelancer_profile->hourly_rate;
+                    $instructor = DB::table('cource_user')->where('seller_id',$data->id)->where('status','posted')->first();
+                    $location = DB::table('locations')->where('id',$data->location_id)->first();
+                    if(!empty($location)){
+                        
+                            $data->location_flag = $location->flag;
+                            $data->location_title = $location->title;
+                            $data->location_imagePath = asset(Helper::getLocationFlag($location->flag));
+                        
+                    }
+                    else{
+                        $data->location_flag = null;
+                            $data->location_title = null;
+                            $data->location_imagePath = null;
+                    }
+                    if(!empty($data->skills[0])){
+                        foreach ($data->skills as $key => $skill) {
+                            if($key==0){
+                                $data->skill = $skill->title;
+                            }
+                        }
+                    }
+                    else{
+                        $data->skill = null;
+                    }
+                    if(!empty($instructor))
+                    {
+                        $data->instructor = 1;
+                    }
+                    else
+                    {
+                        $data->instructor = 0;
+                    }
+                 
+                }
+              
+            
+            $json['type']="success";
+            $json['data'] = $freelancer;
+            return $json;
+        }
+        else{
+            $json['type']="error";
             return $json;
         }
     }

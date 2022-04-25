@@ -76,6 +76,14 @@ class Category extends Model
     {
         return $this->morphedByMany('App\Service', 'catable');
     }
+    public function blogs()
+    {
+        return $this->morphedByMany('App\Blog', 'catable');
+    }
+    public function courses()
+    {
+        return $this->morphedByMany('App\Cource', 'catable');
+    }
 
     /**
      * Set slug before saving in DB
@@ -152,8 +160,8 @@ class Category extends Model
     {
         if (!empty($request)) {
             $cats = self::find($id);
-            if ($cats->title != $request['category_title']) {
-                $cats->slug  =  filter_var($request['category_title'], FILTER_SANITIZE_STRING);
+            if ($cats->slug != $request['category_slug']) {
+                $cats->slug  =  filter_var($request['category_slug'], FILTER_SANITIZE_STRING);
             }
             $cats->title = filter_var($request['category_title'], FILTER_SANITIZE_STRING);
             $cats->abstract = filter_var($request['category_abstract'], FILTER_SANITIZE_STRING);

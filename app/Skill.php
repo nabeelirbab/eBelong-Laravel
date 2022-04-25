@@ -52,7 +52,18 @@ class Skill extends Model
     {
         return $this->belongsToMany('App\User');
     }
-
+    public function courses()
+    {
+        return $this->belongsToMany('App\Cource');
+    }
+    public function blogs()
+    {
+        return $this->belongsToMany('App\Blog');
+    }
+    public function services()
+    {
+        return $this->belongsToMany('App\Service');
+    }
     /**
      * The job that belong to the skill.
      *
@@ -73,9 +84,10 @@ class Skill extends Model
      * @return string
      */
     public function setSlugAttribute($value)
-    {
+    { 
         if (!empty($value)) {
             $temp = str_slug($value, '-');
+            
             if (!Skill::all()->where('slug', $temp)->isEmpty()) {
                 $i = 1;
                 $new_slug = $temp . '-' . $i;
@@ -122,8 +134,8 @@ class Skill extends Model
 
         if (!empty($request)) {
             $skills = self::find($id);
-            if ($skills->title != filter_var($request['skill_title'], FILTER_SANITIZE_STRING)) {
-                $skills->slug = filter_var($request['skill_title'], FILTER_SANITIZE_STRING);
+            if ($skills->slug != $request['skill_slug']) {
+             $skills->slug = $request['skill_slug'];
             }
             $skills->title = filter_var($request['skill_title'], FILTER_SANITIZE_STRING);
             $skills->logo = filter_var($request['logo'], FILTER_SANITIZE_STRING);
@@ -166,10 +178,22 @@ class Skill extends Model
             ->where('agency_user_id', $agency_id)
             ->get()->pluck('skill_id')->toArray();
     }
+    public static function getBlogSkill($blog_id)
+    {
+        return DB::table('blog_skill')->select('skill_id')
+            ->where('blog_id', $blog_id)
+            ->get()->pluck('skill_id')->toArray();
+    }
     public static function getCourseSkill($course_id)
     {
         return DB::table('cource_skill')->select('skill_id')
             ->where('cource_id', $course_id)
+            ->get()->pluck('skill_id')->toArray();
+    }
+    public static function getServiceSkill($service_id)
+    {
+        return DB::table('service_skill')->select('skill_id')
+            ->where('service_id', $service_id)
             ->get()->pluck('skill_id')->toArray();
     }
     public static function getJob($skill_id)

@@ -6,6 +6,12 @@ use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\Helper;
 use App\WorkDiary;
+use App\SiteManagement;
+use DB;
+use App\Payout;
+use Illuminate\Support\Facades\Schema;
+use App\User;
+use Illuminate\Database\Eloquent\Model;
 
 class Kernel extends ConsoleKernel
 {
@@ -16,6 +22,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         Commands\pymentStatusChange::class,
+        Commands\SitemapCommand::class,
     ];
 
     /**
@@ -27,13 +34,15 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
        $schedule->command('payment:statuschange')->hourly();
-
+       $schedule->command('generate:sitemap')->daily();
        $schedule->call( 
            function () {
-                \Log::info("Updating Payouts");
-               Helper::updatePayouts();
-           }
-       )->everyMinute();
+                info("Updating Payouts");
+                Helper::updatePayouts();
+            }
+            
+           
+       )->hourly();
        
        $schedule->call(  
             function () {

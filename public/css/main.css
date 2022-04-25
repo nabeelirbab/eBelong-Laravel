@@ -5460,10 +5460,17 @@ body.wt-login .wt-userlogedin{display: block;}
 .wt-404errorcontent{
 	float: left;
 	width: 100%;
-	padding: 60px;
+	padding: 0px 60px 60px 60px ;
 	background: #fff;
 	text-align: center;
 	border-radius: 0 0 4px 4px;
+}
+.wt-404errorcontent .e-button {
+    font-size: 20px;
+    font-weight: 700;
+}
+.error-remove-padding {
+	padding-top: unset;
 }
 .wt-404errorcontent .wt-title h3{
 	margin: 0;
@@ -8375,9 +8382,9 @@ body.lang-ja .wt-loginfooterinfo a + a:before {
 	margin: 23px 0 0;
 }
 .wt-service-details .wt-description p{
-	font-size: 16px;
+	font-size: 16px !important;
 	margin: 0 0 26px;
-	line-height: 26px;
+	line-height: 26px !important;
 }
 .wt-service-details .wt-description p:last-child{margin: 0;}
 .wt-service-details .wt-description .wt-title h3{
@@ -9378,11 +9385,19 @@ body.lang-ja .wt-loginfooterinfo a + a:before {
 	padding: 0px 1px;
 }
 .wt-freelancers-content .dc-title a i{color: #9013F3;}
-.wt-freelancers-content .dc-title{float: left;width: 100%; height: 100px;}
+.wt-freelancers-content .dc-title{
+	float: unset;width: unset; height: unset;
+}
+.wt-freelancers-content .dc-discription h6 {
+	color: #999;
+    font: 400 14px/18px 'Open Sans', Arial, Helvetica, sans-serif;
+    margin-bottom: 12px;
+}
 .wt-freelancers-content .dc-title h3{
+
 	font-size:16px;
 	margin: 0 0 6px;
-	font-weight: 400;
+	font-weight: 600;
 	line-height: 26px;
 }
 .wt-freelancers-content .dc-title span{
@@ -9417,8 +9432,10 @@ body.lang-ja .wt-loginfooterinfo a + a:before {
 .wt-freelancers-rating{
 	width: auto;
 	overflow: hidden;
-	margin: 20px -20px -20px;
-	border-top: 1px solid #ddd;
+	/* margin: 20px -20px -20px; 
+	border-top: 1px solid #ddd;*/
+	margin: unset;
+	border-top: unset;
 }
 .wt-bannerholderthree.wt-bannerholdervtwo:before{
 	display: none;
@@ -10284,4 +10301,318 @@ a:focus{text-decoration: none !important;}
     border: unset !important;
     padding: unset !important;
     orphans: unset !important;
+}
+
+.fix-blury-image-issue {
+	image-rendering: -moz-crisp-edges;         /* Firefox */
+	image-rendering:   -o-crisp-edges;         /* Opera */
+	image-rendering: -webkit-optimize-contrast;/* Webkit (non-standard naming) */
+	image-rendering: crisp-edges;
+	-ms-interpolation-mode: nearest-neighbor;  /* IE (non-standard property) */
+}
+
+/* =================== Candidate Wishlist =================== */
+.candidate_wishlist {
+    text-align: center;
+    width: 100%;
+    margin: 30px 0px;
+}
+
+.candidate_wishlist h1{
+	font-weight: 500;
+	font-size: 30px;
+}
+
+.candidate_wishlist h5 {
+	font-weight: 500;
+}
+
+.candidate_wishlist h5 a{
+	text-decoration: underline;
+    color: #9013F3;
+}
+.candidate_wishlist h5 a:hover{
+	text-decoration: unset;
+}
+
+.candidate_wishlist_no_data {
+    margin-top: 70px;
+}
+
+.candidate_wishlist_no_data h5 {
+    font-size: 20px;
+}
+
+.candidate_wishlist_no_data a{
+	font-size: 20px;
+    text-decoration: underline;
+}
+.candidate_wishlist_no_data a:hover{
+    text-decoration: unset
+}
+
+.candidate_wishlist_data .find-talent-freelancers .wt-userlistingimg{
+	float: right;
+}
+
+.candidate_wishlist_data .find-talent-freelancers .find-talent-info {
+	text-align: left;
+}
+
+.candidate_wishlist_data .find-talent-freelancers .instructor-badge img {
+	width: 65px;
+	height: 65px;
+}
+
+.candidate_wishlist_data .find-talent-freelancers .verticlealign {
+	flex-direction: row;
+    align-items: center;
+}
+.candidate_wishlist_data .find-talent-freelancers .wt-hourlyrate {
+	margin-top: unset;
+	margin: auto;
+	width: 70%;
+}
+
+.candidate_wishlist_data .find-talent-freelancers .esthours {
+	width: 70%;
+    padding: 12px 6px;
+    margin: auto;
+    border: 2px solid #3A0B5F;
+	font-size: 14px;
+    color: #3A0B5F;
+}
+
+.candidate_wishlist_data .find-talent-freelancers .equalsign {
+	font-size: 20px;
+	color: #3A0B5F;
+	font-weight: 600;
+}
+
+.candidate_wishlist_data .find-talent-freelancers .individualresult {
+	font-size: 20px;
+	font-weight: 600;
+	color: #3A0B5F;
+}
+
+.candidate_wishlist_data .find-talent{
+	margin: 20px 0px;
+}
+
+.candidate_wishlist_data .find-talent-freelancers-total-est-cost {
+	margin: 20px 0px;
+	border: 2px solid #3A0B5F;
+    padding: 20px 0px;
+}
+
+.candidate_wishlist_data .find-talent-freelancers-total-est-cost .est-cost-heading {
+    font-size: 18px;
+    font-weight: 600;
+    color: #3A0B5F;
+}
+.candidate_wishlist_data .find-talent-freelancers-total-est-cost .est-cost-totle {
+    font-size: 20px;
+    font-weight: 600;
+    color: #3A0B5F;
+	text-align: center;
+}
+.candidate_count img{
+	width: 35px;
+    margin-left: 10px;
+}
+
+@media only screen and (max-width: 768px){
+	.candidate_count img{
+		width: 25px;
+		margin-left: 0px;
+		margin-right: 10px;
+	}
+	.wt-loginarea .wt-loginbtn {
+		margin-right: 10px;
+	}
+}
+#candidate_count {
+	position: relative;
+}
+#candidate_count .count {
+    align-self: center;
+    top: 12px;
+    right: -12px;
+    background: white;
+    width: 18px;
+    text-align: center;
+    border-radius: 100%;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    position: absolute;
+}
+
+#candidate_count .count h5 {
+	line-height: 1.3;
+}
+
+.countinue-btn .e-button {
+	color: #fff;
+    padding: 0 50px;
+    background: #3A0B5F;
+    position: relative;
+    text-align: center;
+    border-radius: 5px;
+    display: inline-block;
+    vertical-align: middle;
+    text-transform: uppercase;
+    font: 700 13px/50px 'Poppins', Arial, Helvetica, sans-serif;
+}
+
+.countinue-btn {
+	margin: 50px 0px;
+}
+
+.find-talent .find-talent-candidate .verticlealign:hover .removeCandidate {
+    position: absolute;
+	display: block;
+	z-index: 20;
+}
+.find-talent .find-talent-candidate .verticlealign .removeCandidate {
+    position: absolute;
+	display: none;
+}
+
+.find-talent .find-talent-candidate .verticlealign .removeCandidate .e-button {
+    padding: 0.3rem 1rem;
+}
+
+.wishlistDesktopView {
+	display: contents;
+}
+.wishlistMobileView {
+	display: none;
+}
+@media only screen and (max-width: 768px){
+	.wishlistDesktopView {
+		display: none;
+	}
+	.wishlistMobileView {
+		display: block;
+		margin-bottom: 10px;
+	}
+	.find-talent-freelancers .wishlistMobileView .wt-userlistingimg {
+		max-height: 100% !important;
+		max-width: 100% !important;
+		margin: unset !important;
+	}
+	.find-talent-freelancers .wishlistMobileView .wt-userlistingimg img {
+		width: 65px;
+		height: 66px;
+	}
+
+	.find-talent-freelancers .wishlistMobileView .find-talent-info .wt-title a {
+		font-size: 16px !important;
+	}
+	.find-talent-freelancers .wishlistMobileView .find-talent-info .wt-talent-skill a {
+		font-size: 16px !important;
+	}
+	.find-talent-freelancers .wishlistMobileView .find-talent-info .wt-talent-location .wt-locationarea {
+		font-size: 13px !important;
+	}
+	.candidate_wishlist_data .find-talent-freelancers .wishlistMobileView .instructor-badge img {
+		width: 53px;
+		height: 53px;
+	}
+	.candidate_wishlist_data .find-talent-freelancers .wishlistMobileView .certified-badge img {
+		width: 53px;
+		height: 53px;
+	}
+	.mobileHoursRate {
+		display: flex;
+		width: 100%;
+		overflow-x: auto;
+	}
+	.candidate_wishlist_data .find-talent-freelancers .mobileHoursRate .wt-hourlyrate {
+		width: 30%;
+	}
+	.candidate_wishlist_data .find-talent-freelancers .mobileHoursRate .esthours {
+		width: 30%;
+	}
+	.candidate_wishlist_data .find-talent-freelancers .mobileHoursRate .equalsign {
+		width: 10%;
+		padding: 12px 6px;
+	}
+	.candidate_wishlist_data .find-talent-freelancers .mobileHoursRate .individualresult {
+		width: 30%;
+		padding: 12px 6px;
+	}
+	.wishlistMobileView .imgBadges {
+		display: flex;
+		justify-content: space-between;
+		margin-bottom: 10px;
+	}
+	.candidate_wishlist_data .find-talent-freelancers .wishlistMobileView .find-talent-info {
+		margin-bottom: 10px;
+	}
+	.find-talent .find-talent-candidate .verticlealign .removeCandidate .e-button {
+		padding: 0rem 0.5rem;
+	}
+	.find-talent .find-talent-candidate .verticlealign:hover .removeCandidate {
+		right: 35px !important;
+	}
+	.candidate_wishlist_data .find-talent-freelancers-total-est-cost .est-cost-totle {
+		font-weight: 800;
+	}
+}
+
+.wt-freelancers-rating .e-button.blogs-read-more {
+	color: #fff;
+    padding: 0 50px;
+    background: #3A0B5F;
+    position: relative;
+    text-align: center;
+    border-radius: 100px;
+    display: inline-block;
+    vertical-align: middle;
+    text-transform: uppercase;
+    font: 700 13px/40px 'Poppins', Arial, Helvetica, sans-serif;
+}
+.blog-date {
+    position: absolute;
+    background: #3A0B5F;
+    padding: 6px;
+    top: 20px;
+	border-radius: 0px 50px 50px 0px;
+}
+.blog-date h6 {
+    margin-bottom: unset;
+	color: #ffffff;
+}
+.blog-category {
+    position: absolute;
+    background: #3A0B5F;
+    padding: 6px;
+	bottom: -16px;
+	border-radius: 5px;
+	left: 20px;
+}
+.blog-category h6 {
+    margin-bottom: unset;
+	color: #ffffff;
+}
+
+.wt-freelancers-blogs.wt-freelancers figure {
+	overflow: unset;
+}
+.wt-freelancers.wt-freelancers-blogs {
+    overflow: unset;
+}
+
+.dc-discription {
+    height: 60px;
+}
+.dc-discription p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 }

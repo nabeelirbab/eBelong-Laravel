@@ -11,7 +11,7 @@
 				<div class="container">
 					<div class="wt-dashboardbox">
 						<div class="wt-dashboardboxtitle wt-titlewithsearch">
-							<h2>Profile Update(Freelancer)</h2> 
+							<h2>Profile Update{{ Helper::getAuthRoleName() }}</h2> 
 							
 						</div>
 						<div class="wt-dashboardboxcontent wt-categoriescontentholder">
@@ -157,6 +157,10 @@
 											</div>
 										</div>
 									@endif
+									<div class="wt-tabscontenttitle">
+										<h2>{{{ trans('lang.my_skills') }}}</h2>
+									</div>
+									<user_skills :ph_rate_skills="'{{ trans('lang.ph_rate_skills') }}'"></user_skills>
 									<div class="wt-location wt-tabsinfo">
 										<div class="wt-tabscontenttitle">
 											<h2>{{trans('lang.your_loc')}}</h2>

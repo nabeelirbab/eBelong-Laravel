@@ -48,6 +48,8 @@
                         @else
                             <div class="wt-btnarea"><a href="{{{ url(route('showUserProfile', ['slug' => Auth::user()->slug])) }}}" class="wt-btn">{{{ trans('lang.view_profile') }}}</a></div>
                         @endif
+                        @elseif ($role === 'editor')
+                            <div class="wt-btnarea course-btn"><a href="{{{ url(route('PostBlog')) }}}" class="wt-btn">{{{ trans('lang.post_Blog') }}}</a></div>
                     @endif
                 </div>
             </div>
@@ -199,6 +201,51 @@
                             </ul>
                         </li>
                     @endif
+                    @if ($role === 'editor')
+                    <li>
+                            <a href="{{{ route('editorDashboard') }}}">
+                                <i class="ti-desktop" aria-hidden="true"></i>
+                                <span>Editor Dashboard</span>
+                            </a>
+                        </li>
+
+                        <li class="menu-item-has-children">
+                            <span class="wt-dropdowarrow"><i class="lnr lnr-chevron-right"></i></span>
+                            <a href="javascript:void(0)">
+                                <i class="ti-layers"></i>
+                                <span>{{ trans('lang.Blogs') }}</span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li><hr><a href="{{{ route('manageBlogs') }}}">{{ trans('lang.manage_blogs') }}</a></li>
+                                <li><hr><a href="{{{ route('editorBlogs') }}}">{{ trans('lang.my_blogs') }}</a></li>
+                                
+                            </ul>
+                        </li>
+                    
+                    <li class="menu-item-has-children">
+                        <span class="wt-dropdowarrow"><i class="lnr lnr-chevron-right"></i></span>
+                        <a href="javascript:void(0)">
+                            <i class="ti-layers"></i>
+                            <span>{{ trans('lang.taxonomies') }}</span>
+                        </a>
+                        <ul class="sub-menu">
+                            <li><hr><a href="{{{ route('skills') }}}">{{ trans('lang.skills') }}</a></li>
+                            <li><hr><a href="{{{ route('categories') }}}">{{ trans('lang.job_cats') }}</a></li>
+                            <li><hr><a href="{{{ route('departments') }}}">{{ trans('lang.dpts') }}</a></li>
+                            <li><hr><a href="{{{ route('languages') }}}">{{ trans('lang.langs') }}</a></li>
+                            <li><hr><a href="{{{ route('locations') }}}">{{ trans('lang.locations') }}</a></li>
+                            <li><hr><a href="{{{ route('badges') }}}">{{ trans('lang.badges') }}</a></li>
+                            <li><a href="{{{ route('deliveryTime') }}}">{{ trans('lang.delivery_time') }}</a></li>
+                            <li><a href="{{{ route('ResponseTime') }}}">{{ trans('lang.response_time') }}</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="{{{ route('userListing') }}}">
+                            <i class="ti-user"></i>
+                            <span>{{ trans('lang.manage_users') }}</span>
+                        </a>
+                    </li>
+                    @endif
                     @if ($role === 'employer' || $role === 'freelancer' )
                         <li>
                             <a href="{{{ url($role.'/dashboard') }}}">
@@ -322,17 +369,27 @@
                                         <li><hr><a href="{{{ route('ServiceListing', ['status'=>'cancelled']) }}}">{{ trans('lang.cancelled_services') }}</a></li>
                                     </ul>
                                 </li>
-                                 <li class="menu-item-has-children">
+                                <li class="menu-item-has-children">
                                     <span class="wt-dropdowarrow"><i class="lnr lnr-chevron-right"></i></span>
                                     <a href="javascript:void(0)">
                                         <i class="ti-briefcase"></i>
                                         <span>{{ trans('lang.manage_courses') }}</span>
                                     </a>
                                     <ul class="sub-menu">
-                                        <li><hr><a href="{{{ route('CourseListing', ['status'=>'posted']) }}}">{{ trans('lang.posted_courses') }}</a></li>
-                                        <li><hr><a href="{{{ route('CourseListing', ['status'=>'bought']) }}}">{{ trans('lang.bought_courses') }}</a></li>
-                                        <li><hr><a href="{{{ route('CourseOrders') }}}">{{ trans('lang.course_orders') }}</a></li>
-
+                                        <li class="menu-item-has-children">
+                                            <span class="wt-dropdowarrow"><i class="lnr lnr-chevron-right"></i></span>
+                                            <a href="javascript:void(0)">
+                                                {{-- <i class="ti-briefcase"></i> --}}
+                                                <span>{{ "My Offered Courses" }}</span>
+                                            </a>
+                                            <ul class="sub-menu">
+                                                <li><a href="{{{ route('CourseListing', ['status'=>'posted']) }}}">{{ 'My Courses' }}</a></li>
+                                                <li><a href="{{{ route('CourseOrders') }}}">{{ trans('lang.course_orders') }}</a></li>
+                                            </ul>
+                                        </li>
+                                       
+                                        <li><a href="{{{ route('CourseListing', ['status'=>'bought']) }}}">{{ 'Enrolled Courses' }}</a></li>
+                                        <li><a href="{{{ route('CourseListing', ['status'=>'waiting']) }}}">{{ 'Pending Courses' }}</a></li>
                                     </ul>
                                 </li>
                             @endif

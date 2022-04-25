@@ -66,11 +66,11 @@
                                                 <div class="wt-tabscontenttitle">
                                                     <h2>Agency Logo</h2>
                                                 </div>
-
+                                                <input type="hidden" name="agency_logo_64" id="base64image">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label style="font-size: 16px;line-height: 20px;color: black;"> Agency Logo </label>
-                                                        <input type="file" name="agency_logo" class="form-control" v-model="agency_logo">
+                                                        <!-- <label style="font-size: 16px;line-height: 20px;color: black;"> Agency Logo </label> -->
+                                                        <input type="file"  class="form-control" name="agency_logo" id="imageupld">
                                                     </div>
                                                 </div>
 
@@ -161,6 +161,31 @@
 
                                         {{-- {!! form::close(); !!} --}}
                                     </form>
+                                    <div class="modal bd-example-modal-lg imagecrop" id="model" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">
+                                          <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Agency Logo</h5>
+                                                <button type="button" id="cancel" class="close" data-dismiss="modal" aria-label="Close">
+                                                  <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="img-container">
+                                                    <div class="row">
+                                                        <div class="col-md-11">
+                                                            <img id="image" src="https://avatars0.githubusercontent.com/u/3456749">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                              </div>
+                                              <div class="modal-footer">
+                                                <button type="button" id = "close" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <button type="button" class="btn btn-primary crop" id="crop">Crop</button>
+                                              </div>
+                                          </div>
+                                        </div>
+                                      </div>
                                 </div>
                             </div>
                         </div>
@@ -169,4 +194,83 @@
             </div>
         </div>
     </section>
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.6/cropper.js"></script>
+<script>
+     $(document).ready(function() {
+var $modal = $('.imagecrop');
+var $modaal = $('#imageupld');
+console.log($modaal)
+        var image = document.getElementById('image');
+        console.log(image)
+        var cropper;
+        $("body").on("change", "#imageupld", function(e){
+            console.log("hrllo")
+            var files = e.target.files;
+            console.log(files[0].type);
+            var done = function(url) {
+                image.src = url;
+                $('#model').show();
+                cropper = new Cropper(image, {
+                aspectRatio: 1,
+                viewMode: 1,
+            });
+               
+            };
+            var reader;
+            var file;
+            var url;
+            
+            if (files && files.length > 0 && (files[0].type== "image/png" || files[0].type=="image/jpg" || files[0].type=="image/jpeg" || files[0].type=="image/svg+xml"||files[0].type=="image/svg")) {
+                file = files[0];
+                if (URL) {
+                    done(URL.createObjectURL(file));
+                } else if (FileReader) {
+                    reader = new FileReader();
+                    reader.onload = function(e) {
+                        done(reader.result);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+        });
+   
+        $("body").on("click", "#close", function() {
+            $('#model').hide();
+            cropper.destroy();
+            cropper = null;
+            $("#imageupld").val(null);
+            });
+            $("body").on("click", "#cancel", function() {
+            $('#model').hide();
+            cropper.destroy();
+            cropper = null;
+            $("#imageupld").val(null);
+            });
+        $("body").on("click", "#crop", function() {
+            canvas = cropper.getCroppedCanvas({
+                width: 160,
+                height: 160,
+            });
+            
+            canvas.toBlob(function(blob) {
+                url = URL.createObjectURL(blob);
+                console.log(url)
+                var reader = new FileReader();
+                reader.readAsDataURL(blob);
+                reader.onloadend = function() {
+                     var base64data = reader.result;
+                     $('#base64image').val(base64data);
+                    //  document.getElementById('imagePreview').style.backgroundImage = "url("+base64data+")";
+                    $('#model').hide();
+                    cropper.destroy();
+                    cropper = null;
+                }
+            });
+        })
+    });
+</script>
 @endsection

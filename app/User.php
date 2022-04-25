@@ -452,16 +452,39 @@ class User extends Authenticatable
     ) {
         $json = array();
         $user_id = array();
-        $user_by_role =  User::role($type)->select('id')->get()->pluck('id')->toArray();
+        $user_by_role =  User::role($type)->pluck('id')->toArray();
+        $picture = Profile::whereNotNull('avater')->whereIn('user_id', $user_by_role)->get();
+        $ids = null;
+        $idss=null;
+        $idsss=null;
+        foreach ($picture as $id) {
+            $ids[] = $id->user_id;
+        }
+        
+        $ids_ordered = implode(',', $ids);
+        $users_certified_and_pics =  User::whereIn('id', $ids)->where('is_disabled', 'false')->where('status',1)->where('is_certified',1)->get();
+        foreach ($users_certified_and_pics as $id_) {
+            $idss[] = $id_->id;
+        }
+        // dd($idss);
+    //  dd($idss);
+        $users_not_certified_and_pics = !empty($user_by_role) ? User::whereIn('id', $user_by_role)->where('is_disabled', 'false')->where('status',1)->where('is_certified',0)->get() : array();
+        foreach ($users_not_certified_and_pics as $id__) {
+            $idsss[] = $id__->id;
+        }
+        // dd($idsss);
+        // dd($ids_ordered);
         $users = !empty($user_by_role) ? User::whereIn('id', $user_by_role)->where('is_disabled', 'false')->where('status',1) : array();
+        // dd($users->paginate(20)->setPath('') );
         $filters = array();
-        if (!empty($users)) {
+        
+       
             $filters['type'] = $type;
             if (!empty($keyword)) {
                 $filters['s'] = $keyword;
-                $users->where(DB::raw('CONCAT(first_name," ",last_name)'),'like','%'.$keyword.'%');
-                //$users->whereIn('id', $user_by_role);
-                $users->where('is_disabled', 'false');
+                $users = !empty($user_by_role) ? User::whereIn('id', $user_by_role)->where(DB::raw('CONCAT(first_name," ",last_name)'),'like','%'.$keyword.'%')->where('is_disabled', 'false')->where('status',1) :array();
+                
+                
             }
 
             if (!empty($search_categories)) {
@@ -473,7 +496,8 @@ class User extends Authenticatable
                         $user_id[] = $freelancer->user_id;
                     }
                 }
-                $users->whereIn('id', $user_id)->get();
+                $users->whereIn('id', $user_id)->orderBy('is_certified', 'DESC');
+               
             }
 
             if (!empty($search_locations)) {
@@ -481,18 +505,13 @@ class User extends Authenticatable
                 $locations = Location::select('id')->whereIn('slug', $search_locations)
                     ->get()->pluck('id')->toArray();
                 $users->whereIn('location_id', $locations);
+                
             }
 
-            $picture = Profile::whereNotNull('avater')->get();
-            $ids = null;
-            foreach ($picture as $id) {
-                $ids[] = $id->user_id;
-            }
-            $ids_ordered = implode(',', $ids);
-            $users->whereIn('id', $ids)
-                ->orderByRaw("FIELD(id, $ids_ordered)")
-                ->get();
-
+           
+            // $dp_users = !empty($user_by_role) ? User::whereIn('id', $ids)
+            // ->orderByRaw("FIELD(id, $ids_ordered)")->where('is_disabled', 'false')->where('status',1)->paginate(20)->setPath('') :array();
+            //     dd($dp_users);
 
             if (!empty($search_employees)) {
                 $filters['employees'] = $search_employees;
@@ -502,7 +521,8 @@ class User extends Authenticatable
                         $user_id[] = $employee->user_id;
                     }
                 }
-                $users->whereIn('id', $user_id)->get();
+                $users->whereIn('id', $user_id);
+                
             }
             if (!empty($search_skills)) {
                 $user_id = array();
@@ -517,7 +537,9 @@ class User extends Authenticatable
                         $user_id[] = $ui->user_id;
                     }
                 }
-                $users->whereIn('id', $user_id);
+                // dd($user_id);
+                $users->whereIn('id', $user_id)->orderBy('is_certified', 'DESC');
+                
             }
             if (!empty($search_hourly_rates)) {
                 $user_id = array();
@@ -547,7 +569,7 @@ class User extends Authenticatable
                         $user_id[] = $freelancer->user_id;
                     }
                 }
-                $users->whereIn('id', $user_id)->get();
+                $users->whereIn('id', $user_id);
             }
             if (!empty($search_english_levels)) {
                 $user_id = array();
@@ -558,28 +580,35 @@ class User extends Authenticatable
                         $user_id[] = $freelancer->user_id;
                     }
                 }
-                $users->whereIn('id', $user_id)->get();
+                $users->whereIn('id', $user_id);
             }
-            /*  if (!empty($search_languages)) {
-                 $user_id = array();
-                 $filters['languages'] = $search_languages;
-                 $languages = Language::whereIn('slug', $search_languages)->get();
-                 foreach ($languages as $key => $language) {
-                     if (!empty($language->users[$key]->id)) {
-                         $user_id[] = $language->users[$key]->id;
-                     }
-                 }
-                 $users->whereIn('id', $user_id);
-             } */
-            if ($type = 'freelancer') {
-                $users = $users->orderByRaw('-badge_id DESC')->orderBy('expiry_date', 'DESC');
-            } else {
-                $users = $users->orderBy('created_at', 'DESC');
-            }
-            //DB::enableQueryLog();
-            $users = $users->paginate(20)->setPath('');
-            //dd(DB::getQueryLog());
+            
+        if(
+        empty($keyword)&&
+        empty($search_locations)&&
+        empty($search_employees)&&
+        empty($search_skills)&&
+        empty($search_hourly_rates)&&
+        empty($search_freelaner_types)&&
+        empty($search_english_levels)&&
+        empty($search_languages)&&
+        empty($search_categories)){
+        $users = User::join('profiles', 'users.id', '=', 'profiles.user_id')
+            ->select('users.*')
+             ->whereIn('users.id', $user_by_role)->where('users.is_disabled', 'false')->where('users.status',1)
+             ->orderBy('users.is_certified','DESC')
+             ->orderBy('profiles.avater', 'DESC');
         }
+        // dd($users->get());
+        
+        //   $users = $users->orderBy('is_certified', 'DESC')->orderByRaw('id',$idss)->orderByRaw('id',$idsss); 
+        //   dd($users->get());
+        //   $users = $users->profile->orderByRaw('ISNULL(sortOrder), sortOrder ASC');
+          $users = $users->paginate(20)->setPath('');
+        //   dd($users);
+        //   $users = $dp_users->appends($users);
+
+     
         foreach ($filters as $key => $filter) {
             $pagination = $users->appends(
                 array(
@@ -777,6 +806,12 @@ class User extends Authenticatable
         }
         if($role=="name_desc"){
             $query = User::orderBy('first_name','desc')->paginate(10)->setpath('');
+        }
+        if($role=="certified"){
+            $query =  User::select('*')->where('is_certified',1)->latest()->paginate(10)->setPath('');
+        }
+        if($role=="featured"){
+            $query =  User::select('*')->where('is_featured',1)->latest()->paginate(10)->setPath('');
         }
         return $query;
 

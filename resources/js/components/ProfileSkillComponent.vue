@@ -100,18 +100,55 @@
             },
             getSkills(){
                 let self = this;
+                var segment_str = window.location.pathname;
+                 var segment_array = segment_str.split( '/' );
+                 var slug = segment_array[segment_array.length - 1];
+                if(slug=="profile"){
                 axios.get(APP_URL + '/get-freelancer-skills')
                 .then(function (response) {
                     self.stored_skills = response.data.skills;
                     console.log("jjj")
                 });
+                }
+                else{
+                axios.post(APP_URL + '/admin/get-freelancer-skills',{
+                    slug: slug
+                })
+                .then(function (response) {
+                    self.stored_skills = response.data.skills;
+                    if(self.stored_skills.length == 0) {
+                        self.all_skills_selected = response.data.message;
+                        self.is_empty = true;
+                    }
+                });
+            
+                }
             },
             getUserSkills(){
                 let self = this;
+                var segment_str = window.location.pathname; // return segment1/segment2/segment3/segment4
+                var segment_array = segment_str.split( '/' );
+                var edit_url = segment_array[segment_array.length - 2];
+                console.log(edit_url);
+                if(edit_url == "freelancer") {
                 axios.get(APP_URL + '/freelancer/get-freelancer-skills')
                 .then(function (response) {
                     self.freelancer_skills = response.data.freelancer_skills;
                 });
+                }
+                else{
+                    var id = segment_array[segment_array.length - 1];
+                    console.log(id);
+                    axios.post(APP_URL + '/admin/get-admin-freelancer-skills',{
+                        id:id
+                    })
+                    .then(function (response) {
+                        console.log("jjj self.id-skills", response)
+                        if(response.data.type = 'success') {
+                            self.freelancer_skills = response.data.skills;
+                        }
+                    });
+                }
             },
             addSkill: function () {
                 var skillsSelect = document.getElementById("freelancer_skill");

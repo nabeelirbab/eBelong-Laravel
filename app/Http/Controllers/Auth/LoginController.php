@@ -71,7 +71,11 @@ class LoginController extends Controller
             }
             elseif ($user_role === 'admin') {
                 return Redirect::to('admin/dashboard');
-            } else {
+            } 
+            elseif ($user_role === 'editor') {
+                return Redirect::to('editor/dashboard');
+            } 
+            else {
                 return Redirect::to(url()->previous());
             }
             // if (!empty($user->verification_code)) {

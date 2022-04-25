@@ -1254,7 +1254,7 @@ class Helper extends Model
     public static function getSearchableList($type)
     {
         $json = array();
-        if ($type == 'freelancer') {
+        if ($type == 'freelancer'||$type=='hire') {
             $freelancs  = DB::table("skills")
                 ->select(
                     "title AS name",
@@ -1298,7 +1298,7 @@ class Helper extends Model
             
             $json = array_merge($categories,$skills,$jobs);
         }
-        if ($type == 'service') {
+        if ($type == 'service'||$type=='services') {
             $services = DB::table("services")
                 ->select(
                     "title AS name",
@@ -1306,7 +1306,8 @@ class Helper extends Model
                 )->get()->toArray();
             $json = $services;
         }
-        if ($type == 'instructors') {
+       
+        if ($type == 'instructors'||$type=='courses') {
             $cources = DB::table("cources")
                 ->select(
                     "title AS name",
@@ -1314,6 +1315,15 @@ class Helper extends Model
                 )->get()->toArray();
               
             $json = $cources;
+        }
+        if ($type == 'blogs') {
+            $blogs = DB::table("blogs")
+                ->select(
+                    "title AS name",
+                    "slug"
+                )->get()->toArray();
+              
+            $json = $blogs;
         }
         return $json;
     }
@@ -2199,7 +2209,8 @@ class Helper extends Model
      * @return array
      */
     public static function updatePayouts()
-    {
+    { 
+       
         $payout_settings = SiteManagement::getMetaValue('commision');
         $min_payount = !empty($payout_settings) && !empty($payout_settings[0]['min_payout']) ? $payout_settings[0]['min_payout'] : '';
         $payment_settings = SiteManagement::getMetaValue('commision');
@@ -2227,7 +2238,21 @@ class Helper extends Model
                 GROUP BY service_user.seller_id"
             )
         );
-        $data = array_merge($job_payouts, $purchased_services);
+        $purchased_courses = DB::select(
+            DB::raw(
+                "SELECT SUM(cources.price) AS total, cource_user.seller_id AS user_id, GROUP_CONCAT(cource_user.id) AS ids
+                FROM cource_user 
+                INNER JOIN cources
+                WHERE cource_user.cource_id = cources.id
+                AND cource_user.type = 'employer'
+                AND cource_user.status = 'bought'
+                AND cource_user.paid = 'pending' 
+                GROUP BY cource_user.seller_id"
+            )
+        );
+        
+        $data = array_merge($job_payouts, $purchased_services,$purchased_courses);
+       
         $result=array();
         foreach ($data as $value) {
             if (isset($result[((array)$value)["user_id"]])) {
@@ -2239,14 +2264,16 @@ class Helper extends Model
         $totalPayouts = array();
         $totalPayouts = array_values($result);
         if (!empty($totalPayouts)) {
+            // dd($totalPayouts);
             foreach ($totalPayouts as $q) {
                 if ($q['total'] >= $min_payount) {
                     $user = User::find($q['user_id']);
-                    if ($user->profile->count() > 0) {
-                        $payout_id = !empty($user->profile->payout_id) ? $user->profile->payout_id : '';
-                        $payout_detail = !empty($user->profile->payout_settings) ? $user->profile->payout_settings : array();
+                    if ($user['profile']) {
+                        $payout_id = !empty($user['profile']->payout_id) ? $user['profile']->payout_id : '';
+                        $payout_detail = !empty($user['profile']->payout_settings) ? $user->profile->payout_settings : array();
                         if (!empty($payout_id) || !empty($payout_detail)) {
                             $total_earning = Self::deductAdminCommission($q['total']);
+                            // dd($total_earning);
                             $payout = new Payout();
                             $payout->user()->associate($q['user_id']);
                             $payout->amount = $total_earning;
@@ -2280,6 +2307,7 @@ class Helper extends Model
 							$employeeid = "";
 							if(!empty($job_payouts)) {
 								foreach ($job_payouts as $q) {
+                                    
 									$projectids .= $projectids == "" ? $q->ids : $projectids.','.$q->ids;
 								}
 								$job = DB::table('proposals')->select('jobs.user_id')
@@ -2307,6 +2335,21 @@ class Helper extends Model
 									}
 								}
 							} 
+                            if(!empty($purchased_courses)) {
+                               
+                                    
+									$projectids .= $projectids == "" ? $q['ids'] : $projectids.','.$q['ids'];
+								
+							
+								$course = DB::table('cource_user')->select('cource_user.user_id')
+									->whereIn('cource_user.id',explode(",",$projectids));
+								if($course->count() > 0 ){
+									$course= $course->get();
+									foreach($course as $empid){ 
+										$employeeid = $employeeid != "" ? $employeeid.",".$empid->user_id : $empid->user_id;
+									}
+								}
+							} 
 							/*========== end get project id & employee id ===========*/
 							
                             $payout->status = 'pending';
@@ -2324,6 +2367,16 @@ class Helper extends Model
                     $primary_records = explode(',', $q->ids);
                     foreach ($primary_records as $primary) {
                         DB::table('proposals')
+                            ->where('id', $primary)
+                            ->update(['paid' => 'completed']);
+                    }
+                }
+            }
+            if (!empty($purchased_courses)) {
+                foreach ($purchased_courses as $q) {
+                    $primary_records = explode(',', $q->ids);
+                    foreach ($primary_records as $primary) {
+                        DB::table('cource_user')
                             ->where('id', $primary)
                             ->update(['paid' => 'completed']);
                     }
@@ -3039,6 +3092,23 @@ class Helper extends Model
         $output .= "%signature%";
         return $output;
     }
+    public static function getAgencyInvitationDeclineEmailContent()
+    {
+        $output = "";
+        $output .= "Hello %creator_name%,<br>";
+        $output .= " Your Invation Request is Declined by <strong><a href='%member_link%'>'%member_name%'</a> for %agency_name%";
+        $output .= "%signature%";
+        return $output;
+    }
+
+    public static function getAgencyInvitationEmailContent()
+    {
+        $output = "";
+        $output .= "Hello %member_name%,<br>";
+        $output .= " You are Invited by <strong><a href='%creator_link%'>'%creator_name%'</a> for %agency_name%";
+        $output .= "%signature%";
+        return $output;
+    }
 
     /**
      * Service new order email content
@@ -3243,6 +3313,7 @@ class Helper extends Model
                 } elseif (file_exists($path . '/' . $image)) {
                     return $path . '/' . $requested_file;
                 } else {
+                    
                     return '/uploads/settings/general/imgae-not-availabe.png';
                 }
             } elseif (file_exists($path . '/' . $image)) {
@@ -3252,6 +3323,34 @@ class Helper extends Model
             }
         } else {
             return '/uploads/settings/general/imgae-not-availabe.png';
+        }
+    }
+    public static function getUserImageWithSize($path, $image, $size = "", $space_encode = false)
+    {
+        $requested_file = $image;
+        if (!empty($path) && !empty($image)) {
+            if ($space_encode == true) {
+                if ($image == trim($image) && strpos($image, ' ') !== false) {
+                    $requested_file = str_replace(' ', '%20', $image);
+                }
+            }
+            if (!empty($size)) {
+                $file = $path . '/' . $size . '-' . $image;
+                if (file_exists($file)) {
+                    return $path . '/' . $size . '-' . $requested_file;
+                } elseif (file_exists($path . '/' . $image)) {
+                    return $path . '/' . $requested_file;
+                } else {
+                    
+                    return '/uploads/settings/general/user.jpg';
+                }
+            } elseif (file_exists($path . '/' . $image)) {
+                return $path . '/' . $requested_file;
+            } else {
+                return '/uploads/settings/general/user.jpg';
+            }
+        } else {
+            return '/uploads/settings/general/user.jpg';
         }
     }
 
@@ -3334,7 +3433,11 @@ class Helper extends Model
                 return trans('lang.freelancer');
             } elseif (Auth::user()->getRoleNames()->first() == 'employer') {
                 return trans('lang.employer');
-            } else {
+            } 
+            elseif (Auth::user()->getRoleNames()->first() == 'editor') {
+                return 'Editor';
+            } 
+            else {
                 return trans('lang.admin');
             }
         } else {

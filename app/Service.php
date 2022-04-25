@@ -75,6 +75,13 @@ class Service extends Model
         return $this->belongsToMany('App\User')->withPivot('type', 'status', 'seller_id', 'paid');
     }
 
+
+    public function skills()
+    {
+
+        return $this->belongsToMany('App\Skill')->withPivot('skill_rating');
+    }
+
     /**
      * Get service seller
      *
@@ -182,6 +189,12 @@ class Service extends Model
             $service->languages()->sync($languages);
             $categories = $request['categories'];
             $service->categories()->sync($categories);
+            if ($request['skills']) {
+                $skills = $request['skills'];
+                foreach ($skills as $skill) {
+                    $service->skills()->attach($skill['id'],['skill_rating' => $skill['rating']]);
+                }
+            }
             $this->users()->attach($user_id, ['type' => 'seller', 'status' => 'published', 'seller_id' => $user_id]);
             $json['new_service'] = $service_id;
             $json['type'] = 'success';
@@ -256,6 +269,15 @@ class Service extends Model
             $service->languages()->sync($languages);
             $categories = $request['categories'];
             $service->categories()->sync($categories);
+            if ($request['skills']) {
+                $skills = $request['skills'];
+                $service->skills()->detach();
+                if (!empty($skills)) {
+                    foreach ($skills as $skill) {
+                        $service->skills()->attach($skill['id'],['skill_rating' => $skill['rating']]);
+                    }
+                }
+            }
             $json['type'] = 'success';
             return $json;
         } else {
@@ -332,7 +354,8 @@ class Service extends Model
         $search_locations,
         $search_languages,
         $search_delivery_time,
-        $search_response_time
+        $search_response_time,
+        $search_skills
     ) {
         $json = array();
         $services = Service::select('*');
@@ -381,6 +404,21 @@ class Service extends Model
             $filters['response_time'] = $search_response_time;
             $response_time = ResponseTime::select('id')->whereIn('slug', $search_response_time)->get()->pluck('id')->toArray();
             $services->whereIn('response_time_id', $response_time);
+        }
+        if (!empty($search_skills)) {
+            $filters['skills'] = $search_skills;
+            foreach ($search_skills as $key => $search_skill) {
+                $skill_obj = Skill::where('slug', $search_skill)->first();
+                $skill= Skill::find($skill_obj->id);
+                    //  dd($skill->courses);
+                if (!empty($skill->services)) {
+                    $skill_services = $skill->services->pluck('id')->toArray();
+                    foreach ($skill_services as $id) {
+                        $service_id[] = $id;
+                    }
+                }
+            }
+            $services->where('status','published')->whereIn('id', $service_id);
         }
         $services = $services->orderByRaw("is_featured DESC, updated_at DESC")->paginate(20)->setPath('');
         foreach ($filters as $key => $filter) {

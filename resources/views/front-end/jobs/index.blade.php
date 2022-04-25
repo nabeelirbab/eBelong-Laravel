@@ -74,7 +74,7 @@
                                         <span>{{ trans('lang.01') }}  results for <em>"{{{$keyword}}}"</em></span>
                                     </div>
                                 @endif
-                                @if (!empty($jobs))
+                                @if (!empty($jobs && $jobs->count() > 0)))
                                     @foreach ($jobs as $job)
                                         @if (\Schema::hasColumn('jobs', 'expiry_date') && !empty($job->expiry_date))
                                             @php $expiry = Carbon\Carbon::parse($job->expiry_date); @endphp
@@ -159,12 +159,12 @@
                                                                     
                                                                     <div class="wt-tag wt-widgettag">
                                                                         <!-- @foreach ($job->skills as $skill )
-                                                                            <a href="{{{url('search-results?type=job&skills%5B%5D='.$skill->slug)}}}">{{$skill->title}}</a>
+                                                                            <a href="{{{url('jobs/'.$skill->slug)}}}">{{$skill->title}}</a>
                                                                         @endforeach -->
                                                                         <?php $count = 0; ?>
                                                                         @foreach($job->skills as $skill)
                                                                             <?php if($count == 4) break; ?>
-                                                                                <a href="{{{url('search-results?type=job&skills%5B%5D='.$skill->slug)}}}">{{{ $skill->title }}}</a>
+                                                                                <a href="{{{url('jobs/'.$skill->slug)}}}">{{{ $skill->title }}}</a>
                                                                             <?php $count++; ?>
                                                                         @endforeach
 
@@ -213,7 +213,7 @@
                                                         </div>
                                                         <div class="wt-tag wt-widgettag">
                                                             @foreach ($job->skills as $skill )
-                                                                <a href="{{{url('search-results?type=job&skills%5B%5D='.$skill->slug)}}}">{{$skill->title}}</a>
+                                                                <a href="{{{url('jobs/'.$skill->slug)}}}">{{$skill->title}}</a>
                                                             @endforeach
                                                         </div>
                                                     </div>
@@ -356,12 +356,12 @@
                                                                         </div> -->
                                                                         <div class="wt-tag wt-widgettag">
                                                                             <!-- @foreach ($job->skills as $skill )
-                                                                                <a href="{{{url('search-results?type=job&skills%5B%5D='.$skill->slug)}}}">{{$skill->title}}</a>
+                                                                                <a href="{{{url('jobs/'.$skill->slug)}}}">{{$skill->title}}</a>
                                                                             @endforeach -->
                                                                             <?php $count = 0; ?>
                                                                             @foreach($job->skills as $skill)
                                                                                 <?php if($count == 2) break; ?>
-                                                                                    <a href="{{{url('search-results?type=job&skills%5B%5D='.$skill->slug)}}}">{{{ $skill->title }}}</a>
+                                                                                    <a href="{{{url('jobs/'.$skill->slug)}}}">{{{ $skill->title }}}</a>
                                                                                 <?php $count++; ?>
                                                                             @endforeach
 
@@ -412,7 +412,7 @@
                                                         </div>
                                                         <div class="wt-tag wt-widgettag">
                                                             @foreach ($job->skills as $skill )
-                                                                <a href="{{{url('search-results?type=job&skills%5B%5D='.$skill->slug)}}}">{{$skill->title}}</a>
+                                                                <a href="{{{url('jobs/'.$skill->slug)}}}">{{$skill->title}}</a>
                                                             @endforeach
                                                         </div>
                                                     </div>

@@ -29,7 +29,7 @@
                                 @php $checked = ( !empty($_GET['category']) && in_array($category->slug, $_GET['category'] )) ? 'checked' : ''; @endphp
                                 <span class="wt-checkbox">
                                     <input id="cat-{{{ $category->slug }}}" type="checkbox" name="category[]" value="{{{ $category->slug }}}" {{$checked}} >
-                                    <label for="cat-{{{ $category->slug }}}"> {{{ $category->title }}}</label>
+                                    <label for="cat-{{{ $category->slug }}}"> <a href="{{ url('jobs/'.$category->slug) }}"  >{{{ $category->title }}}</a></label>
                                 </span>
                             @endforeach
                         </div>
@@ -55,7 +55,7 @@
                                 @php $checked = ( !empty($_GET['locations']) && in_array($location->slug, $_GET['locations'])) ? 'checked' : '' @endphp
                                 <span class="wt-checkbox">
                                     <input id="location-{{{ $location->slug }}}" type="checkbox" name="locations[]" value="{{{$location->slug}}}" {{$checked}} >
-                                    <label for="location-{{{ $location->slug }}}"> <img src="{{{asset(Helper::getLocationFlag($location->flag))}}}" alt="{{ trans('lang.img') }}" style="width:18px;height:11px"> {{{ $location->title }}}</label>
+                                    <label for="location-{{{ $location->slug }}}"> <a href="{{ url('jobs/'.$location->slug) }}"  ><img src="{{{asset(Helper::getLocationFlag($location->flag))}}}" alt="{{ trans('lang.img') }}" style="width:18px;height:11px"> {{{ $location->title }}}</a></label>
                                 </span>
                             @endforeach
                         </div>
@@ -75,7 +75,7 @@
                                 @php $checked = (!empty($_GET['skills']) && in_array($skill->slug, $_GET['skills'])) ? 'checked' : '' @endphp
                                 <span class="wt-checkbox">
                                     <input id="skill-{{{ $key }}}" type="checkbox" name="skills[]" value="{{{$skill->slug}}}" {{$checked}} >
-                                    <label for="skill-{{{ $key }}}">{{{ $skill->title }}}</label>
+                                    <label for="skill-{{{ $key }}}"><a href="{{ url('jobs/'.$skill->slug) }}"  >{{{ $skill->title }}}</a></label>
                                 </span>
                             @endforeach
                         </div>
@@ -95,7 +95,7 @@
                                 @php $checked = ( !empty($_GET['project_lengths']) && in_array($key, $_GET['project_lengths'])) ? 'checked' : '' @endphp
                                 <span class="wt-checkbox">
                                     <input id="{{{ $key }}}" type="checkbox" name="project_lengths[]" value="{{{$key}}}" {{$checked}}>
-                                    <label for="{{{ $key }}}">{{{ $length }}}</label>
+                                    <label for="{{{ $key }}}"><a href="{{ url('jobs/'.$key) }}"  >{{{ $length }}}</a></label>
                                 </span>
                             @endforeach
                         </div>
@@ -121,7 +121,7 @@
                                 @php $checked = ( !empty($_GET['languages']) && in_array($language->slug, $_GET['languages'])) ? 'checked' : '' @endphp
                                 <span class="wt-checkbox">
                                     <input id="language-{{{ $language->slug }}}" type="checkbox" name="languages[]" value="{{{$language->slug}}}" {{$checked}} >
-                                    <label for="language-{{{ $language->slug }}}">{{{ $language->title }}}</label>
+                                    <label for="language-{{{ $language->slug }}}"><a href="{{ url('jobs/'.$language->slug) }}"  >{{{ $language->title }}}</a></label>
                                 </span>
                             @endforeach
                         </div>

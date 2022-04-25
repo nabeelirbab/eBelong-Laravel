@@ -120,7 +120,7 @@
                                             </div>
                                             <div class="wt-tag wt-widgettag">
                                                 @foreach ($job->skills as $skill)
-                                                    <a href="{{{url('search-results?type=job&skills%5B%5D='.$skill->slug)}}}">{{{ $skill->title }}}</a>
+                                                    <a href="{{{url('jobs/'.$skill->slug)}}}">{{{ $skill->title }}}</a>
                                                 @endforeach
                                             </div>
                                         </div>

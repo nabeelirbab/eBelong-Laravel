@@ -61,7 +61,7 @@ export default {
   methods:{
       onClick(slug){
          if(!slug) slug = this.skills.find(obj=>obj.name === this.query).slug;
-         window.location.replace(`${this.url}?type=freelancer&s=&skills[]=${slug}`);
+         window.location.replace(`${window.APP_URL}/hire/${slug}`);
       },
       log(item) {
       console.log("featured items ", item)

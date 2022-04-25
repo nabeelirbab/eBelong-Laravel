@@ -27,7 +27,7 @@
                             <div class="wt-service-tabel wt-jobservice-details">
                                 @if (!empty($freelancer))
                                     @if (!empty($attachment))
-                                    <a href="/instructor/{{ $course->slug }}">
+                                    <a href="/course/{{ $course->slug }}">
                                         <figure class="service-feature-image"><img src="{{{asset('/uploads/courses/'.$freelancer->id.'/'.$attachment[0])}}}" alt="{{{$course['title']}}}"></figure>
                                     </a>
                                         @endif
@@ -37,7 +37,7 @@
                                         @if ($course['is_featured'] == 'true')
                                             <span class="wt-featuredtagvtwo">{{ trans('lang.featured') }}</span>
                                         @endif
-                                        <a href="/instructor/{{ $course->title }}"><h3>{{{$course['title']}}}</h3></a>
+                                        <a href="/course/{{ $course->title }}"><h3>{{{$course['title']}}}</h3></a>
                                         <span><strong>{{ !empty($symbol) ? $symbol['symbol'] : '$' }}{{{$course['price']}}}</strong></span>
                                     </div>
                                 </div>

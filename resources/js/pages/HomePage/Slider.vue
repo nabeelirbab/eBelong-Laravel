@@ -26,8 +26,8 @@
           >
             
             <!-- <img v-if="item.is_instructor == 1" style="margin-left: 180px;height: 40px;" :src="`${baseUrl}/images/instructor/instructor_logo.png`"/> -->
-            <img v-if="item.is_certified == 1" style="position: absolute; top: 10px; right: 8px; max-width: 60px;" :src="`${baseUrl}/images/certified/Certified_Icon.png`"/>           
-            <img v-if="item.is_instructor == 1" style="position: absolute; top: 10px; left: 8px; max-width: 50px;" :src="`${baseUrl}/images/instructor/instructor_logo.png`"/>           
+            <img v-if="item.is_certified == 1" class="home-certified-logo" :src="`${baseUrl}/images/certified/Certified_Icon.png`"/>           
+            <img v-if="item.is_instructor == 1" class="home-instructor-logo" :src="`${baseUrl}/images/instructor/instructor_logo.png`"/>           
 
             <div  v-on:click="() => onClick(item.slug)" class="e-freelancer__item-image c-pointer">
               <img :src="item.imagePath" :alt="item.first_name" />
@@ -44,7 +44,7 @@
                 <img class="e-freelancer__item-agency-image-area" :src="`${baseUrl}/uploads/agency_logos/${item.agency_id}/${item.agency_avatar}`"/>
               </div>
               <div class="e-freelancer__item-agency-text">
-                {{item.agency_name}}
+                <a v-bind:href="'agency/' + item.agency_slug">{{item.agency_name}}</a>
               </div>
             </div>
             <div v-if="item.has_agency == 1 && item.agency_avatar == null" class="e-freelancer__item-agency text-center">
@@ -52,7 +52,7 @@
                 <img class="e-freelancer__item-agency-image-area" :src="`${baseUrl}/uploads/settings/general/imgae-not-availabe.png`"/>
               </div>
               <div class="e-freelancer__item-agency-text">
-                {{item.agency_name}}
+                <a v-bind:href="'agency/' + item.agency_slug">{{item.agency_name}}</a>
               </div>
             </div>
             

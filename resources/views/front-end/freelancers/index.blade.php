@@ -106,8 +106,8 @@ $show_f_banner = 'true'
                                 @if (!empty($users))
                                 @foreach ($users as $key => $freelancer)
                                 @php
-                                $user_image = !empty($freelancer->profile->avater) ?
-                                '/uploads/users/'.$freelancer->id.'/'.$freelancer->profile->avater :
+                                $user_image = !empty($freelancer->profile['avater']) ?
+                                '/uploads/users/'.$freelancer->id.'/'.$freelancer->profile['avater'] :
                                 '';
                                 $flag = !empty($freelancer->location->flag) ? Helper::getLocationFlag($freelancer->location->flag) :
                                 '/images/img-01.png';
@@ -149,7 +149,7 @@ $show_f_banner = 'true'
                                                     <div class="row samemargin">
                                                         <div class="col-lg-2 col-md-12 col-sm-12 removepaddingleft">
                                                             <figure class="wt-userlistingimg">
-                                                                <img src="{{{ asset(Helper::getImageWithSize('uploads/users/'.$freelancer->id, $freelancer->profile->avater, 'listing')) }}}" alt="{{ trans('lang.img') }}">
+                                                                <img src="{{{ asset(Helper::getUserImageWithSize('uploads/users/'.$freelancer->id, $freelancer->profile['avater'], 'listing')) }}}" alt="{{ trans('lang.img') }}">
                                                             </figure>
                                                         </div>
                                                         <div class="col-lg-10 col-md-12 col-sm-12 removepadding">
@@ -170,7 +170,7 @@ $show_f_banner = 'true'
                                                                     @foreach($freelancer->skills as $i => $skill)
                                                                     @if($i==0)
                                                                     <!-- <img style="width: 16px" src="/uploads/logos/{{{ $skill->logo }}}" alt=""> -->
-                                                                    <a href="{{{url('search-results?type=job&skills%5B%5D='.$skill->slug)}}}">{{{ $skill->title }}}</a>
+                                                                    <a href="{{{url('jobs/'.$skill->slug)}}}">{{{ $skill->title }}}</a>
                                                                     @endif
                                                                     @endforeach
                                                                     @endif
@@ -213,7 +213,7 @@ $show_f_banner = 'true'
                                                                 <?php $count = 0; ?>
                                                                 @foreach($freelancer->skills as $skill)
                                                                     <?php if($count == 4) break; ?>
-                                                                        <a href="{{{url('search-results?type=job&skills%5B%5D='.$skill->slug)}}}">{{{ $skill->title }}}</a>
+                                                                        <a href="{{{url('jobs/'.$skill->slug)}}}">{{{ $skill->title }}}</a>
                                                                     <?php $count++; ?>
                                                                 @endforeach
 
@@ -233,7 +233,7 @@ $show_f_banner = 'true'
                                                     }@endphp
                                                     @if($freelancer->is_instructor == 1)
                                                     <a href="{{{ url('profile/'.$freelancer->slug) }}}" class="instructor-badge">
-                                                        <img src="/images/instructor/instructor_logo.png" />
+                                                        <img class="fix-blury-image-issue" src="/images/instructor/instructor_logo.png" />
                                                     </a>
                                                     @endif
                                                     @if($freelancer->is_certified == 1)
@@ -254,10 +254,10 @@ $show_f_banner = 'true'
                                                     </div>
                                                     <div class="col-lg-2 col-md-12 col-sm-12">
                                                         <div>
-                                                            @if (!empty($freelancer->profile->hourly_rate))
+                                                            @if (!empty($freelancer->profile['hourly_rate']))
                                                             <span class="wt-hourlyrate">
                                                                 <span>
-                                                                    {{ (!empty($symbol['symbol'])) ? $symbol['symbol'] : '$' }}{{{ $freelancer->profile->hourly_rate }}} {{ trans('lang.per_hour') }}
+                                                                    {{ (!empty($symbol['symbol'])) ? $symbol['symbol'] : '$' }}{{{ $freelancer->profile['hourly_rate'] }}} {{ trans('lang.per_hour') }}
                                                                 </span>
                                                             </span>
                                                             @else
@@ -317,7 +317,7 @@ $show_f_banner = 'true'
                                         </div>
                                         <!-- ======================== Old script ============================== -->
                                         <!-- <figure class="wt-userlistingimg">
-                                                        <img src="{{{ asset(Helper::getImageWithSize('uploads/users/'.$freelancer->id, $freelancer->profile->avater, 'listing')) }}}" alt="{{ trans('lang.img') }}">
+                                                        <img src="{{{ asset(Helper::getImageWithSize('uploads/users/'.$freelancer->id, $freelancer->profile['avater'], 'listing')) }}}" alt="{{ trans('lang.img') }}">
                                                     </figure>
                                                     <div class="wt-userlistingcontent">
                                                         <div class="wt-contenthead">
@@ -350,19 +350,19 @@ $show_f_banner = 'true'
                                                                 @foreach($freelancer->skills as $i =>  $skill)
                                                                 @if($i==0)
                                                                 <img style="width: 16px" src="/uploads/logos/{{{ $skill->logo }}}" alt="">
-                                                                <a style="color: #2B2B2B" href="{{{url('search-results?type=job&skills%5B%5D='.$skill->slug)}}}">{{{ $skill->title }}}</a>
+                                                                <a style="color: #2B2B2B" href="{{{url('jobs/'.$skill->slug)}}}">{{{ $skill->title }}}</a>
                                                                 
                                                                 @endif
                                                             @endforeach
                                                                     comment area start <li><span><i class="fas fa-th"></i>
                                                                         React Developer
-                                                                        {{ (!empty($symbol['symbol'])) ? $symbol['symbol'] : '$' }}{{{ $freelancer->profile->hourly_rate }}} {{ trans('lang.per_hour') }}</span>
+                                                                        {{ (!empty($symbol['symbol'])) ? $symbol['symbol'] : '$' }}{{{ $freelancer->profile['hourly_rate'] }}} {{ trans('lang.per_hour') }}</span>
                                                                     </li> comment area end
                                                                 @endif
                                                                 @if (!empty($freelancer->skills))
                                                                 <div class="wt-tag wt-widgettag">
                                                             comment area start @foreach($freelancer->skills as $skill)
-                                                                <a href="{{{url('search-results?type=job&skills%5B%5D='.$skill->slug)}}}">{{{ $skill->title }}}</a>
+                                                                <a href="{{{url('jobs/'.$skill->slug)}}}">{{{ $skill->title }}}</a>
                                                                 <img src="/uploads/logos/{{{ $skill->logo }}}" alt="">
                                                             @endforeach comment area end
                                                                 </div>
@@ -385,9 +385,9 @@ $show_f_banner = 'true'
                                                             </ul>
                                                         </div>
                                                         <div class="wt-rightarea">
-                                                        @if (!empty($freelancer->profile->hourly_rate))
+                                                        @if (!empty($freelancer->profile['hourly_rate']))
                                                                     <span class="wt-hourlyrate">
-                                                                        {{ (!empty($symbol['symbol'])) ? $symbol['symbol'] : '$' }}{{{ $freelancer->profile->hourly_rate }}} {{ trans('lang.per_hour') }}</span>
+                                                                        {{ (!empty($symbol['symbol'])) ? $symbol['symbol'] : '$' }}{{{ $freelancer->profile['hourly_rate'] }}} {{ trans('lang.per_hour') }}</span>
                                                                 @endif
                                                             <div class="rating-area">
                                                             comment area start  <span class="wt-starcontent">
@@ -406,7 +406,7 @@ $show_f_banner = 'true'
                                                         <div class="wt-tag wt-widgettag">
                                                             @foreach($freelancer->skills as $skill)
                                                             
-                                                                <a href="{{{url('search-results?type=job&skills%5B%5D='.$skill->slug)}}}">{{{ $skill->title }}}</a>
+                                                                <a href="{{{url('jobs/'.$skill->slug)}}}">{{{ $skill->title }}}</a>
                                                         
                                                             @endforeach
                                                         </div>
@@ -438,8 +438,8 @@ $show_f_banner = 'true'
                                 @if (!empty($users))
                                 @foreach ($users as $key => $freelancer)
                                 @php
-                                $user_image = !empty($freelancer->profile->avater) ?
-                                '/uploads/users/'.$freelancer->id.'/'.$freelancer->profile->avater :
+                                $user_image = !empty($freelancer->profile['avater']) ?
+                                '/uploads/users/'.$freelancer->id.'/'.$freelancer->profile['avater']:
                                 '';
                                 $flag = !empty($freelancer->location->flag) ? Helper::getLocationFlag($freelancer->location->flag) :
                                 '/images/img-01.png';
@@ -482,7 +482,7 @@ $show_f_banner = 'true'
                                                     <div class="row samemargin">
                                                         <div class="col-lg-12 col-md-12 col-sm-12">
                                                             <figure class="wt-userlistingimg">
-                                                                <img src="{{{ asset(Helper::getImageWithSize('uploads/users/'.$freelancer->id, $freelancer->profile->avater, 'listing')) }}}" alt="{{ trans('lang.img') }}">
+                                                                <img src="{{{ asset(Helper::getImageWithSize('uploads/users/'.$freelancer->id, $freelancer->profile, 'listing')) }}}" alt="{{ trans('lang.img') }}">
                                                             </figure>
                                                         </div>
                                                         <div class="col-lg-12 col-md-12 col-sm-12 samemargin removepadding">
@@ -503,7 +503,7 @@ $show_f_banner = 'true'
                                                                     @foreach($freelancer->skills as $i => $skill)
                                                                     @if($i==0)
                                                                     <!-- <img style="width: 16px" src="/uploads/logos/{{{ $skill->logo }}}" alt=""> -->
-                                                                    <a href="{{{url('search-results?type=job&skills%5B%5D='.$skill->slug)}}}">{{{ $skill->title }}}</a>
+                                                                    <a href="{{{url('jobs/'.$skill->slug)}}}">{{{ $skill->title }}}</a>
                                                                     @endif
                                                                     @endforeach
                                                                     @endif
@@ -541,7 +541,7 @@ $show_f_banner = 'true'
                                                                 <?php $count = 0; ?>
                                                                 @foreach($freelancer->skills as $skill)
                                                                     <?php if($count == 2) break; ?>
-                                                                        <a href="{{{url('search-results?type=job&skills%5B%5D='.$skill->slug)}}}">{{{ $skill->title }}}</a>
+                                                                        <a href="{{{url('jobs/'.$skill->slug)}}}">{{{ $skill->title }}}</a>
                                                                     <?php $count++; ?>
                                                                 @endforeach
 
@@ -570,10 +570,10 @@ $show_f_banner = 'true'
                                                     </div>
                                                     <div class="col-lg-12 col-md-12 col-sm-12">
                                                         <div>
-                                                            @if (!empty($freelancer->profile->hourly_rate))
+                                                            @if (!empty($freelancer->profile['hourly_rate']))
                                                             <span class="wt-hourlyrate">
                                                                 <span>
-                                                                    {{ (!empty($symbol['symbol'])) ? $symbol['symbol'] : '$' }}{{{ $freelancer->profile->hourly_rate }}} {{ trans('lang.per_hour') }}
+                                                                    {{ (!empty($symbol['symbol'])) ? $symbol['symbol'] : '$' }}{{{ $freelancer->profile['hourly_rate'] }}} {{ trans('lang.per_hour') }}
                                                                 </span>
                                                             </span>
                                                             @else
@@ -618,7 +618,7 @@ $show_f_banner = 'true'
                                                     @endif
                                                 @endif
                                                 <figure class="wt-userlistingimg">
-                                                    <img src="{{{ asset(Helper::getImageWithSize('uploads/users/'.$freelancer->id, $freelancer->profile->avater, 'listing')) }}}" alt="{{ trans('lang.img') }}">
+                                                    <img src="{{{ asset(Helper::getImageWithSize('uploads/users/'.$freelancer->id, $freelancer->profile['avater'], 'listing')) }}}" alt="{{ trans('lang.img') }}">
                                                 </figure>
                                                 <div class="wt-userlistingcontent">
                                                     <div class="wt-contenthead">
@@ -659,7 +659,7 @@ $show_f_banner = 'true'
                                                                 @foreach($freelancer->skills as $i =>  $skill)
                                                                     @if($i==0)
                                                                         <img style="width: 16px" src="/uploads/logos/{{{ $skill->logo }}}" alt="">
-                                                                        <a style="color: #2B2B2B" href="{{{url('search-results?type=job&skills%5B%5D='.$skill->slug)}}}">{{{ $skill->title }}}</a>
+                                                                        <a style="color: #2B2B2B" href="{{{url('jobs/'.$skill->slug)}}}">{{{ $skill->title }}}</a>
                                                                     @endif
                                                                 @endforeach
                                                                 @if (!empty($freelancer->location))
@@ -670,13 +670,13 @@ $show_f_banner = 'true'
                                                             
                                                                 comment start <li><span><i class="fas fa-th"></i>
                                                                     React Developer
-                                                                    {{ (!empty($symbol['symbol'])) ? $symbol['symbol'] : '$' }}{{{ $freelancer->profile->hourly_rate }}} {{ trans('lang.per_hour') }}</span>
+                                                                    {{ (!empty($symbol['symbol'])) ? $symbol['symbol'] : '$' }}{{{ $freelancer->profile['hourly_rate'] }}} {{ trans('lang.per_hour') }}</span>
                                                                 </li> comment end
                                                             @endif
                                                             @if (!empty($freelancer->skills))
                                                                 <div class="wt-tag wt-widgettag">
                                                                 comment start @foreach($freelancer->skills as $skill)
-                                                                    <a href="{{{url('search-results?type=job&skills%5B%5D='.$skill->slug)}}}">{{{ $skill->title }}}</a>
+                                                                    <a href="{{{url('jobs/'.$skill->slug)}}}">{{{ $skill->title }}}</a>
                                                                     <img src="/uploads/logos/{{{ $skill->logo }}}" alt="">
                                                                 @endforeach comment end
                                                                 </div>
@@ -704,16 +704,16 @@ $show_f_banner = 'true'
                                                     <div class="wt-tag wt-widgettag">
                                                         @foreach($freelancer->skills as $i => $skill)
                                                             @if ($i <= 3)
-                                                                <a href="{{{url('search-results?type=job&skills%5B%5D='.$skill->slug)}}}">{{{ $skill->title }}}</a>
+                                                                <a href="{{{url('jobs/'.$skill->slug)}}}">{{{ $skill->title }}}</a>
                                                             @endif
                                                         @endforeach
                                                     </div>
                                                 @endif
                                             </div>
                                             <div class="wt-bottom">
-                                                @if (!empty($freelancer->profile->hourly_rate))
+                                                @if (!empty($freelancer->profile['hourly_rate']))
                                                     <span class="wt-hourlyrate">
-                                                        {{ (!empty($symbol['symbol'])) ? $symbol['symbol'] : '$' }}{{{ $freelancer->profile->hourly_rate }}} {{ trans('lang.per_hour') }}
+                                                        {{ (!empty($symbol['symbol'])) ? $symbol['symbol'] : '$' }}{{{ $freelancer->profile['hourly_rate'] }}} {{ trans('lang.per_hour') }}
                                                     </span>
                                                 @endif
                                                 <div class="rating-area">

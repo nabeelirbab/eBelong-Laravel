@@ -81,6 +81,12 @@ class FreelancerEmailMailable extends Mailable
         }elseif ($this->type == 'accept_agency') {
             $email_message = $this->getAgencyInvitationAcceptEmailContent($this->email_params);
         }
+        elseif ($this->type == 'decline_agency') {
+            $email_message = $this->getAgencyInvitationDeclineEmailContent($this->email_params);
+        } 
+        elseif ($this->type == 'agency_invitation') {
+            $email_message = $this->getAgencyInvitationEmailContent($this->email_params);
+        } 
         elseif ($this->type == 'freelancer_email_course_cancelled') {
             $email_message = $this->prepareFreelancerEmailCourseCancel($this->email_params);
         }
@@ -602,13 +608,15 @@ class FreelancerEmailMailable extends Mailable
 	
 	public function prepareFreelancerEmailJoinAgency($email_params){
 		extract($email_params);
-        $freelancer_name = $freelancer_name;
+        $freelancer_name = $agency_creator_name;
         $agency_name = $agency_name;
 		$freelancer_link = 'http://dev.ebelong.com/profile/'.Auth::user()->slug;
+        $member_link = $agency_member_link;
+        $member_name = $agency_member_name;
         $signature = EmailHelper::getSignature();
         $app_content = $this->template->content;
         $email_content_default = 	'<p>Hello <strong><a href="%freelancer_link%">%freelancer_name%</a></strong>,</p>
-									 <p>Your %agency_name% join request sent successfully.</p>
+									 <p>Your %agency_name% join request sent successfully to <strong><a href="%member_link%">%member_name%</a></strong>.</p>
 									 <p>%signature%</p>';
         //set default contents
         if (empty($app_content)) {
@@ -617,6 +625,8 @@ class FreelancerEmailMailable extends Mailable
         $app_content = str_replace("%freelancer_name%", $freelancer_name, $app_content);
         $app_content = str_replace("%freelancer_link%", $freelancer_link, $app_content);
         $app_content = str_replace("%agency_name%", $agency_name, $app_content);
+        $app_content = str_replace("%member_name%", $member_name, $app_content);
+        $app_content = str_replace("%member_link%", $member_link, $app_content);
         $app_content = str_replace("%signature%", $signature, $app_content);
 
         $body = "";
@@ -643,6 +653,62 @@ class FreelancerEmailMailable extends Mailable
         } 
         $app_content = str_replace("%creator_name%", $creator_name, $app_content);
         $app_content = str_replace("%member_link%", $member_link, $app_content);
+        $app_content = str_replace("%member_name%", $member_name, $app_content);
+        $app_content = str_replace("%agency_name%", $agency_name, $app_content);
+        $app_content = str_replace("%signature%", $signature, $app_content);
+
+        $body = "";
+        $body .= EmailHelper::getEmailHeader();
+        $body .= $app_content;
+        $body .= EmailHelper::getEmailFooter();
+        return $body;
+	}
+    public function getAgencyInvitationDeclineEmailContent($email_params){
+		extract($email_params);
+        $creator_name = $agency_creator_name;
+        $member_name = $agency_member_name;
+        $agency_name = $agency_name;
+		$member_link = 'http://dev.ebelong.com/profile/'.Auth::user()->slug;
+        $signature = EmailHelper::getSignature();
+        // /dd($this->template);
+        $app_content = $this->template->content;
+        $email_content_default = 	'<p>Hello <strong><a href="%creator_link%">%creator_name%</a></strong>,</p>
+									 <p>Your Invitation request is declined by <strong><a href="%member_link%">%member_name%</a></strong> for %agency_name%.</p>
+									 <p>%signature%</p>';
+        //set default contents
+        if (empty($app_content)) {
+            $app_content = $email_content_default;
+        } 
+        $app_content = str_replace("%creator_name%", $creator_name, $app_content);
+        $app_content = str_replace("%member_link%", $member_link, $app_content);
+        $app_content = str_replace("%member_name%", $member_name, $app_content);
+        $app_content = str_replace("%agency_name%", $agency_name, $app_content);
+        $app_content = str_replace("%signature%", $signature, $app_content);
+
+        $body = "";
+        $body .= EmailHelper::getEmailHeader();
+        $body .= $app_content;
+        $body .= EmailHelper::getEmailFooter();
+        return $body;
+	}
+    public function getAgencyInvitationEmailContent($email_params){
+		extract($email_params);
+        $creator_name = $agency_creator_name;
+        $member_name = $agency_member_name;
+        $agency_name = $agency_name;
+		$creator_link = 'http://dev.ebelong.com/profile/'.Auth::user()->slug;
+        $signature = EmailHelper::getSignature();
+        // /dd($this->template);
+        $app_content = $this->template->content;
+        $email_content_default = 	'<p>Hello %member_name%</a></strong>,</p>
+									 <p>You are Invited by <strong><a href="%creator_link%">%creator_name%</a></strong> for %agency_name%.</p>
+									 <p>%signature%</p>';
+        //set default contents
+        if (empty($app_content)) {
+            $app_content = $email_content_default;
+        } 
+        $app_content = str_replace("%creator_name%", $creator_name, $app_content);
+        $app_content = str_replace("%member_link%", $creator_link, $app_content);
         $app_content = str_replace("%member_name%", $member_name, $app_content);
         $app_content = str_replace("%agency_name%", $agency_name, $app_content);
         $app_content = str_replace("%signature%", $signature, $app_content);

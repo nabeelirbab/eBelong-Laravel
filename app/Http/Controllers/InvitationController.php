@@ -162,19 +162,28 @@ class InvitationController extends Controller {
                     ); 
                     DB::table('model_has_roles')->insert($hasRoleData);
                     if($request['user_type']== 3 ){
-                    $admin_template = DB::table('email_types')->select('id')->where('email_type', 'invite_freelancer')->get()->first();
+                    $admin_template = DB::table('email_types')->select('id')->where('email_type', 'invite_freelancer')->first();
+                    $template_data = EmailTemplate::getEmailTemplateByID($admin_template->id);
                     }
                     if($request['user_type']== 2 ){
-                        $admin_template = DB::table('email_types')->select('id')->where('email_type', 'invite_employer')->get()->first();
+                        $admin_template = DB::table('email_types')->select('id')->where('email_type', 'invite_employer')->first();
+                        $template_data = EmailTemplate::getEmailTemplateByID($admin_template->id);
                     }
+                    if($request['user_type']== 4 ){
+                        
+                        $admin_template = DB::table('email_types')->select('id')->where('email_type', 'invite_editor')->first();
+                        $template_data = EmailTemplate::getEmailTemplateByID($admin_template['id']);
+                        
+                    }
+                    // dd($admin_template);
                     
-                    $template_data = EmailTemplate::getEmailTemplateByID($admin_template->id);
+                   
                     $email_params['name'] = Helper::getUserName($user_id);
                     $email_params['email'] = $toEmail;
                     $email_params['password'] = $userPassword;
                     $email_params['link'] = url('/');
 
-                    Mail::to($toEmail)->send(new InvitationMailable( 'invite_people',$template_data, $email_params));
+                    Mail::to($toEmail)->send(new InvitationMailable( 'invite_people',$template_data, $email_params,$request['user_type']));
                     $sentEmailNum++;
                     } else {
                         $duplicateEmailNum++;

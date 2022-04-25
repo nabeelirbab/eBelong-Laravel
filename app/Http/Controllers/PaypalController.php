@@ -134,6 +134,9 @@ class PaypalController extends Controller
                 Session::flash('error', trans('lang.paypal_empty_credentials'));
                 return Redirect::back();
             }
+            // else{
+            //     // dd(env('PAYPAL_SANDBOX_API_USERNAME'));
+            // }
         } elseif ($payment_mode == 'false') {
             if (empty(env('PAYPAL_LIVE_API_USERNAME'))
                 && empty(env('PAYPAL_LIVE_API_PASSWORD'))
@@ -147,9 +150,10 @@ class PaypalController extends Controller
         $settings = SiteManagement::getMetaValue('commision');
         $currency = !empty($settings[0]['currency']) ? $settings[0]['currency'] : 'USD';
         // dd($currency);
+        // $currency = 'USD';
         if (Auth::user()) {
-            //$recurring = ($request->get('mode') === 'recurring') ? true : false;
-            $recurring = false;
+            $recurring = ($request->get('mode') === 'recurring') ? true : false;
+            // $recurring = false;
             $success = true;
             $cart = $this->getCheckoutData($recurring, $success);
             // dd($cart);
@@ -182,8 +186,8 @@ class PaypalController extends Controller
     public function getExpressCheckoutSuccess(Request $request)
     {
         if (Auth::user()) {
-            //$recurring = ($request->get('mode') === 'recurring') ? true : false;
-            $recurring = false;
+            $recurring = ($request->get('mode') === 'recurring') ? true : false;
+            // $recurring = false;
             $token = $request->get('token');
             $PayerID = $request->get('PayerID');
             $success = true;
@@ -549,7 +553,7 @@ class PaypalController extends Controller
                     //     ['user_id' => $user_id, 'product_id'=>$id,'type'=>'course','cource_product_id' => $id, 'invoice_id' => $invoice_id, 'status' => 'pending', 'created_at' => \Carbon\Carbon::now(), 'updated_at' => \Carbon\Carbon::now()]
                     // );
                     $course = Cource::find($id);
-                    $course->users()->attach(Auth::user()->id, ['type' => 'employer', 'status' => 'waiting', 'seller_id' => $freelancer, 'paid' => 'completed','invoice_id' => $invoice_id,]);
+                    $course->users()->attach(Auth::user()->id, ['type' => 'employer', 'status' => 'waiting', 'seller_id' => $freelancer, 'paid' => 'pending','invoice_id' => $invoice_id,]);
                     $course->save();
                     // send message to freelancer
                     $message = new Message();
@@ -567,7 +571,7 @@ class PaypalController extends Controller
                         $template_data->subject = "Course Order";
                       
                         $email_params['title'] = $course->title;
-                        $email_params['course_link'] = url('instructor/' . $course->slug);
+                        $email_params['course_link'] = url('course/' . $course->slug);
                         $email_params['amount'] = $course->price;
                         $email_params['freelancer_name'] = Helper::getUserName($freelancer);
                         $email_params['employer_profile'] = url('profile/' . $user->slug);
