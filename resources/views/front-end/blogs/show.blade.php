@@ -32,7 +32,7 @@
             </div>
         </div>
     </div>
-    <div class="wt-haslayout wt-main-section" id="blog">
+    <div class="wt-haslayout wt-main-section blog-detail-section" id="blog">
         @if (Session::has('message'))
             <div class="flash_msg">
                 <flash_messages :message_class="'success'" :time ='5' :message="'{{{ Session::get('message') }}}'" v-cloak></flash_messages>
@@ -45,51 +45,257 @@
         <div class="container">
             <div class="row">
                 <div id="wt-twocolumns" class="wt-twocolumns wt-haslayout">
-                    <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 col-xl-8 float-left">
-                        <div class="wt-usersingle wt-servicesingle-holder">
-                            <div class="wt-servicesingle">
-                                {{-- @if ($blog->is_featured == 'true')
-                                    <span class="wt-featuredtagvtwo">{{ trans('lang.featured') }}</span>
-                                @endif --}}
-                                {{--  <span class="wt-featuredtagvtwo">Featured</span>  --}}
-                                <div class="wt-servicesingle-title">
-                                    <div class="wt-title">
-                                        @if (!empty($blog->title))
-                                            <h2>{{{ $blog->title }}}</h2>
-                                        @endif
-                                    </div>
-                                    {{-- <ul class="wt-userlisting-breadcrumb">
-                                        <li>
-                                            <span>
-                                                <i class="fa fa-star"></i>
-                                                {{{ $rating }}}/<i>5</i>&nbsp;({{{ !empty($reviews) ? $reviews->count() : ''}}} {{ trans('lang.feedbacks') }})
-                                            </span>
-                                        </li>
-                                        <li>
-                                            
-                                        </li>
-                                    </ul> --}}
-                                </div>
-                                @if (!empty($attachments))
-                                    @php $enable_slider = count($attachments) > 1 ? 'wt-servicesslider' : ''; @endphp
-                                    <div class="wt-freelancers-info">
-                                        <div id="{{$enable_slider}}" class="wt-servicesslider owl-carousel">
-                                            @foreach ($attachments as $attachment)
-                                                <figure class="item">
-                                                    <img src="{{{asset(Helper::getImageWithSize('uploads/blogs/'.$blog->id, $attachment, 'medium'))}}}" alt="img description" class="item">
-                                                </figure>
-                                            @endforeach
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                        <div><strong>Updated : {{ Carbon\Carbon::parse($blog->updated_at)->format('d M Y') }}</strong></div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" style="background: #f5f5f5;">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 float-left blog-first-div">
+                                <div class="wt-usersingle wt-servicesingle-holder">
+                                    <div class="wt-servicesingle">
+                                        <div class="wt-servicesingle-title">
+                                            <div class="wt-title">
+                                                @if (!empty($blog->title))
+                                                    <h1>{{{ $blog->title }}}</h1>
+                                                @endif
+                                            </div>
                                         </div>
-                                        @if (count($attachments) > 1)
-                                            <div id="wt-servicesgallery" class="wt-servicesgallery owl-carousel">
-                                                @foreach ($attachments as $attachment)
-                                                    @php $image = 'uploads/blogs/'.$blog->id.'/'.$attachment; @endphp
-                                                    <div class="item"><figure><img src="{{{asset($image)}}}" alt="img description"></figure></div>
-                                                @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 float-left blog-first-div">
+                                <div class="wt-usersingle wt-servicesingle-holder">
+                                    <div class="wt-servicesingle">
+                                        {{-- @if ($blog->is_featured == 'true')
+                                            <span class="wt-featuredtagvtwo">{{ trans('lang.featured') }}</span>
+                                        @endif --}}
+                                        {{--  <span class="wt-featuredtagvtwo">Featured</span>  --}}
+                                        <!-- <div class="wt-servicesingle-title">
+                                            <div class="wt-title">
+                                                @if (!empty($blog->title))
+                                                    <h2>{{{ $blog->title }}}</h2>
+                                                @endif
+                                            </div>
+                                            {{-- <ul class="wt-userlisting-breadcrumb">
+                                                <li>
+                                                    <span>
+                                                        <i class="fa fa-star"></i>
+                                                        {{{ $rating }}}/<i>5</i>&nbsp;({{{ !empty($reviews) ? $reviews->count() : ''}}} {{ trans('lang.feedbacks') }})
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    
+                                                </li>
+                                            </ul> --}}
+                                        </div> -->
+                                        @if (!empty($attachments))
+                                            @php $enable_slider = count($attachments) > 1 ? 'wt-servicesslider' : ''; @endphp
+                                            <div class="wt-freelancers-info">
+                                                <div id="{{$enable_slider}}" class="wt-servicesslider owl-carousel">
+                                                    @foreach ($attachments as $attachment)
+                                                        <figure class="item">
+                                                            <img src="{{{asset(Helper::getImageWithSize('uploads/blogs/'.$blog->id, $attachment, 'medium'))}}}" alt="img description" class="item">
+                                                        </figure>
+                                                    @endforeach
+                                                </div>
+                                                @if (count($attachments) > 1)
+                                                    <div id="wt-servicesgallery" class="wt-servicesgallery owl-carousel">
+                                                        @foreach ($attachments as $attachment)
+                                                            @php $image = 'uploads/blogs/'.$blog->id.'/'.$attachment; @endphp
+                                                            <div class="item"><figure><img src="{{{asset($image)}}}" alt="img description"></figure></div>
+                                                        @endforeach
+                                                    </div>
+                                                @endif
                                             </div>
                                         @endif
+                                        <!-- <div class="wt-service-details">
+                                            @if (!empty($blog->content))
+                                                <div class="wt-description course-detail-description">
+                                                    @php echo htmlspecialchars_decode(stripslashes($blog->content)); @endphp
+                                                </div>
+                                            @endif
+                                        </div> -->
                                     </div>
-                                @endif
+                                    <!-- <div class="wt-clientfeedback">
+                                        @if (!empty($reviews) && $reviews->count() != 0)
+                                        <div class="wt-usertitle wt-titlewithselect">
+                                            <h2>{{ trans('lang.reviews') }}</h2>
+                                        </div>
+                                            @foreach ($reviews as $key => $review)
+                                                @php
+                                                    $user = App\User::find($review->user_id);
+                                                    $stars  = $review->avg_rating != 0 ? $review->avg_rating/5*100 : 0;
+                                                @endphp
+                                                <div class="wt-userlistinghold wt-userlistingsingle">
+                                                        <figure class="wt-userlistingimg">
+                                                            <img src="{{ asset(Helper::getProfileImage($review->user_id)) }}" alt="{{{ trans('Employer') }}}">
+                                                        </figure>
+                                                        <div class="wt-userlistingcontent">
+                                                            <div class="wt-contenthead">
+                                                                <div class="wt-title">
+                                                                    <a href="{{{ url('profile/'.$user->slug) }}}">@if ($user->user_verified == 1)<i class="fa fa-check-circle"></i>@endif {{{ Helper::getUserName($review->user_id) }}}</a>
+                                                                    <h3>{{{ $blog->title }}}</h3>
+                                                                </div>
+                                                                <ul class="wt-userlisting-breadcrumb">
+                                                                    @if (!empty($blog->location))
+                                                                        <li>
+                                                                            <span>
+                                                                                <img src="{{{asset(Helper::getLocationFlag($blog->location->flag))}}}" alt="{{{ trans('lang.flag_img') }}}"> {{{ $blog->location->title }}}
+                                                                            </span>
+                                                                        </li>
+                                                                    @endif
+                                                                    <li><span><i class="far fa-calendar"></i> {{ Carbon\Carbon::parse($blog->created_at)->format('M Y') }} - {{ Carbon\Carbon::parse($blog->updated_at)->format('M Y') }}</span></li>
+                                                                    <li>
+                                                                        <span class="wt-stars"><span style="width: {{ $stars }}%;"></span></span>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                        <div class="wt-description">
+                                                            @if (!empty($review->feedback))
+                                                                <p>“ {{{ $review->feedback }}} ”</p>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                            @endforeach
+                                        {{-- @else
+                                            <div class="wt-userprofile">
+                                                @if (file_exists(resource_path('views/extend/errors/no-record.blade.php')))
+                                                    @include('extend.errors.no-record')
+                                                @else
+                                                    @include('errors.no-record')
+                                                @endif
+                                            </div> --}}
+                                        @endif
+                                    </div> -->
+                                </div>
+                            </div>
+                    
+                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 float-left blog-second-div">
+                                <div class="wt-usersingle wt-servicesingle-holder">
+                                    <div class="wt-servicesingle">
+                                        {{-- @if ($blog->is_featured == 'true')
+                                            <span class="wt-featuredtagvtwo">{{ trans('lang.featured') }}</span>
+                                        @endif --}}
+                                        {{--  <span class="wt-featuredtagvtwo">Featured</span>  --}}
+                                        <!-- <div class="wt-servicesingle-title">
+                                            <div class="wt-title">
+                                                @if (!empty($blog->title))
+                                                    <h2>{{{ $blog->title }}}</h2>
+                                                @endif
+                                            </div>
+                                            {{-- <ul class="wt-userlisting-breadcrumb">
+                                                <li>
+                                                    <span>
+                                                        <i class="fa fa-star"></i>
+                                                        {{{ $rating }}}/<i>5</i>&nbsp;({{{ !empty($reviews) ? $reviews->count() : ''}}} {{ trans('lang.feedbacks') }})
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    
+                                                </li>
+                                            </ul> --}}
+                                        </div> -->
+                                        @if (!empty($attachments))
+                                            @php $enable_slider = count($attachments) > 1 ? 'wt-servicesslider' : ''; @endphp
+                                            <div class="wt-freelancers-info">
+                                                <div id="{{$enable_slider}}" class="wt-servicesslider owl-carousel">
+                                                    @foreach ($attachments as $attachment)
+                                                        <figure class="item">
+                                                            <img src="{{{asset(Helper::getImageWithSize('uploads/blogs/'.$blog->id, $attachment, 'medium'))}}}" alt="img description" class="item">
+                                                        </figure>
+                                                    @endforeach
+                                                </div>
+                                                @if (count($attachments) > 1)
+                                                    <div id="wt-servicesgallery" class="wt-servicesgallery owl-carousel">
+                                                        @foreach ($attachments as $attachment)
+                                                            @php $image = 'uploads/blogs/'.$blog->id.'/'.$attachment; @endphp
+                                                            <div class="item"><figure><img src="{{{asset($image)}}}" alt="img description"></figure></div>
+                                                        @endforeach
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        @endif
+                                        <!-- <div class="wt-service-details">
+                                            @if (!empty($blog->content))
+                                                <div class="wt-description course-detail-description">
+                                                    @php echo htmlspecialchars_decode(stripslashes($blog->content)); @endphp
+                                                </div>
+                                            @endif
+                                        </div> -->
+                                    </div>
+                                    <!-- <div class="wt-clientfeedback">
+                                        @if (!empty($reviews) && $reviews->count() != 0)
+                                        <div class="wt-usertitle wt-titlewithselect">
+                                            <h2>{{ trans('lang.reviews') }}</h2>
+                                        </div>
+                                            @foreach ($reviews as $key => $review)
+                                                @php
+                                                    $user = App\User::find($review->user_id);
+                                                    $stars  = $review->avg_rating != 0 ? $review->avg_rating/5*100 : 0;
+                                                @endphp
+                                                <div class="wt-userlistinghold wt-userlistingsingle">
+                                                        <figure class="wt-userlistingimg">
+                                                            <img src="{{ asset(Helper::getProfileImage($review->user_id)) }}" alt="{{{ trans('Employer') }}}">
+                                                        </figure>
+                                                        <div class="wt-userlistingcontent">
+                                                            <div class="wt-contenthead">
+                                                                <div class="wt-title">
+                                                                    <a href="{{{ url('profile/'.$user->slug) }}}">@if ($user->user_verified == 1)<i class="fa fa-check-circle"></i>@endif {{{ Helper::getUserName($review->user_id) }}}</a>
+                                                                    <h3>{{{ $blog->title }}}</h3>
+                                                                </div>
+                                                                <ul class="wt-userlisting-breadcrumb">
+                                                                    @if (!empty($blog->location))
+                                                                        <li>
+                                                                            <span>
+                                                                                <img src="{{{asset(Helper::getLocationFlag($blog->location->flag))}}}" alt="{{{ trans('lang.flag_img') }}}"> {{{ $blog->location->title }}}
+                                                                            </span>
+                                                                        </li>
+                                                                    @endif
+                                                                    <li><span><i class="far fa-calendar"></i> {{ Carbon\Carbon::parse($blog->created_at)->format('M Y') }} - {{ Carbon\Carbon::parse($blog->updated_at)->format('M Y') }}</span></li>
+                                                                    <li>
+                                                                        <span class="wt-stars"><span style="width: {{ $stars }}%;"></span></span>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                        <div class="wt-description">
+                                                            @if (!empty($review->feedback))
+                                                                <p>“ {{{ $review->feedback }}} ”</p>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                            @endforeach
+                                        {{-- @else
+                                            <div class="wt-userprofile">
+                                                @if (file_exists(resource_path('views/extend/errors/no-record.blade.php')))
+                                                    @include('extend.errors.no-record')
+                                                @else
+                                                    @include('errors.no-record')
+                                                @endif
+                                            </div> --}}
+                                        @endif
+                                    </div> -->
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 float-left blog-second-div">
+                                <div class="wt-usersingle wt-servicesingle-holder">
+                                    <div class="wt-servicesingle">
+                                        <div class="wt-servicesingle-title">
+                                            <div class="wt-title">
+                                                @if (!empty($blog->title))
+                                                    <h2>{{{ $blog->title }}}</h2>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 float-left">
                                 <div class="wt-service-details">
                                     @if (!empty($blog->content))
                                         <div class="wt-description course-detail-description">
@@ -97,61 +303,63 @@
                                         </div>
                                     @endif
                                 </div>
-                            </div>
-                            <div class="wt-clientfeedback">
-                                @if (!empty($reviews) && $reviews->count() != 0)
-                                <div class="wt-usertitle wt-titlewithselect">
-                                    <h2>{{ trans('lang.reviews') }}</h2>
-                                </div>
-                                    @foreach ($reviews as $key => $review)
-                                        @php
-                                            $user = App\User::find($review->user_id);
-                                            $stars  = $review->avg_rating != 0 ? $review->avg_rating/5*100 : 0;
-                                        @endphp
-                                        <div class="wt-userlistinghold wt-userlistingsingle">
-                                                <figure class="wt-userlistingimg">
-                                                    <img src="{{ asset(Helper::getProfileImage($review->user_id)) }}" alt="{{{ trans('Employer') }}}">
-                                                </figure>
-                                                <div class="wt-userlistingcontent">
-                                                    <div class="wt-contenthead">
-                                                        <div class="wt-title">
-                                                            <a href="{{{ url('profile/'.$user->slug) }}}">@if ($user->user_verified == 1)<i class="fa fa-check-circle"></i>@endif {{{ Helper::getUserName($review->user_id) }}}</a>
-                                                            <h3>{{{ $blog->title }}}</h3>
+                                <div class="wt-clientfeedback">
+                                    @if (!empty($reviews) && $reviews->count() != 0)
+                                        <div class="wt-usertitle wt-titlewithselect">
+                                            <h2>{{ trans('lang.reviews') }}</h2>
+                                        </div>
+                                            @foreach ($reviews as $key => $review)
+                                                @php
+                                                    $user = App\User::find($review->user_id);
+                                                    $stars  = $review->avg_rating != 0 ? $review->avg_rating/5*100 : 0;
+                                                @endphp
+                                                <div class="wt-userlistinghold wt-userlistingsingle">
+                                                        <figure class="wt-userlistingimg">
+                                                            <img src="{{ asset(Helper::getProfileImage($review->user_id)) }}" alt="{{{ trans('Employer') }}}">
+                                                        </figure>
+                                                        <div class="wt-userlistingcontent">
+                                                            <div class="wt-contenthead">
+                                                                <div class="wt-title">
+                                                                    <a href="{{{ url('profile/'.$user->slug) }}}">@if ($user->user_verified == 1)<i class="fa fa-check-circle"></i>@endif {{{ Helper::getUserName($review->user_id) }}}</a>
+                                                                    <h3>{{{ $blog->title }}}</h3>
+                                                                </div>
+                                                                <ul class="wt-userlisting-breadcrumb">
+                                                                    @if (!empty($blog->location))
+                                                                        <li>
+                                                                            <span>
+                                                                                <img src="{{{asset(Helper::getLocationFlag($blog->location->flag))}}}" alt="{{{ trans('lang.flag_img') }}}"> {{{ $blog->location->title }}}
+                                                                            </span>
+                                                                        </li>
+                                                                    @endif
+                                                                    <li><span><i class="far fa-calendar"></i> {{ Carbon\Carbon::parse($blog->created_at)->format('M Y') }} - {{ Carbon\Carbon::parse($blog->updated_at)->format('M Y') }}</span></li>
+                                                                    <li>
+                                                                        <span class="wt-stars"><span style="width: {{ $stars }}%;"></span></span>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
                                                         </div>
-                                                        <ul class="wt-userlisting-breadcrumb">
-                                                            @if (!empty($blog->location))
-                                                                <li>
-                                                                    <span>
-                                                                        <img src="{{{asset(Helper::getLocationFlag($blog->location->flag))}}}" alt="{{{ trans('lang.flag_img') }}}"> {{{ $blog->location->title }}}
-                                                                    </span>
-                                                                </li>
+                                                        <div class="wt-description">
+                                                            @if (!empty($review->feedback))
+                                                                <p>“ {{{ $review->feedback }}} ”</p>
                                                             @endif
-                                                            <li><span><i class="far fa-calendar"></i> {{ Carbon\Carbon::parse($blog->created_at)->format('M Y') }} - {{ Carbon\Carbon::parse($blog->updated_at)->format('M Y') }}</span></li>
-                                                            <li>
-                                                                <span class="wt-stars"><span style="width: {{ $stars }}%;"></span></span>
-                                                            </li>
-                                                        </ul>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="wt-description">
-                                                    @if (!empty($review->feedback))
-                                                        <p>“ {{{ $review->feedback }}} ”</p>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                    @endforeach
-                                {{-- @else
-                                    <div class="wt-userprofile">
-                                        @if (file_exists(resource_path('views/extend/errors/no-record.blade.php')))
-                                            @include('extend.errors.no-record')
-                                        @else
-                                            @include('errors.no-record')
-                                        @endif
-                                    </div> --}}
-                                @endif
+                                            @endforeach
+                                        {{-- @else
+                                            <div class="wt-userprofile">
+                                                @if (file_exists(resource_path('views/extend/errors/no-record.blade.php')))
+                                                    @include('extend.errors.no-record')
+                                                @else
+                                                    @include('errors.no-record')
+                                                @endif
+                                            </div> --}}
+                                    @endif
+                                </div>
                             </div>
                         </div>
                     </div>
+                    
+                    
                     {{-- <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 col-xl-4 float-left">
                         @if (file_exists(resource_path('views/extend/front-end/blogs/sidebar/index.blade.php')))
                             @include('extend.front-end.blogs.sidebar.index')

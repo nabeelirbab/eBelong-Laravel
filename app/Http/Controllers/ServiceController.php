@@ -899,6 +899,17 @@ class ServiceController extends Controller
                     foreach ($category_services as $id) {
                         $service_id[] = $id;
                     }
+                    if($categor_obj->title=='E-Commerce'||$categor_obj->title=='Cloud Computing'||$categor_obj->title=='Data Science'||
+                    $categor_obj->title=='Graphic Designing'||$categor_obj->title=='Artificial Intelligence'||$categor_obj->title=='Growth Hacking'){
+                        $skill_obj = Skill::where('title', $categor_obj->title)->get();
+                        $skill= Skill::find($skill_obj[0]->id);
+                        if (!empty($skill->services)) {
+                            $skill_services = $skill->services->pluck('id')->toArray();
+                            foreach ($skill_services as $id) {
+                                $service_id[] = $id;
+                            }
+                        }
+                    }
                 }
                 $services = Service::where('status','published')->whereIn('id', $service_id)->orderBy('id','DESC')->paginate(10)->setPath('');
             }
