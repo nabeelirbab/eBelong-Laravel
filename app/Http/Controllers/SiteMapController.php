@@ -32,7 +32,7 @@ class SiteMapController extends Controller
             $sitemap->add(Url::create("/hire/{$Item->slug}"));
         });
         Skill::all()->each(function (Skill $Item) use ($sitemap) {
-            if($Item->title=='E-commerce'||$Item->title=='Cloud Computing'||$Item->title=='Data Science'||
+            if($Item->title=='E-Commerce'||$Item->title=='Cloud Computing'||$Item->title=='Data Science'||
             $Item->title=='Graphic Designing'||$Item->title=='Artificial Intelligence'||$Item->title=='Growth Hacking'){
                 
             }
@@ -47,7 +47,7 @@ class SiteMapController extends Controller
             $sitemap->add(Url::create("/services/{$Item->slug}"));
         });
         Skill::all()->each(function (Skill $Item) use ($sitemap) {
-            if($Item->title=='E-commerce'||$Item->title=='Cloud Computing'||$Item->title=='Data Science'||
+            if($Item->title=='E-Commerce'||$Item->title=='Cloud Computing'||$Item->title=='Data Science'||
             $Item->title=='Graphic Designing'||$Item->title=='Artificial Intelligence'||$Item->title=='Growth Hacking'){
                 
             }
@@ -65,7 +65,7 @@ class SiteMapController extends Controller
             $sitemap->add(Url::create("/job/{$Item->slug}"));
         });
         Skill::all()->each(function (Skill $Item) use ($sitemap) {
-            if($Item->title=='E-commerce'||$Item->title=='Cloud Computing'||$Item->title=='Data Science'||
+            if($Item->title=='E-Commerce'||$Item->title=='Cloud Computing'||$Item->title=='Data Science'||
             $Item->title=='Graphic Designing'||$Item->title=='Artificial Intelligence'||$Item->title=='Growth Hacking'){
                 
             }
@@ -77,7 +77,7 @@ class SiteMapController extends Controller
             $sitemap->add(Url::create("/courses/{$Item->slug}"));
         });
         Skill::all()->each(function (Skill $Item) use ($sitemap) {
-            if($Item->title=='E-commerce'||$Item->title=='Cloud Computing'||$Item->title=='Data Science'||
+            if($Item->title=='E-Commerce'||$Item->title=='Cloud Computing'||$Item->title=='Data Science'||
             $Item->title=='Graphic Designing'||$Item->title=='Artificial Intelligence'||$Item->title=='Growth Hacking'){
                 
             }
