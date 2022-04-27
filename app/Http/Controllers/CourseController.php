@@ -1546,6 +1546,17 @@ class CourseController extends Controller
                     foreach ($category_courses as $id) {
                         $course_id[] = $id;
                     }
+                    if($categor_obj->title=='E-Commerce'||$categor_obj->title=='Cloud Computing'||$categor_obj->title=='Data Science'||
+                    $categor_obj->title=='Graphic Designing'||$categor_obj->title=='Artificial Intelligence'||$categor_obj->title=='Growth Hacking'){
+                        $skill_obj = Skill::where('title', $categor_obj->title)->get();
+                        $skill= Skill::find($skill_obj[0]->id);
+                        if (!empty($skill->courses)) {
+                            $skill_courses = $skill->courses->pluck('id')->toArray();
+                            foreach ($skill_courses as $id) {
+                                $course_id[] = $id;
+                            }
+                        }
+                    }
                 }
                 $services = Cource::where('status','published')->whereIn('id', $course_id)->orderBy('id','DESC')->paginate(10)->setPath('');
             }

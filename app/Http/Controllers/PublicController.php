@@ -1485,6 +1485,7 @@ class PublicController extends Controller
                     $freelancer_profile = Profile::where('user_id',$data->id)->first();
                     $data->avater = $freelancer_profile->avater;
                     $data->avater_imagePath = asset(!empty($freelancer_profile->avater) ? '/uploads/users/' . $data->id . '/' . $freelancer_profile->avater : '/images/user.jpg');
+                    $data->avater_imagePath = Helper::getUserImageWithSize('uploads/users/'.$data->id, $freelancer_profile->avater, 'listing');
                     $data->hourly_rates = $freelancer_profile->hourly_rate;
                     $instructor = DB::table('cource_user')->where('seller_id',$data->id)->where('status','posted')->first();
                     $location = DB::table('locations')->where('id',$data->location_id)->first();
