@@ -34,7 +34,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
        $schedule->command('payment:statuschange')->hourly();
-       $schedule->command('generate:sitemap')->dailyAt('21:25')->timezone('Asia/Karachi');
+       $schedule->command('generate:sitemap')->dailyAt('21:45')->timezone('Asia/Karachi');
        $schedule->call( 
            function () {
                 info("Updating Payouts");
