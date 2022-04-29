@@ -259,14 +259,7 @@
                                 <span>My Profile</span>
                             </a>
                         </li>
-                        @if(!empty($agency_user) && $agency_user->is_agency==0)
-                        <li>
-                            <a href="{{{ url('agency/invitations/list') }}}">
-                                <i class="ti-envelope"></i>
-                                <span>{{ 'Agency Invitation' }}</span>
-                            </a>
-                        </li>
-                        @endif
+                        
                         <li>
                             <a href="{{{ route('message') }}}">
                                 <i class="ti-envelope"></i>
@@ -300,7 +293,7 @@
                                     </ul>
                                 </li>
                             @endif
-                            @if (Helper::getAccessType() == 'both' || Helper::getAccessType() == 'services')
+                            {{-- @if (Helper::getAccessType() == 'both' || Helper::getAccessType() == 'services')
                                 <li class="menu-item-has-children">
                                     <span class="wt-dropdowarrow"><i class="lnr lnr-chevron-right"></i></span>
                                     <a href="javascript:void(0)">
@@ -314,8 +307,8 @@
 
                                     </ul>
                                 </li>
-                            @endif
-                            <li>
+                            @endif --}}
+                            {{-- <li>
                                 <a href="{{{ route('employerPayoutsSettings') }}}">
                                     <i class="ti-money"></i>
                                     <span> {{ trans('lang.payouts') }}</span>
@@ -341,8 +334,16 @@
                                         <span>{{ trans('lang.packages') }}</span>
                                     </a>
                                 </li>
-                            @endif
+                            @endif --}}
                         @elseif ($role === 'freelancer')
+                        @if(!empty($agency_user) && $agency_user->is_agency==0)
+                        <li>
+                            <a href="{{{ url('agency/invitations/list') }}}">
+                                <i class="ti-envelope"></i>
+                                <span>{{ 'Agency Invitation' }}</span>
+                            </a>
+                        </li>
+                        @endif
                             <li class="menu-item-has-children">
                                 <span class="wt-dropdowarrow"><i class="lnr lnr-chevron-right"></i></span>
                                 <a href="javascript:void(0)">

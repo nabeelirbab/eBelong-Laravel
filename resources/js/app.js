@@ -5620,7 +5620,8 @@ if (document.getElementById("services")) {
             console.log(error);
           });
       },
-      hireFreelancer: function (id, title, text, mode) {
+      hireFreelancer: function (auth,id, title, text, mode) {
+        var self = this;
         this.$swal({
           title: title,
           text: text,
@@ -5635,6 +5636,7 @@ if (document.getElementById("services")) {
           showLoaderOnConfirm: false,
         }).then((result) => {
           if (result.value) {
+            if(auth=="true"){
             if (mode == "false") {
               axios
                 .post(APP_URL + "/user/generate-order/bacs/" + id + "/service")
@@ -5649,6 +5651,9 @@ if (document.getElementById("services")) {
                         "/project/service"
                     );
                   }
+                  else{
+                    self.showError(response.data.process);
+                  }
                 })
                 .catch(function (error) {
                   console.log(error);
@@ -5657,6 +5662,11 @@ if (document.getElementById("services")) {
               window.location.replace(
                 APP_URL + "/service/payment-process/" + id
               );
+              }
+              
+            }
+            else{
+              self.showError("PLease Login as Employer");
             }
           } else {
             this.$swal.close();
@@ -5948,7 +5958,7 @@ if (document.getElementById("blog")) {
                           document.addEventListener('iziToast-closing', function (data) {
                               if (data.detail.id == 'info_notify') {
                                   self.showCompleted(response.data.message);
-                                  window.location.replace(APP_URL + '/search-results?type=blogs');
+                                  window.location.replace(APP_URL + '/blogs');
                               }
                           });
                       } else {
@@ -6247,10 +6257,12 @@ if (document.getElementById("blog")) {
                   closeOnCancel: true,
                   showLoaderOnConfirm: false
               }).then((result) => {
+                console.log(result)
                   if (result.value) {
                       if (mode == 'false') {
                           axios.post(APP_URL + '/user/generate-order/bacs/'+id+'/service')
                           .then(function (response) {
+                            console.log(response)
                               if (response.data.type == 'success') {
                                   window.location.replace(APP_URL+'/user/order/bacs/'+response.data.service_order+'/'+response.data.order_id+'/project/service');
                               }
@@ -6262,6 +6274,7 @@ if (document.getElementById("blog")) {
                           window.location.replace(APP_URL + '/service/payment-process/' + id);
                       }
                   } else {
+                    console.log("og")
                       this.$swal.close()
                   }
               })
