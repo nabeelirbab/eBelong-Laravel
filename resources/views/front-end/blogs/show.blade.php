@@ -46,7 +46,7 @@
             <div class="row">
                 <div id="wt-twocolumns" class="wt-twocolumns wt-haslayout">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                        <div><strong>Updated : {{ Carbon\Carbon::parse($blog->updated_at)->format('d M Y') }}</strong></div>
+                        <div><strong>Posted On : {{ Carbon\Carbon::parse($blog->created_at)->format('d M Y') }}</strong></div>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" style="background: #f5f5f5;">
                         <div class="row">

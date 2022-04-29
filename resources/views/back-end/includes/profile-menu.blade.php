@@ -160,8 +160,10 @@
                             <span>Editor Dashboard</span>
                         </a>
                         </li>
-                    <li><a href="{{{ url($role.'/profile') }}}"><i class="ti-settings"></i>{{ trans('lang.profile_settings') }}</a>
-                    </li>
+                    {{-- <li><a href="{{{ url($role.'/profile') }}}"><i class="ti-settings"></i>{{ trans('lang.profile_settings') }}</a>
+                        <li><a href="{{{ url(route('showUserProfile', ['slug' => Auth::user()->slug])) }}}"><i class="ti-user"></i>
+                            <span>My Profile</span></a>
+                    </li> --}}
                     <li class="menu-item-has-children">
                         <span class="wt-dropdowarrow"><i class="lnr lnr-chevron-right"></i></span>
                         <a href="javascript:void(0)">
@@ -217,20 +219,7 @@
                         <span>My Profile</span>
                     </a>
                 </li>
-                @php 
-                $user = !empty(Auth::user()) ? Auth::user() : '';
-                if(!empty($user)){
-                  $agency_user = \App\User::select('is_agency')->where('id', Auth::user()->id)->first();
-                  }
-                  @endphp
-                @if(!empty($agency_user) && $agency_user->is_agency==0)
-                <li>
-                    <a href="{{{ url('agency/invitations/list') }}}">
-                        <i class="ti-envelope"></i>
-                        <span>{{ 'Agency Invitation' }}</span>
-                    </a>
-                </li>
-                @endif
+                
                 <li>
                     <a href="{{{ route('message') }}}">
                         <i class="ti-envelope"></i>
@@ -268,7 +257,7 @@
                             </ul>
                         </li>
                     @endif
-                    @if (Helper::getAccessType() == 'both' || Helper::getAccessType() == 'services')
+                    {{-- @if (Helper::getAccessType() == 'both' || Helper::getAccessType() == 'services')
                         <li class="menu-item-has-children">
                             <span class="wt-dropdowarrow"><i class="lnr lnr-chevron-right"></i></span>
                             <a href="javascript:void(0)">
@@ -281,8 +270,8 @@
                                 <li><a href="{{{ url('employer/services/cancelled') }}}">{{ trans('lang.cancelled_services') }}</a></li>
                             </ul>
                         </li>
-                    @endif
-                    <li>
+                    @endif --}}
+                    {{-- <li>
                         <a href="{{{ route('employerPayoutsSettings') }}}">
                             <i class="ti-money"></i>
                             <span>{{ trans('lang.payouts') }}</span>
@@ -307,8 +296,22 @@
                                 <span>{{ trans('lang.packages') }}</span>
                             </a>
                         </li>
-                    @endif
+                    @endif --}}
                 @elseif ($role === 'freelancer')
+                @php 
+                $user = !empty(Auth::user()) ? Auth::user() : '';
+                if(!empty($user)){
+                  $agency_user = \App\User::select('is_agency')->where('id', Auth::user()->id)->first();
+                  }
+                  @endphp
+                @if(!empty($agency_user) && $agency_user->is_agency==0)
+                <li>
+                    <a href="{{{ url('agency/invitations/list') }}}">
+                        <i class="ti-envelope"></i>
+                        <span>{{ 'Agency Invitation' }}</span>
+                    </a>
+                </li>
+                @endif
                     <li class="menu-item-has-children page_item_has_children">
                         <a href="javascript:void(0)">
                             <i class="ti-briefcase"></i>
