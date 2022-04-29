@@ -63,12 +63,19 @@
                                         
                                     </div>
                                 </div>
+                                @php $username = !empty($blog->editor_id)? \App\Helper::getUserName($blog->editor_id): 'Anonymos' ;
+                                $user = !empty($blog->editor_id)? \App\Profile::where('user_id',$blog->editor_id)->first():array();
+                                @endphp
                                 <div class="d-flex blog-box-logo-name">
-                                    <img src="http://127.0.0.1:8000/uploads/agency_logos/33/20220209153923.jpg" alt="eBelong" class="up-avatar up-avatar-company flex-shrink-0 up-avatar-30" style="width: 50px; height: 50px; margin-right: 10px; border-radius: 100%;"> 
+                                    @if(!empty($user) && !empty($user->avater))
+                                    <img src="{{{ asset(Helper::getUserImageWithSize('uploads/users/'.$blog->editor_id, $user->avater, 'listing')) }}}" alt="eBelong" class="up-avatar up-avatar-company flex-shrink-0 up-avatar-30" style="width: 50px; height: 50px; margin-right: 10px; border-radius: 100%;"> 
+                                    @else
+                                    <img src="{{{ asset('images/user.jpg') }}}" alt="eBelong" class="up-avatar up-avatar-company flex-shrink-0 up-avatar-30" style="width: 50px; height: 50px; margin-right: 10px; border-radius: 100%;"> 
+                                    @endif
                                     <div class="ml-10 blog-box-name">
-                                        <div>Blog posted User Name</div> 
+                                        <div><strong>Posted By</strong></div> 
                                         <a href="http://127.0.0.1:8000/agency/disrupt-lab-75984" target="_blank" class="up-btn-link text-left">
-                                            add further detail
+                                            {{ $username }}
                                         </a>
                                     </div>
                                 </div>
