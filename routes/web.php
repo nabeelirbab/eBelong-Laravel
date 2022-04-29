@@ -444,7 +444,7 @@ Route::group(
         Route::post('admin/response-time/update-response-time/{id}', 'ResponseTimeController@update');
         Route::post('admin/delete-checked-response-time', 'ResponseTimeController@deleteSelected');
 
-        Route::get('editor/profile', 'UserController@adminProfileSettings')->name('adminProfile');
+        Route::get('{role}/profile', 'UserController@adminProfileSettings')->name('adminProfile');
         Route::post('editor/store-profile-settings', 'UserController@storeProfileSettings');
         Route::post('editor/upload-temp-image', 'UserController@uploadTempImage');
         Route::post('admin/upload-temp-image', 'UserController@uploadTempImage');

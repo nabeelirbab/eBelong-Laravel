@@ -125,12 +125,12 @@
                 </li>
                 <li class="menu-item-has-children">
                     <span class="wt-dropdowarrow"><i class="lnr lnr-chevron-right"></i></span>
-                    <a href="{{{ route('adminProfile') }}}">
+                    <a href="{{{ url(route('adminProfile', ['role' => $role])) }}}">
                         <i class="ti-settings"></i>
                         <span>{{ trans('lang.settings') }}</span>
                     </a>
                     <ul class="sub-menu">
-                        <li><a href="{{{ route('adminProfile') }}}">{{ trans('lang.acc_settings') }}</a></li>
+                        <li><a href="{{{ url(route('adminProfile', ['role' => $role])) }}}">{{ trans('lang.acc_settings') }}</a></li>
                         <li><a href="{{{ route('settings') }}}">{{ trans('lang.general_settings') }}</a></li>
                         <li><a href="{{{ route('resetPassword') }}}">{{ trans('lang.reset_pass') }}</a></li>
                     </ul>
@@ -160,10 +160,17 @@
                             <span>Editor Dashboard</span>
                         </a>
                         </li>
-                    {{-- <li><a href="{{{ url($role.'/profile') }}}"><i class="ti-settings"></i>{{ trans('lang.profile_settings') }}</a>
-                        <li><a href="{{{ url(route('showUserProfile', ['slug' => Auth::user()->slug])) }}}"><i class="ti-user"></i>
-                            <span>My Profile</span></a>
-                    </li> --}}
+                        <li class="menu-item-has-children">
+                            <span class="wt-dropdowarrow"><i class="lnr lnr-chevron-right"></i></span>
+                            <a href="{{{ url(route('adminProfile', ['role' => $role])) }}}">
+                                <i class="ti-settings"></i>
+                                <span>{{ trans('lang.settings') }}</span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li><a href="{{{ url(route('adminProfile', ['role' => $role])) }}}">{{ trans('lang.acc_settings') }}</a></li>
+                                <li><a href="{{{ route('resetPassword') }}}">{{ trans('lang.reset_pass') }}</a></li>
+                            </ul>
+                        </li>
                     <li class="menu-item-has-children">
                         <span class="wt-dropdowarrow"><i class="lnr lnr-chevron-right"></i></span>
                         <a href="javascript:void(0)">
@@ -233,7 +240,7 @@
                         <span>{{ trans('lang.settings') }}</span>
                     </a>
                     <ul class="sub-menu">
-                        <li><a href="{{{ url($role.'/profile') }}}">{{ trans('lang.profile_settings') }}</a></li>
+                        <li><a href="{{{ url(route('adminProfile', ['role' => $role])) }}}">{{ trans('lang.profile_settings') }}</a></li>
                         <li><a href="{{{ route('manageAccount') }}}">{{ trans('lang.acc_settings') }}</a></li>
                     </ul>
                 </li>
