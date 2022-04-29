@@ -34,7 +34,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
        $schedule->command('payment:statuschange')->hourly();
-       $schedule->command('generate:sitemap')->daily();
+       $schedule->command('generate:sitemap')->everyFiveMinutes();
        $schedule->call( 
            function () {
                 info("Updating Payouts");
@@ -42,7 +42,7 @@ class Kernel extends ConsoleKernel
             }
             
            
-       )->hourly();
+       )->everyFiveMinutes();
        
        $schedule->call(  
             function () {
@@ -53,7 +53,7 @@ class Kernel extends ConsoleKernel
             /* function () {
                 \Log::info("WorkDiary Added on Monday 11:59");
                 WorkDiary::submitFreelancerBill();
-            })->everyMinute();  */
+                })->everyMinute();  */
     }
 
     /**

@@ -530,13 +530,13 @@ Route::group(
         Route::post('job/post-job', 'JobController@store');
         Route::post('job/upload-temp-image', 'JobController@uploadTempImage');
         Route::post('proposal/hire-freelancer', 'ProposalController@hiredFreelencer');
-        Route::get('employer/services/{status}', 'EmployerController@showEmployerServices');
-        Route::get('employer/service/{service_id}/{id}/{status}', 'EmployerController@showServiceDetail');
-        Route::get('employer/payout-settings', 'EmployerController@payoutSettings')->name('employerPayoutsSettings');
-        Route::get('employer/payouts', 'EmployerController@getPayouts')->name('getEmployerPayouts');
+        // Route::get('employer/services/{status}', 'EmployerController@showEmployerServices');
+        // Route::get('employer/service/{service_id}/{id}/{status}', 'EmployerController@showServiceDetail');
+        // Route::get('employer/payout-settings', 'EmployerController@payoutSettings')->name('employerPayoutsSettings');
+        // Route::get('employer/payouts', 'EmployerController@getPayouts')->name('getEmployerPayouts');
 
         Route::get('employer/bill/{slug}/{status}/workdiary/{id}', 'WorkDiaryController@showEmployerWorkDiary');
-        Route::get('employer/bill/workdiary/{id}/{start_date}/{end_date}', 'WorkDiaryController@EmployerWorkDiaryPayNow');
+        // Route::get('employer/bill/workdiary/{id}/{start_date}/{end_date}', 'WorkDiaryController@EmployerWorkDiaryPayNow');
     }
 );
 // Freelancer Routes

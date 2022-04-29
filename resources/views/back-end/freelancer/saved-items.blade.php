@@ -93,13 +93,15 @@
                                     <div class="wt-focomponylist">
                                         @foreach ($saved_employers as $employer)
                                             @php
-                                                $emp = \App\User::find($employer);
-                                                $profile = \App\User::find($employer)->profile;
+                                               
+                                                $profile = \App\Profile::find($employer);
+                                                $user = !empty($profile->user_id) ?\App\User::find($profile->user_id):array();
                                                 $user_image = !empty($profile) ? $profile->avater : '';
-                                                $profile_image = !empty($user_image) ? '/uploads/users/'.$employer.'/'.$user_image : 'images/user-login.png';
-                                                $user_name = Helper::getUserName($employer);
-                                                $verified_user = \App\User::select('user_verified')->where('id', $emp->id)->pluck('user_verified')->first();
+                                                $profile_image = !empty($user_image) ? '/uploads/users/'.$user->id.'/'.$user_image : 'images/user-login.png':'';
+                                                $user_name =!empty($user->id) ? Helper::getUserName($user->id):'';
+                                                $verified_user = !empty($user->id) ? \App\User::select('user_verified')->where('id', $emp->id)->pluck('user_verified')->first():0;
                                             @endphp
+                                             @if(!empty($user->id))
                                             <div class="wt-followedcompnies">
                                                 <div class="wt-userlistinghold wt-userlistingsingle">
                                                     <figure class="wt-userlistingimg">
@@ -123,6 +125,7 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            @endif
                                         @endforeach
                                     </div>
                                 @else
@@ -146,23 +149,24 @@
                                 <div class="wt-likedfreelancers wt-haslayout">
                                     @foreach ($saved_freelancers as $key => $freelancer)
                                         @php
-                                            $user = \App\User::find($freelancer);
-                                            $profile = \App\User::find($freelancer)->profile;
+                                            $profile = \App\Profile::find($freelancer);
+                                            $user = !empty($profile)?\App\User::find($profile->user_id):array();
                                             $rating = !empty($profile->rating) ? $profile->rating : 0;
                                             $user_image = !empty($profile) ? $profile->avater : '';
-                                            $profile_image = !empty($user_image) ? '/uploads/users/'.$freelancer.'/'.$user_image : 'images/user.jpg';
-                                            $user_name = Helper::getUserName($freelancer);
-                                            $reviews = \App\Review::where('receiver_id', $freelancer)->count();
-                                            $proposal = \App\Proposal::select('job_id')->where('freelancer_id', $user->id)->pluck('job_id')->first();
+                                            $profile_image = !empty($user_image) ? '/uploads/users/'.$user->id.'/'.$user_image : 'images/user.jpg';
+                                            $user_name =!empty($user->id)? \App\Helper::getUserName($user->id):'';
+                                            $reviews = !empty($user->id)? \App\Review::where('receiver_id', $user->id)->count() : 0;
+                                            $proposal =!empty($user->id)? \App\Proposal::select('job_id')->where('freelancer_id', $user->id)->pluck('job_id')->first():array();
                                             $employer_id = !empty($proposal) ? \App\Job::select('user_id')->where('id', $proposal)->pluck('user_id')->first() : '';
                                             $job = !empty($employer_id) ? \App\Job::where('user_id', $employer_id)->first() : '';
                                             $featured_class = (!empty($job) && $job->is_featured == 'true') ? 'wt-featured' : '';
-                                            $verified_user = \App\User::select('user_verified')->where('id', $freelancer)->pluck('user_verified')->first();
-                                            $avg_rating = \App\Review::where('receiver_id', $user->id)->sum('avg_rating');
+                                            $verified_user =!empty($user->id)? \App\User::select('user_verified')->where('id', $user->id)->pluck('user_verified')->first():0;
+                                            $avg_rating = !empty($user->id)? \App\Review::where('receiver_id', $user->id)->sum('avg_rating'):0;
                                             $user_rating  = $avg_rating != 0 ? round($avg_rating/\App\Review::count()) : 0;
-                                            $user_reviews = \App\Review::where('receiver_id', $user->id)->get();
+                                            $user_reviews = !empty($user->id)? \App\Review::where('receiver_id', $user->id)->get() : array();
                                             $stars  = $user_reviews->sum('avg_rating') != 0 ? $user_reviews->sum('avg_rating')/20*100 : 0;
                                         @endphp
+                                        @if(!empty($user->id))
                                         <div class="wt-userlistinghold {{$featured_class}}">
                                             @if ( !empty($job->is_featured) && $job->is_featured == 'true')
                                                 <span class="wt-featuredtag"><img src="{{{ asset('images/featured.png') }}}" alt="{{{ trans('ph.is_featured') }}}" data-tipso="Plus Member" class="template-content tipso_style"></span>
@@ -184,8 +188,13 @@
                                                                 {{ !empty($symbol) ? $symbol['symbol'] : '$' }}{{{ $profile->hourly_rate }}} {{ trans('lang.per_hour') }}</span>
                                                             </li>
                                                         @endif
-                                                        <li><span><img src="{{{asset(Helper::getLocationFlag($user->location->flag))}}}" alt="{{{ trans('lang.locations') }}}"> {{{ $user->location->title }}}</span></li>
-                                                        <li class="wt-btndisbaled"><a href="javascript:void(0);" class="wt-clicksave"><i class="fa fa-heart"></i> Saved</a></li>
+                                                        @if(!empty($user->location))
+                                                                <span>
+                                                                    <img src="{{{asset(Helper::getLocationFlag($user->location->flag))}}}" alt="{{{ trans('lang.locations') }}}">
+                                                                    {{{ $user->location->title }}}  
+                                                                </span>
+                                                                @endif
+                                                      <li class="wt-btndisbaled"><a href="javascript:void(0);" class="wt-clicksave"><i class="fa fa-heart"></i> Saved</a></li>
                                                     </ul>
                                                 </div>
                                                 <div class="wt-rightarea">
@@ -194,6 +203,7 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        @endif
                                     @endforeach
                                 </div>
                                 @else

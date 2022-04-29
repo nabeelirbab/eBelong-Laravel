@@ -201,7 +201,7 @@
                                         </div>
                                         @if(!empty($roles))
                                             <ul class="wt-accordionhold wt-formaccordionhold accordion">
-                                            @php unset($roles[1]); @endphp
+                                            {{-- @php unset($roles[1]); @endphp --}}
                                            
                                                 @foreach ($roles as $key => $role)
                                                

@@ -86,12 +86,13 @@
                                     <div class="wt-focomponylist">
                                         @foreach ($saved_employers as $employer)
                                             @php
-                                                $user = \App\User::find($employer);
-                                                $profile = \App\User::find($employer)->profile;
+                                                $profile = \App\Profile::find($employer);
+                                                $user = !empty($profile->user_id) ?\App\User::find($profile->user_id):array();
                                                 $user_image = !empty($profile) ? $profile->avater : '';
-                                                $profile_image = !empty($user_image) ? '/uploads/users/'.$employer.'/'.$user_image : 'images/user-login.png';
-                                                $user_name = Helper::getUserName($employer);
+                                                $profile_image = !empty($user_image) ? '/uploads/users/'.$user->id.'/'.$user_image : 'images/user-login.png':'';
+                                                $user_name =!empty($user->id)? Helper::getUserName($user->id):'';
                                             @endphp
+                                            @if(!empty($user->id))
                                             <div class="wt-followedcompnies">
                                                 <div class="wt-userlistinghold wt-userlistingsingle">
                                                     <figure class="wt-userlistingimg">
@@ -115,6 +116,7 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            @endif
                                         @endforeach
                                     </div>
                                 @else
@@ -134,22 +136,26 @@
                                 <div class="wt-tabscontenttitle">
                                     <h2>{{ trans('lang.liked_freelancers') }}</h2>
                                 </div>
+                              
                                 @if (!empty($saved_freelancers))
                                     <div class="wt-likedfreelancers wt-haslayout">
                                         @foreach ($saved_freelancers as $key => $freelancer)
                                             @php
-                                                $user = \App\User::find($freelancer);
-                                                $profile = \App\User::find($freelancer)->profile;
+                                               
+                                                $profile = \App\Profile::find($freelancer);
+                                                $user = !empty($profile->id)?\App\User::find($profile->user_id):'';
                                                 $rating = !empty($profile->rating) ? $profile->rating : 0;
                                                 $user_image = !empty($profile) ? $profile->avater : '';
-                                                $profile_image = !empty($user_image) ? '/uploads/users/'.$freelancer.'/'.$user_image : 'images/user.jpg';
-                                                $user_name = Helper::getUserName($freelancer);
-                                                $reviews = \App\Review::where('receiver_id', $freelancer)->count();
-                                                $avg_rating = \App\Review::where('receiver_id', $user->id)->sum('avg_rating');
+                                                $profile_image = !empty($user_image) ? '/uploads/users/'.$user->id.'/'.$user_image : 'images/user.jpg';
+                                                $user_name = !empty($user->id)?Helper::getUserName($user->id):'';
+                                                $reviews = !empty($user->id)?\App\Review::where('receiver_id', $user->id)->count():0;
+                                                $avg_rating = !empty($user->id)?\App\Review::where('receiver_id', $user->id)->sum('avg_rating'):0;
                                                 $user_rating  = $avg_rating != 0 ? round($avg_rating/\App\Review::count()) : 0;
-                                                $user_reviews = \App\Review::where('receiver_id', $user->id)->get();
-                                                $stars  = $user_reviews->sum('avg_rating') != 0 ? $user_reviews->sum('avg_rating')/20*100 : 0;
+                                                $user_reviews = !empty($user->id)?\App\Review::where('receiver_id', $user->id)->get():array();
+                                                $stars  = !empty($user_reviews) && $user_reviews->sum('avg_rating') != 0 ? $user_reviews->sum('avg_rating')/20*100 : 0;
                                             @endphp
+                                            @if(!empty($user->id))
+                                            <h1>{{ $user->id }}</h1>
                                             <div class="wt-userlistinghold wt-featured">
                                                 <figure class="wt-userlistingimg">
                                                     <img src="{{{ asset($profile_image) }}}" alt="{{{ trans('lang.profile_img') }}}">
@@ -174,10 +180,12 @@
                                                             @endif
                                                             </li>
                                                             <li>
+                                                                @if(!empty($user->location))
                                                                 <span>
                                                                     <img src="{{{asset(Helper::getLocationFlag($user->location->flag))}}}" alt="{{{ trans('lang.locations') }}}">
-                                                                    {{{ $user->location->title }}}
+                                                                    {{{ $user->location->title }}}  
                                                                 </span>
+                                                                @endif
                                                             </li>
                                                             <li class="wt-btndisbaled">
                                                                 <a href="javascript:void(0);" class="wt-clicksave">
@@ -192,6 +200,7 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            @endif
                                         @endforeach
                                     </div>
                                 @else

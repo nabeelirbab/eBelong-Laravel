@@ -1470,6 +1470,16 @@ public function adminRating(Request $request){
                     $user_id[] = $freelancer->user_id;
                 }
             }
+            if($category_obj->title=='E-commerce'||$category_obj->title=='Cloud Computing'||$category_obj->title=='Data Science'||
+            $category_obj->title=='Graphic Designing'||$category_obj->title=='Artificial Intelligence'||$category_obj->title=='Growth Hacking'){
+                $skill_obj = Skill::where('title', $category_obj->title)->get();
+                foreach ($skill_obj as $key => $skill) {
+                    $userid = DB::table('skill_user')->select('user_id')->where('skill_id',$skill->id)->get();
+                    foreach($userid as $ui){
+                        $user_id[] = $ui->user_id;
+                    }
+                }
+            }
         }
         $users->whereIn('id', $user_id)->orderBy('is_certified', 'DESC'); 
         }
@@ -1492,7 +1502,6 @@ public function adminRating(Request $request){
 
         }
         if ($type=='english-level') {
-           
             $freelancers = Profile::where('english_level', $slug)->get();
                 foreach ($freelancers as $key => $freelancer) {
                     if (!empty($freelancer->user_id)) {

@@ -1335,15 +1335,16 @@ class UserController extends Controller
     {
         if (Auth::user()) {
             $user = $this->user::find(Auth::user()->id);
+            
+            // $users = !empty($user_by_role) ? User::whereIn('id', $user_by_role)->where('is_disabled', 'false')->where('status',1) : array();
             $profile = $user->profile;
             $user_id=array();
             $saved_jobs        = !empty($profile->saved_jobs) ? unserialize($profile->saved_jobs) : array();
             $saved_freelancers = !empty($profile->saved_freelancer) ? unserialize($profile->saved_freelancer) : array();
-        //     foreach ($saved_freelancers as $key => $value) {
-        //         $user_id[] = $value;
-        //     }
-        //    $h=User::whereIn('id',$user_id)->get();
-        //    dd($h);
+            $user_id =  Profile::whereIn('id',$saved_freelancers)->pluck('user_id')->toArray();
+            // $saved_freelancers=User::whereIn('id',$user_id)->get();
+            // $u = Profile::find(218);
+            // dd(User::find($u->user_id));
             $saved_employers   = !empty($profile->saved_employers) ? unserialize($profile->saved_employers) : array();
             $currency          = SiteManagement::getMetaValue('commision');
             $symbol            = !empty($currency) && !empty($currency[0]['currency']) ? Helper::currencyList($currency[0]['currency']) : array();
@@ -2184,7 +2185,7 @@ class UserController extends Controller
             return $response;
         }
         $json = array();
-        if (Helper::getAuthRoleName()=='Freelancer') {
+        if (Helper::getAuthRoleName()=='Freelancer'||Helper::getAuthRoleName()=='Employer') {
             $json['type'] = 'error';
             $json['process'] = trans('You are not permited to buy Services');
             return $json;
