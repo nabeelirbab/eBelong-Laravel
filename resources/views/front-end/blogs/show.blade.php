@@ -49,7 +49,7 @@
                         <div><strong>Posted On : {{ Carbon\Carbon::parse($blog->created_at)->format('d M Y') }}</strong></div>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" style="background: #f5f5f5;">
-                        <div class="row">
+                        <div class="row reverse-logic flex-column-reverse">
                             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 float-left blog-first-div">
                                 <div class="wt-usersingle wt-servicesingle-holder">
                                     <div class="wt-servicesingle">
@@ -60,6 +60,16 @@
                                                 @endif
                                             </div>
                                         </div>
+                                        
+                                    </div>
+                                </div>
+                                <div class="d-flex blog-box-logo-name">
+                                    <img src="http://127.0.0.1:8000/uploads/agency_logos/33/20220209153923.jpg" alt="eBelong" class="up-avatar up-avatar-company flex-shrink-0 up-avatar-30" style="width: 50px; height: 50px; margin-right: 10px; border-radius: 100%;"> 
+                                    <div class="ml-10 blog-box-name">
+                                        <div>Blog posted User Name</div> 
+                                        <a href="http://127.0.0.1:8000/agency/disrupt-lab-75984" target="_blank" class="up-btn-link text-left">
+                                            add further detail
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -170,133 +180,12 @@
                                     </div> -->
                                 </div>
                             </div>
-                    
-                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 float-left blog-second-div">
-                                <div class="wt-usersingle wt-servicesingle-holder">
-                                    <div class="wt-servicesingle">
-                                        {{-- @if ($blog->is_featured == 'true')
-                                            <span class="wt-featuredtagvtwo">{{ trans('lang.featured') }}</span>
-                                        @endif --}}
-                                        {{--  <span class="wt-featuredtagvtwo">Featured</span>  --}}
-                                        <!-- <div class="wt-servicesingle-title">
-                                            <div class="wt-title">
-                                                @if (!empty($blog->title))
-                                                    <h2>{{{ $blog->title }}}</h2>
-                                                @endif
-                                            </div>
-                                            {{-- <ul class="wt-userlisting-breadcrumb">
-                                                <li>
-                                                    <span>
-                                                        <i class="fa fa-star"></i>
-                                                        {{{ $rating }}}/<i>5</i>&nbsp;({{{ !empty($reviews) ? $reviews->count() : ''}}} {{ trans('lang.feedbacks') }})
-                                                    </span>
-                                                </li>
-                                                <li>
-                                                    
-                                                </li>
-                                            </ul> --}}
-                                        </div> -->
-                                        @if (!empty($attachments))
-                                            @php $enable_slider = count($attachments) > 1 ? 'wt-servicesslider' : ''; @endphp
-                                            <div class="wt-freelancers-info">
-                                                <div id="{{$enable_slider}}" class="wt-servicesslider owl-carousel">
-                                                    @foreach ($attachments as $attachment)
-                                                        <figure class="item">
-                                                            <img src="{{{asset(Helper::getImageWithSize('uploads/blogs/'.$blog->id, $attachment, 'medium'))}}}" alt="img description" class="item">
-                                                        </figure>
-                                                    @endforeach
-                                                </div>
-                                                @if (count($attachments) > 1)
-                                                    <div id="wt-servicesgallery" class="wt-servicesgallery owl-carousel">
-                                                        @foreach ($attachments as $attachment)
-                                                            @php $image = 'uploads/blogs/'.$blog->id.'/'.$attachment; @endphp
-                                                            <div class="item"><figure><img src="{{{asset($image)}}}" alt="img description"></figure></div>
-                                                        @endforeach
-                                                    </div>
-                                                @endif
-                                            </div>
-                                        @endif
-                                        <!-- <div class="wt-service-details">
-                                            @if (!empty($blog->content))
-                                                <div class="wt-description course-detail-description">
-                                                    @php echo htmlspecialchars_decode(stripslashes($blog->content)); @endphp
-                                                </div>
-                                            @endif
-                                        </div> -->
-                                    </div>
-                                    <!-- <div class="wt-clientfeedback">
-                                        @if (!empty($reviews) && $reviews->count() != 0)
-                                        <div class="wt-usertitle wt-titlewithselect">
-                                            <h2>{{ trans('lang.reviews') }}</h2>
-                                        </div>
-                                            @foreach ($reviews as $key => $review)
-                                                @php
-                                                    $user = App\User::find($review->user_id);
-                                                    $stars  = $review->avg_rating != 0 ? $review->avg_rating/5*100 : 0;
-                                                @endphp
-                                                <div class="wt-userlistinghold wt-userlistingsingle">
-                                                        <figure class="wt-userlistingimg">
-                                                            <img src="{{ asset(Helper::getProfileImage($review->user_id)) }}" alt="{{{ trans('Employer') }}}">
-                                                        </figure>
-                                                        <div class="wt-userlistingcontent">
-                                                            <div class="wt-contenthead">
-                                                                <div class="wt-title">
-                                                                    <a href="{{{ url('profile/'.$user->slug) }}}">@if ($user->user_verified == 1)<i class="fa fa-check-circle"></i>@endif {{{ Helper::getUserName($review->user_id) }}}</a>
-                                                                    <h3>{{{ $blog->title }}}</h3>
-                                                                </div>
-                                                                <ul class="wt-userlisting-breadcrumb">
-                                                                    @if (!empty($blog->location))
-                                                                        <li>
-                                                                            <span>
-                                                                                <img src="{{{asset(Helper::getLocationFlag($blog->location->flag))}}}" alt="{{{ trans('lang.flag_img') }}}"> {{{ $blog->location->title }}}
-                                                                            </span>
-                                                                        </li>
-                                                                    @endif
-                                                                    <li><span><i class="far fa-calendar"></i> {{ Carbon\Carbon::parse($blog->created_at)->format('M Y') }} - {{ Carbon\Carbon::parse($blog->updated_at)->format('M Y') }}</span></li>
-                                                                    <li>
-                                                                        <span class="wt-stars"><span style="width: {{ $stars }}%;"></span></span>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                        <div class="wt-description">
-                                                            @if (!empty($review->feedback))
-                                                                <p>“ {{{ $review->feedback }}} ”</p>
-                                                            @endif
-                                                        </div>
-                                                    </div>
-                                            @endforeach
-                                        {{-- @else
-                                            <div class="wt-userprofile">
-                                                @if (file_exists(resource_path('views/extend/errors/no-record.blade.php')))
-                                                    @include('extend.errors.no-record')
-                                                @else
-                                                    @include('errors.no-record')
-                                                @endif
-                                            </div> --}}
-                                        @endif
-                                    </div> -->
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 float-left blog-second-div">
-                                <div class="wt-usersingle wt-servicesingle-holder">
-                                    <div class="wt-servicesingle">
-                                        <div class="wt-servicesingle-title">
-                                            <div class="wt-title">
-                                                @if (!empty($blog->title))
-                                                    <h2>{{{ $blog->title }}}</h2>
-                                                @endif
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 float-left">
-                                <div class="wt-service-details">
+                                <div class="wt-service-details" style="margin-top: 20px;">
                                     @if (!empty($blog->content))
                                         <div class="wt-description course-detail-description">
                                             @php echo htmlspecialchars_decode(stripslashes($blog->content)); @endphp

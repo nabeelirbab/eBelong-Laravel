@@ -128,7 +128,7 @@
                                                         </div>
                                                     @endif
                                                    
-                                                    <div class="wt-freelancers-details">
+                                                    <div class="wt-freelancers-details wt-freelancers-blogs-details">
                                                         <!-- @if (empty($blog->editor_id))
                                                             <figure class="wt-freelancers-img">
                                                                 <img src="{{ asset(Helper::getProfileImage($blog->editor_id)) }}" alt="img description">
@@ -139,6 +139,13 @@
                                                             </figure>
                                                         @endif -->
                                                         <div class="wt-freelancers-content">
+                                                            <!-- @if(!empty($blog->categories))
+                                                                @foreach ( $blog->categories as $key=>$cat )
+                                                                @if($key==0)
+                                                                <div class="blog-category"><h6> {{ $cat->title }} </h6></div>
+                                                                @endif
+                                                                @endforeach
+                                                            @endif -->
                                                             <div class="dc-title">
                                                                 @if ($blog->editor_id)
                                                                     {{-- <a href="{{{ url('profile/'.$blog->seller[0]->slug) }}}"><i class="fa fa-check-circle"></i> {{{Helper::getUserName($blog->seller[0]->id)}}}</a> --}}
