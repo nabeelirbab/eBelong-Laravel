@@ -27,19 +27,19 @@ class HomeController extends Controller
         $all_skills = Skill::all();
         
 		$i = 0;
-		foreach($categories as $cat){
-			$categorycount = DB::table('catables')
-				->select('catables.id as catableid')
-				->join('jobs', 'jobs.id', '=', 'catables.catable_id')
-				->where(array('category_id'=>$cat->id,'catable_type'=>"App\Job"))
-				->where('jobs.status','posted')
-				->where('jobs.expiry_date','>',date('Y-m-d'))				
-				->get();
-			if(count($categorycount) == 0){ 
-				unset($categories[$i]);
-			}
-			$i++;
-		}
+		// foreach($categories as $cat){
+		// 	$categorycount = DB::table('catables')
+		// 		->select('catables.id as catableid')
+		// 		->join('jobs', 'jobs.id', '=', 'catables.catable_id')
+		// 		->where(array('category_id'=>$cat->id,'catable_type'=>"App\Job"))
+		// 		->where('jobs.status','posted')
+		// 		->where('jobs.expiry_date','>',date('Y-m-d'))				
+		// 		->get();
+		// 	if(count($categorycount) == 0){ 
+		// 		unset($categories[$i]);
+		// 	}
+		// 	$i++;
+		// }
 		
         $jobs = Job::latest()->where('status','posted')->get()->all();
         if(!empty($jobs))
@@ -161,7 +161,7 @@ class HomeController extends Controller
                     $freelancers[$key]->location_name = "";
                 }
             }
-            // dd($freelancers);
+            // dd($categories);
            
         }
         
