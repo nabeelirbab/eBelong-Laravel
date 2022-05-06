@@ -74,7 +74,7 @@
                                     @endif
                                     <div class="ml-10 blog-box-name">
                                         <div><strong>Posted By</strong></div> 
-                                        <a href="http://127.0.0.1:8000/agency/disrupt-lab-75984" target="_blank" class="up-btn-link text-left">
+                                        <a href="#" class="up-btn-link text-left">
                                             {{ $username }}
                                         </a>
                                     </div>

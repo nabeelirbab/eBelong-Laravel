@@ -141,13 +141,13 @@ export default {
       this.$emit("updateData", "step", 5);
       this.$cookies.remove("candidateIds");
 
-      // axios.post(window.APP_URL + "/postskill", submitData).then((res) => {
-      //   console.log("get candidate index res", res);
-      //   if (res.data.status) {
-      //     this.$cookies.remove("candidateIds");
-      //     this.$emit("updateData", "step", 5);
-      //   }
-      // });
+      axios.post(window.APP_URL + "/postskill", submitData).then((res) => {
+        console.log("get candidate index res", res);
+        if (res.data.status) {
+          this.$cookies.remove("candidateIds");
+          this.$emit("updateData", "step", 5);
+        }
+      });
     },
     onChange(target) {
       this[target.name] = target.value;
