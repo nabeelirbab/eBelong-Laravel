@@ -79,7 +79,7 @@
 															<i class="lnr lnr-pencil"></i>
 														</a>
 													
-															<delete :title="'{{trans("lang.ph_delete_confirm_title")}}'" :id="'{{ $blog['id'] }}'" :message="'{{trans("lang.ph_course_delete_message")}}'" :url="'{{url('editor/dashboard/delete-blog')}}'"></delete>
+															<delete :title="'{{trans("lang.ph_delete_confirm_title")}}'" :id="'{{ $blog['id'] }}'" :message="'{{trans("lang.ph_blog_delete_message")}}'" :url="'{{url('editor/dashboard/delete-blog')}}'"></delete>
 													
 														
 													</div>

@@ -125,75 +125,7 @@
                                 </div>
                             </div>
                         @endif
-                        @if ($access_type == 'services' || $access_type== 'both')
-                            <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-3">
-                                <div class="wt-insightsitem wt-dashboardbox">
-                                    <figure class="wt-userlistingimg">
-                                        {{ Helper::getImages('uploads/settings/icon',$ongoing_services_icon, 'gift') }}
-                                    </figure>
-                                    <div class="wt-insightdetails">
-                                        <div class="wt-title">
-                                            <h3>{{{ Auth::user()->purchasedServices->count() }}}</h3>
-                                            <span>{{ trans('lang.total_ongoing_services') }}</span>
-                                            <a href="{{{ url('employer/services/hired') }}}">{{ trans('lang.click_view') }}</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-3">
-                                <div class="wt-insightsitem wt-dashboardbox">
-                                    <figure class="wt-userlistingimg">
-                                        {{ Helper::getImages('uploads/settings/icon',$completed_services_icon, 'gift') }}
-                                    </figure>
-                                    <div class="wt-insightdetails">
-                                        <div class="wt-title">
-                                            <h3>{{{ Auth::user()->completedServices->count() }}}</h3>
-                                            <span>{{ trans('lang.total_completed_services') }}</span>
-                                            <a href="{{{ url('employer/services/completed') }}}">{{ trans('lang.click_view') }}</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-3">
-                                <div class="wt-insightsitem wt-dashboardbox">
-                                    <figure class="wt-userlistingimg">
-                                        {{ Helper::getImages('uploads/settings/icon',$cancelled_services_icon, 'gift') }}
-                                    </figure>
-                                    <div class="wt-insightdetails">
-                                        <div class="wt-title">
-                                            <h3>{{{ Auth::user()->cancelledServices->count() }}}</h3>
-                                            <span>{{ trans('lang.total_cancelled_services') }}</span>
-                                            <a href="{{{ url('employer/services/cancelled') }}}">{{ trans('lang.click_view') }}</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        @endif
-
-                          <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-3">
-                                <div class="wt-insightsitem wt-dashboardbox">
-
-                                    <figure class="wt-userlistingimg">
-                                   <!--     {{ Helper::getImages('uploads/settings/icon',$completed_services_icon, 'gift') }}  -->
-                                       <i class="fas fa-hand-holding-usd" style="font-size:50px;"></i>
-                                    </figure> 
-                                    <div class="wt-insightdetails">
-                                        <div class="wt-title">
-                                            <h3>$100</h3>
-                                            <span>Wallet</span>
-                                            <a href="#">{{ trans('lang.click_view') }}</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-      
-
-
-
+                    
         @if ($access_type == 'jobs' || $access_type== 'both')
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">

@@ -234,7 +234,7 @@ class BlogController extends Controller
             $blog= $this->blog::find($request['id']);
             $blog->delete();
             $json['type'] = 'success';
-            $json['message'] = trans('lang.course_delete');
+            $json['message'] = trans('lang.blog_delete');
             return $json;
         } else {
             $json['type'] = 'error';

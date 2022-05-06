@@ -2222,7 +2222,7 @@ class Helper extends Model
                 GROUP_CONCAT(id) AS ids
                 FROM proposals
                 WHERE paid = 'pending' 
-                AND status = 'completed' 
+                AND proposals.status = 'completed' 
                 GROUP BY freelancer_id"
             )
         );
@@ -2252,7 +2252,6 @@ class Helper extends Model
         );
         
         $data = array_merge($job_payouts, $purchased_services,$purchased_courses);
-       
         $result=array();
         foreach ($data as $value) {
             if (isset($result[((array)$value)["user_id"]])) {
@@ -2267,13 +2266,15 @@ class Helper extends Model
             // dd($totalPayouts);
             foreach ($totalPayouts as $q) {
                 if ($q['total'] >= $min_payount) {
+                  //  dd("im gr8r");
                     $user = User::find($q['user_id']);
+                   
                     if ($user['profile']) {
                         $payout_id = !empty($user['profile']->payout_id) ? $user['profile']->payout_id : '';
                         $payout_detail = !empty($user['profile']->payout_settings) ? $user->profile->payout_settings : array();
                         if (!empty($payout_id) || !empty($payout_detail)) {
                             $total_earning = Self::deductAdminCommission($q['total']);
-                            // dd($total_earning);
+                          
                             $payout = new Payout();
                             $payout->user()->associate($q['user_id']);
                             $payout->amount = $total_earning;

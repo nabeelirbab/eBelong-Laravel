@@ -1,5 +1,7 @@
 @extends(file_exists(resource_path('views/extend/back-end/master.blade.php')) ? 'extend.back-end.master' : 'back-end.master')
 @section('content')
+@php  $user = !empty(Auth::user()) ? Auth::user() : '';
+$role = !empty($user) ? $user->getRoleNames()->first() : array(); @endphp
     <div class="freelancer-profile wt-dbsectionspace la-admin-details" id="user_profile">
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9">
@@ -7,7 +9,11 @@
                     <div class="wt-dashboardtabs">
                         <ul class="wt-tabstitle nav navbar-nav">
                             <li class="nav-item">
-                                <a class="{{{ \Request::route()->getName()==='adminProfile'? 'active': '' }}}" href="{{{ route('adminProfile') }}}">{{{ trans('lang.admin_detail') }}}</a>
+                                @if($role=='admin')
+                                <a class="{{{ \Request::route()->getName()==='adminProfile'? 'active': '' }}}" href="{{{ url(route('adminProfile', ['role' => $role])) }}}">{{{ trans('lang.admin_detail') }}}</a>
+                           @else
+                           <a class="{{{ \Request::route()->getName()==='adminProfile'? 'active': '' }}}" href="{{{ url(route('adminProfile', ['role' => $role])) }}}">{{{ 'Editor Details' }}}</a>
+                         @endif
                             </li>
                         </ul>
                     </div>

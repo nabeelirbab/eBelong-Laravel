@@ -40,7 +40,7 @@
                                 </div>
                             </div>
                             <div class="wt-courses wt-tabsinfo">
-                                <div class="wt-skills la-skills-holder wt-tabsinfo" id="wt-skills">
+                                <div class="wt-skills la-skills-holder wt-tabsinfo blogs-create-area" id="wt-skills">
                                     <div class="wt-tabscontenttitle">
                                         <h2>{{ trans('lang.skills_req') }}</h2>
                                     </div>

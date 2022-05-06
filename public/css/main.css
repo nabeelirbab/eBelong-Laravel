@@ -10449,8 +10449,22 @@ a:focus{text-decoration: none !important;}
     position: absolute;
 }
 
+
 #candidate_count .count h5 {
 	line-height: 1.3;
+	margin-bottom: 0px;
+}
+@media only screen and (max-width: 768px){
+	#candidate_count .count {
+		right: 0px;
+		width: 16px;
+		height: 16px;
+	}
+	#candidate_count .count h5 {
+		margin-bottom: 0px !important;
+		font-size: 12px;
+		line-height: 1.5 !important;
+	}
 }
 
 .countinue-btn .e-button {
@@ -10590,7 +10604,7 @@ a:focus{text-decoration: none !important;}
     position: absolute;
     background: #3A0B5F;
     padding: 6px;
-	bottom: -16px;
+	bottom: 0px;
 	border-radius: 5px;
 	left: 20px;
 }
@@ -10602,9 +10616,9 @@ a:focus{text-decoration: none !important;}
 .wt-freelancers-blogs.wt-freelancers figure {
 	overflow: unset;
 }
-.wt-freelancers.wt-freelancers-blogs {
+/* .wt-freelancers.wt-freelancers-blogs {
     overflow: unset;
-}
+} */
 
 .dc-discription {
     height: 60px;
@@ -10626,22 +10640,42 @@ a:focus{text-decoration: none !important;}
 	padding: 28px 0px 0px;
 }
 .blog-detail-section .blog-first-div {
-	display: block;
+	display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 	
 }
-.blog-detail-section .blog-second-div {
-	display: none;
+.blog-detail-section .reverse-logic.flex-column-reverse {
+	flex-direction: unset !important;
 }
 
 @media only screen and (max-width: 768px){
-	.blog-detail-section .blog-first-div {
-		display: none;
+	.blog-detail-section .reverse-logic.flex-column-reverse {
+		flex-direction: column-reverse !important;
 	}
-	.blog-detail-section .blog-second-div {
-		display: block;
-	}
+
 	.blog-detail-section .wt-servicesingle {
 		padding: unset;
 	}
 }
 
+.wt-freelancers-blogs-details .wt-freelancers-content .dc-title{
+	height: 60px;
+}
+
+.wt-tabsinfo.blogs-create-area {
+	margin-bottom: 0px;
+}
+
+.blogs-create-area .course-skills .wt-skillsform fieldset .form-group.wt-btnarea {
+	margin-top: 20px;
+}
+
+.blogs-create-area .wt-myskills{
+	margin-top: 0px;
+}
+
+.blog-box-logo-name {
+	width: 100%;
+	margin: 0 0 23px;
+}
