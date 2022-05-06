@@ -27,6 +27,7 @@ return [
     'ph_search_articles' => 'Search Articles',
     'add_article' => 'Add Article',
     'articles' => 'Articles',
+    'Talent' => 'Talent',
     'article_desc' => 'The description is not prominent by default; however, some themes may show it.',
     'edit_article' => 'Edit Article',
     'update_article' => 'Update Article',

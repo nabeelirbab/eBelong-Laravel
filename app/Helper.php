@@ -143,9 +143,14 @@ class Helper extends Model
     public static function getCategoryImage($image)
     {
         if (!empty($image)) {
+            if (file_exists('uploads/categories/' . $image)) {
             return '/uploads/categories/' . $image;
+            }
+            else{
+                return 'uploads/categories/1585694189-admin.png';
+            }
         } else {
-            return 'uploads/categories/img-09.png';
+            return 'uploads/categories/1585694189-admin.png';
         }
     }
 
