@@ -782,13 +782,13 @@ $show_f_banner = 'true'
     $(document).ready(function() {
         setTimeout(function() {
             $('#talentModalCenter').modal('show');
-        }, 20000);
+        }, 30000);
     });
 
     function closefunction() {
         setTimeout(function() {
                 $('#talentModalCenter').modal('show');
-            }, 20000); 
+            }, 30000); 
     }
 
 </script>
