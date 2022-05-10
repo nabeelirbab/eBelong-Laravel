@@ -10672,10 +10672,16 @@ a:focus{text-decoration: none !important;}
 }
 
 .blogs-create-area .wt-myskills{
-	margin-top: 0px;
+	margin-top: unset;
+}
+.blogs-create-area .wt-myskills ul li:first-child {
+	margin-top: 20px;
 }
 
 .blog-box-logo-name {
 	width: 100%;
 	margin: 0 0 23px;
+}
+.blog-detail-section .wt-service-details .wt-description p {
+    word-wrap: break-word;
 }
