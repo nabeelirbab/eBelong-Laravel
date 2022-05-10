@@ -143,9 +143,14 @@ class Helper extends Model
     public static function getCategoryImage($image)
     {
         if (!empty($image)) {
+            if (file_exists('uploads/categories/' . $image)) {
             return '/uploads/categories/' . $image;
+            }
+            else{
+                return 'uploads/categories/1585694189-admin.png';
+            }
         } else {
-            return 'uploads/categories/img-09.png';
+            return 'uploads/categories/1585694189-admin.png';
         }
     }
 
@@ -1565,6 +1570,18 @@ class Helper extends Model
                 return 'images/e-1110x300.jpg';
             }
         }
+        elseif ($user->role_type == 'editor') {
+            if (!empty($size)) {
+                if (file_exists('images/' . $size . '-e-1110x300.jpg')) {
+                    return 'images/' . $size . '-e-1110x300.jpg';
+                } else {
+                    return 'images/e-1110x300.jpg';
+                }
+            } else {
+                return 'images/e-1110x300.jpg';
+            }
+        }
+
     }
 
 
