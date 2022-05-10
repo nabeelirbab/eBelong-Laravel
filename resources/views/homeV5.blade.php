@@ -149,22 +149,22 @@
 														<?php if($user_role == 'guest'||$user_role == 'editor'): ?>
 														<li style="order: 1;">
 															<a href="{{url('/courses')}}">
-																{{{ trans('lang.courses') }}}
+																{{{ trans('lang.browse_instructors') }}}
 															</a>
 														</li>
 														<li style="order: 2;">
 															<a href="{{url('hire')}}">
-																{{{ trans('lang.Talent') }}}
+																{{{ trans('lang.view_freelancers') }}}
 															</a>
 														</li>
 														<li style="order: 4;">
 															<a href="{{url('/jobs')}}">
-																{{{ trans('lang.jobs') }}}
+																{{{ trans('lang.browse_jobs') }}}
 															</a>
 														</li>
 														<li style="order: 5;">
 															<a href="{{url('/services')}}">
-																{{{ trans('lang.services') }}}
+																{{{ trans('lang.browse_services') }}}
 															</a>
 														</li>
 														<li style="order: 6;">
@@ -180,22 +180,22 @@
 														<?php elseif($user_role == 'admin'): ?>
 														<li style="order: 1;">
 															<a href="{{url('/courses')}}">
-																{{{ trans('lang.courses') }}}
+																{{{ trans('lang.browse_instructors') }}}
 															</a>
 														</li>
 														<li style="order: 2;">
 															<a href="{{url('hire')}}">
-																{{{ trans('lang.Talent') }}}
+																{{{ trans('lang.view_freelancers') }}}
 															</a>
 														</li>
 														<li style="order: 4;">
 															<a href="{{url('/jobs')}}">
-																{{{ trans('lang.jobs') }}}
+																{{{ trans('lang.browse_jobs') }}}
 															</a>
 														</li>
 														<li style="order: 5;">
 															<a href="{{url('services')}}">
-																{{{ trans('lang.services') }}}
+																{{{ trans('lang.browse_services') }}}
 															</a>
 														</li>
 														<li style="order: 6;">
@@ -206,23 +206,23 @@
 														<?php elseif($user_role == 'employer'): ?>
 														<li style="order: 2;">
 															<a href="{{url('hire')}}">
-																{{{ trans('lang.Talent') }}}
+																{{{ trans('lang.view_freelancers') }}}
 															</a>
 														</li>
 														<li style="order: 5;">
 															<a href="{{url('/services')}}">
-																{{{ trans('lang.services') }}}
+																{{{ trans('lang.browse_services') }}}
 															</a>
 														</li>		
 														<?php elseif($user_role == 'freelancer'): ?>
 														<li style="order: 1;">
 															<a href="{{url('/courses')}}">
-																{{{ trans('lang.courses') }}}
+																{{{ trans('lang.browse_instructors') }}}
 															</a>
 														</li>
 														<li style="order: 4;">
 															<a href="{{url('/jobs')}}">
-																{{{ trans('lang.jobs') }}}
+																{{{ trans('lang.browse_jobs') }}}
 															</a>
 														</li>
 																	
