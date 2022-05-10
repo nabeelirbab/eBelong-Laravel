@@ -17,7 +17,7 @@
                         <div class="wt-dashboardboxcontent">
                             <div class="wt-jobdescription wt-tabsinfo">
                                 <div class="wt-tabscontenttitle">
-                                    <h2>{{ trans('lang.blog_title') }}</h2>
+                                    <h2>{{ trans('lang.Blog_Title') }}</h2>
                                 </div>
                                 <div class="wt-formtheme wt-userform wt-userformvtwo">
                                     <fieldset>
