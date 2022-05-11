@@ -178,8 +178,8 @@
                             <span>{{ trans('lang.Blogs') }}</span>
                         </a>
                         <ul class="sub-menu">
-                            <li><hr><a href="{{{ route('manageBlogs') }}}">{{ trans('lang.manage_blogs') }}</a></li>
-                            <li><hr><a href="{{{ route('editorBlogs') }}}">{{ trans('lang.my_blogs') }}</a></li>
+                            <li><a href="{{{ route('manageBlogs') }}}">{{ trans('lang.manage_blogs') }}</a></li>
+                            <li><a href="{{{ route('editorBlogs') }}}">{{ trans('lang.my_blogs') }}</a></li>
                             
                         </ul>
                     </li>
@@ -190,12 +190,12 @@
                             <span>{{ trans('lang.taxonomies') }}</span>
                         </a>
                         <ul class="sub-menu">
-                            <li><hr><a href="{{{ route('skills') }}}">{{ trans('lang.skills') }}</a></li>
-                            <li><hr><a href="{{{ route('categories') }}}">{{ trans('lang.job_cats') }}</a></li>
-                            <li><hr><a href="{{{ route('departments') }}}">{{ trans('lang.dpts') }}</a></li>
-                            <li><hr><a href="{{{ route('languages') }}}">{{ trans('lang.langs') }}</a></li>
-                            <li><hr><a href="{{{ route('locations') }}}">{{ trans('lang.locations') }}</a></li>
-                            <li><hr><a href="{{{ route('badges') }}}">{{ trans('lang.badges') }}</a></li>
+                            <li><a href="{{{ route('skills') }}}">{{ trans('lang.skills') }}</a></li>
+                            <li><a href="{{{ route('categories') }}}">{{ trans('lang.job_cats') }}</a></li>
+                            <li><a href="{{{ route('departments') }}}">{{ trans('lang.dpts') }}</a></li>
+                            <li><a href="{{{ route('languages') }}}">{{ trans('lang.langs') }}</a></li>
+                            <li><a href="{{{ route('locations') }}}">{{ trans('lang.locations') }}</a></li>
+                            <li><a href="{{{ route('badges') }}}">{{ trans('lang.badges') }}</a></li>
                             <li><a href="{{{ route('deliveryTime') }}}">{{ trans('lang.delivery_time') }}</a></li>
                             <li><a href="{{{ route('ResponseTime') }}}">{{ trans('lang.response_time') }}</a></li>
                         </ul>
