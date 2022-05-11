@@ -178,7 +178,7 @@
                                 <span>{{ trans('lang.settings') }}</span>
                             </a>
                             <ul class="sub-menu">
-                                <li><hr><a href="{{{ url(route('adminProfile', ['role' => $role]))}}}">{{ trans('lang.acc_settings') }}</a></li>
+                                <li><hr><a href="{{{ url(route('adminProfile'))}}}">{{ trans('lang.acc_settings') }}</a></li>
                                 <li><hr><a href="{{{ url('admin/settings') }}}">{{ trans('lang.general_settings') }}</a></li>
                                 <li><hr><a href="{{{ route('resetPassword') }}}">{{ trans('lang.reset_pass') }}</a></li>
                             </ul>
@@ -215,7 +215,7 @@
                                 <span>{{ trans('lang.settings') }}</span>
                             </a>
                             <ul class="sub-menu">
-                                <li><hr><a href="{{{ url(route('adminProfile', ['role' => $role]))}}}">{{ trans('lang.acc_settings') }}</a></li>
+                                <li><hr><a href="{{{ url(route('editorProfile'))}}}">{{ trans('lang.acc_settings') }}</a></li>
                                 {{-- <li><hr><a href="{{{ url('admin/settings') }}}">{{ trans('lang.general_settings') }}</a></li> --}}
                                 <li><hr><a href="{{{ route('resetPassword') }}}">{{ trans('lang.reset_pass') }}</a></li>
                             </ul>
@@ -277,17 +277,6 @@
                                 <span>{{ trans('lang.msg_center') }}</span>
                             </a>
                         </li>
-                        <li class="menu-item-has-children">
-                            <span class="wt-dropdowarrow"><i class="lnr lnr-chevron-right"></i></span>
-                            <a href="javascript:void(0)">
-                                <i class="ti-settings"></i>
-                                <span>{{ trans('lang.settings') }}</span>
-                            </a>
-                            <ul class="sub-menu">
-                                <li><hr><a href="{{{ url(route('adminProfile', ['role' => $role])) }}}">{{ trans('lang.profile_settings') }}</a></li>
-                                <li><hr><a href="{{{ route('manageAccount') }}}">{{ trans('lang.acc_settings') }}</a></li>
-                            </ul>
-                        </li>
                         @if ($role === 'employer')
                             @if (Helper::getAccessType() == 'both' || Helper::getAccessType() == 'jobs')
                                 <li class="menu-item-has-children">
@@ -301,6 +290,17 @@
                                         <li><hr><a href="{{{ url('employer/jobs/completed') }}}">{{ trans('lang.completed_jobs') }}</a></li>
                                         <li><hr><a href="{{{ url('employer/jobs/hired') }}}">{{ trans('lang.ongoing_jobs') }}</a></li>
 
+                                    </ul>
+                                </li>
+                                <li class="menu-item-has-children">
+                                    <span class="wt-dropdowarrow"><i class="lnr lnr-chevron-right"></i></span>
+                                    <a href="javascript:void(0)">
+                                        <i class="ti-settings"></i>
+                                        <span>{{ trans('lang.settings') }}</span>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><hr><a href="{{{ url(route('employerPersonalDetail')) }}}">{{ trans('lang.profile_settings') }}</a></li>
+                                        <li><hr><a href="{{{ route('manageAccount') }}}">{{ trans('lang.acc_settings') }}</a></li>
                                     </ul>
                                 </li>
                             @endif
@@ -365,6 +365,17 @@
                                     <li><hr><a href="{{{ url('freelancer/jobs/completed') }}}">{{ trans('lang.completed_projects') }}</a></li>
                                     <li><hr><a href="{{{ url('freelancer/jobs/cancelled') }}}">{{ trans('lang.cancelled_projects') }}</a></li>
                                     <li><hr><a href="{{{ url('freelancer/jobs/hired') }}}">{{ trans('lang.ongoing_projects') }}</a></li>
+                                </ul>
+                            </li>
+                            <li class="menu-item-has-children">
+                                <span class="wt-dropdowarrow"><i class="lnr lnr-chevron-right"></i></span>
+                                <a href="javascript:void(0)">
+                                    <i class="ti-settings"></i>
+                                    <span>{{ trans('lang.settings') }}</span>
+                                </a>
+                                <ul class="sub-menu">
+                                    <li><hr><a href="{{{ url(route('personalDetail')) }}}">{{ trans('lang.profile_settings') }}</a></li>
+                                    <li><hr><a href="{{{ route('manageAccount') }}}">{{ trans('lang.acc_settings') }}</a></li>
                                 </ul>
                             </li>
                             @if (Helper::getAccessType() == 'both' || Helper::getAccessType() == 'services')

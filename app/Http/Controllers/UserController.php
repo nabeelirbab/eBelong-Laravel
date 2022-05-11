@@ -2777,6 +2777,38 @@ class UserController extends Controller
         $avater = !empty($profile->avater) ? $profile->avater : '';
         $tagline = !empty($profile->tagline) ? $profile->tagline : '';
         $description = !empty($profile->description) ? $profile->description : '';
+        
+            if (file_exists(resource_path('views/extend/back-end/admin/profile-settings/personal-detail/index.blade.php'))) {
+                return view(
+                    'extend.back-end.admin.profile-settings.personal-detail.index',
+                    compact(
+                        'banner',
+                        'avater',
+                        'tagline',
+                        'description'
+                    )
+                );
+            } else {
+                return view(
+                    'back-end.admin.profile-settings.personal-detail.index',
+                    compact(
+                        'banner',
+                        'avater',
+                        'tagline',
+                        'description'
+                    )
+                );
+            }
+        
+    }
+    public function editorProfileSettings()
+    {
+        $profile = Profile::where('user_id', Auth::user()->id)
+            ->get()->first();
+        $banner = !empty($profile->banner) ? $profile->banner : '';
+        $avater = !empty($profile->avater) ? $profile->avater : '';
+        $tagline = !empty($profile->tagline) ? $profile->tagline : '';
+        $description = !empty($profile->description) ? $profile->description : '';
         if(Helper::getAuthRoleName()=="Editor"){
             if (file_exists(resource_path('views/extend/back-end/editor/profile-settings/personal-detail/index.blade.php'))) {
                 return view(
@@ -2800,29 +2832,7 @@ class UserController extends Controller
                 );
             }
         }
-        else{
-            if (file_exists(resource_path('views/extend/back-end/admin/profile-settings/personal-detail/index.blade.php'))) {
-                return view(
-                    'extend.back-end.admin.profile-settings.personal-detail.index',
-                    compact(
-                        'banner',
-                        'avater',
-                        'tagline',
-                        'description'
-                    )
-                );
-            } else {
-                return view(
-                    'back-end.admin.profile-settings.personal-detail.index',
-                    compact(
-                        'banner',
-                        'avater',
-                        'tagline',
-                        'description'
-                    )
-                );
-            }
-        }
+        
     }
 
     /**
