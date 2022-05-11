@@ -9,11 +9,9 @@ $role = !empty($user) ? $user->getRoleNames()->first() : array(); @endphp
                     <div class="wt-dashboardtabs">
                         <ul class="wt-tabstitle nav navbar-nav">
                             <li class="nav-item">
-                                @if($role=='admin')
-                                <a class="{{{ \Request::route()->getName()==='adminProfile'? 'active': '' }}}" href="{{{ url(route('adminProfile', ['role' => $role])) }}}">{{{ trans('lang.admin_detail') }}}</a>
-                           @else
-                           <a class="{{{ \Request::route()->getName()==='adminProfile'? 'active': '' }}}" href="{{{ url(route('adminProfile', ['role' => $role])) }}}">{{{ 'Editor Details' }}}</a>
-                         @endif
+                               
+                           <a class="{{{ \Request::route()->getName()==='editorProfile'? 'active': '' }}}" href="{{{ url(route('editorProfile')) }}}">{{{ 'Editor Details' }}}</a>
+                         
                             </li>
                         </ul>
                     </div>

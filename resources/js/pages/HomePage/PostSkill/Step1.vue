@@ -3,12 +3,16 @@
     <div class="e-project-type__header">
       <div class="d-flex justify-content-between flex-column flex-md-row">
         <div class="order-md-1 order-1">
-      <div class="e-project-type__title">Tell us about your project type</div>
-      <div class="e-project-type__subtitle">
-        Select the category from the list below
-      </div>
-      </div>
-        <div class="order-md-2 text-center"><img :src="`${APP_URL}/images/home/step_1.svg`"/></div>
+          <div class="e-project-type__title">
+            Tell us about your project type
+          </div>
+          <div class="e-project-type__subtitle">
+            Select the category from the list below
+          </div>
+        </div>
+        <div class="order-md-2 text-center">
+          <img :src="`${APP_URL}/images/home/step_1.svg`" />
+        </div>
       </div>
     </div>
     <div class="e-project-type__content">
@@ -20,25 +24,32 @@
           :key="index"
           class="e-project-type__list--item"
           :class="{
-            'e-project-type__list--item__active': selectedCategories.includes(category.title),
+            'e-project-type__list--item__active': selectedCategories.includes(
+              category.title
+            ),
           }"
         >
+          <img
+            :src="`/uploads/categories/${category.image}`"
+            style="width: 15px"
+          />
           {{ category.title }}
         </li>
       </ul>
       <div class="e-project-type__search" v-if="filterCategories.length">
         <!-- <input class="e-input-field" type="text" /> -->
-        <multiselect 
-        placeholder="Select for other types here"
-        :multiple="true" 
-        :tagging="true" 
-        v-model="value"
-        @select="(e)=>onClick(e.id)" 
-        @remove="(e)=>onClick(e.id)" 
-
-        track-by="id" label="title"
-        :options="Object.values(categories)">
-        <span slot="noResult">Oops! Please enter valid matches</span>
+        <multiselect
+          placeholder="Select for other types here"
+          :multiple="true"
+          :tagging="true"
+          v-model="value"
+          @select="(e) => onClick(e.id)"
+          @remove="(e) => onClick(e.id)"
+          track-by="id"
+          label="title"
+          :options="Object.values(categories)"
+        >
+          <span slot="noResult">Oops! Please enter valid matches</span>
         </multiselect>
       </div>
     </div>
@@ -65,20 +76,21 @@ export default {
   data() {
     return {
       value: null,
-      APP_URL:window.APP_URL,
-      show_error:false,
-      filterCategories:Object.values(this.categories).filter((obj,index)=>index>9)
+      APP_URL: window.APP_URL,
+      show_error: false,
+      filterCategories: Object.values(this.categories).filter(
+        (obj, index) => index > 9
+      ),
     };
   },
   props: ["step", "updateData", "selectedCategories", "categories"],
   methods: {
-    onSubmit(){
-      if(this.selectedCategories.length){
-        this.$emit('updateData', 'step', 2)
-      }else{
+    onSubmit() {
+      if (this.selectedCategories.length) {
+        this.$emit("updateData", "step", 2);
+      } else {
         this.show_error = true;
       }
-      
     },
     onClick(index) {
       this.show_error = false;
@@ -89,7 +101,7 @@ export default {
       } else {
         selectedCategories.push(index);
       }
-            console.log(selectedCategories,'selectedCategories');
+      console.log(selectedCategories, "selectedCategories");
       this.$emit("updateData", "selectedCategories", selectedCategories);
     },
     addTag(newTag) {
@@ -105,27 +117,25 @@ export default {
 </script>
 
 <style lang="scss">
-
-    .multiselect{
-        &__select{
-            display: none !important;
-        }
-        &__input{
-            border:0  !important;
-        }
-        &__tags{
-            padding: 8px !important;
-            border-radius: 0 !important;
-            &-wrap{
-                position: absolute;
-                right: 0;
-              
-            }
-        }
-        &__tag{
-                background: black !important;
-                border-radius: 0 !important;
-        }
+.multiselect {
+  &__select {
+    display: none !important;
+  }
+  &__input {
+    border: 0 !important;
+  }
+  &__tags {
+    padding: 8px !important;
+    border-radius: 0 !important;
+    &-wrap {
+      position: absolute;
+      right: 0;
     }
+  }
+  &__tag {
+    background: black !important;
+    border-radius: 0 !important;
+  }
+}
 </style>
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>

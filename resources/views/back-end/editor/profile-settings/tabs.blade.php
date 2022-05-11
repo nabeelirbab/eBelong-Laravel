@@ -1,7 +1,7 @@
 <div class="wt-dashboardtabs">
     <ul class="wt-tabstitle nav navbar-nav">
         <li class="nav-item">
-            <a class="{{{ \Request::route()->getName()==='personalDetail'? 'active': '' }}}" href="{{{ route('personalDetail') }}}">{{{ trans('lang.personal_detail') }}}</a>
+            <a class="{{{ \Request::route()->getName()==='personalDetail'? 'active': '' }}}" href="{{{ route('editorProfile') }}}">{{{ trans('lang.personal_detail') }}}</a>
         </li>
        
     </ul>
