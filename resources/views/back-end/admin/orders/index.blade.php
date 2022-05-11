@@ -50,10 +50,18 @@
 												$title = $package->title;
 												$amount = $package->cost;
 											}
-											elseif ($order->type == 'course'|| $order->type ='cource') {
-												$course_order = !empty($order->product_id) ? DB::table('cource_user')->select('cource_id')->where('id', $order->product_id)->first() : '';
-												$course = !empty($course_order->cource_id) ? App\Cource::find($course_order->cource_id) : '';
+											elseif ($order->type == 'course'|| $order->type =='cource') {
+												// if($order->product_id==31){
+												// 	echo $order->product_id;
+												// 	// $course_order = !empty($order->product_id) ? DB::table('cource_user')->select('cource_id')->where('id', $order->product_id)->first() : 'empty';
+												// $course = !empty($order->product_id) ? App\Cource::find($order->product_id) : '';
+												// $title = !empty($course) ? $course->title : '';
+												
+												// }
+												// $course_order = !empty($order->product_id) ? DB::table('cource_user')->select('cource_id')->where('id', $order->product_id)->first() : '';
+												$course = !empty($order->product_id) ? App\Cource::find($order->product_id) : '';
 												$title = !empty($course) ? $course->title : '';
+												// echo !empty($course)?"45445 ".$course->title: $order->product_id;
 												$amount = !empty($course) ? $course->price : '';
 												$attachment = !empty($course) ? Helper::getUnserializeData($course->attachments)[0] : '';
 										}
