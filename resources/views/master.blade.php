@@ -128,6 +128,7 @@
 						@yield('slider')			
 						  @yield('main') 
 			@yield('footer')
+			@yield('whatsapp')
 		</div>
             <div id="login-notification" class="">
                 <notifications group="login-notification" position="bottom left" /></notifications>

@@ -556,7 +556,7 @@
 					
 					
 				</style>
-				
+				<div data-component="WhatsappIconComponent" data-vue='{}'  id="e-postjob"></div>
 				<footer id="wt-footer" class="wt-footerholder wt-footertwo wt-haslayout">
 					<div class="container">
 						<div class="row">

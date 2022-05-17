@@ -61,6 +61,15 @@
 	@endif
 @endsection
 
+@section('whatsapp')
+	@if (file_exists(resource_path('views/extend/front-end/includes/whatsapp.blade.php')))
+		@include('extend.front-end.includes.whatsapp')
+	@else 
+		@include('front-end.includes.whatsapp')
+	@endif
+@endsection
+
+
 @push('scripts')
 <script>
 	jQuery('.wt-btndemotoggle').on('click', function() {
