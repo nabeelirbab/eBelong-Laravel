@@ -9,7 +9,7 @@
                 </div>
             </div>
             <div class="wt-haslayout wt-post-job-wrap">
-                {!! Form::open(['url' => '', 'class' =>'wt-haslayout', 'id' => 'post_blog_form',  '@submit.prevent'=>'submitBlog']) !!}
+                {!! Form::open(['url' => '', 'class' =>'wt-haslayout', 'id' => 'post_blog_form','@submit.prevent'=>'submitBlog']) !!}
                     <div class="wt-dashboardbox">
                         <div class="wt-dashboardboxtitle">
                             <h2>{{ trans('lang.post_blog') }}</h2>
@@ -55,7 +55,7 @@
                                     <h2>{{ trans('lang.blog_content') }}</h2>
                                 </div>
                                 <div class="wt-formtheme wt-userform wt-userformvtwo">
-                                    {!! Form::textarea('content', null, ['class' => 'wt-tinymceeditor', 'id' => 'wt-tinymceeditor', 'placeholder' => trans('lang.blog_desc_note')]) !!}
+                                    {!! Form::textarea('content', null, ['class' => 'wt-tinymceblogeditor', 'id' => 'wt-tinymceeditor', 'placeholder' => trans('lang.blog_desc_note')]) !!}
                                 </div>
                             </div>
                             <div class="wt-attachmentsholder">
