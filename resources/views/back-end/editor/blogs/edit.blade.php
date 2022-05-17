@@ -57,7 +57,7 @@
                                     <h2>{{ trans('lang.blog_content') }}</h2>
                                 </div>
                                 <div class="wt-formtheme wt-userform wt-userformvtwo">
-                                    {!! Form::textarea('description', e($blog->content), ['class' => 'wt-tinymceeditor', 'id' => 'wt-tinymceeditor', 'placeholder' => trans('lang.service_desc_note')]) !!}
+                                    {!! Form::textarea('description', e($blog->content), ['class' => 'wt-tinymceblogeditor', 'id' => 'wt-tinymceeditor', 'placeholder' => trans('lang.service_desc_note')]) !!}
                                 </div>
                             </div>
                             <div class="wt-courses wt-tabsinfo">
