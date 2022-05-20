@@ -111,7 +111,7 @@
                                                 <div id="{{$enable_slider}}" class="wt-servicesslider owl-carousel">
                                                     @foreach ($attachments as $attachment)
                                                         <figure class="item">
-                                                            <img src="{{{asset(Helper::getImageWithSize('uploads/blogs/'.$blog->id, $attachment, 'medium'))}}}" alt="img description" class="item">
+                                                            <img src="{{{asset(Helper::getImageWithSize('uploads/blogs/'.$blog->id, $attachment, ''))}}}" alt="img description" class="item">
                                                         </figure>
                                                     @endforeach
                                                 </div>
