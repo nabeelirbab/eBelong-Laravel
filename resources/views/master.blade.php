@@ -19,6 +19,7 @@
 	<meta name="keywords" content="@yield('keywords')">
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta property="og:image" content="https://ebelongmaster-1517a.kxcdn.com/uploads/services/873/medium-1629458797-download%20(12).jpg">
 	<link rel="apple-touch-icon" href="apple-touch-icon.png">
 	<link rel="icon" href="{{{ asset(Helper::getSiteFavicon()) }}}" type="image/x-icon">
 	<link href="{{asset('css/app.css') }}" rel="stylesheet">

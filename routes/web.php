@@ -355,8 +355,8 @@ Route::group(
             'as' => 'UserData', 
             'uses' => 'UserController@getLogNotificationData'
         ]);
-        Route::get('/admin/send-notifications','UserController@viewNotificationData')->name('viewMobileNotification');
-        Route::post('/admin/send-notifications-post','UserController@sendNotificationData')->name('sendMobileNotification');
+        // Route::get('/admin/send-notifications','UserController@viewNotificationData')->name('viewMobileNotification');
+        // Route::post('/admin/send-notifications-post','UserController@sendNotificationData')->name('sendMobileNotification');
         Route::post('/admin/login-notification-updated','UserController@updateNotificationData');
 		
 
@@ -515,6 +515,8 @@ Route::group(
         Route::post('course/get-course-settings', 'CourseController@getCourseSettings');
         Route::post('service/update-service', 'ServiceController@update');
         Route::post('service/update-course', 'CourseController@update');
+        Route::get('/send-notifications','UserController@viewNotificationData')->name('viewMobileNotification');
+        Route::post('/send-notifications-post','UserController@sendNotificationData')->name('sendMobileNotification');
     }
 );
 //Employer Routes
