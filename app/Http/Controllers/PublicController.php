@@ -1050,26 +1050,13 @@ class PublicController extends Controller
             }
             elseif ($type === 'freelancerjobs') 
             {
-                $allJobs = array();
+                $jobs = array();
                 $freelancer_skills = Skill::getFreelancerSkill(Auth::user()['id']);
-                foreach ($freelancer_skills as $key => $skill_id) {
-                $jobss[$key] = Skill::getJob($skill_id);
+                $job_ids = DB::table('job_skill')->whereIn('skill_id', $freelancer_skills)->pluck('job_id')->toArray();
+                if(!empty($job_ids)){
+                $jobs = Job::whereIn('id',$job_ids)->where('expiry_date', '>', date('Y-m-d'))->get();
                 }
-                if(!empty($jobss)){
-                foreach ($jobss as $key => $job) {
-                 foreach ($job as $key => $value) {
-                    $allJobs[$key] = $value->job_id;
-                }
-                }
-            }
                
-                $jobs=array();
-                if(!empty($allJobs)){
-                $allJobs = array_unique($allJobs);
-                foreach ($allJobs as $job_id) {
-                        $Jobs[$job_id] = Job::where('id',$job_id)->get();                    
-                }
-            }
                 $Jobs_total_records = Job::count();
                 $job_list_meta_title = !empty($inner_page) && !empty($inner_page[0]['job_list_meta_title']) ? $inner_page[0]['job_list_meta_title'] : trans('lang.job_listing');
                 $job_list_meta_desc = !empty($inner_page) && !empty($inner_page[0]['job_list_meta_desc']) ? $inner_page[0]['job_list_meta_desc'] : trans('lang.job_meta_desc');
@@ -1077,14 +1064,7 @@ class PublicController extends Controller
                 $job_inner_banner = !empty($inner_page) && !empty($inner_page[0]['job_inner_banner']) ? $inner_page[0]['job_inner_banner'] : null;
                 $project_settings = !empty(SiteManagement::getMetaValue('project_settings')) ? SiteManagement::getMetaValue('project_settings') : array();
                 $completed_project_setting = !empty($project_settings) && !empty($project_settings['enable_completed_projects']) ? $project_settings['enable_completed_projects'] : 'true';
-                if(!empty($Jobs)){
-                foreach ($Jobs as $key => $value) {
-                    $jobs[$key] = $value[0];
-                        // dd($jobss->employeer->slug);
-                    // }
-                }
-            }
-             
+           
             
                 if (!empty($jobs)) {
                      
@@ -1115,7 +1095,7 @@ class PublicController extends Controller
                     // }
                 }
                 else{
-                    $jobs=[];
+                    
                     return view(
                         'front-end.jobs.index',
                         compact(

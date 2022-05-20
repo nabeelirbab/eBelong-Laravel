@@ -115,24 +115,30 @@
                                                 </span>
                                             </li>
                                         @endif
+                                        @php 
+                                       
+                                            $freelancer_saved=array_search($profile->id,$save_freelancer);
                                         
+                                        @endphp 
                                         @if (Auth::user())
                                         @if ($profile->user_id != Auth::user()->id)
-                                        @if (in_array($profile->id, $save_freelancer))
-                                            <li class="wt-btndisbaled">
-                                                <a href="javascrip:void(0);" class="wt-clicksave wt-clicksave">
+                                       
+                                            <li id="remove-{{$profile->id}}"style="{{ $freelancer_saved ? '' : 'display: none;' }}" >
+                                                <a href="javascrip:void(0);"  class="click_to_save wt-clicksave"
+                                                    @click.prevent="remove_wishlist('remove-{{$profile->id}}', {{ $profile->id }}, 'saved_freelancer', 'Save','add-{{$profile->id}}')" v-cloak>
                                                     <i class="fa fa-heart"></i>
                                                     {{ trans('lang.saved') }}
                                                 </a>
                                             </li>
-                                        @else
-                                            <li v-bind:class="disable_btn" v-cloak>
-                                                <a href="javascrip:void(0);" v-bind:class="click_to_save" id="freelancer-{{$profile->id}}" @click.prevent="add_wishlist('freelancer'-{{$profile->id}}, {{$profile->id}}, 'saved_freelancer', '{{trans("lang.saved")}}')" v-cloak>
-                                                    <i v-bind:class="saved_class"></i>
-                                                    @{{ text }}
+                                        
+                                            <li id="add-{{$profile->id}}" style="{{ $freelancer_saved ? 'display: none;' : '' }}" >
+                                                <a href="javascript:void(0);" class="click_to_save" 
+                                                    @click.prevent="add_wishlist('add-{{$profile->id}}', {{ $profile->id }}, 'saved_freelancer',  '{{{trans('lang.saved')}}}','remove-{{$profile->id}}')" v-cloak>
+                                                    <i v-bind:class="saved_class"></i> 
+                                                    Save
                                                 </a>
                                             </li>
-                                        @endif
+                                        
                                         @endif
                                         @endif
                                     </ul>
