@@ -7,7 +7,7 @@
 @section('title'){{ $cource->title }} @stop
 @section('description', "$cource->description")
 @section('content')
-<head>
+{{-- <head>
     @foreach ($attachments as $attachment)
     <meta property="og:image" content="{{ asset(Helper::getImageWithSize('uploads/courses/'.$seller->id, $attachment, '')) }}"/>
     @endforeach
@@ -16,7 +16,7 @@
 	<meta property="og:title" content="{{ $cource->title }}"/>
 	<meta property="og:type" content="article"/>
 	<meta property="og:url" content="https://dev.ebelong.com/course/after-effects"/>
- </head>
+ </head> --}}
     @php $breadcrumbs = Breadcrumbs::generate('CourceDetail', $cource->slug); @endphp
     <div class="wt-haslayout wt-innerbannerholder">
         <div class="container">
