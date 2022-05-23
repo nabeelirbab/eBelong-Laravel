@@ -16,7 +16,6 @@
 @section('og_url', env('APP_URL').'/course/'.$cource->slug)
 @section('og_title', $cource->title)
 @section('content')
-
 {{-- <head>
     @foreach ($attachments as $attachment)
     <meta property="og:image" content="{{ asset(Helper::getImageWithSize('uploads/courses/'.$seller->id, $attachment, '')) }}"/>
