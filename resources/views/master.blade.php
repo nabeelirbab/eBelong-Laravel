@@ -21,6 +21,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta property="og:image" content="@yield('og_image')"/>
 	<meta property="og:title" content="@yield('og_title')"/>
+	<meta property="og:description" content="@yield('og_desc')"/>
 	<meta property="og:type" content="article"/>
 	<meta property="og:url" content="@yield('og_url')"/>
 	<link rel="apple-touch-icon" href="apple-touch-icon.png">
