@@ -6,7 +6,17 @@
 @endpush
 @section('title'){{ $cource->title }} @stop
 @section('description', "$cource->description")
+@php $i =0;@endphp
+@foreach ($attachments as $attachment)
+@php $i++; @endphp
+@if($i==1)
+@section('og_image', asset(Helper::getImageWithSize('uploads/courses/'.$seller->id, $attachment, 'medium')))
+@endif
+@endforeach
+@section('og_url', env('APP_URL').'/course/'.$cource->title)
+@section('og_title', $cource->title)
 @section('content')
+
 {{-- <head>
     @foreach ($attachments as $attachment)
     <meta property="og:image" content="{{ asset(Helper::getImageWithSize('uploads/courses/'.$seller->id, $attachment, '')) }}"/>
