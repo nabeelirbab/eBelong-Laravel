@@ -66,17 +66,43 @@
                                 @php $username = !empty($blog->editor_id)? \App\Helper::getUserName($blog->editor_id): 'Anonymos' ;
                                 $user = !empty($blog->editor_id)? \App\Profile::where('user_id',$blog->editor_id)->first():array();
                                 @endphp
-                                <div class="d-flex blog-box-logo-name">
-                                    @if(!empty($user) && !empty($user->avater))
-                                    <img src="{{{ asset(Helper::getUserImageWithSize('uploads/users/'.$blog->editor_id, $user->avater, 'listing')) }}}" alt="eBelong" class="up-avatar up-avatar-company flex-shrink-0 up-avatar-30" style="width: 50px; height: 50px; margin-right: 10px; border-radius: 100%;"> 
-                                    @else
-                                    <img src="{{{ asset('images/user.jpg') }}}" alt="eBelong" class="up-avatar up-avatar-company flex-shrink-0 up-avatar-30" style="width: 50px; height: 50px; margin-right: 10px; border-radius: 100%;"> 
-                                    @endif
-                                    <div class="ml-10 blog-box-name">
-                                        <div><strong>Posted By</strong></div> 
-                                        <a href="#" class="up-btn-link text-left">
-                                            {{ $username }}
-                                        </a>
+                                <div class="blog-box-logo-name">
+                                    <div class="d-flex" style="margin-bottom: 20px;">
+                                        @if(!empty($user) && !empty($user->avater))
+                                        <img src="{{{ asset(Helper::getUserImageWithSize('uploads/users/'.$blog->editor_id, $user->avater, 'listing')) }}}" alt="eBelong" class="up-avatar up-avatar-company flex-shrink-0 up-avatar-30" style="width: 50px; height: 50px; margin-right: 10px; border-radius: 100%;"> 
+                                        @else
+                                        <img src="{{{ asset('images/user.jpg') }}}" alt="eBelong" class="up-avatar up-avatar-company flex-shrink-0 up-avatar-30" style="width: 50px; height: 50px; margin-right: 10px; border-radius: 100%;"> 
+                                        @endif
+                                        <div class="ml-10 blog-box-name">
+                                            <div><strong>Posted By</strong></div> 
+                                            <div class="up-btn-link text-left">
+                                                {{ $username }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex blog-box-share-icon">
+                                        <ul class="wt-socialiconssimple wt-socialiconfooter">
+                                            <li class="wt-facebook">
+                                                <a href="https://www.facebook.com/3belong/">
+                                                    <i class="fa fa fa-facebook-f"></i>
+                                                </a>
+                                            </li>
+                                            <li class="wt-twitter">
+                                                <a href="https://www.facebook.com/3belong/">
+                                                <i class="fa fa fa-twitter"></i>
+                                                </a>
+                                            </li>
+                                            <li class="wt-googleplus">
+                                                <a href="https://www.facebook.com/3belong/">
+                                                    <i class="fa fab fa-google-plus-g"></i>
+                                                </a>
+                                            </li>
+                                            <li class="wt-pinterest">
+                                                <a href="https://www.facebook.com/3belong/">
+                                                    <i class="fa fab fa-pinterest"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
