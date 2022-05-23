@@ -15,6 +15,7 @@
 @endforeach
 @section('og_url', env('APP_URL').'/course/'.$cource->slug)
 @section('og_title', $cource->title)
+@section('og_desc', htmlspecialchars_decode(stripslashes($cource->description)))
 @section('content')
 {{-- <head>
     @foreach ($attachments as $attachment)

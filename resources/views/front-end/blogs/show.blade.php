@@ -6,6 +6,16 @@
 @endpush
 @section('title'){{ $blog->title }} @stop
 @section('description', "$blog->content")
+@php $i =0;@endphp
+@foreach ($attachments as $attachment)
+@php $i++; @endphp
+@if($i==1)
+@section('og_image', asset(Helper::getImageWithSize('uploads/blogs/'.$blog->id, $attachment, 'medium')))
+@endif
+@endforeach
+@section('og_url', env('APP_URL').'/blog/'.$blog->slug)
+@section('og_title', $blog->title)
+@section('og_desc', htmlspecialchars_decode(stripslashes("$blog->content")))
 @section('content')
     @php $breadcrumbs = Breadcrumbs::generate('BlogDetail', $blog->slug); @endphp
     <div class="wt-haslayout wt-innerbannerholder">
@@ -83,22 +93,22 @@
                                     <div class="d-flex blog-box-share-icon">
                                         <ul class="wt-socialiconssimple wt-socialiconfooter">
                                             <li class="wt-facebook">
-                                                <a href="https://www.facebook.com/3belong/">
+                                                <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(Request::fullUrl()) }}">
                                                     <i class="fa fa fa-facebook-f"></i>
                                                 </a>
                                             </li>
                                             <li class="wt-twitter">
-                                                <a href="https://www.facebook.com/3belong/">
+                                                <a href="https://twitter.com/intent/tweet?url={{ urlencode(Request::fullUrl()) }}">
                                                 <i class="fa fa fa-twitter"></i>
                                                 </a>
                                             </li>
                                             <li class="wt-googleplus">
-                                                <a href="https://www.facebook.com/3belong/">
+                                                <a href="//pinterest.com/pin/create/button/?url={{ urlencode(Request::fullUrl()) }}">
                                                     <i class="fa fab fa-google-plus-g"></i>
                                                 </a>
                                             </li>
                                             <li class="wt-pinterest">
-                                                <a href="https://www.facebook.com/3belong/">
+                                                <a href="https://plus.google.com/share?url={{ urlencode(Request::fullUrl()) }}">
                                                     <i class="fa fab fa-pinterest"></i>
                                                 </a>
                                             </li>
