@@ -19,7 +19,7 @@
 	<meta name="keywords" content="@yield('keywords')">
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta property="og:image" content="https://dev.ebelong.com/uploads/courses/460/medium-1653306820-wp.png"/>
+	<meta property="og:image" content="https://dev.ebelong.com/uploads/courses/460/medium-1653308031-website.jpg"/>
 	<meta property="og:title" content="After Affects"/>
 	<meta property="og:type" content="article"/>
 	<meta property="og:url" content="https://dev.ebelong.com/course/after-effects"/>
