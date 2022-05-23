@@ -92,6 +92,8 @@ Route::get('hire', 'FreelancerController@freelancersListing')->name('freelancers
 Route::get('jobs/{slug}', 'JobController@jobsList')->name('FilteredJobs');
 Route::get('jobs', 'JobController@jobsListing')->name('jobs');
 
+//seo-remote-developers
+Route::get('hire-remote-developers', 'PublicController@remoteDevPage');
 /*Route::get('/sendemail', 'SendMailController@index');
 Route::post('/sendemail/send', 'SendMailController@send'); */
 
