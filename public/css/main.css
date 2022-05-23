@@ -10703,3 +10703,11 @@ a:focus{text-decoration: none !important;}
 .whatsapp-icon img {
     width: 60px;
 }
+
+.blog-box-share-icon .wt-socialiconssimple li:first-child {
+	padding: 0 10px;
+}
+
+.blog-box-share-icon .wt-socialiconfooter.wt-socialiconssimple li a i {
+    color: #9013F3;
+}

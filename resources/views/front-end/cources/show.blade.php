@@ -6,7 +6,27 @@
 @endpush
 @section('title'){{ $cource->title }} @stop
 @section('description', "$cource->description")
+@php $i =0;@endphp
+@foreach ($attachments as $attachment)
+@php $i++; @endphp
+@if($i==1)
+@section('og_image', asset(Helper::getImageWithSize('uploads/courses/'.$seller->id, $attachment, 'medium')))
+@endif
+@endforeach
+@section('og_url', env('APP_URL').'/course/'.$cource->slug)
+@section('og_title', $cource->title)
+@section('og_desc', htmlspecialchars_decode(stripslashes($cource->description)))
 @section('content')
+{{-- <head>
+    @foreach ($attachments as $attachment)
+    <meta property="og:image" content="{{ asset(Helper::getImageWithSize('uploads/courses/'.$seller->id, $attachment, '')) }}"/>
+    @endforeach
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="630"/>
+	<meta property="og:title" content="{{ $cource->title }}"/>
+	<meta property="og:type" content="article"/>
+	<meta property="og:url" content="https://dev.ebelong.com/course/after-effects"/>
+ </head> --}}
     @php $breadcrumbs = Breadcrumbs::generate('CourceDetail', $cource->slug); @endphp
     <div class="wt-haslayout wt-innerbannerholder">
         <div class="container">

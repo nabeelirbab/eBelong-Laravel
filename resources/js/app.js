@@ -2286,7 +2286,7 @@ if (document.getElementById("user_profile")) {
             }
           });
       },
-      add_wishlist: function (element_id, id, column, saved_text) {
+      add_wishlist: function (element_id, id, column, saved_text,hidable_element_id) {
         var self = this;
         axios
           .post(APP_URL + "/user/add-wishlist", {
@@ -2297,17 +2297,20 @@ if (document.getElementById("user_profile")) {
             if (response.data.authentication == true) {
               if (response.data.type == "success") {
                 if (column == "saved_freelancer") {
-                  jQuery("#" + element_id)
-                    .parents("li")
-                    .addClass("wt-btndisbaled");
-                  jQuery("#" + element_id).addClass("wt-clicksave");
-                  jQuery("#" + element_id)
-                    .find(".save_text")
-                    .text(saved_text);
-                  self.disable_btn = "wt-btndisbaled";
-                  self.text = Vue.prototype.trans("lang.btn_save");
-                  self.saved_class = "fa fa-heart";
-                  self.click_to_save = "wt-clicksave";
+                  jQuery("#" + hidable_element_id).show();
+                  jQuery("#" + element_id).hide();
+                //   jQuery("#" + element_id)
+                //     .parents("li")
+                //     .addClass("wt-btndisbaled");
+                //   jQuery("#" + element_id).addClass("wt-clicksave");
+                //   jQuery("#" + element_id)
+                //     .find(".save_text")
+                //     .text(saved_text);
+                //   self.disable_btn = "wt-btndisbaled";
+                //   self.text = Vue.prototype.trans("lang.btn_save");
+                //   self.saved_class = "fa fa-heart";
+                //   self.click_to_save = "wt-clicksave";
+    
                 } else if (column == "saved_employers") {
                   jQuery("#" + element_id).addClass(
                     "wt-btndisbaled wt-clicksave"
@@ -2334,6 +2337,53 @@ if (document.getElementById("user_profile")) {
                   // self.saved_class = 'wt-clicksave';
                   self.text = saved_text;
                 }
+                self.showMessage(response.data.message);
+              } else {
+                self.showError(response.data.message);
+              }
+            } else {
+              self.showError(response.data.message);
+            }
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      },
+      remove_wishlist: function (
+        element_id,
+        id,
+        column,
+        saved_text,
+        hidable_element_id
+      ) {
+        var self = this;
+        axios
+          .post(APP_URL + "/user/remove-wishlist", {
+            id: id,
+            column: column,
+            seller_id: "",
+          })
+          .then(function (response) {
+            if (response.data.authentication == true) {
+              if (response.data.type == "success") {
+                if (column == "saved_freelancer") {
+                  // jQuery("#" + element_id)
+                  //   .parents("li")
+                  //   .addClass("wt-btndisbaled");
+                  // jQuery("#" + element_id).addClass("wt-clicksave");
+                  // jQuery("#" + element_id)
+                  //   .find(".save_text")
+                  //   .text(saved_text);
+                  // self.disable_btn = "wt-btndisbaled";
+                  // self.text = "Save";
+                  // self.saved_class = "fa fa-heart";
+                  // self.click_to_save = "wt-clicksave";
+                  console.log("#"+hidable_element_id)
+                  console.log("#"+element_id)
+                  jQuery("#"+element_id).toggle();
+                  jQuery("#"+hidable_element_id).toggle();
+                  
+                } 
                 self.showMessage(response.data.message);
               } else {
                 self.showError(response.data.message);
