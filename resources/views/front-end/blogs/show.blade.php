@@ -13,9 +13,10 @@
 @section('og_image', asset(Helper::getImageWithSize('uploads/blogs/'.$blog->id, $attachment, 'medium')))
 @endif
 @endforeach
+@php $content = htmlspecialchars_decode(stripslashes("$blog->content"))@endphp
 @section('og_url', env('APP_URL').'/blog/'.$blog->slug)
 @section('og_title', $blog->title)
-@section('og_desc', htmlspecialchars_decode(stripslashes("$blog->content")))
+@section('og_desc', strip_tags("$blog->content"))
 @section('content')
     @php $breadcrumbs = Breadcrumbs::generate('BlogDetail', $blog->slug); @endphp
     <div class="wt-haslayout wt-innerbannerholder">
