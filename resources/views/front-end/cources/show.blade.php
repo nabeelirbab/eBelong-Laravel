@@ -13,7 +13,7 @@
 @section('og_image', asset(Helper::getImageWithSize('uploads/courses/'.$seller->id, $attachment, 'medium')))
 @endif
 @endforeach
-@section('og_url', env('APP_URL').'/course/'.$cource->title)
+@section('og_url', env('APP_URL').'/course/'.$cource->slug)
 @section('og_title', $cource->title)
 @section('content')
 
