@@ -1512,4 +1512,8 @@ class PublicController extends Controller
             return $json;
         }
     }
+
+    public function remoteDevPage(){
+        return view('front-end.remoteDeveloper.index');
+    }
 }
