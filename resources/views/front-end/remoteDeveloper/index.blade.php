@@ -1,4 +1,9 @@
-@extends(file_exists(resource_path('views/extend/back-end/master.blade.php')) ? 'extend.back-end.master' : 'back-end.master')
+@extends(file_exists(resource_path('views/extend/front-end/master.blade.php')) ?
+'extend.front-end.master':
+ 'front-end.master', ['body_class' => 'wt-innerbgcolor'] )
+@push('stylesheets')
+    <link href="{{ asset('css/owl.carousel.min.css') }}" rel="stylesheet">
+@endpush
 @section('content')
 
 <div class="container landing-page">
