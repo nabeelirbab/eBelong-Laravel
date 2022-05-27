@@ -94,6 +94,9 @@ Route::get('jobs', 'JobController@jobsListing')->name('jobs');
 
 //seo-remote-developers
 Route::get('hire-remote-developers', 'PublicController@remoteDevPage');
+Route::post('post-guest-message', 'PublicController@storeGuestMsg');
+
+
 /*Route::get('/sendemail', 'SendMailController@index');
 Route::post('/sendemail/send', 'SendMailController@send'); */
 
@@ -468,6 +471,9 @@ Route::group(
         Route::get('get/{type}/{filename}/{id}', 'PublicController@getFile')->name('getfile');
         Route::post('blog/update-blog', 'BlogController@update');
         Route::post('blog/change-status', 'BlogController@changeStatus');
+
+        Route::get('editor/pages', 'PageController@dynamicPages');
+        Route::get('/guest-messages','PublicController@showGuestInfo')->name('guestMessages');
         
 
    
