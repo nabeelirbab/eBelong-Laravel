@@ -1516,4 +1516,50 @@ class PublicController extends Controller
     public function remoteDevPage(){
         return view('front-end.remoteDeveloper.index');
     }
-}
+    public function storeGuestMsg(Request $request){
+        $json = array();
+        // $server = Helper::worketicIsDemoSiteAjax();
+        // if (!empty($server)) {
+        //     $response['message'] = $server->getData()->message;
+        //     return $response;
+        // }
+        request()->validate
+            (
+                [
+                'name' => 'required',
+                'email' => 'required|email',
+                'message' => 'required',
+                'phone' => 'required|numeric|digits:11'
+               
+            ]
+        );
+        
+        $data =DB::table('contact_info')->insertGetId(
+            [
+                'name' => filter_var($request['name'], FILTER_SANITIZE_STRING),
+                'message' => filter_var($request['message'], FILTER_SANITIZE_STRING),
+                'email' => $request['email'],
+                'phone' => $request['phone'],
+                "created_at" => Carbon::now(), "updated_at" => Carbon::now()
+            ]
+        );
+       
+        if(!empty($data))
+            {
+                Session::flash('message', 'Thankyou for Showing Interest!');
+                return redirect('/hire-remote-developers');
+            } 
+            
+        else{
+            Session::flash('errror', 'Something went wrong!');
+            return redirect('/');
+        }
+    }
+    public function showGuestInfo(){
+        $users = DB::table('contact_info')->paginate(15);
+        return view('back-end/editor/guests/index',compact('users'));
+
+    }
+
+    }
+
