@@ -36,6 +36,15 @@
                                     @endif
                                 </div>
                                 <div class="form-group">
+                                    {!! Form::text( 'skill_heading', null, ['class' =>'form-control'.($errors->has('skill_heading') ? ' is-invalid' : ''), 'placeholder' => 'Heading Text'] ) !!}
+                                    <span class="form-group-description">{{{ 'Heading Text for the pages' }}}</span>
+                                    @if ($errors->has('skill_heading'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('skill_heading') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                                <div class="form-group">
                                     <label for="imageInput">Skill Logo</label>
                                     <input name="skill_logo" type="file" id="imageInput">
                                 </div>
@@ -53,7 +62,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    {!! Form::textarea( 'skill_desc', null, ['class' =>'form-control', 'placeholder' => trans('lang.ph_desc')] ) !!}
+                                    {!! Form::textarea( 'skill_desc', null, ['class' => 'wt-tinymceblogeditor', 'id' => 'wt-tinymceeditor', 'placeholder' => trans('lang.ph_desc')] ) !!}
                                     <span class="form-group-description">{{{ trans('lang.cat_desc') }}}</span>
                                 </div>
                                 <div class="form-group wt-btnarea">
