@@ -1403,6 +1403,8 @@ public function adminRating(Request $request){
 
     public function freelancerList($slug){
         $type='category';
+        $heading = "";
+        $dynamic_content="";
         $locations  = Location::all();
         $languages  = Language::all();
         $categories = Category::orderBy('title')->get();
@@ -1481,6 +1483,13 @@ public function adminRating(Request $request){
                 }
             }
         }
+        
+        if(!empty($category_obj->heading)){
+            $heading = $category_obj->heading;
+        }
+        if(!empty($category_obj->abstract)){
+            $dynamic_content = $category_obj->abstract;
+        }
         $users->whereIn('id', $user_id)->orderBy('is_certified', 'DESC'); 
         }
         if ($type=='location') {
@@ -1494,10 +1503,18 @@ public function adminRating(Request $request){
                 $skill_obj = Skill::where('slug', $slug)->get();
                 foreach ($skill_obj as $key => $skill) {
                     $userid = DB::table('skill_user')->select('user_id')->where('skill_id',$skill->id)->get();
+                    if(!empty($skill->heading)){
+                        $heading = $skill->heading;
+                    }
+                    if(!empty($skill->description)){
+                        $dynamic_content = $skill->description;
+                    }
                     foreach($userid as $ui){
                         $user_id[] = $ui->user_id;
                     }
+
                 }
+               
                 $users->whereIn('id', $user_id)->orderBy('is_certified', 'DESC'); 
 
         }
@@ -1539,8 +1556,12 @@ public function adminRating(Request $request){
             }
             $users->whereIn('id', $user_id);
         }
-
-        $users = $users->paginate(20)->setPath('');
+        if(empty($heading)){
+            $heading = "Find Talented Freelancers";
+        }
+       
+        // $dynamic_content = DB::table('hybrid_pages')->where('title','hire')->where('skill_slug',$slug)->get();
+        $users = $users->paginate(7)->setPath('');
 
         $type="freelancer";
         if (file_exists(resource_path('views/extend/front-end/freelancers/freelancersList.blade.php'))) {
@@ -1563,7 +1584,10 @@ public function adminRating(Request $request){
                                 'show_f_banner',
                                 'f_inner_banner',
                                 'enable_package',
-                                'show_breadcrumbs'
+                                'show_breadcrumbs',
+                                'dynamic_content',
+                                'heading',
+                                
                 )
             );
         } else {
@@ -1586,13 +1610,16 @@ public function adminRating(Request $request){
                     'show_f_banner',
                     'f_inner_banner',
                     'enable_package',
-                    'show_breadcrumbs'
+                    'show_breadcrumbs',
+                    'dynamic_content',
+                    'heading'
                 )
             );
         }
         
     }
     public function freelancersListing(){
+        $heading = "";
         $locations  = Location::all();
         $languages  = Language::all();
         $categories = Category::orderBy('title')->get();
@@ -1603,7 +1630,7 @@ public function adminRating(Request $request){
         ->select('users.*')
          ->whereIn('users.id', $user_by_role)->where('users.is_disabled', 'false')->where('users.status',1)
          ->orderBy('users.is_certified','DESC')
-         ->orderBy('profiles.avater', 'DESC')->paginate(20)->setPath('');
+         ->orderBy('profiles.avater', 'DESC')->paginate(7)->setPath('');
         $type = "freelancer";
         $project_length = Helper::getJobDurationList();
         $symbol   = !empty($currency) && !empty($currency[0]['currency']) ? Helper::currencyList($currency[0]['currency']) : array();
@@ -1618,6 +1645,9 @@ public function adminRating(Request $request){
         $enable_package = !empty($payment_settings) && !empty($payment_settings[0]['enable_packages']) ? $payment_settings[0]['enable_packages'] : 'true';
         $breadcrumbs_settings = SiteManagement::getMetaValue('show_breadcrumb');
         $show_breadcrumbs = !empty($breadcrumbs_settings) ? $breadcrumbs_settings : 'true';
+        if(empty($heading)){
+            $heading = "Find Talented Freelancers";
+        }
         if (file_exists(resource_path('views/extend/front-end/freelancers/freelancersList.blade.php'))) {
             return view(
                 'extend.front-end.freelancers.freelancersList',
@@ -1638,7 +1668,8 @@ public function adminRating(Request $request){
                                 'show_f_banner',
                                 'f_inner_banner',
                                 'enable_package',
-                                'show_breadcrumbs'
+                                'show_breadcrumbs',
+                                'heading'
                 )
             );
         } else {
@@ -1661,7 +1692,8 @@ public function adminRating(Request $request){
                     'show_f_banner',
                     'f_inner_banner',
                     'enable_package',
-                    'show_breadcrumbs'
+                    'show_breadcrumbs',
+                    'heading'
                 )
             );
         }
