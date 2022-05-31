@@ -1586,7 +1586,7 @@ public function adminRating(Request $request){
                                 'enable_package',
                                 'show_breadcrumbs',
                                 'dynamic_content',
-                                'heading',
+                                'heading'
                                 
                 )
             );
