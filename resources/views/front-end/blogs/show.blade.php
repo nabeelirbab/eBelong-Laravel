@@ -113,6 +113,11 @@
                                                     <i class="fa fab fa-pinterest"></i>
                                                 </a>
                                             </li>
+                                            <li class="wt-linkedIn">
+                                                <a href="https://plus.google.com/share?url={{ urlencode(Request::fullUrl()) }}">
+                                                    <i class="fa fab fa-linkedin"></i>
+                                                </a>
+                                            </li>
                                         </ul>
                                     </div>
                                 </div>
