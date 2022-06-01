@@ -131,11 +131,13 @@ class StatsController extends Controller
     // )->get();
     // dd(Carbon::now()->subMonth(6), Carbon::now()));
     $data = [];
-foreach (range(0, 6) as $i) {
-    $date = now()->subMonths($i);
-    $dates[$date->format('m')] = User::where('created_at', '>=', $date->startOfMonth()->startOfDay()->toDateString())
-        ->where('created_at', '<=', $date->endOfMonth()->endOfDay()->toDateString())
+    
+for($i = 0; $i < 6; ++$i) {
+    $date = now()->startOfMonth()->subMonth($i);
+    $dates[$date->format('m')] = User::where('created_at', '>=', $date->startOfMonth()->startOfDay()->toDateTimeString())
+        ->where('created_at', '<=', $date->endOfMonth()->endOfDay()->toDateTimeString())
         ->count();
+        // dd($date->startOfMonth()->startOfDay()->toDateString());
 }
 $data = array_values($dates);
 foreach ($dates as $key => $value) {

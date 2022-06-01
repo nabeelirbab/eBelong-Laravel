@@ -114,7 +114,7 @@
                                                 </a>
                                             </li>
                                             <li class="wt-linkedIn">
-                                                <a href="https://plus.google.com/share?url={{ urlencode(Request::fullUrl()) }}">
+                                                <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ urlencode(Request::fullUrl()) }}">
                                                     <i class="fa fab fa-linkedin"></i>
                                                 </a>
                                             </li>
