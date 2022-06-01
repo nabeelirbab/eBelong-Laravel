@@ -117,7 +117,7 @@ class Skill extends Model
             $this->slug = filter_var($request['skill_title'], FILTER_SANITIZE_STRING);
             $this->logo = filter_var($request['logo'], FILTER_SANITIZE_STRING);
             $this->is_featured = filter_var($request['is_featured'], FILTER_SANITIZE_STRING);
-            $this->description = filter_var($request['skill_desc'], FILTER_SANITIZE_STRING);
+            $this->description = $request['skill_desc'];
             return $this->save();
         }
     }
@@ -142,7 +142,7 @@ class Skill extends Model
             $skills->heading = filter_var($request['skill_heading'], FILTER_SANITIZE_STRING);
             $skills->logo = filter_var($request['logo'], FILTER_SANITIZE_STRING);
             $skills->is_featured = filter_var($request['is_featured'], FILTER_SANITIZE_STRING);
-            $skills->description = filter_var($request['skill_desc'], FILTER_SANITIZE_STRING);
+            $skills->description = $request['skill_desc'];
             $skills->save();
         }
     }

@@ -124,7 +124,7 @@ class Category extends Model
             $this->title = filter_var($request['category_title'], FILTER_SANITIZE_STRING);
             $this->slug = filter_var($request['category_title'], FILTER_SANITIZE_STRING);
             $this->heading = filter_var($request['category_heading'], FILTER_SANITIZE_STRING);
-            $this->abstract = filter_var($request['category_abstract'], FILTER_SANITIZE_STRING);
+            $this->abstract = $request['category_abstract'];
             $old_path = Helper::PublicPath() . '/uploads/categories/temp';
             if (!empty($request['uploaded_image'])) {
                 $filename = $request['uploaded_image'];
@@ -166,7 +166,7 @@ class Category extends Model
             }
             $cats->title = filter_var($request['category_title'], FILTER_SANITIZE_STRING);
             $cats->heading = filter_var($request['category_heading'], FILTER_SANITIZE_STRING);
-            $cats->abstract = filter_var($request['category_abstract'], FILTER_SANITIZE_STRING);
+            $cats->abstract = $request['category_abstract'];
             $old_path = Helper::PublicPath() . '/uploads/categories/temp';
             if (!empty($request['uploaded_image'])) {
                 $filename = $request['uploaded_image'];
