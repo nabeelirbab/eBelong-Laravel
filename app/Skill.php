@@ -113,6 +113,7 @@ class Skill extends Model
         if (!empty($request)) {
 
             $this->title = filter_var($request['skill_title'], FILTER_SANITIZE_STRING);
+            $this->title = filter_var($request['skill_heading'], FILTER_SANITIZE_STRING);
             $this->slug = filter_var($request['skill_title'], FILTER_SANITIZE_STRING);
             $this->logo = filter_var($request['logo'], FILTER_SANITIZE_STRING);
             $this->is_featured = filter_var($request['is_featured'], FILTER_SANITIZE_STRING);
@@ -138,6 +139,7 @@ class Skill extends Model
              $skills->slug = $request['skill_slug'];
             }
             $skills->title = filter_var($request['skill_title'], FILTER_SANITIZE_STRING);
+            $skills->heading = filter_var($request['skill_heading'], FILTER_SANITIZE_STRING);
             $skills->logo = filter_var($request['logo'], FILTER_SANITIZE_STRING);
             $skills->is_featured = filter_var($request['is_featured'], FILTER_SANITIZE_STRING);
             $skills->description = filter_var($request['skill_desc'], FILTER_SANITIZE_STRING);

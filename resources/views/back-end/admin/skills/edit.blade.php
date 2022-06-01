@@ -33,6 +33,15 @@
                                     @endif
                                 </div>
                                 <div class="form-group">
+                                    {!! Form::text( 'skill_heading', e($skills['heading']), ['class' =>'form-control'.($errors->has('skill_heading') ? ' is-invalid' : '')] ) !!}
+                                    <span class="form-group-description">{{{ trans('lang.desc') }}}</span>
+                                    @if ($errors->has('skill_title'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('skill_title') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                                <div class="form-group">
                                     {!! Form::text( 'skill_slug', e($skills['slug']), ['class' =>'form-control'.($errors->has('skill_slug') ? ' is-invalid' : '')] ) !!}
                                     <span class="form-group-description">{{{ trans('lang.desc') }}}</span>
                                     @if ($errors->has('skill_slug'))
@@ -71,7 +80,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    {!! Form::textarea( 'skill_desc', e($skills['description']), ['class' =>'form-control',
+                                    {!! Form::textarea( 'skill_desc', e($skills['description']), ['class' => 'wt-tinymceblogeditor', 'id' => 'wt-tinymceeditor',
                                     'placeholder' => trans('lang.ph_desc')] ) !!}
                                     <span class="form-group-description">{{{ trans('lang.cat_desc') }}}</span>
                                 </div>
