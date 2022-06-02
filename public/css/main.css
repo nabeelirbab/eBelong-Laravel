@@ -2450,7 +2450,7 @@ body.wt-login .wt-userlogedin{display: block;}
 /* Artcle Style */
 /* Artcle Banner Style */
 .wt-innerbannerholder{
-	height: 150px;
+	/* height: 150px; */
 	/* background-image: url(../images/bannerimg/aboutus.jpg) !important; */
 	background-size: cover;
     background-repeat: no-repeat;
@@ -6793,7 +6793,7 @@ select.is-invalid {border-color: #dc3545;}
 }
 .wt-profilephoto .wt-location.wt-tabsinfo{margin: 0;}
 .wt-innerbannerholder,
-.wt-bannerholder{margin: 0 0 20px;}
+.wt-bannerholder{margin: 0 0 40px;}
 #pages-list .wt-innerbannerholder,
 #pages-list .wt-bannerholder{margin: 0;}
 .wt-ratepoints{
@@ -11306,5 +11306,8 @@ textarea::placeholder {
 	min-height: 40rem;
 } */
 	
-
+.dynamic-data {
+    margin-top: 20px;
+    font-size: 16px;
+}
 
