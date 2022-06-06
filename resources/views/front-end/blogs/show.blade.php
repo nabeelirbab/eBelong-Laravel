@@ -7,12 +7,14 @@
 @section('title'){{ $blog->title }} @stop
 @section('description', "$blog->content")
 @php $i =0;@endphp
+@if (!empty($attachments))
 @foreach ($attachments as $attachment)
 @php $i++; @endphp
 @if($i==1)
 @section('og_image', asset(Helper::getImageWithSize('uploads/blogs/'.$blog->id, $attachment, 'medium')))
 @endif
 @endforeach
+@endif
 @php $content = htmlspecialchars_decode(stripslashes("$blog->content"))@endphp
 @section('og_url', env('APP_URL').'/blog/'.$blog->slug)
 @section('og_title', $blog->title)
