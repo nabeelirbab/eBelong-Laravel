@@ -23,8 +23,7 @@ class HomeController extends Controller
     public function theme5()
     {
         $categories = Category::select('id','title','slug','image')->get();
-        $all_skills = Skill::select('id','title','slug','image','is_featured')->get();
-        
+        $all_skills = Skill::select('id','title','slug','logo','is_featured')->get();
 		$i = 0;
 		// foreach($categories as $cat){
 		// 	$categorycount = DB::table('catables')
