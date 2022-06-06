@@ -34,7 +34,7 @@
                                 </div>
                                 <div class="form-group">
                                     {!! Form::text( 'skill_heading', e($skills['heading']), ['class' =>'form-control'.($errors->has('skill_heading') ? ' is-invalid' : '')] ) !!}
-                                    <span class="form-group-description">{{{ trans('lang.desc') }}}</span>
+                                    <span class="form-group-description">{{{ "Heading Text For skills" }}}</span>
                                     @if ($errors->has('skill_title'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('skill_title') }}</strong>
