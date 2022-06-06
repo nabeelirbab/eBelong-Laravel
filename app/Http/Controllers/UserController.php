@@ -939,13 +939,21 @@ class UserController extends Controller
             $user_emails = explode(',', $request->notification_emails);
 
             foreach ($user_emails as $email) {
-
+                // dd($this->user::getUserRoleType(Auth::user()->id)->role_type);
+                if($this->user::getUserRoleType(Auth::user()->id)->role_type=='freelancer'){
+                    $user_ids = DB::table('users')->join('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
+                    ->select('users.id')
+                    ->where('users.email', $email)->where('model_has_roles.role_id', '3')->get();
+                }
+                if($this->user::getUserRoleType(Auth::user()->id)->role_type=='admin'){
                 $user_ids = DB::table('users')->select('id')
                     ->where('email', '=', $email)
                     ->get();
-
+                }
                 $user_ids = @json_decode(json_encode($user_ids), true);
-
+                if(empty($user_ids)){
+                    return redirect()->back()->with('alert', 'No Users Available with this Email!');
+                }
                 foreach ($user_ids as $user_id) {
 
                     $firebaseTokens = DB::table('user_device_tokens')->select('device_token')
