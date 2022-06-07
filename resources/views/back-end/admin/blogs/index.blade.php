@@ -75,11 +75,11 @@
 														<a href="{{{route('BlogDetail',$blog['slug'])}}}" class="wt-viewinfo">
 															<i class="lnr lnr-eye"></i>
 														</a>
-														<a href="{{{url('editor/dashboard/edit-blog/'.$blog['id'])}}}" class="wt-addinfo wt-skillsaddinfo">
+														<a href="{{{url('admin/dashboard/edit-blog/'.$blog['id'])}}}" class="wt-addinfo wt-skillsaddinfo">
 															<i class="lnr lnr-pencil"></i>
 														</a>
-													
-															<delete :title="'{{trans("lang.ph_delete_confirm_title")}}'" :id="'{{ $blog['id'] }}'" :message="'{{trans("lang.ph_blog_delete_message")}}'" :url="'{{url('editor/dashboard/delete-blog')}}'"></delete>
+													        @php $role = \App\Helper::getSessionUserRole();@endphp
+															<delete :title="'{{trans("lang.ph_delete_confirm_title")}}'" :id="'{{ $blog['id'] }}'" :message="'{{trans("lang.ph_blog_delete_message")}}'" :url="'{{url($role.'/dashboard/delete-blog')}}'"></delete>
 													
 														
 													</div>

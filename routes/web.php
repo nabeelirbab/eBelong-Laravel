@@ -363,6 +363,9 @@ Route::group(
         // Route::get('/admin/send-notifications','UserController@viewNotificationData')->name('viewMobileNotification');
         // Route::post('/admin/send-notifications-post','UserController@sendNotificationData')->name('sendMobileNotification');
         Route::post('/admin/login-notification-updated','UserController@updateNotificationData');
+
+        //blogs
+        Route::get('admin/manage-blogs', 'BlogController@manageAdminBlogs')->name('manageAdminBlogs');
 		
 
 
@@ -466,8 +469,8 @@ Route::group(
         Route::get('editor/manage-blogs', 'BlogController@manageBlogs')->name('manageBlogs');
         Route::get('editor/blogs', 'BlogController@editorBlogs')->name('editorBlogs');
         
-        Route::post('editor/dashboard/delete-blog', 'BlogController@destroy');
-        Route::get('editor/dashboard/edit-blog/{id}', 'BlogController@edit')->name('edit_blog');
+        Route::post('{role}/dashboard/delete-blog', 'BlogController@destroy');
+        Route::get('{role}/dashboard/edit-blog/{id}', 'BlogController@edit')->name('edit_blog');
         Route::get('get/{type}/{filename}/{id}', 'PublicController@getFile')->name('getfile');
         Route::post('blog/update-blog', 'BlogController@update');
         Route::post('blog/change-status', 'BlogController@changeStatus');
