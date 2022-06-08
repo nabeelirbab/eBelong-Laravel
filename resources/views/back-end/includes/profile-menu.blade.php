@@ -448,12 +448,12 @@
                         </li>
                     @endif
                 @endif
-                <li>
+                {{-- <li>
                     <a href="{{{ route('viewMobileNotification') }}}">
                         <i class="ti-email"></i>
                         <span>{{ 'Push Notifications' }}</span>
                     </a>
-                </li>
+                </li> --}}
                 <li>
                     <a href="{{{ url($role.'/saved-items') }}}">
                         <i class="ti-heart"></i>

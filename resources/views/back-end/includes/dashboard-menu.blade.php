@@ -488,12 +488,12 @@
                                 <span>{{ trans('lang.saved_items') }}</span>
                             </a>
                         </li>
-                        <li>
+                        {{-- <li>
                             <a href="{{{ route('viewMobileNotification') }}}">
                                 <i class="ti-email"></i>
                                 <span>{{ 'Push Notifications' }}</span>
                             </a>
-                        </li>
+                        </li> --}}
                     @endif
                     <li>
                         <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('dashboard-logout-form').submit();">
