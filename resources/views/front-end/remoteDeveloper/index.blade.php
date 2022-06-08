@@ -72,7 +72,7 @@
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 order-2 section2_right">
                 <div class="section2_image section2_image_height">
                     <span>
-                        <img src="https://www.turing.com/_next/image?url=%2Fimg%2Fpic-skills.png&w=1920&q=75"/>
+                        <img src="{{ asset('uploads/settings/general/image-1.jpg') }}" alt="img 1"/>
                     </span>
                 </div>
             </div>
@@ -127,7 +127,7 @@
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 section2_right">
                 <div class="section2_image section2_image_height">
                     <span>
-                        <img src="https://www.turing.com/img/search.svg"/>
+                        <img src="{{ asset('uploads/settings/general/image-2.png') }}" alt="img 2"/>
                     </span>
                 </div>
             </div>
@@ -169,7 +169,7 @@
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 order-2 section2_right">
                 <div class="section2_image section2_image_height">
                     <span>
-                        <img src="https://www.turing.com/img/earth-collab.svg"/>
+                        <img src="{{ asset('uploads/settings/general/image-3.jpg') }}" alt="img 3"/>
                     </span>
                 </div>
             </div>
