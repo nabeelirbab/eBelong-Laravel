@@ -667,38 +667,41 @@ class PublicController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getUserRelatedFreelancers($user_id)
-
+    public function getUserRelatedFreelancers()
     {
         $json = array();
+        $user_id = Auth::user()->id;
         $user = User::find($user_id);
         if(!empty($user)){
         $profile = Profile::where('user_id',$user_id)->first();
+        $user->user_image = asset(!empty($profile->avater) ? Helper::getUserImageWithSize('uploads/users/'.$profile->user_id, $profile->avater, 'listing') : '/images/user.jpg');
         $skills = $user->skills()->get();
-        $selectedcategories = !empty($profile->category_id) ? $profile->category_id : '';
-        $cat_user_id = array();
-        $freelancers = Profile::where('category_id', $selectedcategories)->get();
-        foreach ($freelancers as $key => $freelancer) {
-            if (!empty($freelancer->user_id)) {
-                $cat_user_id[] = $freelancer->user_id;
-            }
-        }
         foreach ($skills as $key => $skill) {
             $skill_slugs[] = $skill->slug;
         }
-        $user_id = array();
         $search_skills = $skill_slugs;
+        $h = 'user_skilll';
+        $ids_to_skip = array();
         $user_by_role =  User::role(3)->pluck('id')->toArray();
         $skills = Skill::whereIn('slug', $search_skills)->get();
-                foreach ($skills as $key => $skill) {
-                    $userid = DB::table('skill_user')->select('user_id')->where('skill_id',$skill->id)->get();
-                    foreach($userid as $ui){
-                        $user_id[] = $ui->user_id;
-                    }
-                }
-                // dd($cat_user_id);
-        $users = User::whereIn('id', $user_by_role)->whereIn('id', $user_id)->orwhereIn('id',$cat_user_id)->where('is_disabled', 'false')->where('status',1)->get();
-        $json['users']=$users;
+        $user->$h=$skills;
+        foreach ($user->$h as $key => $skill) {
+            $user_ids = array();
+            $userid = DB::table('skill_user')->select('user_id')->where('skill_id',$skill->id)->get();
+            foreach($userid as $ui){
+                $user_ids[] = $ui->user_id;
+            }
+            $skill->relations =  User::whereIn('id', $user_by_role)->whereIn('id', $user_ids)->whereNotIn('id',$ids_to_skip)->where('id','!=',$user_id)->where('is_disabled', 'false')->where('status',1)->get();
+            foreach($userid as $ui){
+                $ids_to_skip[] = $ui->user_id;
+            }
+            foreach ($skill->relations as $key => $related_users) {
+                $profile = Profile::where('user_id',$related_users->id)->first();
+                $related_users->user_image = asset(!empty($profile->avater) ? Helper::getUserImageWithSize('uploads/users/'.$profile->user_id, $profile->avater, 'listing') : '/images/user.jpg');
+            
+            }
+        }
+        $json['users']=$user;
         return $json;
 
     }
