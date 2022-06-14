@@ -11,8 +11,8 @@
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 section1_right">
                 <div class="section1_headline">
                     <h3 class="section1_firstTitle">For companies</h3>
-                    <h1 class="section1_headlineTitle">Tired of fighting with Silicon Valley giants to hire software developers?</h1>
-                    <div class="Section1_subTitle">Hire senior pre-vetted remote developers with strong technical and communication skills at unbeatable prices, ready to work in your timezone.</div>
+                    <h1 class="section1_headlineTitle">Looking to Hire Remote Developers?</h1>
+                    <div class="Section1_subTitle">Are you in the market for vetted remote developers and software programmers that have sharp technical and interactive skills, we have just what you're looking for!</div>
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 section1_left">
@@ -68,6 +68,32 @@
                 </div>
             </div>
         </div>
+        <div class="row additional-section">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <h2 class="additional_headlineTitle">
+                    Take on the most Professional Remote Developers 
+                </h2>
+                <p class="additional_subTitle">
+                    Whether your business requires teams or individuals for remote development, app buildout, web development, or any other software development projects we have strong programmers and engineers waiting to help you.
+                </p>
+            </div>
+        </div>
+        <div class="row additional-section">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <h2 class="additional_headlineTitle">
+                    How Do We Locate Qualified Software Developers for Your Needs? 
+                </h2>
+                <p class="additional_subTitle1">
+                    Firstly, our people will hear out and pay close attention to your requirements, this is inclusive of project details, position descriptions, the desired outcome, and required workflow. All these key points help us find the ideal team of specialists for you.
+                </p>
+                <p class="additional_subTitle1">
+                    Next up, after getting a basic layout of your plan, our team reviews candidates to find the best remote developers and programmers for you. Checking out their tech skills, language proficiency, background but also their soft skills. Soft skills, are essential and enhance an individual's technical abilities, allowing them to figure out your unique needs and arrange plans for designing programs. We'll present you with a list of the most suitable developers and programmers available.
+                </p>
+                <p class="additional_subTitle">
+                    On to the next step, after you finalize your choice from our list of developers and hire remote developers or hire software programmers they are integrated into your project to improve efficiency. In the end, you will have a team of professionals, or an individual if you prefer, working for you directly just like an in-house team but the only difference is, that our team works remotely.
+                </p>
+            </div>
+        </div>
         <div class="row section2 margin-row"> 
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 order-2 section2_right">
                 <div class="section2_image section2_image_height">
@@ -79,41 +105,41 @@
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 section2_left">
                 <div class="section2_left_info">
                     <div class="section2_left_infoWrap">
-                        <h2 class="section2_left_info-list-title tablet-hidden mobile-hidden">High quality/cost ratio</h2>
+                        <h2 class="section2_left_info-list-title tablet-hidden mobile-hidden"></h2>
                         <div class="section2_left_list-item">
                             <div class="section2_left_list-item-icon">
                                 <span>
-                                    <img alt="icon" src="https://www.turing.com/img/icons/icon-box-money.svg">
+                                    <img alt="icon" src="{{ asset('uploads/settings/landingpageicons/icon-box-money.svg') }}">
                                 </span>
                             </div>
                             <div class="section2_left_list-item-info">
-                                <h3>Hire Silicon Valley caliber at half the cost</h3>
+                                <h3>Top Tier Talent at Half The Cost</h3>
                                 <p class="section2_left_list-item-text">
-                                    Hire the top 1% of 1.5 million+ developers from 150+ countries who have applied to Turing.
+                                    Hire the top 1% of 1.5 million+ developers from 150+ countries who have applied to eBelong.
                                 </p>
                             </div>
                         </div>
                         <div class="section2_left_list-item">
                             <div class="section2_left_list-item-icon">
                                 <span>
-                                    <img alt="icon" src="https://www.turing.com/img/icons/icon-box-skills.svg">
+                                    <img alt="icon" src="{{ asset('uploads/settings/landingpageicons/icon-box-skills.svg') }}">
                                 </span>
                             </div>
                             <div class="section2_left_list-item-info">
-                                <h3>100+ skills available</h3>
+                                <h3>100+ skills</h3>
                                 <p class="section2_left_list-item-text">
-                                    Hire React, Node, Python, Angular, Swift, React Native, Android, Java, Rails, Golang, DevOps, ML, Data Engineers, and more.
+                                    Hire React, Node, React Native, Python, Golang, Data Engineers, Angular, DevOps, Rails, Swift, Android, Java, ML, and more.
                                 </p>
                             </div>
                         </div>
                         <div class="section2_left_list-item">
                             <div class="section2_left_list-item-icon">
                                 <span>
-                                    <img alt="icon" src="https://www.turing.com/img/icons/icon-box-guard.svg">
+                                    <img alt="icon" src="{{ asset('uploads/settings/landingpageicons/icon-box-guard.svg') }}">
                                 </span>
                             </div>
                             <div class="section2_left_list-item-info">
-                                <h3>Zero risk</h3>
+                                <h3>Vetted Developers</h3>
                                 <p class="section2_left_list-item-text">
                                     If you decide to stop within two weeks, you pay nothing.
                                 </p>
@@ -134,30 +160,30 @@
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 section2_left">
                 <div class="section2_left_info">
                     <div class="section2_left_infoWrap">
-                        <h2 class="section2_left_info-list-title tablet-hidden mobile-hidden">Rigorous Vetting</h2>
+                        <h2 class="section2_left_info-list-title tablet-hidden mobile-hidden">Expert Vetted Talent</h2>
                         <div class="section2_left_list-item">
                             <div class="section2_left_list-item-icon">
                                 <span>
-                                    <img alt="icon" src="https://www.turing.com/img/icons/icon-box-checked.svg">
+                                    <img alt="icon" src="{{ asset('uploads/settings/landingpageicons/icon-box-checked.svg') }}">
                                 </span>
                             </div>
                             <div class="section2_left_list-item-info">
                                 <h3>5+ hours of tests and interviews</h3>
                                 <p class="section2_left_list-item-text">
-                                    More rigorous than Silicon Valley job interviews. We test for 100+ skills, data structures, algorithms, systems design, software specializations & frameworks.
+                                    We look for great communicators who can take charge of business and product goals without the need of being micromanaged.
                                 </p>
                             </div>
                         </div>
                         <div class="section2_left_list-item">
                             <div class="section2_left_list-item-icon">
                                 <span>
-                                    <img alt="icon" src="https://www.turing.com/img/icons/icon-box-medal.svg">
+                                    <img alt="icon" src="{{ asset('uploads/settings/landingpageicons/icon-box-medal.svg') }}">
                                 </span>
                             </div>
                             <div class="section2_left_list-item-info">
                                 <h3>Seniority tests</h3>
                                 <p class="section2_left_list-item-text">
-                                    We select excellent communicators who can proactively take ownership of business and product objectives without micromanagement.
+                                    We extensively screen our remote developers to ensure that you are only matched with top-tier talent.
                                 </p>
                             </div>
                         </div>
@@ -165,7 +191,7 @@
                 </div>
             </div>
         </div>
-        <div class="row section4 margin-row"> 
+        <!-- <div class="row section4 margin-row"> 
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 order-2 section2_right">
                 <div class="section2_image section2_image_height">
                     <span>
@@ -180,7 +206,7 @@
                         <div class="section2_left_list-item">
                             <div class="section2_left_list-item-icon">
                                 <span>
-                                    <img alt="icon" src="https://www.turing.com/img/icons/icon-box-timezone.svg">
+                                    <img alt="icon" src="{{ asset('uploads/settings/landingpageicons/icon-box-timezone.svg') }}">
                                 </span>
                             </div>
                             <div class="section2_left_list-item-info">
@@ -193,7 +219,7 @@
                         <div class="section2_left_list-item">
                             <div class="section2_left_list-item-icon">
                                 <span>
-                                    <img alt="icon" src="https://www.turing.com/img/icons/icon-box-manage.svg">
+                                    <img alt="icon" src="{{ asset('uploads/settings/landingpageicons/icon-box-manage.svg') }}">
                                 </span>
                             </div>
                             <div class="section2_left_list-item-info">
@@ -206,7 +232,7 @@
                         <div class="section2_left_list-item">
                             <div class="section2_left_list-item-icon">
                                 <span>
-                                    <img alt="icon" src="https://www.turing.com/img/icons/icon-box-calendar.svg">
+                                    <img alt="icon" src="{{ asset('uploads/settings/landingpageicons/icon-box-calendar.svg') }}">
                                 </span>
                             </div>
                             <div class="section2_left_list-item-info">
@@ -219,32 +245,72 @@
                     </div>
                 </div>
             </div>
+        </div> -->
+        <div class="row additional-section">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <h2 class="additional_headlineTitle">
+                    Advantages of Hiring Remote Developers and Programmers for your Business 
+                </h2>
+                <p class="additional_subTitle">
+                    The world is quickly changing and remote jobs are going to be the next big thing, the shift to remote work has already begun and In fact, there are many advantages to this type of hiring.
+                </p>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <h3 class="additional_headlineTitle1">
+                    1. Lower Operational Costs  
+                </h3>
+                <p class="additional_subTitle1">
+                    Hiring a remote development team is financially smart and will save you some big bucks in the long run. Not only does it prevent you from spending unnecessarily on rent for a workplace but It even cuts down the costs of the hiring procedure. Rather than spending hours looking for the best candidate, you can simply choose a company to do it for you, and in the end, you'll have a team of experts at your disposal at lower costs.
+                </p>
+                <h3 class="additional_headlineTitle1">
+                    2. Larger Pool of Candidates  
+                </h3>
+                <p class="additional_subTitle1">
+                    Hiring remote developers gives you an undeniable competitive edge because unlike the companies hiring in-house employees, you can hire anyone from around the world. Meaning you have a much higher chance of finding talented, dedicated, and smart employees.
+                </p>
+                <h3 class="additional_headlineTitle1">
+                    3. Developers' Availability  
+                </h3>
+                <p class="additional_subTitle">
+                    Some projects will require a massive number of hours from your team, and this simply isn't feasible in the long run when it comes to an in-house developers team. On the other hand, remote programmers and remote software developers are hired from around the globe, and can likely work on a project at any time since you will be hiring different individuals from different countries. Multiple individuals can work on one project at all hours allowing you to exert double the amount of effort in the same amount of time.
+                </p>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <h2 class="additional_headlineTitle">
+                    Tips to Streamline Communication with your Team of Remote Developers 
+                </h2>
+                <p class="additional_subTitle">
+                    Now that you've decided on hiring remote software developers and programmers, How can you avoid misunderstandings, and cooperate successfully with your remote development team?
+                </p>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <h3 class="additional_headlineTitle1">
+                    1. Share the Knowledge  
+                </h3>
+                <p class="additional_subTitle1">
+                    Unshared knowledge has been known to have a negative long-term impact on your bottom line but also on your team's day-to-day productivity and workflow. Make sure you and your remote developers and software programmers are on the same page about the project and different tasks at all times. To avoid duplicating each other's work or getting stuck teams should be communicating and exchanging information through some form of regular documentation and even live training or one-on-one meetings. These are some of the key ways to ensure your team has access to required information at any given time, saving precious time in the long run.
+                </p>
+                <h3 class="additional_headlineTitle1">
+                    2. Establish Coding Practices  
+                </h3>
+                <p class="additional_subTitle1">
+                    Many different coding practices exist and making sure you and your developer's vision of exactly what is to be done will help prevent miscommunication from the start. This means clarifying all features and characteristics of the project such as which data structure they are accustomed to or if they comment on their code.
+                </p>
+                <h3 class="additional_headlineTitle1">
+                    3. Build Trust  
+                </h3>
+                <p class="additional_subTitle">
+                    To achieve maximum success, proper communication with your remote developer's team is a key factor. Show interest in your team and share all the required knowledge with them, motivating them with regular meetings and conferences dedicated to tackling communication issues. Show them that you are willing to solve their problems and are just as dedicated to them as they are to you, this will help foster a strong and fruitful relationship, which is essential for your business and workplace morale.
+                </p>
+            </div>
         </div>
-    </div>
+    </div> 
     <section class="color_section">
         <div class="container">
             <h5 class="BackedBySection_title">
                 Join 200+ fast-scaling start-ups<br/>
                 and Fortune 500 companies that have hired eBelong developers
             </h5>
-            <h6 class="BackedBySection_subtitle">Including top companies backed by</h6>
-            <div class="BackedBySection_logos">
-                <span>
-                    <img alt="" aria-hidden="true" src="https://www.turing.com/img/backed-by/google-white.svg">
-                </span>
-                <span>
-                    <img alt="" aria-hidden="true" src="https://www.turing.com/img/backed-by/andressen-white.svg">
-                </span>
-                <span>
-                    <img alt="" aria-hidden="true" src="https://www.turing.com/img/backed-by/bloomerg-white.svg">
-                </span>
-                <span>
-                    <img alt="" aria-hidden="true" src="https://www.turing.com/img/backed-by/kleiner-white.svg">
-                </span>
-                <span>
-                    <img alt="" aria-hidden="true" src="https://www.turing.com/img/backed-by/founders-white.svg">
-                </span>
-            </div>
         </div>
     </section>
     <section class="section5">
@@ -304,17 +370,17 @@
             </ol>
         </div>
     </section>
-    <section class="video_section">
+    <!-- <section class="video_section">
         <div class="container">
             <video width="80%" controls>
             <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
             </video>
         </div>
-    </section>
+    </section> -->
     <section class="section6">
         <div class="container">
             <div class="GradientCard_list">
-                <div class="GradientCard_root" href="/press">
+                <!-- <div class="GradientCard_root" href="/press">
                     <div class="GradientCard_gradient GradientCard_gradient-purple">
                         <span style="box-sizing:border-box;display:inline-block;overflow:hidden;width:initial;height:initial;background:none;opacity:1;border:0;margin:0;padding:0;position:relative;max-width:100%">
                             <span style="box-sizing:border-box;display:block;width:initial;height:initial;background:none;opacity:1;border:0;margin:0;padding:0;max-width:100%">
@@ -327,12 +393,12 @@
                         <div>What's up with Turing? Get the latest news about us here.
                         </div>
                     </div>
-                </div>
-                <div class="GradientCard_root" href="/press">
-                    <div class="GradientCard_gradient GradientCard_gradient-blue">
+                </div> -->
+                <a class="GradientCard_root" href="/blogs">
+                    <div class="GradientCard_gradient GradientCard_gradient-purple">
                         <span style="box-sizing:border-box;display:inline-block;overflow:hidden;width:initial;height:initial;background:none;opacity:1;border:0;margin:0;padding:0;position:relative;max-width:100%">
                             <span style="box-sizing:border-box;display:block;width:initial;height:initial;background:none;opacity:1;border:0;margin:0;padding:0;max-width:100%">
-                                <img style="display:block;max-width:100%;width:initial;height:initial;background:none;opacity:1;border:0;margin:0;padding:0" alt="" aria-hidden="true" src="https://www.turing.com/icons/blog.svg">
+                                <img style="display:block;max-width:100%;width:initial;height:initial;background:none;opacity:1;border:0;margin:0;padding:0" alt="" aria-hidden="true" src="{{ asset('uploads/settings/landingpageicons/blog-icon-white.svg') }}">
                             </span>
                         </span>
                     </div>
@@ -341,12 +407,12 @@
                         <div>Know more about remote work. Check out our blog here.
                         </div>
                     </div>
-                </div>
-                <div class="GradientCard_root" href="/press">
+                </a>
+                <a class="GradientCard_root" href="/press">
                     <div class="GradientCard_gradient GradientCard_gradient-green">
                         <span style="box-sizing:border-box;display:inline-block;overflow:hidden;width:initial;height:initial;background:none;opacity:1;border:0;margin:0;padding:0;position:relative;max-width:100%">
                             <span style="box-sizing:border-box;display:block;width:initial;height:initial;background:none;opacity:1;border:0;margin:0;padding:0;max-width:100%">
-                                <img style="display:block;max-width:100%;width:initial;height:initial;background:none;opacity:1;border:0;margin:0;padding:0" alt="" aria-hidden="true" src="https://www.turing.com/icons/contact.svg">
+                                <img style="display:block;max-width:100%;width:initial;height:initial;background:none;opacity:1;border:0;margin:0;padding:0" alt="" aria-hidden="true" src="{{ asset('uploads/settings/landingpageicons/contact-us.svg') }}">
                             </span>
                         </span>
                     </div>
@@ -355,7 +421,7 @@
                         <div>Have any questions? We'd love to hear from you.
                         </div>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
     </section>
