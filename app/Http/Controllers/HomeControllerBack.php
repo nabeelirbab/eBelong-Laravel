@@ -23,8 +23,8 @@ class HomeController extends Controller
   
     public function theme5()
     {
-        $categories = Category::all();
-        $all_skills = Skill::all();
+        $categories = Category::select('id','title','slug','image')->get();
+        $all_skills = Skill::select('id','title','slug','logo','is_featured')->get();
         
 		$i = 0;
 		// foreach($categories as $cat){
@@ -129,7 +129,7 @@ class HomeController extends Controller
                 $reviews = \App\Review::where('receiver_id', $freelancer->id)->get();
                 $freelancers[$key]->rating_width  = $reviews->sum('avg_rating') != 0 ? (($reviews->sum('avg_rating')/$feedbacks)/5)*100 : 0;
                 $freelancers[$key]->average_rating_count = round(!empty($feedbacks) ? $reviews->sum('avg_rating')/$feedbacks : 0);
-                $freelancers[$key]->imagePath = asset(!empty($freelancer->avater) ? '/uploads/users/' . $freelancer->id . '/' . $freelancer->avater : '/images/user.jpg');
+                $freelancers[$key]->imagePath = asset(!empty($freelancer->avater) ? Helper::getUserImageWithSize('uploads/users/'.$freelancer->id, $freelancer->avater, 'listing') : '/images/user.jpg');
                 if(!empty($skills))
                 {
                     foreach ($skills as $key1 => $skill) {

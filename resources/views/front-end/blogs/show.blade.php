@@ -7,12 +7,14 @@
 @section('title'){{ $blog->title }} @stop
 @section('description', "$blog->content")
 @php $i =0;@endphp
+@if (!empty($attachments))
 @foreach ($attachments as $attachment)
 @php $i++; @endphp
 @if($i==1)
 @section('og_image', asset(Helper::getImageWithSize('uploads/blogs/'.$blog->id, $attachment, 'medium')))
 @endif
 @endforeach
+@endif
 @php $content = htmlspecialchars_decode(stripslashes("$blog->content"))@endphp
 @section('og_url', env('APP_URL').'/blog/'.$blog->slug)
 @section('og_title', $blog->title)
@@ -24,7 +26,7 @@
             <div class="row justify-content-md-center">
                 <div class="col-xs-12 col-sm-12 col-md-8 push-md-2 col-lg-6 push-lg-3">
                     <div class="wt-innerbannercontent">
-                    <div class="wt-title"><h2>{{ trans('lang.blog_detail') }}</h2></div>
+                    {{-- <div class="wt-title"><h2>{{ trans('lang.blog_detail') }}</h2></div> --}}
                     @if (!empty($show_breadcrumbs) && $show_breadcrumbs === 'true')
                         @if (count($breadcrumbs))
                             <ol class="wt-breadcrumb">
@@ -111,6 +113,11 @@
                                             <li class="wt-pinterest">
                                                 <a href="https://plus.google.com/share?url={{ urlencode(Request::fullUrl()) }}">
                                                     <i class="fa fab fa-pinterest"></i>
+                                                </a>
+                                            </li>
+                                            <li class="wt-linkedIn">
+                                                <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ urlencode(Request::fullUrl()) }}">
+                                                    <i class="fa fab fa-linkedin"></i>
                                                 </a>
                                             </li>
                                         </ul>

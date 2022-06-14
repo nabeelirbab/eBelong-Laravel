@@ -92,6 +92,11 @@ Route::get('hire', 'FreelancerController@freelancersListing')->name('freelancers
 Route::get('jobs/{slug}', 'JobController@jobsList')->name('FilteredJobs');
 Route::get('jobs', 'JobController@jobsListing')->name('jobs');
 
+//seo-remote-developers
+Route::get('hire-remote-developers', 'PublicController@remoteDevPage');
+Route::post('post-guest-message', 'PublicController@storeGuestMsg');
+
+
 /*Route::get('/sendemail', 'SendMailController@index');
 Route::post('/sendemail/send', 'SendMailController@send'); */
 
@@ -120,7 +125,6 @@ Route::get('agency/{slug}', 'PublicController@agencyView')->name('agencyView');
 Route::get('categories', 'CategoryController@categoriesList')->name('categoriesList');
 Route::get('page/{slug}', 'PageController@show')->name('showPage');
 
-Route::get('get-related-freelancers/{user_id}','PublicController@getUserRelatedFreelancers');
 Route::post('store/project-offer', 'UserController@storeProjectOffers');
 if (Helper::getAccessType() == 'both' || Helper::getAccessType() == 'jobs') {
     // Route::get('jobs', 'JobController@listjobs')->name('jobs');
@@ -358,6 +362,9 @@ Route::group(
         Route::get('/admin/send-notifications','UserController@viewNotificationData')->name('viewMobileNotification');
         Route::post('/admin/send-notifications-post','UserController@sendNotificationData')->name('sendMobileNotification');
         Route::post('/admin/login-notification-updated','UserController@updateNotificationData');
+
+        //blogs
+        Route::get('admin/manage-blogs', 'BlogController@manageAdminBlogs')->name('manageAdminBlogs');
 		
 
 
@@ -461,11 +468,14 @@ Route::group(
         Route::get('editor/manage-blogs', 'BlogController@manageBlogs')->name('manageBlogs');
         Route::get('editor/blogs', 'BlogController@editorBlogs')->name('editorBlogs');
         
-        Route::post('editor/dashboard/delete-blog', 'BlogController@destroy');
-        Route::get('editor/dashboard/edit-blog/{id}', 'BlogController@edit')->name('edit_blog');
+        Route::post('{role}/dashboard/delete-blog', 'BlogController@destroy');
+        Route::get('{role}/dashboard/edit-blog/{id}', 'BlogController@edit')->name('edit_blog');
         Route::get('get/{type}/{filename}/{id}', 'PublicController@getFile')->name('getfile');
         Route::post('blog/update-blog', 'BlogController@update');
         Route::post('blog/change-status', 'BlogController@changeStatus');
+
+        Route::get('editor/pages', 'PageController@dynamicPages');
+        Route::get('/guest-messages','PublicController@showGuestInfo')->name('guestMessages');
         
 
    
@@ -602,6 +612,9 @@ Route::group(
         Route::post('freelancer/dashboard/delete-agency', 'AgencyController@destroy');
         Route::post('agency/remove-member', 'AgencyController@removeMembers');
         Route::get('freelancer/dashboard/edit-agency/{id}', 'AgencyController@edit')->name('edit_agency');
+
+        //connections
+        Route::get('get-related-freelancers','PublicController@getUserRelatedFreelancers');
     }
 );
 // Employer|Freelancer Routes

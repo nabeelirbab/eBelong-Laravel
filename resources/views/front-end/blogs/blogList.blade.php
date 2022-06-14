@@ -158,7 +158,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="wt-freelancers-rating">
-                                                            <button onclick="location.href='{{{url('blog/'.$blog->slug)}}}'" class="e-button e-button-primary blogs-read-more">READ MORE</button>
+                                                            <a href="{{{url('blog/'.$blog->slug)}}}" class="e-button e-button-primary blogs-read-more">READ MORE</a>
                                                             <!-- <ul>
                                                                 <li><span><i class="fa fa-star"></i>Read More</span></li>
                                                                 

@@ -71,6 +71,12 @@
                     </a>
                 </li>
                 <li>
+                    <a href="{{{ route('manageAdminBlogs') }}}">
+                        <i class="ti-layers"></i>
+                        <span>{{ trans('lang.manage_blogs') }}</span>
+                    </a>
+                </li>
+                <li>
                     <a href="{{{ url($role.'/saved-items') }}}">
                         <i class="ti-heart"></i>
                         <span>{{ trans('lang.saved_items') }}</span>
@@ -182,6 +188,12 @@
                             <li><a href="{{{ route('editorBlogs') }}}">{{ trans('lang.my_blogs') }}</a></li>
                             
                         </ul>
+                    </li>
+                    <li>
+                        <a href="{{{ route('guestMessages') }}}">
+                            <i class="ti-user"></i>
+                            <span>{{ "Guest Messages" }}</span>
+                        </a>
                     </li>
                     <li class="menu-item-has-children">
                         <span class="wt-dropdowarrow"><i class="lnr lnr-chevron-right"></i></span>
@@ -436,6 +448,12 @@
                         </li>
                     @endif
                 @endif
+                {{-- <li>
+                    <a href="{{{ route('viewMobileNotification') }}}">
+                        <i class="ti-email"></i>
+                        <span>{{ 'Push Notifications' }}</span>
+                    </a>
+                </li> --}}
                 <li>
                     <a href="{{{ url($role.'/saved-items') }}}">
                         <i class="ti-heart"></i>

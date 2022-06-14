@@ -27,12 +27,16 @@
                                         <span class="form-group-description">{{{ trans('lang.desc') }}}</span>
                                     </div>
                                     <div class="form-group">
-                                        {!! Form::text( 'category_slug', e($cats['slug']), ['class' =>'form-control'] ) !!}
+                                        {!! Form::text( 'category_slug', e($cats['slug']), ['class' =>'form-control','placeholder' => 'Heading Text'] ) !!}
                                         <span class="form-group-description">{{{ trans('lang.desc') }}}</span>
                                     </div>
                                     <div class="form-group">
-                                        {!! Form::textarea( 'category_abstract', e($cats['abstract']), ['class' =>'form-control',
-                                        'placeholder' => trans('lang.ph_desc')] )
+                                        {!! Form::text( 'category_heading', e($cats['heading']), ['class' =>'form-control'] ) !!}
+                                        <span class="form-group-description">{{{ 'Heading text for categories' }}}</span>
+                                    </div>
+                                    <div class="form-group">
+                                        {!! Form::textarea( 'category_abstract', e($cats['abstract']), ['class' => 'wt-tinymceblogeditor', 'id' => 'wt-tinymceeditor'
+                                        ,'placeholder' => trans('lang.ph_desc')] )
                                         !!}
                                         <span class="form-group-description">{{{ trans('lang.cat_desc') }}}</span>
                                     </div>

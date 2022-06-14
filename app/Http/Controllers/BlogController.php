@@ -227,24 +227,54 @@ class BlogController extends Controller
             }
 
         }
+        public function manageAdminBlogs(){
+            
+            $blogs = Blog::all();
+            $status_list = array_pluck(Helper::getFreelancerServiceStatus(), 'title', 'value');
+            if (file_exists(resource_path('views/extend/back-end/admin/blogs/index.blade.php'))) {
+                return view(
+                    'extend.back-end.admin.blogs.index',
+                    compact(
+                        'blogs',
+                        'status_list'
+                      
+                    )
+                );
+            } else {
+                return view(
+                    'back-end.admin.blogs.index',
+                    compact(
+                        'blogs',
+                        'status_list'  
+                    )
+                );
+            }
+        }
         public function destroy(Request $request)
     {
         $json = array();
-        if (!empty($request['id'])) {
-            $blog= $this->blog::find($request['id']);
-            $blog->delete();
-            $json['type'] = 'success';
-            $json['message'] = trans('lang.blog_delete');
-            return $json;
-        } else {
+        if(Helper::getSessionUserRole()=='admin' ||Helper::getSessionUserRole()=='editor'){
+            if (!empty($request['id'])) {
+                $blog= $this->blog::find($request['id']);
+                $blog->delete();
+                $json['type'] = 'success';
+                $json['message'] = trans('lang.blog_delete');
+                return $json;
+            } else {
+                $json['type'] = 'error';
+                $json['message'] = trans('lang.something_wrong');
+                
+                return $json;
+            }
+        }
+        else{
             $json['type'] = 'error';
-            $json['message'] = trans('lang.something_wrong');
+            $json['message'] = 'You are not authorized to delete blog';
             return $json;
         }
     }
-    public function edit($id)
+    public function edit($role , $id)
     {
-      
         $categories = Category::pluck('title', 'id');
         $blog = $this->blog::find($id);
         $serialize_attachment = preg_replace_callback(
@@ -255,24 +285,47 @@ class BlogController extends Controller
             $blog->attachments
         );
         $attachments = !empty($serialize_attachment) ? unserialize($serialize_attachment) : '';
-        if (file_exists(resource_path('views/extend/back-end/editor/blogs/edit.blade.php'))) {
-            return view(
-                'extend.back-end.editor.blogs.edit',
-                compact(
-                    'categories',
-                    'blogs',
-                    'attachments'
-                )
-            );
-        } else {
-            return view(
-                'back-end.editor.blogs.edit',
-                compact(
-                    'categories',
-                    'blog',
-                    'attachments'
-                )
-            );
+        if(Helper::getSessionUserRole()=='editor'){
+            if (file_exists(resource_path('views/extend/back-end/editor/blogs/edit.blade.php'))) {
+                return view(
+                    'extend.back-end.editor.blogs.edit',
+                    compact(
+                        'categories',
+                        'blogs',
+                        'attachments'
+                    )
+                );
+            } else {
+                return view(
+                    'back-end.editor.blogs.edit',
+                    compact(
+                        'categories',
+                        'blog',
+                        'attachments'
+                    )
+                );
+            }
+        }
+        if(Helper::getSessionUserRole()=='admin'){
+            if (file_exists(resource_path('views/extend/back-end/admin/blogs/edit.blade.php'))) {
+                return view(
+                    'extend.back-end.admin.blogs.edit',
+                    compact(
+                        'categories',
+                        'blogs',
+                        'attachments'
+                    )
+                );
+            } else {
+                return view(
+                    'back-end.admin.blogs.edit',
+                    compact(
+                        'categories',
+                        'blog',
+                        'attachments'
+                    )
+                );
+            }
         }
     }
     public function update(Request $request)

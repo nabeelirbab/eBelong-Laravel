@@ -34,7 +34,16 @@
                                         @endif
                                     </div>
                                     <div class="form-group">
-                                        {!! Form::textarea( 'category_abstract', null, ['class' =>'form-control', 'placeholder' => trans('lang.ph_desc')] ) !!}
+                                        {!! Form::text( 'category_heading', null, ['class' =>'form-control'.($errors->has('category_heading') ? ' is-invalid' : ''), 'placeholder' => 'Heading Text'] ) !!}
+                                        <span class="form-group-description">{{{ 'Heading Text for the pages' }}}</span>
+                                        @if ($errors->has('category_heading'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('category_heading') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                    <div class="form-group">
+                                        {!! Form::textarea( 'category_abstract', null, ['class' => 'wt-tinymceblogeditor', 'id' => 'wt-tinymceeditor', 'placeholder' => trans('lang.ph_desc')] ) !!}
                                         <span class="form-group-description">{{{ trans('lang.cat_desc') }}}</span>
                                     </div>
                                     <div class="wt-settingscontent">

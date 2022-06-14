@@ -25,10 +25,10 @@ $show_f_banner = 'true'
 <div class="wt-haslayout wt-innerbannerholder" style="background-image:url({{{ asset(Helper::getBannerImage($f_inner_banner, 'uploads/settings/general')) }}})">
     <div class="container">
         <div class="row justify-content-md-center">
-            <div class="col-xs-12 col-sm-12 col-md-8 push-md-2 col-lg-6 push-lg-3">
+            <div class="col-xs-12 col-sm-12 col-md-12 push-md-12 col-lg-12 push-lg-12">
                 <div class="wt-innerbannercontent">
                     <div class="wt-title">
-                        <h2>{{ trans('lang.freelancers') }}</h2>
+                        <h1>{{{  $heading }}}</h1>
                     </div>
                     @if (!empty($show_breadcrumbs) && $show_breadcrumbs === 'true')
                     @if (count($breadcrumbs))
@@ -737,10 +737,16 @@ $show_f_banner = 'true'
                                 @endif
                             </div>
                         </div>
-                    </div>
                 </div>
+                
             </div>
         </div>
+        <div class="dynamic-data">
+            @if(!empty($dynamic_content))
+                @php echo htmlspecialchars_decode(stripslashes($dynamic_content)); @endphp
+            @endif
+        </div>
+        
     </div>
     <!-- Button trigger modal -->
     <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#talentModalCenter">

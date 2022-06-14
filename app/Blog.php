@@ -176,7 +176,7 @@ class Blog extends Model
         if (!empty($request)) {
             $user = !empty(Auth::user()) ? Auth::user() : '';
             $role = !empty($user) ? $user->getRoleNames()->first() : array();
-            if ($role === 'editor'){
+            if ($role === 'editor'|| $role ==='admin'){
             $blog = Blog::find($id);
             $user_id=Auth::user()->id;
             if ($blog->slug != $request['blog_slug']) {

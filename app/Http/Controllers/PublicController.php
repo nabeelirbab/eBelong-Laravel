@@ -667,38 +667,41 @@ class PublicController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getUserRelatedFreelancers($user_id)
-
+    public function getUserRelatedFreelancers()
     {
         $json = array();
+        $user_id = Auth::user()->id;
         $user = User::find($user_id);
         if(!empty($user)){
         $profile = Profile::where('user_id',$user_id)->first();
+        $user->user_image = asset(!empty($profile->avater) ? Helper::getUserImageWithSize('uploads/users/'.$profile->user_id, $profile->avater, 'listing') : '/images/user.jpg');
         $skills = $user->skills()->get();
-        $selectedcategories = !empty($profile->category_id) ? $profile->category_id : '';
-        $cat_user_id = array();
-        $freelancers = Profile::where('category_id', $selectedcategories)->get();
-        foreach ($freelancers as $key => $freelancer) {
-            if (!empty($freelancer->user_id)) {
-                $cat_user_id[] = $freelancer->user_id;
-            }
-        }
         foreach ($skills as $key => $skill) {
             $skill_slugs[] = $skill->slug;
         }
-        $user_id = array();
         $search_skills = $skill_slugs;
+        $h = 'user_skilll';
+        $ids_to_skip = array();
         $user_by_role =  User::role(3)->pluck('id')->toArray();
         $skills = Skill::whereIn('slug', $search_skills)->get();
-                foreach ($skills as $key => $skill) {
-                    $userid = DB::table('skill_user')->select('user_id')->where('skill_id',$skill->id)->get();
-                    foreach($userid as $ui){
-                        $user_id[] = $ui->user_id;
-                    }
-                }
-                // dd($cat_user_id);
-        $users = User::whereIn('id', $user_by_role)->whereIn('id', $user_id)->orwhereIn('id',$cat_user_id)->where('is_disabled', 'false')->where('status',1)->get();
-        $json['users']=$users;
+        $user->$h=$skills;
+        foreach ($user->$h as $key => $skill) {
+            $user_ids = array();
+            $userid = DB::table('skill_user')->select('user_id')->where('skill_id',$skill->id)->get();
+            foreach($userid as $ui){
+                $user_ids[] = $ui->user_id;
+            }
+            $skill->relations =  User::whereIn('id', $user_by_role)->whereIn('id', $user_ids)->whereNotIn('id',$ids_to_skip)->where('id','!=',$user_id)->where('is_disabled', 'false')->where('status',1)->get();
+            foreach($userid as $ui){
+                $ids_to_skip[] = $ui->user_id;
+            }
+            foreach ($skill->relations as $key => $related_users) {
+                $profile = Profile::where('user_id',$related_users->id)->first();
+                $related_users->user_image = asset(!empty($profile->avater) ? Helper::getUserImageWithSize('uploads/users/'.$profile->user_id, $profile->avater, 'listing') : '/images/user.jpg');
+            
+            }
+        }
+        $json['users']=$user;
         return $json;
 
     }
@@ -1512,4 +1515,54 @@ class PublicController extends Controller
             return $json;
         }
     }
-}
+
+    public function remoteDevPage(){
+        return view('front-end.remoteDeveloper.index');
+    }
+    public function storeGuestMsg(Request $request){
+        $json = array();
+        // $server = Helper::worketicIsDemoSiteAjax();
+        // if (!empty($server)) {
+        //     $response['message'] = $server->getData()->message;
+        //     return $response;
+        // }
+        request()->validate
+            (
+                [
+                'name' => 'required',
+                'email' => 'required|email',
+                'message' => 'required',
+                'phone' => 'required|numeric|digits:11'
+               
+            ]
+        );
+        
+        $data =DB::table('contact_info')->insertGetId(
+            [
+                'name' => filter_var($request['name'], FILTER_SANITIZE_STRING),
+                'message' => filter_var($request['message'], FILTER_SANITIZE_STRING),
+                'email' => $request['email'],
+                'phone' => $request['phone'],
+                "created_at" => Carbon::now(), "updated_at" => Carbon::now()
+            ]
+        );
+       
+        if(!empty($data))
+            {
+                Session::flash('message', 'Thankyou for Showing Interest!');
+                return redirect('/hire-remote-developers');
+            } 
+            
+        else{
+            Session::flash('errror', 'Something went wrong!');
+            return redirect('/');
+        }
+    }
+    public function showGuestInfo(){
+        $users = DB::table('contact_info')->paginate(15);
+        return view('back-end/editor/guests/index',compact('users'));
+
+    }
+
+    }
+
