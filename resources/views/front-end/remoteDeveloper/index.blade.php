@@ -113,10 +113,10 @@
                                 </span>
                             </div>
                             <div class="section2_left_list-item-info">
-                                <h3>Top Tier Talent at Half The Cost</h3>
-                                <p class="section2_left_list-item-text">
+                                <h3 style="margin-bottom: 60px;">Top Tier Talent at Half The Cost</h3>
+                                <!-- <p class="section2_left_list-item-text">
                                     Hire the top 1% of 1.5 million+ developers from 150+ countries who have applied to eBelong.
-                                </p>
+                                </p> -->
                             </div>
                         </div>
                         <div class="section2_left_list-item">
@@ -126,10 +126,10 @@
                                 </span>
                             </div>
                             <div class="section2_left_list-item-info">
-                                <h3>100+ skills</h3>
-                                <p class="section2_left_list-item-text">
+                                <h3 style="margin-bottom: 60px;">100+ skills</h3>
+                                <!-- <p class="section2_left_list-item-text">
                                     Hire React, Node, React Native, Python, Golang, Data Engineers, Angular, DevOps, Rails, Swift, Android, Java, ML, and more.
-                                </p>
+                                </p> -->
                             </div>
                         </div>
                         <div class="section2_left_list-item">
@@ -139,10 +139,10 @@
                                 </span>
                             </div>
                             <div class="section2_left_list-item-info">
-                                <h3>Vetted Developers</h3>
-                                <p class="section2_left_list-item-text">
+                                <h3 style="margin-bottom: 60px;">Vetted Developers</h3>
+                                <!-- <p class="section2_left_list-item-text">
                                     If you decide to stop within two weeks, you pay nothing.
-                                </p>
+                                </p> -->
                             </div>
                         </div>
                     </div>
@@ -167,8 +167,8 @@
                                     <img alt="icon" src="{{ asset('uploads/settings/landingpageicons/icon-box-checked.svg') }}">
                                 </span>
                             </div>
-                            <div class="section2_left_list-item-info">
-                                <h3>5+ hours of tests and interviews</h3>
+                            <div class="section2_left_list-item-info" style="margin-bottom: 20px;">
+                                <!-- <h3>5+ hours of tests and interviews</h3> -->
                                 <p class="section2_left_list-item-text">
                                     We look for great communicators who can take charge of business and product goals without the need of being micromanaged.
                                 </p>
@@ -180,8 +180,8 @@
                                     <img alt="icon" src="{{ asset('uploads/settings/landingpageicons/icon-box-medal.svg') }}">
                                 </span>
                             </div>
-                            <div class="section2_left_list-item-info">
-                                <h3>Seniority tests</h3>
+                            <div class="section2_left_list-item-info" style="margin-bottom: 20px;">
+                                <!-- <h3>Seniority tests</h3> -->
                                 <p class="section2_left_list-item-text">
                                     We extensively screen our remote developers to ensure that you are only matched with top-tier talent.
                                 </p>
