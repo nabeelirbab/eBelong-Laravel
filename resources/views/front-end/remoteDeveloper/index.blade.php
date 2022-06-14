@@ -10,7 +10,7 @@
         <div class="row section1 margin-row">
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 section1_right">
                 <div class="section1_headline">
-                    <h3 class="section1_firstTitle">For companies</h3>
+                    <!-- <h3 class="section1_firstTitle"></h3> -->
                     <h1 class="section1_headlineTitle">Looking to Hire Remote Developers?</h1>
                     <div class="Section1_subTitle">Are you in the market for vetted remote developers and software programmers that have sharp technical and interactive skills, we have just what you're looking for!</div>
                 </div>
@@ -35,7 +35,7 @@
                     </div>
                 @endif
                 <div class="form-banner">
-                    <h2>Fill out the form and one of our Publishing  experts will contact you promptly</h2>
+                    <h2>Fill out the form and one of our Hiring experts will contact you promptly</h2>
                     <form action="{{ url('/post-guest-message') }}" method="post" class="cmxform banner-form" id="bannerform">
                         @csrf
                         <div class="row">
