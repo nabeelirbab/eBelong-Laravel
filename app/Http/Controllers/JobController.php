@@ -938,7 +938,7 @@ class JobController extends Controller
     $show_breadcrumbs = !empty($breadcrumbs_settings) ? $breadcrumbs_settings : 'true';
     $current_date = Carbon::now()->toDateTimeString();
     $jobs = Job::select('*');
-    $jobs = $jobs->where('expiry_date', '>', date('Y-m-d'));
+    // $jobs = $jobs->where('expiry_date', '>', date('Y-m-d'));
     $jobs = $jobs->orderByRaw("id DESC")->paginate(20)->setPath('');
     $type='job';
     if (file_exists(resource_path('views/extend/front-end/jobs/jobList.blade.php'))) {
