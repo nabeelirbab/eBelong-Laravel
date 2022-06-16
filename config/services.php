@@ -1,5 +1,13 @@
 <?php
+if(env('APP_URL')=='https://ebelong.com'){
+    $linkedin_url = 'http://ebelong.com/auth/linkedin/callback';
+}
+elseif(env('APP_URL')=='https://dev.ebelong.com'){
+    $linkedin_url = 'http://dev.ebelong.com/auth/linkedin/callback';
+}
+else{
 $linkedin_url = env('APP_URL').'/auth/linkedin/callback';
+}
 return [
 
     /*
