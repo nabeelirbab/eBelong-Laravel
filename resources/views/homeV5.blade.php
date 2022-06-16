@@ -148,6 +148,11 @@
 													<?php if($user_role): ?>
 														<?php if($user_role == 'guest'||$user_role == 'editor'): ?>
 														<li style="order: 1;">
+															<a href="{{url('/hire-remote-developers')}}">
+																Hire Developer
+															</a>
+														</li>
+														<li style="order: 1;">
 															<a href="{{url('/courses')}}">
 																{{{ trans('lang.courses') }}}
 															</a>
