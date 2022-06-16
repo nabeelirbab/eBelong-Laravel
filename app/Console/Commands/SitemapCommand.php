@@ -60,6 +60,7 @@ class SitemapCommand extends Command
         $sitemap->add(Url::create("/"));
         $sitemap->add(Url::create("/jobs"));
         $sitemap->add(Url::create("/services"));
+        $sitemap->add(Url::create("/hire-remote-developers"));
         Category::all()->each(function (Category $Item) use ($sitemap) {
             $sitemap->add(Url::create("/hire/{$Item->slug}"));
         });
