@@ -148,6 +148,11 @@
 													<?php if($user_role): ?>
 														<?php if($user_role == 'guest'||$user_role == 'editor'): ?>
 														<li style="order: 1;">
+															<a href="{{url('/hire-remote-developers')}}">
+																Hire Developer
+															</a>
+														</li>
+														<li style="order: 1;">
 															<a href="{{url('/courses')}}">
 																{{{ trans('lang.courses') }}}
 															</a>
@@ -157,11 +162,11 @@
 																{{{ trans('lang.Talent') }}}
 															</a>
 														</li>
-														<li style="order: 4;">
+														{{-- <li style="order: 4;">
 															<a href="{{url('/jobs')}}">
 																{{{ trans('lang.jobs') }}}
 															</a>
-														</li>
+														</li> --}}
 														<li style="order: 5;">
 															<a href="{{url('/services')}}">
 																{{{ trans('lang.services') }}}
@@ -188,11 +193,11 @@
 																{{{ trans('lang.Talent') }}}
 															</a>
 														</li>
-														<li style="order: 4;">
+														{{-- <li style="order: 4;">
 															<a href="{{url('/jobs')}}">
 																{{{ trans('lang.jobs') }}}
 															</a>
-														</li>
+														</li> --}}
 														<li style="order: 5;">
 															<a href="{{url('services')}}">
 																{{{ trans('lang.services') }}}
@@ -220,11 +225,11 @@
 																{{{ trans('lang.courses') }}}
 															</a>
 														</li>
-														<li style="order: 4;">
+														{{-- <li style="order: 4;">
 															<a href="{{url('/jobs')}}">
 																{{{ trans('lang.jobs') }}}
 															</a>
-														</li>
+														</li> --}}
 																	
 														<?php endif;  ?>
 													<?php endif;  ?>
