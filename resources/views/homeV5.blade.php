@@ -162,11 +162,11 @@
 																{{{ trans('lang.Talent') }}}
 															</a>
 														</li>
-														<li style="order: 4;">
+														{{-- <li style="order: 4;">
 															<a href="{{url('/jobs')}}">
 																{{{ trans('lang.jobs') }}}
 															</a>
-														</li>
+														</li> --}}
 														<li style="order: 5;">
 															<a href="{{url('/services')}}">
 																{{{ trans('lang.services') }}}
@@ -193,11 +193,11 @@
 																{{{ trans('lang.Talent') }}}
 															</a>
 														</li>
-														<li style="order: 4;">
+														{{-- <li style="order: 4;">
 															<a href="{{url('/jobs')}}">
 																{{{ trans('lang.jobs') }}}
 															</a>
-														</li>
+														</li> --}}
 														<li style="order: 5;">
 															<a href="{{url('services')}}">
 																{{{ trans('lang.services') }}}
@@ -225,11 +225,11 @@
 																{{{ trans('lang.courses') }}}
 															</a>
 														</li>
-														<li style="order: 4;">
+														{{-- <li style="order: 4;">
 															<a href="{{url('/jobs')}}">
 																{{{ trans('lang.jobs') }}}
 															</a>
-														</li>
+														</li> --}}
 																	
 														<?php endif;  ?>
 													<?php endif;  ?>
