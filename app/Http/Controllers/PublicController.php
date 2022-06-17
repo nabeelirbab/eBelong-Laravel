@@ -17,6 +17,7 @@ use App\Mail\FindMatchEmailAdminMailable;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Http\Request;
 use App\User;
+use Alert;
 use App\AgencyUser;
 use App\Cource;
 use App\Blog;
@@ -1530,18 +1531,17 @@ class PublicController extends Controller
             (
                 [
                 'name' => 'required',
-                'email' => 'required|email',
+                'guest_email' => 'required|email',
                 'message' => 'required',
                 'phone' => 'required|numeric|digits:11'
                
             ]
         );
-        
         $data =DB::table('contact_info')->insertGetId(
             [
                 'name' => filter_var($request['name'], FILTER_SANITIZE_STRING),
                 'message' => filter_var($request['message'], FILTER_SANITIZE_STRING),
-                'email' => $request['email'],
+                'guest_email' => $request['guest_email'],
                 'phone' => $request['phone'],
                 "created_at" => Carbon::now(), "updated_at" => Carbon::now()
             ]
@@ -1549,12 +1549,12 @@ class PublicController extends Controller
        
         if(!empty($data))
             {
-                Session::flash('message', 'Thankyou for Showing Interest!');
+                Alert::success('Message Sent', 'Thankyou for Showing Interest');
                 return redirect('/hire-remote-developers');
             } 
             
         else{
-            Session::flash('errror', 'Something went wrong!');
+            Alert::error('errror', 'Something went wrong!');
             return redirect('/');
         }
     }
