@@ -4391,6 +4391,12 @@ body.wt-login .wt-userlogedin{display: block;}
 	font-size: 28px;
 	margin: 0 0 18px;
 	line-height: 34px;
+	width: 73%;
+}
+@media only screen and (max-width: 768px){
+	.wt-proposalhead h2{
+		width: 100%;
+	}
 }
 .wt-proposalholder .wt-btnarea{
 	width: auto;
@@ -10714,6 +10720,11 @@ a:focus{text-decoration: none !important;}
 }
 .landing-page {
     margin: 100px auto;
+}
+@media only screen and (max-width: 768px){
+	.landing-page {
+		margin: 10px auto;
+	}
 }
 .landing-page .section1_right {
     display: flex;
