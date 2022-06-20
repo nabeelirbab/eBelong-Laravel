@@ -35,7 +35,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <input type="text" name="name" id="bnm" placeholder="Name:"> 
-                                @if ($errors->has('phone'))
+                                @if ($errors->has('name'))
                                     <span class="invalid-feedback" style="display: block;" role="alert">
                                         {{ $errors->first('name') }}
                                     </span>
@@ -451,16 +451,18 @@
 <script type="text/javascript">
     var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
     (function(){
+        
     var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
     s1.async=true;
     s1.src='https://embed.tawk.to/6290b9a3b0d10b6f3e745567/1g42laa69';
     s1.charset='UTF-8';
     s1.setAttribute('crossorigin','*');
     s0.parentNode.insertBefore(s1,s0);
+    setTimeout(function () {
     
-    Tawk_API.onBeforeLoad = function(){
     Tawk_API.maximize();
-    }
+    
+}, 10000);
     })();
  
     </script>
