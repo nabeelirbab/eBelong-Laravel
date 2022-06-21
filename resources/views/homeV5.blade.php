@@ -149,7 +149,7 @@
 														<?php if($user_role == 'guest'||$user_role == 'editor'): ?>
 														<li style="order: 1;">
 															<a href="{{url('/hire-remote-developers')}}">
-																Hire Developer
+																Hire Developers
 															</a>
 														</li>
 														<li style="order: 1;">

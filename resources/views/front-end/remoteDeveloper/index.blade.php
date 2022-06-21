@@ -36,7 +36,7 @@
                             <div class="col-md-6">
                                 <input type="text" name="name" id="bnm" placeholder="Name:"> 
                                 @if ($errors->has('name'))
-                                    <span class="invalid-feedback" style="display: block;" role="alert">
+                                    <span class="invalid-feedback" style="display: block; position: absolute; bottom: -19px;" role="alert">
                                         {{ $errors->first('name') }}
                                     </span>
                                 @endif
@@ -50,7 +50,7 @@
                                 "type="phone"  name="phone" placeholder="Phone:" id="bpn" 
                                > 
                                 @if ($errors->has('phone'))
-                                    <span class="invalid-feedback"style="display: block;" role="alert">
+                                    <span class="invalid-feedback"style="display: block; position: absolute; bottom: 20px;" role="alert">
                                         {{ $errors->first('phone') }}
                                     </span>
                                 @endif
@@ -61,7 +61,7 @@
                             <div class="col-md-12">
                                 <input type="email" placeholder="Email:" id="bem" name="guest_email">
                                 @if ($errors->has('guest_email'))
-                                    <span class="invalid-feedback" style="display: block;" role="alert">
+                                    <span class="invalid-feedback" style="display: block; position: absolute; bottom: 20px;" role="alert">
                                         {{ $errors->first('guest_email') }}
                                     </span>
                                 @endif
@@ -72,7 +72,7 @@
                             <div class="col-md-12">
                                 <textarea name="message" id="bmsg" rows="10" placeholder="Message"></textarea>
                                 @if ($errors->has('message'))
-                                    <span class="invalid-feedback"style="display: block;" role="alert">
+                                    <span class="invalid-feedback"style="display: block; position: absolute; bottom: 0px;" role="alert">
                                         {{ $errors->first('message') }}
                                     </span>
                                 @endif
