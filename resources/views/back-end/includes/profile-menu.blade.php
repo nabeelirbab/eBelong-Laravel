@@ -83,6 +83,12 @@
                     </a>
                 </li>
                 <li>
+                    <a href="{{{ route('guestMessages') }}}">
+                        <i class="ti-user"></i>
+                        <span>{{ "Guest Messages" }}</span>
+                    </a>
+                </li>
+                <li>
                     <a href="{{{ route('emailTemplates') }}}">
                         <i class="ti-email"></i>
                         <span>{{ trans('lang.email_templates') }}</span>

@@ -34,7 +34,7 @@
                         @csrf
                         <div class="row">
                             <div class="col-md-6">
-                                <input type="text" name="name" id="bnm" placeholder="Name:"> 
+                                <input type="text" name="name" id="bnm" placeholder="Name:" value="{{ old('name') }}"> 
                                 @if ($errors->has('name'))
                                     <span class="invalid-feedback" style="display: block; position: absolute; bottom: -19px;" role="alert">
                                         {{ $errors->first('name') }}
@@ -47,7 +47,7 @@
                                 if (!event.key.match(allowedRegex)) {
                                     event.preventDefault();
                                 }
-                                "type="phone"  name="phone" placeholder="Phone:" id="bpn" 
+                                "type="phone"  name="phone" placeholder="Phone:" id="bpn" value="{{ old('phone') }}"
                                > 
                                 @if ($errors->has('phone'))
                                     <span class="invalid-feedback"style="display: block; position: absolute; bottom: 20px;" role="alert">
@@ -59,7 +59,7 @@
 
                         <div class="row">
                             <div class="col-md-12">
-                                <input type="email" placeholder="Email:" id="bem" name="guest_email">
+                                <input type="email" placeholder="Email:" id="bem" name="guest_email" value="{{ old('guest_email') }}">
                                 @if ($errors->has('guest_email'))
                                     <span class="invalid-feedback" style="display: block; position: absolute; bottom: 20px;" role="alert">
                                         {{ $errors->first('guest_email') }}
@@ -70,7 +70,7 @@
 
                         <div class="row">
                             <div class="col-md-12">
-                                <textarea name="message" id="bmsg" rows="10" placeholder="Message"></textarea>
+                                <textarea name="message" id="bmsg" rows="10" placeholder="Message">{{ old('message') }}</textarea>
                                 @if ($errors->has('message'))
                                     <span class="invalid-feedback"style="display: block; position: absolute; bottom: 0px;" role="alert">
                                         {{ $errors->first('message') }}
