@@ -181,6 +181,8 @@ class SiteManagement extends Model
                 $inner_page_data_array[$key]['article_list_meta_title'] = $inner_page['article_list_meta_title'];
                 $inner_page_data_array[$key]['article_list_meta_desc'] = $inner_page['article_list_meta_desc'];
                 $inner_page_data_array[$key]['show_article_banner'] = $inner_page['show_article_banner'];
+                $inner_page_data_array[$key]['remote_list_meta_title'] = $inner_page['remote_list_meta_title'];
+                $inner_page_data_array[$key]['remote_list_meta_desc'] = $inner_page['remote_list_meta_desc'];
                 if (!empty($inner_page['f_inner_banner'])) {
                     if (file_exists($old_path . '/' . $inner_page['f_inner_banner'])) {
                         if (!file_exists($new_path)) {

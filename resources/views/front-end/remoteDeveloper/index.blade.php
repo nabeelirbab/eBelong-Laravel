@@ -4,6 +4,8 @@
 @push('stylesheets')
     <link href="{{ asset('css/owl.carousel.min.css') }}" rel="stylesheet">
 @endpush
+@section('title'){{$remote_list_meta_title }} @stop
+@section('description', $remote_list_meta_desc)
 @section('content')
 @include('sweetalert::alert')
 <div class="landing-page">

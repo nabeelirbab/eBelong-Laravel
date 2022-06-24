@@ -181,6 +181,7 @@
                             <ul class="sub-menu">
                                 <li><a href="{{{ url(route('editorProfile')) }}}">{{ trans('lang.acc_settings') }}</a></li>
                                 <li><a href="{{{ route('resetPassword') }}}">{{ trans('lang.reset_pass') }}</a></li>
+                                <li><a href="{{{ url('editor/settings/inner-pages') }}}">{{ "Inner Pages" }}</a></li>
                             </ul>
                         </li>
                     <li class="menu-item-has-children">

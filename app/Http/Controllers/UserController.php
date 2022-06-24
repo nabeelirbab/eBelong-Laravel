@@ -2193,11 +2193,13 @@ class UserController extends Controller
             return $response;
         }
         $json = array();
+        if($type=='service'){
         if (Helper::getAuthRoleName()=='Freelancer'||Helper::getAuthRoleName()=='Employer') {
             $json['type'] = 'error';
             $json['process'] = trans('You are not permited to buy Services');
             return $json;
         }
+    }
 
         if (!empty($id)) {
             $order = new Order();
