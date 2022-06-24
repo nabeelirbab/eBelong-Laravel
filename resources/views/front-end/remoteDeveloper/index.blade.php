@@ -52,7 +52,7 @@
                                 "type="phone"  name="phone" placeholder="Phone:" id="bpn" value="{{ old('phone') }}"
                                > 
                                 @if ($errors->has('phone'))
-                                    <span class="invalid-feedback"style="display: block; position: absolute; bottom: 20px;" role="alert">
+                                    <span class="invalid-feedback"style="display: block; position: absolute; bottom: -19px;" role="alert">
                                         {{ $errors->first('phone') }}
                                     </span>
                                 @endif
@@ -63,7 +63,7 @@
                             <div class="col-md-12">
                                 <input type="email" placeholder="Email:" id="bem" name="guest_email" value="{{ old('guest_email') }}">
                                 @if ($errors->has('guest_email'))
-                                    <span class="invalid-feedback" style="display: block; position: absolute; bottom: 20px;" role="alert">
+                                    <span class="invalid-feedback" style="display: block; position: absolute; bottom: -19px;" role="alert">
                                         {{ $errors->first('guest_email') }}
                                     </span>
                                 @endif
