@@ -175,6 +175,29 @@
             @include('back-end.admin.settings.inner-pages.article_inner_banner')
         @endif
     </div>
+    <div class="wt-location wt-tabsinfo">
+        <div class="wt-tabscontenttitle">
+            <h2>{{{ 'Hire Remote Developer Listing' }}}</h2>
+        </div>
+        <div class="wt-settingscontent">
+            <div class="wt-description"><p>{{ trans('lang.seo_meta_title') }}</p></div>
+            <div class="wt-formtheme wt-userform">
+                <div class="form-group">
+                    {!! Form::text('inner_page[0][remote_list_meta_title]', $remote_meta_title, array('class' => 'form-control')) !!}
+                </div>
+            </div>
+        </div>
+        <div class="wt-settingscontent">
+            <div class="wt-description"><p>{{ trans('lang.seo_meta_desc') }}</p></div>
+            <div class="wt-formtheme wt-userform">
+                <div class="form-group">
+                    {!! Form::textarea('inner_page[0][remote_list_meta_desc]', $remote_meta_desc, array('class' => 'form-control')) !!}
+                </div>
+            </div>
+        </div>
+        
+       
+    </div>
     <div class="wt-updatall la-updateall-holder">
         <i class="ti-announcement"></i>
         <span>{{{ trans('lang.save_changes_note') }}}</span>

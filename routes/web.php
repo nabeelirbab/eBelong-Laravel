@@ -95,7 +95,7 @@ Route::get('jobs', 'JobController@jobsListing')->name('jobs');
 //seo-remote-developers
 Route::get('hire-remote-developers', 'PublicController@remoteDevPage');
 Route::post('post-guest-message', 'PublicController@storeGuestMsg');
-
+Route::get('/get-login-user-role', 'PublicController@loginUserRole');
 
 /*Route::get('/sendemail', 'SendMailController@index');
 Route::post('/sendemail/send', 'SendMailController@send'); */
@@ -280,8 +280,7 @@ Route::group(
         Route::post('admin/store/settings', 'SiteManagementController@storeGeneralSettings');
         Route::post('admin/store/general-home-settings', 'SiteManagementController@storeGeneralHomeSettings');
         Route::post('admin/store/chat-settings', 'SiteManagementController@storeChatSettings');
-        Route::post('admin/store/innerpage-settings', 'SiteManagementController@storeInnerPageSettings');
-        Route::post('admin/get/innerpage-settings', 'SiteManagementController@getInnerPageSettings');
+       
         Route::get('admin/get/registration-settings', 'SiteManagementController@getRegistrationSettings');
         Route::get('admin/get/site-payment-option', 'SiteManagementController@getSitePaymentOption');
         // Route::get('admin/theme-style-settings', 'SiteManagementController@ThemeStyleSettings');
@@ -309,8 +308,8 @@ Route::group(
         Route::post('admin/invitationsubmit', 'UserController@newInvite')->name('inviteUserSubmit');
        
         
-        Route::post('admin/store/breadcrumbs-settings', 'SiteManagementController@storeBreadcrumbsSettings');
-        Route::post('admin/get/breadcrumbs-settings', 'SiteManagementController@getBreadcrumbsSettings');
+       
+        
         Route::post('admin/get/project-settings', 'SiteManagementController@getprojectSettings');
         Route::post('admin/store/project-settings', 'SiteManagementController@storeProjectSettings');
         Route::post('admin/store/bank-detail', 'SiteManagementController@storeBankDetail');
@@ -473,10 +472,17 @@ Route::group(
         Route::get('get/{type}/{filename}/{id}', 'PublicController@getFile')->name('getfile');
         Route::post('blog/update-blog', 'BlogController@update');
         Route::post('blog/change-status', 'BlogController@changeStatus');
-
+       
+        //landing page guests
         Route::get('editor/pages', 'PageController@dynamicPages');
         Route::get('/guest-messages','PublicController@showGuestInfo')->name('guestMessages');
         
+        //seo inner pages edit
+        Route::get('editor/settings/inner-pages','SiteManagementController@editorInnerPageSettings');
+        Route::post('admin/store/breadcrumbs-settings', 'SiteManagementController@storeBreadcrumbsSettings');
+        Route::post('admin/get/breadcrumbs-settings', 'SiteManagementController@getBreadcrumbsSettings');
+        Route::post('admin/store/innerpage-settings', 'SiteManagementController@storeInnerPageSettings');
+        Route::post('admin/get/innerpage-settings', 'SiteManagementController@getInnerPageSettings');
 
    
    

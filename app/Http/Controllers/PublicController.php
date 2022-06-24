@@ -95,6 +95,20 @@ class PublicController extends Controller
             return $json;
         }
     }
+    public function loginUserRole(Request $request)
+    {
+        $json = array();
+        if (Auth::user()) {
+            $user = User::find(Auth::user()->id);
+            $json['type'] = 'success';
+            $json['role'] = $user->getRoleNames()->first();
+            return $json;
+        } else {
+            $json['type'] = 'error';
+            $json['message'] = trans('lang.something_wrong');
+            return $json;
+        }
+    }
 
     /**
      * Step1 Registeration Validation
@@ -1518,7 +1532,11 @@ class PublicController extends Controller
     }
 
     public function remoteDevPage(){
-        return view('front-end.remoteDeveloper.index');
+        $inner_page  = SiteManagement::getMetaValue('inner_page_data');
+        $remote_list_meta_title = !empty($inner_page) && !empty($inner_page[0]['remote_list_meta_title']) ? $inner_page[0]['remote_list_meta_title'] : 'Hire Remote Developers';
+        $remote_list_meta_desc = !empty($inner_page) && !empty($inner_page[0]['remote_list_meta_desc']) ? $inner_page[0]['remote_list_meta_desc'] : 'Hire Remote Developers';
+    
+        return view('front-end.remoteDeveloper.index',compact('remote_list_meta_title','remote_list_meta_desc'));
     }
     public function storeGuestMsg(Request $request){
         $json = array();
