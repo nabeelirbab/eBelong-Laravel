@@ -2504,6 +2504,7 @@ if (document.getElementById("settings")) {
       favicon: false,
       reg_form_banner: false,
       success_message: "",
+      role: '',
       notificationSystem: {
         options: {
           success: {
@@ -2553,6 +2554,15 @@ if (document.getElementById("settings")) {
       loading: false,
     },
     created: function () {
+      var role;
+      axios
+      .get(APP_URL + "/get-login-user-role")
+      .then(function (response) {
+        if (response.data.type === "success") {
+           role = response.data.role
+        }
+    })
+    if(role=='admin'){
       this.getHomeSectionDisplaySetting();
       this.getChatDisplaySetting();
       this.getPrimaryColorDisplaySetting();
@@ -2561,6 +2571,11 @@ if (document.getElementById("settings")) {
       this.getSitePaymentOptions();
       this.getBreadcrumbsSettings();
       this.getProjectSettings();
+    }
+    else{
+      this.getInnerPageSettings();
+      this.getBreadcrumbsSettings();
+    }
     },
     ready: function () {},
     methods: {
@@ -3238,6 +3253,7 @@ if (document.getElementById("settings")) {
         axios
           .post(APP_URL + "/admin/get/innerpage-settings")
           .then(function (response) {
+            console.log(response.data.show_f_banner)
             if (response.data.show_f_banner == "true") {
               self.show_f_banner = true;
             } else {
@@ -3429,6 +3445,15 @@ if (document.getElementById("profile_settings")) {
       };
     },
     created: function () {
+      axios
+              .get(APP_URL + "/get-login-user-role")
+              .then(function (response) {
+                if (response.data.type === "success") {
+                  role = response.data.role
+                  console.log(role)
+                } 
+              })
+             
       this.getUserEmailNotification();
       this.getSearchableSettings();
     },

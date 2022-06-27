@@ -136,6 +136,12 @@
                             </a>
                         </li>
                         <li>
+                            <a href="{{{ route('guestMessages') }}}">
+                                <i class="ti-user"></i>
+                                <span>{{ "Guest Messages" }}</span>
+                            </a>
+                        </li>
+                        <li>
                             <a href="{{{ route('emailTemplates') }}}">
                                 <i class="ti-email"></i>
                                 <span>{{ trans('lang.email_templates') }}</span>
@@ -224,6 +230,7 @@
                                 <li><hr><a href="{{{ url(route('editorProfile'))}}}">{{ trans('lang.acc_settings') }}</a></li>
                                 {{-- <li><hr><a href="{{{ url('admin/settings') }}}">{{ trans('lang.general_settings') }}</a></li> --}}
                                 <li><hr><a href="{{{ route('resetPassword') }}}">{{ trans('lang.reset_pass') }}</a></li>
+                                <li><hr><a href="{{{ url('editor/settings/inner-pages') }}}">{{ "Inner Pages" }}</a></li>
                             </ul>
                         </li>
                         <li class="menu-item-has-children">

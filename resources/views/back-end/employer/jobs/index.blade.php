@@ -36,13 +36,13 @@
 															<div class="wt-title">
 																@if (!empty($user_name))
 																	<a href="{{{ url('profile/'.$job->employer->slug) }}}">
-																	@if ($verified_user === 1)
+																	@if ($verified_user == '1')
 																		<i class="fa fa-check-circle"></i>&nbsp;
 																	@endif
 																	{{{ $user_name.' | JOB ID: '.$job->id }}}</a>
 																@endif
 																@if (!empty($job->title))
-																	<h2><a href="{{{ url('job/'.$job->slug) }}}">{{{ $job->title }}}</a></h2>
+																	<h4><a href="{{{ url('job/'.$job->slug) }}}">{{{ $job->title }}}</a></h4>
 																@endif
 															</div>
 														@endif
@@ -78,10 +78,11 @@
 														<div class="wt-hireduserstatus">
 															<h4>{{{ $proposals->count() }}}</h4><span>{{ trans('lang.proposals') }}</span>
 															@if ($proposals->count() > 0)
+															
 																<ul class="wt-hireduserimgs">
 																	@foreach ($proposals as $proposal)
 																		@php
-																			$profile = \App\User::find($proposal->freelancer_id)->profile;
+																			$profile = \App\Profile::where('user_id',$proposal->freelancer_id)->first();
 																			$user_image = !empty($profile) ? $profile->avater : '';
 																			$profile_image = !empty($user_image) ? '/uploads/users/'.$proposal->freelancer_id.'/'.$user_image : 'images/user-login.png';
 																		@endphp

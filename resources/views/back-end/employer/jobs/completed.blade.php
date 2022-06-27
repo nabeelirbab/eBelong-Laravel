@@ -15,7 +15,7 @@
                                     @php
                                         $accepted_proposal = \App\Job::find($job->id)->proposals()->where('status', 'completed')->first();
                                         
-                                        $profile = \App\Job::find($job->id)->proposals()->where('status', 'completed')->count() > 0 ? \App\User::find($accepted_proposal->freelancer_id)->profile : array();
+                                        $profile = \App\Job::find($job->id)->proposals()->where('status', 'completed')->count() > 0 ? \App\Profile::where('user_id',$accepted_proposal->freelancer_id)->first() : array();
 
                                         $user_image = !empty($profile) ? $profile->avater : '';
                                         $verified_user = \App\User::select('user_verified')->where('id', $job->employer->id)->pluck('user_verified')->first();

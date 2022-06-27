@@ -48,7 +48,7 @@
                                     
                                             <tr class="del-user-{{ $user->id }}">
                                                 <td>{{{ ucwords($user->name) }}}</td>
-                                                <td>{{{ $user->email }}}</td>
+                                                <td>{{{ $user->guest_email }}}</td>
                                                 <td>{{ $user->phone }}</td>
                                                 <td>{{ $user->message }}</td>                                          
                                                 <td><?= date('d M Y', strtotime($user->created_at)) ?></td>

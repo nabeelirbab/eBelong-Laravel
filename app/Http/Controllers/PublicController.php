@@ -17,6 +17,7 @@ use App\Mail\FindMatchEmailAdminMailable;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Http\Request;
 use App\User;
+use Alert;
 use App\AgencyUser;
 use App\Cource;
 use App\Blog;
@@ -87,6 +88,20 @@ class PublicController extends Controller
             $json['type'] = 'success';
             $json['role'] = $user->getRoleNames()->first();
             session()->forget('user_id');
+            return $json;
+        } else {
+            $json['type'] = 'error';
+            $json['message'] = trans('lang.something_wrong');
+            return $json;
+        }
+    }
+    public function loginUserRole(Request $request)
+    {
+        $json = array();
+        if (Auth::user()) {
+            $user = User::find(Auth::user()->id);
+            $json['type'] = 'success';
+            $json['role'] = $user->getRoleNames()->first();
             return $json;
         } else {
             $json['type'] = 'error';
@@ -1517,7 +1532,11 @@ class PublicController extends Controller
     }
 
     public function remoteDevPage(){
-        return view('front-end.remoteDeveloper.index');
+        $inner_page  = SiteManagement::getMetaValue('inner_page_data');
+        $remote_list_meta_title = !empty($inner_page) && !empty($inner_page[0]['remote_list_meta_title']) ? $inner_page[0]['remote_list_meta_title'] : 'Hire Remote Developers';
+        $remote_list_meta_desc = !empty($inner_page) && !empty($inner_page[0]['remote_list_meta_desc']) ? $inner_page[0]['remote_list_meta_desc'] : 'Hire Remote Developers';
+    
+        return view('front-end.remoteDeveloper.index',compact('remote_list_meta_title','remote_list_meta_desc'));
     }
     public function storeGuestMsg(Request $request){
         $json = array();
@@ -1530,18 +1549,17 @@ class PublicController extends Controller
             (
                 [
                 'name' => 'required',
-                'email' => 'required|email',
+                'guest_email' => 'required|email',
                 'message' => 'required',
                 'phone' => 'required|numeric|digits:11'
                
             ]
         );
-        
         $data =DB::table('contact_info')->insertGetId(
             [
                 'name' => filter_var($request['name'], FILTER_SANITIZE_STRING),
                 'message' => filter_var($request['message'], FILTER_SANITIZE_STRING),
-                'email' => $request['email'],
+                'guest_email' => $request['guest_email'],
                 'phone' => $request['phone'],
                 "created_at" => Carbon::now(), "updated_at" => Carbon::now()
             ]
@@ -1549,12 +1567,12 @@ class PublicController extends Controller
        
         if(!empty($data))
             {
-                Session::flash('message', 'Thankyou for Showing Interest!');
+                Alert::success('Message Sent', 'Thankyou for Showing Interest');
                 return redirect('/hire-remote-developers');
             } 
             
         else{
-            Session::flash('errror', 'Something went wrong!');
+            Alert::error('errror', 'Something went wrong!');
             return redirect('/');
         }
     }

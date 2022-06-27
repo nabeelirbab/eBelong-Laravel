@@ -4,7 +4,10 @@
 @push('stylesheets')
     <link href="{{ asset('css/owl.carousel.min.css') }}" rel="stylesheet">
 @endpush
+@section('title'){{$remote_list_meta_title }} @stop
+@section('description', $remote_list_meta_desc)
 @section('content')
+@include('sweetalert::alert')
 <div class="landing-page">
     <div class="container">
         <div class="row section1 margin-row">
@@ -16,16 +19,8 @@
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 section1_left">
-                @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-                @endif
-                @if (Session::has('message'))
+              
+                {{-- @if (Session::has('message'))
                     <div class="alert alert-success">
                         {{ Session::get('message') }}
                     </div>
@@ -33,35 +28,62 @@
                     <div class="alert alert-danger">
                         {{ Session::get('error') }}
                     </div>
-                @endif
+                @endif --}}
+               
                 <div class="form-banner">
                     <h2>Fill out the form and one of our Hiring experts will contact you promptly</h2>
-                    <form action="{{ url('/post-guest-message') }}" method="post" class="cmxform banner-form" id="bannerform">
+                    <form action="{{ url('/post-guest-message') }}" method="post" class="cmxform banner-form">
                         @csrf
                         <div class="row">
                             <div class="col-md-6">
-                                <input type="text" name="name" id="bnm" placeholder="Name:"> 
+                                <input type="text" name="name" id="bnm" placeholder="Name:" value="{{ old('name') }}"> 
+                                @if ($errors->has('name'))
+                                    <span class="invalid-feedback" style="display: block; position: absolute; bottom: -19px;" role="alert">
+                                        {{ $errors->first('name') }}
+                                    </span>
+                                @endif
                             </div>
                             <div class="col-md-6">
-                                <input type="phone"  name="phone" placeholder="Phone:" id="bpn"> 
+                                <input  onkeypress="
+                                 const allowedRegex = /[0-9]/g;
+                                if (!event.key.match(allowedRegex)) {
+                                    event.preventDefault();
+                                }
+                                "type="phone"  name="phone" placeholder="Phone:" id="bpn" value="{{ old('phone') }}"
+                               > 
+                                @if ($errors->has('phone'))
+                                    <span class="invalid-feedback"style="display: block; position: absolute; bottom: -19px;" role="alert">
+                                        {{ $errors->first('phone') }}
+                                    </span>
+                                @endif
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col-md-12">
-                                <input type="email" placeholder="Email:" id="bem" name="email">
+                                <input type="email" placeholder="Email:" id="bem" name="guest_email" value="{{ old('guest_email') }}">
+                                @if ($errors->has('guest_email'))
+                                    <span class="invalid-feedback" style="display: block; position: absolute; bottom: -19px;" role="alert">
+                                        {{ $errors->first('guest_email') }}
+                                    </span>
+                                @endif
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col-md-12">
-                                <textarea name="message" id="bmsg" rows="10" placeholder="Message"></textarea>
+                                <textarea name="message" id="bmsg" rows="10" placeholder="Message">{{ old('message') }}</textarea>
+                                @if ($errors->has('message'))
+                                    <span class="invalid-feedback"style="display: block; position: absolute; bottom: 0px;" role="alert">
+                                        {{ $errors->first('message') }}
+                                    </span>
+                                @endif
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col-md-12">
-                                <input type="submit" value="Submit" id="banner-form-submit" name="banner-form-submit" placeholder="Connect With Us">
+                                <input type="submit" value="Submit" placeholder="Connect With Us">
                             </div>
                         </div>
                     </form>
@@ -431,12 +453,19 @@
 <script type="text/javascript">
     var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
     (function(){
+        
     var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
     s1.async=true;
     s1.src='https://embed.tawk.to/6290b9a3b0d10b6f3e745567/1g42laa69';
     s1.charset='UTF-8';
     s1.setAttribute('crossorigin','*');
     s0.parentNode.insertBefore(s1,s0);
+    setTimeout(function () {
+    
+    Tawk_API.maximize();
+    
+}, 10000);
     })();
+ 
     </script>
     <!--End of Tawk.to Script-->
