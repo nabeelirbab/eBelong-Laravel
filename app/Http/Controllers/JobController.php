@@ -941,6 +941,7 @@ class JobController extends Controller
     // $jobs = $jobs->where('expiry_date', '>', date('Y-m-d'));
     $jobs = $jobs->orderByRaw("id DESC")->paginate(20)->setPath('');
     $type='job';
+    dd($jobs);
     if (file_exists(resource_path('views/extend/front-end/jobs/jobList.blade.php'))) {
         return view(
             'extend.front-end.jobs.jobList',

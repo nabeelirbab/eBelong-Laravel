@@ -1659,7 +1659,7 @@ class Helper extends Model
      */
     public static function getProjectImage($image, $user_id)
     {
-        return !empty($image) ? '/uploads/users/' . $user_id . '/' . $image : 'images/projects/img-01.jpg';
+        return !empty($image) ? '/uploads/users/' . $user_id . '/' . $image : '/uploads/settings/general/user.jpg';
     }
 
     /**
