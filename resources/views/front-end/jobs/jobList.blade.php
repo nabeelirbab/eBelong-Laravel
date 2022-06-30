@@ -29,7 +29,9 @@
                                       </search-form>
                               </div>
                               @if (!empty($jobs && $jobs->count() > 0))
+                              @foreach ($jobs as $job )
                               <h1>{{ $job->title }}</h1>
+                              @endforeach
                                 @endif
 {{-- end testing --}}
                             </div>
