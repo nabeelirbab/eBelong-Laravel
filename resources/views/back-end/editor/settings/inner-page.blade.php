@@ -11,7 +11,7 @@
             </div>
         @endif
         <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 float-left">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 float-left">
                 <div class="wt-dashboardbox wt-dashboardtabsholder wt-accountsettingholder">
     <div class="la-inner-pages wt-haslayout">
         {!! Form::open(['url' => '', 'class' =>'wt-formtheme wt-userform', 'id' =>'breadcrumb-option', '@submit.prevent'=>'submitBreadcrumbs'])!!}

@@ -6747,6 +6747,7 @@ if (document.getElementById("agency")) {
   });
 }
 if (document.getElementById("cources")) {
+  console.log("COURSES CALLED")
   const vservices = new Vue({
     el: "#cources",
     mounted: function () {
