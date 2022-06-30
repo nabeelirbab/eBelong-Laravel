@@ -3972,6 +3972,7 @@ if (document.getElementById("post_job")) {
 }
 
 if (document.getElementById("jobs")) {
+  console.log("JOBS CALLED")
   const jobVue = new Vue({
     el: "#jobs",
     mounted: function () {
