@@ -16,6 +16,22 @@
                         <div class="wt-innerbannercontent">
                             <div class="wt-title">
                                 <h2>Jobs</h2>
+                                {{-- extra stuff for debugging --}}
+                                <div class="search-form">
+                                    <search-form
+                                      :placeholder="'{{ trans('lang.looking_for') }}'"
+                                      :freelancer_placeholder="'{{ trans('lang.search_filter_list.freelancer') }}'"
+                                      :employer_placeholder="'{{ trans('lang.search_filter_list.employers') }}'"
+                                      :job_placeholder="'{{ trans('lang.search_filter_list.jobs') }}'"
+                                      :service_placeholder="'{{ trans('lang.search_filter_list.services') }}'"
+                                      :no_record_message="'{{ trans('lang.no_record') }}'"
+                                      >
+                                      </search-form>
+                              </div>
+                              @if (!empty($jobs && $jobs->count() > 0))
+                              <h1>{{ $job->title }}</h1>
+                                @endif
+{{-- end testing --}}
                             </div>
                             @if (!empty($show_breadcrumbs) && $show_breadcrumbs === 'true')
                                 @if (count($breadcrumbs))
@@ -37,7 +53,7 @@
         </div>
     @endif
     <div class="wt-haslayout wt-main-section" id="jobs">
-    {{-- <div class="search-form">
+    <div class="search-form">
               <search-form
                 :placeholder="'{{ trans('lang.looking_for') }}'"
                 :freelancer_placeholder="'{{ trans('lang.search_filter_list.freelancer') }}'"
@@ -47,7 +63,7 @@
                 :no_record_message="'{{ trans('lang.no_record') }}'"
                 >
                 </search-form>
-        </div> --}}
+        </div>
         @if (Session::has('payment_message'))
             @php $response = Session::get('payment_message') @endphp
             <div class="flash_msg">
