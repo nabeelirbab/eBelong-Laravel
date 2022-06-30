@@ -14,7 +14,7 @@
                 <div class="row justify-content-md-center">
                     <div class="col-xs-12 col-sm-12 col-md-8 push-md-2 col-lg-6 push-lg-3">
                         <div class="wt-innerbannercontent">
-                            <div class="wt-title">
+                            <div class="wt-title" id="jobs">
                                 <h2>Jobs</h2>
                                 {{-- extra stuff for debugging --}}
                                 <div class="search-form">
@@ -28,11 +28,6 @@
                                       >
                                       </search-form>
                               </div>
-                              @if (!empty($jobs && $jobs->count() > 0))
-                              @foreach ($jobs as $job )
-                              <h1>{{ $job->title }}</h1>
-                              @endforeach
-                                @endif
 {{-- end testing --}}
                             </div>
                             @if (!empty($show_breadcrumbs) && $show_breadcrumbs === 'true')
