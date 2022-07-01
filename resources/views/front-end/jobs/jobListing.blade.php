@@ -17,6 +17,7 @@
                             <div class="wt-title">
                                 <h2>Jobs</h2>
                             </div>
+                            @php var_dump($jobs) @endphp
                             @if (!empty($show_breadcrumbs) && $show_breadcrumbs === 'true')
                                 @if (count($breadcrumbs))
                                     <ol class="wt-breadcrumb">
@@ -48,6 +49,7 @@
                 >
                 </search-form>
         </div>
+        <h1>hi</h1>
         @if (Session::has('payment_message'))
             @php $response = Session::get('payment_message') @endphp
             <div class="flash_msg">
