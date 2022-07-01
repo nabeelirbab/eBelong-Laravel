@@ -36,7 +36,8 @@
             </div>
         </div>
     @endif
-    <div class="wt-haslayout wt-main-section">
+    <div id="jobs">
+    <div class="wt-haslayout wt-main-section" >
     <div class="search-form">
               <search-form
                 :placeholder="'{{ trans('lang.looking_for') }}'"
@@ -48,7 +49,7 @@
                 >
                 </search-form>
         </div>
-        <h1>hi</h1>
+       
         @if (Session::has('payment_message'))
             @php $response = Session::get('payment_message') @endphp
             <div class="flash_msg">
@@ -464,5 +465,6 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
     @endsection
