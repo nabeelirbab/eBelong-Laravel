@@ -89,8 +89,9 @@ Route::get('hire/{slug}', 'FreelancerController@freelancerList')->name('Filtered
 Route::get('hire', 'FreelancerController@freelancersListing')->name('freelancers');
 
 //seo-jobs
-Route::get('jobs/{slug}', 'JobController@jobsList')->name('FilteredJobs');
 Route::get('jobs', 'JobController@jobsListing')->name('jobs');
+Route::get('jobs/{slug}', 'JobController@jobsList')->name('FilteredJobs');
+
 
 //seo-remote-developers
 Route::get('hire-remote-developers', 'PublicController@remoteDevPage');
