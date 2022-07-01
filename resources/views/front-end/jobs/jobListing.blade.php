@@ -17,7 +17,6 @@
                             <div class="wt-title">
                                 <h2>Jobs</h2>
                             </div>
-                            @php var_dump($jobs) @endphp
                             @if (!empty($show_breadcrumbs) && $show_breadcrumbs === 'true')
                                 @if (count($breadcrumbs))
                                     <ol class="wt-breadcrumb">
@@ -37,7 +36,7 @@
             </div>
         </div>
     @endif
-    <div class="wt-haslayout wt-main-section" id="jobs">
+    <div class="wt-haslayout wt-main-section">
     <div class="search-form">
               <search-form
                 :placeholder="'{{ trans('lang.looking_for') }}'"
