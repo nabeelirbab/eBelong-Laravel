@@ -49,7 +49,7 @@
     </div>
     @endif
     <div  >
-    <div class="wt-haslayout wt-main-section" id="services">
+    <div class="wt-haslayout wt-main-section">
 
        
         @if (Session::has('payment_message'))
