@@ -1793,6 +1793,7 @@ if (document.getElementById("location")) {
   });
 }
 if (document.getElementById("user_profile")) {
+  console.log("user profile")
   const freelancerProfile = new Vue({
     el: "#user_profile",
     mounted: function () {
@@ -5326,6 +5327,7 @@ if (document.getElementById("workdiary")) {
 }
 
 if (document.getElementById("services")) {
+  console.log("services called")
   const vservices = new Vue({
     el: "#services",
     mounted: function () {

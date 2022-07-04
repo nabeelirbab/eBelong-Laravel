@@ -36,7 +36,7 @@
             </div>
         </div>
     @endif
-    <div id="services">
+    <div id="user_profile">
     <div class="wt-haslayout wt-main-section" >
     <div class="search-form">
               <search-form
