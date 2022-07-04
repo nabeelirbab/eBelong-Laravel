@@ -36,7 +36,7 @@
             </div>
         </div>
     @endif
-    <div id="jobs">
+    <div id="jobsTest">
     <div class="wt-haslayout wt-main-section" >
     <div class="search-form">
               <search-form
@@ -121,7 +121,7 @@
                                                                                 @endif
                                                                             @endif
                                                                            
-                                                                                {{-- <span class="wt-viewjobheart"id="remove-{{$job->id}}" style="{{ $job_saved ? '' : 'display: none;' }}">
+                                                                                <span class="wt-viewjobheart"id="remove-{{$job->id}}" style="{{ $job_saved ? '' : 'display: none;' }}">
                                                                                     <a href="javascript:void(0);"  class="wt-clicklike wt-clicksave"
                                                                                  @click.prevent="remove_wishlist('remove-{{$job->id}}', {{ $job->id }}, 'saved_jobs', 'Save','add-{{$job->id}}')" v-cloak>
                                                                                     <i class="fa fa-heart"></i> {{trans("lang.saved")}}</a></span>
@@ -130,7 +130,7 @@
                                                                                     <a href="javascrip:void(0);" class="wt-clicklike" @click.prevent="add_wishlist('job-{{$job->id}}', {{$job->id}}, 'saved_jobs', '{{trans('lang.saved')}}','remove-{{$job->id}}')" v-cloak>
                                                                                         <i class="fa fa-heart"></i>
                                                                                     </a>
-                                                                                </span> --}}
+                                                                                </span>
                                                                             
                                                                         </div>
                                                                     </div>
@@ -230,7 +230,7 @@
                                                             <li><span><i class="far fa-folder wt-viewjobfolder"></i>{{{ trans('lang.type') }}} {{{$project_type}}}</span></li>
                                                             <li><span><i class="far fa-clock wt-viewjobclock"></i>{{{ Helper::getJobDurationList($job->duration)}}}</span></li>
                                                             <li><span><i class="fa fa-tag wt-viewjobtag"></i>{{{ trans('lang.job_id') }}} {{{$job->code}}}</span></li>
-                                                            {{-- @if (!empty($user->profile->saved_jobs) && in_array($job->id, unserialize($user->profile->saved_jobs)))
+                                                            @if (!empty($user->profile->saved_jobs) && in_array($job->id, unserialize($user->profile->saved_jobs)))
                                                                 <li style=pointer-events:none;><a href="javascript:void(0);" class="wt-clicklike wt-clicksave"><i class="fa fa-heart"></i> {{trans("lang.saved")}}</a></li>
                                                             @else
                                                                 <li>
@@ -239,7 +239,7 @@
                                                                         <span class="save_text">{{ trans('lang.click_to_save') }}</span>
                                                                     </a>
                                                                 </li>
-                                                            @endif --}}
+                                                            @endif
                                                             <li class="wt-btnarea"><a href="{{url('job/'.$job->slug)}}" class="wt-btn">{{{ trans('lang.view_job') }}}</a></li>
                                                         </ul>
                                                     </div>
@@ -312,7 +312,7 @@
                                                                                     <span class="wt-viewjobhour"><i class="fa fa-dollar-sign wt-viewjobdollar"></i>{{{$job->price}}}</span>
                                                                                     @endif
                                                                                 @endif
-                                                                                {{-- @if (!empty($user->profile->saved_jobs) && in_array($job->id, unserialize($user->profile->saved_jobs)))
+                                                                                @if (!empty($user->profile->saved_jobs) && in_array($job->id, unserialize($user->profile->saved_jobs)))
                                                                                     <span class="wt-viewjobheart"><a href="javascript:void(0);" class="wt-clicklike wt-clicksave"><i class="fa fa-heart"></i> {{trans("lang.saved")}}</a></span>
                                                                                 @else
                                                                                     <span class="wt-viewjobheart">
@@ -320,7 +320,7 @@
                                                                                             <i class="fa fa-heart"></i>
                                                                                         </a>
                                                                                     </span>
-                                                                                @endif --}}
+                                                                                @endif
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -429,7 +429,7 @@
                                                             <li><span><i class="far fa-folder wt-viewjobfolder"></i>{{{ trans('lang.type') }}} {{{$project_type}}}</span></li>
                                                             <li><span><i class="far fa-clock wt-viewjobclock"></i>{{{ Helper::getJobDurationList($job->duration)}}}</span></li>
                                                             <li><span><i class="fa fa-tag wt-viewjobtag"></i>{{{ trans('lang.job_id') }}} {{{$job->code}}}</span></li>
-                                                            {{-- @if (!empty($user->profile->saved_jobs) && in_array($job->id, unserialize($user->profile->saved_jobs)))
+                                                            @if (!empty($user->profile->saved_jobs) && in_array($job->id, unserialize($user->profile->saved_jobs)))
                                                                 <li style=pointer-events:none;><a href="javascript:void(0);" class="wt-clicklike wt-clicksave"><i class="fa fa-heart"></i> {{trans("lang.saved")}}</a></li>
                                                             @else
                                                                 <li>
@@ -438,7 +438,7 @@
                                                                         <span class="save_text">{{ trans('lang.click_to_save') }}</span>
                                                                     </a>
                                                                 </li>
-                                                            @endif --}}
+                                                            @endif
                                                             <li class="wt-btnarea"><a href="{{url('job/'.$job->slug)}}" class="wt-btn">{{{ trans('lang.view_job') }}}</a></li>
                                                         </ul>
                                                     </div>
