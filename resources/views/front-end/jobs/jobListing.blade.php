@@ -9,13 +9,24 @@
 @endphp
     @if ($show_job_banner == 'true')
         @php $breadcrumbs = Breadcrumbs::generate('searchResults'); @endphp
-        <div class="wt-haslayout wt-innerbannerholder" style="background-image:url({{{ asset(Helper::getBannerImage($job_inner_banner, 'uploads/settings/general')) }}})" id="jobsTest">
+        <div class="wt-haslayout wt-innerbannerholder" style="background-image:url({{{ asset(Helper::getBannerImage($job_inner_banner, 'uploads/settings/general')) }}})">
             <div class="container">
                 <div class="row justify-content-md-center">
                     <div class="col-xs-12 col-sm-12 col-md-8 push-md-2 col-lg-6 push-lg-3">
                         <div class="wt-innerbannercontent">
-                            <div class="wt-title">
+                            <div class="wt-title" id = "jobsTest">
                                 <h2>Jobs</h2>
+                                <div class="search-form">
+                                    <search-form
+                                      :placeholder="'{{ trans('lang.looking_for') }}'"
+                                      :freelancer_placeholder="'{{ trans('lang.search_filter_list.freelancer') }}'"
+                                      :employer_placeholder="'{{ trans('lang.search_filter_list.employers') }}'"
+                                      :job_placeholder="'{{ trans('lang.search_filter_list.jobs') }}'"
+                                      :service_placeholder="'{{ trans('lang.search_filter_list.services') }}'"
+                                      :no_record_message="'{{ trans('lang.no_record') }}'"
+                                      >
+                                      </search-form>
+                              </div>
                             </div>
                             @if (!empty($show_breadcrumbs) && $show_breadcrumbs === 'true')
                                 @if (count($breadcrumbs))
@@ -34,21 +45,12 @@
                     </div>
                 </div>
             </div>
-        
-    @endif
-    <div >
-    <div class="wt-haslayout wt-main-section" >
-    <div class="search-form">
-              <search-form
-                :placeholder="'{{ trans('lang.looking_for') }}'"
-                :freelancer_placeholder="'{{ trans('lang.search_filter_list.freelancer') }}'"
-                :employer_placeholder="'{{ trans('lang.search_filter_list.employers') }}'"
-                :job_placeholder="'{{ trans('lang.search_filter_list.jobs') }}'"
-                :service_placeholder="'{{ trans('lang.search_filter_list.services') }}'"
-                :no_record_message="'{{ trans('lang.no_record') }}'"
-                >
-                </search-form>
         </div>
+    </div>
+    @endif
+    <div  >
+    <div class="wt-haslayout wt-main-section" id="services">
+
        
         @if (Session::has('payment_message'))
             @php $response = Session::get('payment_message') @endphp
@@ -467,5 +469,4 @@
         </div>
     </div>
     </div>
-</div>
     @endsection
