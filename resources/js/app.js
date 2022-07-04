@@ -3974,7 +3974,7 @@ if (document.getElementById("post_job")) {
 if (document.getElementById("jobsTest")) {
   console.log("JOBS 123")
   const jobVue = new Vue({
-    el: "#jobs",
+    el: "#jobsTest",
     mounted: function () {
       if (document.getElementsByClassName("flash_msg") != null) {
         flashVue.$emit("showFlashMessage");
