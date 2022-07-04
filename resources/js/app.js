@@ -3971,10 +3971,10 @@ if (document.getElementById("post_job")) {
   });
 }
 
-if (document.getElementById("jobs")) {
-  console.log("JOBS ---")
+if (document.getElementById("jobsTest")) {
+  console.log("JOBS 123")
   const jobVue = new Vue({
-    el: "#jobs",
+    el: "#jobsTest",
     mounted: function () {
       if (document.getElementsByClassName("flash_msg") != null) {
         flashVue.$emit("showFlashMessage");
@@ -4077,108 +4077,108 @@ if (document.getElementById("jobs")) {
           this.notificationSystem.options.message
         );
       },
-      // add_wishlist: function (
-      //   element_id,
-      //   id,
-      //   column,
-      //   saved_text,
-      //   hidable_element_id
-      // ) {
-      //   var self = this;
-      //   axios
-      //     .post(APP_URL + "/user/add-wishlist", {
-      //       id: id,
-      //       column: column,
-      //     })
-      //     .then(function (response) {
-      //       if (response.data.authentication == true) {
-      //         if (column == "saved_jobs") {
-      //           jQuery("#" + hidable_element_id).show();
-      //           jQuery("#" + element_id).hide();
+      add_wishlist: function (
+        element_id,
+        id,
+        column,
+        saved_text,
+        hidable_element_id
+      ) {
+        var self = this;
+        axios
+          .post(APP_URL + "/user/add-wishlist", {
+            id: id,
+            column: column,
+          })
+          .then(function (response) {
+            if (response.data.authentication == true) {
+              if (column == "saved_jobs") {
+                jQuery("#" + hidable_element_id).show();
+                jQuery("#" + element_id).hide();
 
-      //           // jQuery('#' + element_id).parents('li').addClass('wt-btndisbaled');
-      //           //jQuery('#' + element_id).addClass('wt-clicksave');
-      //           //jQuery('#' + element_id).find('.save_text').text(saved_text);
-      //           // self.disable_btn = 'wt-btndisbaled wt-clicksave';
-      //           // self.text = saved_text;
-      //           // self.heart_class = 'fa fa-heart';
-      //         }
+                // jQuery('#' + element_id).parents('li').addClass('wt-btndisbaled');
+                //jQuery('#' + element_id).addClass('wt-clicksave');
+                //jQuery('#' + element_id).find('.save_text').text(saved_text);
+                // self.disable_btn = 'wt-btndisbaled wt-clicksave';
+                // self.text = saved_text;
+                // self.heart_class = 'fa fa-heart';
+              }
 
-      //         if (column == "saved_employers") {
-      //           self.disable_follow = "wt-btndisbaled";
-      //           self.follow_text = saved_text;
-      //         }
-      //         self.showMessage(response.data.message);
-      //       } else {
-      //         self.showError(response.data.message);
-      //       }
-      //     })
-      //     .catch(function (error) {
-      //       console.log(error);
-      //     });
-      // },
-      // remove_wishlist: function (
-      //   element_id,
-      //   id,
-      //   column,
-      //   saved_text,
-      //   hidable_element_id
-      // ) {
-      //   var self = this;
-      //   axios
-      //     .post(APP_URL + "/user/remove-wishlist", {
-      //       id: id,
-      //       column: column,
-      //       seller_id: "",
-      //     })
-      //     .then(function (response) {
-      //       if (response.data.authentication == true) {
-      //         if (response.data.type == "success") {
-      //           if (column == "saved_freelancer") {
-      //             jQuery("#" + element_id)
-      //               .parents("li")
-      //               .addClass("wt-btndisbaled");
-      //             jQuery("#" + element_id).addClass("wt-clicksave");
-      //             jQuery("#" + element_id)
-      //               .find(".save_text")
-      //               .text(saved_text);
-      //             self.disable_btn = "wt-btndisbaled";
-      //             self.text = "Save";
-      //             self.saved_class = "fa fa-heart";
-      //             self.click_to_save = "wt-clicksave";
-      //           } else if (column == "saved_employers") {
-      //             jQuery("#" + element_id).addClass(
-      //               "wt-btndisbaled wt-clicksave"
-      //             );
-      //             jQuery("#" + element_id).text(saved_text);
-      //             jQuery("#" + element_id)
-      //               .parents(".wt-clicksavearea")
-      //               .find("i")
-      //               .addClass("fa fa-heart");
-      //             self.disable_follow = "wt-btndisbaled";
-      //             self.follow_text = saved_text;
-      //           } else if (column == "saved_jobs") {
-      //             jQuery("#" + hidable_element_id).show();
-      //             jQuery("#" + element_id).hide();
-      //           } else if (column == "saved_services") {
-      //             jQuery("#" + hidable_element_id).show();
-      //             jQuery("#" + element_id).hide();
-      //           } else if (column == "saved_cources") {
-      //             jQuery("#" + hidable_element_id).show();
-      //             jQuery("#" + element_id).hide();
-      //           }
-      //           self.showMessage(response.data.message);
-      //         } else {
-      //           self.showError(response.data.message);
-      //         }
-      //       } else {
-      //         self.showError(response.data.message);
-      //       }
-      //     })
-      //     .catch(function (error) {
-      //       console.log(error);
-      //     });
-      // },
+              if (column == "saved_employers") {
+                self.disable_follow = "wt-btndisbaled";
+                self.follow_text = saved_text;
+              }
+              self.showMessage(response.data.message);
+            } else {
+              self.showError(response.data.message);
+            }
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      },
+      remove_wishlist: function (
+        element_id,
+        id,
+        column,
+        saved_text,
+        hidable_element_id
+      ) {
+        var self = this;
+        axios
+          .post(APP_URL + "/user/remove-wishlist", {
+            id: id,
+            column: column,
+            seller_id: "",
+          })
+          .then(function (response) {
+            if (response.data.authentication == true) {
+              if (response.data.type == "success") {
+                if (column == "saved_freelancer") {
+                  jQuery("#" + element_id)
+                    .parents("li")
+                    .addClass("wt-btndisbaled");
+                  jQuery("#" + element_id).addClass("wt-clicksave");
+                  jQuery("#" + element_id)
+                    .find(".save_text")
+                    .text(saved_text);
+                  self.disable_btn = "wt-btndisbaled";
+                  self.text = "Save";
+                  self.saved_class = "fa fa-heart";
+                  self.click_to_save = "wt-clicksave";
+                } else if (column == "saved_employers") {
+                  jQuery("#" + element_id).addClass(
+                    "wt-btndisbaled wt-clicksave"
+                  );
+                  jQuery("#" + element_id).text(saved_text);
+                  jQuery("#" + element_id)
+                    .parents(".wt-clicksavearea")
+                    .find("i")
+                    .addClass("fa fa-heart");
+                  self.disable_follow = "wt-btndisbaled";
+                  self.follow_text = saved_text;
+                } else if (column == "saved_jobs") {
+                  jQuery("#" + hidable_element_id).show();
+                  jQuery("#" + element_id).hide();
+                } else if (column == "saved_services") {
+                  jQuery("#" + hidable_element_id).show();
+                  jQuery("#" + element_id).hide();
+                } else if (column == "saved_cources") {
+                  jQuery("#" + hidable_element_id).show();
+                  jQuery("#" + element_id).hide();
+                }
+                self.showMessage(response.data.message);
+              } else {
+                self.showError(response.data.message);
+              }
+            } else {
+              self.showError(response.data.message);
+            }
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      },
       check_auth: function (url) {
         var self = this;
         axios
