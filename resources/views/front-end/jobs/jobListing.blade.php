@@ -49,7 +49,7 @@
     </div>
     @endif
     <div  >
-    <div class="wt-haslayout wt-main-section" id="services">
+    <div class="wt-haslayout wt-main-section">
 
        
         @if (Session::has('payment_message'))
@@ -123,7 +123,7 @@
                                                                                 @endif
                                                                             @endif
                                                                            
-                                                                                <span class="wt-viewjobheart"id="remove-{{$job->id}}" style="{{ $job_saved ? '' : 'display: none;' }}">
+                                                                                {{-- <span class="wt-viewjobheart"id="remove-{{$job->id}}" style="{{ $job_saved ? '' : 'display: none;' }}">
                                                                                     <a href="javascript:void(0);"  class="wt-clicklike wt-clicksave"
                                                                                  @click.prevent="remove_wishlist('remove-{{$job->id}}', {{ $job->id }}, 'saved_jobs', 'Save','add-{{$job->id}}')" v-cloak>
                                                                                     <i class="fa fa-heart"></i> {{trans("lang.saved")}}</a></span>
@@ -132,7 +132,7 @@
                                                                                     <a href="javascrip:void(0);" class="wt-clicklike" @click.prevent="add_wishlist('job-{{$job->id}}', {{$job->id}}, 'saved_jobs', '{{trans('lang.saved')}}','remove-{{$job->id}}')" v-cloak>
                                                                                         <i class="fa fa-heart"></i>
                                                                                     </a>
-                                                                                </span>
+                                                                                </span> --}}
                                                                             
                                                                         </div>
                                                                     </div>
@@ -314,7 +314,7 @@
                                                                                     <span class="wt-viewjobhour"><i class="fa fa-dollar-sign wt-viewjobdollar"></i>{{{$job->price}}}</span>
                                                                                     @endif
                                                                                 @endif
-                                                                                @if (!empty($user->profile->saved_jobs) && in_array($job->id, unserialize($user->profile->saved_jobs)))
+                                                                                {{-- @if (!empty($user->profile->saved_jobs) && in_array($job->id, unserialize($user->profile->saved_jobs)))
                                                                                     <span class="wt-viewjobheart"><a href="javascript:void(0);" class="wt-clicklike wt-clicksave"><i class="fa fa-heart"></i> {{trans("lang.saved")}}</a></span>
                                                                                 @else
                                                                                     <span class="wt-viewjobheart">
@@ -322,7 +322,7 @@
                                                                                             <i class="fa fa-heart"></i>
                                                                                         </a>
                                                                                     </span>
-                                                                                @endif
+                                                                                @endif --}}
                                                                             </div>
                                                                         </div>
                                                                     </div>
