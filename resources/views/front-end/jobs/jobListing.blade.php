@@ -15,8 +15,8 @@
                     <div class="col-xs-12 col-sm-12 col-md-8 push-md-2 col-lg-6 push-lg-3">
                         <div class="wt-innerbannercontent">
                             <div class="wt-title" id = "jobsTest">
-                                <h2>Jobs</h2>
-                                <div class="search-form">
+                                <h1>Jobs</h1>
+                                <div class="search-form jobListingPage">
                                     <search-form
                                       :placeholder="'{{ trans('lang.looking_for') }}'"
                                       :freelancer_placeholder="'{{ trans('lang.search_filter_list.freelancer') }}'"
@@ -49,7 +49,7 @@
     </div>
     @endif
     <div  >
-    <div class="wt-haslayout wt-main-section">
+    <div class="wt-haslayout wt-main-section jobListing">
         @if (Session::has('payment_message'))
             @php $response = Session::get('payment_message') @endphp
             <div class="flash_msg">
