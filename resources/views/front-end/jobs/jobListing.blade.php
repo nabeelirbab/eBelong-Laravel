@@ -127,7 +127,7 @@
                                                                                     <i class="fa fa-heart"></i> {{trans("lang.saved")}}</a></span>
                                                                             
                                                                                 <span class="wt-viewjobheart"id="add-{{$job->id}}" style="{{ $job_saved ? 'display: none;' : '' }}">
-                                                                                    <a href="#" class="wt-clicklike" onclick="add_to_wishlist('job-{{$job->id}}', {{$job->id}}, 'saved_jobs', '{{trans('lang.saved')}}','remove-{{$job->id}}');" >
+                                                                                    <a href="javascript:void(0);" class="wt-clicklike" onclick="add_to_wishlist('job-{{$job->id}}', {{$job->id}}, 'saved_jobs', '{{trans('lang.saved')}}','remove-{{$job->id}}');" >
                                                                                         <i class="fa fa-heart"></i>
                                                                                     </a>
                                                                                 </span>
@@ -236,7 +236,7 @@
                                                                 <i class="fa fa-heart"></i> {{trans("lang.saved")}}</a></span>
                                                         
                                                             <span class="wt-viewjobheart"id="add-{{$job->id}}" style="{{ $job_saved ? 'display: none;' : '' }}">
-                                                                <a href="#" class="wt-clicklike" onclick="add_to_wishlist('job-{{$job->id}}', {{$job->id}}, 'saved_jobs', '{{trans('lang.saved')}}','remove-{{$job->id}}');" >
+                                                                <a href="javascript:void(0);" class="wt-clicklike" onclick="add_to_wishlist('job-{{$job->id}}', {{$job->id}}, 'saved_jobs', '{{trans('lang.saved')}}','remove-{{$job->id}}');" >
                                                                     <i class="fa fa-heart"></i>
                                                                 </a>
                                                             </span>
@@ -524,12 +524,12 @@
                 jQuery("#" + hidable_element_id).show();
                   jQuery("#" + element_id).hide();
               }
-              iziToast.show({
+              iziToast.success({
                 message: response.message,
                 position: "center",
                 timeout: 3000,
                 progressBar: true,
-                color:'green'
+                backgroundColor: 'green',
                 })
             }
             else{
