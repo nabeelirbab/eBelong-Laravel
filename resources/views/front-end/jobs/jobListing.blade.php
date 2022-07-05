@@ -14,7 +14,7 @@
                 <div class="row justify-content-md-center">
                     <div class="col-xs-12 col-sm-12 col-md-8 push-md-2 col-lg-6 push-lg-3">
                         <div class="wt-innerbannercontent">
-                            <div class="wt-title" id = "jobsTest">
+                            <div class="wt-title" id = "jobs">
                                 <h1>Jobs</h1>
                                 <div class="search-form jobListingPage">
                                     <search-form
@@ -485,12 +485,12 @@
                 jQuery("#" + hidable_element_id).show();
                 jQuery("#" + element_id).hide();
               }
-                iziToast.show({
+              iziToast.success({
                 message: response.message,
                 position: "center",
                 timeout: 3000,
                 progressBar: true,
-                color:'green'
+                backgroundColor: 'green',
                 })
             }
             else{
