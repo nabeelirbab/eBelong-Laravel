@@ -11386,3 +11386,20 @@ textarea::placeholder {
 		margin-bottom: 20px;
 	}
 }
+.jobListingPage .wt-formbannervtwo {
+    margin-top: 0px;
+}
+.jobListingPage .wt-dropdown > span {
+	padding: 0px;
+}
+.jobListingPage .wt-formbannervtwo .wt-dropdown > span i, .wt-formbannervtwo .wt-dropdown > span em {
+    text-align: left;
+}
+.jobListingPage .wt-dropdown > span {
+    color: #999;
+    width: 528px;
+}
+.jobListing.wt-main-section {
+    padding-top: 28px;
+	padding-bottom: 80px;
+}
