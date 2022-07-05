@@ -14,9 +14,9 @@
                 <div class="row justify-content-md-center">
                     <div class="col-xs-12 col-sm-12 col-md-8 push-md-2 col-lg-6 push-lg-3">
                         <div class="wt-innerbannercontent">
-                            <div class="wt-title" id = "jobsTest">
-                                <h2>Jobs</h2>
-                                <div class="search-form">
+                            <div class="wt-title" id = "jobs">
+                                <h1>Jobs</h1>
+                                <div class="search-form jobListingPage">
                                     <search-form
                                       :placeholder="'{{ trans('lang.looking_for') }}'"
                                       :freelancer_placeholder="'{{ trans('lang.search_filter_list.freelancer') }}'"
@@ -49,9 +49,7 @@
     </div>
     @endif
     <div  >
-    <div class="wt-haslayout wt-main-section">
-
-       
+    <div class="wt-haslayout wt-main-section jobListing">
         @if (Session::has('payment_message'))
             @php $response = Session::get('payment_message') @endphp
             <div class="flash_msg">
@@ -123,16 +121,16 @@
                                                                                 @endif
                                                                             @endif
                                                                            
-                                                                                {{-- <span class="wt-viewjobheart"id="remove-{{$job->id}}" style="{{ $job_saved ? '' : 'display: none;' }}">
+                                                                                <span class="wt-viewjobheart"id="remove-{{$job->id}}" style="{{ $job_saved ? '' : 'display: none;' }}">
                                                                                     <a href="javascript:void(0);"  class="wt-clicklike wt-clicksave"
-                                                                                 @click.prevent="remove_wishlist('remove-{{$job->id}}', {{ $job->id }}, 'saved_jobs', 'Save','add-{{$job->id}}')" v-cloak>
+                                                                                 onclick="remove_from_wishlist('remove-{{$job->id}}', {{ $job->id }}, 'saved_jobs', 'Save','add-{{$job->id}}')" >
                                                                                     <i class="fa fa-heart"></i> {{trans("lang.saved")}}</a></span>
                                                                             
                                                                                 <span class="wt-viewjobheart"id="add-{{$job->id}}" style="{{ $job_saved ? 'display: none;' : '' }}">
-                                                                                    <a href="javascrip:void(0);" class="wt-clicklike" @click.prevent="add_wishlist('job-{{$job->id}}', {{$job->id}}, 'saved_jobs', '{{trans('lang.saved')}}','remove-{{$job->id}}')" v-cloak>
+                                                                                    <a href="javascript:void(0);" class="wt-clicklike" onclick="add_to_wishlist('job-{{$job->id}}', {{$job->id}}, 'saved_jobs', '{{trans('lang.saved')}}','remove-{{$job->id}}');" >
                                                                                         <i class="fa fa-heart"></i>
                                                                                     </a>
-                                                                                </span> --}}
+                                                                                </span>
                                                                             
                                                                         </div>
                                                                     </div>
@@ -232,16 +230,16 @@
                                                             <li><span><i class="far fa-folder wt-viewjobfolder"></i>{{{ trans('lang.type') }}} {{{$project_type}}}</span></li>
                                                             <li><span><i class="far fa-clock wt-viewjobclock"></i>{{{ Helper::getJobDurationList($job->duration)}}}</span></li>
                                                             <li><span><i class="fa fa-tag wt-viewjobtag"></i>{{{ trans('lang.job_id') }}} {{{$job->code}}}</span></li>
-                                                            @if (!empty($user->profile->saved_jobs) && in_array($job->id, unserialize($user->profile->saved_jobs)))
-                                                                <li style=pointer-events:none;><a href="javascript:void(0);" class="wt-clicklike wt-clicksave"><i class="fa fa-heart"></i> {{trans("lang.saved")}}</a></li>
-                                                            @else
-                                                                <li>
-                                                                    <a href="javascrip:void(0);" class="wt-clicklike" id="job-{{$job->id}}" @click.prevent="add_wishlist('job-{{$job->id}}', {{$job->id}}, 'saved_jobs', '{{trans("lang.saved")}}')" v-cloak>
-                                                                        <i class="fa fa-heart"></i>
-                                                                        <span class="save_text">{{ trans('lang.click_to_save') }}</span>
-                                                                    </a>
-                                                                </li>
-                                                            @endif
+                                                            <span class="wt-viewjobheart"id="remove-{{$job->id}}" style="{{ $job_saved ? '' : 'display: none;' }}">
+                                                                <a href="javascript:void(0);"  class="wt-clicklike wt-clicksave"
+                                                             onclick="remove_from_wishlist('remove-{{$job->id}}', {{ $job->id }}, 'saved_jobs', 'Save','add-{{$job->id}}')" >
+                                                                <i class="fa fa-heart"></i> {{trans("lang.saved")}}</a></span>
+                                                        
+                                                            <span class="wt-viewjobheart"id="add-{{$job->id}}" style="{{ $job_saved ? 'display: none;' : '' }}">
+                                                                <a href="javascript:void(0);" class="wt-clicklike" onclick="add_to_wishlist('job-{{$job->id}}', {{$job->id}}, 'saved_jobs', '{{trans('lang.saved')}}','remove-{{$job->id}}');" >
+                                                                    <i class="fa fa-heart"></i>
+                                                                </a>
+                                                            </span>
                                                             <li class="wt-btnarea"><a href="{{url('job/'.$job->slug)}}" class="wt-btn">{{{ trans('lang.view_job') }}}</a></li>
                                                         </ul>
                                                     </div>
@@ -469,4 +467,83 @@
         </div>
     </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js" integrity="sha512-Zq9o+E00xhhR/7vJ49mxFNJ0KQw1E1TMWkPTxrWcnpfEFDEXgUiwJHIKit93EW/XxE31HSI5GEOW06G6BF1AtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script type="text/javascript">
+      function add_to_wishlist( element_id, id, column, saved_text, hidable_element_id){
+            $.ajax({
+               type:'POST',
+               url:"{{ url('/user/add-wishlist') }}",
+               data:{
+               _token : "{{ csrf_token() }}",
+               id: id,
+               column: column,
+               },
+               success:function(response) {
+              console.log(response)
+              if(response.authentication==true){
+              if (column == "saved_jobs") {
+                jQuery("#" + hidable_element_id).show();
+                jQuery("#" + element_id).hide();
+              }
+              iziToast.success({
+                message: response.message,
+                position: "center",
+                timeout: 3000,
+                progressBar: true,
+                backgroundColor: 'green',
+                })
+            }
+            else{
+                iziToast.show({
+                message: response.message,
+                position: "topRight",
+                timeout: 3000,
+                progressBar: false,
+                color: 'red',
+                })
+            }
+        }
+            
+               
+            });
+        }
+        function remove_from_wishlist( element_id, id, column, saved_text, hidable_element_id){
+            console.log("in remove")
+            $.ajax({
+               type:'POST',
+               url:"{{ url('/user/remove-wishlist') }}",
+               data:{
+               _token : "{{ csrf_token() }}",
+               id: id,
+               column: column,
+               },
+               success:function(response) {
+                console.log(response)
+                if(response.authentication==true){
+              if (column == "saved_jobs") {
+                jQuery("#" + hidable_element_id).show();
+                  jQuery("#" + element_id).hide();
+              }
+              iziToast.success({
+                message: response.message,
+                position: "center",
+                timeout: 3000,
+                progressBar: true,
+                backgroundColor: 'green',
+                })
+            }
+            else{
+                iziToast.show({
+                message: response.message,
+                position: "topRight",
+                timeout: 3000,
+                progressBar: false,
+                color: 'red',
+                })
+            }
+            } });
+        }
+            </script>
     @endsection
+    
+    
