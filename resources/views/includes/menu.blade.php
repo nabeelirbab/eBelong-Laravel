@@ -95,7 +95,7 @@
                 </a>
             </li>
                 <li style="order: 4;">
-                    <a href="{{url('search-results?type=freelancerjobs')}}">
+                    <a href="{{url('jobs')}}">
                     {{{ trans('lang.jobs') }}}
                 </a>
                 </li>
