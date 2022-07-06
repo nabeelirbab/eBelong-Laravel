@@ -688,7 +688,7 @@ class Job extends Model
             }
 		
             if(!empty($job_id)){
-                $jobs->whereIn('id', $job_id);
+                $jobs->whereIn('id', $job_id)->where('price','>','5');
             }
         }
 
@@ -697,7 +697,7 @@ class Job extends Model
             $filters['locations'] = $search_locations;
 
             $locations = Location::select('id')->whereIn('slug', $search_locations)->get()->pluck('id')->toArray();
-            $jobs->whereIn('location_id', $locations);
+            $jobs->whereIn('location_id', $locations)->where('price','>','5');
 
         }
 
@@ -707,7 +707,7 @@ class Job extends Model
 
             $locations = Location::select('id')->whereIn('slug', $search_locations)->get()->pluck('id')->toArray();
 
-            $jobs->whereIn('location_id', $locations);
+            $jobs->whereIn('location_id', $locations)->where('price','>','5');
 
         }
 
@@ -726,13 +726,13 @@ class Job extends Model
                 }
             } 
             if(!empty($job_id)){ 
-                $jobs->whereIn('id', $job_id);
+                $jobs->whereIn('id', $job_id)->where('price','>','5');
             }
         }
       
         if (!empty($search_project_lengths)) {
             $filters['project_lengths'] = $search_project_lengths;
-            $jobs->whereIn('duration', $search_project_lengths);
+            $jobs->whereIn('duration', $search_project_lengths)->where('price','>','5');
         }
 
         if (!empty($search_languages)) { 
@@ -748,14 +748,14 @@ class Job extends Model
                 }
             }
             if(!empty($job_id)){
-                $jobs->whereIn('id', $job_id);
+                $jobs->whereIn('id', $job_id)->where('price','>','5');
             }
         }
 
         if ($display_completed_projects == 'false') {
-            $jobs = $jobs->where('status', '!=', 'completed');
+            $jobs = $jobs->where('status', '!=', 'completed')->where('price','>','5');
         }
-        $jobs = $jobs->where('expiry_date', '>', date('Y-m-d'));
+        // $jobs = $jobs->where('expiry_date', '>', date('Y-m-d'));
         $jobs = $jobs->orderByRaw("id DESC")->paginate(20)->setPath('');
 		
         foreach ($filters as $key => $filter) {

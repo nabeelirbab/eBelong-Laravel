@@ -78,7 +78,7 @@
                                     @foreach ($jobs as $job)
                                         @if (\Schema::hasColumn('jobs', 'expiry_date') && !empty($job->expiry_date))
                                             @php $expiry = Carbon\Carbon::parse($job->expiry_date); @endphp
-                                            @if (Carbon\Carbon::now()->lessThan($expiry))
+                                            {{-- @if (Carbon\Carbon::now()->lessThan($expiry)) --}}
                                                 @php
                                                     $job = \App\Job::find($job->id);
                                                     //$description = strip_tags(stripslashes($job->description));
@@ -187,7 +187,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            @endif
+                                            {{-- @endif --}}
                                         @else 
                                             @php
                                             
@@ -270,7 +270,7 @@
                                     @foreach ($jobs as $job)
                                         @if (\Schema::hasColumn('jobs', 'expiry_date') && !empty($job->expiry_date))
                                             @php $expiry = Carbon\Carbon::parse($job->expiry_date); @endphp
-                                            @if (Carbon\Carbon::now()->lessThan($expiry))
+                                            {{-- @if (Carbon\Carbon::now()->lessThan($expiry)) --}}
                                                 @php
                                                     $job = \App\Job::find($job->id);
                                                     //$description = strip_tags(stripslashes($job->description));
@@ -386,7 +386,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            @endif
+                                            {{-- @endif --}}
                                         @else 
                                             @php
                                             
