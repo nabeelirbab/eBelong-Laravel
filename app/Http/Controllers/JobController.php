@@ -819,13 +819,13 @@ class JobController extends Controller
                 }
             }
             
-                $jobs->whereIn('id', $job_id);
+                $jobs->whereIn('id', $job_id)->where('price','>','5');
             
             
         }  
         if ($type=='location') {
             $location = Location::select('id')->where('slug', $slug)->get()->pluck('id')->toArray();
-            $jobs->whereIn('location_id', $location);
+            $jobs->whereIn('location_id', $location)->where('price','>','5');
 
         }
         if ($type=='skill') {
@@ -840,12 +840,12 @@ class JobController extends Controller
                 }
             } 
             if(!empty($job_id)){ 
-                $jobs->whereIn('id', $job_id);
+                $jobs->whereIn('id', $job_id)->where('price','>','5');
             }
         
       
         if ($type=='project-length') {
-            $jobs->where('duration', $slug);
+            $jobs->where('duration', $slug)->where('price','>','5');
         }
 
         if ($type=='language') { 
@@ -860,7 +860,7 @@ class JobController extends Controller
                 }
             }
             if(!empty($job_id)){
-                $jobs->whereIn('id', $job_id);
+                $jobs->whereIn('id', $job_id)->where('price','>','5');
             }
         }
            
@@ -939,6 +939,7 @@ class JobController extends Controller
     $current_date = Carbon::now()->toDateTimeString();
     $jobs = Job::select('*');
     // $jobs = $jobs->where('expiry_date', '>', date('Y-m-d'));
+    $jobs = $jobs->where('price','>','5');
     $jobs = $jobs->orderByRaw("id DESC")->paginate(20)->setPath('');
     $type='job';
     if (file_exists(resource_path('views/extend/front-end/jobs/jobListing.blade.php'))) {
