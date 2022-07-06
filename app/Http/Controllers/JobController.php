@@ -939,9 +939,9 @@ class JobController extends Controller
     $current_date = Carbon::now()->toDateTimeString();
     $jobs = Job::select('*');
     // $jobs = $jobs->where('expiry_date', '>', date('Y-m-d'));
-    
+
     //if freelancer than show only jobs which matches the skills
-    if(Helper::getRoleByUserID(Auth::user()->id) == 3){
+    if(Auth::user() && Helper::getRoleByUserID(Auth::user()->id) == 3){
         $freelancer_skills = Skill::getFreelancerSkill(Auth::user()['id']);
         $job__ids = DB::table('job_skill')->whereIn('skill_id', $freelancer_skills)->pluck('job_id')->toArray();
         if(!empty($job__ids)){
