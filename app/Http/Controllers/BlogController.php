@@ -466,7 +466,7 @@ class BlogController extends Controller
         $skills     = Skill::orderBy('title')->get();
         $blog_id = array();
         $blogs= array();
-        $blogs=Blog::where('status','published')->orderByRaw("updated_at DESC")->paginate(10)->setPath('');
+        $blogs=Blog::where('status','published')->orderByRaw("id DESC")->paginate(10)->setPath('');
         $type = "blogs";
         if (file_exists(resource_path('views/extend/front-end/blogs/blogList.blade.php'))) {
             return view(
