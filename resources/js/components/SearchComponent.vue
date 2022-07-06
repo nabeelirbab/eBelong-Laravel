@@ -334,7 +334,7 @@
                             else if( types == 'Work ') {
                                 types = 'job';
                                 if(slug == "") 
-                                    window.location.replace(APP_URL+'/search-results?type='+types);   
+                                    window.location.replace(APP_URL+'/jobs');   
                                 else 
                                 {
                                     let url_type = document.getElementById('url_type').value;
