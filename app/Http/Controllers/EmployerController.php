@@ -575,7 +575,7 @@ class EmployerController extends Controller
                 $symbol = !empty($currency) && !empty($currency[0]['currency']) ? Helper::currencyList($currency[0]['currency']) : array();
 
                
-              //  $bill_status = WorkDiary::where('project_id', $proposal->job_id)->first();
+               $bill_status = WorkDiary::where('project_id', $proposal->job_id)->first();
                 //dd($bill_status);
                 
                 
@@ -667,7 +667,7 @@ public function employerHourlyPaymentProcess($id)
                 //dd($bill_status);
                 
                 
-              //  $commision_amount = $payout_settings[0]['emp_commision'];
+               $commision_amount = $payout_settings[0]['emp_commision'];
               //  $total_amount = "";
 
              //  dd($payout_settings[0]['commision']);
