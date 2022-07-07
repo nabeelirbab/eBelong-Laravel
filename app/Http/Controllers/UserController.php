@@ -2763,7 +2763,7 @@ class UserController extends Controller
      */
     public function showOrders()
     {
-        $orders = Order::all();
+        $orders = Order::orderBy('id','DESC')->get();
         $currency   = SiteManagement::getMetaValue('commision');
         $symbol = !empty($currency) && !empty($currency[0]['currency']) ? Helper::currencyList($currency[0]['currency']) : array();
         $status_list = Helper::getOrderStatus();
