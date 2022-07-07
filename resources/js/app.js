@@ -3869,6 +3869,9 @@ if (document.getElementById("post_job")) {
             if (error.response.data.errors.project_cost) {
               self.showError(error.response.data.errors.project_cost[0]);
             }
+            if (error.response.data.errors.project_type) {
+              self.showError(error.response.data.errors.project_type[0]);
+            }
             if (error.response.data.errors.description) {
               self.showError(error.response.data.errors.description[0]);
             }
@@ -3880,6 +3883,15 @@ if (document.getElementById("post_job")) {
             }
             if (error.response.data.errors.expiry_date) {
               self.showError(error.response.data.errors.expiry_date[0]);
+            }
+            if (error.response.data.errors.no_of_hours) {
+              self.showError(error.response.data.errors.no_of_hours[0]);
+            }
+            if (error.response.data.errors.categories) {
+              self.showError(error.response.data.errors.categories[0]);
+            }
+            if (error.response.data.errors.skills) {
+              self.showError(error.response.data.errors.skills[0]);
             }
           });
       },
@@ -3938,6 +3950,18 @@ if (document.getElementById("post_job")) {
             }
             if (error.response.data.errors.expiry_date) {
               self.showError(error.response.data.errors.expiry_date[0]);
+            }
+            if (error.response.data.errors.project_type) {
+              self.showError(error.response.data.errors.project_type[0]);
+            }
+            if (error.response.data.errors.no_of_hours) {
+              self.showError(error.response.data.errors.no_of_hours[0]);
+            }
+            if (error.response.data.errors.categories) {
+              self.showError(error.response.data.errors.categories[0]);
+            }
+            if (error.response.data.errors.skills) {
+              self.showError(error.response.data.errors.skills[0]);
             }
           });
       },
