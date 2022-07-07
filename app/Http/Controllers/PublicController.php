@@ -392,6 +392,9 @@ class PublicController extends Controller
                 $payment_settings = SiteManagement::getMetaValue('commision');
                 $enable_package = !empty($payment_settings) && !empty($payment_settings[0]['enable_packages']) ? $payment_settings[0]['enable_packages'] : 'true';
                 $videos = !empty($profile->videos) ? Helper::getUnserializeData($profile->videos) : '';
+                if( !empty($videos) && $videos[0]["url"]==null ){
+                    $videos = array();
+                }
                 $feedbacks = Review::select('feedback')->where('receiver_id', $user->id)->count(); 
                 $average_rating_count = !empty($feedbacks) ? $reviews->sum('avg_rating')/$feedbacks : 0;
                 if (file_exists(resource_path('views/extend/front-end/users/freelancer-show.blade.php'))) {
