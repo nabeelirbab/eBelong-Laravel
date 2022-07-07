@@ -63,6 +63,7 @@
                                                 !empty($job->duration)
                                                 )
                                                 <ul class="wt-userlisting-breadcrumb wt-userlisting-breadcrumbvtwo">
+                                                    <!-- @php var_dump($job) @endphp -->
                                                     @if (!empty($job->project_level))
                                                         <li><span><i class="fa fa-dollar-sign wt-viewjobdollar"></i> {{{Helper::getProjectLevel($job->project_level)}}}</span></li>
                                                     @endif
@@ -71,6 +72,8 @@
                                                     @endif
                                                     @if (!empty($job->project_type))
                                                         <li><span class="wt-clicksavefolder"><i class="far fa-folder wt-viewjobfolder"></i> {{ trans('lang.type') }} {{{$project_type}}}</span></li>
+                                                    @endif
+                                                    @if (!empty($job->no_of_hours))<li><span><i class="far fa-clock wt-viewjobclock"></i> {{{ $job->no_of_hours }}} hr/Week</span></li>
                                                     @endif
                                                     @if (!empty($job->duration))
                                                         <li><span class="wt-dashboradclock"><i class="far fa-clock wt-viewjobclock"></i> {{ trans('lang.duration') }} {{{ Helper::getJobDurationList($job->duration) }}}</span></li>

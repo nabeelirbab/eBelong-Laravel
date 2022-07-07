@@ -11403,3 +11403,14 @@ textarea::placeholder {
     padding-top: 28px;
 	padding-bottom: 80px;
 }
+
+.wt-innerbannercontent .wt-title h2 {
+	margin: 20px 0px;
+	font-weight: bold;
+}
+.wt-innerbannercontent .wt-title h1 {
+	margin: 20px 0px;
+}
+.wt-userlisting-breadcrumb li {
+	padding-left: 0px !important;
+}
