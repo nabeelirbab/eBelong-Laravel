@@ -4098,7 +4098,7 @@ body.wt-login .wt-userlogedin{display: block;}
 	margin: 0;
 	font-weight: 400;
 	margin: 0 0 16px;
-	display: none;
+	display: block;
 	font-size: 18px;
 	line-height: 22px;
 	/* white-space: nowrap; */
@@ -11402,4 +11402,15 @@ textarea::placeholder {
 .jobListing.wt-main-section {
     padding-top: 28px;
 	padding-bottom: 80px;
+}
+
+.wt-innerbannercontent .wt-title h2 {
+	margin: 20px 0px;
+	font-weight: bold;
+}
+.wt-innerbannercontent .wt-title h1 {
+	margin: 20px 0px;
+}
+.wt-userlisting-breadcrumb li {
+	padding-left: 0px !important;
 }
