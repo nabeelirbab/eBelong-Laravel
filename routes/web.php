@@ -558,7 +558,7 @@ Route::group(
         // Route::get('employer/payouts', 'EmployerController@getPayouts')->name('getEmployerPayouts');
 
         Route::get('employer/bill/{slug}/{status}/workdiary/{id}', 'WorkDiaryController@showEmployerWorkDiary');
-        // Route::get('employer/bill/workdiary/{id}/{start_date}/{end_date}', 'WorkDiaryController@EmployerWorkDiaryPayNow');
+        Route::get('employer/bill/workdiary/{id}/{start_date}/{end_date}', 'WorkDiaryController@EmployerWorkDiaryPayNow');
     }
 );
 // Freelancer Routes

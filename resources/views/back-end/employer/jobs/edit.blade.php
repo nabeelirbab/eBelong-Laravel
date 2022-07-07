@@ -13,6 +13,14 @@
                         <div class="loader"></div>
                     </div>
                 </div>
+                @php $list = array(
+                    'fixed'     => 'Fixed',
+                    'hourly'    => 'Hourly',
+                    
+                );
+                $disabled = $job->project_type == 'hourly' ? "" : "disabled";
+                $no_of_hours = $job->project_type=='hourly' ? $job->no_of_hours:'ADD NUMBER OF HOURS PER WEEK' ; 
+                @endphp
                 <div class="wt-haslayout wt-post-job-wrap">
                     {!! Form::open(['url' => '', 'class' =>'post-job-form wt-haslayout', 'id' => 'job_edit_form', '@submit.prevent'=>'updateJob("'.$job->id.'")']) !!}
                         <div class="wt-dashboardbox">
@@ -39,6 +47,15 @@
                                                     {!! Form::select('job_duration', $job_duration , e($job->duration)) !!}
                                                 </span>
                                             </div>
+                                            <div class="form-group form-group-half wt-formwithlabel">                                       
+                                                <span class="wt-select">	
+                                                    {!! Form::select('project_type', $list, e($job->project_type),array('id' => 'proj-type')) !!}					 
+                                                </span>			
+                                                    </div>	
+                                                    <div class="form-group form-group-half wt-formwithlabel job-cost-input">
+                                                        <input id="hours" type="text" name="no_of_hours" value="{{ $no_of_hours }}" placeholder ="ADD NUMBER OF HOURS PER WEEK" 
+                                                        {{ $disabled }} style="background-color:#ddd; color: #999">
+                                                    </div>
                                             <div class="form-group form-group-half wt-formwithlabel">
                                                 <span class="wt-select">
                                                     {!! Form::select('freelancer_type', $freelancer_level_list, e($job->freelancer_type)) !!}
@@ -192,4 +209,8 @@
             </div>
         </div>
     </div>
+    @section('bootstrap_script')
+    <script src="{{ asset('js/vendor/bootstrap.min.js') }}"></script>
+
+@stop
 @endsection

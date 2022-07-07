@@ -1152,7 +1152,7 @@ class WorkDiaryController extends Controller
                     'validation_error_text',
                     'cancel_popup_title',
                     'bill_hours',
-                    'sum_hours',
+        
                     'week_days',
                     'monday',
                     'tuesday',
@@ -1163,7 +1163,7 @@ class WorkDiaryController extends Controller
                     'sunday',
                     'total_hours',
                     'current_week',
-                    'work_diary_status',
+                    
                     'bill_status',
                     'previous_bill',
                     'project_hours_data',
@@ -1195,7 +1195,7 @@ class WorkDiaryController extends Controller
                     'validation_error_text',
                     'cancel_popup_title',
                     'bill_hours',
-                    'sum_hours',
+                  
                     'week_days',
                     'monday',
                     'tuesday',
@@ -1206,7 +1206,7 @@ class WorkDiaryController extends Controller
                     'sunday',
                     'total_hours',
                     'current_week',
-                    'work_diary_status',
+                    
                     'bill_status',
                     'previous_bill',
                     'project_hours_data',

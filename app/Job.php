@@ -496,6 +496,11 @@ class Job extends Model
 
             $job->project_level = filter_var($request['project_levels'], FILTER_SANITIZE_STRING);
 
+            $job->project_type = filter_var($request['project_type'], FILTER_SANITIZE_STRING);
+
+            $job->no_of_hours = filter_var($request['no_of_hours'], FILTER_SANITIZE_STRING);
+
+
             $job->description = $request['description'];
 
             $job->english_level = filter_var($request['english_level'], FILTER_SANITIZE_STRING);

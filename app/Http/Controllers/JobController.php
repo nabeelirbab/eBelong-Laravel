@@ -265,7 +265,7 @@ class JobController extends Controller
             $json['type'] = 'job_warning';
             return $json;
         }
-        
+    
         $this->validate(
             $request,
             [
@@ -277,8 +277,14 @@ class JobController extends Controller
                 'english_level'    => 'required',
                 'project_cost'    => 'required',
                 'description'    => 'required',
+                'no_of_hours' => $request->project_type === 'hourly' ?'required':'nullable',
+                'categories' => 'required',
+                'skills' =>'required',
+
             ]
         );
+    
+    
         if (Schema::hasColumn('jobs', 'expiry_date')) {
             if ($request['expiry_date'] == trans('lang.project_expiry')) {
                 $json['type'] = 'error';
@@ -444,7 +450,11 @@ class JobController extends Controller
                 'title' => 'required',
                 'project_levels'    => 'required',
                 'english_level'    => 'required',
+                'project_type'      => 'required',
                 'project_cost'    => 'required',
+                'no_of_hours' => $request->project_type === 'hourly' ?'required':'nullable',
+                'categories' => 'required',
+                'skills' =>'required',
             ]
         );
         if (Schema::hasColumn('jobs', 'expiry_date')) {
