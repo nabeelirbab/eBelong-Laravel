@@ -40,6 +40,7 @@ use Carbon\Carbon;
 use App\Message;
 use App\Service;
 use App\SiteManagement;
+use App\Wallet;
 
 /**
  * Class StripeController
@@ -124,7 +125,7 @@ class StripeController extends Controller
                     $json['message'] = 'The Stripe Token was not generated correctly';
                     return $json;
                 }
-                if (session()->has('project_type')) {
+               
                     $project_type = session()->get('project_type');
                     if ($project_type == 'course') {
                         $payment_detail = $stripe->charges()->create(
@@ -137,18 +138,18 @@ class StripeController extends Controller
                     ]
                         );
                     }
+                
+                else{
+                    $payment_detail = $stripe->charges()->create(
+                        [
+                            'card' => $token['id'],
+                            'currency' => $currency,
+                            'amount'   => $product_price,
+                            'description' => trans('lang.add_in_wallet'),
+                            
+                        ]
+                    );
                 }
-        else{
-            $payment_detail = $stripe->charges()->create(
-                [
-                    'card' => $token['id'],
-                    'currency' => $currency,
-                    'amount'   => $product_price,
-                    'description' => trans('lang.add_in_wallet'),
-                    
-                ]
-            );
-        }
 
                 $customer = $stripe->customers()->create(
                     [
@@ -323,7 +324,7 @@ class StripeController extends Controller
                                             );
                                     }
                                 }
-                                if ($project_type == 'service') {
+                                elseif ($project_type == 'service') {
                                     $last_order_id = session()->get('custom_order_id');
                                     DB::table('orders')
                                         ->where('id', $last_order_id)
@@ -362,55 +363,75 @@ class StripeController extends Controller
                                             );
                                     }
                                 }
-                            } else {
-                                $last_order_id = session()->get('custom_order_id');
-                                DB::table('orders')
-                                    ->where('id', $last_order_id)
-                                    ->update(['status' => 'completed']);
-                                $id = session()->get('product_id');
-                                $proposal = Proposal::find($id);
-                                $proposal->hired = 1;
-                                $proposal->status = 'hired';
-                                $proposal->paid = 'pending';
-                                $proposal->save();
-                                $job = Job::find($proposal->job->id);
-                                $job->status = 'hired';
-                                $job->save();
-                                // send message to freelancer
-                                $message = new Message();
-                                $user = User::find(intval(Auth::user()->id));
-                                $message->user()->associate($user);
-                                $message->receiver_id = intval($proposal->freelancer_id);
-                                $message->body = trans('lang.hire_for') . ' ' . $job->title . ' ' . trans('lang.project');
-                                $message->status = 0;
-                                $message->save();
-                                // send mail
-                                if (trim(env('MAIL_USERNAME')) != "" && trim(env('MAIL_PASSWORD')) != "") {
-                                    $freelancer = User::find($proposal->freelancer_id);
-                                    $employer = User::find($job->user_id);
-                                    if (!empty($freelancer->email)) {
-                                        $email_params = array();
-                                        $template = DB::table('email_types')->select('id')->where('email_type', 'freelancer_email_hire_freelancer')->get()->first();
-                                        if (!empty($template->id)) {
-                                            $template_data = EmailTemplate::getEmailTemplateByID($template->id);
-                                            $email_params['project_title'] = $job->title;
-                                            $email_params['hired_project_link'] = url('job/' . $job->slug);
-                                            $email_params['name'] = Helper::getUserName($freelancer->id);
-                                            $email_params['link'] = url('profile/' . $freelancer->slug);
-                                            $email_params['employer_profile'] = url('profile/' . $employer->slug);
-                                            $email_params['emp_name'] = Helper::getUserName($employer->id);
-                                            Mail::to($freelancer->email)
-                                                ->send(
-                                                    new FreelancerEmailMailable(
-                                                        'freelancer_email_hire_freelancer',
-                                                        $template_data,
-                                                        $email_params
-                                                    )
-                                                );
+                                else {
+                                    $id = session()->get('product_id');
+                                    $user_id = Auth::user()->id;
+                                    DB::table('orders')->insert(
+                                        ['user_id' => $user_id, 'product_id' => $id, 'invoice_id' => $invoice_id,'type'=>'job', 'status' => 'completed', 'created_at' => \Carbon\Carbon::now(), 'updated_at' => \Carbon\Carbon::now()]
+                                    );
+                                    $order_id = DB::getPdo()->lastInsertId();
+                                    $last_order_id = session()->get('custom_order_id');
+                                    // DB::table('orders')
+                                    //     ->where('id', $last_order_id)
+                                    //     ->update(['status' => 'completed']);
+                                    $id = session()->get('product_id');
+                                    $proposal = Proposal::find($id);
+                                    $proposal->hired = 1;
+                                    $proposal->status = 'hired';
+                                    $proposal->paid = 'pending';
+                                    $proposal->save();
+                                    $job = Job::find($proposal->job->id);
+                                    $job->status = 'hired';
+                                    $job->save();
+                                    if($job->project_type == "hourly")
+                                    {
+                                        $wallet_data = array(
+                                            "type" => "credit",
+                                            "job_id" => $job->id,
+                                            "employer_id" => Auth::user()->id,
+                                            "freelancer_id" => 0,
+                                            "description" => "Intiallly Employeer First Week Amount",
+                                            "amount" => $product_price,
+                                            "wallet_type" => "employer"   
+                                        );
+                                        Wallet::createentry($wallet_data);
+                                    } 
+                                    // send message to freelancer
+                                    $message = new Message();
+                                    $user = User::find(intval(Auth::user()->id));
+                                    $message->user()->associate($user);
+                                    $message->receiver_id = intval($proposal->freelancer_id);
+                                    $message->body = trans('lang.hire_for') . ' ' . $job->title . ' ' . trans('lang.project');
+                                    $message->status = 0;
+                                    $message->save();
+                                    // send mail
+                                    if (trim(env('MAIL_USERNAME')) != "" && trim(env('MAIL_PASSWORD')) != "") {
+                                        $freelancer = User::find($proposal->freelancer_id);
+                                        $employer = User::find($job->user_id);
+                                        if (!empty($freelancer->email)) {
+                                            $email_params = array();
+                                            $template = DB::table('email_types')->select('id')->where('email_type', 'freelancer_email_hire_freelancer')->get()->first();
+                                            if (!empty($template->id)) {
+                                                $template_data = EmailTemplate::getEmailTemplateByID($template->id);
+                                                $email_params['project_title'] = $job->title;
+                                                $email_params['hired_project_link'] = url('job/' . $job->slug);
+                                                $email_params['name'] = Helper::getUserName($freelancer->id);
+                                                $email_params['link'] = url('profile/' . $freelancer->slug);
+                                                $email_params['employer_profile'] = url('profile/' . $employer->slug);
+                                                $email_params['emp_name'] = Helper::getUserName($employer->id);
+                                                Mail::to($freelancer->email)
+                                                    ->send(
+                                                        new FreelancerEmailMailable(
+                                                            'freelancer_email_hire_freelancer',
+                                                            $template_data,
+                                                            $email_params
+                                                        )
+                                                    );
+                                            }
                                         }
                                     }
                                 }
-                            }
+                            } 
                         }
                     }
                 } else {
@@ -441,7 +462,7 @@ class StripeController extends Controller
             if ($type == 'project') {
                 if ($project_type == 'service') {
                     $json['url'] = url('employer/services/hired');
-                }  if ($project_type == 'course') {
+                }  elseif ($project_type == 'course') {
                     $json['url'] = url('freelancer/course/bought');
                 }
                 else {

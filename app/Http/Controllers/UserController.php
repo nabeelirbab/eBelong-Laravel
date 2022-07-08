@@ -2001,11 +2001,12 @@ class UserController extends Controller
                         $proposal = new Proposal();
                         $send_message = $proposal::sendMessage($request, $user_id);
                     } else {
+                       
                         $json['type'] = 'error';
                         $json['message'] = trans('lang.not_allowed_msg');
                         return $json;
                     }
-                } if($request['project_type'] == 'course'){
+                } elseif($request['project_type'] == 'course'){
                     // $purchase_service = Helper::getPivotService($request['proposal_id']);
                     // $status = $purchase_service->status;
                     // if ($status == "hired") {
@@ -2016,6 +2017,7 @@ class UserController extends Controller
                 }
                 
                 else {
+                    dd("in elses");
                     $purchase_service = Helper::getPivotService($request['proposal_id']);
                     $status = $purchase_service->status;
                     if ($status == "hired") {

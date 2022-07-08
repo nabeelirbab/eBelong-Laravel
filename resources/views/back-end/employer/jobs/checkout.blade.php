@@ -32,6 +32,7 @@
                         session()->put(['product_title' => e($job->title)]);
                         session()->put(['product_price' => e($proposal->amount)]);
                         session()->put(['type' => 'project']);
+                        session()->put(['project_type' => 'job']);
                     @endphp
                   
                     <table class="sj-checkouttable">
@@ -77,6 +78,7 @@
                         session()->put(['product_title' => e($job->title)]);
                         session()->put(['product_price' => e($hourly_project_amount_per_week)]);
                         session()->put(['type' => 'project']);
+                        session()->put(['project_type' => 'job']);
                         @endphp
                         <table class="sj-checkouttable">
                         <thead>

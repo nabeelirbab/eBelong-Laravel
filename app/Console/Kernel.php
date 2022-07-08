@@ -23,6 +23,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         Commands\pymentStatusChange::class,
         Commands\SitemapCommand::class,
+        Commands\PayoutsCommand::class,
     ];
 
     /**
@@ -35,15 +36,8 @@ class Kernel extends ConsoleKernel
     {
        $schedule->command('payment:statuschange')->hourly();
        $schedule->command('generate:sitemap')->everyFiveMinutes();
-       $schedule->call( 
-           function () {
-                info("Updating Payouts");
-                Helper::updatePayouts();
-            }
-            
+       $schedule->command('update:payouts')->everyMinute();
            
-       )->everyFiveMinutes();
-       
        $schedule->call(  
             function () {
                 \Log::info("WorkDiary Added on Monday 11:59");
