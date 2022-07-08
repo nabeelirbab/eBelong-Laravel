@@ -498,6 +498,7 @@ Route::group(
         Route::post('job/update-job', 'JobController@update');
         Route::post('skills/get-job-skills', 'SkillController@getJobSkills');
         Route::post('job/delete-job', 'JobController@destroy');
+        Route::get('proposal/{slug}/{status}', 'ProposalController@show');
     }
 );
 Route::group(
@@ -554,8 +555,8 @@ Route::group(
         Route::post('proposal/hire-freelancer', 'ProposalController@hiredFreelencer');
         // Route::get('employer/services/{status}', 'EmployerController@showEmployerServices');
         // Route::get('employer/service/{service_id}/{id}/{status}', 'EmployerController@showServiceDetail');
-        // Route::get('employer/payout-settings', 'EmployerController@payoutSettings')->name('employerPayoutsSettings');
-        // Route::get('employer/payouts', 'EmployerController@getPayouts')->name('getEmployerPayouts');
+        Route::get('employer/payout-settings', 'EmployerController@payoutSettings')->name('employerPayoutsSettings');
+        Route::get('employer/payouts', 'EmployerController@getPayouts')->name('getEmployerPayouts');
 
         Route::get('employer/bill/{slug}/{status}/workdiary/{id}', 'WorkDiaryController@showEmployerWorkDiary');
         Route::get('employer/bill/workdiary/{id}/{start_date}/{end_date}', 'WorkDiaryController@EmployerWorkDiaryPayNow');
@@ -650,7 +651,7 @@ Route::group(
         Route::get('{role}/saved-items', 'UserController@getSavedItems')->name('getSavedItems');
         Route::post('profile/get-wishlist', 'UserController@getUserWishlist');
         Route::post('job/add-wishlist', 'JobController@addWishlist');
-        Route::get('proposal/{slug}/{status}', 'ProposalController@show');
+        
         Route::post('proposal/download-attachments', 'UserController@downloadAttachments');
         Route::post('proposal/send-message', 'UserController@sendPrivateMessage');
         Route::post('proposal/get-private-messages', 'UserController@getPrivateMessage');

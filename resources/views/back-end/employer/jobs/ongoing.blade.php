@@ -3,6 +3,16 @@
     @if (session()->has('type'))
         @php session()->forget('type'); @endphp
     @endif
+    @if (Session::has('payment_message'))
+    @php $msg = Session::get('payment_message') @endphp
+        <div class="alert alert-success">
+            {{ $msg['message'] }}
+        </div>
+    @elseif (Session::has('error'))
+        <div class="alert alert-danger">
+            {{ Session::get('error') }}
+        </div>
+    @endif
     <div class="wt-haslayout wt-dbsectionspace">
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -41,7 +51,7 @@
                                                                 <a href="{{{ url('profile/'.$job->employer->slug) }}}">@if($verified_user === 1)<i class="fa fa-check-circle"></i>@endif&nbsp;{{{ $user_name.' | JOB ID: '.$job->id }}}</a>
                                                             @endif
                                                             @if (!empty($job->title))
-                                                                <h2>{{{ $job->title }}}</h2>
+                                                                <h4>{{{ $job->title }}}</h4>
                                                             @endif
                                                         </div>
                                                     @endif
