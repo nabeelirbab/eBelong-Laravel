@@ -11414,3 +11414,11 @@ textarea::placeholder {
 .wt-userlisting-breadcrumb li {
 	padding-left: 0px !important;
 }
+.anchor-content-center {
+	display: flex;
+	align-items: center;
+	margin: unset !important;
+}
+.anchor-content-center .location-name {
+	margin-left: 10px;
+}

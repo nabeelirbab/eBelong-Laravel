@@ -721,7 +721,7 @@
 					
 					setTimeout(function() {
 						$('html,body').animate({
-						scrollTop: $("#scroll-id").offset().top},
+						scrollTop: $("#scroll-id").offset().top - 130},
 						'slow');
             		}, 300);
 				  }
