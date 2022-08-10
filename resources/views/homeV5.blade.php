@@ -721,9 +721,9 @@
 					
 					setTimeout(function() {
 						$('html,body').animate({
-						scrollTop: $("#scroll-id").offset().top},
+						scrollTop: $("#scroll-id").offset().top - 100},
 						'slow');
-            		}, 300);
+            		}, 100);
 				  }
 		})
 
