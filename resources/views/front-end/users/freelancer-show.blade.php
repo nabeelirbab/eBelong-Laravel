@@ -167,7 +167,7 @@
                                     </div>
                                    
                                     <div class="wt-statisticcontent wt-countercolor3">
-                                        @if(empty($amount))
+                                        @if(!empty($amount))
                                         <h3 data-from="0" data-to="{{ $amount }}" data-speed="8000" data-refresh-interval="100">{{ empty($amount) ? $symbol.'0.00' : $symbol."".$amount }}</h3>
                                         <h4>{{ trans('lang.total_earnings') }}</h4>
                                         @endif
