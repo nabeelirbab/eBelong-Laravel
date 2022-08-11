@@ -65,7 +65,7 @@ class Order extends Model
             $json['id'] = $this->id;
             return $json;
         } 
-        if($type='course'){
+        if($type=='course'){
             $cource = Cource::find($product_id);
             $seller = Helper::getCourceSeller($cource->id);
             $cource_order_id = DB::table('cource_user')->insertGetId(

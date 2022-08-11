@@ -1,6 +1,6 @@
 <template>
-  <div class="container">
-    <div class="e-postskill" id="scroll-id">
+  <div class="container" id="scroll-id">
+    <div class="e-postskill">
       <div class="e-postskill__header">
         <div class="e-postskill__header_title">
           Speed up your hiring process

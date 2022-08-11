@@ -159,7 +159,8 @@ $show_f_banner = 'true'
                                                                         @if ($verified_user == 1)
                                                                         <i class="fa fa-check-circle"></i>
                                                                         @endif
-                                                                        {{{ Helper::getUserName($freelancer->id) }}}
+                                                                        <!-- {{{ Helper::getUserName($freelancer->first_name) }}} -->
+                                                                        {{{$freelancer->first_name}}}
                                                                     </a>
                                                                     <!-- @if (!empty($freelancer->profile->tagline))
                                                                                     <h2><a href="{{{ url('profile/'.$freelancer->slug) }}}">{{{ $freelancer->profile->tagline }}}</a></h2>
@@ -492,7 +493,8 @@ $show_f_banner = 'true'
                                                                         @if ($verified_user == 1)
                                                                         <i class="fa fa-check-circle"></i>
                                                                         @endif
-                                                                        {{{ Helper::getUserName($freelancer->id) }}}
+                                                                        <!-- {{{ Helper::getUserName($freelancer->id) }}} -->
+                                                                        {{{$freelancer->first_name}}}
                                                                     </a>
                                                                     <!-- @if (!empty($freelancer->profile->tagline))
                                                                             <h2><a href="{{{ url('profile/'.$freelancer->slug) }}}">{{{ $freelancer->profile->tagline }}}</a></h2>

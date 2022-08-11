@@ -420,6 +420,7 @@ class PaypalController extends Controller
                 
                 }
                 else {
+                    // dd("djdjjd");
 
                    DB::table('orders')
                     ->where('id', $last_order_id)
@@ -506,8 +507,10 @@ class PaypalController extends Controller
                     }
                 }
             } else if ($product_type == 'project') {
+
                 if (session()->has('project_type')) {
                     $project_type = session()->get('project_type');
+                   
                     if ($project_type == 'service') {
                         $id = session()->get('product_id');
                         $freelancer = session()->get('service_seller');
@@ -590,6 +593,7 @@ class PaypalController extends Controller
                 }
                 //
                 else {
+                    
                     $id = session()->get('product_id');
                     $proposal = Proposal::find($id);
                     $proposal->hired = 1;

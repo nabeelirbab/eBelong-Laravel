@@ -45,8 +45,8 @@
                                         </div>			 				
                                         <div class="form-group form-group-half wt-formwithlabel">                                       
                                         <span class="wt-select">						
-                                        <select id= "proj-type" name="project_type">
-                                            <option selected="selected" value="select_project_type">Select Project Type</option>
+                                        <select id= "proj-type" name="project_type" >
+                                            <option value="" disabled selected>Select Project Type</option>
                                             <option value = "fixed">Fixed</option>
                                             <option value = "hourly" >Hourly</option>	
                                         </select>	 

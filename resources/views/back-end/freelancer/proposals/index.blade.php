@@ -35,7 +35,7 @@
                                                                 &nbsp;{{{ $user_name.' | JOB ID: '.$proposal->job->id }}}</a>
                                                             @endif
                                                             @if (!empty($proposal->job->title))
-                                                                <h2>{{{ $proposal->job->title }}}</h2>
+                                                                <h4>{{{ $proposal->job->title }}}</h4>
                                                             @endif
                                                         </div>
                                                     @endif

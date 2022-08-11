@@ -573,9 +573,9 @@ class EmployerController extends Controller
                 $payment_gateway = !empty($payout_settings) && !empty($payout_settings[0]['payment_method']) ? $payout_settings[0]['payment_method'] : null;
                 $currency   = SiteManagement::getMetaValue('commision');
                 $symbol = !empty($currency) && !empty($currency[0]['currency']) ? Helper::currencyList($currency[0]['currency']) : array();
-
+                $hourly_project_amount_per_week = '';
                
-              //  $bill_status = WorkDiary::where('project_id', $proposal->job_id)->first();
+               $bill_status = WorkDiary::where('project_id', $proposal->job_id)->first();
                 //dd($bill_status);
                 
                 
@@ -590,7 +590,7 @@ class EmployerController extends Controller
                     $commision_amount = ($payout_settings[0]['emp_commision']/100)*$proposal->amount;
                     $total_amount = $proposal->amount + $commision_amount;
                 }elseif($job->project_type == 'hourly') {
-
+                   
                       $commision_amount = $payout_settings[0]['emp_commision'];
                       $hourly_project_amount_per_week =  $proposal->amount * $job->no_of_hours;
                       $total_amount =  $hourly_project_amount_per_week + ($hourly_project_amount_per_week *  ( $commision_amount / 100) ) ;
@@ -661,13 +661,13 @@ public function employerHourlyPaymentProcess($id)
                 $payment_gateway = !empty($payout_settings) && !empty($payout_settings[0]['payment_method']) ? $payout_settings[0]['payment_method'] : null;
                 $currency   = SiteManagement::getMetaValue('commision');
                 $symbol = !empty($currency) && !empty($currency[0]['currency']) ? Helper::currencyList($currency[0]['currency']) : array();
-
+                $hourly_project_amount_per_week = '';
                
                 $bill_status = WorkDiary::where('project_id', $proposal->job_id)->first();
                 //dd($bill_status);
                 
                 
-              //  $commision_amount = $payout_settings[0]['emp_commision'];
+               $commision_amount = $payout_settings[0]['emp_commision'];
               //  $total_amount = "";
 
              //  dd($payout_settings[0]['commision']);

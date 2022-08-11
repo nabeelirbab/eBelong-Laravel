@@ -322,6 +322,12 @@
                                     </ul>
                                 </li>
                             @endif
+                            <li>
+                                <a href="{{{ route('employerPayoutsSettings') }}}">
+                                    <i class="ti-money"></i>
+                                    <span> {{ trans('lang.payouts') }}</span>
+                                </a>
+                            </li>
                             {{-- @if (Helper::getAccessType() == 'both' || Helper::getAccessType() == 'services')
                                 <li class="menu-item-has-children">
                                     <span class="wt-dropdowarrow"><i class="lnr lnr-chevron-right"></i></span>

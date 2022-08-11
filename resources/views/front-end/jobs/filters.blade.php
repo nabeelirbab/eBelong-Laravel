@@ -55,7 +55,12 @@
                                 @php $checked = ( !empty($_GET['locations']) && in_array($location->slug, $_GET['locations'])) ? 'checked' : '' @endphp
                                 <span class="wt-checkbox">
                                     <input id="location-{{{ $location->slug }}}" type="checkbox" name="locations[]" value="{{{$location->slug}}}" {{$checked}} >
-                                    <label for="location-{{{ $location->slug }}}"> <a href="{{ url('jobs/'.$location->slug) }}"  ><img src="{{{asset(Helper::getLocationFlag($location->flag))}}}" alt="{{ trans('lang.img') }}" style="width:18px;height:11px"> {{{ $location->title }}}</a></label>
+                                    <label for="location-{{{ $location->slug }}}">
+                                        <a href="{{ url('jobs/'.$location->slug) }}" class="anchor-content-center" >
+                                            <img src="{{{asset(Helper::getLocationFlag($location->flag))}}}" alt="{{ trans('lang.img') }}" style="width:25px;height:18px">
+                                            <div class="location-name">{{{ $location->title }}}</div>
+                                        </a>
+                                    </label>
                                 </span>
                             @endforeach
                         </div>
