@@ -46,7 +46,7 @@
                                     @endif
                                     <div class="wt-title">
                                         @if (!empty($user_name))
-                                            <h3>@if ($user->user_verified === 1)<i class="fa fa-check-circle"></i> @endif {{{ $user_name }}}</h3>
+                                            <h3>@if ($user->user_verified === 1)<i class="fa fa-check-circle"></i> @endif {{{ $user->first_name }}}</h3>
                                         @endif
                                         <span>
                                             <div class="wt-proposalfeedback"><span class="wt-starcontent"> {{{ round($average_rating_count) }}}/<i>5</i>&nbsp;<em>({{{ $reviews->count() }}} {{ trans('lang.feedbacks') }})</em></span></div>
@@ -234,7 +234,7 @@
                                                         </figure>
                                                         <div class="wt-freelancers-content">
                                                             <div class="dc-title">
-                                                                <a href="{{{ url('profile/'.$user->slug) }}}"><i class="fa fa-check-circle"></i> {{{Helper::getUserName($user->id)}}}</a>
+                                                                <a href="{{{ url('profile/'.$user->slug) }}}"><i class="fa fa-check-circle"></i> {{{$user->first_name}}}</a>
                                                                 <a href="{{{url('service/'.$service->slug)}}}"><h3>{{{$service->title}}}</h3></a>
                                                                 <span><strong>{{ $symbol }}{{{$service->price}}}</strong> {{trans('lang.starting_from')}}</span>
                                                             </div>
@@ -307,7 +307,7 @@
                                                             </figure>
                                                             <div class="wt-freelancers-content">
                                                                 <div class="dc-title">
-                                                                    <a href="{{{ url('profile/'.$user->slug) }}}"><i class="fa fa-check-circle"></i> {{{Helper::getUserName($user->id)}}}</a>
+                                                                    <a href="{{{ url('profile/'.$user->slug) }}}"><i class="fa fa-check-circle"></i> {{{$user->first_name}}}</a>
                                                                     <a href="{{{url('course/'.$cource->slug)}}}"><h3>{{{$cource->title}}}</h3></a>
                                                                     <span><strong>{{ $symbol }}{{{$cource->price}}}</strong> {{trans('lang.starting_from')}}</span>
                                                                 </div>
