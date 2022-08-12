@@ -72,12 +72,17 @@
                             <div class="carousel-item">
                                 <div class="carousel-item-text"> Join a community of innovators </div>
                             </div>
+                            <div class="carousel-item">
+                                <div class="carousel-item-text"> Post a Job, Get application, Shortlist and Hire Candidates </div>
+                            </div>
+                            
                             
                         </div>    
                         <ol class="carousel-indicators">
                             <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
                             <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
                             <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                            <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
                         </ol>
                     </div>
                 </div>

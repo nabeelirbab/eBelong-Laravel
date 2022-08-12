@@ -33,72 +33,73 @@
               v-for="item in items"
               :key="item.id"
             >
-              <!-- <img v-if="item.is_instructor == 1" style="margin-left: 180px;height: 40px;" :src="`${baseUrl}/images/instructor/instructor_logo.png`"/> -->
-              <img
-                v-if="item.is_certified == 1"
-                class="home-certified-logo"
-                :src="`${baseUrl}/images/certified/Certified_Icon.png`"
-              />
-              <img
-                v-if="item.is_instructor == 1"
-                class="home-instructor-logo"
-                :src="`${baseUrl}/images/instructor/instructor_logo.png`"
-              />
-
               <div
+                class="e-freelancer-full-box c-pointer"
                 v-on:click="() => onClick(item.slug)"
-                class="e-freelancer__item-image c-pointer"
               >
-                <img :src="item.imagePath" :alt="item.first_name" />
-              </div>
+                <img
+                  v-if="item.is_certified == 1"
+                  class="home-certified-logo"
+                  :src="`${baseUrl}/images/certified/Certified_Icon.png`"
+                />
+                <img
+                  v-if="item.is_instructor == 1"
+                  class="home-instructor-logo"
+                  :src="`${baseUrl}/images/instructor/instructor_logo.png`"
+                />
 
-              <div class="e-freelancer__item-title">
-                <!-- {{ item.first_name }} {{ item.last_name }} -->
-                {{ item.first_name }}
-              </div>
-              <div class="e-freelancer__item-skill text-center">
-                {{ item.tagline }}
-              </div>
-              <div
-                v-if="item.has_agency == 1 && item.agency_avatar != null"
-                class="e-freelancer__item-agency text-center"
-              >
-                <div class="e-freelancer__item-agency-image">
-                  <img
-                    class="e-freelancer__item-agency-image-area"
-                    :src="`${baseUrl}/uploads/agency_logos/${item.agency_id}/${item.agency_avatar}`"
-                  />
+                <div class="e-freelancer__item-image">
+                  <img :src="item.imagePath" :alt="item.first_name" />
                 </div>
-                <div class="e-freelancer__item-agency-text">
-                  <a v-bind:href="'agency/' + item.agency_slug">{{
-                    item.agency_name
-                  }}</a>
-                </div>
-              </div>
-              <div
-                v-if="item.has_agency == 1 && item.agency_avatar == null"
-                class="e-freelancer__item-agency text-center"
-              >
-                <div class="e-freelancer__item-agency-image">
-                  <img
-                    class="e-freelancer__item-agency-image-area"
-                    :src="`${baseUrl}/uploads/settings/general/imgae-not-availabe.png`"
-                  />
-                </div>
-                <div class="e-freelancer__item-agency-text">
-                  <a v-bind:href="'agency/' + item.agency_slug">{{
-                    item.agency_name
-                  }}</a>
-                </div>
-              </div>
 
-              <div class="e-freelancer__item-rating my-2 mb-4">
-                <span class="wt-stars"
-                  ><span :style="{ width: item.rating_width + '%' }"></span
-                ></span>
-              </div>
-              <div class="e-freelancer__item-price">
-                <span> ${{ item.hourly_rate }}/hr </span>
+                <div class="e-freelancer__item-title">
+                  <!-- {{ item.first_name }} {{ item.last_name }} -->
+                  {{ item.first_name }}
+                </div>
+                <div class="e-freelancer__item-skill text-center">
+                  {{ item.tagline }}
+                </div>
+                <div
+                  v-if="item.has_agency == 1 && item.agency_avatar != null"
+                  class="e-freelancer__item-agency text-center"
+                >
+                  <div class="e-freelancer__item-agency-image">
+                    <img
+                      class="e-freelancer__item-agency-image-area"
+                      :src="`${baseUrl}/uploads/agency_logos/${item.agency_id}/${item.agency_avatar}`"
+                    />
+                  </div>
+                  <div class="e-freelancer__item-agency-text">
+                    <a v-bind:href="'agency/' + item.agency_slug">{{
+                      item.agency_name
+                    }}</a>
+                  </div>
+                </div>
+                <div
+                  v-if="item.has_agency == 1 && item.agency_avatar == null"
+                  class="e-freelancer__item-agency text-center"
+                >
+                  <div class="e-freelancer__item-agency-image">
+                    <img
+                      class="e-freelancer__item-agency-image-area"
+                      :src="`${baseUrl}/uploads/settings/general/imgae-not-availabe.png`"
+                    />
+                  </div>
+                  <div class="e-freelancer__item-agency-text">
+                    <a v-bind:href="'agency/' + item.agency_slug">{{
+                      item.agency_name
+                    }}</a>
+                  </div>
+                </div>
+
+                <div class="e-freelancer__item-rating my-2 mb-4">
+                  <span class="wt-stars"
+                    ><span :style="{ width: item.rating_width + '%' }"></span
+                  ></span>
+                </div>
+                <div class="e-freelancer__item-price">
+                  <span> ${{ item.hourly_rate }}/hr </span>
+                </div>
               </div>
             </splide-slide>
           </splide>
