@@ -136,7 +136,8 @@
                                             <?php }else{ ?>
                                                 <div class="wt-hireduserstatus">
                                                     <h3>Hired</h3>
-                                                    <span style="color: red;">Please pay the all frelancer payment</span>
+                                                    <!-- <span style="color: red;">Please pay the all frelancer payment</span> -->
+                                                    <span style="color: #9013f3">Please make sure to pay the Freelancer on time</span>
                                                 </div>
                                             <?php } ?>
                                             <div class="wt-hireduserstatus">
