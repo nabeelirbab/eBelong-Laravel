@@ -10288,7 +10288,7 @@ a:focus{text-decoration: none !important;}
 }
 
 .registration-carousel .carousel-item .carousel-item-text {
-	font-size: 26px;
+	font-size: 22px;
 	color: #3A0B5F;
 	line-height: 2;
     font-weight: 600;
@@ -11422,3 +11422,4 @@ textarea::placeholder {
 .anchor-content-center .location-name {
 	margin-left: 10px;
 }
+
