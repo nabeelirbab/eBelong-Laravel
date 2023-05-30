@@ -76,6 +76,14 @@
                                         @endif
                                         </span>
                                     </div>
+                                    @if(Auth::user()->id == $user->id)
+                                    <div class="wt-widgetcontent wt-skillscontent mt-3">
+                                            <div class="wt-skillholder" data-percent="{{{ $percentage }}}%">
+                                                <span> Profile Completion<em>{{{ $percentage }}}%</em></span>
+                                                <div class="wt-skillbarholder"><div class="wt-skillbar"></div></div>
+                                            </div>
+                                    </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>

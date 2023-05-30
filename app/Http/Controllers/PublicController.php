@@ -349,8 +349,10 @@ class PublicController extends Controller
                 abort(404);
             }
             $skills = $user->skills()->get();
-            $job = Job::where('user_id', $user->id)->get();
+            $job = Job::where('user_id', $user->id)->orderBy('id','desc')->get();
             $profile = Profile::all()->where('user_id', $user->id)->first();
+            $percentage = $this->getProfileCompletionPercentage($profile);
+            
             $reasons = Helper::getReportReasons();
             $avatar = !empty($profile->avater) ? '/uploads/users/' . $profile->user_id . '/' . $profile->avater : '/images/user.jpg';
             $banner = !empty($profile->banner) ? '/uploads/users/' . $profile->user_id . '/' . $profile->banner : Helper::getUserProfileBanner($user->id);
@@ -369,10 +371,13 @@ class PublicController extends Controller
                        $cources = Helper::getFreelancerCourses('posted', $user->id);
                 }
             }
-                $reviews = Review::where('receiver_id', $user->id)->get();
+                $reviews = Review::where('receiver_id', $user->id)->orderBy('id','desc')->get();
                 $awards = !empty($profile->awards) ? unserialize($profile->awards) : array();
                 $projects = !empty($profile->projects) ? unserialize($profile->projects) : array();
                 $experiences = !empty($profile->experience) ? unserialize($profile->experience) : array();
+                usort($experiences, function ($a, $b) {
+                    return strtotime($b['start_date']) - strtotime($a['start_date']);
+                });
                 $education = !empty($profile->education) ? unserialize($profile->education) : array();
                 $freelancer_rating  = !empty($user->profile->ratings) ? Helper::getUnserializeData($user->profile->ratings) : 0;
                 $rating = !empty($freelancer_rating) ? $freelancer_rating[0] : 0;
@@ -435,7 +440,8 @@ class PublicController extends Controller
                             'tagline',
                             'desc',
                             'display_chat',
-                            'enable_package'
+                            'enable_package',
+                            'percentage'
                         )
                     );
                 } else {
@@ -476,7 +482,8 @@ class PublicController extends Controller
                             'tagline',
                             'desc',
                             'display_chat',
-                            'enable_package'
+                            'enable_package',
+                            'percentage'
                         )
                     );
                 }
@@ -544,6 +551,53 @@ class PublicController extends Controller
         }
     }
 
+public function getProfileCompletionPercentage($profile)
+{
+    $totalFields = 9; // Total number of fields required for profile completion
+    
+    $completedFields = 0; // Counter for completed fields
+    
+    // Check if each required field is filled or not
+    if (!empty($profile->english_level)) {
+        $completedFields++;
+    }
+    
+    if (!empty($profile->hourly_rate)) {
+        $completedFields++;
+    }
+    
+    if (!empty($profile->experience)) {
+        $completedFields++;
+    }
+    
+    if (!empty($profile->education)) {
+        $completedFields++;
+    }
+    
+    if (!empty($profile->projects)) {
+        $completedFields++;
+    }
+
+    if (!empty($profile->avater)) {
+        $completedFields++;
+    }
+
+    if (!empty($profile->banner)) {
+        $completedFields++;
+    }
+
+    if (!empty($profile->description)) {
+        $completedFields++;
+    }
+    
+    if (!empty($profile->tagline)) {
+        $completedFields++;
+    }
+    
+    // Calculate profile completion percentage
+    $percentage = ($completedFields / $totalFields) * 100;
+    return intval(round($percentage));
+}
     /**
      * Get filtered list.
      *
@@ -1344,8 +1398,12 @@ class PublicController extends Controller
         $id = $request['id'];
         $freelancer = User::find($id);
         if (!empty($freelancer)) {
+            $experiences = !empty($freelancer->profile->experience) ? unserialize($freelancer->profile->experience) : array();
+                usort($experiences, function ($a, $b) {
+                    return strtotime($b['start_date']) - strtotime($a['start_date']);
+                });
             $json['type'] = 'success';
-            $json['experience'] = unserialize($freelancer->profile->experience);
+            $json['experience'] = $experiences;
             return $json;
         } else {
             $json['type'] = 'error';
@@ -1366,8 +1424,12 @@ class PublicController extends Controller
         $id = $request['id'];
         $freelancer = User::find($id);
         if (!empty($freelancer)) {
+            $educations = !empty($freelancer->profile->education) ? unserialize($freelancer->profile->education) : array();
+                usort($educations, function ($a, $b) {
+                    return strtotime($b['start_date']) - strtotime($a['start_date']);
+                });
             $json['type'] = 'success';
-            $json['education'] = unserialize($freelancer->profile->education);
+            $json['education'] = $educations;
             return $json;
         } else {
             $json['type'] = 'error';

@@ -63,9 +63,9 @@ Route::get('/auth/linkedin/callback', 'Auth\LinkedinController@handleLinkedinCal
 
 //SiteMap
 Route::get('/sitemap','SiteMapController@index');
-Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web']], function () {
-        \UniSharp\LaravelFilemanager\Lfm::routes();
-    });
+// Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web']], function () {
+//         \UniSharp\LaravelFilemanager\Lfm::routes();
+//     });
 //whishlist
 Route::post('get-wishlist-freelancers','PublicController@getWishlistFreelancers');
 Route::get('wishlist', 'PublicController@GuestWishlist');

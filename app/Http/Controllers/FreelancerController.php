@@ -526,8 +526,12 @@ class FreelancerController extends Controller
             $profile = $this->freelancer::select('experience')
                 ->where('user_id', $user_id)->get()->first();
             if (!empty($profile)) {
+                $experiences = !empty($profile->experience) ? unserialize($profile->experience) : array();
+                usort($experiences, function ($a, $b) {
+                    return strtotime($b['start_date']) - strtotime($a['start_date']);
+                });
                 $json['type'] = 'success';
-                $json['experiences'] = unserialize($profile->experience);
+                $json['experiences'] = $experiences;
                 return $json;
             } else {
                 $json['type'] = 'error';
@@ -856,6 +860,8 @@ class FreelancerController extends Controller
         if (Auth::user()) {
             $ongoing_jobs = array();
             $freelancer_id = Auth::user()->id;
+            $have_courses = Auth::user()->cources()->count();
+            $have_service = Auth::user()->services()->count();
             $ongoing_projects = Proposal::getProposalsByStatus($freelancer_id, 'hired');
             $cancelled_projects = Proposal::getProposalsByStatus($freelancer_id, 'cancelled');
             $package_item = Item::where('subscriber', $freelancer_id)->first();
@@ -912,7 +918,9 @@ class FreelancerController extends Controller
                         'completed_services_icon',
                         'ongoing_services_icon',
                         'enable_package',
-                        'package'
+                        'package',
+                        'have_courses',
+                        'have_service'
                     )
                 );
             } else {
@@ -942,7 +950,9 @@ class FreelancerController extends Controller
                         'completed_services_icon',
                         'ongoing_services_icon',
                         'enable_package',
-                        'package'
+                        'package',
+                        'have_courses',
+                        'have_service'
                     )
                 );
             }
@@ -1251,6 +1261,7 @@ else {
             if (Schema::hasTable('cources') && Schema::hasTable('cource_user')) {
                 if (Schema::hasColumn('cource_user','cource_id') && Schema::hasColumn('cource_user','paid') && Schema::hasColumn('cource_user','paid_progress') && Schema::hasColumn('cource_user','status') && Schema::hasColumn('cource_user','type') && Schema::hasColumn('cource_user','seller_id') && Schema::hasColumn('cource_user','user_id')) {    
             $freelancer = User::find($freelancer_id);
+
             $currency   = SiteManagement::getMetaValue('commision');
             $symbol = !empty($currency) && !empty($currency[0]['currency']) ? Helper::currencyList($currency[0]['currency']) : array();
             $status_list = array_pluck(Helper::getFreelancerServiceStatus(), 'title', 'value');

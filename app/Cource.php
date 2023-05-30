@@ -146,6 +146,7 @@ class Cource extends Model
             $location = $request['locations'];
             $this->location()->associate($location);
             $this->title = filter_var($request['title'], FILTER_SANITIZE_STRING);
+            $this->user_type = filter_var($request['user_type'], FILTER_SANITIZE_STRING);
             $this->slug = filter_var($request['title'], FILTER_SANITIZE_STRING);
             $this->price = filter_var($request['course_price'], FILTER_SANITIZE_STRING);
             $this->delivery_time_id = intval($request['delivery_time']);

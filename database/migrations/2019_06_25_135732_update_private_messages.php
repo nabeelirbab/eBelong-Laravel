@@ -13,15 +13,9 @@ class UpdatePrivateMessages extends Migration
      */
     public function up()
     {
-        Schema::table(
-            'private_messages',
-            function (Blueprint $table) {
-                $table->enum(
-                    'project_type',
-                    ['job', 'service']
-                )->default('job');
-            }
-        );
+        Schema::table('private_messages', function (Blueprint $table) {
+            $table->enum('project_type', ['job', 'service'])->default('job');
+        });
     }
 
     /**
@@ -31,11 +25,8 @@ class UpdatePrivateMessages extends Migration
      */
     public function down()
     {
-        Schema::table(
-            'reviews',
-            function (Blueprint $table) {
-                $table->dropColumn('project_type');
-            }
-        );
+        Schema::table('private_messages', function (Blueprint $table) {
+            $table->dropColumn('project_type');
+        });
     }
 }

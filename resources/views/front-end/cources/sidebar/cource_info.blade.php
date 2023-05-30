@@ -1,4 +1,5 @@
 <div class="wt-userrating wt-userratingvtwo">
+
     <div class="wt-ratingtitle">
        <h3>{{ !empty($symbol) ? $symbol['symbol'] : '$' }}{{{$cource->price}}}</h3>
        <span>{{trans('lang.starting_from')}}</span>
@@ -17,6 +18,9 @@
           </li>
           <li>
              <span><i class="fa fa-clock-o iconcolor4"></i><strong>{{{$response_time->title}}}</strong>&nbsp;{{ trans('lang.response_time') }}</span>
+          </li>
+          <li>
+             <span><i class="fa fa-clock-o iconcolor4"></i><strong>{{{$cource->user_type}}}</strong></span>
           </li>
        </ul>
        <div class="wt-ratingcontent">
