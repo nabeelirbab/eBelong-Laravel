@@ -10,7 +10,8 @@
                 <h3 v-if="projects[index].project_title">{{projects[index].project_title}}</h3>
                 <a :href="'http://'+projects[index].project_url" target="_blank" v-if="projects[index].project_url">{{projects[index].project_url}}</a>
             </div>
-            <!-- Modal -->
+
+            <!-- Modalll -->
             <div class="modal modalss"  v-if="activeModalId === index">
               <div class="modal-dialog modal-md" role="document">
                 <div class="modal-content">
