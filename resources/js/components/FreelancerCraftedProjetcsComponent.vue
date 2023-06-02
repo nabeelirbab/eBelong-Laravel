@@ -11,7 +11,7 @@
                 <a :href="'http://'+projects[index].project_url" target="_blank" v-if="projects[index].project_url">{{projects[index].project_url}}</a>
             </div>
             <!-- Modal -->
-            <div class="modal"  v-if="activeModalId === index">
+            <div class="modal modalss"  v-if="activeModalId === index">
               <div class="modal-dialog modal-md" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
@@ -63,7 +63,7 @@
     }
 </script>
 <style type="text/css">
-    .modal{
+    .modalss{
         display: block !important;
     }
 </style>

@@ -860,6 +860,8 @@ class FreelancerController extends Controller
         if (Auth::user()) {
             $ongoing_jobs = array();
             $freelancer_id = Auth::user()->id;
+            $profile = Profile::all()->where('user_id', $freelancer_id)->first();
+            $percentage = $this->getProfileCompletionPercentage($profile);
             $have_courses = Auth::user()->cources()->count();
             $have_service = Auth::user()->services()->count();
             $ongoing_projects = Proposal::getProposalsByStatus($freelancer_id, 'hired');
@@ -920,7 +922,8 @@ class FreelancerController extends Controller
                         'enable_package',
                         'package',
                         'have_courses',
-                        'have_service'
+                        'have_service',
+                        'percentage'
                     )
                 );
             } else {
@@ -952,13 +955,62 @@ class FreelancerController extends Controller
                         'enable_package',
                         'package',
                         'have_courses',
-                        'have_service'
+                        'have_service',
+                        'percentage'
                     )
                 );
             }
         }
     }
 
+
+public function getProfileCompletionPercentage($profile)
+{
+    $totalFields = 9; // Total number of fields required for profile completion
+    
+    $completedFields = 0; // Counter for completed fields
+    
+    // Check if each required field is filled or not
+    if (!empty($profile->english_level)) {
+        $completedFields++;
+    }
+    
+    if (!empty($profile->hourly_rate)) {
+        $completedFields++;
+    }
+    
+    if (!empty($profile->experience)) {
+        $completedFields++;
+    }
+    
+    if (!empty($profile->education)) {
+        $completedFields++;
+    }
+    
+    if (!empty($profile->projects)) {
+        $completedFields++;
+    }
+
+    if (!empty($profile->avater)) {
+        $completedFields++;
+    }
+
+    if (!empty($profile->banner)) {
+        $completedFields++;
+    }
+
+    if (!empty($profile->description)) {
+        $completedFields++;
+    }
+    
+    if (!empty($profile->tagline)) {
+        $completedFields++;
+    }
+    
+    // Calculate profile completion percentage
+    $percentage = ($completedFields / $totalFields) * 100;
+    return intval(round($percentage));
+}
     /**
      * Show services.
      *

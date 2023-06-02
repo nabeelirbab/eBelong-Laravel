@@ -17,7 +17,7 @@
                                 <i class="fa fa-check-circle wt-greentick"></i>
                                 @endif
                                 <figure class="wt-userlistingimg">
-                                    {{ Helper::getImages('uploads/settings/icon',$latest_proposals_icon, 'layers') }}
+                                    {{ Helper::getImages('uploads/settings/icon',$latest_proposals_icon, 'briefcase') }}
                                 </figure>
                                 <div class="wt-insightdetails">
                                     <div class="wt-title">
@@ -33,7 +33,7 @@
                                 <i class="fa fa-check-circle wt-greentick"></i>
                                 @endif
                                 <figure class="wt-userlistingimg">
-                                    {{ Helper::getImages('uploads/settings/icon',$latest_proposals_icon, 'layers') }}
+                                    {{ Helper::getImages('uploads/settings/icon',$latest_proposals_icon, 'book') }}
                                 </figure>
                                 <div class="wt-insightdetails">
                                     <div class="wt-title">
@@ -46,7 +46,7 @@
                         <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-3">
                             <div class="wt-insightsitem wt-dashboardbox">
                                 <figure class="wt-userlistingimg">
-                                    {{ Helper::getImages('uploads/settings/icon',$latest_proposals_icon, 'layers') }}
+                                    {{ Helper::getImages('uploads/settings/icon',$latest_proposals_icon, 'user') }}
                                 </figure>
                                 <div class="wt-insightdetails">
                                     <div class="wt-title">
@@ -55,6 +55,14 @@
                        {{ trans('lang.click_view') }}</a>
                                     </div>
                                 </div>
+                                 @if (Auth::user())
+                                    <div class="wt-widgetcontent wt-skillscontent mt-3">
+                                      <div class="wt-skillholder" data-percent="{{{ $percentage }}}%">
+                                        <span>Profile Completion<em>{{{ $percentage }}}%</em></span>
+                                        <div class="wt-skillbarholder"><div class="wt-skillbar" style="width: {{ $percentage }}% !important;"></div></div>
+                                      </div>
+                                    </div>
+                                 @endif
                             </div>
                         </div>
                         @if (!empty($enable_package) && $enable_package === 'true')

@@ -150,6 +150,13 @@
                                                                 </li>
                                                             </ul>
                                                         </div>
+                                                        @if($service->user_type)
+                                                        <div class="wt-freelancers-rating">
+                                                            <ul>
+                                                                <li><span><i class="fa fa-briefcase"></i>{{{$service->user_type}}}</span></li>
+                                                            </ul>
+                                                        </div>
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>
