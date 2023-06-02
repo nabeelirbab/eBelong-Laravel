@@ -7,12 +7,14 @@
 @section('title'){{ $cource->title }} @stop
 @section('description', "$cource->description")
 @php $i =0;@endphp
+@if($attachments)
 @foreach ($attachments as $attachment)
 @php $i++; @endphp
 @if($i==1)
 @section('og_image', asset(Helper::getImageWithSize('uploads/courses/'.$seller->id, $attachment, 'medium')))
 @endif
 @endforeach
+@endif
 @section('og_url', env('APP_URL').'/course/'.$cource->slug)
 @section('og_title', $cource->title)
 @section('og_desc', htmlspecialchars_decode(stripslashes($cource->description)))

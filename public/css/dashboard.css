@@ -615,6 +615,7 @@ body{background: #f7f7f7;}
     border-right: 1px solid #ddd;
 }
 .wt-iconbox > i:hover {background: #f7f7f7;}
+.wt-greentick{ color: green;font-size: 20px; }
 /* DASHBOARD SIDEBAR */
 .wt-codescanholder{
 	border: 0;

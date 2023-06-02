@@ -526,8 +526,12 @@ class FreelancerController extends Controller
             $profile = $this->freelancer::select('experience')
                 ->where('user_id', $user_id)->get()->first();
             if (!empty($profile)) {
+                $experiences = !empty($profile->experience) ? unserialize($profile->experience) : array();
+                usort($experiences, function ($a, $b) {
+                    return strtotime($b['start_date']) - strtotime($a['start_date']);
+                });
                 $json['type'] = 'success';
-                $json['experiences'] = unserialize($profile->experience);
+                $json['experiences'] = $experiences;
                 return $json;
             } else {
                 $json['type'] = 'error';
@@ -856,6 +860,10 @@ class FreelancerController extends Controller
         if (Auth::user()) {
             $ongoing_jobs = array();
             $freelancer_id = Auth::user()->id;
+            $profile = Profile::all()->where('user_id', $freelancer_id)->first();
+            $percentage = $this->getProfileCompletionPercentage($profile);
+            $have_courses = Auth::user()->cources()->count();
+            $have_service = Auth::user()->services()->count();
             $ongoing_projects = Proposal::getProposalsByStatus($freelancer_id, 'hired');
             $cancelled_projects = Proposal::getProposalsByStatus($freelancer_id, 'cancelled');
             $package_item = Item::where('subscriber', $freelancer_id)->first();
@@ -912,7 +920,10 @@ class FreelancerController extends Controller
                         'completed_services_icon',
                         'ongoing_services_icon',
                         'enable_package',
-                        'package'
+                        'package',
+                        'have_courses',
+                        'have_service',
+                        'percentage'
                     )
                 );
             } else {
@@ -942,13 +953,64 @@ class FreelancerController extends Controller
                         'completed_services_icon',
                         'ongoing_services_icon',
                         'enable_package',
-                        'package'
+                        'package',
+                        'have_courses',
+                        'have_service',
+                        'percentage'
                     )
                 );
             }
         }
     }
 
+
+public function getProfileCompletionPercentage($profile)
+{
+    $totalFields = 9; // Total number of fields required for profile completion
+    
+    $completedFields = 0; // Counter for completed fields
+    
+    // Check if each required field is filled or not
+    if (!empty($profile->english_level)) {
+        $completedFields++;
+    }
+    
+    if (!empty($profile->hourly_rate)) {
+        $completedFields++;
+    }
+    
+    if (!empty($profile->experience)) {
+        $completedFields++;
+    }
+    
+    if (!empty($profile->education)) {
+        $completedFields++;
+    }
+    
+    if (!empty($profile->projects)) {
+        $completedFields++;
+    }
+
+    if (!empty($profile->avater)) {
+        $completedFields++;
+    }
+
+    if (!empty($profile->banner)) {
+        $completedFields++;
+    }
+
+    if (!empty($profile->description)) {
+        $completedFields++;
+    }
+    
+    if (!empty($profile->tagline)) {
+        $completedFields++;
+    }
+    
+    // Calculate profile completion percentage
+    $percentage = ($completedFields / $totalFields) * 100;
+    return intval(round($percentage));
+}
     /**
      * Show services.
      *
@@ -1251,6 +1313,7 @@ else {
             if (Schema::hasTable('cources') && Schema::hasTable('cource_user')) {
                 if (Schema::hasColumn('cource_user','cource_id') && Schema::hasColumn('cource_user','paid') && Schema::hasColumn('cource_user','paid_progress') && Schema::hasColumn('cource_user','status') && Schema::hasColumn('cource_user','type') && Schema::hasColumn('cource_user','seller_id') && Schema::hasColumn('cource_user','user_id')) {    
             $freelancer = User::find($freelancer_id);
+
             $currency   = SiteManagement::getMetaValue('commision');
             $symbol = !empty($currency) && !empty($currency[0]['currency']) ? Helper::currencyList($currency[0]['currency']) : array();
             $status_list = array_pluck(Helper::getFreelancerServiceStatus(), 'title', 'value');

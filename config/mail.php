@@ -100,8 +100,8 @@ return [
     //'username' => env('MAIL_USERNAME'),
     'username' => env('MAIL_USERNAME') != "" ? base64_decode(env('MAIL_USERNAME')) : '',
 	
-    //'password' => env('MAIL_PASSWORD'),
-    'password' =>  env('MAIL_PASSWORD') != "" ? base64_decode(env('MAIL_PASSWORD')) : '',
+    'password' => env('MAIL_PASSWORD'),
+    // 'password' =>  env('MAIL_PASSWORD') != "" ? base64_decode(env('MAIL_PASSWORD')) : '',
 
     /*
     |--------------------------------------------------------------------------

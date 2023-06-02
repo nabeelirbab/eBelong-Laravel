@@ -42,6 +42,7 @@
                     id:self.freelancer_id
                 })
                 .then(function (response) {
+                    console.log(response.data);
                     self.experiences = response.data.experience;
                 });
             },

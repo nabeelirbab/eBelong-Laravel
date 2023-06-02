@@ -395,6 +395,7 @@
                                         <span>{{ "My Offered Courses" }}</span>
                                     </a>
                                     <ul class="sub-menu">
+                                        <li><a href="{{{ url(route('freelancerPostCourse')) }}}">{{ trans('lang.post_course') }}</a></li>
                                         <li><a href="{{{ route('CourseListing', ['status'=>'posted']) }}}">{{ 'My Courses' }}</a></li>
                                         <li><a href="{{{ route('CourseOrders') }}}">{{ trans('lang.course_orders') }}</a></li>
                                     </ul>

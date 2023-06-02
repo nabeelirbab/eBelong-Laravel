@@ -152,10 +152,11 @@ class EmailHelper extends Model
         $sender_tagline = !empty($setting) && !empty($setting[0]['sender_tagline']) ? $setting[0]['sender_tagline'] : 'Eblong A Better Workplace for Employers and Freelancers';
         $sender_url = !empty($setting) && !empty($setting[0]['sender_url']) ? $setting[0]['sender_url'] : 'URL';
         ?>
-        <div style="width: 100%; float: left; padding: 15px 0 0; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;">
+        <div style="width: 100%;display: grid; float: left; padding: 15px 0 0; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;">
             <div style="float: left; border-radius: 5px; overflow: hidden; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;">
                 <img style="display: block;" src="<?php echo Self::getSiteLogo(); ?>" alt="<?php echo Self::getSiteTitle(); ?>">
             </div>
+            <br>
             <div style="overflow: hidden; padding: 0 0 0 20px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;">
                 <p style="margin: 0 0 7px; font-size: 14px; line-height: 14px; color: #919191; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;">Regards</p>
                 <h2 style="font-size: 18px; line-height: 18px; margin: 0 0 5px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; color: #333; font-weight: normal;font-family: 'Work Sans', Arial, Helvetica, sans-serif;"><?php echo $sender_name; ?></h2>

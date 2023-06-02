@@ -190,6 +190,7 @@ class CourseController extends Controller
                 'delivery_time'    => 'required',
                 'course_price'    => 'required',
                 'response_time'    => 'required',
+                'user_type'    => 'required',
                 'english_level'    => 'required',
                 'description'    => 'required',
             ]
