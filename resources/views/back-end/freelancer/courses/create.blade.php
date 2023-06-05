@@ -128,10 +128,12 @@
                                                 </div>
                                             </div>
                                         <div class="form-group form-group-half">
-                                            {!! Form::hidden( 'longitude', null, ['class' =>'form-control', 'id' => 'lat', 'placeholder' => trans('lang.enter_logitude')]) !!}
+                                            <input type="hidden" id="lat" name="longitude">
+                                            <!-- {!! Form::hidden( 'longitude', null, ['class' =>'form-control', 'id' => 'lat', 'placeholder' => trans('lang.enter_logitude')]) !!} -->
                                         </div>
                                         <div class="form-group form-group-half">
-                                            {!! Form::hidden( 'latitude', null, ['class' =>'form-control', 'id' => 'lng', 'placeholder' => trans('lang.enter_latitude')]) !!}
+                                            <input type="hidden" id="lng" name="latitude">
+                                            <!-- {!! Form::hidden( 'latitude', null, ['class' =>'form-control', 'id' => 'lng', 'placeholder' => trans('lang.enter_latitude')]) !!} -->
                                         </div>
                                         <!-- <div class="wt-jobskills wt-jobskills-holder wt-tabsinfo">
                                             

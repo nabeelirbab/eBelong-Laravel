@@ -195,15 +195,15 @@ class CourseController extends Controller
                 'description'    => 'required',
             ]
         );
-        if (!empty($request['latitude']) || !empty($request['longitude'])) {
-            $this->validate(
-                $request,
-                [
-                    'latitude' => ['regex:/^-?([1-8]?[1-9]|[1-9]0)\.{1}\d{1,6}$/'],
-                    'longitude' => ['regex:/^-?([1]?[1-7][1-9]|[1]?[1-8][0]|[1-9]?[0-9])\.{1}\d{1,6}$/'],
-                ]
-            );
-        }
+        // if (!empty($request['latitude']) || !empty($request['longitude'])) {
+        //     $this->validate(
+        //         $request,
+        //         [
+        //             'latitude' => ['regex:/^-?([1-8]?[1-9]|[1-9]0)\.{1}\d{1,6}$/'],
+        //             'longitude' => ['regex:/^-?([1]?[1-7][1-9]|[1]?[1-8][0]|[1-9]?[0-9])\.{1}\d{1,6}$/'],
+        //         ]
+        //     );
+        // }
         $user = User::find(Auth::user()->id);
         $package_item = Item::where('subscriber', Auth::user()->id)->first();
         $package = !empty($package_item) ? Package::find($package_item->product_id) : '';
