@@ -3382,7 +3382,8 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function updatePayoutDetail(Request $request)
-    {   
+    {  
+    // dd($request->all()); 
         $payout_setting = $request['payout_settings'];
        
         $user_id = $request['id'];

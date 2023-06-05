@@ -1418,7 +1418,7 @@ return [
     'payment_methods' => [
         'paypal' => 'Paypal',
         'stripe' => 'Stripe',
-        'banktransfar' => 'Bank Transfar',
+        'banktransfar' => 'Bank Transfer',
     ],
     'currency' => [
         'usd' => 'United States Dollar',

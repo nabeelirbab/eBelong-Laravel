@@ -500,13 +500,13 @@ class Profile extends Model
                 $payouts['paypal_email'] = $payout_setting['paypal_email'];
                 $payout_id = $payout_setting['paypal_email'];
             } elseif ($payout_setting['type'] == 'bacs') {
-               /*  $payouts['bank_account_name'] = $payout_setting['bank_account_name'];
+                 $payouts['bank_account_name'] = $payout_setting['bank_account_name'];
                 $payout_id = $payout_setting['bank_account_number'];
                 $payouts['bank_account_number'] = $payout_setting['bank_account_number'];
                 $payouts['bank_name'] = $payout_setting['bank_name'];
                 $payouts['bank_routing_number'] = $payout_setting['bank_routing_number'];
                 $payouts['bank_iban'] = $payout_setting['bank_iban'];
-                $payouts['bank_bic_swift'] = $payout_setting['bank_bic_swift']; */ 
+                $payouts['bank_bic_swift'] = $payout_setting['bank_bic_swift'];  
 
                
             }
