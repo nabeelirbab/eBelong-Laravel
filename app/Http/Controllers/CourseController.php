@@ -972,6 +972,9 @@ class CourseController extends Controller
         $options = '';
         $seller = '';
         $payrols = Helper::getPayoutsList();
+        $payout_settings = SiteManagement::getMetaValue('commision');
+        $payment_methods = !empty($payout_settings) && !empty($payout_settings[0]['payment_method']) ? $payout_settings[0]['payment_method'] : null;
+        // dd($payment_methods);
         $user = User::find(Auth::user()->id);
         // $location = Location::select('title')->where('id',$user->location_id)->first();
         // $user->location_name = $location->title; 
@@ -981,7 +984,7 @@ class CourseController extends Controller
         $freelancer = User::find($seller->user_id);
         $cost = $course->price;
         $payout_settings = $user->profile->count() > 0 ? Helper::getUnserializeData($user->profile->payout_settings) : '';
-        return view('back-end.freelancer.courses.checkout', compact('course','freelancer','symbol','mode','bank_detail','subtitle','options','seller','title', 'cost','payrols' , 'user' , 'payout_settings'));
+        return view('back-end.freelancer.courses.checkout', compact('course','freelancer','symbol','mode','bank_detail','subtitle','options','seller','title', 'cost','payrols' , 'user' , 'payout_settings','payment_methods'));
     }
     public function courseOrders(){
         $courses = DB::table('cource_user')->where('status','waiting')->where('seller_id',Auth::user()->id)->get();

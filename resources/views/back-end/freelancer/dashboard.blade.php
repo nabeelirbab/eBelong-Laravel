@@ -52,7 +52,8 @@
                                     <div class="wt-title">
                                         <h3>My Profile</h3>
                                         <a href="{{{ url(route('showUserProfile', ['slug' => Auth::user()->slug])) }}}">
-                       {{ trans('lang.click_view') }}</a>
+                       {{ trans('lang.click_view') }} </a>
+                                        <a href="{{{ url('freelancer/profile') }}}">/ Profile Setting</a>
                                     </div>
                                 </div>
                                  @if (Auth::user())

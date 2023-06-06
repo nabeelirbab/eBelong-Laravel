@@ -45,4 +45,7 @@
           @endif
          </div>
     </div>
+    @if($cource->user_type != 'Remote')
+     <div id="map" style="width: 350px; height: 350px;"></div>
+    @endif
  </div>

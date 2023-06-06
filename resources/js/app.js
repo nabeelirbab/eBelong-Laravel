@@ -4747,7 +4747,7 @@ if (document.getElementById("packages")) {
         this.loading = true;
         var self = this;
         axios
-          .get(APP_URL + "/course/bacs-checkout")
+          .get(APP_URL + "/bacs-checkout")
           .then(function (response) {
             console.log(response.data);
             if (response.data.type == "success") {

@@ -193,6 +193,36 @@
 @endsection
 @push('scripts')
     <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
+        @push('scripts')
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkCYdMuRkyApHONAWqjzNYYvYX2INz-nM&libraries=places&callback=initMap" async defer></script>
+<script>
+    function initMap() {
+        // Create a map object
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 8, // Set the initial zoom level
+            center: { lat: {{ $cource->latitude }}, lng: {{ $cource->longitude }} } // Set the initial center point
+        });
+
+        // Create a marker and set its position
+        var marker = new google.maps.Marker({
+            position: { lat: {{ $cource->latitude }}, lng: {{ $cource->longitude }} },
+            map: map
+        });
+
+        // Create an info window to display the address
+        var infoWindow = new google.maps.InfoWindow({
+            content: '{{ $cource->address }}'
+        });
+
+        // Attach the info window to the marker
+        marker.addListener('click', function() {
+            infoWindow.open(map, marker);
+        });
+    }
+</script>
+
+
+ @endpush
     <script>
         /* SERVICE SLIDER */
         function customerFeedback(){
