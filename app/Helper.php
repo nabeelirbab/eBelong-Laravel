@@ -4130,12 +4130,15 @@ class Helper extends Model
 	
 	public static function getRefrenceNo($payoutid,$payment_method){
 		$refrence = DB::table('admin_to_freelancers')->select('payout_batch_id')->where('payout_id',$payoutid)->first();
+        // dd($refrence);
+        if($refrence){
 		if($payment_method == "bacs"){
 			$refrence = unserialize($refrence->payout_batch_id);
 			return $refrence['reference_number'];
 		}else{
 			return $refrence->payout_batch_id;
 		}
+    }
     }
     
     public static function getAgencyList($id = 0,$where = array()){

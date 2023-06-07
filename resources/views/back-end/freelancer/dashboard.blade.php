@@ -22,7 +22,9 @@
                                 <div class="wt-insightdetails">
                                     <div class="wt-title">
                                         <h3>My Services</h3>
-                                        <a href="{{{ route('ServiceListing', ['status'=>'posted']) }}}">{{ trans('lang.click_view') }}</a>
+                                        <div class="wt-actionbtn" style="display: inline-flex;">
+                                        <a href="{{{ route('ServiceListing', ['status'=>'posted']) }}}" class="wt-viewinfo"><i class="lnr lnr-eye" style="line-height: 28px;color: white;"></i> </a>
+                                    </div>
                                     </div>
                                 </div>
                             </div>
@@ -38,7 +40,9 @@
                                 <div class="wt-insightdetails">
                                     <div class="wt-title">
                                         <h3>My Courses</h3>
-                                        <a href="{{{ route('CourseListing', ['status'=>'posted']) }}}">{{ trans('lang.click_view') }}</a>
+                                        <div class="wt-actionbtn" style="display: inline-flex;">
+                                        <a href="{{{ route('CourseListing', ['status'=>'posted']) }}}" class="wt-viewinfo"><i class="lnr lnr-eye" style="line-height: 28px;color: white;"></i> </a>
+                                    </div>
                                     </div>
                                 </div>
                             </div>
@@ -51,9 +55,11 @@
                                 <div class="wt-insightdetails">
                                     <div class="wt-title">
                                         <h3>My Profile</h3>
-                                        <a href="{{{ url(route('showUserProfile', ['slug' => Auth::user()->slug])) }}}">
-                       {{ trans('lang.click_view') }} </a>
-                                        <a href="{{{ url('freelancer/profile') }}}">/ Profile Setting</a>
+                                        <div class="wt-actionbtn" style="display: inline-flex;">
+                                        <a href="{{{ url(route('showUserProfile', ['slug' => Auth::user()->slug])) }}}" class="wt-viewinfo" style="margin: 0 6px;">
+                                        <i class="lnr lnr-eye" style="line-height: 28px;color: white;"></i> </a>
+                                        <a href="{{{ url('freelancer/profile') }}}" class="wt-addinfo wt-skillsaddinfo"> <i class="lnr lnr-pencil" style="line-height: 28px;color: white;"></i></a>
+                                        </div>
                                     </div>
                                 </div>
                                  @if (Auth::user())

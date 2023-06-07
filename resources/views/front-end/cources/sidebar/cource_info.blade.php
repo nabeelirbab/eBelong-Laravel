@@ -46,6 +46,15 @@
          </div>
     </div>
     @if($cource->user_type != 'Remote')
-     <div id="map" style="width: 350px; height: 350px;"></div>
+  <iframe
+  width="600"
+  height="450"
+  frameborder="0"
+  scrolling="no"
+  marginheight="0"
+  marginwidth="0"
+  src="https://maps.google.com/maps?q={{ urlencode($cource->address) }}&hl=en&z=14&amp;output=embed"
+></iframe>
+
     @endif
  </div>
