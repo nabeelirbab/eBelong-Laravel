@@ -75,12 +75,16 @@
                                         <h3>{{ trans('lang.select_pay_method') }}</h3>
                                     </div>
                                     <ul class="sj-paymentmethod">
-                                            <li>
-                                                <a href="{{{url('paypal/ec-checkout')}}}">
-                                                    <i class="fa fa-paypal"></i>
-                                                    <span><em>{{ trans('lang.pay_amount_via') }}</em> {{ Helper::getPaymentMethodList("paypal")['title']}} {{ trans('lang.pay_gateway') }}</span>
-                                                </a>
-                                            </li>
+                                       @foreach ($payment_methods as $key => $payment_method)
+                                       @if($payment_method == 'paypal')
+                                        <li>
+                                        <a href="{{url('paypal/ec-checkout')}}">
+                                        <i class="fa fa-paypal"></i>
+                                        <span><em>{{ trans('lang.pay_amount_via') }}</em> {{ Helper::getPaymentMethodList($payment_method)['title']}} {{ trans('lang.pay_gateway') }}</span>
+                                        </a>
+                                        </li>
+                                        @endif
+                                        @if($payment_method == 'stripe')
                                             <li>
                                                 <a href="javascrip:void(0);" v-on:click.prevent="getStriprForm">
                                                      <i class="fab fa-stripe-s"></i>
@@ -88,12 +92,16 @@
                                                     <span><em>{{ trans('lang.pay_amount_via') }}</em> {{ Helper::getPaymentMethodList("stripe")['title']}} {{ trans('lang.pay_gateway') }}</span>
                                                 </a>
                                             </li>
+                                            @endif
+                                           @if($payment_method == 'banktransfar')
                                             <li>
                                                 <a href="javascrip:void(0);" v-on:click.prevent="submitBankOrder">
                                                     <i class="fas fa-university"></i>
                                                     <span><em>{{ trans('lang.pay_amount_via') }}</em> {{ Helper::getPaymentMethodList("banktransfar")['title']}}</span>
                                                 </a>
                                             </li>
+                                             @endif
+                                           @endforeach
                                             </div>
                                         </div>
                                     </div>

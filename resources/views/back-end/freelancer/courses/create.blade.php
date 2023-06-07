@@ -113,7 +113,7 @@
                                             </span>
                                         </div>
                                         <div class="form-group form-group-half">
-                                            {!! Form::text( 'address', null, ['class' =>'form-control', 'placeholder' => trans('lang.your_address')] ) !!}
+                                            {!! Form::text( 'address', null, ['class' =>'form-control', 'id' => 'address', 'placeholder' => trans('lang.your_address')] ) !!}
                                         </div>
                                         @if (!empty($longitude) && !empty($latitude))
                                             <div class="form-group wt-formmap">
@@ -122,11 +122,18 @@
                                                 </div>
                                             </div>
                                         @endif
+                                        <div class="form-group wt-formmap" id="googleMap" style="display: none;">
+                                                <div class="wt-locationmap">
+                                                    <div id="map" style="width: 100%; height: 400px;"></div>
+                                                </div>
+                                            </div>
                                         <div class="form-group form-group-half">
-                                            {!! Form::text( 'longitude', null, ['class' =>'form-control', 'placeholder' => trans('lang.enter_logitude')]) !!}
+                                            <input type="hidden" id="lat" name="longitude">
+                                            <!-- {!! Form::hidden( 'longitude', null, ['class' =>'form-control', 'id' => 'lat', 'placeholder' => trans('lang.enter_logitude')]) !!} -->
                                         </div>
                                         <div class="form-group form-group-half">
-                                            {!! Form::text( 'latitude', null, ['class' =>'form-control', 'placeholder' => trans('lang.enter_latitude')]) !!}
+                                            <input type="hidden" id="lng" name="latitude">
+                                            <!-- {!! Form::hidden( 'latitude', null, ['class' =>'form-control', 'id' => 'lng', 'placeholder' => trans('lang.enter_latitude')]) !!} -->
                                         </div>
                                         <!-- <div class="wt-jobskills wt-jobskills-holder wt-tabsinfo">
                                             
@@ -190,3 +197,49 @@
     </div>
 </div>
 @endsection
+@push('scripts')
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkCYdMuRkyApHONAWqjzNYYvYX2INz-nM&libraries=places&callback=initialize" async defer></script>
+
+    <script>
+function initialize() {
+   // initializeAutocomplete_home();
+   initAutocomplete();
+}
+var map;
+        function initAutocomplete() {
+       var addressInput = document.getElementById('address');
+        var autocomplete = new google.maps.places.Autocomplete(addressInput);
+
+        autocomplete.addListener('place_changed', function() {
+            var place = autocomplete.getPlace();
+
+            if (!place.geometry) {
+                // Handle the case when the selected place has no geometry.
+                return;
+            }
+
+            // Retrieve the latitude and longitude values
+            var lat = place.geometry.location.lat();
+            var lng = place.geometry.location.lng();
+
+            // Assign the lat and lng values to input fields
+            document.getElementById('lat').value = lat;
+            document.getElementById('lng').value = lng;
+            document.getElementById('googleMap').style.display = 'block';
+
+            // Create a map centered at the selected location
+            var mapContainer = document.getElementById('map');
+            map = new google.maps.Map(mapContainer, {
+                center: { lat: lat, lng: lng },
+                zoom: 15
+            });
+
+            // Add a marker at the selected location
+            var marker = new google.maps.Marker({
+                position: { lat: lat, lng: lng },
+                map: map
+            });
+        });
+        }
+    </script>
+ @endpush

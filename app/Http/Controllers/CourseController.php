@@ -195,15 +195,15 @@ class CourseController extends Controller
                 'description'    => 'required',
             ]
         );
-        if (!empty($request['latitude']) || !empty($request['longitude'])) {
-            $this->validate(
-                $request,
-                [
-                    'latitude' => ['regex:/^-?([1-8]?[1-9]|[1-9]0)\.{1}\d{1,6}$/'],
-                    'longitude' => ['regex:/^-?([1]?[1-7][1-9]|[1]?[1-8][0]|[1-9]?[0-9])\.{1}\d{1,6}$/'],
-                ]
-            );
-        }
+        // if (!empty($request['latitude']) || !empty($request['longitude'])) {
+        //     $this->validate(
+        //         $request,
+        //         [
+        //             'latitude' => ['regex:/^-?([1-8]?[1-9]|[1-9]0)\.{1}\d{1,6}$/'],
+        //             'longitude' => ['regex:/^-?([1]?[1-7][1-9]|[1]?[1-8][0]|[1-9]?[0-9])\.{1}\d{1,6}$/'],
+        //         ]
+        //     );
+        // }
         $user = User::find(Auth::user()->id);
         $package_item = Item::where('subscriber', Auth::user()->id)->first();
         $package = !empty($package_item) ? Package::find($package_item->product_id) : '';
@@ -972,6 +972,9 @@ class CourseController extends Controller
         $options = '';
         $seller = '';
         $payrols = Helper::getPayoutsList();
+        $payout_settings = SiteManagement::getMetaValue('commision');
+        $payment_methods = !empty($payout_settings) && !empty($payout_settings[0]['payment_method']) ? $payout_settings[0]['payment_method'] : null;
+        // dd($payment_methods);
         $user = User::find(Auth::user()->id);
         // $location = Location::select('title')->where('id',$user->location_id)->first();
         // $user->location_name = $location->title; 
@@ -981,7 +984,7 @@ class CourseController extends Controller
         $freelancer = User::find($seller->user_id);
         $cost = $course->price;
         $payout_settings = $user->profile->count() > 0 ? Helper::getUnserializeData($user->profile->payout_settings) : '';
-        return view('back-end.freelancer.courses.checkout', compact('course','freelancer','symbol','mode','bank_detail','subtitle','options','seller','title', 'cost','payrols' , 'user' , 'payout_settings'));
+        return view('back-end.freelancer.courses.checkout', compact('course','freelancer','symbol','mode','bank_detail','subtitle','options','seller','title', 'cost','payrols' , 'user' , 'payout_settings','payment_methods'));
     }
     public function courseOrders(){
         $courses = DB::table('cource_user')->where('status','waiting')->where('seller_id',Auth::user()->id)->get();

@@ -20,7 +20,12 @@
              <span><i class="fa fa-clock-o iconcolor4"></i><strong>{{{$response_time->title}}}</strong>&nbsp;{{ trans('lang.response_time') }}</span>
           </li>
           <li>
-             <span><i class="fa fa-clock-o iconcolor4"></i><strong>{{{$cource->user_type}}}</strong></span>
+             <span><i class="fa fa-briefcase iconcolor4"></i><strong>
+              @if(!$cource->user_type)
+                  Remote
+                 @else
+                  {{{$cource->user_type}}}
+               @endif</strong></span>
           </li>
        </ul>
        <div class="wt-ratingcontent">
@@ -40,4 +45,16 @@
           @endif
          </div>
     </div>
+    @if($cource->user_type != 'Remote')
+  <iframe
+  width="600"
+  height="450"
+  frameborder="0"
+  scrolling="no"
+  marginheight="0"
+  marginwidth="0"
+  src="https://maps.google.com/maps?q={{ urlencode($cource->address) }}&hl=en&z=14&amp;output=embed"
+></iframe>
+
+    @endif
  </div>
