@@ -45,16 +45,16 @@
           @endif
          </div>
     </div>
-    @if($cource->user_type != 'Remote')
-  <iframe
-  width="600"
-  height="450"
-  frameborder="0"
-  scrolling="no"
-  marginheight="0"
-  marginwidth="0"
-  src="https://maps.google.com/maps?q={{ urlencode($cource->address) }}&hl=en&z=14&amp;output=embed"
-></iframe>
+    @if($cource->user_type && $cource->user_type != 'Remote')
+      <iframe
+      width="600"
+      height="450"
+      frameborder="0"
+      scrolling="no"
+      marginheight="0"
+      marginwidth="0"
+      src="https://maps.google.com/maps?q={{ urlencode($cource->address) }}&hl=en&z=14&amp;output=embed"
+    ></iframe>
 
     @endif
  </div>

@@ -31,7 +31,7 @@
                                 <div class="wt-formtheme wt-userform wt-userformvtwo la-job-details-form">
                                     <fieldset>
                                         <div class="form-group">
-                                            <input type="text" name="title" class="form-control" placeholder="{{ trans('lang.job_title') }}" v-model="title">
+                                            <input type="text" name="title" class="form-control" placeholder="{{ trans('lang.job_title') }}" id="title" v-model="title">
                                         </div>
                                         <div class="form-group form-group-half wt-formwithlabel">
                                             <span class="wt-select">
@@ -101,8 +101,13 @@
                                 </div>
                             </div>
                             <div class="wt-jobdetails wt-tabsinfo">
-                                <div class="wt-tabscontenttitle">
+                                <div class="wt-tabscontenttitle d-flex justify-content-between">
                                     <h2>{{ trans('lang.job_dtl') }}</h2>
+                                    <buttom class="btn btn-sm btn-success" onclick="generateCompletion()" id="mainButton">Auto Complete</buttom>
+                                    <button class="btn btn-primary" style="display: none" id="loader" type="button" disabled>
+                                      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                      Loading...
+                                    </button>
                                 </div>
                                 <div class="wt-formtheme wt-userform wt-userformvtwo">
                                     {!! Form::textarea('description', null, ['class' => 'wt-tinymceeditor', 'id' => 'wt-tinymceeditor', 'placeholder' => trans('lang.job_dtl_note')]) !!}
@@ -188,6 +193,35 @@
 </div>
 @section('bootstrap_script')
     <script src="{{ asset('js/vendor/bootstrap.min.js') }}"></script>
+
+    <script type="text/javascript">
+        function generateCompletion(){
+            $('#mainButton').hide();
+            document.getElementById('loader').style.display = 'block';
+            tinymce.init({
+                  selector: '#wt-tinymceeditor',
+                  // Add other configuration options as needed
+                });
+              var title = $('#title').val();
+             $.ajax({
+                url: '{{url("generate-completion")}}/?cmd=write job description for '+title,
+                type: 'GET',
+                dataType: 'json',
+                success: function(response) {
+                    document.getElementById('loader').style.display = 'none';
+                    $('#mainButton').show();
+                    tinymce.get('wt-tinymceeditor').setContent(response);
+                    // document.getElementById('wt-tinymceeditor').value = response;
+                    console.log(response);
+                },
+                error: function(error) {
+                    // Handle the error
+                    console.error(error);
+                }
+            });
+        }
+       
+    </script>
 
 @stop
 @endsection

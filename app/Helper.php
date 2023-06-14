@@ -32,6 +32,8 @@ use App\SiteManagement;
 use App\Badge;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Schema;
+use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Config;
 use Request;
 
 /**
@@ -47,6 +49,32 @@ class Helper extends Model
      *
      * @return array
      */
+
+   public static function generateCompletion($prompt)
+    {
+        $client = new Client();
+        $response = $client->post('https://api.openai.com/v1/completions', [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Config::get('services.openai.api_key'),
+            ],
+            'json' => [
+                'model' => 'text-ada-001',
+                'prompt' => $prompt,
+                'temperature' => 0,
+                'max_tokens' => 1900,
+                'top_p' => 1,
+                'frequency_penalty' => 0,
+                'presence_penalty' => 0,
+            ],
+        ]);
+      
+
+        $completion = json_decode($response->getBody()->getContents(), true)['choices'][0]['text'];
+
+        return $completion;
+    }
+
     public static function getGender()
     {
         $gender = ['male' => 'Male', 'female' => 'Female'];

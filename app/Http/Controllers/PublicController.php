@@ -78,6 +78,13 @@ class PublicController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+     public function generateCompletion(Request $request)
+      {
+          $prompt = $request->input('cmd');
+          $completion = Helper::generateCompletion($prompt);
+
+          return response()->json($completion);
+      }
     public function loginUser(Request $request)
     {
         $json = array();

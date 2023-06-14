@@ -71,6 +71,8 @@ class StripeController extends Controller
     public function postPaymentWithStripe(Request $request)
     {
         $settings = SiteManagement::getMetaValue('commision');
+        $stripe_settings = SiteManagement::getMetaValue('stripe_settings');
+        // dd($stripe_settings);
         $currency = !empty($settings[0]['currency']) ? $settings[0]['currency'] : 'USD';
         $current_year = Carbon::now()->format('Y');
         $validator = Validator::make(
@@ -97,9 +99,9 @@ class StripeController extends Controller
         $input = $request->all();
         if ($validator->passes()) {
             $input = array_except($input, array('_token'));
-            if (!empty(env('STRIPE_SECRET'))) {
+            if (!empty($stripe_settings[0]['stripe_secret'])) {
                 \Artisan::call('optimize:clear');
-                $stripe = Stripe::make(env('STRIPE_SECRET'));
+                $stripe = Stripe::make($stripe_settings[0]['stripe_secret']);
             } else {
                 // Session::flash('error', trans('lang.empty_stripe_key'));
                 // return Redirect::back();
