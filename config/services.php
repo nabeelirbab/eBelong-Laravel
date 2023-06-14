@@ -21,7 +21,9 @@ return [
     | to have a conventional place to find your various credentials.
     |
     */
-
+   'openai' => [
+        'api_key' => env('OPENAI_API_KEY'),
+    ],
     'mailgun' => [
         'domain' => env('MAILGUN_DOMAIN'),
         'secret' => env('MAILGUN_SECRET'),

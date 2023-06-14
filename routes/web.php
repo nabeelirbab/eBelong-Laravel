@@ -48,6 +48,8 @@ if (empty(Request::segment(1))) {
     }
 }
 
+Route::get('/generate-completion', 'PublicController@generateCompletion');
+
 Route::get(
     '/home',
     function () {
