@@ -48,7 +48,7 @@ if (empty(Request::segment(1))) {
     }
 }
 
-Route::get('/generate-completion', 'PublicController@generateCompletion');
+
 
 Route::get(
     '/home',
@@ -69,6 +69,7 @@ Route::get('/sitemap','SiteMapController@index');
 //         \UniSharp\LaravelFilemanager\Lfm::routes();
 //     });
 //whishlist
+Route::get('/generate-completion', 'PublicController@generateCompletion');
 Route::post('get-wishlist-freelancers','PublicController@getWishlistFreelancers');
 Route::get('wishlist', 'PublicController@GuestWishlist');
 Route::get('get-skills-for-wishlist', 'SkillController@getWhishlistSkills');

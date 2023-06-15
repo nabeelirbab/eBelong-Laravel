@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2058571725db6c345a27497cab40919b",
+    "content-hash": "c9555a5dfe34175bdae7955191eb35ef",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -187,111 +187,6 @@
             },
             "abandoned": true,
             "time": "2020-02-25T11:57:40+00:00"
-        },
-        {
-            "name": "consoletvs/charts",
-            "version": "5.4.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ConsoleTVs/Charts.git",
-                "reference": "353039ae19488c0ddd33213f5506548ef8b77558"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ConsoleTVs/Charts/zipball/353039ae19488c0ddd33213f5506548ef8b77558",
-                "reference": "353039ae19488c0ddd33213f5506548ef8b77558",
-                "shasum": ""
-            },
-            "require": {
-                "consoletvs/support": "^2.1.2",
-                "illuminate/support": "5.*",
-                "jenssegers/date": "v3.*",
-                "jlawrence/eos": "3.*",
-                "php": ">=7.0.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "ConsoleTVs\\Charts\\ChartsServiceProvider"
-                    ],
-                    "aliases": {
-                        "Charts": "ConsoleTVs\\Charts\\Facades\\Charts"
-                    }
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "ConsoleTVs\\Charts\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Erik Campobadal",
-                    "email": "soc@erik.cat"
-                }
-            ],
-            "description": "Create charts for laravel using different charts libraries",
-            "support": {
-                "issues": "https://github.com/ConsoleTVs/Charts/issues",
-                "source": "https://github.com/ConsoleTVs/Charts/tree/master"
-            },
-            "time": "2017-09-28T14:44:56+00:00"
-        },
-        {
-            "name": "consoletvs/support",
-            "version": "2.5",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ConsoleTVs/Support.git",
-                "reference": "c7502eb323069bc7da1ad37e28d9c281ade8f1f0"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ConsoleTVs/Support/zipball/c7502eb323069bc7da1ad37e28d9c281ade8f1f0",
-                "reference": "c7502eb323069bc7da1ad37e28d9c281ade8f1f0",
-                "shasum": ""
-            },
-            "require": {
-                "ext-bcmath": "*",
-                "illuminate/support": "5.*",
-                "intervention/image": "^2.4",
-                "php": ">=7.0",
-                "umpirsky/language-list": "^1.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "ConsoleTVs\\Support\\SupportServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "ConsoleTVs\\Support\\": "."
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Erik Campobadal",
-                    "email": "soc@erik.cat"
-                }
-            ],
-            "description": "ConsoleTVs support library",
-            "support": {
-                "issues": "https://github.com/ConsoleTVs/Support/issues",
-                "source": "https://github.com/ConsoleTVs/Support/tree/master"
-            },
-            "time": "2017-12-15T07:30:36+00:00"
         },
         {
             "name": "davejamesmiller/laravel-breadcrumbs",
@@ -1777,122 +1672,6 @@
             },
             "abandoned": "php-parallel-lint/php-console-highlighter",
             "time": "2018-09-29T18:48:56+00:00"
-        },
-        {
-            "name": "jenssegers/date",
-            "version": "v3.5.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/jenssegers/date.git",
-                "reference": "58393b0544fc2525b3fcd02aa4c989857107e05a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/jenssegers/date/zipball/58393b0544fc2525b3fcd02aa4c989857107e05a",
-                "reference": "58393b0544fc2525b3fcd02aa4c989857107e05a",
-                "shasum": ""
-            },
-            "require": {
-                "nesbot/carbon": "^1.0|^2.0",
-                "php": ">=5.6",
-                "symfony/translation": "^2.7|^3.0|^4.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^5.0|^6.0|^7.0",
-                "satooshi/php-coveralls": "^2.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.1-dev"
-                },
-                "laravel": {
-                    "providers": [
-                        "Jenssegers\\Date\\DateServiceProvider"
-                    ],
-                    "aliases": {
-                        "Date": "Jenssegers\\Date\\Date"
-                    }
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Jenssegers\\Date\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Jens Segers",
-                    "homepage": "https://jenssegers.com"
-                }
-            ],
-            "description": "A date library to help you work with dates in different languages",
-            "homepage": "https://github.com/jenssegers/date",
-            "keywords": [
-                "carbon",
-                "date",
-                "datetime",
-                "i18n",
-                "laravel",
-                "time",
-                "translation"
-            ],
-            "support": {
-                "issues": "https://github.com/jenssegers/date/issues",
-                "source": "https://github.com/jenssegers/date/tree/master"
-            },
-            "time": "2019-03-10T08:50:58+00:00"
-        },
-        {
-            "name": "jlawrence/eos",
-            "version": "v3.2.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/jlawrence11/eos.git",
-                "reference": "25e3d0f2316cb4636000f452a8e7dcc83725a32a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/jlawrence11/eos/zipball/25e3d0f2316cb4636000f452a8e7dcc83725a32a",
-                "reference": "25e3d0f2316cb4636000f452a8e7dcc83725a32a",
-                "shasum": ""
-            },
-            "require-dev": {
-                "codeclimate/php-test-reporter": "dev-master",
-                "phpunit/phpunit": "4.*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "jlawrence\\eos\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL-2.1+"
-            ],
-            "authors": [
-                {
-                    "name": "Jon Lawrence",
-                    "email": "jon@jon-lawrence.com"
-                }
-            ],
-            "description": "Parse and solve math equations without using 'eval()'.",
-            "keywords": [
-                "eos",
-                "equations",
-                "math",
-                "solve"
-            ],
-            "support": {
-                "issues": "https://github.com/jlawrence11/eos/issues",
-                "source": "https://github.com/jlawrence11/eos/tree/master"
-            },
-            "time": "2016-03-02T22:35:41+00:00"
         },
         {
             "name": "kylekatarnls/update-helper",
@@ -6470,63 +6249,17 @@
             "time": "2021-12-08T09:12:39+00:00"
         },
         {
-            "name": "umpirsky/language-list",
-            "version": "v1.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/umpirsky/language-list.git",
-                "reference": "7813f6696559496d014acd5dce0e3b09c0766844"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/umpirsky/language-list/zipball/7813f6696559496d014acd5dce0e3b09c0766844",
-                "reference": "7813f6696559496d014acd5dce0e3b09c0766844",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.4"
-            },
-            "require-dev": {
-                "slowprog/composer-copy-file": "^0.2",
-                "symfony/locale": "^2.7|^3.0",
-                "umpirsky/list-generator": "^1.1"
-            },
-            "type": "library",
-            "extra": {
-                "copy-file": {
-                    "vendor/umpirsky/list-generator/Dockerfile": "./",
-                    "vendor/umpirsky/list-generator/docker-compose.yml": "./"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Saša Stamenković",
-                    "email": "umpirsky@gmail.com"
-                }
-            ],
-            "description": "List of all languages with names and ISO 639-1 codes in all languages and all data formats.",
-            "support": {
-                "issues": "https://github.com/umpirsky/language-list/issues",
-                "source": "https://github.com/umpirsky/language-list/tree/master"
-            },
-            "time": "2018-05-08T16:54:36+00:00"
-        },
-        {
             "name": "vlucas/phpdotenv",
-            "version": "v2.6.8",
+            "version": "v2.6.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vlucas/phpdotenv.git",
-                "reference": "f1e2a35e53abe9322f0ab9ada689967e30055d40"
+                "reference": "2e93cc98e2e8e869f8d9cfa61bb3a99ba4fc4141"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vlucas/phpdotenv/zipball/f1e2a35e53abe9322f0ab9ada689967e30055d40",
-                "reference": "f1e2a35e53abe9322f0ab9ada689967e30055d40",
+                "url": "https://api.github.com/repos/vlucas/phpdotenv/zipball/2e93cc98e2e8e869f8d9cfa61bb3a99ba4fc4141",
+                "reference": "2e93cc98e2e8e869f8d9cfa61bb3a99ba4fc4141",
                 "shasum": ""
             },
             "require": {
@@ -6560,11 +6293,13 @@
             "authors": [
                 {
                     "name": "Graham Campbell",
-                    "email": "hello@gjcampbell.co.uk"
+                    "email": "hello@gjcampbell.co.uk",
+                    "homepage": "https://github.com/GrahamCampbell"
                 },
                 {
                     "name": "Vance Lucas",
-                    "email": "vance@vancelucas.com"
+                    "email": "vance@vancelucas.com",
+                    "homepage": "https://github.com/vlucas"
                 }
             ],
             "description": "Loads environment variables from `.env` to `getenv()`, `$_ENV` and `$_SERVER` automagically.",
@@ -6575,7 +6310,7 @@
             ],
             "support": {
                 "issues": "https://github.com/vlucas/phpdotenv/issues",
-                "source": "https://github.com/vlucas/phpdotenv/tree/v2.6.8"
+                "source": "https://github.com/vlucas/phpdotenv/tree/v2.6.9"
             },
             "funding": [
                 {
@@ -6587,7 +6322,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-10-02T19:02:17+00:00"
+            "time": "2021-12-12T22:59:22+00:00"
         },
         {
             "name": "workerman/channel",
@@ -9109,5 +8844,5 @@
         "php": "^7.1.3"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.3.0"
 }

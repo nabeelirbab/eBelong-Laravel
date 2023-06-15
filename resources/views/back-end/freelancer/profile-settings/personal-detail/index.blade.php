@@ -90,3 +90,34 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+ <script type="text/javascript">
+        function generateCompletion(){
+            $('#mainButton').hide();
+            document.getElementById('loader').style.display = 'block';
+            tinymce.init({
+                  selector: '#wt-tinymceeditor',
+                  // Add other configuration options as needed
+                });
+              var title = $('#tagline').val();
+             $.ajax({
+                url: '{{url("generate-completion")}}?cmd=Create a resume about me for the role of '+title,
+                type: 'GET',
+                dataType: 'json',
+                success: function(response) {
+                    document.getElementById('loader').style.display = 'none';
+                    $('#mainButton').show();
+                    $('#description').val(response);
+                    // document.getElementById('wt-tinymceeditor').value = response;
+                    console.log(response);
+                },
+                error: function(error) {
+                    // Handle the error
+                    console.error(error);
+                }
+            });
+        }
+       
+    </script>
+    @endpush    

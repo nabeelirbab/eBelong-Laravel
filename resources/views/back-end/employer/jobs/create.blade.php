@@ -103,7 +103,7 @@
                             <div class="wt-jobdetails wt-tabsinfo">
                                 <div class="wt-tabscontenttitle d-flex justify-content-between">
                                     <h2>{{ trans('lang.job_dtl') }}</h2>
-                                    <buttom class="btn btn-sm btn-success" onclick="generateCompletion()" id="mainButton">Auto Complete</buttom>
+                                    <buttom class="btn btn-sm btn-success" onclick="generateCompletion()" id="mainButton">Complete with ChatGPT</buttom>
                                     <button class="btn btn-primary" style="display: none" id="loader" type="button" disabled>
                                       <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                                       Loading...
@@ -204,7 +204,7 @@
                 });
               var title = $('#title').val();
              $.ajax({
-                url: '{{url("generate-completion")}}/?cmd=write job description for '+title,
+                url: '{{url("generate-completion")}}?cmd=write job description for '+title,
                 type: 'GET',
                 dataType: 'json',
                 success: function(response) {
