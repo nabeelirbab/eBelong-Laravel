@@ -10,6 +10,7 @@ use View;
 use App\Category;
 use App\Skill;
 use App\Location;
+use App\Cource;
 use App\Language;
 use App\Job;
 use App\User;
@@ -24,6 +25,37 @@ class HomeController extends Controller
     {
         $categories = Category::select('id','title','slug','image')->get();
         $all_skills = Skill::select('id','title','slug','logo','is_featured')->get();
+          $services = DB::table('cources')
+            ->join('cource_user', 'cources.id', '=', 'cource_user.cource_id')
+            ->join('users', 'users.id', '=', 'cource_user.user_id')
+            ->where('cources.status', 'published')
+            ->where('cource_user.type', 'seller')
+            ->orderByRaw("cources.is_featured DESC, cources.updated_at DESC")
+            ->select('cources.id','cources.title','cources.slug','cources.attachments','cources.status','cources.is_featured','users.id as seller_id')
+            ->get()
+            ->toArray();
+            // dd($services);
+        
+        if(!empty($services))
+        {
+            foreach ($services as $key => $service) 
+            {
+               $services[$key]->sellerName =  Helper::getUserName($service->seller_id);
+              $attachments = Helper::getUnserializeData($service->attachments);
+              if(!empty($attachments)){
+               foreach($attachments as $attachment){
+                 $services[$key]->imagePath = asset(Helper::getImageWithSize('uploads/courses/'.$service->seller_id, $attachment, 'medium'));
+               }
+              }else{
+                 $services[$key]->imagePath  = asset('uploads/settings/general/imgae-not-availabe.png');
+              }
+              // dd($service);
+             
+            }
+
+
+        }
+
 		$i = 0;
 		// foreach($categories as $cat){
 		// 	$categorycount = DB::table('catables')
@@ -172,7 +204,8 @@ class HomeController extends Controller
                 'categories',
                 'jobs',
                 'freelancers',
-                'all_skills'
+                'all_skills',
+                'services'
             )
         ); 
     } 
