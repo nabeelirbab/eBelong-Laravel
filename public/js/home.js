@@ -49513,6 +49513,28 @@ var render = function () {
                           },
                         },
                         [
+                          item.is_certified == 1
+                            ? _c("img", {
+                                staticClass: "home-certified-logo",
+                                attrs: {
+                                  src:
+                                    _vm.baseUrl +
+                                    "/images/certified/Certified_Icon.png",
+                                },
+                              })
+                            : _vm._e(),
+                          _vm._v(" "),
+                          item.is_instructor == 1
+                            ? _c("img", {
+                                staticClass: "home-instructor-logo",
+                                attrs: {
+                                  src:
+                                    _vm.baseUrl +
+                                    "/images/instructor/instructor_logo.png",
+                                },
+                              })
+                            : _vm._e(),
+                          _vm._v(" "),
                           _c(
                             "div",
                             { staticClass: "e-freelancer__item-image" },

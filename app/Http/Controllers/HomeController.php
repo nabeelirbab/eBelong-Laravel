@@ -32,15 +32,22 @@ class HomeController extends Controller
             ->where('cources.is_featured', 'true')
             ->where('cource_user.type', 'seller')
             ->orderByRaw("cources.is_featured DESC, cources.updated_at DESC")
-            ->select('cources.id','cources.title','cources.slug','cources.attachments','cources.status','cources.is_featured','cources.price','cources.user_type','users.id as seller_id')
+            ->select('cources.id','cources.title','cources.slug','cources.attachments','cources.status','cources.is_featured','cources.price','cources.user_type','users.id as seller_id','users.is_certified','users.is_instructor')
             ->get()
             ->toArray();
-            // dd($services);
         
         if(!empty($services))
         {
             foreach ($services as $key => $service) 
             {
+                $instructor = DB::table('cource_user')->where('seller_id',$service->seller_id)->where('status','posted')->count();
+                if(!empty($instructor) && $instructor > 0){
+                    $service->is_instructor = 1;
+                }
+                else{
+                    $service->is_instructor = 0;
+                }
+                
                $services[$key]->sellerName =  Helper::getUserName($service->seller_id);
               $attachments = Helper::getUnserializeData($service->attachments);
               if(!empty($attachments)){
@@ -56,6 +63,7 @@ class HomeController extends Controller
 
 
         }
+            // dd($services);
 
 		$i = 0;
 		// foreach($categories as $cat){

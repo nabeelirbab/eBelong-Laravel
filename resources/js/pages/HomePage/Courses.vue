@@ -14,7 +14,7 @@
                 class="e-freelancer-full-box c-pointer"
                 v-on:click="() => onClick(item.slug)"
               >
-               <!--  <img
+                <img
                   v-if="item.is_certified == 1"
                   class="home-certified-logo"
                   :src="`${baseUrl}/images/certified/Certified_Icon.png`"
@@ -23,7 +23,7 @@
                   v-if="item.is_instructor == 1"
                   class="home-instructor-logo"
                   :src="`${baseUrl}/images/instructor/instructor_logo.png`"
-                /> -->
+                />
 
                 <div class="e-freelancer__item-image">
                   <img :src="item.imagePath" :alt="item.first_name" />
