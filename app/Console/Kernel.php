@@ -39,15 +39,15 @@ class Kernel extends ConsoleKernel
        $schedule->command('update:payouts')->everyMinute();
            
        $schedule->call(  
-            function () {
-                \Log::info("WorkDiary Added on Monday 11:59");
-                WorkDiary::submitFreelancerBill();
-            })->weekly()->mondays()->at('11:59');
+            // function () {
+            //     \Log::info("WorkDiary Added on Monday 11:59");
+            //     WorkDiary::submitFreelancerBill();
+            // })->weekly()->mondays()->at('11:59');
             
-            /* function () {
+             function () {
                 \Log::info("WorkDiary Added on Monday 11:59");
                 WorkDiary::submitFreelancerBill();
-                })->everyMinute();  */
+                })->everyMinute();  
     }
 
     /**
