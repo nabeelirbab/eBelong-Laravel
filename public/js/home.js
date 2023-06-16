@@ -8511,7 +8511,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -49488,7 +49487,7 @@ var render = function () {
       [
         _c("div", { staticClass: "e-freelancer mt-5 mb-5" }, [
           _c("div", { staticClass: "e-freelancer__header" }, [
-            _vm._v("Courses"),
+            _vm._v("Featured Courses"),
           ]),
           _vm._v(" "),
           _c(
@@ -49557,11 +49556,28 @@ var render = function () {
                             ]
                           ),
                           _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "e-freelancer__item-rating my-2 mb-4",
+                            },
+                            [
+                              item.user_type == "" || item.user_type == "Remote"
+                                ? _c("span", [_vm._v("Remote")])
+                                : _c("span", [_vm._v("In-Person")]),
+                            ]
+                          ),
+                          _vm._v(" "),
                           item.is_featured == "true"
                             ? _c(
                                 "div",
                                 { staticClass: "e-freelancer__item-price" },
-                                [_c("span", [_vm._v(" Featured ")])]
+                                [
+                                  _c("span", [
+                                    _vm._v(" $" + _vm._s(item.price) + " "),
+                                  ]),
+                                ]
                               )
                             : _vm._e(),
                         ]
