@@ -505,8 +505,8 @@ $slider = Helper::getPageSlider($page_id);
 <!-- <?php echo json_encode($freelancers);?> -->
 <div data-component="FeaturedSkill" data-vue='<?php echo json_encode(array('categories'=> $categories,'skills'=>$all_skills)) ?>' id="e-freelancer-featured-skill"></div>
 <div data-component="Slider" data-vue='<?php echo json_encode($freelancers);?>' id="e-freelancer"></div>
-<div data-component="Courses" data-vue='<?php echo json_encode($services);?>' id="e-services"></div>
 <div data-component="WhyeBelong" data-vue='{}' id="e-whyebleong"></div>
+<div data-component="Courses" data-vue='<?php echo json_encode($services);?>' id="e-services"></div>
 <div data-component="BannerJob" data-vue='{}'  id="e-banner-job" ></div>
 <div data-component="PostSkill" data-vue='<?php echo json_encode(array('categories'=> $categories,'skills'=>$all_skills)) ?>' id="e-postskill"></div>
 

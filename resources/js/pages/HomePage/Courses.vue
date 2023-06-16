@@ -2,7 +2,7 @@
   <div>
     <div v-isvisible.scroll="" class="container">
       <div class="e-freelancer mt-5 mb-5">
-        <div class="e-freelancer__header">Courses</div>
+        <div class="e-freelancer__header">Featured Courses</div>
         <div class="e-freelancer__content">
           <splide :options="options">
             <splide-slide
@@ -67,15 +67,14 @@
                       item.agency_name
                     }}</a>
                   </div>
-                </div>
+                </div> -->
 
                 <div class="e-freelancer__item-rating my-2 mb-4">
-                  <span class="wt-stars"
-                    ><span :style="{ width: item.rating_width + '%' }"></span
-                  ></span>
-                </div> -->
+                  <span v-if="item.user_type == '' || item.user_type =='Remote'">Remote</span>
+                  <span v-else>In-Person</span>              
+                </div> 
                 <div class="e-freelancer__item-price" v-if="item.is_featured == 'true'">
-                  <span> Featured </span>
+                  <span> ${{ item.price }} </span>
                 </div>
               </div>
             </splide-slide>
