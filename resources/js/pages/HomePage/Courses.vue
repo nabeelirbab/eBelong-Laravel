@@ -22,7 +22,6 @@
                   :src="`${baseUrl}/images/certified/Certified_Icon.png`"
                 />
                -->
-
                 <div class="">
                   <img :src="item.imagePath" :alt="item.first_name" />
                 </div>
