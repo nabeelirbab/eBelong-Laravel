@@ -9,23 +9,21 @@
               class="e-freelancer__item"
               v-for="item in items"
               :key="item.id"
+              style="padding-top: 0px"
             >
               <div
                 class="e-freelancer-full-box c-pointer"
                 v-on:click="() => onClick(item.slug)"
+                style="padding-top: 0px"
               >
-                <img
+                <!-- <img
                   v-if="item.is_certified == 1"
                   class="home-certified-logo"
                   :src="`${baseUrl}/images/certified/Certified_Icon.png`"
                 />
-                <img
-                  v-if="item.is_instructor == 1"
-                  class="home-instructor-logo"
-                  :src="`${baseUrl}/images/instructor/instructor_logo.png`"
-                />
+               -->
 
-                <div class="e-freelancer__item-image">
+                <div class="">
                   <img :src="item.imagePath" :alt="item.first_name" />
                 </div>
 
@@ -76,6 +74,11 @@
                 <div class="e-freelancer__item-price" v-if="item.is_featured == 'true'">
                   <span> ${{ item.price }} </span>
                 </div>
+                  <img
+                  v-if="item.is_instructor == 1"
+                  style="width: 20%;align-self: flex-end;position: absolute;bottom: 0;"
+                  :src="`${baseUrl}/images/instructor/instructor_logo.png`"
+                />
               </div>
             </splide-slide>
           </splide>

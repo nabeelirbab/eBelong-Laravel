@@ -8511,6 +8511,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -49500,12 +49503,17 @@ var render = function () {
                 _vm._l(_vm.items, function (item) {
                   return _c(
                     "splide-slide",
-                    { key: item.id, staticClass: "e-freelancer__item" },
+                    {
+                      key: item.id,
+                      staticClass: "e-freelancer__item",
+                      staticStyle: { "padding-top": "0px" },
+                    },
                     [
                       _c(
                         "div",
                         {
                           staticClass: "e-freelancer-full-box c-pointer",
+                          staticStyle: { "padding-top": "0px" },
                           on: {
                             click: function () {
                               return _vm.onClick(item.slug)
@@ -49513,40 +49521,14 @@ var render = function () {
                           },
                         },
                         [
-                          item.is_certified == 1
-                            ? _c("img", {
-                                staticClass: "home-certified-logo",
-                                attrs: {
-                                  src:
-                                    _vm.baseUrl +
-                                    "/images/certified/Certified_Icon.png",
-                                },
-                              })
-                            : _vm._e(),
-                          _vm._v(" "),
-                          item.is_instructor == 1
-                            ? _c("img", {
-                                staticClass: "home-instructor-logo",
-                                attrs: {
-                                  src:
-                                    _vm.baseUrl +
-                                    "/images/instructor/instructor_logo.png",
-                                },
-                              })
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "e-freelancer__item-image" },
-                            [
-                              _c("img", {
-                                attrs: {
-                                  src: item.imagePath,
-                                  alt: item.first_name,
-                                },
-                              }),
-                            ]
-                          ),
+                          _c("div", {}, [
+                            _c("img", {
+                              attrs: {
+                                src: item.imagePath,
+                                alt: item.first_name,
+                              },
+                            }),
+                          ]),
                           _vm._v(" "),
                           _c(
                             "div",
@@ -49601,6 +49583,22 @@ var render = function () {
                                   ]),
                                 ]
                               )
+                            : _vm._e(),
+                          _vm._v(" "),
+                          item.is_instructor == 1
+                            ? _c("img", {
+                                staticStyle: {
+                                  width: "20%",
+                                  "align-self": "flex-end",
+                                  position: "absolute",
+                                  bottom: "0",
+                                },
+                                attrs: {
+                                  src:
+                                    _vm.baseUrl +
+                                    "/images/instructor/instructor_logo.png",
+                                },
+                              })
                             : _vm._e(),
                         ]
                       ),
