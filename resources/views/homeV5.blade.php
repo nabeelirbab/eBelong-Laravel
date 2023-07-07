@@ -35,17 +35,6 @@ href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/
 display:none;
 }
 
-@media only screen and (min-device-width : 320px) and (max-device-width : 480px) 
-{
-.wt-header .wt-navigation > ul > li > a {
-color: #767676 !important ;
-}
-
-.wt-navigationarea .wt-logo {
-margin: 5px 0 0;
-height: 35.5px !important;
-}    
-}
 
 .wt-logo-header{
 height:0px !important;
@@ -137,6 +126,33 @@ color: #ffffff
   color: #fff;
   z-index: 1000;
   cursor: pointer;
+}
+.answer-dropdown{
+	width: 100%;
+}
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) 
+{
+.wt-header .wt-navigation > ul > li > a {
+color: #767676 !important ;
+}
+
+.wt-navigationarea .wt-logo {
+margin: 5px 0 0;
+height: 35.5px !important;
+} 
+ #chat-container {
+    width: 90%;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    position: fixed;
+    bottom: 95px;
+    right: 40px;
+    z-index: 99;
+    background-color: #fff;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}   
 }
 </style>
 <script type="text/javascript">
