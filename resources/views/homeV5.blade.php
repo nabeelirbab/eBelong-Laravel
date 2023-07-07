@@ -806,13 +806,6 @@ jQuery(".preloader-outer").fadeOut();
 <script>
         const questions = {
             freelancer: [
-                {
-                    text: "Are you a freelancer?",
-                    options: [
-                        { value: "yes", label: "Yes" },
-                        { value: "no", label: "No" }
-                    ]
-                },
 
                 {
                     text: "Are you looking for jobs?",
@@ -1083,8 +1076,8 @@ jQuery(".preloader-outer").fadeOut();
         let userAnswers = {};
 
         const startupOptions = [
-            { value: "freelancer", label: "Freelancer" },
-            { value: "employer", label: "Employer" }
+            { value: "freelancer", label: "I'm a Freelancer" },
+            { value: "employer", label: "I'm hiring" }
         ];
 		let isChatActive = false; 
 		     const chatButton = document.getElementById('floating-button');
@@ -1106,21 +1099,13 @@ jQuery(".preloader-outer").fadeOut();
 		    }
 		});
 
-		function hideOptions() {
-		    // Clear the previous messages and answers
-		    messagesContainer.innerHTML = '';
-		    answerButtonsContainer.innerHTML = '';
-
-		    // Reset the user answers and currentQuestionIndex
-		    userAnswers = {};
-		    currentQuestionIndex = 0;
-		}
+		
         // chatContainer.appendChild(chatButton);
 
         function displayOptions(options) {
             const message = document.createElement('div');
             message.classList.add('message', 'bot-message');
-            message.textContent = "Select an option:";
+            message.textContent = "You are";
             messagesContainer.appendChild(message);
 
             answerButtonsContainer.innerHTML = '';
@@ -1199,6 +1184,14 @@ function handleAnswer(question, answer) {
 
   const answerMessage = document.createElement('div');
   answerMessage.classList.add('message', 'user-message');
+  if(answer == 'no'){
+
+  	// chatContainer.style.display = 'none';
+    hideOptions();
+    displayOptions(startupOptions);
+    // isChatActive = false;
+    return false
+  }
   answerMessage.textContent = `${answer}`;
   messagesContainer.appendChild(answerMessage);
 
@@ -1210,6 +1203,15 @@ function handleAnswer(question, answer) {
     callAPI();
   }
 }
+function hideOptions() {
+		    // Clear the previous messages and answers
+		    messagesContainer.innerHTML = '';
+		    answerButtonsContainer.innerHTML = '';
+
+		    // Reset the user answers and currentQuestionIndex
+		    userAnswers = {};
+		    currentQuestionIndex = 0;
+		}
 function callAPI() {
         	// alert('ddd');
 			if(userAnswers['role'] == "freelancer"){
