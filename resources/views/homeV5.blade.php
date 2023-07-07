@@ -70,6 +70,74 @@ background: #fbde44;
 .wt-header .wt-navigationarea .wt-userlogedin .wt-username h3 {
 color: #ffffff
 }
+   #chat-container {
+            width: 400px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            position: fixed;
+            bottom: 95px;
+            right: 40px;
+            z-index: 99;
+            background-color: #fff;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* CSS styles for the chat messages */
+        .message {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .user-message {
+            text-align: right;
+            color: #0066cc;
+            background-color: #eaf6ff;
+            font-size: 20px;
+        }
+
+        .bot-message {
+            text-align: left;
+            color: #333333;
+            background-color: #f5f5f5;
+            font-size: 20px;
+        }
+
+
+        /* CSS styles for the answer buttons */
+        .answer-button {
+            display: block;
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #e0e0e0;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .answer-button:hover {
+            background-color: #d0d0d0;
+        }
+.chat-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  font-size: 1.375rem;
+  background-color: #9013F3;
+  box-shadow: 0 5px 15px -3px rgba(0,0,0,.25);
+  position: fixed;
+  right: 1.5rem;
+  bottom: 2.25rem;
+  text-align: center;
+  color: #fff;
+  z-index: 1000;
+  cursor: pointer;
+}
 </style>
 <script type="text/javascript">
 var APP_URL = {!! json_encode(url('/')) !!}
@@ -90,6 +158,14 @@ gtag('config', 'UA-47887669-1');
 </head>
 
 <body class="wt-login lang-en ltr ">
+<div id="chat-container">
+    <div id="messages-container"></div>
+    <div id="answer-buttons-container" class="d-flex" style="justify-content: space-evenly"></div>
+</div>
+
+<div class="chat-btn hidden-xs" id="floating-button">
+  <span class="lnr lnr-question-circle"></span>
+</div>
 <!--[if lt IE 8]>
 <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
@@ -711,7 +787,187 @@ home.onreadystatechange = home.onload = function(){
 jQuery(".preloader-outer").fadeOut();
 }
 </script>
+<script>
+        const questions = {
+            freelancer: [
+                {
+                    text: "Are you a freelancer?",
+                    options: [
+                        { value: "yes", label: "Yes" },
+                        { value: "no", label: "No" }
+                    ]
+                },
+                {
+                    text: "Are you looking for jobs?",
+                    options: [
+                        { value: "yes", label: "Yes" },
+                        { value: "no", label: "No" }
+                    ]
+                },
+                {
+                    text: "Are you looking for deals?",
+                    options: [
+                        { value: "yes", label: "Yes" },
+                        { value: "no", label: "No" }
+                    ]
+                }
+            ],
+            employer: [
+                {
+                    text: "Are you an employer?",
+                    options: [
+                        { value: "yes", label: "Yes" },
+                        { value: "no", label: "No" }
+                    ]
+                },
+                {
+                    text: "Are you looking for freelancers?",
+                    options: [
+                        { value: "yes", label: "Yes" },
+                        { value: "no", label: "No" }
+                    ]
+                }
+            ]
+        };
 
+        let currentQuestionIndex = 0;
+        const messagesContainer = document.getElementById('messages-container');
+        const answerButtonsContainer = document.getElementById('answer-buttons-container');
+        const chatContainer = document.getElementById('chat-container');
+        let userAnswers = {};
+
+        const startupOptions = [
+            { value: "freelancer", label: "Freelancer" },
+            { value: "employer", label: "Employer" }
+        ];
+		let isChatActive = false; 
+		     const chatButton = document.getElementById('floating-button');
+
+		// Hide messagesContainer initially
+		chatContainer.style.display = 'none';
+
+		chatButton.addEventListener('click', () => {
+		    if (!isChatActive) {
+		        // Show chatContainer and display options
+		        chatContainer.style.display = 'block';
+		        displayOptions(startupOptions);
+		        isChatActive = true;
+		    } else {
+		        // Hide chatContainer and hide options
+		        chatContainer.style.display = 'none';
+		        hideOptions();
+		        isChatActive = false;
+		    }
+		});
+
+		function hideOptions() {
+		    // Clear the previous messages and answers
+		    messagesContainer.innerHTML = '';
+		    answerButtonsContainer.innerHTML = '';
+
+		    // Reset the user answers and currentQuestionIndex
+		    userAnswers = {};
+		    currentQuestionIndex = 0;
+		}
+        // chatContainer.appendChild(chatButton);
+
+        function displayOptions(options) {
+            const message = document.createElement('div');
+            message.classList.add('message', 'bot-message');
+            message.textContent = "Select an option:";
+            messagesContainer.appendChild(message);
+
+            answerButtonsContainer.innerHTML = '';
+
+            options.forEach(option => {
+                const button = document.createElement('button');
+                button.classList.add('btn','btn-success');
+                button.textContent = option.label;
+                button.value = option.value;
+                button.addEventListener('click', () => handleOptionSelect(option.value));
+                answerButtonsContainer.appendChild(button);
+            });
+        }
+
+        function handleOptionSelect(option) {
+            userAnswers["role"] = option;
+            currentQuestionIndex = 0;
+            messagesContainer.innerHTML = '';
+            answerButtonsContainer.innerHTML = '';
+
+            const selectedRole = userAnswers["role"];
+            const selectedQuestions = questions[selectedRole];
+
+            displayQuestion(selectedQuestions[currentQuestionIndex]);
+        }
+
+        function displayQuestion(question) {
+            const message = document.createElement('div');
+            message.classList.add('message', 'bot-message');
+            message.textContent = question.text;
+            messagesContainer.appendChild(message);
+
+            answerButtonsContainer.innerHTML = '';
+
+            question.options.forEach(option => {
+                const button = document.createElement('button');
+                button.classList.add('answer-button');
+                button.textContent = option.label;
+                button.value = option.value;
+                button.addEventListener('click', () => handleAnswer(option.value));
+                answerButtonsContainer.appendChild(button);
+            });
+        }
+        function handleAnswer(answer) {
+            const currentRole = userAnswers["role"];
+            const currentQuestions = questions[currentRole];
+
+            userAnswers[currentQuestions[currentQuestionIndex].text] = answer;
+
+            // Display user's current answer
+            const answerMessage = document.createElement('div');
+            answerMessage.classList.add('message', 'user-message');
+            answerMessage.textContent = `${answer}`;
+            messagesContainer.appendChild(answerMessage);
+
+            currentQuestionIndex++;
+
+            if (currentQuestionIndex < currentQuestions.length) {
+                displayQuestion(currentQuestions[currentQuestionIndex]);
+            } else {
+                // All questions answered, call the API
+                callAPI();
+            }
+        }
+
+
+
+        function callAPI() {
+        	// alert('ddd');
+        	console.log(JSON.stringify(userAnswers));
+        	 window.location = '{{ url("jobs") }}';
+            // Replace the API endpoint with your actual API endpoint
+            // fetch('{{ url("chatbot")}}', {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json'
+            //     },
+            //     body: JSON.stringify(userAnswers)
+            // })
+            //     .then(response => response.json())
+            //     .then(data => {
+            //     	console.log(data);
+            //         // Process the API response
+            //         const message = document.createElement('div');
+            //         // message.classList.add('message', 'bot-message');
+            //         // message.textContent = data.message;
+            //         // messagesContainer.appendChild(message);
+            //     })
+            //     .catch(error => {
+            //         console.error('Error:', error);
+            //     });
+        }
+    </script>
 <script type="text/javascript">
 window.addEventListener('load', function () {
 // alert("It's loaded!")

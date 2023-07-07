@@ -169,8 +169,8 @@
                         <?php } ?>
                         <!-- Previous Bill Work End-->
 
-                        <!-- <div class="wt-rcvproposalholder wt-hiredfreelancer wt-tabsinfo"> -->
-                            <!-- <div class="wt-tabscontenttitle">
+                        <div class="wt-rcvproposalholder wt-hiredfreelancer wt-tabsinfo">
+                            <div class="wt-tabscontenttitle">
                                 <h2>
                                     @php 
                                 $currentdate = date("m/d/Y");
@@ -202,8 +202,8 @@
                                @endphp 
 
                                 </h2>
-                            </div> -->
-                            <!-- <div class="wt-jobdetailscontent">
+                            </div>
+                            <div class="wt-jobdetailscontent">
                                
                                     <div class="wt-userlistinghold wt-featured wt-proposalitem">
 
@@ -320,7 +320,7 @@
                                                     </div>
                                                 </div>
 			                            </div>
-			                        </div> -->
+			                        </div>
 			                      <!-- </div> -->
 
 
