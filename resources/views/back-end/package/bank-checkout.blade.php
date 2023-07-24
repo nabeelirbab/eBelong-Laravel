@@ -97,7 +97,7 @@
                     </div>
                 </div>
             </div>
-            @if ($mode == 'false' && !empty($bank_detail))
+            @if ($mode == 'true' && !empty($bank_detail))
                 <div id="packages" class=" col-12 col-xl-4">
                     <div class="wt-dashboardbox wt-account-details"> 
                         <div class="sj-checkoutjournal">

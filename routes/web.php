@@ -69,6 +69,8 @@ Route::get('/sitemap','SiteMapController@index');
 //         \UniSharp\LaravelFilemanager\Lfm::routes();
 //     });
 //whishlist
+Route::post('/chatbot', 'UserController@chatbot');
+
 Route::get('/generate-completion', 'PublicController@generateCompletion');
 Route::post('get-wishlist-freelancers','PublicController@getWishlistFreelancers');
 Route::get('wishlist', 'PublicController@GuestWishlist');

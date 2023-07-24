@@ -429,6 +429,10 @@ class UserController extends Controller
 
     }
 
+    public function chatbot(Request $request){
+       return '1';
+    }
+
     public function EditAgencyData(Request $request)
     {
         $data = $request->all();

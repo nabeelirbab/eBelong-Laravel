@@ -1,3 +1,4 @@
+
 <html class="no-js" lang="" dir="ltr">
 <head>
 <meta charset="utf-8">
@@ -25,9 +26,13 @@
 <link
 rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+<head>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+</head>
+
 
 {{-- <!-- <link href="https://amentotech.com/projects/worketic/css/linearicons.css" rel="stylesheet"> --> --}}	<link href="{{ asset('worketic/css/main.css') }}" rel="stylesheet">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
 
 
 <style>
@@ -35,17 +40,6 @@ href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/
 display:none;
 }
 
-@media only screen and (min-device-width : 320px) and (max-device-width : 480px) 
-{
-.wt-header .wt-navigation > ul > li > a {
-color: #767676 !important ;
-}
-
-.wt-navigationarea .wt-logo {
-margin: 5px 0 0;
-height: 35.5px !important;
-}    
-}
 
 .wt-logo-header{
 height:0px !important;
@@ -70,6 +64,101 @@ background: #fbde44;
 .wt-header .wt-navigationarea .wt-userlogedin .wt-username h3 {
 color: #ffffff
 }
+   #chat-container {
+            width: 400px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            position: fixed;
+            bottom: 95px;
+            right: 40px;
+            z-index: 99;
+            background-color: #fff;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* CSS styles for the chat messages */
+        .message {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .user-message {
+            text-align: right;
+            color: #0066cc;
+            background-color: #eaf6ff;
+            font-size: 20px;
+        }
+
+        .bot-message {
+            text-align: left;
+            color: #333333;
+            background-color: #f5f5f5;
+            font-size: 20px;
+        }
+
+
+        /* CSS styles for the answer buttons */
+        .answer-button {
+            display: block;
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #e0e0e0;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .answer-button:hover {
+            background-color: #d0d0d0;
+        }
+.chat-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  font-size: 1.375rem;
+  background-color: #9013F3;
+  box-shadow: 0 5px 15px -3px rgba(0,0,0,.25);
+  position: fixed;
+  right: 1.5rem;
+  bottom: 2.25rem;
+  text-align: center;
+  color: #fff;
+  z-index: 1000;
+  cursor: pointer;
+}
+.answer-dropdown{
+	width: 100%;
+}
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) 
+{
+.wt-header .wt-navigation > ul > li > a {
+color: #767676 !important ;
+}
+
+.wt-navigationarea .wt-logo {
+margin: 5px 0 0;
+height: 35.5px !important;
+} 
+ #chat-container {
+    width: 90%;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    position: fixed;
+    bottom: 95px;
+    right: 40px;
+    z-index: 99;
+    background-color: #fff;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}   
+}
 </style>
 <script type="text/javascript">
 var APP_URL = {!! json_encode(url('/')) !!}
@@ -90,6 +179,14 @@ gtag('config', 'UA-47887669-1');
 </head>
 
 <body class="wt-login lang-en ltr ">
+<div id="chat-container">
+    <div id="messages-container"></div>
+    <div id="answer-buttons-container" class="d-flex" style="justify-content: space-evenly"></div>
+</div>
+
+<div class="chat-btn hidden-xs" id="floating-button">
+  <span class="lnr lnr-question-circle"></span>
+</div>
 <!--[if lt IE 8]>
 <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
@@ -698,10 +795,14 @@ $menu_title = DB::table('site_managements')->select('meta_value')->where('meta_k
 </footer>
 </div>
 </div>
-<script src="{{ asset('worketic/js/jquery-3.3.1.min.js') }}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+<!-- <script src="{{ asset('worketic/js/jquery-3.3.1.min.js') }}"></script> -->
 
 <script src="{{ asset('worketic/js/tinymce/tinymce.min.js') }}"></script>
-<script src="{{ asset('worketic/js/vendor/jquery-library.js') }}"></script>	
+<script src="{{ asset('worketic/js/vendor/jquery-library.js') }}"></script>		
+
 
 <script>
 var home = document.createElement('script');
@@ -711,7 +812,6 @@ home.onreadystatechange = home.onload = function(){
 jQuery(".preloader-outer").fadeOut();
 }
 </script>
-
 <script type="text/javascript">
 window.addEventListener('load', function () {
 // alert("It's loaded!")
@@ -826,5 +926,11 @@ page_id="143435542479695"
 theme_color="#7646FF">
 </div> --}}
 <!-- </div> -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+<script>
+  var searchResultsUrl = '{{ URL::to("/search-results") }}';
+</script>
+<script src="{{ asset('js/chatbot.js') }}"></script>
 </body>
 </html>
