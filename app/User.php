@@ -55,7 +55,7 @@ class User extends Authenticatable
         'first_name', 'last_name', 'slug', 'email', 'password',
         'avatar', 'banner', 'tagline', 'description',
         'location_id', 'verification_code', 'address',
-        'longitude', 'latitude','oauth_type','oauth_id'
+        'longitude', 'latitude', 'oauth_type', 'oauth_id'
     ];
 
     /**
@@ -171,7 +171,7 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Service')->withPivot('type', 'status', 'seller_id', 'paid');
     }
-     /**
+    /**
      * Get the cources for the freelancer.
      *
      * @return relation
@@ -325,18 +325,18 @@ class User extends Authenticatable
                 $this->location()->associate($location);
             }
             if (!empty($request['oauth_id'])) {
-                
-                $this->oauth_id=$request['oauth_id'];
+
+                $this->oauth_id = $request['oauth_id'];
             }
             if (!empty($request['oauth_type'])) {
-                
-                $this->oauth_type=$request['oauth_type'];
+
+                $this->oauth_type = $request['oauth_type'];
             }
             $this->badge_id = null;
             $this->expiry_date = null;
             $this->save();
             $user_id = $this->id;
-            $user_name=$this->first_name;
+            $user_name = $this->first_name;
             $profile = new Profile();
             $profile->user()->associate($user_id);
             if (!empty($request['employees'])) {
@@ -348,10 +348,10 @@ class User extends Authenticatable
             }
             if (!empty($request['hidden_avater_image'])) {
                 $file_original_name = substr($request['hidden_avater_image'], strrpos($request['hidden_avater_image'], '/') + 1);
-                $file_original_name = explode('?',$file_original_name);
+                $file_original_name = explode('?', $file_original_name);
                 $file_original_name = $file_original_name[0];
                 $small_img = Image::make($request['hidden_avater_image']);
-                $path = Helper::PublicPath() . '/uploads/users/'.$user_id.'/';
+                $path = Helper::PublicPath() . '/uploads/users/' . $user_id . '/';
                 if (!file_exists($path)) {
                     File::makeDirectory($path, 0755, true, true);
                 }
@@ -363,7 +363,7 @@ class User extends Authenticatable
                         $constraint->upsize();
                     }
                 );
-                $small_img->save($path . '/small-' . $file_original_name."-".$user_name. ".jpg");
+                $small_img->save($path . '/small-' . $file_original_name . "-" . $user_name . ".jpg");
                 // generate medium image size
                 $medium_img = Image::make($request['hidden_avater_image']);
                 $medium_img->fit(
@@ -373,13 +373,12 @@ class User extends Authenticatable
                         $constraint->upsize();
                     }
                 );
-                $medium_img->save($path . '/medium-' . $file_original_name."-".$user_name. ".jpg");
+                $medium_img->save($path . '/medium-' . $file_original_name . "-" . $user_name . ".jpg");
                 // save original image size
                 $img = Image::make($request['hidden_avater_image']);
-                $img->save($path . '/' . $file_original_name."-".$user_name. ".jpg");
-                $profile->avater = $file_original_name."-".$user_name.".jpg";
-            }
-            else {
+                $img->save($path . '/' . $file_original_name . "-" . $user_name . ".jpg");
+                $profile->avater = $file_original_name . "-" . $user_name . ".jpg";
+            } else {
                 $profile->avater = null;
             }
             $profile->save();
@@ -455,160 +454,155 @@ class User extends Authenticatable
         $user_by_role =  User::role($type)->pluck('id')->toArray();
         $picture = Profile::whereNotNull('avater')->whereIn('user_id', $user_by_role)->get();
         $ids = null;
-        $idss=null;
-        $idsss=null;
+        $idss = null;
+        $idsss = null;
         foreach ($picture as $id) {
             $ids[] = $id->user_id;
         }
-        
+
         $ids_ordered = implode(',', $ids);
-        $users_certified_and_pics =  User::whereIn('id', $ids)->where('is_disabled', 'false')->where('status',1)->where('is_certified',1)->get();
+        $users_certified_and_pics =  User::whereIn('id', $ids)->where('is_disabled', 'false')->where('status', 1)->where('is_certified', 1)->get();
         foreach ($users_certified_and_pics as $id_) {
             $idss[] = $id_->id;
         }
         // dd($idss);
-    //  dd($idss);
-        $users_not_certified_and_pics = !empty($user_by_role) ? User::whereIn('id', $user_by_role)->where('is_disabled', 'false')->where('status',1)->where('is_certified',0)->get() : array();
+        //  dd($idss);
+        $users_not_certified_and_pics = !empty($user_by_role) ? User::whereIn('id', $user_by_role)->where('is_disabled', 'false')->where('status', 1)->where('is_certified', 0)->get() : array();
         foreach ($users_not_certified_and_pics as $id__) {
             $idsss[] = $id__->id;
         }
         // dd($idsss);
         // dd($ids_ordered);
-        $users = !empty($user_by_role) ? User::whereIn('id', $user_by_role)->where('is_disabled', 'false')->where('status',1) : array();
+        $users = !empty($user_by_role) ? User::whereIn('id', $user_by_role)->where('is_disabled', 'false')->where('status', 1) : array();
         // dd($users->paginate(20)->setPath('') );
         $filters = array();
-        
-       
-            $filters['type'] = $type;
-            if (!empty($keyword)) {
-                $filters['s'] = $keyword;
-                $users = !empty($user_by_role) ? User::whereIn('id', $user_by_role)->where(DB::raw('CONCAT(first_name," ",last_name)'),'like','%'.$keyword.'%')->where('is_disabled', 'false')->where('status',1) :array();
-                
-                
-            }
 
-            if (!empty($search_categories)) {
-                $filters['category'] = $search_categories;
-                $user_id = array();
-                $freelancers = Profile::whereIn('category_id', $search_categories)->get();
-                foreach ($freelancers as $key => $freelancer) {
-                    if (!empty($freelancer->user_id)) {
-                        $user_id[] = $freelancer->user_id;
-                    }
+
+        $filters['type'] = $type;
+        if (!empty($keyword)) {
+            $filters['s'] = $keyword;
+            $users = !empty($user_by_role) ? User::whereIn('id', $user_by_role)->where(DB::raw('CONCAT(first_name," ",last_name)'), 'like', '%' . $keyword . '%')->where('is_disabled', 'false')->where('status', 1) : array();
+        }
+
+        if (!empty($search_categories)) {
+            $filters['category'] = $search_categories;
+            $user_id = array();
+            $freelancers = Profile::whereIn('category_id', $search_categories)->get();
+            foreach ($freelancers as $key => $freelancer) {
+                if (!empty($freelancer->user_id)) {
+                    $user_id[] = $freelancer->user_id;
                 }
-                $users->whereIn('id', $user_id)->orderBy('is_certified', 'DESC');
-               
             }
+            $users->whereIn('id', $user_id)->orderBy('is_certified', 'DESC');
+        }
 
-            if (!empty($search_locations)) {
-                $filters['locations'] = $search_locations;
-                $locations = Location::select('id')->whereIn('slug', $search_locations)
-                    ->get()->pluck('id')->toArray();
-                $users->whereIn('location_id', $locations);
-                
-            }
+        if (!empty($search_locations)) {
+            $filters['locations'] = $search_locations;
+            $locations = Location::select('id')->whereIn('slug', $search_locations)
+                ->get()->pluck('id')->toArray();
+            $users->whereIn('location_id', $locations);
+        }
 
-           
-            // $dp_users = !empty($user_by_role) ? User::whereIn('id', $ids)
-            // ->orderByRaw("FIELD(id, $ids_ordered)")->where('is_disabled', 'false')->where('status',1)->paginate(20)->setPath('') :array();
-            //     dd($dp_users);
 
-            if (!empty($search_employees)) {
-                $filters['employees'] = $search_employees;
-                $employees = Profile::whereIn('no_of_employees', $search_employees)->get();
-                foreach ($employees as $key => $employee) {
-                    if (!empty($employee->user_id)) {
-                        $user_id[] = $employee->user_id;
-                    }
+        // $dp_users = !empty($user_by_role) ? User::whereIn('id', $ids)
+        // ->orderByRaw("FIELD(id, $ids_ordered)")->where('is_disabled', 'false')->where('status',1)->paginate(20)->setPath('') :array();
+        //     dd($dp_users);
+
+        if (!empty($search_employees)) {
+            $filters['employees'] = $search_employees;
+            $employees = Profile::whereIn('no_of_employees', $search_employees)->get();
+            foreach ($employees as $key => $employee) {
+                if (!empty($employee->user_id)) {
+                    $user_id[] = $employee->user_id;
                 }
-                $users->whereIn('id', $user_id);
-                
             }
-            if (!empty($search_skills)) {
-                $user_id = array();
-                $filters['skills'] = $search_skills;
-                $skills = Skill::whereIn('slug', $search_skills)->get();
-                foreach ($skills as $key => $skill) {
-                    /* if (!empty($skill->freelancers[$key]->id)) {
+            $users->whereIn('id', $user_id);
+        }
+        if (!empty($search_skills)) {
+            $user_id = array();
+            $filters['skills'] = $search_skills;
+            $skills = Skill::whereIn('slug', $search_skills)->get();
+            foreach ($skills as $key => $skill) {
+                /* if (!empty($skill->freelancers[$key]->id)) {
                         $user_id[] = $skill->freelancers[$key]->id;
                     } */
-                    $userid = DB::table('skill_user')->select('user_id')->where('skill_id',$skill->id)->get();
-                    foreach($userid as $ui){
-                        $user_id[] = $ui->user_id;
-                    }
+                $userid = DB::table('skill_user')->select('user_id')->where('skill_id', $skill->id)->get();
+                foreach ($userid as $ui) {
+                    $user_id[] = $ui->user_id;
                 }
-                // dd($user_id);
-                $users->whereIn('id', $user_id)->orderBy('is_certified', 'DESC');
-                
             }
-            if (!empty($search_hourly_rates)) {
-                $user_id = array();
-                $filters['hourly_rate'] = $search_hourly_rates;
-                $min = '';
-                $max = '';
-                foreach ($search_hourly_rates as $search_hourly_rate) {
-                    $hourly_rates = explode("-", $search_hourly_rate);
-                    $min = $hourly_rates[0];
-                    if (!empty($hourly_rates[1])) {
-                        $max = $hourly_rates[1];
-                    }
-                    $userid = Profile::select('user_id')->whereIn('user_id', $user_by_role)
-                        ->whereBetween('hourly_rate', [$min, $max])->get()->pluck('user_id')->toArray();
-                    foreach($userid as $ui){
-                        $user_id[] = $ui;
-                    }
+            // dd($user_id);
+            $users->whereIn('id', $user_id)->orderBy('is_certified', 'DESC');
+        }
+        if (!empty($search_hourly_rates)) {
+            $user_id = array();
+            $filters['hourly_rate'] = $search_hourly_rates;
+            $min = '';
+            $max = '';
+            foreach ($search_hourly_rates as $search_hourly_rate) {
+                $hourly_rates = explode("-", $search_hourly_rate);
+                $min = $hourly_rates[0];
+                if (!empty($hourly_rates[1])) {
+                    $max = $hourly_rates[1];
                 }
-                $users->whereIn('id', $user_id);
-            }
-            if (!empty($search_freelaner_types)) {
-                $user_id = array();
-                $filters['freelaner_type'] = $search_freelaner_types;
-                $freelancers = Profile::whereIn('freelancer_type', $search_freelaner_types)->get();
-                foreach ($freelancers as $key => $freelancer) {
-                    if (!empty($freelancer->user_id)) {
-                        $user_id[] = $freelancer->user_id;
-                    }
+                $userid = Profile::select('user_id')->whereIn('user_id', $user_by_role)
+                    ->whereBetween('hourly_rate', [$min, $max])->get()->pluck('user_id')->toArray();
+                foreach ($userid as $ui) {
+                    $user_id[] = $ui;
                 }
-                $users->whereIn('id', $user_id);
             }
-            if (!empty($search_english_levels)) {
-                $user_id = array();
-                $filters['english_level'] = $search_english_levels;
-                $freelancers = Profile::whereIn('english_level', $search_english_levels)->get();
-                foreach ($freelancers as $key => $freelancer) {
-                    if (!empty($freelancer->user_id)) {
-                        $user_id[] = $freelancer->user_id;
-                    }
+            $users->whereIn('id', $user_id);
+        }
+        if (!empty($search_freelaner_types)) {
+            $user_id = array();
+            $filters['freelaner_type'] = $search_freelaner_types;
+            $freelancers = Profile::whereIn('freelancer_type', $search_freelaner_types)->get();
+            foreach ($freelancers as $key => $freelancer) {
+                if (!empty($freelancer->user_id)) {
+                    $user_id[] = $freelancer->user_id;
                 }
-                $users->whereIn('id', $user_id);
             }
-            
-        if(
-        empty($keyword)&&
-        empty($search_locations)&&
-        empty($search_employees)&&
-        empty($search_skills)&&
-        empty($search_hourly_rates)&&
-        empty($search_freelaner_types)&&
-        empty($search_english_levels)&&
-        empty($search_languages)&&
-        empty($search_categories)){
-        $users = User::join('profiles', 'users.id', '=', 'profiles.user_id')
-            ->select('users.*')
-             ->whereIn('users.id', $user_by_role)->where('users.is_disabled', 'false')->where('users.status',1)
-             ->orderBy('users.is_certified','DESC')
-             ->orderBy('profiles.avater', 'DESC');
+            $users->whereIn('id', $user_id);
+        }
+        if (!empty($search_english_levels)) {
+            $user_id = array();
+            $filters['english_level'] = $search_english_levels;
+            $freelancers = Profile::whereIn('english_level', $search_english_levels)->get();
+            foreach ($freelancers as $key => $freelancer) {
+                if (!empty($freelancer->user_id)) {
+                    $user_id[] = $freelancer->user_id;
+                }
+            }
+            $users->whereIn('id', $user_id);
+        }
+
+        if (
+            empty($keyword) &&
+            empty($search_locations) &&
+            empty($search_employees) &&
+            empty($search_skills) &&
+            empty($search_hourly_rates) &&
+            empty($search_freelaner_types) &&
+            empty($search_english_levels) &&
+            empty($search_languages) &&
+            empty($search_categories)
+        ) {
+            $users = User::join('profiles', 'users.id', '=', 'profiles.user_id')
+                ->select('users.*')
+                ->whereIn('users.id', $user_by_role)->where('users.is_disabled', 'false')->where('users.status', 1)
+                ->orderBy('users.is_certified', 'DESC')
+                ->orderBy('profiles.avater', 'DESC');
         }
         // dd($users->get());
-        
+
         //   $users = $users->orderBy('is_certified', 'DESC')->orderByRaw('id',$idss)->orderByRaw('id',$idsss); 
         //   dd($users->get());
         //   $users = $users->profile->orderByRaw('ISNULL(sortOrder), sortOrder ASC');
-          $users = $users->paginate(20)->setPath('');
+        $users = $users->paginate(20)->setPath('');
         //   dd($users);
         //   $users = $dp_users->appends($users);
 
-     
+
         foreach ($filters as $key => $filter) {
             $pagination = $users->appends(
                 array(
@@ -758,60 +752,58 @@ class User extends Authenticatable
                 )
             );
     }
-    public static function getFilterUsers($role = ""){
+    public static function getFilterUsers($role = "")
+    {
 
         $query = '';
-        if($role=="agency_member"){
-        $agency_members= DB::table('agency_associated_users')->where('is_pending',0)->where('is_accepted', 1)->pluck('user_id')->toArray();
-        $query = User::whereIn('id', $agency_members)
-                   ->latest()
-                   ->paginate(10)->setPath('');
-        }
-        if($role == "agency_creator"){
-            $agency_members= DB::table('agency_user')->pluck('user_id')->toArray();
+        if ($role == "agency_member") {
+            $agency_members = DB::table('agency_associated_users')->where('is_pending', 0)->where('is_accepted', 1)->pluck('user_id')->toArray();
             $query = User::whereIn('id', $agency_members)
-                       ->latest()
-                       ->paginate(10)->setPath('');
-            }
-        
-        if($role == "instructors"){
-            $instructor_ids= DB::table('cource_user')->distinct()->pluck('seller_id')->toArray();
+                ->latest()
+                ->paginate(10)->setPath('');
+        }
+        if ($role == "agency_creator") {
+            $agency_members = DB::table('agency_user')->pluck('user_id')->toArray();
+            $query = User::whereIn('id', $agency_members)
+                ->latest()
+                ->paginate(10)->setPath('');
+        }
+
+        if ($role == "instructors") {
+            $instructor_ids = DB::table('cource_user')->distinct()->pluck('seller_id')->toArray();
             $query = User::whereIn('id', $instructor_ids)
-            ->latest()
-            ->paginate(10)->setPath('');
-            
+                ->latest()
+                ->paginate(10)->setPath('');
         }
-        if($role == "freelancers"){
-            $instructor_ids= DB::table('cource_user')->distinct()->pluck('seller_id')->toArray();
+        if ($role == "freelancers") {
+            $instructor_ids = DB::table('cource_user')->distinct()->pluck('seller_id')->toArray();
             $query = User::whereNotIn('id', $instructor_ids)
-            ->latest()
-            ->paginate(10)->setPath('');
-            
+                ->latest()
+                ->paginate(10)->setPath('');
         }
-        if($role=="new_members"){
+        if ($role == "new_members") {
             $query = User::select('*')->latest()->paginate(10)->setPath('');
         }
-        if($role=="old_members"){
+        if ($role == "old_members") {
             $query = User::oldest()->paginate(10)->setPath('');
-            
         }
-        if($role=="Email_asc"){
-            $query = User::orderBy('email','asc')->paginate(10)->setpath('');
+        if ($role == "Email_asc") {
+            $query = User::orderBy('email', 'asc')->paginate(10)->setpath('');
         }
-        if($role=="Email_desc"){
-            $query = User::orderBy('email','desc')->paginate(10)->setpath('');
+        if ($role == "Email_desc") {
+            $query = User::orderBy('email', 'desc')->paginate(10)->setpath('');
         }
-        if($role=="name_asc"){
-            $query = User::orderBy('first_name','asc')->paginate(10)->setpath('');
+        if ($role == "name_asc") {
+            $query = User::orderBy('first_name', 'asc')->paginate(10)->setpath('');
         }
-        if($role=="name_desc"){
-            $query = User::orderBy('first_name','desc')->paginate(10)->setpath('');
+        if ($role == "name_desc") {
+            $query = User::orderBy('first_name', 'desc')->paginate(10)->setpath('');
         }
-        if($role=="certified"){
-            $query =  User::select('*')->where('is_certified',1)->latest()->paginate(10)->setPath('');
+        if ($role == "certified") {
+            $query =  User::select('*')->where('is_certified', 1)->latest()->paginate(10)->setPath('');
         }
-        if($role=="featured"){
-            $query =  User::select('*')->where('is_featured',1)->latest()->paginate(10)->setPath('');
+        if ($role == "featured") {
+            $query =  User::select('*')->where('is_featured', 1)->latest()->paginate(10)->setPath('');
         }
         return $query;
 
@@ -823,8 +815,6 @@ class User extends Authenticatable
         //     );
         //     return $query;
         // }
-     
+
     }
-
-
 }

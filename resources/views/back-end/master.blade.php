@@ -32,6 +32,7 @@
 @push('scripts')
     <script src="{{ asset('js/chosen.jquery.js') }}"></script>
     <script src="{{ asset('js/jquery.basictable.min.js') }}"></script>
+	
     <script>
         jQuery('.chosen-select').chosen();
         jQuery('.wt-tablecategories').basictable({
@@ -109,7 +110,7 @@
 		@endif
 		/*========== End agency user assign in freelancer ==========*/
 	</script>
-
+@stack('stripe')
 	<script src="{{ asset('js/bootstrap-typeahead.js') }}" type="text/javascript"></script>
 	<script>
 		$(document).ready(function(){

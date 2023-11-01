@@ -928,6 +928,7 @@ theme_color="#7646FF">
 <!-- </div> -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
 <script>
   var searchResultsUrl = '{{ URL::to("/search-results") }}';
 </script>

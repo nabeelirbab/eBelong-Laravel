@@ -34,10 +34,11 @@ Route::get(
 if (empty(Request::segment(1))) {
     if (Schema::hasTable('users') && Schema::hasTable('site_managements')) {
         //Route::get('/', 'HomeController@index')->name('home');
-        Route::get('/', 'HomeController@theme5'); 
+        Route::get('/', 'HomeController@theme5');
     } else {
         if (!empty(env('DB_DATABASE'))) {
-            Route::get('/',
+            Route::get(
+                '/',
                 function () {
                     return Redirect::to('/install');
                 }
@@ -64,7 +65,7 @@ Route::get('/auth/linkedin/redirect', 'Auth\LinkedinController@handleLinkedinRed
 Route::get('/auth/linkedin/callback', 'Auth\LinkedinController@handleLinkedinCallback');
 
 //SiteMap
-Route::get('/sitemap','SiteMapController@index');
+Route::get('/sitemap', 'SiteMapController@index');
 // Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web']], function () {
 //         \UniSharp\LaravelFilemanager\Lfm::routes();
 //     });
@@ -72,7 +73,7 @@ Route::get('/sitemap','SiteMapController@index');
 Route::post('/chatbot', 'UserController@chatbot');
 
 Route::get('/generate-completion', 'PublicController@generateCompletion');
-Route::post('get-wishlist-freelancers','PublicController@getWishlistFreelancers');
+Route::post('get-wishlist-freelancers', 'PublicController@getWishlistFreelancers');
 Route::get('wishlist', 'PublicController@GuestWishlist');
 Route::get('get-skills-for-wishlist', 'SkillController@getWhishlistSkills');
 Route::get('get-categories-for-whishlist', 'CategoryController@getWishlistCategories');
@@ -142,7 +143,7 @@ if (Helper::getAccessType() == 'both' || Helper::getAccessType() == 'services') 
     Route::get('service/{slug}', 'ServiceController@show')->name('serviceDetail');
 }
 if (Helper::getAccessType() == 'both' || Helper::getAccessType() == 'instructor') {
-   
+
     Route::get('course/{slug}', 'CourseController@show')->name('CourceDetail');
 }
 Route::get('user/password/reset/{verify_code}', 'PublicController@resetPasswordView')->name('getResetPassView');
@@ -160,7 +161,7 @@ Route::post('user/remove-wishlist', 'UserController@RemoveWishlist');
 Route::group(
     ['middleware' => ['role:admin']],
     function () {
-        Route::get('user', ['uses'=>'UserController@records', 'as'=>'user.records']);
+        Route::get('user', ['uses' => 'UserController@records', 'as' => 'user.records']);
         // Article Category Routes
         Route::get('admin/article/categories', 'ArticleCategoryController@index')->name('articleCategories');
         Route::post('admin/get-freelancer-skills', 'SkillController@getAdminFreelancerSkills');
@@ -193,14 +194,14 @@ Route::group(
 
         Route::get('users-datatable', 'UserController@datatable')->name('users.datatable');
         Route::get('users-data', 'UserController@usersList')->name('users.data');
-		
-        
+
+
         Route::get('admin/dashboard', 'StatsController@index')->name('adminDashboard');
-        
-		
-		Route::post('admin/store-freelancer-profile-settings','UserController@storeFreelancerProfileSettings');
-		Route::post('admin/store-employer-profile-settings','UserController@storeEmployerProfileSettings');
-		
+
+
+        Route::post('admin/store-freelancer-profile-settings', 'UserController@storeFreelancerProfileSettings');
+        Route::post('admin/store-employer-profile-settings', 'UserController@storeEmployerProfileSettings');
+
         Route::get('admin/home-page-settings', 'SiteManagementController@homePageSettings')->name('homePageSettings');
         Route::post('admin/get-page-option', 'SiteManagementController@getPageOption');
         // Skill Routes
@@ -286,7 +287,7 @@ Route::group(
         Route::post('admin/store/settings', 'SiteManagementController@storeGeneralSettings');
         Route::post('admin/store/general-home-settings', 'SiteManagementController@storeGeneralHomeSettings');
         Route::post('admin/store/chat-settings', 'SiteManagementController@storeChatSettings');
-       
+
         Route::get('admin/get/registration-settings', 'SiteManagementController@getRegistrationSettings');
         Route::get('admin/get/site-payment-option', 'SiteManagementController@getSitePaymentOption');
         // Route::get('admin/theme-style-settings', 'SiteManagementController@ThemeStyleSettings');
@@ -312,10 +313,10 @@ Route::group(
         Route::post('admin/email-templates/update-templates/{id}', 'EmailTemplateController@update');
         Route::get('admin/invitation', 'UserController@newInviteForm')->name('inviteUser');
         Route::post('admin/invitationsubmit', 'UserController@newInvite')->name('inviteUserSubmit');
-       
-        
-       
-        
+
+
+
+
         Route::post('admin/get/project-settings', 'SiteManagementController@getprojectSettings');
         Route::post('admin/store/project-settings', 'SiteManagementController@storeProjectSettings');
         Route::post('admin/store/bank-detail', 'SiteManagementController@storeBankDetail');
@@ -335,11 +336,11 @@ Route::group(
         //All Services
         Route::get('admin/services', 'ServiceController@adminServices')->name('allServices');
         Route::get('admin/service-orders', 'ServiceController@adminServiceOrders')->name('ServiceOrders');
-        Route::get('admin/services/search' , 'ServiceController@adminServices');
-       //All Courses
+        Route::get('admin/services/search', 'ServiceController@adminServices');
+        //All Courses
         Route::get('admin/courses', 'CourseController@adminCourses')->name('allCourses');
         Route::get('admin/course-orders', 'CourseController@adminCourseOrders')->name('adminCourseOrders');
-        Route::get('admin/course/search' , 'CourseController@adminCourses');
+        Route::get('admin/course/search', 'CourseController@adminCourses');
         //All packages
         Route::get('admin/packages', 'PackageController@create')->name('createPackage');
         Route::get('admin/packages/search', 'PackageController@create');
@@ -358,39 +359,36 @@ Route::group(
         Route::post('admin/order/change-status', 'UserController@changeOrderStatus');
         //rating to freelancer
 
-       
-        
+
+
         Route::get('/admin/login-notification', [
-            'as' => 'UserData', 
+            'as' => 'UserData',
             'uses' => 'UserController@getLogNotificationData'
         ]);
-        Route::get('/admin/send-notifications','UserController@viewNotificationData')->name('viewMobileNotification');
-        Route::post('/admin/send-notifications-post','UserController@sendNotificationData')->name('sendMobileNotification');
-        Route::post('/admin/login-notification-updated','UserController@updateNotificationData');
+        Route::get('/admin/send-notifications', 'UserController@viewNotificationData')->name('viewMobileNotification');
+        Route::post('/admin/send-notifications-post', 'UserController@sendNotificationData')->name('sendMobileNotification');
+        Route::post('/admin/login-notification-updated', 'UserController@updateNotificationData');
 
         //blogs
         Route::get('admin/manage-blogs', 'BlogController@manageAdminBlogs')->name('manageAdminBlogs');
-		
-
-
     }
 );
 Route::group(
     ['middleware' => ['role:editor|admin']],
     function () {
-        Route::post('admin/store-freelancer-profile-settings','UserController@storeFreelancerProfileSettings');
-	
+        Route::post('admin/store-freelancer-profile-settings', 'UserController@storeFreelancerProfileSettings');
+
         Route::post('admin/get-freelancer-skills', 'SkillController@getAdminFreelancerSkills');
         Route::post('admin/get-admin-freelancer-skills', 'FreelancerController@getAdminFreelancerSkills');
         Route::get('admin/invite-people', 'InvitationController@index')->name('invitePeople');
         Route::post('admin/invite-people', 'InvitationController@sendInvitation');
         Route::get('editor/dashboard', 'StatsController@index')->name('editorDashboard');
         Route::get('users', 'UserController@userListing')->name('userListing');
-        Route::get('users/profile-edit/{id}','UserController@userProfileUpdate');
-        Route::post('/admin/update-user-is-featured-status','UserController@updateIsFeaturedStatus');
-        Route::post('/admin/update-user-is-certified-status','UserController@updateIsCertifiedStatus');
-        Route::post('/admin/update-user-is-disabled-status','UserController@updateIsDisabledStatus');
-        Route::post('/admin/update-user-badge','UserController@updateUserBadge');
+        Route::get('users/profile-edit/{id}', 'UserController@userProfileUpdate');
+        Route::post('/admin/update-user-is-featured-status', 'UserController@updateIsFeaturedStatus');
+        Route::post('/admin/update-user-is-certified-status', 'UserController@updateIsCertifiedStatus');
+        Route::post('/admin/update-user-is-disabled-status', 'UserController@updateIsDisabledStatus');
+        Route::post('/admin/update-user-badge', 'UserController@updateUserBadge');
         Route::post('admin/submit-rating', 'FreelancerController@adminRating');
         // Skill Routes
         Route::get('admin/skills', 'SkillController@index')->name('skills');
@@ -472,26 +470,23 @@ Route::group(
         Route::post('blog/upload-temp-image', 'BlogController@uploadTempImage');
         Route::get('editor/manage-blogs', 'BlogController@manageBlogs')->name('manageBlogs');
         Route::get('editor/blogs', 'BlogController@editorBlogs')->name('editorBlogs');
-        
+
         Route::post('{role}/dashboard/delete-blog', 'BlogController@destroy');
         Route::get('{role}/dashboard/edit-blog/{id}', 'BlogController@edit')->name('edit_blog');
         Route::get('get/{type}/{filename}/{id}', 'PublicController@getFile')->name('getfile');
         Route::post('blog/update-blog', 'BlogController@update');
         Route::post('blog/change-status', 'BlogController@changeStatus');
-       
+
         //landing page guests
         Route::get('editor/pages', 'PageController@dynamicPages');
-        Route::get('/guest-messages','PublicController@showGuestInfo')->name('guestMessages');
-        
+        Route::get('/guest-messages', 'PublicController@showGuestInfo')->name('guestMessages');
+
         //seo inner pages edit
-        Route::get('editor/settings/inner-pages','SiteManagementController@editorInnerPageSettings');
+        Route::get('editor/settings/inner-pages', 'SiteManagementController@editorInnerPageSettings');
         Route::post('admin/store/breadcrumbs-settings', 'SiteManagementController@storeBreadcrumbsSettings');
         Route::post('admin/get/breadcrumbs-settings', 'SiteManagementController@getBreadcrumbsSettings');
         Route::post('admin/store/innerpage-settings', 'SiteManagementController@storeInnerPageSettings');
         Route::post('admin/get/innerpage-settings', 'SiteManagementController@getInnerPageSettings');
-
-   
-   
     }
 );
 Route::group(
@@ -514,7 +509,6 @@ Route::group(
             Route::get('freelancer/service/{id}/{status}', 'FreelancerController@showServiceDetail')->name('ServiceDetail');
             Route::get('freelancer/courses/{status}', 'FreelancerController@showCourses')->name('CourseListing');
             Route::get('freelancer/course/{id}/{status}', 'FreelancerController@showCourseDetail');
-          
         }
         Route::get('freelancer/course/orders', 'CourseController@courseOrders')->name('CourseOrders');
         Route::post('services/change-status', 'ServiceController@changeStatus');
@@ -572,9 +566,9 @@ Route::group(
     ['middleware' => ['role:freelancer']],
     function () {
         Route::get('/get-freelancer-skills', 'SkillController@getFreelancerSkills');
-        Route::get('course/bacs-checkout','CourseController@bacsPayment');
-        Route::post('course/send-message','CourseController@sendMessage');
-        Route::post('course/send-message-to-instructor','CourseController@sendMessagetoInstructor');
+        Route::get('course/bacs-checkout', 'CourseController@bacsPayment');
+        Route::post('course/send-message', 'CourseController@sendMessage');
+        Route::post('course/send-message-to-instructor', 'CourseController@sendMessagetoInstructor');
         // // Route::get('/get-freelancer-skills', 'SkillController@getCourseSkills');
         Route::get('course/{id}/enrolled-students', 'CourseController@StudentsListing');
         Route::get('course/{id}/waiting-students', 'CourseController@waitingStudents');
@@ -594,11 +588,11 @@ Route::group(
         Route::get('freelancer/jobs/{status}', 'FreelancerController@showFreelancerJobs');
         Route::get('freelancer/job/{slug}', 'FreelancerController@showOnGoingJobDetail')->name('showOnGoingJobDetail');
         Route::get('freelancer/proposals', 'FreelancerController@showFreelancerProposals')->name('showFreelancerProposals');
-        Route::get('freelancer/proposal-edit/{job_slug}/{id}','ProposalController@ProposalUpdate');
+        Route::get('freelancer/proposal-edit/{job_slug}/{id}', 'ProposalController@ProposalUpdate');
         Route::post('proposal/update-proposal', 'ProposalController@update');
         Route::get('freelancer/dashboard', 'FreelancerController@freelancerDashboard')->name('freelancerDashboard');
         Route::get('freelancer/profile', 'FreelancerController@index')->name('personalDetail');
-        
+
         Route::post('freelancer/upload-temp-image', 'FreelancerController@uploadTempImage');
         Route::get('freelancer/dashboard/post-service', 'ServiceController@create')->name('freelancerPostService');
         Route::get('freelancer/dashboard/post-course', 'CourseController@create')->name('freelancerPostCourse');
@@ -619,15 +613,15 @@ Route::group(
         Route::get('agency/acceptInvitation/{agencyid}', 'AgencyController@acceptInvitation');
         Route::get('agency/declineInvitation/{agencyid}', 'AgencyController@DeclineInvitation');
         Route::post('agency/upload-temp-image', 'AgencyController@uploadTempImage');
-        Route::get('agency/users','AgencyController@index')->name('agency-user-list');
-        Route::get('agency-user-status-change/{id}','AgencyController@updateStatus');
-        Route::get('get-agency-list','AgencyController@getAgencyList');
+        Route::get('agency/users', 'AgencyController@index')->name('agency-user-list');
+        Route::get('agency-user-status-change/{id}', 'AgencyController@updateStatus');
+        Route::get('get-agency-list', 'AgencyController@getAgencyList');
         Route::post('freelancer/dashboard/delete-agency', 'AgencyController@destroy');
         Route::post('agency/remove-member', 'AgencyController@removeMembers');
         Route::get('freelancer/dashboard/edit-agency/{id}', 'AgencyController@edit')->name('edit_agency');
 
         //connections
-        Route::get('get-related-freelancers','PublicController@getUserRelatedFreelancers');
+        Route::get('get-related-freelancers', 'PublicController@getUserRelatedFreelancers');
     }
 );
 // Employer|Freelancer Routes
@@ -656,16 +650,16 @@ Route::group(
         Route::get('{role}/saved-items', 'UserController@getSavedItems')->name('getSavedItems');
         Route::post('profile/get-wishlist', 'UserController@getUserWishlist');
         Route::post('job/add-wishlist', 'JobController@addWishlist');
-        
+
         Route::post('proposal/download-attachments', 'UserController@downloadAttachments');
         Route::post('proposal/send-message', 'UserController@sendPrivateMessage');
         Route::post('proposal/get-private-messages', 'UserController@getPrivateMessage');
         Route::get('proposal/download/message-attachments/{id}', 'UserController@downloadMessageAttachments');
         Route::get('user/package/checkout/{id}', 'UserController@checkout');
         Route::get('user/order/bacs/{id}/{order}/{type}/{project_type?}', 'UserController@bankCheckout');
-        Route::get('bacs-checkout','CourseController@bacsPayment');
+        Route::get('bacs-checkout', 'CourseController@bacsPayment');
         Route::post('user/generate-order/bacs/{id}/{type}', 'UserController@generateOrder');
-        Route::get('course/{id}/generate-order','CourseController@generateOrder');
+        Route::get('course/{id}/generate-order', 'CourseController@generateOrder');
         Route::get('employer/{type}/invoice', 'UserController@getEmployerInvoices')->name('employerInvoice');
         Route::get('freelancer/{type}/invoice', 'UserController@getFreelancerInvoices')->name('freelancerInvoice');
         Route::get('show/invoice/{id}', 'UserController@showInvoice');
@@ -675,9 +669,6 @@ Route::group(
         Route::get('user/get-payout-detail', 'UserController@getPayoutDetail');
         Route::post('user/upload-temp-image/{type?}', 'UserController@uploadTempImage');
         Route::post('user/submit/transection', 'UserController@submitTransection');
-
-        
-      
     }
 );
 Route::group(
@@ -724,8 +715,8 @@ Route::post('proposal/submit-proposal', 'ProposalController@store');
 Route::post('get-freelancer-experiences', 'PublicController@getFreelancerExperience');
 Route::post('get-freelancer-education', 'PublicController@getFreelancerEducation');
 
-Route::get('addmoney/stripe', array('as' => 'addmoney.paywithstripe', 'uses' => 'StripeController@payWithStripe',));
-Route::post('addmoney/stripe', array('as' => 'addmoney.stripe', 'uses' => 'StripeController@postPaymentWithStripe',));
+// Route::get('addmoney/stripe', array('as' => 'addmoney.paywithstripe', 'uses' => 'StripeController@payWithStripe',));
+Route::match(['get', 'post'], 'addmoney/stripe', array('as' => 'addmoney.stripe', 'uses' => 'StripeController@postPaymentWithStripe',));
 
 
 Route::get('service/payment-process/{id}', 'ServiceController@employerPaymentProcess');

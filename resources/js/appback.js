@@ -204,9 +204,9 @@ jQuery(document).ready(function () {
         statusbar: false,
         toolbar1: 'undo redo | insert | image | styleselect | bold italic | alignleft aligncenter alignright alignjustify code',
         image_advtab: true,
-        inline_styles : true,
+        inline_styles: true,
         remove_script_host: false,
-        extended_valid_elements  : "span[style],i[class]",
+        extended_valid_elements: "span[style],i[class]",
         relative_urls: false
     });
 
@@ -219,9 +219,9 @@ jQuery(document).ready(function () {
         statusbar: false,
         toolbar1: 'undo redo | insert | image | styleselect | bold italic | alignleft aligncenter alignright alignjustify code',
         image_advtab: true,
-        inline_styles : true,
+        inline_styles: true,
         remove_script_host: false,
-        extended_valid_elements  : "span[style],i[class]",
+        extended_valid_elements: "span[style],i[class]",
         relative_urls: false
     });
 
@@ -245,7 +245,7 @@ if (document.getElementById("slider")) {
     const vmHeader = new Vue({
         el: '#slider',
         mounted: function () {
-            
+
         },
     });
 }
@@ -259,7 +259,7 @@ if (document.getElementById("orders")) {
             }
         },
         data: {
-            loading:false, 
+            loading: false,
             notificationSystem: {
                 options: {
                     success: {
@@ -273,9 +273,9 @@ if (document.getElementById("orders")) {
                         class: 'error_notification'
                     },
                 }
-            }, 
+            },
         },
-        methods: { 
+        methods: {
             showMessage(message) {
                 return this.$toast.success(' ', message, this.notificationSystem.options.success);
             },
@@ -291,13 +291,13 @@ if (document.getElementById("orders")) {
                 }
             },
             downloadAttachment: function (type, attachment, id) {
-                window.location.replace(APP_URL+'/get/'+type+'/'+attachment+'/'+id);
+                window.location.replace(APP_URL + '/get/' + type + '/' + attachment + '/' + id);
             },
             changeStatus: function (id) {
                 this.loading = true;
-                var status = document.getElementById('order_status_tab'+id).value;
+                var status = document.getElementById('order_status_tab' + id).value;
                 var self = this;
-                axios.post(APP_URL + '/admin/order/change-status', { 
+                axios.post(APP_URL + '/admin/order/change-status', {
                     status: status,
                     id: id,
                 })
@@ -316,7 +316,7 @@ if (document.getElementById("orders")) {
                     });
             },
         }
-        
+
     });
 }
 
@@ -435,27 +435,27 @@ if (document.getElementById("registration")) {
                         if (error.response.data.errors.first_name) {
                             self.form_step1.first_name_error = error.response.data.errors.first_name[0];
                             self.form_step1.is_first_name_error = true;
-                            $(document).ready(function() {  
-                               $("#captcha").css('display','none');  
-                              
-                                }); 
-                                
-                         }
+                            $(document).ready(function () {
+                                $("#captcha").css('display', 'none');
+
+                            });
+
+                        }
                         if (error.response.data.errors.last_name) {
                             self.form_step1.last_name_error = error.response.data.errors.last_name[0];
                             self.form_step1.is_last_name_error = true;
-                            $(document).ready(function() {  
-                               $("#captcha").css('display','none');  
-                              
-                                }); 
+                            $(document).ready(function () {
+                                $("#captcha").css('display', 'none');
+
+                            });
                         }
                         if (error.response.data.errors.email) {
                             self.form_step1.email_error = error.response.data.errors.email[0];
                             self.form_step1.is_email_error = true;
-                            $(document).ready(function() {  
-                               $("#captcha").css('display','none');  
-                              
-                                }); 
+                            $(document).ready(function () {
+                                $("#captcha").css('display', 'none');
+
+                            });
                         }
                     });
             },
@@ -472,8 +472,8 @@ if (document.getElementById("registration")) {
                 var self = this;
                 axios.post(APP_URL + '/register/form-step2-custom-errors', form_data).
                     then(function (response) {
-                        jQuery("#captcha").css('display','none');  
-                       self.submitUser();
+                        jQuery("#captcha").css('display', 'none');
+                        self.submitUser();
                     })
                     .catch(function (error) {
                         if (error.response.data.errors.password) {
@@ -1203,14 +1203,14 @@ if (document.getElementById("badge-list")) {
                 axios.post(APP_URL + '/badge/get-color', {
                     id: id,
                 })
-                .then(function (response) {
-                    if (response.data.type = 'success') {
-                        self.color = response.data.color;
-                    }
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
+                    .then(function (response) {
+                        if (response.data.type = 'success') {
+                            self.color = response.data.color;
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
             },
             selectAll: function () {
                 this.is_show = !this.is_show;
@@ -1429,7 +1429,7 @@ if (document.getElementById("user_profile")) {
             // delete gallery video
             var countvideosLength = jQuery('.social-icons-content').find('.wrap-social-icons').length
             if (countvideosLength) {
-                this.video.count = countvideosLength -1;
+                this.video.count = countvideosLength - 1;
             } else {
                 this.video.count = 0;
             }
@@ -1449,9 +1449,9 @@ if (document.getElementById("user_profile")) {
         },
         data: {
             videos: [],
-            video:{
-                url:'',
-                count:0,
+            video: {
+                url: '',
+                count: 0,
             },
             loading: false,
             server_error: '',
@@ -1717,7 +1717,7 @@ if (document.getElementById("user_profile")) {
                     jQuery('.wt-loginarea .wt-loginformhold').slideToggle();
                 }
             },
-                     
+
             submitProjectOffer: function (id) {
                 this.loading = true;
                 let offer_form = document.getElementById('send-offer-form');
@@ -1880,8 +1880,8 @@ if (document.getElementById("settings")) {
         },
         components: { Verte },
         data: {
-            enable_sandbox:false,
-            show_reg_form_banner:false,
+            enable_sandbox: false,
+            show_reg_form_banner: false,
             enable_breadcrumbs: false,
             enable_completed_projects: false,
             show_emplyr_inn_sec: false,
@@ -2532,7 +2532,7 @@ if (document.getElementById("settings")) {
                     } else {
                         self.$swal.close()
                     }
-                }) 
+                })
             },
             submitTemplateFilter: function () {
                 document.getElementById("template_filter_form").submit();
@@ -3227,7 +3227,7 @@ if (document.getElementById("jobs")) {
                             window.location.replace(url);
                         } else {
                             self.showError(response.data.message);
-                           
+
                         }
                     })
                     .catch(function (error) {
@@ -3311,15 +3311,15 @@ if (document.getElementById("jobs")) {
                 }).then((result) => {
                     if (result.value) {
                         if (mode == 'false') {
-                            axios.post(APP_URL + '/user/generate-order/bacs/'+id+'/job')
-                            .then(function (response) {
-                                if (response.data.type == 'success') {
-                                    window.location.replace(APP_URL+'/user/order/bacs/'+id+'/'+response.data.order_id+'/project');
-                                } 
-                            })
-                            .catch(function (error) {
-                                console.log(error);
-                            });    
+                            axios.post(APP_URL + '/user/generate-order/bacs/' + id + '/job')
+                                .then(function (response) {
+                                    if (response.data.type == 'success') {
+                                        window.location.replace(APP_URL + '/user/order/bacs/' + id + '/' + response.data.order_id + '/project');
+                                    }
+                                })
+                                .catch(function (error) {
+                                    console.log(error);
+                                });
                         } else {
                             window.location.replace(APP_URL + '/payment-process/' + id);
                         }
@@ -3339,10 +3339,10 @@ if (document.getElementById("jobs")) {
             submitRefund: function (job_id) {
                 this.loading = true;
                 var self = this;
-                var job_id = $('#refundable-job-id-'+job_id).val();
-                var selected_user = $("#refundable_user_id-"+job_id).val();
-                var refundable_amount = $('#refundable-amount-'+job_id).val();
-                var order_id = $('#refundable-order-id-'+job_id).val();
+                var job_id = $('#refundable-job-id-' + job_id).val();
+                var selected_user = $("#refundable_user_id-" + job_id).val();
+                var refundable_amount = $('#refundable-amount-' + job_id).val();
+                var order_id = $('#refundable-order-id-' + job_id).val();
                 let form = document.getElementById('submit_refund_' + job_id);
                 let form_data = new FormData(form);
                 form_data.append('refundable_user_id', selected_user);
@@ -3595,21 +3595,21 @@ if (document.getElementById("packages")) {
                     this.freelancer_options = true;
                 }
             },
-            generateOrder: function(id) {
+            generateOrder: function (id) {
                 if (id) {
                     var self = this;
-                    axios.post(APP_URL + '/user/generate-order/bacs/'+id+'/package')
+                    axios.post(APP_URL + '/user/generate-order/bacs/' + id + '/package')
                         .then(function (response) {
                             if (response.data.type == 'success') {
-                                window.location.replace(APP_URL+'/user/order/bacs/'+id+'/'+response.data.order_id+'/package');
-                            } 
+                                window.location.replace(APP_URL + '/user/order/bacs/' + id + '/' + response.data.order_id + '/package');
+                            }
                         })
                         .catch(function (error) {
                             console.log(error);
-                        });    
+                        });
                 }
             },
-            submitTransection: function(id) {
+            submitTransection: function (id) {
                 if (!(document.getElementById('transection_detail').value)) return this.showError(Vue.prototype.trans('lang.transection_detail_req'))
                 this.loading = true;
                 let bankForm = document.getElementById('trans_form');
@@ -3702,29 +3702,35 @@ if (document.getElementById("packages")) {
                 this.$refs.myModalRef.show()
             },
             submitStripeFrom: function () {
-                this.loading = true;
-                let stripe_payment = document.getElementById('stripe-payment-form');
-                let data = new FormData(stripe_payment);
+                alert('fff');
                 var self = this;
-                axios.post(APP_URL + '/addmoney/stripe', data)
-                    .then(function (response) {
-                        console.log(response.data);
-                        if (response.data.type == 'success') {
-                            self.loading = false;
-                            self.showMessage(response.data.message);
-                            setTimeout(function () {
-                                window.location.replace(response.data.url);
-                            }, 3000);
-                        } else if (response.data.type == 'error') {
-                            self.loading = false;
-                            self.showError(response.data.message);
-                        }
-                    })
-                    .catch(function (error) {
+                stripe.createToken(card).then(function (result) {
+                    if (result.error) {
                         self.loading = false;
-                        console.log(error);
-                    });
-            },
+                        self.showError(result.error.message);
+                    } else {
+                        // Insert the token into the form so it gets submitted to the server:
+                        let form = document.getElementById('stripe-payment-form');
+                        let hiddenInput = document.createElement('input');
+                        hiddenInput.setAttribute('type', 'hidden');
+                        hiddenInput.setAttribute('name', 'stripeToken');
+                        hiddenInput.setAttribute('value', result.token.id);
+                        form.appendChild(hiddenInput);
+
+                        // Continue the form submission as before:
+                        let data = new FormData(form);
+                        axios.post(APP_URL + '/addmoney/stripe', data)
+                            .then(function (response) {
+                                // ... your existing logic ...
+                            })
+                            .catch(function (error) {
+                                self.loading = false;
+                                console.log(error);
+                            });
+                    }
+                });
+            }
+            ,
         }
     });
 }
@@ -3736,9 +3742,9 @@ if (document.getElementById("invoice_list")) {
             this.getUserPayoutSettings();
         },
         data: {
-            show_paypal_fields:false,
-            show_bank_fields:false,
-            loading:false,
+            show_paypal_fields: false,
+            show_bank_fields: false,
+            loading: false,
             notificationSystem: {
                 options: {
                     success: {
@@ -3761,25 +3767,25 @@ if (document.getElementById("invoice_list")) {
             },
             changePayoutStatus: function (id, projects_ids) {
                 this.loading = true;
-                var status = document.getElementById(id+'-payout_status').value;
+                var status = document.getElementById(id + '-payout_status').value;
                 var self = this;
                 axios.post(APP_URL + '/admin/update-payout-status', {
                     status: status,
                     id: id,
                     projects_ids: projects_ids,
                 })
-                .then(function (response) {
-                    if (response.data.type == 'success') {
-                        self.showMessage(response.data.message);
+                    .then(function (response) {
+                        if (response.data.type == 'success') {
+                            self.showMessage(response.data.message);
+                            self.loading = false;
+                        } else {
+                            self.loading = false;
+                            self.showError(response.data.message);
+                        }
+                    })
+                    .catch(function (error) {
                         self.loading = false;
-                    } else {
-                        self.loading = false;
-                        self.showError(response.data.message);
-                    }
-                })
-                .catch(function (error) {
-                    self.loading = false;
-                });
+                    });
             },
             print: function () {
                 const cssText = `
@@ -4053,36 +4059,36 @@ if (document.getElementById("invoice_list")) {
                 let form_data = new FormData(Form);
                 form_data.append('id', id);
                 axios.post(APP_URL + '/user/update-payout-detail', form_data)
-                .then(function (response) {
-                    if (response.data.type == 'success') {
+                    .then(function (response) {
+                        if (response.data.type == 'success') {
+                            self.loading = false;
+                            self.showMessage(response.data.message);
+                        } else {
+                            self.loading = false;
+                            self.showError(response.data.message);
+                        }
+                    })
+                    .catch(function (error) {
                         self.loading = false;
-                        self.showMessage(response.data.message);
-                    } else {
-                        self.loading = false;
-                        self.showError(response.data.message);
-                    }
-                })
-                .catch(function (error) {
-                    self.loading = false;
-                });
+                    });
             },
-            getUserPayoutSettings: function() {
+            getUserPayoutSettings: function () {
                 var self = this;
                 axios.get(APP_URL + '/user/get-payout-detail')
-                .then(function (response) {
-                    if (response.data.type == 'success') {
-                        if(response.data.payouts.type == 'paypal') {
-                            self.show_paypal_fields = true;
-                        } else if (response.data.payouts.type == 'bacs') {
-                            self.show_bank_fields = true;
+                    .then(function (response) {
+                        if (response.data.type == 'success') {
+                            if (response.data.payouts.type == 'paypal') {
+                                self.show_paypal_fields = true;
+                            } else if (response.data.payouts.type == 'bacs') {
+                                self.show_bank_fields = true;
+                            }
+                        } else {
+
                         }
-                    } else {
+                    })
+                    .catch(function (error) {
 
-                    }
-                })
-                .catch(function (error) {
-
-                });
+                    });
             },
             getPayouts: function () {
                 var year = document.getElementById('payout_year').value;
@@ -4092,15 +4098,15 @@ if (document.getElementById("invoice_list")) {
                 }
 
             },
-            generatePdfPayout: function(year, month) {
+            generatePdfPayout: function (year, month) {
                 var obj = document.getElementById('payout-table')
                 var ids = [];
-                for(var c=0;c<obj.childNodes.length;c++){
-                    if(obj.childNodes[c].nodeType==1) {
+                for (var c = 0; c < obj.childNodes.length; c++) {
+                    if (obj.childNodes[c].nodeType == 1) {
                         ids.push(obj.childNodes[c].id);
                     }
                 }
-                window.location.replace(APP_URL+'/admin/payouts/download/'+year+'/'+month+'/'+ids);
+                window.location.replace(APP_URL + '/admin/payouts/download/' + year + '/' + month + '/' + ids);
             }
         }
     });
@@ -4115,7 +4121,7 @@ if (document.getElementById("workdiary")) {
             }
         },
         created: function () {
-            
+
         },
         data: {
             report: {
@@ -4194,7 +4200,7 @@ if (document.getElementById("workdiary")) {
                 let Form = document.getElementById('post_workdiary_form');
                 let form_data = new FormData(Form);
                 var description = tinyMCE.get('wt-tinymceeditor').getContent();
-                
+
                 form_data.append('description', description);
                 var self = this;
                 console.log("function enter");
@@ -4560,15 +4566,15 @@ if (document.getElementById("services")) {
                 }).then((result) => {
                     if (result.value) {
                         if (mode == 'false') {
-                            axios.post(APP_URL + '/user/generate-order/bacs/'+id+'/service')
-                            .then(function (response) {
-                                if (response.data.type == 'success') {
-                                    window.location.replace(APP_URL+'/user/order/bacs/'+response.data.service_order+'/'+response.data.order_id+'/project/service');
-                                } 
-                            })
-                            .catch(function (error) {
-                                console.log(error);
-                            });
+                            axios.post(APP_URL + '/user/generate-order/bacs/' + id + '/service')
+                                .then(function (response) {
+                                    if (response.data.type == 'success') {
+                                        window.location.replace(APP_URL + '/user/order/bacs/' + response.data.service_order + '/' + response.data.order_id + '/project/service');
+                                    }
+                                })
+                                .catch(function (error) {
+                                    console.log(error);
+                                });
                         } else {
                             window.location.replace(APP_URL + '/service/payment-process/' + id);
                         }
@@ -4699,8 +4705,8 @@ if (document.getElementById("services")) {
             submitRefund: function (order_id) {
                 this.loading = true;
                 var self = this;
-                var refundable_amount = $('#refundable-amount-'+order_id).val();
-                var selected_user = $("#refundable_user_id-"+order_id).val();
+                var refundable_amount = $('#refundable-amount-' + order_id).val();
+                var selected_user = $("#refundable_user_id-" + order_id).val();
                 let form = document.getElementById('submit_refund_' + order_id);
                 let form_data = new FormData(form);
                 form_data.append('amount', refundable_amount);

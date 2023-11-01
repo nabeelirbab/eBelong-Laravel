@@ -10,6 +10,7 @@
 @php
     $show_service_banner = 'true'
 @endphp
+
     @if ($show_service_banner == 'true')
         @php $breadcrumbs = Breadcrumbs::generate('searchResults'); @endphp
         <div class="wt-haslayout wt-innerbannerholder" >
@@ -58,8 +59,15 @@
                 <flash_messages :message_class="'{{{$response['code']}}}'" :time ='5' :message="'{{{ $response['message'] }}}'" v-cloak></flash_messages>
             </div>
         @endif
+        @if (session('success'))
+        <div class="flash_msg">
+            <flash_messages :message_class="success" :time ='5' :message="'{{{ session('success')}}}'" v-cloak></flash_messages>
+        </div>
+    @endif
+
         <div class="wt-haslayout">
             <div class="container">
+              
                 <div class="row">
                     <div id="wt-twocolumns" class="wt-twocolumns wt-haslayout">
 						<div class="filter_icon btn btn-success"><i class="fa fa-filter"></i>Filter</div> 

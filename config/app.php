@@ -130,7 +130,7 @@ return [
     |
     */
 
-    'key' => env('APP_KEY'),
+    'key' => env('APP_KEY', 'base64:XXdRGaShsZ1imna7Ipd9DKMuMo+xTwsfSFsRhVfIqvc='),
 
     'cipher' => 'AES-256-CBC',
 
@@ -154,9 +154,9 @@ return [
     |
     */
     'cdn' => array(
-            "ebelongmaster-1517a.kxcdn.com" => "css|js|eot|woff|ttf",
-            "ebelongmaster-1517a.kxcdn.com" => "jpg|jpeg|png|gif|svg",
-            "ebelongmaster-1517a.kxcdn.com" => ""
+        "ebelongmaster-1517a.kxcdn.com" => "css|js|eot|woff|ttf",
+        "ebelongmaster-1517a.kxcdn.com" => "jpg|jpeg|png|gif|svg",
+        "ebelongmaster-1517a.kxcdn.com" => ""
     ),
 
 
@@ -215,7 +215,7 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         Spatie\JsonApiPaginate\JsonApiPaginateServiceProvider::class,
 
-        ConsoleTVs\Charts\ChartsServiceProvider::class,
+        // ConsoleTVs\Charts\ChartsServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
 
 
