@@ -13,6 +13,7 @@
  */
 
 namespace App\Http\Controllers;
+
 use Illuminate\Filesystem\Filesystem;
 use App\EmailTemplate;
 use App\Mail\InvitationToUser;
@@ -91,7 +92,7 @@ class UserController extends Controller
      *
      * @return void
      */
-    public function __construct(User $user, Profile $profile, AgencyUser $agency_user) 
+    public function __construct(User $user, Profile $profile, AgencyUser $agency_user)
     {
         $this->user = $user;
         $this->profile = $profile;
@@ -105,11 +106,12 @@ class UserController extends Controller
      *
      * @return View
      */
-    public function accountSettings(){
+    public function accountSettings()
+    {
         $languages = Language::pluck('title', 'id');
         $user_id = Auth::user()->id;
         $profile = new Profile();
-        $saved_options = $profile::select('profile_searchable', 'profile_blocked', 'english_level','freelancer_type')
+        $saved_options = $profile::select('profile_searchable', 'profile_blocked', 'english_level', 'freelancer_type')
             ->where('user_id', $user_id)->get()->first();
         $english_levels = Helper::getEnglishLevelList();
         $user_level = !empty($saved_options->english_level) ? $saved_options->english_level : trans('lang.basic');
@@ -131,6 +133,16 @@ class UserController extends Controller
         }
     }
 
+    public function clearRegistrationModal()
+    {
+        // dd(Session::get('show_registration_modal'));
+        Session::forget('show_registration_modal');
+        Session::put('page_views', 0);
+        // dd(Session::get('show_registration_modal'));
+        return redirect()->back();
+    }
+
+
     /**
      * Save user account settings.
      *
@@ -142,103 +154,100 @@ class UserController extends Controller
      */
     public function saveAccountSettings(Request $request)
     {
-		$server_verification = Helper::worketicIsDemoSite();
+        $server_verification = Helper::worketicIsDemoSite();
         if (!empty($server_verification)) {
             Session::flash('error', $server_verification);
             return Redirect::back();
         }
-		
-		// Code for agency form validation
-		if(Helper::getRoleByUserID(Auth::user()->id) == 3){
-			$data = $request->all();
-			if($data['freelancer_type'] == "Agency Freelancers"){
-				if($data['agency_type'] == "new_agency" && (trim($data['agency_name']) == "" || trim($data['contact_no']) == "" || trim($data['contact_email']) == "")){
-						Session::flash('error', 'Please enter proper new agency data');
-						return Redirect::back();
-				}elseif($data['agency_type'] == "existing_agency" && trim($data['agency_id']) == ""){
-					Session::flash('error', 'Please select agency');
-					return Redirect::back();
-				}
-			}
-		}
-       
+
+        // Code for agency form validation
+        if (Helper::getRoleByUserID(Auth::user()->id) == 3) {
+            $data = $request->all();
+            if ($data['freelancer_type'] == "Agency Freelancers") {
+                if ($data['agency_type'] == "new_agency" && (trim($data['agency_name']) == "" || trim($data['contact_no']) == "" || trim($data['contact_email']) == "")) {
+                    Session::flash('error', 'Please enter proper new agency data');
+                    return Redirect::back();
+                } elseif ($data['agency_type'] == "existing_agency" && trim($data['agency_id']) == "") {
+                    Session::flash('error', 'Please select agency');
+                    return Redirect::back();
+                }
+            }
+        }
+
         $profile = new Profile();
         $user_id = Auth::user()->id;
         $profile->storeAccountSettings($request, $user_id);
-		
-		// Code for save agency data.
-		if(Helper::getRoleByUserID(Auth::user()->id) == 3){
-			if($data['freelancer_type'] == "Agency Freelancers"){
-				if($data['agency_type'] == "new_agency"){
-					$agency = array();
-					$agency['user_id'] = Auth::user()->id;
-					$agency['agency_name'] = trim($data['agency_name']);
-					$agency['contact_no'] = trim($data['contact_no']);
-					$agency['contact_email'] = trim($data['contact_email']);
-					
-					$agencyid = DB::table('agency_user')->insertGetId($agency); 
-					DB::table('users')->where('id',$agency['user_id'])->update(array('is_agency'=>1,'agency_id'=>$agencyid));
-					// Send mail of new agency added
-					if (trim(config('mail.username')) != "" && trim(config('mail.password')) != "") {
+
+        // Code for save agency data.
+        if (Helper::getRoleByUserID(Auth::user()->id) == 3) {
+            if ($data['freelancer_type'] == "Agency Freelancers") {
+                if ($data['agency_type'] == "new_agency") {
+                    $agency = array();
+                    $agency['user_id'] = Auth::user()->id;
+                    $agency['agency_name'] = trim($data['agency_name']);
+                    $agency['contact_no'] = trim($data['contact_no']);
+                    $agency['contact_email'] = trim($data['contact_email']);
+
+                    $agencyid = DB::table('agency_user')->insertGetId($agency);
+                    DB::table('users')->where('id', $agency['user_id'])->update(array('is_agency' => 1, 'agency_id' => $agencyid));
+                    // Send mail of new agency added
+                    if (trim(config('mail.username')) != "" && trim(config('mail.password')) != "") {
                         $email_params = array();
-                        $template = DB::table('email_types')->select('id')->where('email_type','new_agency')->get()->first();
+                        $template = DB::table('email_types')->select('id')->where('email_type', 'new_agency')->get()->first();
                         if (!empty($template->id)) {
                             $template_data = EmailTemplate::getEmailTemplateByID($template->id);
                             $email_params['freelancer_name'] = Helper::getUserName($user_id);
-							Mail::to(Auth::user()->email)
-								->send(
-									new FreelancerEmailMailable(
-										'new_agency',
-										$template_data,
-										$email_params
-									)
-								);
+                            Mail::to(Auth::user()->email)
+                                ->send(
+                                    new FreelancerEmailMailable(
+                                        'new_agency',
+                                        $template_data,
+                                        $email_params
+                                    )
+                                );
                         }
                     }
-					
-				}elseif($data['agency_type'] == "existing_agency" && trim($data['agency_id']) != ""){
-					DB::table('users')->where('id',Auth::user()->id)->update(array('is_agency'=>1,'agency_id'=>$data['agency_id']));
-					// Send mail of new agency added
-					if (trim(config('mail.username')) != "" && trim(config('mail.password')) != "") {
+                } elseif ($data['agency_type'] == "existing_agency" && trim($data['agency_id']) != "") {
+                    DB::table('users')->where('id', Auth::user()->id)->update(array('is_agency' => 1, 'agency_id' => $data['agency_id']));
+                    // Send mail of new agency added
+                    if (trim(config('mail.username')) != "" && trim(config('mail.password')) != "") {
                         $email_params = array();
-                        $template = DB::table('email_types')->select('id')->where('email_type','join_agency')->get()->first();
+                        $template = DB::table('email_types')->select('id')->where('email_type', 'join_agency')->get()->first();
                         if (!empty($template->id)) {
                             $template_data = EmailTemplate::getEmailTemplateByID($template->id);
                             $email_params['freelancer_name'] = Helper::getUserName($user_id);
-							$agency_info =  Helper::getAgencyList($data['agency_id']);
+                            $agency_info =  Helper::getAgencyList($data['agency_id']);
                             $email_params['agency_name'] = $agency_info->agency_name;
-							Mail::to(Auth::user()->email)
-								->send(
-									new FreelancerEmailMailable(
-										'join_agency',
-										$template_data,
-										$email_params
-									)
-								);
+                            Mail::to(Auth::user()->email)
+                                ->send(
+                                    new FreelancerEmailMailable(
+                                        'join_agency',
+                                        $template_data,
+                                        $email_params
+                                    )
+                                );
                         }
                     }
-				}
-			}
-		}
-		
+                }
+            }
+        }
+
         Session::flash('message', trans('lang.account_settings_saved'));
         return Redirect::back();
     }
 
     function autoSuggestFetch(Request $request)
     {
-        if($request->get('query'))
-        {
+        if ($request->get('query')) {
             $query = $request->get('query');
             $data = DB::table('agency_user')
                 ->where('agency_name', 'LIKE', "%{$query}%")
                 ->get();
 
             $output = '<ul class="dropdown-menu" style="display:block; position:relative">';
-            foreach($data as $row)
-            {
+            foreach ($data as $row) {
                 $output .= '
-       <li><a href="">'.$row->agency_name.'</a></li>
+       <li><a href="">' . $row->agency_name . '</a></li>
        ';
             }
             $output .= '</ul>';
@@ -256,33 +265,34 @@ class UserController extends Controller
      * @return View
      */
     public function saveAgencyData(Request $request)
-    {   
+    {
         $json = array();
         $data = $request->all();
         $user_id = Auth::user()->id;
         $data['agency_type'] = 'new_agency';
 
 
-        if (Helper::getRoleByUserID(Auth::user()->id) == 3){
+        if (Helper::getRoleByUserID(Auth::user()->id) == 3) {
 
-            if(isset($data['agency_id']) && !empty($data['agency_id'])) {
+            if (isset($data['agency_id']) && !empty($data['agency_id'])) {
                 Session::flash('error', 'Edit Agency - WORK IN PROGRESS');
                 return Redirect::back();
-            }
-            else {
-                if (isset($data['agency_type']) && $data['agency_type'] == "new_agency" && !empty($data['agency_name'])
-                    && !empty($data['contact_email'])){
+            } else {
+                if (
+                    isset($data['agency_type']) && $data['agency_type'] == "new_agency" && !empty($data['agency_name'])
+                    && !empty($data['contact_email'])
+                ) {
 
                     $has_agency_associated = DB::table('agency_user')->select('agency_name')
-                        ->where('user_id',$user_id)
+                        ->where('user_id', $user_id)
                         ->get();
 
                     $has_agency_associated_name = DB::table('agency_user')->select('agency_name')
-                        ->where('agency_name',$data['agency_name'])
+                        ->where('agency_name', $data['agency_name'])
                         ->get();
 
                     $has_agency_associated_email = DB::table('agency_user')->select('contact_email')
-                        ->where('contact_email',$data['contact_email'])
+                        ->where('contact_email', $data['contact_email'])
                         ->get();
 
                     $has_agency_associated = @json_decode(json_encode($has_agency_associated), true);
@@ -303,18 +313,22 @@ class UserController extends Controller
                         return Redirect::back();
                     }
 
-                    if (count($has_agency_associated) === 0 && $has_agency_associated == false
+                    if (
+                        count($has_agency_associated) === 0 && $has_agency_associated == false
                         && count($has_agency_associated_email) === 0 && $has_agency_associated_email == false
-                        && count($has_agency_associated_email) === 0 && $has_agency_associated_email == false) {
+                        && count($has_agency_associated_email) === 0 && $has_agency_associated_email == false
+                    ) {
 
-                        if (isset($data['agency_name']) && isset($data['hourly_rates_min'])
-                            && isset($data['hourly_rates_max']) && isset($data['contact_email'])) {
-                            
+                        if (
+                            isset($data['agency_name']) && isset($data['hourly_rates_min'])
+                            && isset($data['hourly_rates_max']) && isset($data['contact_email'])
+                        ) {
+
                             $slug = str_replace(" ", "-", strtolower($data['agency_name']));
                             $agency = array();
                             $agency['user_id'] = Auth::user()->id;
                             $agency['agency_name'] = trim($data['agency_name']);
-                            $agency['slug'] = $slug .'-'. rand(00000,99999);
+                            $agency['slug'] = $slug . '-' . rand(00000, 99999);
                             $agency['contact_no'] = trim($data['contact_no']);
                             $agency['contact_email'] = trim($data['contact_email']);
                             $agency['founded_in'] = trim($data['founded_in']);
@@ -327,45 +341,41 @@ class UserController extends Controller
                                 'contact_email' => 'required|email|',
                                 'contact_no' => 'required|regex:/(0)[0-9]{9}/|numeric',
                                 'founded_in' => 'required||numeric|digits:4'
-                                ]);
+                            ]);
                             request()->validate([
                                 'agency_logo' => 'required|file|mimes:jpeg,png,jpg,gif,svg|max:2048',
                             ]);
                             $agency['agency_logo'] = null;
                             $agencyid = DB::table('agency_user')->insertGetId($agency);
                             if ($request['skills']) {
-                            $skills = $request['skills'];
-                            $_agency = AgencyUser::find($agencyid);
-                            foreach ($skills as $skill) {
-                                $_agency->skills()->attach($skill['id'], ['skill_rating' => $skill['rating']]);
-                                
+                                $skills = $request['skills'];
+                                $_agency = AgencyUser::find($agencyid);
+                                foreach ($skills as $skill) {
+                                    $_agency->skills()->attach($skill['id'], ['skill_rating' => $skill['rating']]);
+                                }
                             }
-                        }
-                        $folderPath = public_path('uploads/agency_logos/'.$agencyid);
-                        $image_parts = explode(";base64,", $request->agency_logo_64);
-                        $image_type_aux = explode("image/", $image_parts[0]);
-                        $image_type = $image_type_aux[1];
-                        $image_base64 = base64_decode($image_parts[1]);
-                        $file = new Filesystem();
-   
-                        $directory = 'uploads/agency_logos/' . $agencyid;
-                        if ( $file->isDirectory(public_path($directory)) )
-                        {
-                            // return 'Directory already exists';
-                        }
-                        else
-                        {
-                            $file->makeDirectory(public_path($directory), 755, true, true);
-                            // return 'Directory has been created!';
-                        }
-                        // $file = $folderPath . uniqid() . '.png';
-                        $filename = $agencyid."_".time() . '.'. $image_type;
-                        $filepath =$folderPath.'/'.$filename;
-                        $img = Image::make($image_base64)->save(public_path('uploads/agency_logos/'.$agencyid.'/'.$filename));  
-                        // Storage::disk($folderPath)->put($filename, $image_base64);
-                        // File::put($folderPath, $image_base64);
-                        // $image_base64->move($folderPath, $filename);
-                        // file_put_contents($file, $image_base64);
+                            $folderPath = public_path('uploads/agency_logos/' . $agencyid);
+                            $image_parts = explode(";base64,", $request->agency_logo_64);
+                            $image_type_aux = explode("image/", $image_parts[0]);
+                            $image_type = $image_type_aux[1];
+                            $image_base64 = base64_decode($image_parts[1]);
+                            $file = new Filesystem();
+
+                            $directory = 'uploads/agency_logos/' . $agencyid;
+                            if ($file->isDirectory(public_path($directory))) {
+                                // return 'Directory already exists';
+                            } else {
+                                $file->makeDirectory(public_path($directory), 755, true, true);
+                                // return 'Directory has been created!';
+                            }
+                            // $file = $folderPath . uniqid() . '.png';
+                            $filename = $agencyid . "_" . time() . '.' . $image_type;
+                            $filepath = $folderPath . '/' . $filename;
+                            $img = Image::make($image_base64)->save(public_path('uploads/agency_logos/' . $agencyid . '/' . $filename));
+                            // Storage::disk($folderPath)->put($filename, $image_base64);
+                            // File::put($folderPath, $image_base64);
+                            // $image_base64->move($folderPath, $filename);
+                            // file_put_contents($file, $image_base64);
 
                             // if ($files = $request->file('agency_logo')) {
                             //     // Define upload path
@@ -378,14 +388,14 @@ class UserController extends Controller
                             //     $agency['agency_logo'] = "$profileImage";
                             // }
 
-                            DB::table('agency_user')->where('id',$agencyid)->update(array('agency_logo'=> $filename));
+                            DB::table('agency_user')->where('id', $agencyid)->update(array('agency_logo' => $filename));
 
-                            $updateUserAgencyStatus = DB::table('users')->where('id',$agency['user_id'])->update(array('is_agency'=>1,'agency_id'=>$agencyid));
+                            $updateUserAgencyStatus = DB::table('users')->where('id', $agency['user_id'])->update(array('is_agency' => 1, 'agency_id' => $agencyid));
 
                             if ($agencyid && $updateUserAgencyStatus) {
                                 if (trim(config('mail.username')) != "" && trim(config('mail.password')) != "") {
                                     $email_params = array();
-                                    $template = DB::table('email_types')->select('id')->where('email_type','new_agency')->get()->first();
+                                    $template = DB::table('email_types')->select('id')->where('email_type', 'new_agency')->get()->first();
                                     if (!empty($template->id)) {
                                         $template_data = EmailTemplate::getEmailTemplateByID($template->id);
                                         // dd($template_data);
@@ -402,14 +412,11 @@ class UserController extends Controller
                                 }
                                 Session::flash('message', 'Your new Agency has been successfully created.');
                                 return Redirect::to('/profile/settings/agency-settings');
-                            }
-                            else {
+                            } else {
                                 Session::flash('error', 'Something went wrong while associating your account with Agency.');
                                 return Redirect::back();
                             }
-
-                        }
-                        else {
+                        } else {
                             Session::flash('error', 'Please enter hourly rates range for your Agency.');
                             return Redirect::back();
                         }
@@ -419,18 +426,16 @@ class UserController extends Controller
                     return Redirect::back();
                 }
             }
-
-
         } else {
 
             Session::flash('error', 'You dont have access to create an Agency account');
             return Redirect::back();
         }
-
     }
 
-    public function chatbot(Request $request){
-       return '1';
+    public function chatbot(Request $request)
+    {
+        return '1';
     }
 
     public function EditAgencyData(Request $request)
@@ -440,42 +445,45 @@ class UserController extends Controller
         $data['agency_type'] = 'new_agency';
 
 
-        if (Helper::getRoleByUserID(Auth::user()->id) == 3){
+        if (Helper::getRoleByUserID(Auth::user()->id) == 3) {
 
-                if (isset($data['agency_type']) && $data['agency_type'] == "new_agency" && !empty($data['agency_name'])&& !empty($data['contact_email']))
-                {
+            if (isset($data['agency_type']) && $data['agency_type'] == "new_agency" && !empty($data['agency_name']) && !empty($data['contact_email'])) {
 
-                    $has_agency_associated_name = DB::table('agency_user')->select('agency_name')
-                        ->where('agency_name',$data['agency_name'])->where('id',"!=",$data['agency_id'])
-                        ->get();
+                $has_agency_associated_name = DB::table('agency_user')->select('agency_name')
+                    ->where('agency_name', $data['agency_name'])->where('id', "!=", $data['agency_id'])
+                    ->get();
 
-                    $has_agency_associated_email = DB::table('agency_user')->select('contact_email')
-                        ->where('contact_email',$data['contact_email'])->where('id',"!=",$data['agency_id'])
-                        ->get();
+                $has_agency_associated_email = DB::table('agency_user')->select('contact_email')
+                    ->where('contact_email', $data['contact_email'])->where('id', "!=", $data['agency_id'])
+                    ->get();
 
-                    $has_agency_associated = @json_decode(json_encode($has_agency_associated), true);
-                    $has_agency_associated_name = @json_decode(json_encode($has_agency_associated_name), true);
-                    $has_agency_associated_email = @json_decode(json_encode($has_agency_associated_email), true);
+                $has_agency_associated = @json_decode(json_encode($has_agency_associated), true);
+                $has_agency_associated_name = @json_decode(json_encode($has_agency_associated_name), true);
+                $has_agency_associated_email = @json_decode(json_encode($has_agency_associated_email), true);
 
-                    if (count($has_agency_associated_name) > 0) {
-                        Session::flash('error', 'Agency with this name already exists, please retry!');
-                        return Redirect::back();
-                    }
-                    if (count($has_agency_associated_email) > 0) {
-                        Session::flash('error', 'Provided email is already associated with another Agency!');
-                        return Redirect::back();
-                    }
+                if (count($has_agency_associated_name) > 0) {
+                    Session::flash('error', 'Agency with this name already exists, please retry!');
+                    return Redirect::back();
+                }
+                if (count($has_agency_associated_email) > 0) {
+                    Session::flash('error', 'Provided email is already associated with another Agency!');
+                    return Redirect::back();
+                }
 
-                    if ( count($has_agency_associated_name) === 0 && $has_agency_associated_name == false
-                        && count($has_agency_associated_email) === 0 && $has_agency_associated_email == false) {
-                        if (isset($data['agency_name']) && isset($data['hourly_rates_min'])
-                            && isset($data['hourly_rates_max']) && isset($data['contact_email'])) {
-                                
-                            $slug = str_replace(" ", "-", strtolower($data['agency_name']));
-                            $agency = [
+                if (
+                    count($has_agency_associated_name) === 0 && $has_agency_associated_name == false
+                    && count($has_agency_associated_email) === 0 && $has_agency_associated_email == false
+                ) {
+                    if (
+                        isset($data['agency_name']) && isset($data['hourly_rates_min'])
+                        && isset($data['hourly_rates_max']) && isset($data['contact_email'])
+                    ) {
+
+                        $slug = str_replace(" ", "-", strtolower($data['agency_name']));
+                        $agency = [
                             'user_id' => Auth::user()->id,
                             'agency_name' => trim($data['agency_name']),
-                            'slug' => $slug .'-'. rand(00000,99999),
+                            'slug' => $slug . '-' . rand(00000, 99999),
                             'contact_no' => trim($data['contact_no']),
                             'contact_email' => trim($data['contact_email']),
                             'founded_in' => trim($data['founded_in']),
@@ -483,171 +491,152 @@ class UserController extends Controller
                             'hourly_rates_min' => trim($data['hourly_rates_min']),
                             'hourly_rates_max' => trim($data['hourly_rates_max']),
                             'agency_size' => trim($data['agency_size'])
-                            ];
-                            request()->validate([
-                                'agency_name' => 'required|max:120',
-                                'contact_email' => 'required|email|',
-                                'contact_no' => 'required|regex:/(0)[0-9]{9}/|numeric',
-                                'founded_in' => 'required||numeric|digits:4'
-                                ]);
-                           
-                            $updated = DB::table('agency_user')->where('id',$data['agency_id'])->update($agency);
-                            $_agency = AgencyUser::find($data['agency_id']);
-                            // $_agency->skills()->detach();
-                            if ($request['skills']) {
-                                $skills = $request['skills'];
-                                $_agency->skills()->detach();
-                                if (!empty($skills)) {
-                                    foreach ($skills as $skill) {
-                                        $_agency->skills()->attach($skill['id'],['skill_rating' => $skill['rating']]);
-                                        // $_agency->skills()->attach($skill['id'], ['skill_rating' => $skill['rating']]);
-                                    }
-                                }
-                            }
-                            if ($files = $request->file('agency_logo')) {
-                                request()->validate([
-                                    'agency_logo' => 'file|mimes:jpeg,png,jpg,gif,svg|max:2048',
-                                ]);
-                                $folderPath = public_path('uploads/agency_logos/'.$data['agency_id']);
-                                $image_parts = explode(";base64,", $request->agency_logo_64);
-                                $image_type_aux = explode("image/", $image_parts[0]);
-                                $image_type = $image_type_aux[1];
-                                $image_base64 = base64_decode($image_parts[1]);
-                                $file = new Filesystem();
-        
-                                $directory = 'uploads/agency_logos/' . $data['agency_id'];
-                                
-                                $filename = $data['agency_id']."_".time() . '.'. $image_type;
-                                $filepath =$folderPath.'/'.$filename;
-                                $img = Image::make($image_base64)->save(public_path('uploads/agency_logos/'.$data['agency_id'].'/'.$filename));  
-                                $updated = DB::table('agency_user')->where('id',$data['agency_id'])->update(array('agency_logo'=> $filename));
-                                
-                            }
-                                if($updated){
-                                Session::flash('message', 'Your new Agency has been successfully updated.');
-                                return Redirect::to('/profile/settings/agency-settings');}
-                              
-                                else{
-                                Session::flash('message', 'Something Wrong!.');
-                                return Redirect::back();
-                                }
-                        } 
-                        else {
-                            Session::flash('error', 'Please enter hourly rates range for your Agency.');
-                            return Redirect::back();
-                         }  
+                        ];
+                        request()->validate([
+                            'agency_name' => 'required|max:120',
+                            'contact_email' => 'required|email|',
+                            'contact_no' => 'required|regex:/(0)[0-9]{9}/|numeric',
+                            'founded_in' => 'required||numeric|digits:4'
+                        ]);
 
+                        $updated = DB::table('agency_user')->where('id', $data['agency_id'])->update($agency);
+                        $_agency = AgencyUser::find($data['agency_id']);
+                        // $_agency->skills()->detach();
+                        if ($request['skills']) {
+                            $skills = $request['skills'];
+                            $_agency->skills()->detach();
+                            if (!empty($skills)) {
+                                foreach ($skills as $skill) {
+                                    $_agency->skills()->attach($skill['id'], ['skill_rating' => $skill['rating']]);
+                                    // $_agency->skills()->attach($skill['id'], ['skill_rating' => $skill['rating']]);
+                                }
+                            }
                         }
-                        else {
-                            Session::flash('error', 'Please enter other agency email or agency name.');
+                        if ($files = $request->file('agency_logo')) {
+                            request()->validate([
+                                'agency_logo' => 'file|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                            ]);
+                            $folderPath = public_path('uploads/agency_logos/' . $data['agency_id']);
+                            $image_parts = explode(";base64,", $request->agency_logo_64);
+                            $image_type_aux = explode("image/", $image_parts[0]);
+                            $image_type = $image_type_aux[1];
+                            $image_base64 = base64_decode($image_parts[1]);
+                            $file = new Filesystem();
+
+                            $directory = 'uploads/agency_logos/' . $data['agency_id'];
+
+                            $filename = $data['agency_id'] . "_" . time() . '.' . $image_type;
+                            $filepath = $folderPath . '/' . $filename;
+                            $img = Image::make($image_base64)->save(public_path('uploads/agency_logos/' . $data['agency_id'] . '/' . $filename));
+                            $updated = DB::table('agency_user')->where('id', $data['agency_id'])->update(array('agency_logo' => $filename));
+                        }
+                        if ($updated) {
+                            Session::flash('message', 'Your new Agency has been successfully updated.');
+                            return Redirect::to('/profile/settings/agency-settings');
+                        } else {
+                            Session::flash('message', 'Something Wrong!.');
                             return Redirect::back();
-                         } 
-                   
+                        }
+                    } else {
+                        Session::flash('error', 'Please enter hourly rates range for your Agency.');
+                        return Redirect::back();
+                    }
                 } else {
-                    Session::flash('error', 'Please enter all the required fields, and then retry.');
+                    Session::flash('error', 'Please enter other agency email or agency name.');
                     return Redirect::back();
                 }
-            
-
-
+            } else {
+                Session::flash('error', 'Please enter all the required fields, and then retry.');
+                return Redirect::back();
+            }
         } else {
 
             Session::flash('error', 'You dont have access to create an Agency account');
             return Redirect::back();
         }
-
     }
 
 
-    public function inviteToAgency(Request $request) {
+    public function inviteToAgency(Request $request)
+    {
 
-        if(!empty($request->member_role)){
+        if (!empty($request->member_role)) {
             $user_id = User::select('id')->where('email', $request->invitation_email)->first();
-            
+
             if (!empty($user_id->id)) {
-                $alreadyInvited = DB::table('agency_associated_users')->where('agency_id', $request->agency_id)->where('user_id',$user_id->id)->get();
+                $alreadyInvited = DB::table('agency_associated_users')->where('agency_id', $request->agency_id)->where('user_id', $user_id->id)->get();
                 // dd($alreadyInvited);
-                if(!empty($alreadyInvited[0])){
+                if (!empty($alreadyInvited[0])) {
                     Session::flash('error', 'Invitation has already sent to this user.');
-                        return Redirect::back();
-    
+                    return Redirect::back();
                 }
 
                 $associate_user = DB::table('agency_associated_users')->insert(
                     ['agency_id' => $request->agency_id, 'user_id' => $user_id->id, 'member_role' => $request->member_role, 'is_pending' => 1]
                 );
-       $agency_name = DB::table('agency_user')->select('agency_name')->where('id',$request->agency_id)->first();
-        $creator = DB::table('agency_user')->select('user_id')->where('id',$request->agency_id)->first();
-        $member_email = $request->invitation_email;
-        // dd(config('mail.password'));
-        if (trim(config('mail.username')) != "" && trim(config('mail.password')) != "") {
-            
-            $email_params = array();
-            $template_data = (object)array();
-            $template_data->content = Helper::getAgencyInvitationEmailContent();
-            $template_data->title =  "Agency Invitation ";
-            $template_data->subject = "Agency Invitation";
-            // dd($template_data->content);
-            $email_params['agency_creator_name'] = Helper::getUserName($creator->user_id);
-            $email_params['agency_member_name'] = Helper::getUserName($user_id->id);
-            // $agency_info =  Helper::getAgencyList($data['agency_id']);
-            $email_params['agency_name'] = $agency_name->agency_name;
-                Mail::to($member_email)
-                    ->send(
-                        new FreelancerEmailMailable(
-                            'agency_invitation',
-                            $template_data,
-                            $email_params
-                        )
-                    );
-            
-        }
-        if (trim(config('mail.username')) != "" && trim(config('mail.password')) != "") {
-            
-            $email_params = array();
-            $template_data = (object)array();
-            $template_data->content = '';
-            $template_data->title =  "Agency Invitation Sent ";
-            $template_data->subject = "Agency Invitation Sent";
-            // dd($template_data->content);
-            $email_params['agency_creator_name'] = Helper::getUserName($creator->user_id);
-            $email_params['agency_member_name'] = Helper::getUserName($user_id->id);
-            $user = User::find($user_id->id);
-            $email_params['agency_member_link'] = 'http://dev.ebelong.com/profile/'.$user->slug;
-            // $agency_info =  Helper::getAgencyList($data['agency_id']);
-            $email_params['agency_name'] = $agency_name->agency_name;
-                Mail::to($member_email)
-                    ->send(
-                        new FreelancerEmailMailable(
-                            'join_agency',
-                            $template_data,
-                            $email_params
-                        )
-                    );
-            
-        }
+                $agency_name = DB::table('agency_user')->select('agency_name')->where('id', $request->agency_id)->first();
+                $creator = DB::table('agency_user')->select('user_id')->where('id', $request->agency_id)->first();
+                $member_email = $request->invitation_email;
+                // dd(config('mail.password'));
+                if (trim(config('mail.username')) != "" && trim(config('mail.password')) != "") {
+
+                    $email_params = array();
+                    $template_data = (object)array();
+                    $template_data->content = Helper::getAgencyInvitationEmailContent();
+                    $template_data->title =  "Agency Invitation ";
+                    $template_data->subject = "Agency Invitation";
+                    // dd($template_data->content);
+                    $email_params['agency_creator_name'] = Helper::getUserName($creator->user_id);
+                    $email_params['agency_member_name'] = Helper::getUserName($user_id->id);
+                    // $agency_info =  Helper::getAgencyList($data['agency_id']);
+                    $email_params['agency_name'] = $agency_name->agency_name;
+                    Mail::to($member_email)
+                        ->send(
+                            new FreelancerEmailMailable(
+                                'agency_invitation',
+                                $template_data,
+                                $email_params
+                            )
+                        );
+                }
+                if (trim(config('mail.username')) != "" && trim(config('mail.password')) != "") {
+
+                    $email_params = array();
+                    $template_data = (object)array();
+                    $template_data->content = '';
+                    $template_data->title =  "Agency Invitation Sent ";
+                    $template_data->subject = "Agency Invitation Sent";
+                    // dd($template_data->content);
+                    $email_params['agency_creator_name'] = Helper::getUserName($creator->user_id);
+                    $email_params['agency_member_name'] = Helper::getUserName($user_id->id);
+                    $user = User::find($user_id->id);
+                    $email_params['agency_member_link'] = 'http://dev.ebelong.com/profile/' . $user->slug;
+                    // $agency_info =  Helper::getAgencyList($data['agency_id']);
+                    $email_params['agency_name'] = $agency_name->agency_name;
+                    Mail::to($member_email)
+                        ->send(
+                            new FreelancerEmailMailable(
+                                'join_agency',
+                                $template_data,
+                                $email_params
+                            )
+                        );
+                }
                 if ($associate_user === true) {
                     Session::flash('message', 'Invitation has sent.');
                     return Redirect::back();
-                }
-                else {
+                } else {
                     Session::flash('error', 'Unable to invite user.');
                     return Redirect::back();
                 }
-            }
-            else {
+            } else {
                 Session::flash('error', 'No users found with this email.');
                 return Redirect::back();
             }
-
-        }
-        else{
+        } else {
             Session::flash('error', 'Please Choose the Role.');
             return Redirect::back();
-
         }
-
-
     }
 
     /**
@@ -677,7 +666,7 @@ class UserController extends Controller
     {
         $agency_info['is_owner'] = null;
         $agency_info = array();
-        $agency_info = Helper::getAgencyList(0,array('user_id'=>Auth::user()->id));
+        $agency_info = Helper::getAgencyList(0, array('user_id' => Auth::user()->id));
 
         if (!empty($user->languages)) {
             foreach ($user->languages as $user_language) {
@@ -692,20 +681,18 @@ class UserController extends Controller
             if (!empty($agency_info)) {
                 $agency_info['is_owner'] = 1;
             }
-        }
-        else {
+        } else {
 
             $agency_info = DB::table('agency_associated_users')->select('agency_id')
-                ->where('user_id',Auth::user()->id)
-                ->where('is_pending',0)
-                ->where('is_accepted',1)
+                ->where('user_id', Auth::user()->id)
+                ->where('is_pending', 0)
+                ->where('is_accepted', 1)
                 ->get();
             $agency_info = @json_decode(json_encode($agency_info), true);
 
             if (!empty($agency_info)) {
                 $agency_info['is_owner'] = 0;
             }
-
         }
         // $member_type = [
         //     'exclusive_member' => ' Exclusive Member',
@@ -717,9 +704,9 @@ class UserController extends Controller
         }
 
         if (file_exists(resource_path('views/extend/back-end/settings/agency-settings.blade.php'))) {
-            return view('extend.back-end.settings.agency-settings',compact('agency_info'));
+            return view('extend.back-end.settings.agency-settings', compact('agency_info'));
         } else {
-            return view('back-end.settings.agency-settings',compact('agency_info'));
+            return view('back-end.settings.agency-settings', compact('agency_info'));
         }
     }
 
@@ -800,12 +787,12 @@ class UserController extends Controller
             return Redirect::back();
         }
     }
-	public function getLogNotificationData()
-    {      
+    public function getLogNotificationData()
+    {
         $json = array();
         if (Auth::user()) {
             $user = User::where('logged_status', 1)->get();
-            if($user){
+            if ($user) {
                 $json['type'] = 'success';
                 $json['user_log_info'] = $user;
             }
@@ -816,25 +803,27 @@ class UserController extends Controller
             return $json;
         }
     }
-     public function updateNotificationData(Request $request){
+    public function updateNotificationData(Request $request)
+    {
         $id = $request->id;
         $user = User::find($id);
         $user->logged_status = 2;
         $user->save();
-         $json = array();
-         $json['type'] = 'success';
+        $json = array();
+        $json['type'] = 'success';
         return $json;
     }
 
-    public function viewNotificationData(){
+    public function viewNotificationData()
+    {
 
         $skills = Skill::all();
 
         return view('extend.back-end.admin.send-notifications.index', compact('skills'));
-
     }
 
-    public function sendNotificationData(Request $request){
+    public function sendNotificationData(Request $request)
+    {
 
         if (!empty($request->notification_type) && $request->notification_type == 'skills') {
             foreach ($request->skills as $skill) {
@@ -854,7 +843,7 @@ class UserController extends Controller
                     $firebaseTokens = @json_decode(json_encode($firebaseTokens), true);
                     $user_devices_token = null;
                     foreach ($firebaseTokens as $firebaseToken) {
-                       $user_devices_token[] =  $firebaseToken['device_token'];
+                        $user_devices_token[] =  $firebaseToken['device_token'];
                     }
 
                     $error = null;
@@ -896,66 +885,57 @@ class UserController extends Controller
 
                         $response = curl_exec($ch);
 
-                        $response = @json_decode($response,true);
+                        $response = @json_decode($response, true);
 
                         if ($response['failure'] > 0) {
-                            $messageFailure = $response['failure'].' alerts were Failed!';
+                            $messageFailure = $response['failure'] . ' alerts were Failed!';
                         }
 
                         if ($response['success'] > 0) {
-                            $messageSuccess = $response['success'].' alerts were Success!';
+                            $messageSuccess = $response['success'] . ' alerts were Success!';
                         }
 
                         if (!empty($messageFailure) && !empty($messageSuccess)) {
                             $type = 'error';
                             $message = $messageSuccess . ' & ' . $messageFailure;
-                        }
-                        elseif(empty($messageFailure) && !empty($messageSuccess)) {
+                        } elseif (empty($messageFailure) && !empty($messageSuccess)) {
                             $type = 'alert';
                             $message = $messageSuccess;
-                        }
-                        elseif(!empty($messageFailure) && empty($messageSuccess)) {
+                        } elseif (!empty($messageFailure) && empty($messageSuccess)) {
                             $type = 'error';
                             $message = $messageFailure;
-                        }
-                        else {
+                        } else {
                             $message = 'No response from Firebase Api';
                         }
 
                         return redirect()->back()->with($type, $message);
-
-                    }
-                    else {
+                    } else {
 
                         $error['no_application'] = 'Following User dont have Mobile Application yet!';
-
                     }
-                    if(isset($error['no_application'])) {
+                    if (isset($error['no_application'])) {
 
                         return redirect()->back()->with('alert', $error['no_application']);
                     }
-
                 }
-
             }
-        }
-        else if (!empty($request->notification_type) && $request->notification_type == 'email') {
+        } else if (!empty($request->notification_type) && $request->notification_type == 'email') {
             $user_emails = explode(',', $request->notification_emails);
 
             foreach ($user_emails as $email) {
                 // dd($this->user::getUserRoleType(Auth::user()->id)->role_type);
-                if($this->user::getUserRoleType(Auth::user()->id)->role_type=='freelancer'){
+                if ($this->user::getUserRoleType(Auth::user()->id)->role_type == 'freelancer') {
                     $user_ids = DB::table('users')->join('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
-                    ->select('users.id')
-                    ->where('users.email', $email)->where('model_has_roles.role_id', '3')->get();
+                        ->select('users.id')
+                        ->where('users.email', $email)->where('model_has_roles.role_id', '3')->get();
                 }
-                if($this->user::getUserRoleType(Auth::user()->id)->role_type=='admin'){
-                $user_ids = DB::table('users')->select('id')
-                    ->where('email', '=', $email)
-                    ->get();
+                if ($this->user::getUserRoleType(Auth::user()->id)->role_type == 'admin') {
+                    $user_ids = DB::table('users')->select('id')
+                        ->where('email', '=', $email)
+                        ->get();
                 }
                 $user_ids = @json_decode(json_encode($user_ids), true);
-                if(empty($user_ids)){
+                if (empty($user_ids)) {
                     return redirect()->back()->with('alert', 'No Users Available with this Email!');
                 }
                 foreach ($user_ids as $user_id) {
@@ -1009,54 +989,43 @@ class UserController extends Controller
 
                         $response = curl_exec($ch);
 
-                        $response = @json_decode($response,true);
+                        $response = @json_decode($response, true);
 
                         if ($response['failure'] > 0) {
-                            $messageFailure = $response['failure'].' alerts were Failed!';
+                            $messageFailure = $response['failure'] . ' alerts were Failed!';
                         }
 
                         if ($response['success'] > 0) {
-                            $messageSuccess = $response['success'].' alerts were Success!';
+                            $messageSuccess = $response['success'] . ' alerts were Success!';
                         }
 
                         if (!empty($messageFailure) && !empty($messageSuccess)) {
                             $type = 'alert';
                             $message = $messageSuccess . ' & ' . $messageFailure;
-                        }
-                        elseif(empty($messageFailure) && !empty($messageSuccess)) {
+                        } elseif (empty($messageFailure) && !empty($messageSuccess)) {
                             $type = 'success';
                             $message = $messageSuccess;
-                        }
-                        elseif(!empty($messageFailure) && empty($messageSuccess)) {
+                        } elseif (!empty($messageFailure) && empty($messageSuccess)) {
                             $type = 'error';
                             $message = $messageFailure;
-                        }
-                        else {
+                        } else {
                             $message = 'No response from Firebase Api';
                         }
 
                         return redirect()->back()->with($type, $message);
-
-                    }
-                    else {
+                    } else {
 
                         $error['no_application'] = 'Following User dont have Mobile Application yet!';
-
                     }
-                    if(isset($error['no_application'])) {
+                    if (isset($error['no_application'])) {
 
                         return redirect()->back()->with('alert', $error['no_application']);
                     }
-
                 }
-
             }
-        }
-        else {
+        } else {
             return redirect()->back()->with('alert', 'No User type selected!');
-
         }
-
     }
 
     /**
@@ -1347,13 +1316,13 @@ class UserController extends Controller
     {
         if (Auth::user()) {
             $user = $this->user::find(Auth::user()->id);
-            
+
             // $users = !empty($user_by_role) ? User::whereIn('id', $user_by_role)->where('is_disabled', 'false')->where('status',1) : array();
             $profile = $user->profile;
-            $user_id=array();
+            $user_id = array();
             $saved_jobs        = !empty($profile->saved_jobs) ? unserialize($profile->saved_jobs) : array();
             $saved_freelancers = !empty($profile->saved_freelancer) ? unserialize($profile->saved_freelancer) : array();
-            $user_id =  Profile::whereIn('id',$saved_freelancers)->pluck('user_id')->toArray();
+            $user_id =  Profile::whereIn('id', $saved_freelancers)->pluck('user_id')->toArray();
             // $saved_freelancers=User::whereIn('id',$user_id)->get();
             // $u = Profile::find(218);
             // dd(User::find($u->user_id));
@@ -1384,8 +1353,7 @@ class UserController extends Controller
                         )
                     );
                 }
-            }
-            elseif ($request->path() === 'admin/saved-items') {
+            } elseif ($request->path() === 'admin/saved-items') {
                 if (file_exists(resource_path('views/extend/back-end/admin/saved-items.blade.php'))) {
                     return view(
                         'extend.back-end.admin.saved-items',
@@ -1409,8 +1377,7 @@ class UserController extends Controller
                         )
                     );
                 }
-            }
-             elseif ($request->path() === 'freelancer/saved-items') {
+            } elseif ($request->path() === 'freelancer/saved-items') {
                 if (file_exists(resource_path('views/extend/back-end/freelancer/saved-items.blade.php'))) {
                     return view(
                         'extend.back-end.freelancer.saved-items',
@@ -1503,7 +1470,7 @@ class UserController extends Controller
             if (!empty($request['id'])) {
                 $user_id = Auth::user()->id;
                 $id = $request['id'];
-                if (!empty($request['column']) && ($request['column'] === 'saved_employers' || $request['column'] === 'saved_freelancer' || $request['column'] === 'saved_services'||$request['column'] === 'saved_cources')) {
+                if (!empty($request['column']) && ($request['column'] === 'saved_employers' || $request['column'] === 'saved_freelancer' || $request['column'] === 'saved_services' || $request['column'] === 'saved_cources')) {
                     if (!empty($request['seller_id'])) {
                         if ($user_id == $request['seller_id']) {
                             $json['type'] = 'error';
@@ -1549,7 +1516,7 @@ class UserController extends Controller
             if (!empty($request['id'])) {
                 $user_id = Auth::user()->id;
                 $id = $request['id'];
-                if (!empty($request['column']) && ($request['column'] === 'saved_employers' || $request['column'] === 'saved_freelancer' || $request['column'] === 'saved_services'||$request['column'] === 'saved_cources')) {
+                if (!empty($request['column']) && ($request['column'] === 'saved_employers' || $request['column'] === 'saved_freelancer' || $request['column'] === 'saved_services' || $request['column'] === 'saved_cources')) {
                     if (!empty($request['seller_id'])) {
                         if ($user_id == $request['seller_id']) {
                             $json['type'] = 'error';
@@ -1661,8 +1628,7 @@ class UserController extends Controller
                                     $email_params
                                 )
                             );
-                    }
-                    else if ($project_type == 'course') {
+                    } else if ($project_type == 'course') {
                         $course = Cource::find($request['course_id']);
                         $email_params['project_title'] = $course->title;
                         $email_params['completed_project_link'] = url('course/' . $course->slug);
@@ -1875,8 +1841,7 @@ class UserController extends Controller
                                 );
                         }
                     }
-                }
-                else if ($request['report_type'] == 'course_cancel') {
+                } else if ($request['report_type'] == 'course_cancel') {
                     $json['message'] = trans('lang.course_cancelled');
                     if (trim(env('MAIL_USERNAME')) != "" && trim(env('MAIL_PASSWORD')) != "") {
                         $freelancer_job_cancelled = DB::table('email_types')->select('id')->where('email_type', 'freelancer_email_cancel_job')->get()->first();
@@ -1916,8 +1881,7 @@ class UserController extends Controller
                                 )
                             );
                     }
-                }
-                 else if ($request['report_type'] == 'service_cancel') {
+                } else if ($request['report_type'] == 'service_cancel') {
                     $json['message'] = trans('lang.service_cancelled');
                     if (trim(env('MAIL_USERNAME')) != "" && trim(env('MAIL_PASSWORD')) != "") {
                         $freelancer_job_cancelled = DB::table('email_types')->select('id')->where('email_type', 'freelancer_email_cancel_job')->get()->first();
@@ -2005,22 +1969,18 @@ class UserController extends Controller
                         $proposal = new Proposal();
                         $send_message = $proposal::sendMessage($request, $user_id);
                     } else {
-                       
+
                         $json['type'] = 'error';
                         $json['message'] = trans('lang.not_allowed_msg');
                         return $json;
                     }
-                } elseif($request['project_type'] == 'course'){
+                } elseif ($request['project_type'] == 'course') {
                     // $purchase_service = Helper::getPivotService($request['proposal_id']);
                     // $status = $purchase_service->status;
                     // if ($status == "hired") {
-                        $course = new Cource();
-                        $send_message = $course::sendMessage($request, $user_id);
-                    
-
-                }
-                
-                else {
+                    $course = new Cource();
+                    $send_message = $course::sendMessage($request, $user_id);
+                } else {
                     dd("in elses");
                     $purchase_service = Helper::getPivotService($request['proposal_id']);
                     $status = $purchase_service->status;
@@ -2199,13 +2159,13 @@ class UserController extends Controller
             return $response;
         }
         $json = array();
-        if($type=='service'){
-        if (Helper::getAuthRoleName()=='Freelancer'||Helper::getAuthRoleName()=='Employer') {
-            $json['type'] = 'error';
-            $json['process'] = trans('You are not permited to buy Services');
-            return $json;
+        if ($type == 'service') {
+            if (Helper::getAuthRoleName() == 'Freelancer' || Helper::getAuthRoleName() == 'Employer') {
+                $json['type'] = 'error';
+                $json['process'] = trans('You are not permited to buy Services');
+                return $json;
+            }
         }
-    }
 
         if (!empty($id)) {
             $order = new Order();
@@ -2213,15 +2173,14 @@ class UserController extends Controller
             if ($type == 'service') {
                 $json['service_order'] = $new_order['service_order'];
             }
-            if($type == 'course'){
+            if ($type == 'course') {
                 $json['cource_order'] = $new_order['cource_order'];
-            } 
+            }
             $json['type'] = 'success';
             $json['order_id'] = $new_order['id'];
             $json['process'] = trans('lang.saving_profile');
-         
+
             return $json;
-            
         } else {
             $json['type'] = 'error';
             $json['process'] = trans('lang.something_wrong');
@@ -2249,15 +2208,14 @@ class UserController extends Controller
                     $title = $service->title;
                     $cost = $service->price;
                     $product_id = $id;
-                } 
+                }
                 if ($project_type == 'course') {
                     $cource_order = DB::table('cource_user')->select('cource_id')->where('id', $id)->first();
                     $cource = Cource::find($cource_order->cource_id);
                     $title = $cource->title;
                     $cost = $cource->price;
                     $product_id = $id;
-                }
-                else {
+                } else {
                     $proposal = Proposal::where('id', $id)->get()->first();
                     if (!empty($proposal)) {
                         $job = $proposal->job;
@@ -2519,7 +2477,7 @@ class UserController extends Controller
                     if (Schema::hasColumn('items', 'type')) {
                         $item = DB::table('items')->select('id')->where('type', 'package')->where('subscriber', $order->user_id)->first();
                         if (empty($item)) {
-                            $item = DB::table('items')->select('id')->where('subscriber', $order->user_id)->first();    
+                            $item = DB::table('items')->select('id')->where('subscriber', $order->user_id)->first();
                         }
                     } else {
                         $item = DB::table('items')->select('id')->where('subscriber', $order->user_id)->first();
@@ -2769,7 +2727,7 @@ class UserController extends Controller
      */
     public function showOrders()
     {
-        $orders = Order::orderBy('id','DESC')->get();
+        $orders = Order::orderBy('id', 'DESC')->get();
         $currency   = SiteManagement::getMetaValue('commision');
         $symbol = !empty($currency) && !empty($currency[0]['currency']) ? Helper::currencyList($currency[0]['currency']) : array();
         $status_list = Helper::getOrderStatus();
@@ -2793,29 +2751,28 @@ class UserController extends Controller
         $avater = !empty($profile->avater) ? $profile->avater : '';
         $tagline = !empty($profile->tagline) ? $profile->tagline : '';
         $description = !empty($profile->description) ? $profile->description : '';
-        
-            if (file_exists(resource_path('views/extend/back-end/admin/profile-settings/personal-detail/index.blade.php'))) {
-                return view(
-                    'extend.back-end.admin.profile-settings.personal-detail.index',
-                    compact(
-                        'banner',
-                        'avater',
-                        'tagline',
-                        'description'
-                    )
-                );
-            } else {
-                return view(
-                    'back-end.admin.profile-settings.personal-detail.index',
-                    compact(
-                        'banner',
-                        'avater',
-                        'tagline',
-                        'description'
-                    )
-                );
-            }
-        
+
+        if (file_exists(resource_path('views/extend/back-end/admin/profile-settings/personal-detail/index.blade.php'))) {
+            return view(
+                'extend.back-end.admin.profile-settings.personal-detail.index',
+                compact(
+                    'banner',
+                    'avater',
+                    'tagline',
+                    'description'
+                )
+            );
+        } else {
+            return view(
+                'back-end.admin.profile-settings.personal-detail.index',
+                compact(
+                    'banner',
+                    'avater',
+                    'tagline',
+                    'description'
+                )
+            );
+        }
     }
     public function editorProfileSettings()
     {
@@ -2825,7 +2782,7 @@ class UserController extends Controller
         $avater = !empty($profile->avater) ? $profile->avater : '';
         $tagline = !empty($profile->tagline) ? $profile->tagline : '';
         $description = !empty($profile->description) ? $profile->description : '';
-        if(Helper::getAuthRoleName()=="Editor"){
+        if (Helper::getAuthRoleName() == "Editor") {
             if (file_exists(resource_path('views/extend/back-end/editor/profile-settings/personal-detail/index.blade.php'))) {
                 return view(
                     'extend.back-end.editor.profile-settings.personal-detail.index',
@@ -2848,7 +2805,6 @@ class UserController extends Controller
                 );
             }
         }
-        
     }
 
     /**
@@ -3113,16 +3069,15 @@ class UserController extends Controller
      */
     public function userListing()
     {
-        if (Auth::user() && Auth::user()->getRoleNames()->first() === 'admin'|| Auth::user() && Auth::user()->getRoleNames()->first() === 'editor') {
+        if (Auth::user() && Auth::user()->getRoleNames()->first() === 'admin' || Auth::user() && Auth::user()->getRoleNames()->first() === 'editor') {
             if (!empty($_GET['keyword'])) {
                 $keyword = $_GET['keyword'];
                 $keyword_tokens = explode(' ', $keyword);
                 $count = count($keyword_tokens);
-                if($count>1){
-                    $users = $this->user::where('first_name', 'like', '%' . $keyword_tokens[0] . '%')->where('last_name', 'like', '%' . $keyword_tokens[$count-1] . '%')->paginate(7)->setPath('');
-                }
-                else{
-                    $users = $this->user::where('first_name', 'like', '%' . $keyword . '%')->orWhere('last_name', 'like', '%' . $keyword . '%')->paginate(7)->setPath(''); 
+                if ($count > 1) {
+                    $users = $this->user::where('first_name', 'like', '%' . $keyword_tokens[0] . '%')->where('last_name', 'like', '%' . $keyword_tokens[$count - 1] . '%')->paginate(7)->setPath('');
+                } else {
+                    $users = $this->user::where('first_name', 'like', '%' . $keyword . '%')->orWhere('last_name', 'like', '%' . $keyword . '%')->paginate(7)->setPath('');
                 }
                 // dd($users);
                 $pagination = $users->appends(
@@ -3130,23 +3085,21 @@ class UserController extends Controller
                         'keyword' => Input::get('keyword')
                     )
                 );
-            } 
-            elseif (!empty($_GET['role'])) {
+            } elseif (!empty($_GET['role'])) {
                 $users = User::getFilterUsers($_GET['role']);
                 $pagination = $users->appends(
                     array(
                         'keyword' => Input::get('keyword')
                     )
                 );
-            }
-            else {
+            } else {
                 $users = User::select('*')->latest()->paginate(10);
             }
             /* if (file_exists(resource_path('views/extend/back-end/admin/users/index.blade.php'))) {
                 return view('extend.back-end.admin.users.index', compact('users'));
             } else { */
-                return view('back-end.admin.users.index', compact('users'));
-           // }
+            return view('back-end.admin.users.index', compact('users'));
+            // }
         } else {
             abort(404);
         }
@@ -3167,7 +3120,7 @@ class UserController extends Controller
                 ->whereYear('created_at', '=', $year)
                 ->whereMonth('created_at', '=', $month)
                 ->orderBy('created_at', 'DESC')
-                ->paginate(7)->setPath(''); 
+                ->paginate(7)->setPath('');
             $pagination = $payouts->appends(
                 array(
                     'year' => Input::get('year'),
@@ -3177,25 +3130,25 @@ class UserController extends Controller
         } else {
             $payouts =  Payout::orderBy('created_at', 'DESC')->paginate(7);
         }
-		
-		$i = 0;
-		foreach($payouts as $payout){
-			if($payout->payment_method == "bacs"){
-				$paymentInfo = array();
-				$userpayoutdetail = DB::table('profiles')->select('payout_settings')->where('user_id',$payout->user_id);
-				if($userpayoutdetail->count() > 0){
-					$userpayoutdetail = $userpayoutdetail->first();
-					$paymentInfo = trim($userpayoutdetail->payout_settings) != "" ? unserialize($userpayoutdetail->payout_settings) : array();
-					$payouts[$i]->paymentinfo = $paymentInfo;
-				}
-			}
-			$i++;
-		}
+
+        $i = 0;
+        foreach ($payouts as $payout) {
+            if ($payout->payment_method == "bacs") {
+                $paymentInfo = array();
+                $userpayoutdetail = DB::table('profiles')->select('payout_settings')->where('user_id', $payout->user_id);
+                if ($userpayoutdetail->count() > 0) {
+                    $userpayoutdetail = $userpayoutdetail->first();
+                    $paymentInfo = trim($userpayoutdetail->payout_settings) != "" ? unserialize($userpayoutdetail->payout_settings) : array();
+                    $payouts[$i]->paymentinfo = $paymentInfo;
+                }
+            }
+            $i++;
+        }
         $selected_year = !empty($_GET['year']) ? $_GET['year'] : '';
         $selected_month = !empty($_GET['month']) ? $_GET['month'] : '';
         $months = Helper::getMonthList();
         //$years = array_combine(range(date("Y"), 1970), range(date("Y"), 1970));
-		$years = array(date("Y"));
+        $years = array(date("Y"));
         // Helper::updatePayouts();
         if (file_exists(resource_path('views/extend/back-end/admin/payouts.blade.php'))) {
             return view(
@@ -3267,9 +3220,9 @@ class UserController extends Controller
         $role = Auth::user()->getRoleNames()->first();
         if (!empty($request['id'])) {
             $payout = Payout::find($request['id']);
-            $is_transfer = Payout::admintofreelancer($payout,$role);
-            if($is_transfer['status'] == true){
-                if($is_transfer['type'] == "paypal"){
+            $is_transfer = Payout::admintofreelancer($payout, $role);
+            if ($is_transfer['status'] == true) {
+                if ($is_transfer['type'] == "paypal") {
                     $payout->status = $request['status'];
                     $payout->save();
                     if (!empty($request['projects_ids'])) {
@@ -3286,8 +3239,8 @@ class UserController extends Controller
                             }
                         }
                     }
-                    $json['type'] = 'success'; 
-                }elseif($is_transfer['type'] == "bacs"){
+                    $json['type'] = 'success';
+                } elseif ($is_transfer['type'] == "bacs") {
                     $payout->status = $is_transfer['data']['status'];
                     $payout->save();
                     if (!empty($request['projects_ids'])) {
@@ -3304,7 +3257,7 @@ class UserController extends Controller
                             }
                         }
                     }
-                    $json['type'] = $is_transfer['data']['status']; 
+                    $json['type'] = $is_transfer['data']['status'];
                 }
                 $json['message'] = trans('lang.status_updated');
                 return $json;
@@ -3386,13 +3339,13 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function updatePayoutDetail(Request $request)
-    {  
-    // dd($request->all()); 
+    {
+        // dd($request->all()); 
         $payout_setting = $request['payout_settings'];
-       
+
         $user_id = $request['id'];
         if (!empty($user_id)) {
-            $payout_setting = $this->profile->savePayoutDetail($request,$user_id);
+            $payout_setting = $this->profile->savePayoutDetail($request, $user_id);
             $json['type'] = 'success';
             $json['message'] = 'payout update successfully';
             return $json;
@@ -3422,112 +3375,117 @@ class UserController extends Controller
             return $json;
         }
     }
-	
-	public function updateIsFeaturedStatus(Request $request){
-		$userid = $request->post('id');
-		$status = $request->post('status');
-		
-		DB::table('users')->where('id',$userid)->update(array('is_featured'=>$status));
-		$json = array();
-		$json['type'] = 'success';
+
+    public function updateIsFeaturedStatus(Request $request)
+    {
+        $userid = $request->post('id');
+        $status = $request->post('status');
+
+        DB::table('users')->where('id', $userid)->update(array('is_featured' => $status));
+        $json = array();
+        $json['type'] = 'success';
         $json['message'] = 'featured status change successfully.';
-		return $json;
-	}
+        return $json;
+    }
 
-    public function updateIsCertifiedStatus(Request $request){
-		$userid = $request->post('id');
-		$status = $request->post('status');
-		
-		DB::table('users')->where('id',$userid)->update(array('is_certified'=>$status));
-		$json = array();
-		$json['type'] = 'success';
+    public function updateIsCertifiedStatus(Request $request)
+    {
+        $userid = $request->post('id');
+        $status = $request->post('status');
+
+        DB::table('users')->where('id', $userid)->update(array('is_certified' => $status));
+        $json = array();
+        $json['type'] = 'success';
         $json['message'] = 'certified status change successfully.';
-		return $json;
-	}
+        return $json;
+    }
 
-    public function updateIsDisabledStatus(Request $request){
-		$userid = $request->post('id');
-		$status = $request->post('status');
+    public function updateIsDisabledStatus(Request $request)
+    {
+        $userid = $request->post('id');
+        $status = $request->post('status');
 
         // echo '<pre>';
         // print($status);
         // exit();
-		
-		DB::table('users')->where('id',$userid)->update(array('is_disabled'=>$status));
-		$json = array();
-		$json['type'] = 'success';
-        $json['message'] = 'disabled status change successfully.';
-		return $json;
-	}
 
-    public function usersList(){
+        DB::table('users')->where('id', $userid)->update(array('is_disabled' => $status));
+        $json = array();
+        $json['type'] = 'success';
+        $json['message'] = 'disabled status change successfully.';
+        return $json;
+    }
+
+    public function usersList()
+    {
 
         return DataTables::of(User::query())->make(true);
     }
-    
-    public function newInvite(Request $request){
+
+    public function newInvite(Request $request)
+    {
 
         $data = [
             'email' => $request['email'],
             'message' => $request['message']
         ];
-        
+
 
         Mail::to($data['email'])->send(new  InvitationToUser($data));
 
 
-        return Redirect::back()->with('messageInviteSuccess','Invitation has been sucessfully sent.');
-
+        return Redirect::back()->with('messageInviteSuccess', 'Invitation has been sucessfully sent.');
     }
 
-    public function newInviteForm(Request $request){
+    public function newInviteForm(Request $request)
+    {
 
         return view('back-end.admin.invite.index');
-
     }
-	
-	// For load employee / freelancer profile page in admin.
-	public function userProfileUpdate($id){
-		$role_id =  Helper::getRoleByUserID($id);
-		if($role_id == 3||$role_id==4){ // For freelancer
-			$locations = Location::pluck('title', 'id');
-			$skills = Skill::pluck('title', 'id');
-			$profile = User::select(
-								'users.*',
-								'profiles.gender',
-								'profiles.hourly_rate',
-								'profiles.tagline',
-								'profiles.description',
-								'profiles.address',
-								'profiles.longitude',
-								'profiles.latitude',
-								'profiles.banner',
-								'profiles.avater',
-								'profiles.videos',
-								'profiles.category_id'
-							)
-							->join('profiles','profiles.user_id','=','users.id')
-							->where('users.id',$id)
-							->get()->first();
-                          
-            $status =$profile->status;
-            
-			$gender = !empty($profile->gender) ? $profile->gender : '';
-			$hourly_rate = !empty($profile->hourly_rate) ? $profile->hourly_rate : '';
-			$tagline = !empty($profile->tagline) ? $profile->tagline : '';
-			$description = !empty($profile->description) ? $profile->description : '';
-			$address = !empty($profile->address) ? $profile->address : '';
-			$longitude = !empty($profile->longitude) ? $profile->longitude : '';
-			$latitude = !empty($profile->latitude) ? $profile->latitude : '';
-			$banner = !empty($profile->banner) ? $profile->banner : '';
-			$avater = !empty($profile->avater) ? $profile->avater : '';
-			$packages = DB::table('items')->where('subscriber', $id)->count();
-			$package_options = Package::select('options')->where('role_id', $role_id)->first();
-			$options = !empty($package_options) ? unserialize($package_options['options']) : array();
-			$videos = !empty($profile->videos) ? Helper::getUnserializeData($profile->videos) : '';
-			$categories = Category::all();
-			$selectedcategories = !empty($profile->category_id) ? $profile->category_id : '';
-			return view(
+
+    // For load employee / freelancer profile page in admin.
+    public function userProfileUpdate($id)
+    {
+        $role_id =  Helper::getRoleByUserID($id);
+        if ($role_id == 3 || $role_id == 4) { // For freelancer
+            $locations = Location::pluck('title', 'id');
+            $skills = Skill::pluck('title', 'id');
+            $profile = User::select(
+                'users.*',
+                'profiles.gender',
+                'profiles.hourly_rate',
+                'profiles.tagline',
+                'profiles.description',
+                'profiles.address',
+                'profiles.longitude',
+                'profiles.latitude',
+                'profiles.banner',
+                'profiles.avater',
+                'profiles.videos',
+                'profiles.category_id'
+            )
+                ->join('profiles', 'profiles.user_id', '=', 'users.id')
+                ->where('users.id', $id)
+                ->get()->first();
+
+            $status = $profile->status;
+
+            $gender = !empty($profile->gender) ? $profile->gender : '';
+            $hourly_rate = !empty($profile->hourly_rate) ? $profile->hourly_rate : '';
+            $tagline = !empty($profile->tagline) ? $profile->tagline : '';
+            $description = !empty($profile->description) ? $profile->description : '';
+            $address = !empty($profile->address) ? $profile->address : '';
+            $longitude = !empty($profile->longitude) ? $profile->longitude : '';
+            $latitude = !empty($profile->latitude) ? $profile->latitude : '';
+            $banner = !empty($profile->banner) ? $profile->banner : '';
+            $avater = !empty($profile->avater) ? $profile->avater : '';
+            $packages = DB::table('items')->where('subscriber', $id)->count();
+            $package_options = Package::select('options')->where('role_id', $role_id)->first();
+            $options = !empty($package_options) ? unserialize($package_options['options']) : array();
+            $videos = !empty($profile->videos) ? Helper::getUnserializeData($profile->videos) : '';
+            $categories = Category::all();
+            $selectedcategories = !empty($profile->category_id) ? $profile->category_id : '';
+            return view(
                 'back-end.admin.users.freelancerprofileupdate',
                 compact(
                     'videos',
@@ -3549,47 +3507,47 @@ class UserController extends Controller
                     'selectedcategories'
                 )
             );
-		}elseif($role_id == 2){ // For employee
-			$profile = User::select(
-								'users.*',
-								'profiles.gender',
-								'profiles.no_of_employees',
-								'profiles.tagline',
-								'profiles.description',
-								'profiles.address',
-								'profiles.longitude',
-								'profiles.latitude',
-								'profiles.avater',
-								'profiles.banner',
-								'profiles.videos',
-								'profiles.department_id',
-								'profiles.payout_id'
-							)
-							->join('profiles','profiles.user_id','=','users.id')
-							->where('users.id',$id)
-							->get()->first();
-			$employees = Helper::getEmployeesList();
-			$departments = Department::all();
-			$locations = Location::pluck('title', 'id');
-			$gender = !empty($profile->gender) ? $profile->gender : '';
-			$tagline = !empty($profile->tagline) ? $profile->tagline : '';
-			$description = !empty($profile->description) ? $profile->description : '';
-			$banner = !empty($profile->banner) ? $profile->banner : '';
-			$avater = !empty($profile->avater) ? $profile->avater : '';
-			$address = !empty($profile->address) ? $profile->address : '';
-			$longitude = !empty($profile->longitude) ? $profile->longitude : '';
-			$latitude = !empty($profile->latitude) ? $profile->latitude : '';
-			$no_of_employees = !empty($profile->no_of_employees) ? $profile->no_of_employees : '';
-			$department_id = !empty($profile->department_id) ? $profile->department_id : '';
-			$payout_id = !empty($profile->payout_id) ? $profile->payout_id : '';
-			$packages = DB::table('items')->where('subscriber', $id)->count();
-			$package_options = Package::select('options')->where('role_id', $id)->first();
-			$options = !empty($package_options) ? unserialize($package_options['options']) : array();
-			$register_form = SiteManagement::getMetaValue('reg_form_settings');
-			$show_emplyr_inn_sec = !empty($register_form) && !empty($register_form[0]['show_emplyr_inn_sec']) ? $register_form[0]['show_emplyr_inn_sec'] : 'true';
-			
-			return view(
-				'back-end.admin.users.employerprofileupdate',
+        } elseif ($role_id == 2) { // For employee
+            $profile = User::select(
+                'users.*',
+                'profiles.gender',
+                'profiles.no_of_employees',
+                'profiles.tagline',
+                'profiles.description',
+                'profiles.address',
+                'profiles.longitude',
+                'profiles.latitude',
+                'profiles.avater',
+                'profiles.banner',
+                'profiles.videos',
+                'profiles.department_id',
+                'profiles.payout_id'
+            )
+                ->join('profiles', 'profiles.user_id', '=', 'users.id')
+                ->where('users.id', $id)
+                ->get()->first();
+            $employees = Helper::getEmployeesList();
+            $departments = Department::all();
+            $locations = Location::pluck('title', 'id');
+            $gender = !empty($profile->gender) ? $profile->gender : '';
+            $tagline = !empty($profile->tagline) ? $profile->tagline : '';
+            $description = !empty($profile->description) ? $profile->description : '';
+            $banner = !empty($profile->banner) ? $profile->banner : '';
+            $avater = !empty($profile->avater) ? $profile->avater : '';
+            $address = !empty($profile->address) ? $profile->address : '';
+            $longitude = !empty($profile->longitude) ? $profile->longitude : '';
+            $latitude = !empty($profile->latitude) ? $profile->latitude : '';
+            $no_of_employees = !empty($profile->no_of_employees) ? $profile->no_of_employees : '';
+            $department_id = !empty($profile->department_id) ? $profile->department_id : '';
+            $payout_id = !empty($profile->payout_id) ? $profile->payout_id : '';
+            $packages = DB::table('items')->where('subscriber', $id)->count();
+            $package_options = Package::select('options')->where('role_id', $id)->first();
+            $options = !empty($package_options) ? unserialize($package_options['options']) : array();
+            $register_form = SiteManagement::getMetaValue('reg_form_settings');
+            $show_emplyr_inn_sec = !empty($register_form) && !empty($register_form[0]['show_emplyr_inn_sec']) ? $register_form[0]['show_emplyr_inn_sec'] : 'true';
+
+            return view(
+                'back-end.admin.users.employerprofileupdate',
                 //'back-end.employer.profile-settings.personal-detail.index',
                 compact(
                     'payout_id',
@@ -3609,16 +3567,17 @@ class UserController extends Controller
                     'options',
                     'packages',
                     'show_emplyr_inn_sec',
-					'profile'
+                    'profile'
                 )
             );
-		}
-	}
-	
-	// For save updated freelancer profile data
-	public function storeFreelancerProfileSettings(Request $request){
-     //  return $request->all();
-      
+        }
+    }
+
+    // For save updated freelancer profile data
+    public function storeFreelancerProfileSettings(Request $request)
+    {
+        //  return $request->all();
+
         $server = Helper::worketicIsDemoSiteAjax();
         if (!empty($server)) {
             $response['type'] = 'error';
@@ -3641,22 +3600,22 @@ class UserController extends Controller
                     'latitude' => ['regex:/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/'],
                     'longitude' => ['regex:/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/'],
                 ]
-            ); 
+            );
         }
         if (!empty($request['change_password'])) {
-                 $this->validate(
-                    $request,
-                    [
-                        'old_password'    => 'required',
-                        'change_password'    => 'required|min:6',
-                        'password_confirmation'    => 'required|min:6',
-                    ]
-                );
+            $this->validate(
+                $request,
+                [
+                    'old_password'    => 'required',
+                    'change_password'    => 'required|min:6',
+                    'password_confirmation'    => 'required|min:6',
+                ]
+            );
         }
-        
+
         if (Auth::user()) {
             $role_id = Helper::getRoleByUserID($request->post('user_id'));
-            $packages = DB::table('items')->where('subscriber',$request->post('user_id'))->count();
+            $packages = DB::table('items')->where('subscriber', $request->post('user_id'))->count();
             $package_options = Package::select('options')->where('role_id', $role_id)->first();
             $options = !empty($package_options) ? unserialize($package_options['options']) : array();
             $skills = !empty($options) ? $options['no_of_skills'] : array();
@@ -3665,9 +3624,9 @@ class UserController extends Controller
             if (empty($payment_settings)) {
                 $package_status = 'true';
             } else {
-                $package_status =!empty($payment_settings[0]['enable_packages']) ? $payment_settings[0]['enable_packages'] : 'true';
+                $package_status = !empty($payment_settings[0]['enable_packages']) ? $payment_settings[0]['enable_packages'] : 'true';
             }
-			$prfly = new Profile();
+            $prfly = new Profile();
             if ($package_status === 'true') {
                 if ($packages > 0) {
                     if (!empty($request['skills']) && count($request['skills']) > $skills) {
@@ -3703,9 +3662,10 @@ class UserController extends Controller
             return $json;
         }
     }
-	
-	// For save updated employer information from admin side.
-	public function storeEmployerProfileSettings(Request $request){
+
+    // For save updated employer information from admin side.
+    public function storeEmployerProfileSettings(Request $request)
+    {
         $server = Helper::worketicIsDemoSiteAjax();
         if (!empty($server)) {
             $response['type'] = 'error';
@@ -3727,11 +3687,11 @@ class UserController extends Controller
                     'latitude' => ['regex:/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/'],
                     'longitude' => ['regex:/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/'],
                 ]
-            ); 
+            );
         }
         if (!empty($request)) {
             $user_id = $request->post('user_id');
-			$prfly = new Profile();
+            $prfly = new Profile();
             $prfly->storeProfile($request, $user_id);
             $json['type'] = 'success';
             $json['process'] = trans('lang.saving_profile');
@@ -3739,14 +3699,15 @@ class UserController extends Controller
         }
     }
 
-    public function updateUserBadge(Request $request){
-		$userid = $request->post('id');
-		$badge = $request->post('status');
-		
-		DB::table('users')->where('id',$userid)->update(array('badge_id'=>$badge));
-		$json = array();
-		$json['type'] = 'success';
+    public function updateUserBadge(Request $request)
+    {
+        $userid = $request->post('id');
+        $badge = $request->post('status');
+
+        DB::table('users')->where('id', $userid)->update(array('badge_id' => $badge));
+        $json = array();
+        $json['type'] = 'success';
         $json['message'] = 'featured status change successfully.';
-		return $json;
-	}
-} 
+        return $json;
+    }
+}

@@ -49,7 +49,36 @@
     <div class="wt-demo-heading">					<h4>Outstanding Demos</h4>					<p>With easy<em> ONE CLICK INSTALL</em> and fully customizable options, our demos are the best start you'll ever get!!</p>					<div class="wt-demo-btns">						<a href="https://codecanyon.net/item/worketic-market-place-for-freelancers/23712284" target="blank" class="wt-demo-btn">Click To LAUNCH</a>					</div>				</div>			</div>		</div>
 @endif			
 @yield('content')
+<!-- Registration Modal -->
+
+<div class="modal fade" id="registrationModal" tabindex="-1" role="dialog" aria-labelledby="registrationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+        <!-- <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+            <button type="button" onclick="closefunction()" id="closebutton" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div> -->
+        <div class="modal-body">
+            <div class="talent-popup-t1">Registration</div>
+            <!-- <div class="talent-popup-t2">Click <button type="button" id="moveonhome" class="btn btn-primary">here</button> to speed up this process</div> -->
+            <div class="talent-popup-t2">Please register to continue browsing our website.</div>
+            <div class="talent-popup-buttons">
+                <button type="button" onclick="location.href='{{ route('clear.registration.modal') }}'" class="btn btn-secondary" id="cancelbutton" data-dismiss="modal">Cancel</button>
+                <a href="{{ route('register') }}" id="moveonhome" class="btn btn-primary">Join Now</a>
+            </div>
+            
+        </div>
+        <!-- <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" id="cancelbutton" data-dismiss="modal">Close</button>
+            <button type="button" id="moveonhome" class="btn btn-primary">Need Assistance</button>
+        </div> -->
+        </div>
+    </div>
+</div>
 </main>
+
 @endsection
 
 
@@ -69,8 +98,21 @@
 	@endif
 @endsection
 
-
 @push('scripts')
+@if (session('show_registration_modal'))
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            // Show the modal
+            $('#registrationModal').modal('show');
+            // Now, make an AJAX request to a route that will forget the session
+            $.post('/clear-modal-session', {_token: '{{ csrf_token() }}'}, function(data) {
+                // Session 'show_registration_modal' is now cleared
+            });
+        });
+    </script>
+@endif
+
 <script>
 	jQuery('.wt-btndemotoggle').on('click', function() {
 		var _this = jQuery(this);

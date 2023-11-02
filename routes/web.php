@@ -49,6 +49,18 @@ if (empty(Request::segment(1))) {
     }
 }
 
+Route::post('/clear-modal-session', function () {
+    session()->forget('show_registration_modal');
+    return response()->json(['status' => 'success']);
+})->middleware('web');
+
+
+Route::get('/clear-registration-modal', function () {
+    session()->forget('show_registration_modal');
+    return redirect()->back();
+})->name('clear.registration.modal');
+
+Route::get('/clear-registration-modal', 'UserController@clearRegistrationModal')->name('clear.registration.modal');
 
 
 Route::get(
