@@ -89,6 +89,11 @@
                 </li>
                 
             <?php elseif($user_role == 'freelancer'): ?>
+            <li style="order: 5;">
+                <a href="{{url('/services')}}">
+                    {{{ trans('lang.services') }}}
+                </a>
+                </li>
             <li style="order: 1;">
                 <a href="{{url('/courses')}}">
                     {{{ trans('lang.courses') }}}

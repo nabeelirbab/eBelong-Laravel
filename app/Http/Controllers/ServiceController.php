@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use App\Skill;
+use Cartalyst\Stripe\Laravel\Facades\Stripe;
 use App\Language;
 use App\Category;
 use App\Location;
@@ -343,7 +344,7 @@ class ServiceController extends Controller
             $attachments = !empty($seller) ? Helper::getUnserializeData($service->attachments) : '';
             // $service_reviews = DB::table('reviews')->where('job_id', $service->id)->get();
             $save_services = !empty(auth()->user()->profile->saved_services) ? unserialize(auth()->user()->profile->saved_services) : array();
-            $service_saved = array_search($selected_service->id,$save_services);
+            $service_saved = array_search($selected_service->id, $save_services);
             // dd($service_saved);
             $key = 'set_service_view';
             $breadcrumbs_settings = SiteManagement::getMetaValue('show_breadcrumb');
@@ -645,7 +646,9 @@ class ServiceController extends Controller
     public function employerPaymentProcess($id)
     {
         if (Auth::user() && !empty($id)) {
-            if (Auth::user()->getRoleNames()->first() === 'employer') {
+            if (Auth::user()->getRoleNames()->first() === 'employer' || 'freelancer') {
+                $stripe = Stripe::make('sk_test_ws2GR8HLb9gMtA9dAyvnclCL'); // Use your Stripe secret key
+
                 $user_id = Auth::user()->id;
                 $employer = User::find($user_id);
                 $service = Service::find($id);
@@ -659,12 +662,18 @@ class ServiceController extends Controller
                 $payment_gateway = !empty($payout_settings) && !empty($payout_settings[0]['payment_method']) ? $payout_settings[0]['payment_method'] : null;
                 $currency   = SiteManagement::getMetaValue('commision');
                 $symbol = !empty($currency) && !empty($currency[0]['currency']) ? Helper::currencyList($currency[0]['currency']) : array();
-               
-               if(!empty($payout_settings) && !empty($payout_settings[0]['commision'] || $payout_settings[0]['commision'] == 0 || $payout_settings[0]['commision'] == 'Null'))
-                {
-                    $commision_amount = ($payout_settings[0]['emp_commision']/100)*$service->price;
+
+                if (!empty($payout_settings) && !empty($payout_settings[0]['commision'] || $payout_settings[0]['commision'] == 0 || $payout_settings[0]['commision'] == 'Null')) {
+                    $commision_amount = ($payout_settings[0]['emp_commision'] / 100) * $service->price;
                     $total_amount = $service->price + $commision_amount;
                 }
+
+                $paymentIntent = $stripe->paymentIntents()->create([
+                    'amount' => $service->price, // Replace with your actual amount, in cents
+                    'currency' => 'usd',
+                ]);
+
+                $clientSecret = $paymentIntent['client_secret'];
 
 
                 if (file_exists(resource_path('views/extend/back-end/employer/services/checkout.blade.php'))) {
@@ -679,7 +688,8 @@ class ServiceController extends Controller
                             'user_id',
                             'freelancer',
                             'commision_amount',
-                            'total_amount'
+                            'total_amount',
+                            'clientSecret'
                         )
                     );
                 } else {
@@ -694,7 +704,8 @@ class ServiceController extends Controller
                             'user_id',
                             'freelancer',
                             'commision_amount',
-                            'total_amount'
+                            'total_amount',
+                            'clientSecret'
                         )
                     );
                 }
@@ -811,7 +822,7 @@ class ServiceController extends Controller
                 $service_list[$key]['price'] = $service->price;
                 $service_list[$key]['seller'] = $service->seller->toArray();
                 $service_list[$key]['seller_count'] = $service->seller->count();
-                $service_reviews = $service->seller->count() > 0 ? Helper::getServiceReviews($service->seller[0]->id, $service->id) : ''; 
+                $service_reviews = $service->seller->count() > 0 ? Helper::getServiceReviews($service->seller[0]->id, $service->id) : '';
                 $service_list[$key]['service_reviews'] = !empty($service_reviews) ? $service_reviews->count() : '';
                 $service_list[$key]['service_rating']  = !empty($service_reviews) && $service_reviews->sum('avg_rating') != 0 ? round($service_reviews->sum('avg_rating') / $service_reviews->count()) : 0;
                 $service_list[$key]['attachments'] = Helper::getUnserializeData($service->attachments);
@@ -821,10 +832,10 @@ class ServiceController extends Controller
                 $service_list[$key]['no_attachments'] = empty($attachments) ? 'la-service-info' : '';
                 $service_list[$key]['total_orders'] = Helper::getServiceCount($service->id, 'hired');
                 $service_list[$key]['seller_name'] = !empty($service->seller[0]) ? Helper::getUserName($service->seller[0]->id) : '';
-                $service_list[$key]['seller_image'] = !empty($service->seller[0]) ? asset(Helper::getProfileImage($service->seller[0]->id)): '';
+                $service_list[$key]['seller_image'] = !empty($service->seller[0]) ? asset(Helper::getProfileImage($service->seller[0]->id)) : '';
                 if (!empty($attachments)) {
                     foreach ($attachments as $attachment_key => $attachment) {
-                        $service_list[$key]['attachments'][$attachment_key] =  !empty($service->seller[0]) ? asset(Helper::getImageWithSize('uploads/services/'.$service->seller[0]->id, $attachment, 'medium')) : '';
+                        $service_list[$key]['attachments'][$attachment_key] =  !empty($service->seller[0]) ? asset(Helper::getImageWithSize('uploads/services/' . $service->seller[0]->id, $attachment, 'medium')) : '';
                     }
                 }
                 $currency   = SiteManagement::getMetaValue('commision');
@@ -842,8 +853,9 @@ class ServiceController extends Controller
         }
     }
 
-    public function Servicelist($slug){
-        
+    public function Servicelist($slug)
+    {
+
         // $blogs = Blog::select('*')->where('status','published')->orderBy('id','DESC');
         $inner_page  = SiteManagement::getMetaValue('inner_page_data');
         $service_list_meta_title = !empty($inner_page) && !empty($inner_page[0]['service_list_meta_title']) ? $inner_page[0]['service_list_meta_title'] : trans('lang.service_listing');
@@ -857,52 +869,54 @@ class ServiceController extends Controller
         $response_time = ResponseTime::all();
         $skills     = Skill::orderBy('title')->get();
         $service_id = array();
-        $services= array();
-        $type="category";
+        $services = array();
+        $type = "category";
         foreach ($skills as $key => $skill) {
-            if($skill->slug==$slug){
-                $type='skill';
+            if ($skill->slug == $slug) {
+                $type = 'skill';
             }
         }
         foreach ($categories as $key => $cat) {
-            if($cat->slug==$slug){
-                $type='category';
+            if ($cat->slug == $slug) {
+                $type = 'category';
             }
         }
         foreach ($locations as $key => $loc) {
-            if($loc->slug==$slug){
-                $type='location';
+            if ($loc->slug == $slug) {
+                $type = 'location';
             }
         }
         foreach ($delivery_time as $key => $time) {
-            if($time->slug==$slug){
-                $type='delivery-time';
+            if ($time->slug == $slug) {
+                $type = 'delivery-time';
             }
         }
         foreach ($response_time as $key => $time) {
-            if($time->slug==$slug){
-                $type='response-time';
+            if ($time->slug == $slug) {
+                $type = 'response-time';
             }
         }
         foreach ($languages as $key => $lang) {
-            if($lang->slug==$slug){
-                $type='language';
+            if ($lang->slug == $slug) {
+                $type = 'language';
             }
         }
 
-        if($type=='category'){
+        if ($type == 'category') {
             $categor_obj = Category::where('slug', $slug)->first();
-            if(!empty($categor_obj->id)){
+            if (!empty($categor_obj->id)) {
                 $category = Category::find($categor_obj->id);
                 if (!empty($category->services)) {
                     $category_services = $category->services->pluck('id')->toArray();
                     foreach ($category_services as $id) {
                         $service_id[] = $id;
                     }
-                    if($categor_obj->title=='E-Commerce'||$categor_obj->title=='Cloud Computing'||$categor_obj->title=='Data Science'||
-                    $categor_obj->title=='Graphic Designing'||$categor_obj->title=='Artificial Intelligence'||$categor_obj->title=='Growth Hacking'){
+                    if (
+                        $categor_obj->title == 'E-Commerce' || $categor_obj->title == 'Cloud Computing' || $categor_obj->title == 'Data Science' ||
+                        $categor_obj->title == 'Graphic Designing' || $categor_obj->title == 'Artificial Intelligence' || $categor_obj->title == 'Growth Hacking'
+                    ) {
                         $skill_obj = Skill::where('title', $categor_obj->title)->get();
-                        $skill= Skill::find($skill_obj[0]->id);
+                        $skill = Skill::find($skill_obj[0]->id);
                         if (!empty($skill->services)) {
                             $skill_services = $skill->services->pluck('id')->toArray();
                             foreach ($skill_services as $id) {
@@ -911,46 +925,45 @@ class ServiceController extends Controller
                         }
                     }
                 }
-                $services = Service::where('status','published')->whereIn('id', $service_id)->orderBy('id','DESC')->paginate(10)->setPath('');
+                $services = Service::where('status', 'published')->whereIn('id', $service_id)->orderBy('id', 'DESC')->paginate(10)->setPath('');
             }
         }
-        if($type=='skill'){
-                $skill_obj = Skill::where('slug', $slug)->first();
-                if(!empty($skill_obj->id)){
-                $skill= Skill::find($skill_obj->id);
+        if ($type == 'skill') {
+            $skill_obj = Skill::where('slug', $slug)->first();
+            if (!empty($skill_obj->id)) {
+                $skill = Skill::find($skill_obj->id);
                 if (!empty($skill->services)) {
                     $skill_services = $skill->services->pluck('id')->toArray();
                     foreach ($skill_services as $id) {
                         $service_id[] = $id;
                     }
                 }
-            
-            $services=Service::where('status','published')->whereIn('id', $service_id)->orderBy('id','DESC')->paginate(10)->setPath('');
+
+                $services = Service::where('status', 'published')->whereIn('id', $service_id)->orderBy('id', 'DESC')->paginate(10)->setPath('');
             }
         }
-        if($type=='location'){
+        if ($type == 'location') {
             $location = Location::select('id')->where('slug', $slug)->get()->pluck('id')->toArray();
-            $services=Service::where('status','published')->whereIn('location_id', $location)->paginate(10)->setPath('');
-       
+            $services = Service::where('status', 'published')->whereIn('location_id', $location)->paginate(10)->setPath('');
         }
-        if($type=='language'){
+        if ($type == 'language') {
             $language = Language::where('slug', $slug)->first();
             $lang = Language::find($language['id']);
-                if (!empty($lang->services)) {
-                    $lang_services = $lang->services->pluck('id')->toArray();
-                    foreach ($lang_services as $id) {
-                        $service_id[] = $id;
-                    }
+            if (!empty($lang->services)) {
+                $lang_services = $lang->services->pluck('id')->toArray();
+                foreach ($lang_services as $id) {
+                    $service_id[] = $id;
                 }
-            $services=Service::where('status','published')->whereIn('id', $service_id)->orderBy('id','DESC')->paginate(10)->setPath('');
+            }
+            $services = Service::where('status', 'published')->whereIn('id', $service_id)->orderBy('id', 'DESC')->paginate(10)->setPath('');
         }
-        if ($type=='delivery-time') {
+        if ($type == 'delivery-time') {
             $deliverytime = DeliveryTime::select('id')->where('slug', $slug)->get()->pluck('id')->toArray();
-            $services = Service::where('status','published')->whereIn('delivery_time_id', $deliverytime)->paginate(10)->setPath('');
+            $services = Service::where('status', 'published')->whereIn('delivery_time_id', $deliverytime)->paginate(10)->setPath('');
         }
-        if ($type=='response-time') {
+        if ($type == 'response-time') {
             $responsetime = ResponseTime::select('id')->where('slug', $slug)->get()->pluck('id')->toArray();
-            $services= Service::where('status','published')->whereIn('response_time_id', $responsetime)->paginate(10)->setPath('');
+            $services = Service::where('status', 'published')->whereIn('response_time_id', $responsetime)->paginate(10)->setPath('');
         }
         $type = "service";
         if (file_exists(resource_path('views/extend/front-end/services/serviceList.blade.php'))) {
@@ -996,9 +1009,9 @@ class ServiceController extends Controller
         $json = array();
         if (!empty($request['id'])) {
             // $service = $this->cource::where('slug', $request['slug'])->select('id')->first();
-            
-                $service = $this->service::find($request['id']);
-                if (!empty($service)) {
+
+            $service = $this->service::find($request['id']);
+            if (!empty($service)) {
                 $skills = $service->skills->toArray();
                 if (!empty($skills)) {
                     $json['type'] = 'success';
@@ -1012,9 +1025,10 @@ class ServiceController extends Controller
                 $json['error'] = 'error';
                 return $json;
             }
-      }
+        }
     }
-    public function servicesListing(){
+    public function servicesListing()
+    {
         $inner_page  = SiteManagement::getMetaValue('inner_page_data');
         $service_list_meta_title = !empty($inner_page) && !empty($inner_page[0]['service_list_meta_title']) ? $inner_page[0]['service_list_meta_title'] : trans('lang.service_listing');
         $service_list_meta_desc = !empty($inner_page) && !empty($inner_page[0]['service_list_meta_desc']) ? $inner_page[0]['service_list_meta_desc'] : trans('lang.service_meta_desc');
@@ -1026,8 +1040,8 @@ class ServiceController extends Controller
         $skills     = Skill::orderBy('title')->get();
         $delivery_time = DeliveryTime::all();
         $response_time = ResponseTime::all();
-        $services= array();
-        $services=Service::where('status','published')->orderByRaw("is_featured DESC, updated_at DESC")->paginate(10)->setPath('');
+        $services = array();
+        $services = Service::where('status', 'published')->orderByRaw("is_featured DESC, updated_at DESC")->paginate(10)->setPath('');
         $type = "service";
         if (file_exists(resource_path('views/extend/front-end/services/serviceList.blade.php'))) {
             return view(

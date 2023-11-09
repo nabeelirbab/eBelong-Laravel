@@ -169,11 +169,15 @@ Route::post('register/form-step2-custom-errors', 'PublicController@RegisterStep2
 Route::get('search-results', 'PublicController@getSearchResult')->name('searchResults');
 Route::post('user/add-wishlist', 'UserController@addWishlist');
 Route::post('user/remove-wishlist', 'UserController@RemoveWishlist');
+Route::post('/apply-coupon', 'CouponController@applyCoupon');
 // Admin Routes
 Route::group(
     ['middleware' => ['role:admin']],
     function () {
         Route::get('user', ['uses' => 'UserController@records', 'as' => 'user.records']);
+        Route::resource('admin/coupons', CouponController::class);
+
+
         // Article Category Routes
         Route::get('admin/article/categories', 'ArticleCategoryController@index')->name('articleCategories');
         Route::post('admin/get-freelancer-skills', 'SkillController@getAdminFreelancerSkills');
@@ -672,6 +676,7 @@ Route::group(
         Route::get('bacs-checkout', 'CourseController@bacsPayment');
         Route::post('user/generate-order/bacs/{id}/{type}', 'UserController@generateOrder');
         Route::get('course/{id}/generate-order', 'CourseController@generateOrder');
+        Route::get('course/{id}/stripe-order', 'CourseController@stripePage');
         Route::get('employer/{type}/invoice', 'UserController@getEmployerInvoices')->name('employerInvoice');
         Route::get('freelancer/{type}/invoice', 'UserController@getFreelancerInvoices')->name('freelancerInvoice');
         Route::get('show/invoice/{id}', 'UserController@showInvoice');

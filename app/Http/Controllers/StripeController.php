@@ -427,6 +427,8 @@ class StripeController extends Controller
                     // $response['message'] =  trans('lang.course_payment_msg');
                     // Session::flash('payment_message', $response);
                     return redirect('/courses')->with('success', trans('lang.course_payment_msg'));
+                } else if ($project_type == 'service') {
+                    return redirect('/services');
                 } else {
 
                     $json['type'] = 'success';

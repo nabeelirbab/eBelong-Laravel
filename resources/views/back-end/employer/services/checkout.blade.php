@@ -85,7 +85,7 @@
                                                 <span><em>{{ trans('lang.pay_amount_via') }}</em> {{ Helper::getPaymentMethodList($gatway)['title']}} {{ trans('lang.pay_gateway') }}</span>
                                             </a>
                                         @elseif ($gatway == "stripe")
-                                            <a href="javascrip:void(0);" v-on:click.prevent="getStriprForm">
+                                            <a href="javascrip:void(0);" onclick="getStripe()">
                                                 <i class="fab fa-stripe-s"></i>
                                                 <span><em>{{ trans('lang.pay_amount_via') }}</em> {{ Helper::getPaymentMethodList($gatway)['title']}} {{ trans('lang.pay_gateway') }}</span>
                                             </a>
@@ -97,57 +97,94 @@
                         </div>
                     @endif
                 </div>
-                <b-modal ref="myModalRef" hide-footer title="Stripe Payment" class="la-pay-stripe">
-                    <div class="d-block text-center">
-                        <form class="wt-formtheme wt-form-paycard" method="POST" id="stripe-payment-form" role="form" action="" @submit.prevent='submitStripeFrom'>
-                            {{ csrf_field() }}
-                            <fieldset>
-                                <div class="form-group wt-inputwithicon {{ $errors->has('card_no') ? ' has-error' : '' }}">
-                                    <label>{{ trans('lang.card_no') }}</label>
-                                    <img src="{{asset('images/pay-icon.png')}}">
-                                    <input id="card_no" type="text" class="form-control" name="card_no" value="{{ old('card_no') }}" autofocus>
-                                    @if ($errors->has('card_no'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('card_no') }}</strong>
-                                        </span>
-                                    @endif
+                <div class="d-none p-3 mt-5" id="stripForm">
+                    <form class="wt-formtheme wt-form-paycard" id="payment-form">
+                        {{ csrf_field() }}
+                        <fieldset>
+                            <div class="form-group sj-checkpaymentmethod ">
+                                <div  class="sj-title">
+                                    <h3>Payment Details</h3>
                                 </div>
-                                <div class="form-group {{ $errors->has('ccExpiryMonth') ? ' has-error' : '' }}">
-                                    <label>{{ trans('lang.expiry_month') }}</label>
-                                    <input id="ccExpiryMonth" type="number" class="form-control" name="ccExpiryMonth" value="{{ old('ccExpiryMonth') }}" min="1" max="12" autofocus>
-                                    @if ($errors->has('ccExpiryMonth'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('ccExpiryMonth') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
-                                <div class="form-group {{ $errors->has('ccExpiryYear') ? ' has-error' : '' }}">
-                                    <label>{{ trans('lang.expiry_year') }}</label>
-                                    <input id="ccExpiryYear" type="text" class="form-control" name="ccExpiryYear" value="{{ old('ccExpiryYear') }}" autofocus>
-                                    @if ($errors->has('ccExpiryYear'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('ccExpiryYear') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
-                                <div class="form-group wt-inputwithicon {{ $errors->has('cvvNumber') ? ' has-error' : '' }}">
-                                    <label>{{ trans('lang.cvc_no') }}</label>
-                                    <img src="{{asset('images/pay-img.png')}}">
-                                    <input id="cvvNumber" type="text" class="form-control" name="cvvNumber" value="{{ old('cvvNumber') }}" autofocus>
-                                    @if ($errors->has('cvvNumber'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('cvvNumber') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
-                                <div class="form-group wt-btnarea">
-                                    <input type="submit" name="button" class="wt-btn" value="Pay {{ !empty($symbol['symbol']) ? $symbol['symbol'] : '$' }}{{$service->price}}">
-                                </div>
-                            </fieldset>
-                        </form>
-                    </b-modal>
+                                
+                                <div id="payment-element"></div>
+                            </div>
+                            <div class="form-group wt-btnarea">
+                                <button id="submit" class="wt-btn">
+                                    <span id="button-text">Pay {{ !empty($symbol['symbol']) ? $symbol['symbol'] : '$' }}{{ $service->price }}</span>
+                                </button>
+                            </div>
+                        </fieldset>
+                    </form>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 @endsection
+@push('stripe')
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+    function getStripe() {
+        $('#stripForm').toggleClass('d-none d-block');
+    }
+
+    var clientSecret = "{{ $clientSecret }}";
+
+    
+    const stripe = Stripe("pk_test_0zHy4tW3x7acahwgalGNESFq");
+
+        // Passing the clientSecret while creating the elements group
+        const elements = stripe.elements({ clientSecret });
+
+        const paymentElementOptions = {
+            layout: "tabs",
+        };
+
+        const paymentElement = elements.create("payment", paymentElementOptions);
+        paymentElement.mount("#payment-element");
+
+    document.querySelector("#payment-form").addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const { error } = await stripe.confirmPayment({
+            elements,
+            confirmParams: {
+                client_secret: clientSecret,  // This should be the client secret from your payment intent.
+                receipt_email: 'peeknabeel@gmail.com',
+                return_url: "{{ url('addmoney/stripe')}}"
+            },
+        });
+                    
+        if (error) {
+            alert(error.message);
+        } else {
+            alert('dsds');
+            postPaymentWithStripe();
+        }
+    });
+
+    function postPaymentWithStripe() {
+        fetch("/addmoney/stripe", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": "{{ csrf_token() }}"  // For Laravel CSRF protection
+            },
+            body: JSON.stringify({
+                clientSecret: clientSecret
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert("Payment successful!");
+            } else {
+                alert(data.message || "Payment failed.");
+            }
+        })
+        .catch(error => {
+            alert("There was an error processing the payment.");
+        });
+    }
+</script>
+@endpush

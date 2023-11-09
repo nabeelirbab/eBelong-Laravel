@@ -1,5 +1,10 @@
 @extends(file_exists(resource_path('views/extend/back-end/master.blade.php')) ? 'extend.back-end.master' : 'back-end.master')
 @section('content')
+@php
+    $defaultAmount = $course->price; // Set your default amount here
+    $encryptedAmount = Crypt::encrypt($defaultAmount);
+    $stripePaymentUrl = "stripe-order?amount=$encryptedAmount"; // Adjust with your actual Stripe URL
+@endphp
     <section class="wt-haslayout wt-dbsectionspace">
         <div class="row">
             <div class=" col-12 col-xl-8" id="packages">
@@ -62,7 +67,15 @@
                                     @endif
                                     <tr>
                                         <td>{{ trans('lang.total') }}</td>
-                                        <td>{{ !empty($symbol['symbol']) ? $symbol['symbol'] : '$' }}{{{$cost}}}</td>
+                                        <td><span id="total_amount">{{ !empty($symbol['symbol']) ? $symbol['symbol'] : '$' }}{{{$cost}}}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Discount:</td>
+                                        <td><span id="discount_amount">$0</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Sub Total:</td>
+                                        <td><span id="final_amount">{{ !empty($symbol['symbol']) ? $symbol['symbol'] : '$' }}{{{$cost}}}</span></td>
                                     </tr>
                                     <tr>
                                         <td>{{ trans('lang.status') }}</td>
@@ -70,6 +83,20 @@
                                     </tr>
                                 </tbody>
                             </table>
+                              {{-- Coupon Application Section --}}
+                                   
+                                <div class="row mt-5">
+                                    <div class="col-md-9">
+                                    <div class="form-group">
+                                        <input type="text" name="coupon_code" id="coupon_code" class="form-control" placeholder="Enter coupon code">
+                                    </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                    <div class="form-group wt-btnarea">
+                                        <button type="button" class="wt-btn" id="apply_coupon">Apply coupon</button>
+                                    </div>
+                                    </div>
+                                </div>
                                 <div class="sj-checkpaymentmethod">
                                     <div class="sj-title">
                                         <h3>{{ trans('lang.select_pay_method') }}</h3>
@@ -86,7 +113,7 @@
                                         @endif
                                         @if($payment_method == 'stripe')
                                             <li>
-                                                <a href="javascrip:void(0);" onclick="getStripe()">
+                                                <a id="stripe_payment_link" href="{{ $stripePaymentUrl }}">
                                                      <i class="fab fa-stripe-s"></i>
                                                     {{-- <img src="http://ec2-52-87-199-242.compute-1.amazonaws.com/images/credit-card.png" alt="credit-card" style="width:70px; height:48px"> --}}
                                                     <span><em>{{ trans('lang.pay_amount_via') }}</em> {{ Helper::getPaymentMethodList("stripe")['title']}} {{ trans('lang.pay_gateway') }}</span>
@@ -102,25 +129,7 @@
                                             </li>
                                              @endif
                                            @endforeach
-                                           <div class="d-none p-3 mt-5" id="stripForm">
-                                            <form class="wt-formtheme wt-form-paycard" id="payment-form">
-                                                {{ csrf_field() }}
-                                                <fieldset>
-                                                    <div class="form-group sj-checkpaymentmethod ">
-                                                        <div  class="sj-title">
-                                                            <h3>Payment Details</h3>
-                                                        </div>
-                                                        
-                                                        <div id="payment-element"></div>
-                                                    </div>
-                                                    <div class="form-group wt-btnarea">
-                                                        <button id="submit" class="wt-btn">
-                                                            <span id="button-text">Pay {{ !empty($symbol['symbol']) ? $symbol['symbol'] : '$' }}{{ $cost }}</span>
-                                                        </button>
-                                                    </div>
-                                                </fieldset>
-                                            </form>
-                                            </div>
+                                         
                                             </div>
                                         </div>
                                     </div>
@@ -129,72 +138,40 @@
                         </div>
                     </section>
                 @endsection
-                @push('stripe')
-                <script src="https://js.stripe.com/v3/"></script>
-                <script>
-                    function getStripe() {
-                        $('#stripForm').toggleClass('d-none d-block');
-                    }
-                
-                    var clientSecret = "{{ $clientSecret }}";
-                
-                    
-                    const stripe = Stripe("pk_test_0zHy4tW3x7acahwgalGNESFq");
-
-                        // Passing the clientSecret while creating the elements group
-                        const elements = stripe.elements({ clientSecret });
-
-                        const paymentElementOptions = {
-                            layout: "tabs",
-                        };
-
-                        const paymentElement = elements.create("payment", paymentElementOptions);
-                        paymentElement.mount("#payment-element");
-                
-                    document.querySelector("#payment-form").addEventListener("submit", async (e) => {
-                        e.preventDefault();
-                
-                        const { error } = await stripe.confirmPayment({
-                            elements,
-                            confirmParams: {
-                                client_secret: clientSecret,  // This should be the client secret from your payment intent.
-                                receipt_email: 'peeknabeel@gmail.com',
-                                return_url: "{{ url('addmoney/stripe')}}"
-                            },
-                        });
-                                    
-                        if (error) {
-                            alert(error.message);
+            @push('stripe')
+            <script>
+                document.getElementById('apply_coupon').addEventListener('click', function() {
+                    var couponCode = document.getElementById('coupon_code').value;
+                    var originalAmount = document.getElementById('total_amount').textContent; // Assuming this is the element with the original amount
+            
+                    fetch('{{ url('apply-coupon') }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: JSON.stringify({ 
+                            coupon_code: couponCode,
+                            original_amount: originalAmount 
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            document.getElementById('coupon_code').value = "";
+                            document.getElementById('discount_amount').textContent = '$'+data.discount;
+                            document.getElementById('final_amount').textContent = '$'+ data.newAmount;
+            
+                            // Update the Stripe payment link with the new amount and coupon code
+                            var stripeUrl = `stripe-order?amount=${data.encryptedAmount}`;
+                            document.getElementById('stripe_payment_link').href = stripeUrl;
                         } else {
-                            alert('dsds');
-                            postPaymentWithStripe();
+                            // Handle error or invalid coupon
+                            alert(data.error);
                         }
                     });
-                
-                    function postPaymentWithStripe() {
-                        fetch("/addmoney/stripe", {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json",
-                                "X-CSRF-TOKEN": "{{ csrf_token() }}"  // For Laravel CSRF protection
-                            },
-                            body: JSON.stringify({
-                                clientSecret: clientSecret
-                            })
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.success) {
-                                alert("Payment successful!");
-                            } else {
-                                alert(data.message || "Payment failed.");
-                            }
-                        })
-                        .catch(error => {
-                            alert("There was an error processing the payment.");
-                        });
-                    }
-                </script>
-                @endpush
-                
+                });
+            </script>
+            
+            @endpush                
                 

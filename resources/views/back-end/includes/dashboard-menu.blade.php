@@ -178,6 +178,12 @@
                             </a>
                         </li>
                         <li>
+                            <a href="{{{ route('coupons.index') }}}">
+                                <i class="ti-gift"></i>
+                                <span>Coupons</span>
+                            </a>
+                        </li>
+                        <li>
                             <a href="{{{ route('homePageSettings') }}}">
                                 <i class="ti-home"></i>
                                 <span>{{ trans('lang.home_page_settings') }}</span>

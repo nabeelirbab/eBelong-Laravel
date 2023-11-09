@@ -50,7 +50,7 @@ class Helper extends Model
      * @return array
      */
 
-   public static function generateCompletion($prompt)
+    public static function generateCompletion($prompt)
     {
         $client = new Client();
         $response = $client->post('https://api.openai.com/v1/completions', [
@@ -68,7 +68,7 @@ class Helper extends Model
                 'presence_penalty' => 0,
             ],
         ]);
-      
+
 
         $completion = json_decode($response->getBody()->getContents(), true)['choices'][0]['text'];
 
@@ -172,9 +172,8 @@ class Helper extends Model
     {
         if (!empty($image)) {
             if (file_exists('uploads/categories/' . $image)) {
-            return '/uploads/categories/' . $image;
-            }
-            else{
+                return '/uploads/categories/' . $image;
+            } else {
                 return 'uploads/categories/1585694189-admin.png';
             }
         } else {
@@ -816,7 +815,7 @@ class Helper extends Model
             '50-60' => trans('lang.freelancer_hourly_rate.50_60'),
             '60-70' => trans('lang.freelancer_hourly_rate.60_70'),
             '70-80' => trans('lang.freelancer_hourly_rate.70_80'),
-			'80-90' => trans('lang.freelancer_hourly_rate.80_90'),
+            '80-90' => trans('lang.freelancer_hourly_rate.80_90'),
             '90-0' => trans('lang.freelancer_hourly_rate.90_0'),
         );
         if (!empty($key) && array_key_exists($key, $list)) {
@@ -1022,7 +1021,7 @@ class Helper extends Model
     public static function getUserName($user_id)
     {
         if (!empty($user_id)) {
-       return User::find($user_id)['first_name'] . ' ' . User::find($user_id)['last_name'];
+            return User::find($user_id)['first_name'] . ' ' . User::find($user_id)['last_name'];
         } else {
             return '';
         }
@@ -1031,7 +1030,7 @@ class Helper extends Model
     public static function getUserEmail($user_id)
     {
         if (!empty($user_id)) {
-       return User::find($user_id)['email'];
+            return User::find($user_id)['email'];
         } else {
             return '';
         }
@@ -1044,7 +1043,7 @@ class Helper extends Model
      */
     public function getSkills()
     {
-//        $json = array();
+        //        $json = array();
         $skills = Skill::select('title', 'id')->get()->toArray();
         if (!empty($skills)) {
             return $skills;
@@ -1065,33 +1064,30 @@ class Helper extends Model
 
         $agency_ids = DB::table('agency_associated_users')
             ->select('agency_id')
-            ->where('user_id',$id)
-            ->where('is_accepted',1)
+            ->where('user_id', $id)
+            ->where('is_accepted', 1)
             ->get();
         $agency_ids = @json_decode(json_encode($agency_ids), true);
-        if(empty($agency_ids)){
+        if (empty($agency_ids)) {
             $agency_ids = DB::table('users')
-            ->select('agency_id')
-            ->where('id',$id)
-            ->where('is_agency',1)
-            ->get();
-        $agency_ids = @json_decode(json_encode($agency_ids), true);
-
+                ->select('agency_id')
+                ->where('id', $id)
+                ->where('is_agency', 1)
+                ->get();
+            $agency_ids = @json_decode(json_encode($agency_ids), true);
         }
 
-        if(count($agency_ids) > 0) {
+        if (count($agency_ids) > 0) {
             foreach ($agency_ids as $agency_id) {
 
                 $agency_data = DB::table('agency_user')
-                    ->where('id',$agency_id['agency_id'])
+                    ->where('id', $agency_id['agency_id'])
                     ->get();
 
                 $agency_data = @json_decode(json_encode($agency_data), true);
-
             }
         }
         return $agency_data;
-
     }
 
 
@@ -1261,7 +1257,7 @@ class Helper extends Model
             '3' => array(
                 'title' => trans('lang.search_filter_list.services'),
                 'value' => 'service',
-            ), 
+            ),
         );
         if (Helper::getAccessType() == 'jobs') {
             return Arr::except($list, [3]);
@@ -1287,7 +1283,7 @@ class Helper extends Model
     public static function getSearchableList($type)
     {
         $json = array();
-        if ($type == 'freelancer'||$type=='hire') {
+        if ($type == 'freelancer' || $type == 'hire') {
             $freelancs  = DB::table("skills")
                 ->select(
                     "title AS name",
@@ -1313,25 +1309,25 @@ class Helper extends Model
                     "title AS name",
                     "slug"
                 )->get()->toArray();
-            $jobs = self::inserturltype($jobs,1);
-            
+            $jobs = self::inserturltype($jobs, 1);
+
             $skills  = DB::table("skills")
                 ->select(
                     "title AS name",
                     "slug"
                 )->get()->toArray();
-            $skills = self::inserturltype($skills,2);
-            
+            $skills = self::inserturltype($skills, 2);
+
             $categories  = DB::table("categories")
                 ->select(
                     "title AS name",
                     "slug"
                 )->get()->toArray();
-            $categories = self::inserturltype($categories,3);
-            
-            $json = array_merge($categories,$skills,$jobs);
+            $categories = self::inserturltype($categories, 3);
+
+            $json = array_merge($categories, $skills, $jobs);
         }
-        if ($type == 'service'||$type=='services') {
+        if ($type == 'service' || $type == 'services') {
             $services = DB::table("services")
                 ->select(
                     "title AS name",
@@ -1339,14 +1335,14 @@ class Helper extends Model
                 )->get()->toArray();
             $json = $services;
         }
-       
-        if ($type == 'instructors'||$type=='courses') {
+
+        if ($type == 'instructors' || $type == 'courses') {
             $cources = DB::table("cources")
                 ->select(
                     "title AS name",
                     "slug"
                 )->get()->toArray();
-              
+
             $json = $cources;
         }
         if ($type == 'blogs') {
@@ -1355,16 +1351,15 @@ class Helper extends Model
                     "title AS name",
                     "slug"
                 )->get()->toArray();
-              
+
             $json = $blogs;
         }
         return $json;
     }
-    
-    public static function inserturltype($array,$type)
+
+    public static function inserturltype($array, $type)
     {
-        foreach($array as $key => $single)
-        {
+        foreach ($array as $key => $single) {
             $array[$key]->url_type = $type;
         }
         return $array;
@@ -1597,8 +1592,7 @@ class Helper extends Model
             } else {
                 return 'images/e-1110x300.jpg';
             }
-        }
-        elseif ($user->role_type == 'editor') {
+        } elseif ($user->role_type == 'editor') {
             if (!empty($size)) {
                 if (file_exists('images/' . $size . '-e-1110x300.jpg')) {
                     return 'images/' . $size . '-e-1110x300.jpg';
@@ -1609,7 +1603,6 @@ class Helper extends Model
                 return 'images/e-1110x300.jpg';
             }
         }
-
     }
 
 
@@ -2243,7 +2236,7 @@ class Helper extends Model
     {
         $commision = SiteManagement::getMetaValue('commision');
         $admin_commission = !empty($commision) && !empty($commision[0]['commision']) ? $commision[0]['commision'] : 0;
-        return !empty($amount) ? $amount - (($amount/100) * $admin_commission) : 0;
+        return !empty($amount) ? $amount - (($amount / 100) * $admin_commission) : 0;
     }
 
     /**
@@ -2254,8 +2247,8 @@ class Helper extends Model
      * @return array
      */
     public static function updatePayouts()
-    { 
-       
+    {
+
         $payout_settings = SiteManagement::getMetaValue('commision');
         $min_payount = !empty($payout_settings) && !empty($payout_settings[0]['min_payout']) ? $payout_settings[0]['min_payout'] : '';
         $payment_settings = SiteManagement::getMetaValue('commision');
@@ -2295,14 +2288,14 @@ class Helper extends Model
                 GROUP BY cource_user.seller_id"
             )
         );
-        
-        $data = array_merge($job_payouts, $purchased_services,$purchased_courses);
-        $result=array();
+
+        $data = array_merge($job_payouts, $purchased_services, $purchased_courses);
+        $result = array();
         foreach ($data as $value) {
             if (isset($result[((array)$value)["user_id"]])) {
-                $result[((array)$value)["user_id"]]["total"]+=((array)$value)["total"];
+                $result[((array)$value)["user_id"]]["total"] += ((array)$value)["total"];
             } else {
-                $result[((array)$value)["user_id"]]=(array)$value;
+                $result[((array)$value)["user_id"]] = (array)$value;
             }
         }
         $totalPayouts = array();
@@ -2311,20 +2304,20 @@ class Helper extends Model
             // dd($totalPayouts);
             foreach ($totalPayouts as $q) {
                 if ($q['total'] >= $min_payount) {
-                  //  dd("im gr8r");
+                    //  dd("im gr8r");
                     $user = User::find($q['user_id']);
-                   
+
                     if ($user['profile']) {
                         $payout_id = !empty($user['profile']->payout_id) ? $user['profile']->payout_id : '';
                         $payout_detail = !empty($user['profile']->payout_settings) ? $user->profile->payout_settings : array();
                         if (!empty($payout_id) || !empty($payout_detail)) {
                             $total_earning = Self::deductAdminCommission($q['total']);
-                          
+
                             $payout = new Payout();
                             $payout->user()->associate($q['user_id']);
                             $payout->amount = $total_earning;
                             $payout->currency = $currency;
-                            if (!empty($payout_detail)) { 
+                            if (!empty($payout_detail)) {
                                 $payment_details  = Helper::getUnserializeData($user->profile->payout_settings);
                                 if ($payment_details['type'] == 'paypal') {
                                     if (Schema::hasColumn('payouts', 'email')) {
@@ -2347,57 +2340,57 @@ class Helper extends Model
                                     $payout->paypal_id = $payout_id;
                                 }
                             }
-							
+
                             /*========== For get project id & employee id ==========*/
-							$projectids = "";
-							$employeeid = "";
-							if(!empty($job_payouts)) {
-								foreach ($job_payouts as $q) {
-                                    
-									$projectids .= $projectids == "" ? $q->ids : $projectids.','.$q->ids;
-								}
-								$job = DB::table('proposals')->select('jobs.user_id')
-									->join('jobs','jobs.id','=','proposals.job_id')
-									->whereIn('proposals.id',explode(",",$projectids));
-								if($job->count() > 0){
-									$job = $job->get();
-									foreach($job as $empid){ 
-										$employeeid = $employeeid != "" ? $employeeid.",".$empid->user_id : $empid->user_id;
-									}
-								}	
-							}
-							
-							if(!empty($purchased_services)) {
-								foreach ($purchased_services as $q) {
-									$projectids .= $projectids == "" ? $q->ids : $projectids.','.$q->ids;
-								}
-								
-								$service = DB::table('service_user')->select('service_user.user_id')
-									->whereIn('service_user.id',explode(",",$projectids));
-								if($service->count() > 0 ){
-									$service = $service->get();
-									foreach($service as $empid){ 
-										$employeeid = $employeeid != "" ? $employeeid.",".$empid->user_id : $empid->user_id;
-									}
-								}
-							} 
-                            if(!empty($purchased_courses)) {
-                               
-                                    
-									$projectids .= $projectids == "" ? $q['ids'] : $projectids.','.$q['ids'];
-								
-							
-								$course = DB::table('cource_user')->select('cource_user.user_id')
-									->whereIn('cource_user.id',explode(",",$projectids));
-								if($course->count() > 0 ){
-									$course= $course->get();
-									foreach($course as $empid){ 
-										$employeeid = $employeeid != "" ? $employeeid.",".$empid->user_id : $empid->user_id;
-									}
-								}
-							} 
-							/*========== end get project id & employee id ===========*/
-							
+                            $projectids = "";
+                            $employeeid = "";
+                            if (!empty($job_payouts)) {
+                                foreach ($job_payouts as $q) {
+
+                                    $projectids .= $projectids == "" ? $q->ids : $projectids . ',' . $q->ids;
+                                }
+                                $job = DB::table('proposals')->select('jobs.user_id')
+                                    ->join('jobs', 'jobs.id', '=', 'proposals.job_id')
+                                    ->whereIn('proposals.id', explode(",", $projectids));
+                                if ($job->count() > 0) {
+                                    $job = $job->get();
+                                    foreach ($job as $empid) {
+                                        $employeeid = $employeeid != "" ? $employeeid . "," . $empid->user_id : $empid->user_id;
+                                    }
+                                }
+                            }
+
+                            if (!empty($purchased_services)) {
+                                foreach ($purchased_services as $q) {
+                                    $projectids .= $projectids == "" ? $q->ids : $projectids . ',' . $q->ids;
+                                }
+
+                                $service = DB::table('service_user')->select('service_user.user_id')
+                                    ->whereIn('service_user.id', explode(",", $projectids));
+                                if ($service->count() > 0) {
+                                    $service = $service->get();
+                                    foreach ($service as $empid) {
+                                        $employeeid = $employeeid != "" ? $employeeid . "," . $empid->user_id : $empid->user_id;
+                                    }
+                                }
+                            }
+                            if (!empty($purchased_courses)) {
+
+
+                                $projectids .= $projectids == "" ? $q['ids'] : $projectids . ',' . $q['ids'];
+
+
+                                $course = DB::table('cource_user')->select('cource_user.user_id')
+                                    ->whereIn('cource_user.id', explode(",", $projectids));
+                                if ($course->count() > 0) {
+                                    $course = $course->get();
+                                    foreach ($course as $empid) {
+                                        $employeeid = $employeeid != "" ? $employeeid . "," . $empid->user_id : $empid->user_id;
+                                    }
+                                }
+                            }
+                            /*========== end get project id & employee id ===========*/
+
                             $payout->status = 'pending';
                             $payout->order_id = null;
                             $payout->projects_ids = $projectids;
@@ -2864,9 +2857,9 @@ class Helper extends Model
      * @return array
      */
     public static function getUnserializeData($data)
-    
+
     {
-        
+
         if (!empty($data)) {
             $fixed_data = preg_replace_callback(
                 '!s:(\d+):"(.*?)";!',
@@ -2913,7 +2906,7 @@ class Helper extends Model
             'waiting' => array(
                 'title' => "waiting",
                 'value' => 'waiting',
-                
+
             ),
             'enroll' => array(
                 'title' => 'enroll',
@@ -2964,15 +2957,14 @@ class Helper extends Model
     {
         return DB::table('service_user')->where('service_id', $service_id)->where('status', $status)->count();
     }
-    public static function getCourceCount($cource_id,$status)
+    public static function getCourceCount($cource_id, $status)
     {
-        
-       if (Schema::hasTable('cource_user')) {
-    
-       return DB::table('cource_user')->where('cource_id', $cource_id)->where('status', $status)->count();
-  
-  }
-}
+
+        if (Schema::hasTable('cource_user')) {
+
+            return DB::table('cource_user')->where('cource_id', $cource_id)->where('status', $status)->count();
+        }
+    }
     /**
      * Get freelancer services
      *
@@ -3009,7 +3001,7 @@ class Helper extends Model
             ->join('cource_user', 'cource_user.cource_id', '=', 'cources.id')
             ->select('cources.*', 'cource_user.id as pivot_id', 'cource_user.seller_id as seller', 'cource_user.type', 'cource_user.status as pivot_status', 'cource_user.user_id as buyer')
             ->where('cource_user.status', $status)
-            ->where('cource_user.user_id',$user_id);
+            ->where('cource_user.user_id', $user_id);
         if (!empty($paid_status)) {
             $courses->where('cource_user.paid', $paid_status);
         }
@@ -3031,7 +3023,7 @@ class Helper extends Model
             ->join('service_user', 'service_user.service_id', '=', 'services.id')
             ->select('services.*', 'service_user.id as pivot_id', 'service_user.user_id as pivot_user', 'service_user.type', 'service_user.status as pivot_status')
             ->where('service_user.status', $status)
-            ->where('service_user.seller_id', $user_id)->get();            
+            ->where('service_user.seller_id', $user_id)->get();
     }
 
     /**
@@ -3059,7 +3051,7 @@ class Helper extends Model
             ->where('reviews.receiver_id', $receiver_id)
             ->where('reviews.cource_id', $cource_id)->get();
     }
-   
+
 
     /**
      * Get service reviews
@@ -3182,7 +3174,7 @@ class Helper extends Model
         $output .= " Student is waiting for you to enroll him";
         $output .= " Course Information is given below.";
         $output .= "<br>Course Amount : %course_amount% $";
-     
+
         $output .= "%signature%";
         return $output;
     }
@@ -3359,7 +3351,7 @@ class Helper extends Model
                 } elseif (file_exists($path . '/' . $image)) {
                     return $path . '/' . $requested_file;
                 } else {
-                    
+
                     return '/uploads/settings/general/imgae-not-availabe.png';
                 }
             } elseif (file_exists($path . '/' . $image)) {
@@ -3387,7 +3379,7 @@ class Helper extends Model
                 } elseif (file_exists($path . '/' . $image)) {
                     return $path . '/' . $requested_file;
                 } else {
-                    
+
                     return '/uploads/settings/general/user.jpg';
                 }
             } elseif (file_exists($path . '/' . $image)) {
@@ -3479,11 +3471,9 @@ class Helper extends Model
                 return trans('lang.freelancer');
             } elseif (Auth::user()->getRoleNames()->first() == 'employer') {
                 return trans('lang.employer');
-            } 
-            elseif (Auth::user()->getRoleNames()->first() == 'editor') {
+            } elseif (Auth::user()->getRoleNames()->first() == 'editor') {
                 return 'Editor';
-            } 
-            else {
+            } else {
                 return trans('lang.admin');
             }
         } else {
@@ -3687,19 +3677,20 @@ class Helper extends Model
         return $json;
     }
 
-    public static function getSessionUserRole() {
+    public static function getSessionUserRole()
+    {
 
         $user_role = 'guest';
-        if(Auth::user()) {
+        if (Auth::user()) {
             $id = Auth::user()->id;
 
             $user_role_id = DB::table('model_has_roles')
-            ->where('model_id', $id)
-            ->value('role_id');
-    
+                ->where('model_id', $id)
+                ->value('role_id');
+
             $user_role = DB::table('roles')
-            ->where('id', $user_role_id)
-            ->value('role_type');
+                ->where('id', $user_role_id)
+                ->value('role_type');
         }
 
         return $user_role;
@@ -4122,92 +4113,97 @@ class Helper extends Model
         return serialize($data);
     }
 
-    public static function getProjectAndServiceTitle($projects_ids,$type){
+    public static function getProjectAndServiceTitle($projects_ids, $type)
+    {
         $jobtitle = "";
-        if($projects_ids != ""){
-            $projects_ids = explode(",",$projects_ids);
+        if ($projects_ids != "") {
+            $projects_ids = explode(",", $projects_ids);
             foreach ($projects_ids as $key => $id) {
                 if ($type == 'job') {
                     $job = DB::table('proposals')->select('jobs.title')
-                                        ->join('jobs','jobs.id','=','proposals.job_id')
-                                        ->where('proposals.id',$id);
-                        if($job->count() > 0 ){
-                            $job = $job->get();
-                            $jobtitle .= $jobtitle == "" ? $job[0]->title : ", ".$job[0]->title; 
-                        }
+                        ->join('jobs', 'jobs.id', '=', 'proposals.job_id')
+                        ->where('proposals.id', $id);
+                    if ($job->count() > 0) {
+                        $job = $job->get();
+                        $jobtitle .= $jobtitle == "" ? $job[0]->title : ", " . $job[0]->title;
+                    }
                 } elseif ($type == 'service') {
                     /* DB::table('service_user')
                         ->where('id', $id)
                         ->update(['paid_progress' => 'completed']); */
-                        $service = DB::table('service_user')->select('services.title')
-                            ->join('services','services.id','=','service_user.service_id')
-                            ->where('service_user.id',$id);
-                        if($service->count() > 0 ){
-                            $service = $service->get();
-                            $jobtitle .= $jobtitle == "" ? $service[0]->title : ", ".$service[0]->title; 
-                        }
+                    $service = DB::table('service_user')->select('services.title')
+                        ->join('services', 'services.id', '=', 'service_user.service_id')
+                        ->where('service_user.id', $id);
+                    if ($service->count() > 0) {
+                        $service = $service->get();
+                        $jobtitle .= $jobtitle == "" ? $service[0]->title : ", " . $service[0]->title;
+                    }
                 }
             }
-        } 
+        }
         return $jobtitle == "" ? "-" : $jobtitle;
     }
-	
-	public static function array_keys_exists($keys,$arr) {
-		return !array_diff_key(array_flip($keys), $arr);
-	}
-	
-	public static function getRefrenceNo($payoutid,$payment_method){
-		$refrence = DB::table('admin_to_freelancers')->select('payout_batch_id')->where('payout_id',$payoutid)->first();
-        // dd($refrence);
-        if($refrence){
-		if($payment_method == "bacs"){
-			$refrence = unserialize($refrence->payout_batch_id);
-			return $refrence['reference_number'];
-		}else{
-			return $refrence->payout_batch_id;
-		}
-    }
-    }
-    
-    public static function getAgencyList($id = 0,$where = array()){
-		$data = null;
-		if($id == 0){
-			$data = DB::table('agency_user');
-			if(!empty($where)){
-				$data = $data->where($where);
-			}
-			$data = $data->get();
-		}else{
-			$data = DB::table('agency_user')->where('id',$id);
-			if(!empty($where)){
-				$data = $data->where($where);
-			}
-			$data = $data->first();
-		}
-		return $data;
+
+    public static function array_keys_exists($keys, $arr)
+    {
+        return !array_diff_key(array_flip($keys), $arr);
     }
 
-    public static function getAgencyById($id) {
+    public static function getRefrenceNo($payoutid, $payment_method)
+    {
+        $refrence = DB::table('admin_to_freelancers')->select('payout_batch_id')->where('payout_id', $payoutid)->first();
+        // dd($refrence);
+        if ($refrence) {
+            if ($payment_method == "bacs") {
+                $refrence = unserialize($refrence->payout_batch_id);
+                return $refrence['reference_number'];
+            } else {
+                return $refrence->payout_batch_id;
+            }
+        }
+    }
+
+    public static function getAgencyList($id = 0, $where = array())
+    {
+        $data = null;
+        if ($id == 0) {
+            $data = DB::table('agency_user');
+            if (!empty($where)) {
+                $data = $data->where($where);
+            }
+            $data = $data->get();
+        } else {
+            $data = DB::table('agency_user')->where('id', $id);
+            if (!empty($where)) {
+                $data = $data->where($where);
+            }
+            $data = $data->first();
+        }
+        return $data;
+    }
+
+    public static function getAgencyById($id)
+    {
 
         $dataAgency = DB::table('agency_user')
-            ->where('user_id',$id)
+            ->where('user_id', $id)
             ->first();
 
         if (empty($dataAgency->id)) {
             $dataAgency = DB::table('agency_associated_users')
-                ->where('user_id',$id)
+                ->where('user_id', $id)
                 ->first();
         }
 
         return $dataAgency;
-
     }
-    
-    public static function getAutocompleteAgencyList(){
+
+    public static function getAutocompleteAgencyList()
+    {
         $result = DB::table('agency_user')->get();
         $arr = array();
-        foreach($result as $res){
-            array_push($arr,array('value'=>$res->id, 'text'=>$res->agency_name));
+        foreach ($result as $res) {
+            array_push($arr, array('value' => $res->id, 'text' => $res->agency_name));
         }
         return json_encode($arr);
     }

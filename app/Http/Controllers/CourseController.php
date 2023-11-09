@@ -32,6 +32,7 @@ use App\Mail\AdminEmailMailable;
 use App\Mail\FreelancerEmailMailable;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Schema;
 
 class CourseController extends Controller
@@ -962,10 +963,26 @@ class CourseController extends Controller
             abort(404);
         }
     }
+    public function stripePage(Request $request)
+    {
+        $encryptedAmount = $request->input('amount');
+        try {
+            $cost = Crypt::decrypt($encryptedAmount);
 
+            $stripe = Stripe::make('sk_test_ws2GR8HLb9gMtA9dAyvnclCL');
+            $paymentIntent = $stripe->paymentIntents()->create([
+                'amount' => $cost, // Replace with your actual amount, in cents
+                'currency' => 'usd',
+            ]);
+
+            $clientSecret = $paymentIntent['client_secret'];
+            return view('back-end.freelancer.courses.stripe-payment', compact('clientSecret', 'cost'));
+        } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+            // Handle the exception if decryption fails
+        }
+    }
     public function generateOrder($id)
     {
-        $stripe = Stripe::make('sk_test_ws2GR8HLb9gMtA9dAyvnclCL'); // Use your Stripe secret key
 
         $symbol = !empty($payout_settings) && !empty($payout_settings[0]['currency']) ? Helper::currencyList($payout_settings[0]['currency']) : array();
         $mode = !empty($payout_settings) && !empty($payout_settings[0]['payment_mode']) ? $payout_settings[0]['payment_mode'] : 'true';
@@ -986,14 +1003,9 @@ class CourseController extends Controller
         $freelancer = User::find($seller->user_id);
         $cost = $course->price;
         // Create a Payment Intent
-        $paymentIntent = $stripe->paymentIntents()->create([
-            'amount' => $cost, // Replace with your actual amount, in cents
-            'currency' => 'usd',
-        ]);
 
-        $clientSecret = $paymentIntent['client_secret'];
         $payout_settings = $user->profile->count() > 0 ? Helper::getUnserializeData($user->profile->payout_settings) : '';
-        return view('back-end.freelancer.courses.checkout', compact('clientSecret', 'course', 'freelancer', 'symbol', 'mode', 'bank_detail', 'subtitle', 'options', 'seller', 'title', 'cost', 'payrols', 'user', 'payout_settings', 'payment_methods'));
+        return view('back-end.freelancer.courses.checkout', compact('course', 'freelancer', 'symbol', 'mode', 'bank_detail', 'subtitle', 'options', 'seller', 'title', 'cost', 'payrols', 'user', 'payout_settings', 'payment_methods'));
     }
     public function courseOrders()
     {
