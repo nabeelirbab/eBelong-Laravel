@@ -216,6 +216,7 @@ class CourseController extends Controller
         $posted_cources = $user->cources->count();
         $posted_featured_cources = $user->cources->where('is_featured', 'true')->count();
         $payment_settings = SiteManagement::getMetaValue('commision');
+        // dd($payment_settings);
         $package_status = '';
         if (empty($payment_settings)) {
             $package_status = 'true';
@@ -1623,12 +1624,31 @@ class CourseController extends Controller
     {
         $locations  = Location::all();
         $languages  = Language::all();
-        $categories = Category::orderBy('title')->get();;
+        $categories = Category::orderBy('title')->get();
         $skills     = Skill::orderBy('title')->get();
         $delivery_time = DeliveryTime::all();
         $response_time = ResponseTime::all();
-        $services = array();
         $services = Cource::where('status', 'published')->orderByRaw("is_featured DESC, updated_at DESC")->paginate(10)->setPath('');
+
+        // Check if the user is authenticated
+        if (Auth::user()) {
+            // Adding boughtcourse and waiting_status attributes to each service
+            $services->transform(function ($service, $key) {
+                $service->boughtcourse = DB::table('cource_user')
+                    ->where('cource_id', $service->id)
+                    ->where('user_id', Auth::user()->id)
+                    ->where('status', 'bought')
+                    ->exists();
+
+                $service->waiting_status = DB::table('cource_user')
+                    ->where('cource_id', $service->id)
+                    ->where('user_id', Auth::user()->id)
+                    ->where('status', 'waiting')
+                    ->exists();
+
+                return $service;
+            });
+        }
         $type = "instructors";
         if (file_exists(resource_path('views/extend/front-end/cources/courseList.blade.php'))) {
             return view(

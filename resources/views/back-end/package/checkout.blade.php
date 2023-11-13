@@ -1,5 +1,11 @@
 @extends(file_exists(resource_path('views/extend/back-end/master.blade.php')) ? 'extend.back-end.master' : 'back-end.master')
 @section('content')
+@php
+// dd($package->id);
+    $defaultAmount = $package->cost; // Set your default amount here
+    $encryptedAmount = Crypt::encrypt($defaultAmount);
+    $stripePaymentUrl = "stripe/stripe-order?amount=$encryptedAmount"; // Adjust with your actual Stripe URL
+@endphp
     <section class="wt-haslayout wt-dbsectionspace">
         <div class="row">
             <div class=" col-sm-12 col-md-8 push-md-2 col-lg-8 push-lg-2" id="packages">
@@ -28,10 +34,11 @@
                         $options = unserialize($package->options);
                         $banner = $options['banner_option'] = 1 ? 'ti-check' : 'ti-na';
                         $chat = $options['private_chat'] = 1 ? 'ti-check' : 'ti-na';
-                        session()->put(['product_id' => e($package->id)]);
+                        session()->put(['product_id' => $package->id]);
                         session()->put(['product_title' => e($package->title)]);
                         session()->put(['product_price' => e($package->cost)]);
                         session()->put(['type' => 'package']);
+                        // dd(session()->get('product_id') );
                     @endphp
                     <table class="sj-checkouttable">
                         <thead>
@@ -58,7 +65,15 @@
                             </tr>
                             <tr>
                                 <td>{{ trans('lang.total') }}</td>
-                                <td>{{ !empty($symbol['symbol']) ? $symbol['symbol'] : '$' }}{{{$package->cost}}}</td>
+                                <td><span id="total_amount">{{ !empty($symbol['symbol']) ? $symbol['symbol'] : '$' }}{{{$package->cost}}}</span></td>
+                            </tr>
+                            <tr>
+                                <td>Discount:</td>
+                                <td><span id="discount_amount">$0</span></td>
+                            </tr>
+                            <tr>
+                                <td>Sub Total:</td>
+                                <td><span id="final_amount">{{ !empty($symbol['symbol']) ? $symbol['symbol'] : '$' }}{{{$package->cost}}}</span></td>
                             </tr>
                             @if ($mode == 'false')
                                 <tr>
@@ -68,6 +83,20 @@
                             @endif
                         </tbody>
                     </table>
+                        {{-- Coupon Application Section --}}
+                                   
+                        <div class="row mt-5">
+                            <div class="col-md-9">
+                            <div class="form-group">
+                                <input type="text" name="coupon_code" id="coupon_code" class="form-control" placeholder="Enter coupon code">
+                            </div>
+                            </div>
+                            <div class="col-md-3">
+                            <div class="form-group wt-btnarea">
+                                <button type="button" class="wt-btn" id="apply_coupon">Apply coupon</button>
+                            </div>
+                            </div>
+                        </div>
                 </div>
                     @if ($mode == 'true' && !empty($payment_gateway))
                         <div class="sj-checkpaymentmethod">
@@ -83,11 +112,11 @@
                                                 <span><em>{{ trans('lang.pay_amount_via') }}</em> {{ Helper::getPaymentMethodList($gatway)['title']}} {{ trans('lang.pay_gateway') }}</span>
                                             </a>
                                         @elseif ($gatway == "stripe")
-                                            <a href="javascrip:void(0);" v-on:click.prevent="getStriprForm">
-                                              <!--  <i class="fab fa-stripe-s"></i> -->
-                                              <img src="http://ec2-52-87-199-242.compute-1.amazonaws.com/images/credit-card.png" alt="credit-card" style="width:70px; height:48px">
-                                                <span><em>{{ trans('lang.pay_amount_via') }}</em> {{ Helper::getPaymentMethodList($gatway)['title']}} {{ trans('lang.pay_gateway') }}</span>
-                                            </a>
+                                        <a id="stripe_payment_link" href="{{ $stripePaymentUrl }}">
+                                            <i class="fab fa-stripe-s"></i>
+                                           {{-- <img src="http://ec2-52-87-199-242.compute-1.amazonaws.com/images/credit-card.png" alt="credit-card" style="width:70px; height:48px"> --}}
+                                           <span><em>{{ trans('lang.pay_amount_via') }}</em> {{ Helper::getPaymentMethodList("stripe")['title']}} {{ trans('lang.pay_gateway') }}</span>
+                                       </a>
                                         @endif
                                     </li>
                                 @endforeach
@@ -103,57 +132,44 @@
                         </div>
                     @endif
                 </div>
-                <b-modal ref="myModalRef" hide-footer title="Pay by Credit Card" class="la-pay-stripe" :no-close-on-backdrop="true">
-                    <div class="d-block text-center">
-                        <form class="wt-formtheme wt-form-paycard" method="POST" id="stripe-payment-form" role="form" action="" @submit.prevent='submitStripeFrom'>
-                            {{ csrf_field() }}
-                            <fieldset>
-                                <div class="form-group wt-inputwithicon {{ $errors->has('card_no') ? ' has-error' : '' }}">
-                                    <label>{{ trans('lang.card_no') }}</label>
-                                    <img src="{{asset('images/pay-icon.png')}}">
-                                    <input id="card_no" type="text" class="form-control" name="card_no" value="{{ old('card_no') }}" autofocus>
-                                    @if ($errors->has('card_no'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('card_no') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
-                                <div class="form-group {{ $errors->has('ccExpiryMonth') ? ' has-error' : '' }}">
-                                    <label>{{ trans('lang.expiry_month') }}</label>
-                                    <input id="ccExpiryMonth" type="number" class="form-control" name="ccExpiryMonth" value="{{ old('ccExpiryMonth') }}" min="1" max="12" autofocus>
-                                    @if ($errors->has('ccExpiryMonth'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('ccExpiryMonth') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
-                                <div class="form-group {{ $errors->has('ccExpiryYear') ? ' has-error' : '' }}">
-                                    <label>{{ trans('lang.expiry_year') }}</label>
-                                    <input id="ccExpiryYear" type="text" class="form-control" name="ccExpiryYear" value="{{ old('ccExpiryYear') }}" autofocus>
-                                    @if ($errors->has('ccExpiryYear'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('ccExpiryYear') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
-                                <div class="form-group wt-inputwithicon {{ $errors->has('cvvNumber') ? ' has-error' : '' }}">
-                                    <label>{{ trans('lang.cvc_no') }}</label>
-                                    <img src="{{asset('images/pay-img.png')}}">
-                                    <input id="cvvNumber" type="number" class="form-control" name="cvvNumber" value="{{ old('cvvNumber') }}" autofocus>
-                                    @if ($errors->has('cvvNumber'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('cvvNumber') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
-                                <div class="form-group wt-btnarea">
-                                    <input type="submit" name="button" class="wt-btn" value="Pay {{ !empty($symbol['symbol']) ? $symbol['symbol'] : '$' }}{{$package->cost}}">
-                                </div>
-                            </fieldset>
-                        </form>
-                    </b-modal>
                 </div>
             </div>
         </div>
     </section>
 @endsection
+@push('stripe')
+<script>
+    document.getElementById('apply_coupon').addEventListener('click', function() {
+        var couponCode = document.getElementById('coupon_code').value;
+        var originalAmount = document.getElementById('total_amount').textContent; // Assuming this is the element with the original amount
+
+        fetch('{{ url('apply-coupon') }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({ 
+                coupon_code: couponCode,
+                original_amount: originalAmount 
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                document.getElementById('coupon_code').value = "";
+                document.getElementById('discount_amount').textContent = '$'+data.discount;
+                document.getElementById('final_amount').textContent = '$'+ data.newAmount;
+
+                // Update the Stripe payment link with the new amount and coupon code
+                var stripeUrl = `stripe/stripe-order?amount=${data.encryptedAmount}`;
+                document.getElementById('stripe_payment_link').href = stripeUrl;
+            } else {
+                // Handle error or invalid coupon
+                alert(data.error);
+            }
+        });
+    });
+</script>
+
+@endpush   

@@ -9,7 +9,7 @@
                 </div>
             </div>
             <div class="wt-haslayout wt-post-job-wrap">
-                {!! Form::open(['url' => '', 'class' =>'wt-haslayout', 'id' => 'post_cource_form',  '@submit.prevent'=>'submitCource']) !!}
+                {!! Form::open(['url' => '', 'class' =>'wt-haslayout', 'id' => 'post_cource_form',  '@submit.prevent'=>'submitCource', 'files' => true]) !!}
                     <div class="wt-dashboardbox">
                         <div class="wt-dashboardboxtitle">
                             <h2>{{ trans('lang.post_course') }}</h2>
@@ -93,9 +93,11 @@
                                     </div>
                                 </div>
                             </div>
+                        
+
                             <div class="wt-jobdetails wt-tabsinfo">
                                 <div class="wt-tabscontenttitle d-flex justify-content-between">
-                                    <h2>{{ trans('lang.job_dtl') }}</h2>
+                                    <h2>Course Detail</h2>
                                     <buttom class="btn btn-sm btn-success" onclick="generateCompletion()" id="mainButton">Complete with ChatGPT</buttom>
                                     <button class="btn btn-primary" style="display: none" id="loader" type="button" disabled>
                                       <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
@@ -104,6 +106,23 @@
                                 </div>
                                 <div class="wt-formtheme wt-userform wt-userformvtwo">
                                     {!! Form::textarea('description', null, ['class' => 'wt-tinymceeditor', 'id' => 'wt-tinymceeditor', 'placeholder' => trans('lang.service_desc_note')]) !!}
+                                </div>
+                            </div>
+                            <div class="wt-jobdetails wt-tabsinfo">
+                                <div class="wt-tabscontenttitle d-flex justify-content-between">
+                                    <h2>Only Visible To Logged In Users</h2>
+                                    
+                                </div>
+                                <div class="wt-formtheme wt-userform wt-userformvtwo">
+                                      <!-- File Input for Video Upload -->
+                               <div class="form-group mb-3">
+                                <input type="file" name="course_files" class="form-control" accept="video/*,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+
+                               </div>
+                                <!-- Text Input for Additional Details -->
+                                <div class="form-group">
+                                <textarea name="additional_text" class="form-control" placeholder="Additional Text"></textarea>
+                                </div>
                                 </div>
                             </div>
                             <div class="wt-joblocation wt-tabsinfo">

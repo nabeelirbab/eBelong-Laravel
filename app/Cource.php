@@ -100,7 +100,6 @@ class Cource extends Model
     {
 
         return $this->belongsToMany('App\Skill');
-
     }
 
     /**
@@ -137,9 +136,10 @@ class Cource extends Model
      * @return \Illuminate\Http\Response
      */
     public function storeCource($request, $image_size = array())
-    {   
+    {
         $json = array();
         if (!empty($request)) {
+
             $random_number = Helper::generateRandomCode(8);
             $code = strtoupper($random_number);
             $user_id = Auth::user()->id;
@@ -158,8 +158,17 @@ class Cource extends Model
             $this->address = filter_var($request['address'], FILTER_SANITIZE_STRING);
             $this->longitude = filter_var($request['longitude'], FILTER_SANITIZE_STRING);
             $this->latitude = filter_var($request['latitude'], FILTER_SANITIZE_STRING);
+            $this->additional_text = filter_var($request['additional_text'], FILTER_SANITIZE_STRING);
             $old_path = Helper::PublicPath() . '/uploads/courses/temp';
             $new_path = Helper::PublicPath() . '/uploads/courses/' . $user_id;
+            if ($request->hasFile('course_files')) {
+                $file = $request->file('course_files');
+                $filename = time() . '-' . $file->getClientOriginalName();
+                $destinationPath = 'uploads/courses/temp';
+                $path = $destinationPath . '/' . $filename;
+                $file = $file->move($destinationPath, $filename);
+                $this->course_files = $path;
+            }
             $cource_attachments = array();
             if (!empty($request['attachments'])) {
                 $attachments = $request['attachments'];
@@ -296,7 +305,7 @@ class Cource extends Model
      *
      * @return response
      */
-    
+
     /**
      * Send Message.
      *
@@ -346,7 +355,7 @@ class Cource extends Model
     //         return $json;
     //     }
     // }
-   
+
     /**
      * Get Search resoluts.
      *
@@ -369,20 +378,20 @@ class Cource extends Model
         $search_skills
     ) {
         $json = array();
-        $services = Cource::select('*')->where('status','published')->orderBy('id','DESC');
+        $services = Cource::select('*')->where('status', 'published')->orderBy('id', 'DESC');
         $service_id = array();
         $filters = array();
         $filters['type'] = 'instructors';
         if (!empty($keyword)) {
             $filters['s'] = $keyword;
-            $services->where('title', 'like', '%' . $keyword . '%')->where('status','published')->get();
+            $services->where('title', 'like', '%' . $keyword . '%')->where('status', 'published')->get();
         };
         if (!empty($search_categories)) {
             $filters['category'] = $search_categories;
             foreach ($search_categories as $key => $search_category) {
                 $categor_obj = Category::where('slug', $search_category)->first();
                 $category = Category::find($categor_obj->id);
-               
+
                 if (!empty($category->courses)) {
                     $category_services = $category->courses->pluck('id')->toArray();
                     foreach ($category_services as $id) {
@@ -390,14 +399,14 @@ class Cource extends Model
                     }
                 }
             }
-            $services->where('status','published')->whereIn('id', $service_id);
+            $services->where('status', 'published')->whereIn('id', $service_id);
         }
         if (!empty($search_skills)) {
             $filters['skills'] = $search_skills;
             foreach ($search_skills as $key => $search_skill) {
                 $skill_obj = Skill::where('slug', $search_skill)->first();
-                $skill= Skill::find($skill_obj->id);
-                    //  dd($skill->courses);
+                $skill = Skill::find($skill_obj->id);
+                //  dd($skill->courses);
                 if (!empty($skill->courses)) {
                     $skill_services = $skill->courses->pluck('id')->toArray();
                     foreach ($skill_services as $id) {
@@ -405,17 +414,17 @@ class Cource extends Model
                     }
                 }
             }
-            $services->where('status','published')->whereIn('id', $service_id);
+            $services->where('status', 'published')->whereIn('id', $service_id);
         }
         if (!empty($search_locations)) {
             $filters['locations'] = $search_locations;
             $locations = Location::select('id')->whereIn('slug', $search_locations)->get()->pluck('id')->toArray();
-            $services->where('status','published')->whereIn('location_id', $locations);
+            $services->where('status', 'published')->whereIn('location_id', $locations);
         }
         if (!empty($search_languages)) {
             $filters['languages'] = $search_languages;
             // $languages = Language::whereIn('slug', $search_languages)->get();
-           
+
             foreach ($search_languages as $key => $language) {
                 $languages = Language::where('slug', $language)->first();
                 $lang = Language::find($languages->id);
@@ -426,17 +435,17 @@ class Cource extends Model
                     }
                 }
             }
-            $services->where('status','published')->whereIn('id', $service_id);
+            $services->where('status', 'published')->whereIn('id', $service_id);
         }
         if (!empty($search_delivery_time)) {
             $filters['delivery_time'] = $search_delivery_time;
             $delivery_time = DeliveryTime::select('id')->whereIn('slug', $search_delivery_time)->get()->pluck('id')->toArray();
-            $services->where('status','published')->whereIn('delivery_time_id', $delivery_time);
+            $services->where('status', 'published')->whereIn('delivery_time_id', $delivery_time);
         }
         if (!empty($search_response_time)) {
             $filters['response_time'] = $search_response_time;
             $response_time = ResponseTime::select('id')->whereIn('slug', $search_response_time)->get()->pluck('id')->toArray();
-            $services->where('status','published')->whereIn('response_time_id', $response_time);
+            $services->where('status', 'published')->whereIn('response_time_id', $response_time);
         }
         $services = $services->orderByRaw("is_featured DESC, updated_at DESC")->paginate(20)->setPath('');
         foreach ($filters as $key => $filter) {

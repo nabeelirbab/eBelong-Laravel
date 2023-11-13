@@ -12248,6 +12248,21 @@ body.lang-ja .wt-loginfooterinfo a+a:before {
 	font-style: normal;
 }
 
+.wt-boughttagvtwo {
+	top: 0;
+	float: right !important;
+	right: 0px;
+	color: #fff;
+	padding: 0 10px;
+	font-size: 12px;
+	line-height: 20px;
+	z-index: 9;
+	position: absolute;
+	border-radius: 3px 0 6px 0;
+	background: #9013F3;
+	width: 20% !important;
+}
+
 .wt-featuredtagvtwo {
 	top: 0;
 	left: -4px;
@@ -12258,6 +12273,17 @@ body.lang-ja .wt-loginfooterinfo a+a:before {
 	z-index: 9;
 	position: absolute;
 	border-radius: 3px 0 6px 0;
+}
+
+.wt-featuredtagvtwo:after {
+	left: 0;
+	width: 0;
+	height: 0;
+	content: '';
+	bottom: -4px;
+	position: absolute;
+	border-top: 4px solid #bd423d;
+	border-left: 4px solid transparent;
 }
 
 .wt-featuredtagvtwo:after {

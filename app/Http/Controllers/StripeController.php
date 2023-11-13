@@ -87,7 +87,6 @@ class StripeController extends Controller
         $type = Session::has('type') ? session()->get('type') : '';
         $user_id = Auth::user() ? Auth::user()->id : '';
 
-
         try {
             $intent = Stripe::paymentIntents()->find($payment_intent_id);
             $payment_detail = $intent['charges']['data'][0];
@@ -141,11 +140,13 @@ class StripeController extends Controller
 
                 if (Auth::user()) {
                     if ($product_type == 'package') {
+
                         $last_order_id = session()->get('custom_order_id');
-                        DB::table('orders')
-                            ->where('id', $last_order_id)
-                            ->update(['status' => 'completed']);
-                        if (session()->has('product_id')) {
+                        // DB::table('orders')
+                        //     ->where('id', $last_order_id)
+                        //     ->update(['status' => 'completed']);
+                        if ($product_id) {
+                            // dd('ddd');
                             $package_item = \App\Item::where('subscriber', Auth::user()->id)->first();
                             $id = session()->get('product_id');
                             $package = \App\Package::find($id);

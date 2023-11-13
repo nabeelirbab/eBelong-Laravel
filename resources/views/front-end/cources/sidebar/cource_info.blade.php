@@ -37,11 +37,11 @@
           <a href="javascript:;" class="wt-btn" v-on:click.prevent="BuyCource('{{{$cource->id}}}', '{{{trans('lang.hire_cource_title')}}}', '{{{trans('lang.hire_cource_text')}}}', '{{$mode}}','{{ $user_role }}')">{{ trans('lang.buy_now') }} </a>
           @endif
           @if(Auth::user() && $boughtcourse == true)
-          <a href="javascript:;" class="wt-btn" disabled>Enrolled </a>
+          <a href="{{url('freelancer/courses/bought')}}" class="wt-btn" disabled>Enrolled </a>
           @endif
           @if(Auth::user() && $waiting_status == true)
           <p><em>*</em> {{ "Wait for the Instructor to Enroll you " }}</p>
-          <a href="javascript:;" class="wt-btn" disabled>Bought </a>
+          <a href="{{url('freelancer/courses/waiting')}}" class="wt-btn" disabled>Bought </a>
           @endif
          </div>
     </div>

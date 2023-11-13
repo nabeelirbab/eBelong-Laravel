@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Class PackageController.
  *
@@ -28,7 +29,8 @@ use App\Proposal;
 use App\Badge;
 use App\SiteManagement;
 use Illuminate\Support\Facades\Input;
-
+use Cartalyst\Stripe\Laravel\Facades\Stripe;
+use Illuminate\Support\Facades\Crypt;
 
 /**
  * Class PackageController
@@ -171,6 +173,24 @@ class PackageController extends Controller
         Session::flash('message', trans('lang.save_package'));
         return Redirect::back();
     }
+    public function stripePage(Request $request)
+    {
+        $encryptedAmount = $request->input('amount');
+        try {
+            $cost = Crypt::decrypt($encryptedAmount);
+
+            $stripe = Stripe::make('sk_test_ws2GR8HLb9gMtA9dAyvnclCL');
+            $paymentIntent = $stripe->paymentIntents()->create([
+                'amount' => $cost, // Replace with your actual amount, in cents
+                'currency' => 'usd',
+            ]);
+
+            $clientSecret = $paymentIntent['client_secret'];
+            return view('back-end.package.stripe-payment', compact('clientSecret', 'cost'));
+        } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+            // Handle the exception if decryption fails
+        }
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -184,8 +204,8 @@ class PackageController extends Controller
         if (!empty($slug)) {
             $package = $this->package::where('slug', $slug)->first();
             $options = unserialize($package->options);
-            $no_of_services = !empty($options['no_of_services']) ? $options['no_of_services'] : null; 
-            $no_of_featured_services = !empty($options['no_of_featured_services']) ? $options['no_of_featured_services'] : null; 
+            $no_of_services = !empty($options['no_of_services']) ? $options['no_of_services'] : null;
+            $no_of_featured_services = !empty($options['no_of_featured_services']) ? $options['no_of_featured_services'] : null;
             $roles = Role::where('name', '!=', 'admin')->pluck('name', 'id')->toArray();
             $durations = \App\Helper::getPackageDurationList();
             $badges = Badge::select('id', 'title')->get()->pluck('title', 'id');

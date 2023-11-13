@@ -128,6 +128,12 @@
                                                     @if ($service->is_featured == 'true')
                                                         <span class="wt-featuredtagvtwo">{{ trans('lang.featured') }}</span>
                                                     @endif
+                                                    @if(Auth::user() && $service->boughtcourse == true)
+                                                    <a href="{{url('freelancer/courses/bought')}}" class="wt-boughttagvtwo" disabled>Enrolled </a>
+                                                    @endif
+                                                    @if(Auth::user() && $service->waiting_status == true)
+                                                    <a href="{{url('freelancer/courses/waiting')}}" class="wt-boughttagvtwo" disabled>Bought </a>
+                                                    @endif
                                                     <div class="wt-freelancers-details">
                                                         @if ($service->seller->count() > 0)
                                                             <figure class="wt-freelancers-img">

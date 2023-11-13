@@ -178,6 +178,14 @@
                                 @endif
                             </div>
                         </div>
+                        @if(Auth::user() && $boughtcourse == true || $waiting_status == true)
+                        <a href="{{{ url($cource->course_files) }}}" class="wt-btn">View File</a>
+                        <div class="wt-description course-detail-description">
+                            @php echo htmlspecialchars_decode(stripslashes($cource->additional_text)); @endphp
+                        </div>
+
+                        @endif
+
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 col-xl-4 float-left">
                         @if (file_exists(resource_path('views/extend/front-end/cources/sidebar/index.blade.php')))

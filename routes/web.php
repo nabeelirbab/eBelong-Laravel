@@ -672,6 +672,7 @@ Route::group(
         Route::post('proposal/get-private-messages', 'UserController@getPrivateMessage');
         Route::get('proposal/download/message-attachments/{id}', 'UserController@downloadMessageAttachments');
         Route::get('user/package/checkout/{id}', 'UserController@checkout');
+        Route::get('user/package/checkout/stripe/stripe-order', 'PackageController@stripePage');
         Route::get('user/order/bacs/{id}/{order}/{type}/{project_type?}', 'UserController@bankCheckout');
         Route::get('bacs-checkout', 'CourseController@bacsPayment');
         Route::post('user/generate-order/bacs/{id}/{type}', 'UserController@generateOrder');
