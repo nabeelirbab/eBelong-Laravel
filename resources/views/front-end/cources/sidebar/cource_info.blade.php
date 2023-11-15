@@ -1,7 +1,12 @@
 <div class="wt-userrating wt-userratingvtwo">
 
     <div class="wt-ratingtitle">
-       <h3>{{ !empty($symbol) ? $symbol['symbol'] : '$' }}{{{$cource->price}}}</h3>
+      @if(isset($cource->promotion_price) && $cource->promotion_price > 0)
+      <h5><del>{{ !empty($symbol) ? $symbol['symbol'] : '$' }}{{ $cource->price }}</del></h5> <h3>{{ !empty($symbol) ? $symbol['symbol'] : '$' }}{{ $cource->promotion_price }}</h3>
+      @else
+            <h3>{{ !empty($symbol) ? $symbol['symbol'] : '$' }}{{ $cource->price }}</h3>
+      @endif
+  
        <span>{{trans('lang.starting_from')}}</span>
     </div>
     <div class="wt-rating-info">

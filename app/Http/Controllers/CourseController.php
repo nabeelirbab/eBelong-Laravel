@@ -173,7 +173,6 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-
         $json = array();
         $server = Helper::worketicIsDemoSiteAjax();
         if (!empty($server)) {

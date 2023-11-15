@@ -44,6 +44,16 @@
                                         </span>
                                     @endif
                                 </div>
+                                   <!-- Category Dropdown -->
+                                <div class="form-group">
+                                    {!! Form::label('category_id', 'Category') !!}
+                                    {!! Form::select('category_id', $categories, null, ['class' => 'form-control', 'placeholder' => 'Select Category', 'required' => 'required']) !!}
+                                    @if ($errors->has('category_id'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('category_id') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
                                 <div class="form-group">
                                     <label for="imageInput">Skill Logo</label>
                                     <input name="skill_logo" type="file" id="imageInput">
@@ -104,6 +114,7 @@
                                             </th>
                                             <th>{{{ trans('lang.name') }}}</th>
                                             <th>{{{ trans('lang.slug') }}}</th>
+                                            <th>Category</th>
                                             <th>{{{ trans('lang.action') }}}</th>
                                         </tr>
                                     </thead>
@@ -119,6 +130,7 @@
                                                 </td>
                                                 <td>{{{ $skill->title }}}</td>
                                                 <td>{{{ $skill->slug }}}</td>
+                                                <td>{{ $skill->category->title ?? 'No Category' }}</td> 
                                                 <td>
                                                     <div class="wt-actionbtn">
                                                         <a href="{{{ url('admin/skills/edit-skills') }}}/{{{ $skill->id }}}" class="wt-addinfo wt-skillsaddinfo">

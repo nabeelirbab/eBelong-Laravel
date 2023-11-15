@@ -119,6 +119,17 @@
       'Html' => 'Collective\\Html\\HtmlFacade',
     ),
   ),
+  'maatwebsite/excel' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Maatwebsite\\Excel\\ExcelServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Excel' => 'Maatwebsite\\Excel\\Facades\\Excel',
+    ),
+  ),
   'mariuzzo/laravel-js-localization' => 
   array (
     'providers' => 

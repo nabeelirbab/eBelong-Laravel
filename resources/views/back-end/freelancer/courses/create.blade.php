@@ -32,7 +32,9 @@
                                         <div class="form-group form-group-half wt-formwithlabel job-cost-input">
                                             {!! Form::number('course_price', null, array('class' => '', 'placeholder' => trans('lang.course_price'), 'v-model'=>'price','min'=>"1",'step' => 'any')) !!}
                                         </div>
-
+                                        <div class="form-group form-group-half wt-formwithlabel job-cost-input">
+                                            {!! Form::number('promotion_price', null, array('class' => '', 'placeholder' => 'Promotation Price', 'v-model'=>'promotion_price','min'=>"1",'step' => 'any')) !!}
+                                        </div>
                                         <div class="form-group form-group-half wt-formwithlabel">
                                             <span class="wt-select">
                                                <select class="form-control" name="user_type">
@@ -41,6 +43,12 @@
                                                    <option>In-Person</option>
                                                </select>
                                             </span>
+                                        </div>
+                                        <div class="form-group form-group-half wt-formwithlabel job-cost-input">
+                                            {!! Form::date('course_date', null, array('class' => '', 'placeholder' => 'Course Date', 'v-model'=>'course_date')) !!}
+                                        </div>
+                                        <div class="form-group form-group-half wt-formwithlabel job-cost-input">
+                                            {!! Form::time('course_time', null, array('class' => '', 'placeholder' => 'Course Time', 'v-model'=>'course_time')) !!}
                                         </div>
                                     </fieldset>
                                 </div>
@@ -121,7 +129,26 @@
                                </div>
                                 <!-- Text Input for Additional Details -->
                                 <div class="form-group">
-                                <textarea name="additional_text" class="form-control" placeholder="Additional Text"></textarea>
+                                    {!! Form::textarea('additional_text', null, ['class' => 'wt-tinymceeditor', 'id' => 'wt-tinymceeditor1', 'placeholder' => trans('lang.service_desc_note')]) !!}
+
+                                </div>
+                                </div>
+                            </div>
+                            <div class="wt-jobdetails wt-tabsinfo">
+                                <div class="wt-tabscontenttitle d-flex justify-content-between">
+                                    <h2>Only Visible to Users Who Bought the Course</h2>
+                                    
+                                </div>
+                                <div class="wt-formtheme wt-userform wt-userformvtwo">
+                                      <!-- File Input for Video Upload -->
+                               <div class="form-group mb-3">
+                                <input type="file" name="course_files_bought" class="form-control" accept="video/*,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+
+                               </div>
+                                <!-- Text Input for Additional Details -->
+                                <div class="form-group">
+                                    {!! Form::textarea('additional_text_bought', null, ['class' => 'wt-tinymceeditor', 'id' => 'wt-tinymceeditor2', 'placeholder' => trans('lang.service_desc_note')]) !!}
+
                                 </div>
                                 </div>
                             </div>

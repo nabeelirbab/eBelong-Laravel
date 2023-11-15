@@ -13,6 +13,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use View;
 use Auth;
 use Session;
@@ -62,24 +63,25 @@ class SkillController extends Controller
     {
         if (!empty($_GET['keyword'])) {
             $keyword = $_GET['keyword'];
-            $skills = $this->skill::where('title', 'like', '%' . $keyword . '%')->paginate(7)->setPath('');
+            $skills = $this->skill::with('category')->where('title', 'like', '%' . $keyword . '%')->paginate(7)->setPath('');
             $pagination = $skills->appends(
                 array(
                     'keyword' => Input::get('keyword')
                 )
             );
         } else {
-            $skills = $this->skill->paginate(7);
+            $skills = $this->skill->with('category')->paginate(7);
         }
+        $categories = Category::all()->pluck('title', 'id');
         if (file_exists(resource_path('views/extend/back-end/admin/skills/index.blade.php'))) {
             return View::make(
                 'extend.back-end.admin.skills.index',
-                compact('skills')
+                compact('skills', 'categories')
             );
         } else {
             return View::make(
                 'back-end.admin.skills.index',
-                compact('skills')
+                compact('skills', 'categories')
             );
         }
     }
@@ -99,7 +101,7 @@ class SkillController extends Controller
 
         if ($request->hasFile('skill_logo')) {
             $skill_logo = $request->file('skill_logo');
-            $name = time().'.'.$skill_logo->getClientOriginalExtension();
+            $name = time() . '.' . $skill_logo->getClientOriginalExtension();
             $destinationPath = public_path('/uploads/logos/');
             $skill_logo->move($destinationPath, $name);
             $request['logo'] = $name;
@@ -116,9 +118,7 @@ class SkillController extends Controller
             );
             $this->skill->saveSkills($request);
             Session::flash('message', trans('lang.save_skills'));
-
-        }
-        else {
+        } else {
             $server_verification = Helper::worketicIsDemoSite();
             if (!empty($server_verification)) {
                 Session::flash('error', $server_verification);
@@ -148,16 +148,18 @@ class SkillController extends Controller
     {
         if (!empty($id)) {
             $skills = $this->skill::find($id);
+            $categories = Category::all()->pluck('title', 'id');
+
             if (!empty($skills)) {
                 if (file_exists(resource_path('views/extend/back-end/admin/skills/edit.blade.php'))) {
                     return View::make(
                         'extend.back-end.admin.skills.edit',
-                        compact('id', 'skills')
+                        compact('id', 'skills', 'categories')
                     );
                 } else {
                     return View::make(
                         'back-end.admin.skills.edit',
-                        compact('id', 'skills')
+                        compact('id', 'skills', 'categories')
                     );
                 }
                 return Redirect::to('admin/skills');
@@ -183,7 +185,7 @@ class SkillController extends Controller
             ]);
 
             $skill_logo = $request->file('skill_logo');
-            $name = time().'.'.$skill_logo->getClientOriginalExtension();
+            $name = time() . '.' . $skill_logo->getClientOriginalExtension();
             $destinationPath = public_path('/uploads/logos/');
             $skill_logo->move($destinationPath, $name);
             $request['logo'] = $name;
@@ -202,9 +204,7 @@ class SkillController extends Controller
             $this->skill->updateSkills($request, $id);
             Session::flash('message', trans('lang.skill_updated'));
             return Redirect::to('admin/skills');
-        }
-
-        else {
+        } else {
 
             $server_verification = Helper::worketicIsDemoSite();
             if (!empty($server_verification)) {
@@ -221,7 +221,6 @@ class SkillController extends Controller
             Session::flash('message', trans('lang.skill_updated'));
             return Redirect::to('admin/skills');
         }
-
     }
 
     /**
@@ -267,9 +266,9 @@ class SkillController extends Controller
         if (!empty($result)) {
             $skills = DB::table('skills')
                 ->whereIn('id', $result)
-                ->orderBy('title')->orderBy('title','asc')->get()->toArray();
+                ->orderBy('title')->orderBy('title', 'asc')->get()->toArray();
         } else {
-            $skills = Skill::select('title', 'id')->orderBy('title','asc')->get()->toArray();
+            $skills = Skill::select('title', 'id')->orderBy('title', 'asc')->get()->toArray();
         }
         if (!empty($skills)) {
             $json['type'] = 'success';
@@ -283,37 +282,37 @@ class SkillController extends Controller
     }
 
     public function getAdminFreelancerSkills(Request $request)
-    {          
-            $agencyid = $request['slug'];
-            $db_skills = Skill::select('id')->get()->pluck('id')->toArray();
-            $user_skills = Skill::getFreelancerSkill($agencyid);
-            if (!empty($agency_skills)) {
-                $result = array_diff($db_skills, $user_skills);
-                if (!empty($result)) {
-                    $skills = DB::table('skills')
-                        ->whereIn('id', $result)
-                        ->orderBy('title')->orderBy('title','asc')->get()->toArray();
-                } else {
-                    $skills = array();
-                }
+    {
+        $agencyid = $request['slug'];
+        $db_skills = Skill::select('id')->get()->pluck('id')->toArray();
+        $user_skills = Skill::getFreelancerSkill($agencyid);
+        if (!empty($agency_skills)) {
+            $result = array_diff($db_skills, $user_skills);
+            if (!empty($result)) {
+                $skills = DB::table('skills')
+                    ->whereIn('id', $result)
+                    ->orderBy('title')->orderBy('title', 'asc')->get()->toArray();
+            } else {
+                $skills = array();
+            }
+            $json['type'] = 'success';
+            $json['skills'] = $skills;
+            $json['message'] = trans('lang.skills_already_selected');
+            return $json;
+        } else {
+            $skills = Skill::select('title', 'id')->orderBy('title', 'asc')->get()->toArray();
+            if (!empty($skills)) {
                 $json['type'] = 'success';
                 $json['skills'] = $skills;
-                $json['message'] = trans('lang.skills_already_selected');
                 return $json;
             } else {
-                $skills = Skill::select('title', 'id')->orderBy('title','asc')->get()->toArray();
-                if (!empty($skills)) {
-                    $json['type'] = 'success';
-                    $json['skills'] = $skills;
-                    return $json;
-                } else {
-                    $json['type'] = 'error';
-                    $json['message'] = trans('lang.something_wrong');
-                    return $json;
-                }
+                $json['type'] = 'error';
+                $json['message'] = trans('lang.something_wrong');
+                return $json;
             }
         }
-    
+    }
+
 
     /**
      * Get Job Skills.
@@ -334,7 +333,7 @@ class SkillController extends Controller
                 if (!empty($result)) {
                     $skills = DB::table('skills')
                         ->whereIn('id', $result)
-                        ->orderBy('title')->orderBy('title','asc')->get()->toArray();
+                        ->orderBy('title')->orderBy('title', 'asc')->get()->toArray();
                 } else {
                     $skills = array();
                 }
@@ -343,7 +342,7 @@ class SkillController extends Controller
                 $json['message'] = trans('lang.skills_already_selected');
                 return $json;
             } else {
-                $skills = Skill::select('title', 'id')->orderBy('title','asc')->get()->toArray();
+                $skills = Skill::select('title', 'id')->orderBy('title', 'asc')->get()->toArray();
                 if (!empty($skills)) {
                     $json['type'] = 'success';
                     $json['skills'] = $skills;
@@ -355,7 +354,7 @@ class SkillController extends Controller
                 }
             }
         } else {
-            $skills = Skill::select('title', 'id')->orderBy('title','asc')->get()->toArray();
+            $skills = Skill::select('title', 'id')->orderBy('title', 'asc')->get()->toArray();
             if (!empty($skills)) {
                 $json['type'] = 'success';
                 $json['skills'] = $skills;
@@ -369,12 +368,11 @@ class SkillController extends Controller
     }
 
     public function getCourseSkills(Request $request)
-    {
-        {
+    { {
             $json = array();
             if (!empty($request['slug']) && $request['slug'] == "post-course") {
-                
-                $skills = Skill::select('title', 'id')->orderBy('title','asc')->get()->toArray();
+
+                $skills = Skill::select('title', 'id')->orderBy('title', 'asc')->get()->toArray();
                 if (!empty($skills)) {
                     $json['type'] = 'success';
                     $json['skills'] = $skills;
@@ -384,9 +382,7 @@ class SkillController extends Controller
                     $json['message'] = trans('lang.something_wrong');
                     return $json;
                 }
-                
-            }
-            else{            
+            } else {
                 $agencyid = $request['slug'];
                 $db_skills = Skill::select('id')->get()->pluck('id')->toArray();
                 $agency_skills = Skill::getCourseSkill($agencyid);
@@ -395,7 +391,7 @@ class SkillController extends Controller
                     if (!empty($result)) {
                         $skills = DB::table('skills')
                             ->whereIn('id', $result)
-                            ->orderBy('title')->orderBy('title','asc')->get()->toArray();
+                            ->orderBy('title')->orderBy('title', 'asc')->get()->toArray();
                     } else {
                         $skills = array();
                     }
@@ -404,7 +400,7 @@ class SkillController extends Controller
                     $json['message'] = trans('lang.skills_already_selected');
                     return $json;
                 } else {
-                    $skills = Skill::select('title', 'id')->orderBy('title','asc')->get()->toArray();
+                    $skills = Skill::select('title', 'id')->orderBy('title', 'asc')->get()->toArray();
                     if (!empty($skills)) {
                         $json['type'] = 'success';
                         $json['skills'] = $skills;
@@ -419,12 +415,11 @@ class SkillController extends Controller
         }
     }
     public function getServiceSkills(Request $request)
-    {
-        {
+    { {
             $json = array();
             if (!empty($request['slug']) && $request['slug'] == "post-service") {
-                
-                $skills = Skill::select('title', 'id')->orderBy('title','asc')->get()->toArray();
+
+                $skills = Skill::select('title', 'id')->orderBy('title', 'asc')->get()->toArray();
                 if (!empty($skills)) {
                     $json['type'] = 'success';
                     $json['skills'] = $skills;
@@ -434,9 +429,7 @@ class SkillController extends Controller
                     $json['message'] = trans('lang.something_wrong');
                     return $json;
                 }
-                
-            }
-            else{            
+            } else {
                 $serviceid = $request['slug'];
                 $db_skills = Skill::select('id')->get()->pluck('id')->toArray();
                 $service_skills = Skill::getServiceSkill($serviceid);
@@ -445,7 +438,7 @@ class SkillController extends Controller
                     if (!empty($result)) {
                         $skills = DB::table('skills')
                             ->whereIn('id', $result)
-                            ->orderBy('title')->orderBy('title','asc')->get()->toArray();
+                            ->orderBy('title')->orderBy('title', 'asc')->get()->toArray();
                     } else {
                         $skills = array();
                     }
@@ -454,7 +447,7 @@ class SkillController extends Controller
                     $json['message'] = trans('lang.skills_already_selected');
                     return $json;
                 } else {
-                    $skills = Skill::select('title', 'id')->orderBy('title','asc')->get()->toArray();
+                    $skills = Skill::select('title', 'id')->orderBy('title', 'asc')->get()->toArray();
                     if (!empty($skills)) {
                         $json['type'] = 'success';
                         $json['skills'] = $skills;
@@ -472,7 +465,7 @@ class SkillController extends Controller
     {
         $json = array();
         if (!empty($request['slug']) && $request['slug'] == "new") {
-            $skills = Skill::select('title', 'id')->orderBy('title','asc')->get()->toArray();
+            $skills = Skill::select('title', 'id')->orderBy('title', 'asc')->get()->toArray();
             if (!empty($skills)) {
                 $json['type'] = 'success';
                 $json['skills'] = $skills;
@@ -482,9 +475,7 @@ class SkillController extends Controller
                 $json['message'] = trans('lang.something_wrong');
                 return $json;
             }
-            
-        }
-        else{            
+        } else {
             $agencyid = $request['slug'];
             $db_skills = Skill::select('id')->get()->pluck('id')->toArray();
             $agency_skills = Skill::getAgencySkill($agencyid);
@@ -493,7 +484,7 @@ class SkillController extends Controller
                 if (!empty($result)) {
                     $skills = DB::table('skills')
                         ->whereIn('id', $result)
-                        ->orderBy('title')->orderBy('title','asc')->get()->toArray();
+                        ->orderBy('title')->orderBy('title', 'asc')->get()->toArray();
                 } else {
                     $skills = array();
                 }
@@ -502,7 +493,7 @@ class SkillController extends Controller
                 $json['message'] = trans('lang.skills_already_selected');
                 return $json;
             } else {
-                $skills = Skill::select('title', 'id')->orderBy('title','asc')->get()->toArray();
+                $skills = Skill::select('title', 'id')->orderBy('title', 'asc')->get()->toArray();
                 if (!empty($skills)) {
                     $json['type'] = 'success';
                     $json['skills'] = $skills;
@@ -519,7 +510,7 @@ class SkillController extends Controller
     {
         $json = array();
         if (!empty($request['slug']) && $request['slug'] == "new") {
-            $skills = Skill::select('title', 'id')->orderBy('title','asc')->get()->toArray();
+            $skills = Skill::select('title', 'id')->orderBy('title', 'asc')->get()->toArray();
             if (!empty($skills)) {
                 $json['type'] = 'success';
                 $json['skills'] = $skills;
@@ -529,10 +520,8 @@ class SkillController extends Controller
                 $json['message'] = trans('lang.something_wrong');
                 return $json;
             }
-            
-        }
-        else{            
-            $blogid= $request['slug'];
+        } else {
+            $blogid = $request['slug'];
             $db_skills = Skill::select('id')->get()->pluck('id')->toArray();
             $blog_skills = Skill::getBlogSkill($blogid);
             if (!empty($blog_skills)) {
@@ -540,7 +529,7 @@ class SkillController extends Controller
                 if (!empty($result)) {
                     $skills = DB::table('skills')
                         ->whereIn('id', $result)
-                        ->orderBy('title')->orderBy('title','asc')->get()->toArray();
+                        ->orderBy('title')->orderBy('title', 'asc')->get()->toArray();
                 } else {
                     $skills = array();
                 }
@@ -549,7 +538,7 @@ class SkillController extends Controller
                 $json['message'] = trans('lang.skills_already_selected');
                 return $json;
             } else {
-                $skills = Skill::select('title', 'id')->orderBy('title','asc')->get()->toArray();
+                $skills = Skill::select('title', 'id')->orderBy('title', 'asc')->get()->toArray();
                 if (!empty($skills)) {
                     $json['type'] = 'success';
                     $json['skills'] = $skills;

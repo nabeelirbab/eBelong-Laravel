@@ -178,12 +178,28 @@
                                 @endif
                             </div>
                         </div>
-                        @if(Auth::user() && $boughtcourse == true || $waiting_status == true)
+                        @if(Auth::user())
+                        @if($cource->course_files)
                         <a href="{{{ url($cource->course_files) }}}" class="wt-btn">View File</a>
+                        @endif
+                        @if($cource->additional_text)
                         <div class="wt-description course-detail-description">
                             @php echo htmlspecialchars_decode(stripslashes($cource->additional_text)); @endphp
                         </div>
 
+                        @endif
+                        @endif
+
+                        @if(Auth::user() && $boughtcourse == true || $waiting_status == true)
+                        @if($cource->course_files_bought)
+                        <a href="{{{ url($cource->course_files_bought) }}}" class="wt-btn">View File</a>
+                        @endif
+                        @if($cource->additional_text_bought)
+                        <div class="wt-description course-detail-description">
+                            @php echo htmlspecialchars_decode(stripslashes($cource->additional_text_bought)); @endphp
+                        </div>
+
+                        @endif
                         @endif
 
                     </div>

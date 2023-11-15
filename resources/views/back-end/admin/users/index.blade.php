@@ -57,6 +57,8 @@
                                 </span>
                             </div>
                         {!! Form::close() !!}
+                        <a href="{{ url('admin/export-users')}}" style="float: right; margin-right:10px;" class="wt-btn">Export Users
+                        </a>
                     </div>
                     <div class="wt-dashboardboxcontent wt-categoriescontentholder">
                         @if ($users->count() > 0)

@@ -150,7 +150,13 @@
                                                                     <a href="{{{ url('profile/'.$service->seller[0]->slug) }}}"><i class="fa fa-check-circle"></i> {{{Helper::getUserName($service->seller[0]->id)}}}</a>
                                                                 @endif
                                                                 <a href="{{{url('course/'.$service->slug)}}}"><h3>{{{$service->title}}}</h3></a>
-                                                                <span><strong>{{ (!empty($symbol['symbol'])) ? $symbol['symbol'] : '$' }}{{{$service->price}}}</strong> </span>
+                                                                
+                                                                @if(isset($service->promotion_price) && $service->promotion_price > 0)
+																<span><strong><del style="font-size: 15px">{{ !empty($symbol) ? $symbol['symbol'] : '$' }}{{ $service->price }}</del> {{ !empty($symbol) ? $symbol['symbol'] : '$' }}{{ $service->promotion_price }}</strong> {{ trans('lang.starting_from') }}</span>
+																
+																@else
+																<span><strong>{{ !empty($symbol) ? $symbol['symbol'] : '$' }}{{{$service['price']}}}</strong> {{ trans('lang.starting_from') }}</span>
+																@endif
                                                             </div>
                                                         </div>
                                                         <div class="wt-freelancers-rating">

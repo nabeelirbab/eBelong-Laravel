@@ -149,6 +149,7 @@ class Cource extends Model
             $this->user_type = filter_var($request['user_type'], FILTER_SANITIZE_STRING);
             $this->slug = filter_var($request['title'], FILTER_SANITIZE_STRING);
             $this->price = filter_var($request['course_price'], FILTER_SANITIZE_STRING);
+            $this->promotion_price  = filter_var($request['promotion_price'], FILTER_SANITIZE_STRING);
             $this->delivery_time_id = intval($request['delivery_time']);
             $this->description = $request['description'];
             $this->english_level = filter_var($request['english_level'], FILTER_SANITIZE_STRING);
@@ -156,9 +157,12 @@ class Cource extends Model
             $this->is_featured = filter_var($request['is_featured'], FILTER_SANITIZE_STRING);
             $this->show_attachments = filter_var($request['show_attachments'], FILTER_SANITIZE_STRING);
             $this->address = filter_var($request['address'], FILTER_SANITIZE_STRING);
+            $this->course_date = filter_var($request['course_date'], FILTER_SANITIZE_STRING);
+            $this->course_time = filter_var($request['course_time'], FILTER_SANITIZE_STRING);
             $this->longitude = filter_var($request['longitude'], FILTER_SANITIZE_STRING);
             $this->latitude = filter_var($request['latitude'], FILTER_SANITIZE_STRING);
             $this->additional_text = filter_var($request['additional_text'], FILTER_SANITIZE_STRING);
+            $this->additional_text_bought = filter_var($request['additional_text_bought'], FILTER_SANITIZE_STRING);
             $old_path = Helper::PublicPath() . '/uploads/courses/temp';
             $new_path = Helper::PublicPath() . '/uploads/courses/' . $user_id;
             if ($request->hasFile('course_files')) {
@@ -168,6 +172,14 @@ class Cource extends Model
                 $path = $destinationPath . '/' . $filename;
                 $file = $file->move($destinationPath, $filename);
                 $this->course_files = $path;
+            }
+            if ($request->hasFile('course_files_bought')) {
+                $file = $request->file('course_files_bought');
+                $filename = time() . '-' . $file->getClientOriginalName();
+                $destinationPath = 'uploads/courses/temp';
+                $path = $destinationPath . '/' . $filename;
+                $file = $file->move($destinationPath, $filename);
+                $this->course_files_bought = $path;
             }
             $cource_attachments = array();
             if (!empty($request['attachments'])) {
@@ -238,6 +250,7 @@ class Cource extends Model
             }
             $course->title = filter_var($request['title'], FILTER_SANITIZE_STRING);
             $course->price = filter_var($request['course_price'], FILTER_SANITIZE_STRING);
+            $course->promotion_price  = filter_var($request['promotion_price'], FILTER_SANITIZE_STRING);
             $course->delivery_time_id = intval($request['delivery_time']);
             $course->description = $request['description'];
             $course->english_level = filter_var($request['english_level'], FILTER_SANITIZE_STRING);
@@ -245,6 +258,8 @@ class Cource extends Model
             $course->is_featured = filter_var($request['is_featured'], FILTER_SANITIZE_STRING);
             $course->show_attachments = filter_var($request['show_attachments'], FILTER_SANITIZE_STRING);
             $course->address = filter_var($request['address'], FILTER_SANITIZE_STRING);
+            $course->course_date = filter_var($request['course_date'], FILTER_SANITIZE_STRING);
+            $course->course_time = filter_var($request['course_time'], FILTER_SANITIZE_STRING);
             $course->longitude = filter_var($request['longitude'], FILTER_SANITIZE_STRING);
             $course->latitude = filter_var($request['latitude'], FILTER_SANITIZE_STRING);
             $old_path = Helper::PublicPath() . '/uploads/courses/temp';

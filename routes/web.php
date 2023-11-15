@@ -393,7 +393,7 @@ Route::group(
     ['middleware' => ['role:editor|admin']],
     function () {
         Route::post('admin/store-freelancer-profile-settings', 'UserController@storeFreelancerProfileSettings');
-
+        Route::get('admin/export-users', 'UserController@export');
         Route::post('admin/get-freelancer-skills', 'SkillController@getAdminFreelancerSkills');
         Route::post('admin/get-admin-freelancer-skills', 'FreelancerController@getAdminFreelancerSkills');
         Route::get('admin/invite-people', 'InvitationController@index')->name('invitePeople');

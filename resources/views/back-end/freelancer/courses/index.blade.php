@@ -44,7 +44,13 @@
 																	<span class="wt-featuredtagvtwo">Featured</span>
 																@endif
 																<h3>{{{$cource['title']}}}</h3>
+																@if(isset($cource->promotion_price) && $cource->promotion_price > 0)
+																<span><strong><del>{{ !empty($symbol) ? $symbol['symbol'] : '$' }}{{ $cource->price }}</del> {{ !empty($symbol) ? $symbol['symbol'] : '$' }}{{ $cource->promotion_price }}</strong> {{ trans('lang.starting_from') }}</span>
+																
+																@else
 																<span><strong>{{ !empty($symbol) ? $symbol['symbol'] : '$' }}{{{$cource['price']}}}</strong> {{ trans('lang.starting_from') }}</span>
+																@endif
+															
 															</div>
 														</div>
 													</div>

@@ -1,9 +1,9 @@
 @extends(file_exists(resource_path('views/extend/back-end/master.blade.php')) ? 'extend.back-end.master' : 'back-end.master')
 @section('content')
 @php
-    $defaultAmount = $course->price; // Set your default amount here
+    $defaultAmount = isset($course->promotion_price) && $course->promotion_price > 0 ? $course->promotion_price : $course->price;
     $encryptedAmount = Crypt::encrypt($defaultAmount);
-    $stripePaymentUrl = "stripe-order?amount=$encryptedAmount"; // Adjust with your actual Stripe URL
+    $stripePaymentUrl = "stripe-order?amount=$encryptedAmount";
 @endphp
     <section class="wt-haslayout wt-dbsectionspace">
         <div class="row">
@@ -32,7 +32,7 @@
                         @php
                         session()->put(['product_id' => e($course->id)]);
                         session()->put(['product_title' => e($course->title)]);
-                        session()->put(['product_price' => e($course->price)]);
+                        session()->put(['product_price' => $defaultAmount]);
                         session()->put(['type' => 'project']);
                         session()->put(['project_type' => 'course']);
                         session()->put(['course_seller' => $freelancer->id]);
@@ -67,7 +67,15 @@
                                     @endif
                                     <tr>
                                         <td>{{ trans('lang.total') }}</td>
-                                        <td><span id="total_amount">{{ !empty($symbol['symbol']) ? $symbol['symbol'] : '$' }}{{{$cost}}}</span></td>
+                                        <td>
+                                             @if(isset($course->promotion_price) && $course->promotion_price > 0)
+                                            <del>${{ $course->price }}</del> <span id="final_amount">${{ $course->promotion_price }} </span>
+                                        @else
+                                        <span id="final_amount"> 
+                                            ${{ $course->price }}
+                                        </span>
+                                        @endif
+                                    </td>
                                     </tr>
                                     <tr>
                                         <td>Discount:</td>
@@ -75,7 +83,16 @@
                                     </tr>
                                     <tr>
                                         <td>Sub Total:</td>
-                                        <td><span id="final_amount">{{ !empty($symbol['symbol']) ? $symbol['symbol'] : '$' }}{{{$cost}}}</span></td>
+                                        <td>
+                                             @if(isset($course->promotion_price) && $course->promotion_price > 0)
+                                                   <span id="final_amount">${{ $course->promotion_price }} </span>
+                                                @else
+                                                <span id="final_amount"> 
+                                                    ${{ $course->price }}
+                                                </span>
+                                                @endif
+                                           
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>{{ trans('lang.status') }}</td>

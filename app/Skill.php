@@ -74,6 +74,12 @@ class Skill extends Model
         return $this->belongsToMany('App\Job');
     }
 
+    public function category()
+    {
+        return $this->belongsTo('App\Category');
+    }
+
+
     /**
      * Set slug before saving in DB
      *
@@ -84,10 +90,10 @@ class Skill extends Model
      * @return string
      */
     public function setSlugAttribute($value)
-    { 
+    {
         if (!empty($value)) {
             $temp = str_slug($value, '-');
-            
+
             if (!Skill::all()->where('slug', $temp)->isEmpty()) {
                 $i = 1;
                 $new_slug = $temp . '-' . $i;
@@ -115,6 +121,7 @@ class Skill extends Model
             $this->title = filter_var($request['skill_title'], FILTER_SANITIZE_STRING);
             $this->title = filter_var($request['skill_heading'], FILTER_SANITIZE_STRING);
             $this->slug = filter_var($request['skill_title'], FILTER_SANITIZE_STRING);
+            $this->category_id = $request['category_id'];
             $this->logo = filter_var($request['logo'], FILTER_SANITIZE_STRING);
             $this->is_featured = filter_var($request['is_featured'], FILTER_SANITIZE_STRING);
             $this->description = $request['skill_desc'];
@@ -136,11 +143,12 @@ class Skill extends Model
         if (!empty($request)) {
             $skills = self::find($id);
             if ($skills->slug != $request['skill_slug']) {
-             $skills->slug = $request['skill_slug'];
+                $skills->slug = $request['skill_slug'];
             }
             $skills->title = filter_var($request['skill_title'], FILTER_SANITIZE_STRING);
             $skills->heading = filter_var($request['skill_heading'], FILTER_SANITIZE_STRING);
             $skills->logo = filter_var($request['logo'], FILTER_SANITIZE_STRING);
+            $skills->category_id = $request['category_id'];
             $skills->is_featured = filter_var($request['is_featured'], FILTER_SANITIZE_STRING);
             $skills->description = $request['skill_desc'];
             $skills->save();
@@ -201,7 +209,7 @@ class Skill extends Model
     public static function getJob($skill_id)
     {
         return DB::table('job_skill')->select('job_id')
-        ->where('skill_id', $skill_id)
-        ->get();
+            ->where('skill_id', $skill_id)
+            ->get();
     }
 }

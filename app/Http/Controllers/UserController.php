@@ -65,6 +65,8 @@ use App\Location;
 use App\Skill;
 use App\Department;
 use App\Category;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\UsersExport;
 
 
 /**
@@ -131,6 +133,11 @@ class UserController extends Controller
                 compact('languages', 'saved_options', 'user_languages', 'english_levels', 'user_level')
             );
         }
+    }
+
+    public function export()
+    {
+        return Excel::download(new UsersExport, 'users.xlsx');
     }
 
     public function clearRegistrationModal()

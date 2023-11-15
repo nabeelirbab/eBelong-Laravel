@@ -32,6 +32,15 @@
                                         <div class="form-group form-group-half wt-formwithlabel job-cost-input">
                                             {!! Form::number('course_price', e($cource->price), array('class' => '', 'placeholder' => trans('lang.course_price'),'min'=>"1",'step' => 'any')) !!}
                                         </div>
+                                        <div class="form-group form-group-half wt-formwithlabel job-cost-input">
+                                            {!! Form::number('promotion_price',e($cource->promotion_price), array('class' => '','placeholder' => 'Promotion Price','min'=>"1",'step' => 'any')) !!}
+                                        </div>
+                                        <div class="form-group form-group-half wt-formwithlabel job-cost-input">
+                                            {!! Form::date('course_date', e($cource->course_date), array('class' => '', 'placeholder' => 'Course Date')) !!}
+                                        </div>
+                                        <div class="form-group form-group-half wt-formwithlabel job-cost-input">
+                                            {!! Form::time('course_time', e($cource->course_time), array('class' => '', 'placeholder' => 'Course Time')) !!}
+                                        </div>
                                     </fieldset>
                                 </div>
                             </div>

@@ -42,6 +42,15 @@
                                     @endif
                                 </div>
                                 <div class="form-group">
+                                    {!! Form::label('category_id', 'Category') !!}
+                                    {!! Form::select('category_id', $categories, $skills['category_id'], ['class' => 'form-control', 'required' => 'required']) !!}
+                                    @if ($errors->has('category_id'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('category_id') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                                <div class="form-group">
                                     {!! Form::text( 'skill_slug', e($skills['slug']), ['class' =>'form-control'.($errors->has('skill_slug') ? ' is-invalid' : '')] ) !!}
                                     <span class="form-group-description">{{{ trans('lang.desc') }}}</span>
                                     @if ($errors->has('skill_slug'))
