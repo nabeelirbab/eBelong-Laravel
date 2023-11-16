@@ -33,7 +33,7 @@
                                             {!! Form::number('course_price', null, array('class' => '', 'placeholder' => trans('lang.course_price'), 'v-model'=>'price','min'=>"1",'step' => 'any')) !!}
                                         </div>
                                         <div class="form-group form-group-half wt-formwithlabel job-cost-input">
-                                            {!! Form::number('promotion_price', null, array('class' => '', 'placeholder' => 'Promotation Price', 'v-model'=>'promotion_price','min'=>"1",'step' => 'any')) !!}
+                                            {!! Form::number('promotion_price', null, array('class' => '', 'placeholder' => 'Promotion Price', 'v-model'=>'promotion_price','min'=>"1",'step' => 'any')) !!}
                                         </div>
                                         <div class="form-group form-group-half wt-formwithlabel">
                                             <span class="wt-select">

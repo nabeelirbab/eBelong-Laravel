@@ -10,15 +10,14 @@
             <div >
 
                 <div >
-                {!! $chart->html() !!}
+                {!! $chart->container() !!}
                 </div>
                 <hr>
-                {!!$pie->html() !!}
+                {!!$pie->container() !!}
             </div>
             </div>
         </div>
     </div>
-    {!! Charts::scripts() !!}
     {!! $chart->script() !!}
     {!! $pie->script() !!}
 

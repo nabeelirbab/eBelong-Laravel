@@ -275,7 +275,7 @@ Vue.component(
   require("./components/CandidateCount.vue").default
 );
 // window.console.log = function () { };
-window.console.error = function () {};
+window.console.error = function () { };
 
 jQuery(document).ready(function () {
   jQuery(document).on("click", ".wt-back", function (e) {
@@ -413,37 +413,37 @@ jQuery(document).ready(function () {
     selector: "textarea.wt-tinymceblogeditor",
     height: 300,
     theme: "modern",
-     plugins: [
-    "advlist autolink lists link image charmap print preview hr anchor pagebreak",
-    "searchreplace wordcount visualblocks visualchars code fullscreen",
-    "insertdatetime media nonbreaking save table directionality",
-    "emoticons template paste textpattern"
-  ],
-  toolbar: "insert undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media",
-  relative_urls:false, 
-  // convert_urls : false,
-  file_browser_callback : function(field_name, url, type, win) {
-    var x = window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth;
-    var y = window.innerHeight|| document.documentElement.clientHeight|| document.getElementsByTagName('body')[0].clientHeight;
+    plugins: [
+      "advlist autolink lists link image charmap print preview hr anchor pagebreak",
+      "searchreplace wordcount visualblocks visualchars code fullscreen",
+      "insertdatetime media nonbreaking save table directionality",
+      "emoticons template paste textpattern"
+    ],
+    toolbar: "insert undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media",
+    relative_urls: false,
+    // convert_urls : false,
+    file_browser_callback: function (field_name, url, type, win) {
+      var x = window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth;
+      var y = window.innerHeight || document.documentElement.clientHeight || document.getElementsByTagName('body')[0].clientHeight;
 
-    var cmsURL = '/'+ 'laravel-filemanager?field_name=' + field_name;
-    if (type == 'image') {
-      cmsURL = cmsURL + "&type=Images";
-    } else {
-      cmsURL = cmsURL + "&type=Files";
+      var cmsURL = '/' + 'laravel-filemanager?field_name=' + field_name;
+      if (type == 'image') {
+        cmsURL = cmsURL + "&type=Images";
+      } else {
+        cmsURL = cmsURL + "&type=Files";
+      }
+      console.log(cmsURL);
+
+      tinyMCE.activeEditor.windowManager.open({
+        file: cmsURL,
+        title: 'Filemanager',
+        width: x * 0.8,
+        height: y * 0.8,
+        resizable: "yes",
+        close_previous: "no"
+      });
     }
-    console.log(cmsURL);
 
-    tinyMCE.activeEditor.windowManager.open({
-      file : cmsURL,
-      title : 'Filemanager',
-      width : x * 0.8,
-      height : y * 0.8,
-      resizable : "yes",
-      close_previous : "no"
-    });
-  }
-  
   });
   tinymce.init({
     selector: "textarea.wt-tinymceemployereditor",
@@ -461,7 +461,7 @@ jQuery(document).ready(function () {
     remove_script_host: false,
     extended_valid_elements: "span[style],i[class]",
     relative_urls: false,
-    
+
   });
 
   var height = jQuery("#wt-header").outerHeight();
@@ -482,7 +482,7 @@ if (document.getElementById("wt-header")) {
 if (document.getElementById("slider")) {
   const vmHeader = new Vue({
     el: "#slider",
-    mounted: function () {},
+    mounted: function () { },
   });
 }
 
@@ -569,7 +569,7 @@ if (document.getElementById("orders")) {
 if (document.getElementById("message_center")) {
   const vmpassReset = new Vue({
     el: "#message_center",
-    mounted: function () {},
+    mounted: function () { },
     data: {},
     methods: {},
   });
@@ -1887,7 +1887,7 @@ if (document.getElementById("user_profile")) {
       },
       is_popup: false,
     },
-    ready: function () {},
+    ready: function () { },
     methods: {
       showCompleted(message) {
         return this.$toast.success(
@@ -2287,7 +2287,7 @@ if (document.getElementById("user_profile")) {
             }
           });
       },
-      add_wishlist: function (element_id, id, column, saved_text,hidable_element_id) {
+      add_wishlist: function (element_id, id, column, saved_text, hidable_element_id) {
         var self = this;
         axios
           .post(APP_URL + "/user/add-wishlist", {
@@ -2300,18 +2300,18 @@ if (document.getElementById("user_profile")) {
                 if (column == "saved_freelancer") {
                   jQuery("#" + hidable_element_id).show();
                   jQuery("#" + element_id).hide();
-                //   jQuery("#" + element_id)
-                //     .parents("li")
-                //     .addClass("wt-btndisbaled");
-                //   jQuery("#" + element_id).addClass("wt-clicksave");
-                //   jQuery("#" + element_id)
-                //     .find(".save_text")
-                //     .text(saved_text);
-                //   self.disable_btn = "wt-btndisbaled";
-                //   self.text = Vue.prototype.trans("lang.btn_save");
-                //   self.saved_class = "fa fa-heart";
-                //   self.click_to_save = "wt-clicksave";
-    
+                  //   jQuery("#" + element_id)
+                  //     .parents("li")
+                  //     .addClass("wt-btndisbaled");
+                  //   jQuery("#" + element_id).addClass("wt-clicksave");
+                  //   jQuery("#" + element_id)
+                  //     .find(".save_text")
+                  //     .text(saved_text);
+                  //   self.disable_btn = "wt-btndisbaled";
+                  //   self.text = Vue.prototype.trans("lang.btn_save");
+                  //   self.saved_class = "fa fa-heart";
+                  //   self.click_to_save = "wt-clicksave";
+
                 } else if (column == "saved_employers") {
                   jQuery("#" + element_id).addClass(
                     "wt-btndisbaled wt-clicksave"
@@ -2379,12 +2379,12 @@ if (document.getElementById("user_profile")) {
                   // self.text = "Save";
                   // self.saved_class = "fa fa-heart";
                   // self.click_to_save = "wt-clicksave";
-                  console.log("#"+hidable_element_id)
-                  console.log("#"+element_id)
-                  jQuery("#"+element_id).toggle();
-                  jQuery("#"+hidable_element_id).toggle();
-                  
-                } 
+                  console.log("#" + hidable_element_id)
+                  console.log("#" + element_id)
+                  jQuery("#" + element_id).toggle();
+                  jQuery("#" + hidable_element_id).toggle();
+
+                }
                 self.showMessage(response.data.message);
               } else {
                 self.showError(response.data.message);
@@ -2557,28 +2557,28 @@ if (document.getElementById("settings")) {
     created: function () {
       var role;
       axios
-      .get(APP_URL + "/get-login-user-role")
-      .then(function (response) {
-        if (response.data.type === "success") {
-           role = response.data.role
-        }
-    })
-    if(role=='admin'){
-      this.getHomeSectionDisplaySetting();
-      this.getChatDisplaySetting();
-      this.getPrimaryColorDisplaySetting();
-      this.getInnerPageSettings();
-      this.getRegistrationSettings();
-      this.getSitePaymentOptions();
-      this.getBreadcrumbsSettings();
-      this.getProjectSettings();
-    }
-    else{
-      this.getInnerPageSettings();
-      this.getBreadcrumbsSettings();
-    }
+        .get(APP_URL + "/get-login-user-role")
+        .then(function (response) {
+          if (response.data.type === "success") {
+            role = response.data.role
+          }
+        })
+      if (role == 'admin') {
+        this.getHomeSectionDisplaySetting();
+        this.getChatDisplaySetting();
+        this.getPrimaryColorDisplaySetting();
+        this.getInnerPageSettings();
+        this.getRegistrationSettings();
+        this.getSitePaymentOptions();
+        this.getBreadcrumbsSettings();
+        this.getProjectSettings();
+      }
+      else {
+        this.getInnerPageSettings();
+        this.getBreadcrumbsSettings();
+      }
     },
-    ready: function () {},
+    ready: function () { },
     methods: {
       getHomeSectionDisplaySetting: function () {
         let self = this;
@@ -2692,7 +2692,7 @@ if (document.getElementById("settings")) {
               self.showError(response.data.message);
             }
           })
-          .catch(function (error) {});
+          .catch(function (error) { });
       },
       submitGeneralHomeSettings: function () {
         let settings_form = document.getElementById(
@@ -2713,7 +2713,7 @@ if (document.getElementById("settings")) {
               self.showError(response.data.message);
             }
           })
-          .catch(function (error) {});
+          .catch(function (error) { });
       },
       submitChatSettings: function () {
         let chatForm = document.getElementById("submit-chat-form");
@@ -2729,7 +2729,7 @@ if (document.getElementById("settings")) {
               self.showError(response.data.message);
             }
           })
-          .catch(function (error) {});
+          .catch(function (error) { });
       },
       uploadDashboardIcons: function () {
         let upload_icon_form = document.getElementById("upload_dashboard_icon");
@@ -2748,7 +2748,7 @@ if (document.getElementById("settings")) {
               self.showError(response.data.message);
             }
           })
-          .catch(function (error) {});
+          .catch(function (error) { });
       },
       submitThemeStylingSettings: function () {
         let settings_form = document.getElementById("styling-setting-form");
@@ -2767,7 +2767,7 @@ if (document.getElementById("settings")) {
               self.showError(response.data.message);
             }
           })
-          .catch(function (error) {});
+          .catch(function (error) { });
       },
       submitFooterSettings: function () {
         let footersettings = document.getElementById("footer-setting-form");
@@ -2783,7 +2783,7 @@ if (document.getElementById("settings")) {
               self.showError(response.data.message);
             }
           })
-          .catch(function (error) {});
+          .catch(function (error) { });
       },
       submitAccessType: function () {
         let footersettings = document.getElementById("acces_types_form");
@@ -2802,7 +2802,7 @@ if (document.getElementById("settings")) {
               self.showError(response.data.message);
             }
           })
-          .catch(function (error) {});
+          .catch(function (error) { });
       },
       submitSocialSettings: function () {
         let socialsettings = document.getElementById("social-management");
@@ -2818,7 +2818,7 @@ if (document.getElementById("settings")) {
               self.showError(response.data.message);
             }
           })
-          .catch(function (error) {});
+          .catch(function (error) { });
       },
       submitSearchMenu: function () {
         let searchMenu = document.getElementById("search-menu");
@@ -2854,7 +2854,7 @@ if (document.getElementById("settings")) {
               self.showError(response.data.message);
             }
           })
-          .catch(function (error) {});
+          .catch(function (error) { });
       },
       submitPaypalSettings: function () {
         let payment_settings = document.getElementById("payment-form");
@@ -2946,7 +2946,7 @@ if (document.getElementById("settings")) {
               self.showError(response.data.message);
             }
           })
-          .catch(function (error) {});
+          .catch(function (error) { });
       },
       submitHomeSettings: function () {
         let settings_form = document.getElementById("home-settings-form");
@@ -2964,7 +2964,7 @@ if (document.getElementById("settings")) {
               self.showError(response.data.message);
             }
           })
-          .catch(function (error) {});
+          .catch(function (error) { });
       },
       submitSectionSettings: function () {
         let settings_form = document.getElementById("section-settings-form");
@@ -2984,7 +2984,7 @@ if (document.getElementById("settings")) {
               self.showError(response.data.message);
             }
           })
-          .catch(function (error) {});
+          .catch(function (error) { });
       },
       submitServicesSectionSettings: function () {
         let settings_form = document.getElementById("services-sec-settings");
@@ -3002,7 +3002,7 @@ if (document.getElementById("settings")) {
               self.showError(response.data.message);
             }
           })
-          .catch(function (error) {});
+          .catch(function (error) { });
       },
       removeImage: function (id) {
         if (id == "hidden_site_logo") {
@@ -3225,7 +3225,7 @@ if (document.getElementById("settings")) {
               self.showError(response.data.message);
             }
           })
-          .catch(function (error) {});
+          .catch(function (error) { });
       },
       submitOrderSettings: function () {
         let settings_form = document.getElementById("order_settings_form");
@@ -3247,7 +3247,7 @@ if (document.getElementById("settings")) {
               self.showError(response.data.message);
             }
           })
-          .catch(function (error) {});
+          .catch(function (error) { });
       },
       getInnerPageSettings: function () {
         let self = this;
@@ -3340,7 +3340,7 @@ if (document.getElementById("settings")) {
               self.showError(response.data.message);
             }
           })
-          .catch(function (error) {});
+          .catch(function (error) { });
       },
       getBreadcrumbsSettings: function () {
         let self = this;
@@ -3368,7 +3368,7 @@ if (document.getElementById("settings")) {
               self.showError(response.data.message);
             }
           })
-          .catch(function (error) {});
+          .catch(function (error) { });
       },
       getProjectSettings: function () {
         let self = this;
@@ -3396,7 +3396,7 @@ if (document.getElementById("settings")) {
               self.showError(response.data.message);
             }
           })
-          .catch(function (error) {});
+          .catch(function (error) { });
       },
     },
   });
@@ -3447,14 +3447,14 @@ if (document.getElementById("profile_settings")) {
     },
     created: function () {
       axios
-              .get(APP_URL + "/get-login-user-role")
-              .then(function (response) {
-                if (response.data.type === "success") {
-                  role = response.data.role
-                  console.log(role)
-                } 
-              })
-             
+        .get(APP_URL + "/get-login-user-role")
+        .then(function (response) {
+          if (response.data.type === "success") {
+            role = response.data.role
+            console.log(role)
+          }
+        })
+
       this.getUserEmailNotification();
       this.getSearchableSettings();
     },
@@ -4005,7 +4005,7 @@ if (document.getElementById("jobs")) {
         flashVue.$emit("showFlashMessage");
       }
     },
-    created: function () {},
+    created: function () { },
     data: {
       refundable_user: "",
       refundable_payment_method: "",
@@ -4215,7 +4215,7 @@ if (document.getElementById("jobs")) {
               self.showError(response.data.message);
             }
           })
-          .catch(function (error) {});
+          .catch(function (error) { });
       },
       calculate_amount: function (commission) {
         console.log(commission);
@@ -4302,11 +4302,11 @@ if (document.getElementById("jobs")) {
                   if (response.data.type == "success") {
                     window.location.replace(
                       APP_URL +
-                        "/user/order/bacs/" +
-                        id +
-                        "/" +
-                        response.data.order_id +
-                        "/project"
+                      "/user/order/bacs/" +
+                      id +
+                      "/" +
+                      response.data.order_id +
+                      "/project"
                     );
                   }
                 })
@@ -4429,7 +4429,7 @@ if (document.getElementById("jobs")) {
                 });
             },
             allowOutsideClick: () => !this.$swal.isLoading(),
-          }).then((result) => {});
+          }).then((result) => { });
         }
         if (status == "completed") {
           this.$refs.myModalRef.show();
@@ -4467,7 +4467,7 @@ if (document.getElementById("jobs")) {
               self.showError(response.data.message);
             }
           })
-          .catch(function (error) {});
+          .catch(function (error) { });
       },
       submitDispute: function (id) {
         this.loading = true;
@@ -4541,7 +4541,7 @@ if (document.getElementById("jobs")) {
 if (document.getElementById("proposals")) {
   const vproposals = new Vue({
     el: "#proposals",
-    mounted: function () {},
+    mounted: function () { },
     data: {},
     methods: {},
   });
@@ -4622,11 +4622,11 @@ if (document.getElementById("packages")) {
               if (response.data.type == "success") {
                 window.location.replace(
                   APP_URL +
-                    "/user/order/bacs/" +
-                    id +
-                    "/" +
-                    response.data.order_id +
-                    "/package"
+                  "/user/order/bacs/" +
+                  id +
+                  "/" +
+                  response.data.order_id +
+                  "/package"
                 );
               }
             })
@@ -4738,7 +4738,7 @@ if (document.getElementById("packages")) {
               self.showError(response.data.message);
             }
           })
-          .catch(function (error) {});
+          .catch(function (error) { });
       },
       getStriprForm: function () {
         this.$refs.myModalRef.show();
@@ -5170,7 +5170,7 @@ if (document.getElementById("invoice_list")) {
             } else {
             }
           })
-          .catch(function (error) {});
+          .catch(function (error) { });
       },
       getPayouts: function () {
         var year = document.getElementById("payout_year").value;
@@ -5203,7 +5203,7 @@ if (document.getElementById("workdiary")) {
         flashVue.$emit("showFlashMessage");
       }
     },
-    created: function () {},
+    created: function () { },
     data: {
       report: {
         reason: "",
@@ -5315,10 +5315,10 @@ if (document.getElementById("workdiary")) {
                   var project_id = $("#project_id").val();
                   window.location.replace(
                     APP_URL +
-                      "/freelancer/bill/" +
-                      slug +
-                      "/hired/workdiary/" +
-                      project_id
+                    "/freelancer/bill/" +
+                    slug +
+                    "/hired/workdiary/" +
+                    project_id
                   );
                 }
               });
@@ -5757,7 +5757,7 @@ if (document.getElementById("services")) {
             console.log(error);
           });
       },
-      hireFreelancer: function (auth,id, title, text, mode) {
+      hireFreelancer: function (auth, id, title, text, mode) {
         var self = this;
         this.$swal({
           title: title,
@@ -5773,37 +5773,37 @@ if (document.getElementById("services")) {
           showLoaderOnConfirm: false,
         }).then((result) => {
           if (result.value) {
-            if(auth=="true"){
-            if (mode == "false") {
-              axios
-                .post(APP_URL + "/user/generate-order/bacs/" + id + "/service")
-                .then(function (response) {
-                  if (response.data.type == "success") {
-                    window.location.replace(
-                      APP_URL +
+            if (auth == "true") {
+              if (mode == "false") {
+                axios
+                  .post(APP_URL + "/user/generate-order/bacs/" + id + "/service")
+                  .then(function (response) {
+                    if (response.data.type == "success") {
+                      window.location.replace(
+                        APP_URL +
                         "/user/order/bacs/" +
                         response.data.service_order +
                         "/" +
                         response.data.order_id +
                         "/project/service"
-                    );
-                  }
-                  else{
-                    self.showError(response.data.process);
-                  }
-                })
-                .catch(function (error) {
-                  console.log(error);
-                });
-            } else {
-              window.location.replace(
-                APP_URL + "/service/payment-process/" + id
-              );
+                      );
+                    }
+                    else {
+                      self.showError(response.data.process);
+                    }
+                  })
+                  .catch(function (error) {
+                    console.log(error);
+                  });
+              } else {
+                window.location.replace(
+                  APP_URL + "/service/payment-process/" + id
+                );
               }
-              
+
             }
-            else{
-              self.showError("PLease Login as Employer");
+            else {
+              self.showError("Please Login as Employer");
             }
           } else {
             this.$swal.close();
@@ -5881,7 +5881,7 @@ if (document.getElementById("services")) {
                 });
             },
             allowOutsideClick: () => !this.$swal.isLoading(),
-          }).then((result) => {});
+          }).then((result) => { });
         } else if (status == "completed") {
           this.$refs.myModalRef.show();
         }
@@ -5927,7 +5927,7 @@ if (document.getElementById("services")) {
               self.showError(response.data.message);
             }
           })
-          .catch(function (error) {});
+          .catch(function (error) { });
       },
       showReview: function (id) {
         var modal_ref = "myModalRef-" + id;
@@ -5999,578 +5999,578 @@ if (document.getElementById("candidate_count")) {
 }
 if (document.getElementById("blog")) {
   const vservices = new Vue({
-      el: '#blog',
-      mounted: function () {
-          if (document.getElementsByClassName("flash_msg") != null) {
-              flashVue.$emit('showFlashMessage');
-          }
-      },
-      created: function () {
-          this.getSettings();
-      },
-      data: {
-          report: {
-              reason: '',
-              description: '',
-              id: '',
-              model: 'App\\Blog',
-              report_type: '',
-          },
-          title: '',
-          delivery_time: '',
-          price: '',
-          response_time: '',
-          english_level: '',
-          message: '',
-          form_errors: [],
-          custom_error: false,
-          is_show: false,
-          loading: false,
-          show_attachments: false,
-          is_featured: false,
-          is_progress: false,
-          is_completed: false,
-          redirect_url: '',
-          errors: '',
-          disable_btn: '',
-          saved_class: '',
-          heart_class: 'fa fa-heart',
-          text: Vue.prototype.trans('lang.click_to_save'),
-          follow_text: Vue.prototype.trans('lang.click_to_follow'),
-          disable_follow: '',
-          refundable_user: '',
-          refundable_payment_method: '',
-          notificationSystem: {
-              options: {
-                  success: {
-                      position: "center",
-                      timeout: 4000
-                  },
-                  error: {
-                      position: "topRight",
-                      timeout: 7000
-                  },
-                  completed: {
-                      overlay: true,
-                      zindex: 999,
-                      position: 'center',
-                      progressBar: false,
-                  },
-                  info: {
-                      overlay: true,
-                      zindex: 999,
-                      position: 'center',
-                      timeout: 3000,
-                      class: 'iziToast-info',
-                      id: 'info_notify',
-                  }
-              }
-          }
-      },
-      methods: {
-          showCompleted(message) {
-              return this.$toast.success(' ', message, this.notificationSystem.options.completed);
-          },
-          showInfo(message) {
-              return this.$toast.info(' ', message, this.notificationSystem.options.info);
-          },
-          showMessage(message) {
-              return this.$toast.success(' ', message, this.notificationSystem.options.success);
-          },
-          showError(error) {
-              return this.$toast.error(' ', error, this.notificationSystem.options.error);
-          },
-          submitBlog: function () {
-              this.loading = true;
-              let Form = document.getElementById('post_blog_form');
-              let form_data = new FormData(Form);
-              var description = tinyMCE.get('wt-tinymceeditor').getContent();
-              form_data.append('content', description);
-              var self = this;
-              axios.post(APP_URL + '/blogs/post-blog', form_data)
-                  .then(function (response) {
-                      if (response.data.type == 'success') {
-                          self.loading = false;
-                          self.showInfo(response.data.progress);
-                          document.addEventListener('iziToast-closing', function (data) {
-                              if (data.detail.id == 'info_notify') {
-                                  self.showCompleted(response.data.message);
-                                  window.location.replace(APP_URL + '/blogs');
-                              }
-                          });
-                      } else {
-                          self.loading = false;
-                          self.showError(response.data.message);
-                      }
-                  })
-                  .catch(function (error) {
-                      self.loading = false;
-                      if (error.response.data.errors.title) {
-                          self.showError(error.response.data.errors.title[0]);
-                      }
-                     
-                      if (error.response.data.errors.content) {
-                          self.showError(error.response.data.errors.content[0]);
-                      }
-                      
-                  });
-          },
-          FilterBlog: function (typ) {
-            this.loading = true;
-            console.log(typ)
-            if(typ=='category'){
-            let Form = document.getElementById('filter_blog_form');
-            let form_data = new FormData(Form);
-            var self = this;
-            console.log(form_data)
-            var type = form_data.get('type')
-            let cat = form_data.get('category')
-            console.log("in scat")
-            window.location.replace(APP_URL + '/blogs/'+type+'/'+cat);
-            }
-            else{
-              let Form = document.getElementById('filter_blog_skill_form');
-              let form_data = new FormData(Form);
-              var self = this;
-              console.log(form_data)
-              var type = form_data.get('type')
-              let skill = form_data.get('skill')
-            console.log('in skill')
-              window.location.replace(APP_URL + '/blogs/'+type+'/'+skill);
-            }
-            //     .then(function (response) {
-            //         if (response.data.type == 'success') {
-            //             self.loading = false;
-            //             self.showInfo(response.data.progress);
-            //             document.addEventListener('iziToast-closing', function (data) {
-            //                 if (data.detail.id == 'info_notify') {
-            //                     self.showCompleted(response.data.message);
-            //                     window.location.replace(APP_URL + '/search-results?type=blogs');
-            //                 }
-            //             });
-            //         } else {
-            //             self.loading = false;
-            //             self.showError(response.data.message);
-            //         }
-            //     })
-            //     .catch(function (error) {
-            //         self.loading = false;
-            //         if (error.response.data.errors.title) {
-            //             self.showError(error.response.data.errors.title[0]);
-            //         }
-                   
-            //         if (error.response.data.errors.description) {
-            //             self.showError(error.response.data.errors.description[0]);
-            //         }
-                    
-            //     });
-        },
-          changeStatus: function (id) {
-              this.loading = true;
-              var status = document.getElementById(id + '-blog_status').value;
-              var self = this;
-              axios.post(APP_URL + '/blog/change-status', {
-                  status: status,
-                  id: id,
-              })
-                  .then(function (response) {
-                      if (response.data.type == 'success') {
-                          self.loading = false;
-                          self.showMessage(response.data.message);
-                      } else {
-                          self.loading = false;
-                          self.showError(response.data.message);
-                      }
-                  })
-                  .catch(function (error) {
-                      self.loading = false;
-                  });
-          },
-          getSettings: function () {
-              let self = this;
-              var segment_str = window.location.pathname;
-              var segment_array = segment_str.split('/');
-              var id = segment_array[segment_array.length - 1];
-              if (segment_str == '/freelancer/dashboard/edit-service/' + id) {
-                  axios.post(APP_URL + '/service/get-service-settings', {
-                      id: id
-                  })
-                      .then(function (response) {
-                          if (response.data.type == 'success') {
-                              if ((response.data.is_featured == 'true')) {
-                                  self.is_featured = true;
-                              } else {
-                                  self.is_featured = false;
-                              }
-                              if ((response.data.show_attachments == 'true')) {
-                                  self.show_attachments = true;
-                              } else {
-                                  self.show_attachments = false;
-                              }
-                          }
-                      });
-              }
-          },
-          updateBlog: function (id) {
-              this.loading = true;
-              let register_Form = document.getElementById('update_blog_form');
-              let form_data = new FormData(register_Form);
-              var description = tinyMCE.get('wt-tinymceeditor').getContent();
-              form_data.append('content', description);
-              form_data.append('id', id);
-              var self = this;
-              axios.post(APP_URL + '/blog/update-blog', form_data)
-                  .then(function (response) {
-                      self.loading = false;
-                      if (response.data.type == 'success') {
-                          self.showInfo(response.data.progress);
-                          document.addEventListener('iziToast-closing', function (data) {
-                              if (data.detail.id == 'info_notify') {
-                                  self.showCompleted(response.data.message);
-                                      window.location.replace(APP_URL + '/editor/manage-blogs')
-                              }
-                          });
-                      } else {
-                          self.loading = false;
-                          self.showError(response.data.message);
-                      }
-                  })
-                  .catch(function (error) {
-                      self.loading = false;
-                      if (error.response.data.errors.title) {
-                          self.showError(error.response.data.errors.title[0]);
-                      }
-                      if (error.response.data.errors.delivery_time) {
-                          self.showError(error.response.data.errors.delivery_time[0]);
-                      }
-                      if (error.response.data.errors.service_price) {
-                          self.showError(error.response.data.errors.service_price[0]);
-                      }
-                      if (error.response.data.errors.response_time) {
-                          self.showError(error.response.data.errors.response_time[0]);
-                      }
-                      if (error.response.data.errors.content) {
-                          self.showError(error.response.data.errors.content[0]);
-                      }
-                      if (error.response.data.errors.english_level) {
-                          self.showError(error.response.data.errors.english_level[0]);
-                      }
-                      if (error.response.data.errors.latitude) {
-                          self.showError(error.response.data.errors.latitude[0]);
-                      }
-                      if (error.response.data.errors.longitude) {
-                          self.showError(error.response.data.errors.longitude[0]);
-                      }
-                  });
-          },
-          deleteAttachment: function (id) {
-              jQuery('#' + id).remove();
-          },
-          submitReport: function (id, report_type) {
-              this.report.report_type = report_type;
-              this.report.id = id;
-              var self = this;
-              axios.post(APP_URL + '/submit-report', self.report)
-                  .then(function (response) {
-                      if (response.data.type == 'success') {
-                          self.showMessage(response.data.message);
-                      } else if (response.data.type == 'error') {
-                          self.showError(response.data.message);
-                      }
-                  })
-                  .catch(error => {
-                      if (error.response.status == 422) {
-                          if (error.response.data.errors.description) {
-                              self.showError(error.response.data.errors.description[0]);
-                          }
-                          if (error.response.data.errors.reason) {
-                              self.showError(error.response.data.errors.reason[0]);
-                          }
-                      }
-                  });
-          },
-          add_wishlist: function (element_id, id, column, seller_id, saved_text,hidable_element_id) {
-              var self = this;
-              axios.post(APP_URL + '/user/add-wishlist', {
-                  id: id,
-                  column: column,
-                  seller_id: seller_id,
-              })
-                  .then(function (response) {
-                      if (response.data.authentication == true) {
-                          if (response.data.type == 'success') {
-                              if (column == 'saved_freelancer') {
-                                  jQuery('#' + element_id).parents('li').addClass('wt-btndisbaled');
-                                  jQuery('#' + element_id).addClass('wt-clicksave');
-                                  jQuery('#' + element_id).find('.save_text').text(saved_text);
-                                  self.disable_btn = 'wt-btndisbaled';
-                                  self.text = 'Save';
-                                  self.saved_class = 'fa fa-heart';
-                                  self.click_to_save = 'wt-clicksave'
-                              }
-                              else if (column == 'saved_employers') {
-                                  jQuery('#' + element_id).addClass('wt-btndisbaled wt-clicksave');
-                                  jQuery('#' + element_id).text(saved_text);
-                                  jQuery('#' + element_id).parents('.wt-clicksavearea').find('i').addClass('fa fa-heart');
-                                  self.disable_follow = 'wt-btndisbaled';
-                                  self.follow_text = saved_text;
-                              }
-                              else if (column == 'saved_services') {
-                                  jQuery('#' + hidable_element_id).show();
-                                  jQuery('#' + element_id).hide();
-                                  
-                              }
-                              self.showMessage(response.data.message);
-                          } else {
-                              self.showError(response.data.message);
-                          }
-                      } else {
-                          self.showError(response.data.message);
-                      }
-                  })
-                  .catch(function (error) {
-                      console.log(error);
-                  });
-          },
-          remove_wishlist: function (element_id, id, column, seller_id, saved_text,hidable_element_id) {
-              var self = this;
-              axios.post(APP_URL + '/user/remove-wishlist', {
-                  id: id,
-                  column: column,
-                  seller_id: seller_id,
-              })
-                  .then(function (response) {
-                      if (response.data.authentication == true) {
-                          if (response.data.type == 'success') {
-                              if (column == 'saved_freelancer') {
-                                  jQuery('#' + element_id).parents('li').addClass('wt-btndisbaled');
-                                  jQuery('#' + element_id).addClass('wt-clicksave');
-                                  jQuery('#' + element_id).find('.save_text').text(saved_text);
-                                  self.disable_btn = 'wt-btndisbaled';
-                                  self.text = 'Save';
-                                  self.saved_class = 'fa fa-heart';
-                                  self.click_to_save = 'wt-clicksave'
-                              }
-                              else if (column == 'saved_employers') {
-                                  jQuery('#' + element_id).addClass('wt-btndisbaled wt-clicksave');
-                                  jQuery('#' + element_id).text(saved_text);
-                                  jQuery('#' + element_id).parents('.wt-clicksavearea').find('i').addClass('fa fa-heart');
-                                  self.disable_follow = 'wt-btndisbaled';
-                                  self.follow_text = saved_text;
-                              }
-                              else if (column == 'saved_services') {
-                                  jQuery('#' + hidable_element_id).show();
-                                  jQuery('#' + element_id).hide();
-                              }
-                              else if (column == 'saved_cources') {
-                                  // jQuery('#' + element_id).removeClass('wt-clicksave');
-                                  // self.saved_class = 'wt-clicksave';
-                                  jQuery('#' + hidable_element_id).show();
-                                  jQuery('#' + element_id).hide();
-                              }
-                              self.showMessage(response.data.message);
-                          } else {
-                              self.showError(response.data.message);
-                          }
-                      } else {
-                          self.showError(response.data.message);
-                      }
-                  })
-                  .catch(function (error) {
-                      console.log(error);
-                  });
-          },
-          hireFreelancer: function (id, title, text, mode) {
-              this.$swal({
-                  title: title,
-                  text: text,
-                  type: "warning",
-                  customContainerClass: 'hire_popup',
-                  showCancelButton: true,
-                  confirmButtonClass: "btn-danger",
-                  confirmButtonText: "Yes",
-                  cancelButtonText: "No",
-                  closeOnConfirm: true,
-                  closeOnCancel: true,
-                  showLoaderOnConfirm: false
-              }).then((result) => {
-                console.log(result)
-                  if (result.value) {
-                      if (mode == 'false') {
-                          axios.post(APP_URL + '/user/generate-order/bacs/'+id+'/service')
-                          .then(function (response) {
-                            console.log(response)
-                              if (response.data.type == 'success') {
-                                  window.location.replace(APP_URL+'/user/order/bacs/'+response.data.service_order+'/'+response.data.order_id+'/project/service');
-                              }
-                          })
-                          .catch(function (error) {
-                              console.log(error);
-                          });
-                      } else {
-                          window.location.replace(APP_URL + '/service/payment-process/' + id);
-                      }
-                  } else {
-                    console.log("og")
-                      this.$swal.close()
-                  }
-              })
-          },
-          serviceStatus: function (id, pivot_id, employer_id, cancel_text, confirm_button, validation_error, popup_title) {
-              var job_status = document.getElementById("employer_service_status");
-              var status = job_status.options[job_status.selectedIndex].value;
-              if (status == "cancelled") {
-                  this.$swal({
-                      title: popup_title,
-                      text: cancel_text,
-                      type: 'info',
-                      input: 'textarea',
-                      confirmButtonText: confirm_button,
-                      showCancelButton: true,
-                      showLoaderOnConfirm: true,
-                      inputValidator: (textarea) => {
-                          return new Promise((resolve) => {
-                              if (textarea != '') {
-                                  resolve()
-                              } else {
-                                  resolve(validation_error)
-                              }
-                          })
-                      },
-                      preConfirm: (textarea) => {
-                          var self = this;
-                          return axios.post(APP_URL + '/submit-report', {
-                              reason: 'service cancel',
-                              report_type: 'service_cancel',
-                              description: textarea,
-                              id: id,
-                              pivot_id: pivot_id,
-                              model: 'App\\Service',
-                              employer_id: employer_id
-                          })
-                              .then(function (response) {
-                                  if (response.data.type == 'success') {
-                                      self.loading = false;
-                                      self.showInfo(response.data.progress);
-                                      document.addEventListener('iziToast-closing', function (data) {
-                                          if (data.detail.id == 'info_notify') {
-                                              self.showCompleted(response.data.message);
-                                              window.location.replace(APP_URL + '/employer/services/cancelled');
-                                          }
-                                      });
-                                  } else if (response.data.type == 'error') {
-                                      self.showError(response.data.message);
-                                  }
-                              })
-                              .catch(error => {
-                                  if (error.response.status == 422) {
-                                      if (error.response.data.errors.description) {
-                                          self.$swal.showValidationMessage(
-                                              error.response.data.errors.description[0]
-                                          )
-                                      }
-                                  }
-                              })
-                      },
-                      allowOutsideClick: () => !this.$swal.isLoading()
-                  }).then((result) => { })
-              } else if (status == "completed") {
-                  this.$refs.myModalRef.show()
-              }
-          },
-          submitFeedback: function (id, job_id) {
-              this.loading = true;
-              let review_form = document.getElementById('submit-review-form');
-              let form_data = new FormData(review_form);
-              form_data.append('freelancer_id', id);
-              form_data.append('job_id', job_id);
-              form_data.append('type', 'service');
-              var self = this;
-              axios.post(APP_URL + '/user/submit-review', form_data)
-                  .then(function (response) {
-                      if (response.data.type == 'success') {
-                          self.loading = false;
-                          var message = response.data.message;
-                          self.showMessage(message);
-                          setTimeout(function () {
-                              self.$refs.myModalRef.hide()
-                              window.location.replace(APP_URL + '/employer/services/completed');
-                          }, 1000);
-                      } else {
-                          self.loading = false;
-                          self.showError(response.data.message);
-                      }
-                  })
-                  .catch(function (error) {
-                      self.loading = false;
-                  });
-          },
-          check_auth: function (url) {
-              var self = this;
-              axios.get(APP_URL + '/check-service-auth-user')
-                  .then(function (response) {
-                      if (response.data.auth == 1) {
-                          window.location.replace(url);
-                      } else {
-                          self.showError(response.data.message);
-                      }
-                  })
-                  .catch(function (error) {
-
-                  });
-          },
-          showReview: function (id) {
-              var modal_ref = 'myModalRef-' + id;
-              if (this.$refs[modal_ref]) {
-                  this.$refs[modal_ref].show();
-              } else {
-                  this.showError(Vue.prototype.trans('lang.review_not_found'),);
-              }
-          },
-          showReason: function (id) {
-              var modal_ref = 'myModalRef-' + id;
-              this.$refs[modal_ref].show();
-          },
-          showRefoundForm: function (id) {
-              var modal_ref = 'myModalRef-' + id;
-              this.$refs[modal_ref].show();
-          },
-          submitRefund: function (order_id) {
-              this.loading = true;
-              var self = this;
-              var refundable_amount = $('#refundable-amount-'+order_id).val();
-              var selected_user = $("#refundable_user_id-"+order_id).val();
-              let form = document.getElementById('submit_refund_' + order_id);
-              let form_data = new FormData(form);
-              form_data.append('amount', refundable_amount);
-              form_data.append('refundable_user_id', selected_user);
-              form_data.append('order_id', order_id);
-              form_data.append('type', 'service');
-              axios.post(APP_URL + '/admin/submit-user-refund', form_data)
-                  .then(function (response) {
-                      if (response.data.type == 'success') {
-                          self.loading = false;
-                          self.showMessage(response.data.message);
-                          window.location.replace(APP_URL + '/admin/service-orders');
-                      } else if (response.data.type == 'error') {
-                          var modal_ref = 'myModalRef-' + order_id;
-                          self.$refs[modal_ref].hide();
-                          self.loading = false;
-                          self.showError(response.data.message);
-                      }
-                  })
-                  .catch(error => {
-                      if (error.response.status == 422) {
-                          self.loading = false;
-                          var modal_ref = 'myModalRef-' + order_id;
-                          self.$refs[modal_ref].hide();
-                          if (error.response.data.errors.refundable_user_id) {
-                              self.showError(error.response.data.errors.refundable_user_id[0]);
-                          }
-                      }
-                  });
-          },
+    el: '#blog',
+    mounted: function () {
+      if (document.getElementsByClassName("flash_msg") != null) {
+        flashVue.$emit('showFlashMessage');
       }
+    },
+    created: function () {
+      this.getSettings();
+    },
+    data: {
+      report: {
+        reason: '',
+        description: '',
+        id: '',
+        model: 'App\\Blog',
+        report_type: '',
+      },
+      title: '',
+      delivery_time: '',
+      price: '',
+      response_time: '',
+      english_level: '',
+      message: '',
+      form_errors: [],
+      custom_error: false,
+      is_show: false,
+      loading: false,
+      show_attachments: false,
+      is_featured: false,
+      is_progress: false,
+      is_completed: false,
+      redirect_url: '',
+      errors: '',
+      disable_btn: '',
+      saved_class: '',
+      heart_class: 'fa fa-heart',
+      text: Vue.prototype.trans('lang.click_to_save'),
+      follow_text: Vue.prototype.trans('lang.click_to_follow'),
+      disable_follow: '',
+      refundable_user: '',
+      refundable_payment_method: '',
+      notificationSystem: {
+        options: {
+          success: {
+            position: "center",
+            timeout: 4000
+          },
+          error: {
+            position: "topRight",
+            timeout: 7000
+          },
+          completed: {
+            overlay: true,
+            zindex: 999,
+            position: 'center',
+            progressBar: false,
+          },
+          info: {
+            overlay: true,
+            zindex: 999,
+            position: 'center',
+            timeout: 3000,
+            class: 'iziToast-info',
+            id: 'info_notify',
+          }
+        }
+      }
+    },
+    methods: {
+      showCompleted(message) {
+        return this.$toast.success(' ', message, this.notificationSystem.options.completed);
+      },
+      showInfo(message) {
+        return this.$toast.info(' ', message, this.notificationSystem.options.info);
+      },
+      showMessage(message) {
+        return this.$toast.success(' ', message, this.notificationSystem.options.success);
+      },
+      showError(error) {
+        return this.$toast.error(' ', error, this.notificationSystem.options.error);
+      },
+      submitBlog: function () {
+        this.loading = true;
+        let Form = document.getElementById('post_blog_form');
+        let form_data = new FormData(Form);
+        var description = tinyMCE.get('wt-tinymceeditor').getContent();
+        form_data.append('content', description);
+        var self = this;
+        axios.post(APP_URL + '/blogs/post-blog', form_data)
+          .then(function (response) {
+            if (response.data.type == 'success') {
+              self.loading = false;
+              self.showInfo(response.data.progress);
+              document.addEventListener('iziToast-closing', function (data) {
+                if (data.detail.id == 'info_notify') {
+                  self.showCompleted(response.data.message);
+                  window.location.replace(APP_URL + '/blogs');
+                }
+              });
+            } else {
+              self.loading = false;
+              self.showError(response.data.message);
+            }
+          })
+          .catch(function (error) {
+            self.loading = false;
+            if (error.response.data.errors.title) {
+              self.showError(error.response.data.errors.title[0]);
+            }
+
+            if (error.response.data.errors.content) {
+              self.showError(error.response.data.errors.content[0]);
+            }
+
+          });
+      },
+      FilterBlog: function (typ) {
+        this.loading = true;
+        console.log(typ)
+        if (typ == 'category') {
+          let Form = document.getElementById('filter_blog_form');
+          let form_data = new FormData(Form);
+          var self = this;
+          console.log(form_data)
+          var type = form_data.get('type')
+          let cat = form_data.get('category')
+          console.log("in scat")
+          window.location.replace(APP_URL + '/blogs/' + type + '/' + cat);
+        }
+        else {
+          let Form = document.getElementById('filter_blog_skill_form');
+          let form_data = new FormData(Form);
+          var self = this;
+          console.log(form_data)
+          var type = form_data.get('type')
+          let skill = form_data.get('skill')
+          console.log('in skill')
+          window.location.replace(APP_URL + '/blogs/' + type + '/' + skill);
+        }
+        //     .then(function (response) {
+        //         if (response.data.type == 'success') {
+        //             self.loading = false;
+        //             self.showInfo(response.data.progress);
+        //             document.addEventListener('iziToast-closing', function (data) {
+        //                 if (data.detail.id == 'info_notify') {
+        //                     self.showCompleted(response.data.message);
+        //                     window.location.replace(APP_URL + '/search-results?type=blogs');
+        //                 }
+        //             });
+        //         } else {
+        //             self.loading = false;
+        //             self.showError(response.data.message);
+        //         }
+        //     })
+        //     .catch(function (error) {
+        //         self.loading = false;
+        //         if (error.response.data.errors.title) {
+        //             self.showError(error.response.data.errors.title[0]);
+        //         }
+
+        //         if (error.response.data.errors.description) {
+        //             self.showError(error.response.data.errors.description[0]);
+        //         }
+
+        //     });
+      },
+      changeStatus: function (id) {
+        this.loading = true;
+        var status = document.getElementById(id + '-blog_status').value;
+        var self = this;
+        axios.post(APP_URL + '/blog/change-status', {
+          status: status,
+          id: id,
+        })
+          .then(function (response) {
+            if (response.data.type == 'success') {
+              self.loading = false;
+              self.showMessage(response.data.message);
+            } else {
+              self.loading = false;
+              self.showError(response.data.message);
+            }
+          })
+          .catch(function (error) {
+            self.loading = false;
+          });
+      },
+      getSettings: function () {
+        let self = this;
+        var segment_str = window.location.pathname;
+        var segment_array = segment_str.split('/');
+        var id = segment_array[segment_array.length - 1];
+        if (segment_str == '/freelancer/dashboard/edit-service/' + id) {
+          axios.post(APP_URL + '/service/get-service-settings', {
+            id: id
+          })
+            .then(function (response) {
+              if (response.data.type == 'success') {
+                if ((response.data.is_featured == 'true')) {
+                  self.is_featured = true;
+                } else {
+                  self.is_featured = false;
+                }
+                if ((response.data.show_attachments == 'true')) {
+                  self.show_attachments = true;
+                } else {
+                  self.show_attachments = false;
+                }
+              }
+            });
+        }
+      },
+      updateBlog: function (id) {
+        this.loading = true;
+        let register_Form = document.getElementById('update_blog_form');
+        let form_data = new FormData(register_Form);
+        var description = tinyMCE.get('wt-tinymceeditor').getContent();
+        form_data.append('content', description);
+        form_data.append('id', id);
+        var self = this;
+        axios.post(APP_URL + '/blog/update-blog', form_data)
+          .then(function (response) {
+            self.loading = false;
+            if (response.data.type == 'success') {
+              self.showInfo(response.data.progress);
+              document.addEventListener('iziToast-closing', function (data) {
+                if (data.detail.id == 'info_notify') {
+                  self.showCompleted(response.data.message);
+                  window.location.replace(APP_URL + '/editor/manage-blogs')
+                }
+              });
+            } else {
+              self.loading = false;
+              self.showError(response.data.message);
+            }
+          })
+          .catch(function (error) {
+            self.loading = false;
+            if (error.response.data.errors.title) {
+              self.showError(error.response.data.errors.title[0]);
+            }
+            if (error.response.data.errors.delivery_time) {
+              self.showError(error.response.data.errors.delivery_time[0]);
+            }
+            if (error.response.data.errors.service_price) {
+              self.showError(error.response.data.errors.service_price[0]);
+            }
+            if (error.response.data.errors.response_time) {
+              self.showError(error.response.data.errors.response_time[0]);
+            }
+            if (error.response.data.errors.content) {
+              self.showError(error.response.data.errors.content[0]);
+            }
+            if (error.response.data.errors.english_level) {
+              self.showError(error.response.data.errors.english_level[0]);
+            }
+            if (error.response.data.errors.latitude) {
+              self.showError(error.response.data.errors.latitude[0]);
+            }
+            if (error.response.data.errors.longitude) {
+              self.showError(error.response.data.errors.longitude[0]);
+            }
+          });
+      },
+      deleteAttachment: function (id) {
+        jQuery('#' + id).remove();
+      },
+      submitReport: function (id, report_type) {
+        this.report.report_type = report_type;
+        this.report.id = id;
+        var self = this;
+        axios.post(APP_URL + '/submit-report', self.report)
+          .then(function (response) {
+            if (response.data.type == 'success') {
+              self.showMessage(response.data.message);
+            } else if (response.data.type == 'error') {
+              self.showError(response.data.message);
+            }
+          })
+          .catch(error => {
+            if (error.response.status == 422) {
+              if (error.response.data.errors.description) {
+                self.showError(error.response.data.errors.description[0]);
+              }
+              if (error.response.data.errors.reason) {
+                self.showError(error.response.data.errors.reason[0]);
+              }
+            }
+          });
+      },
+      add_wishlist: function (element_id, id, column, seller_id, saved_text, hidable_element_id) {
+        var self = this;
+        axios.post(APP_URL + '/user/add-wishlist', {
+          id: id,
+          column: column,
+          seller_id: seller_id,
+        })
+          .then(function (response) {
+            if (response.data.authentication == true) {
+              if (response.data.type == 'success') {
+                if (column == 'saved_freelancer') {
+                  jQuery('#' + element_id).parents('li').addClass('wt-btndisbaled');
+                  jQuery('#' + element_id).addClass('wt-clicksave');
+                  jQuery('#' + element_id).find('.save_text').text(saved_text);
+                  self.disable_btn = 'wt-btndisbaled';
+                  self.text = 'Save';
+                  self.saved_class = 'fa fa-heart';
+                  self.click_to_save = 'wt-clicksave'
+                }
+                else if (column == 'saved_employers') {
+                  jQuery('#' + element_id).addClass('wt-btndisbaled wt-clicksave');
+                  jQuery('#' + element_id).text(saved_text);
+                  jQuery('#' + element_id).parents('.wt-clicksavearea').find('i').addClass('fa fa-heart');
+                  self.disable_follow = 'wt-btndisbaled';
+                  self.follow_text = saved_text;
+                }
+                else if (column == 'saved_services') {
+                  jQuery('#' + hidable_element_id).show();
+                  jQuery('#' + element_id).hide();
+
+                }
+                self.showMessage(response.data.message);
+              } else {
+                self.showError(response.data.message);
+              }
+            } else {
+              self.showError(response.data.message);
+            }
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      },
+      remove_wishlist: function (element_id, id, column, seller_id, saved_text, hidable_element_id) {
+        var self = this;
+        axios.post(APP_URL + '/user/remove-wishlist', {
+          id: id,
+          column: column,
+          seller_id: seller_id,
+        })
+          .then(function (response) {
+            if (response.data.authentication == true) {
+              if (response.data.type == 'success') {
+                if (column == 'saved_freelancer') {
+                  jQuery('#' + element_id).parents('li').addClass('wt-btndisbaled');
+                  jQuery('#' + element_id).addClass('wt-clicksave');
+                  jQuery('#' + element_id).find('.save_text').text(saved_text);
+                  self.disable_btn = 'wt-btndisbaled';
+                  self.text = 'Save';
+                  self.saved_class = 'fa fa-heart';
+                  self.click_to_save = 'wt-clicksave'
+                }
+                else if (column == 'saved_employers') {
+                  jQuery('#' + element_id).addClass('wt-btndisbaled wt-clicksave');
+                  jQuery('#' + element_id).text(saved_text);
+                  jQuery('#' + element_id).parents('.wt-clicksavearea').find('i').addClass('fa fa-heart');
+                  self.disable_follow = 'wt-btndisbaled';
+                  self.follow_text = saved_text;
+                }
+                else if (column == 'saved_services') {
+                  jQuery('#' + hidable_element_id).show();
+                  jQuery('#' + element_id).hide();
+                }
+                else if (column == 'saved_cources') {
+                  // jQuery('#' + element_id).removeClass('wt-clicksave');
+                  // self.saved_class = 'wt-clicksave';
+                  jQuery('#' + hidable_element_id).show();
+                  jQuery('#' + element_id).hide();
+                }
+                self.showMessage(response.data.message);
+              } else {
+                self.showError(response.data.message);
+              }
+            } else {
+              self.showError(response.data.message);
+            }
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      },
+      hireFreelancer: function (id, title, text, mode) {
+        this.$swal({
+          title: title,
+          text: text,
+          type: "warning",
+          customContainerClass: 'hire_popup',
+          showCancelButton: true,
+          confirmButtonClass: "btn-danger",
+          confirmButtonText: "Yes",
+          cancelButtonText: "No",
+          closeOnConfirm: true,
+          closeOnCancel: true,
+          showLoaderOnConfirm: false
+        }).then((result) => {
+          console.log(result)
+          if (result.value) {
+            if (mode == 'false') {
+              axios.post(APP_URL + '/user/generate-order/bacs/' + id + '/service')
+                .then(function (response) {
+                  console.log(response)
+                  if (response.data.type == 'success') {
+                    window.location.replace(APP_URL + '/user/order/bacs/' + response.data.service_order + '/' + response.data.order_id + '/project/service');
+                  }
+                })
+                .catch(function (error) {
+                  console.log(error);
+                });
+            } else {
+              window.location.replace(APP_URL + '/service/payment-process/' + id);
+            }
+          } else {
+            console.log("og")
+            this.$swal.close()
+          }
+        })
+      },
+      serviceStatus: function (id, pivot_id, employer_id, cancel_text, confirm_button, validation_error, popup_title) {
+        var job_status = document.getElementById("employer_service_status");
+        var status = job_status.options[job_status.selectedIndex].value;
+        if (status == "cancelled") {
+          this.$swal({
+            title: popup_title,
+            text: cancel_text,
+            type: 'info',
+            input: 'textarea',
+            confirmButtonText: confirm_button,
+            showCancelButton: true,
+            showLoaderOnConfirm: true,
+            inputValidator: (textarea) => {
+              return new Promise((resolve) => {
+                if (textarea != '') {
+                  resolve()
+                } else {
+                  resolve(validation_error)
+                }
+              })
+            },
+            preConfirm: (textarea) => {
+              var self = this;
+              return axios.post(APP_URL + '/submit-report', {
+                reason: 'service cancel',
+                report_type: 'service_cancel',
+                description: textarea,
+                id: id,
+                pivot_id: pivot_id,
+                model: 'App\\Service',
+                employer_id: employer_id
+              })
+                .then(function (response) {
+                  if (response.data.type == 'success') {
+                    self.loading = false;
+                    self.showInfo(response.data.progress);
+                    document.addEventListener('iziToast-closing', function (data) {
+                      if (data.detail.id == 'info_notify') {
+                        self.showCompleted(response.data.message);
+                        window.location.replace(APP_URL + '/employer/services/cancelled');
+                      }
+                    });
+                  } else if (response.data.type == 'error') {
+                    self.showError(response.data.message);
+                  }
+                })
+                .catch(error => {
+                  if (error.response.status == 422) {
+                    if (error.response.data.errors.description) {
+                      self.$swal.showValidationMessage(
+                        error.response.data.errors.description[0]
+                      )
+                    }
+                  }
+                })
+            },
+            allowOutsideClick: () => !this.$swal.isLoading()
+          }).then((result) => { })
+        } else if (status == "completed") {
+          this.$refs.myModalRef.show()
+        }
+      },
+      submitFeedback: function (id, job_id) {
+        this.loading = true;
+        let review_form = document.getElementById('submit-review-form');
+        let form_data = new FormData(review_form);
+        form_data.append('freelancer_id', id);
+        form_data.append('job_id', job_id);
+        form_data.append('type', 'service');
+        var self = this;
+        axios.post(APP_URL + '/user/submit-review', form_data)
+          .then(function (response) {
+            if (response.data.type == 'success') {
+              self.loading = false;
+              var message = response.data.message;
+              self.showMessage(message);
+              setTimeout(function () {
+                self.$refs.myModalRef.hide()
+                window.location.replace(APP_URL + '/employer/services/completed');
+              }, 1000);
+            } else {
+              self.loading = false;
+              self.showError(response.data.message);
+            }
+          })
+          .catch(function (error) {
+            self.loading = false;
+          });
+      },
+      check_auth: function (url) {
+        var self = this;
+        axios.get(APP_URL + '/check-service-auth-user')
+          .then(function (response) {
+            if (response.data.auth == 1) {
+              window.location.replace(url);
+            } else {
+              self.showError(response.data.message);
+            }
+          })
+          .catch(function (error) {
+
+          });
+      },
+      showReview: function (id) {
+        var modal_ref = 'myModalRef-' + id;
+        if (this.$refs[modal_ref]) {
+          this.$refs[modal_ref].show();
+        } else {
+          this.showError(Vue.prototype.trans('lang.review_not_found'),);
+        }
+      },
+      showReason: function (id) {
+        var modal_ref = 'myModalRef-' + id;
+        this.$refs[modal_ref].show();
+      },
+      showRefoundForm: function (id) {
+        var modal_ref = 'myModalRef-' + id;
+        this.$refs[modal_ref].show();
+      },
+      submitRefund: function (order_id) {
+        this.loading = true;
+        var self = this;
+        var refundable_amount = $('#refundable-amount-' + order_id).val();
+        var selected_user = $("#refundable_user_id-" + order_id).val();
+        let form = document.getElementById('submit_refund_' + order_id);
+        let form_data = new FormData(form);
+        form_data.append('amount', refundable_amount);
+        form_data.append('refundable_user_id', selected_user);
+        form_data.append('order_id', order_id);
+        form_data.append('type', 'service');
+        axios.post(APP_URL + '/admin/submit-user-refund', form_data)
+          .then(function (response) {
+            if (response.data.type == 'success') {
+              self.loading = false;
+              self.showMessage(response.data.message);
+              window.location.replace(APP_URL + '/admin/service-orders');
+            } else if (response.data.type == 'error') {
+              var modal_ref = 'myModalRef-' + order_id;
+              self.$refs[modal_ref].hide();
+              self.loading = false;
+              self.showError(response.data.message);
+            }
+          })
+          .catch(error => {
+            if (error.response.status == 422) {
+              self.loading = false;
+              var modal_ref = 'myModalRef-' + order_id;
+              self.$refs[modal_ref].hide();
+              if (error.response.data.errors.refundable_user_id) {
+                self.showError(error.response.data.errors.refundable_user_id[0]);
+              }
+            }
+          });
+      },
+    }
   });
 }
 if (document.getElementById("agency")) {
@@ -7391,7 +7391,7 @@ if (document.getElementById("cources")) {
                 });
             },
             allowOutsideClick: () => !this.$swal.isLoading(),
-          }).then((result) => {});
+          }).then((result) => { });
         } else if (status == "completed") {
           this.$refs.myModalRef.show();
         }
@@ -7436,7 +7436,7 @@ if (document.getElementById("cources")) {
               self.showError(response.data.message);
             }
           })
-          .catch(function (error) {});
+          .catch(function (error) { });
       },
       showReview: function (id) {
         var modal_ref = "myModalRef-" + id;
@@ -7654,39 +7654,39 @@ if (document.getElementById("login-notification")) {
       login_data: [],
     },
     mounted: function () {
-      setInterval(function () {
-        let self = this;
-        axios
-          .get(APP_URL + "/admin/login-notification")
-          .then(function (response) {
-            if (response.data.type == "success") {
-              self.login_data = response.data.user_log_info;
-              var n = 0;
-              for (n; n < login_data.length; n++) {
-                Vue.notify({
-                  group: "login-notification",
-                  type: "warning",
-                  title:
-                    login_data[n].first_name +
-                    " " +
-                    login_data[n].last_name +
-                    '<a class="close" href="#" @click="getUpdateRecord"><i class="fa fa-fw fa-close"></i></a>',
-                  text: "Successfully Logged in !",
-                  duration: 10000,
-                  closeOnClick: false,
-                  ignoreDuplicates: true,
-                });
-                var id = login_data[n].id;
-                axios
-                  .post(APP_URL + "/admin/login-notification-updated", {
-                    id: id,
-                  })
-                  .then(function (response) {});
-              }
-            } else {
-            }
-          });
-      }, 15000);
+      // setInterval(function () {
+      //   let self = this;
+      //   axios
+      //     .get(APP_URL + "/admin/login-notification")
+      //     .then(function (response) {
+      //       if (response.data.type == "success") {
+      //         self.login_data = response.data.user_log_info;
+      //         var n = 0;
+      //         for (n; n < login_data.length; n++) {
+      //           Vue.notify({
+      //             group: "login-notification",
+      //             type: "warning",
+      //             title:
+      //               login_data[n].first_name +
+      //               " " +
+      //               login_data[n].last_name +
+      //               '<a class="close" href="#" @click="getUpdateRecord"><i class="fa fa-fw fa-close"></i></a>',
+      //             text: "Successfully Logged in !",
+      //             duration: 10000,
+      //             closeOnClick: false,
+      //             ignoreDuplicates: true,
+      //           });
+      //           var id = login_data[n].id;
+      //           axios
+      //             .post(APP_URL + "/admin/login-notification-updated", {
+      //               id: id,
+      //             })
+      //             .then(function (response) {});
+      //         }
+      //       } else {
+      //       }
+      //     });
+      // }, 15000);
     },
     mehtods: {},
   });

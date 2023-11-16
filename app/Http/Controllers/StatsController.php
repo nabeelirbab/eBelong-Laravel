@@ -14,7 +14,7 @@
 
 namespace App\Http\Controllers;
 
-use Charts;
+use App\Charts\UserChart;
 use App\EmailTemplate;
 use App\Helper;
 use App\Invoice;
@@ -115,65 +115,79 @@ class StatsController extends Controller
             } else {
                 $users = User::select('*')->latest()->paginate(10);
             }
-            
-            return view('back-end.admin.users.index', compact('users'));
 
+            return view('back-end.admin.users.index', compact('users'));
         } else {
             abort(404);
         }
     }
 
-    public function index() 
+    public function index()
     {
-        
-    // 	$users = User::whereBetween('created_at', 
-    //     [Carbon::now()->subMonth(6), Carbon::now()]
-    // )->get();
-    // dd(Carbon::now()->subMonth(6), Carbon::now()));
-    $data = [];
-    
-for($i = 0; $i < 6; ++$i) {
-    $date = now()->startOfMonth()->subMonth($i);
-    $dates[$date->format('m')] = User::where('created_at', '>=', $date->startOfMonth()->startOfDay()->toDateTimeString())
-        ->where('created_at', '<=', $date->endOfMonth()->endOfDay()->toDateTimeString())
-        ->count();
-        // dd($date->startOfMonth()->startOfDay()->toDateString());
-}
-$data = array_values($dates);
-foreach ($dates as $key => $value) {
-    $_key = date('F', mktime(0, 0, 0, $key, 10));
-    $curr_month = date('m');
-    $curr_year = date('Y');
-    $previous_year = $curr_year-1;
-    if($key > $curr_month){
-        
-        $_key = $_key." ,".$previous_year;
+
+        // 	$users = User::whereBetween('created_at', 
+        //     [Carbon::now()->subMonth(6), Carbon::now()]
+        // )->get();
+        // dd(Carbon::now()->subMonth(6), Carbon::now()));
+        $data = [];
+
+        for ($i = 0; $i < 6; ++$i) {
+            $date = now()->startOfMonth()->subMonth($i);
+            $dates[$date->format('m')] = User::where('created_at', '>=', $date->startOfMonth()->startOfDay()->toDateTimeString())
+                ->where('created_at', '<=', $date->endOfMonth()->endOfDay()->toDateTimeString())
+                ->count();
+            // dd($date->startOfMonth()->startOfDay()->toDateString());
+        }
+        $data = array_values($dates);
+        foreach ($dates as $key => $value) {
+            $_key = date('F', mktime(0, 0, 0, $key, 10));
+            $curr_month = date('m');
+            $curr_year = date('Y');
+            $previous_year = $curr_year - 1;
+            if ($key > $curr_month) {
+
+                $_key = $_key . " ," . $previous_year;
+            } else {
+
+                $_key = $_key . " ," . $curr_year;
+            }
+            unset($dates[$key]);
+            $dates[ucfirst($_key)] = $value;
+        }
+        // dd(array_keys($dates));
+
+        // $chart = Charts::database($data,'bar', 'highcharts')
+        // 	      ->title("Users Joining Stats")
+        // 	      ->elementLabel("Users Joined - Monthly")
+        // 	      ->dimensions(700, 400)
+        // 	      ->responsive(true)
+        // 	      ->labels(array_keys($dates))
+        //           ->values($data);
+
+        $chart = new UserChart;
+        $chart->title('Users Joining Stats', 30, "rgb(255, 99, 132)", true, 'Helvetica Neue');
+        $chart->barwidth(0.0);
+        $chart->displaylegend(false);
+        $chart->labels(array_keys($dates));
+        $chart->dataset('Users Joined - Monthly', 'bar', $data)
+            ->color("rgb(255, 99, 132)")
+            ->backgroundcolor("rgb(255, 99, 132)")
+            ->fill(false)
+            ->linetension(0.1)
+            ->dashed([5]);
+        $pie = new UserChart;
+        // $pie  =	 Charts::create('pie', 'highcharts')
+        //           ->title('Freelancers & Employee %')
+        //           ->labels(['Employers', 'Freelancers'])
+        //           ->values([7,92])
+        //           ->dimensions(1000,500)
+        //           ->responsive(true);
+        $pie->title('Freelancers & Employee %', 30, "rgb(255, 99, 132)", true, 'Helvetica Neue');
+        $pie->labels(['Employers', 'Freelancers']);
+        $pie->dataset('Users by trimester', 'pie', [7, 92])
+            ->color("rgb(255, 99, 132)")
+            ->backgroundcolor("rgb(255, 99, 132)");
+
+        return view('back-end.admin.stats.index', compact('chart', 'pie'));
     }
-    else{
-       
-        $_key = $_key." ,".$curr_year;
-    }
-    unset($dates[$key]);
-    $dates[ucfirst($_key)] = $value;
-}
-// dd(array_keys($dates));
-
-        $chart = Charts::database($data,'bar', 'highcharts')
-			      ->title("Users Joining Stats")
-			      ->elementLabel("Users Joined - Monthly")
-			      ->dimensions(700, 400)
-			      ->responsive(true)
-			      ->labels(array_keys($dates))
-                  ->values($data);
-
-        $pie  =	 Charts::create('pie', 'highcharts')
-                  ->title('Freelancers & Employee %')
-                  ->labels(['Employers', 'Freelancers'])
-                  ->values([7,92])
-                  ->dimensions(1000,500)
-                  ->responsive(true);
-
-        return view('back-end.admin.stats.index',compact('chart','pie'));
-    }
-
 }

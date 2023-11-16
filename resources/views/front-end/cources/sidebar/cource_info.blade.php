@@ -13,7 +13,7 @@
        <ul class="wt-service-info test">
           <li>
              <span><i class="fa fa-calendar-check-o iconcolor1"></i>
-             <strong>{{{$delivery_time->title}}}</strong> &nbsp;{{ trans('lang.delivery_time') }}</span>
+             <strong>{{{$cource->course_date}}}</strong> </span>
           </li>
           <li>
              <span><i class="fa fa-search iconcolor2"></i><strong>{{{$cource->views}}}</strong>&nbsp;{{ trans('lang.views') }}</span>
@@ -22,7 +22,7 @@
              <span><i class="fa fa-shopping-basket iconcolor3"></i><strong>{{{Helper::getCourceCount($cource->id,'completed')}}}</strong>&nbsp;{{ trans('lang.sales') }}</span>
           </li>
           <li>
-             <span><i class="fa fa-clock-o iconcolor4"></i><strong>{{{$response_time->title}}}</strong>&nbsp;{{ trans('lang.response_time') }}</span>
+             <span><i class="fa fa-clock-o iconcolor4"></i><strong>{{{$cource->course_time}}}</strong></span>
           </li>
           <li>
              <span><i class="fa fa-briefcase iconcolor4"></i><strong>

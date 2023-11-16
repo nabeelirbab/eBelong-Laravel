@@ -16,7 +16,7 @@ return [
     */
 
     //'driver' => env('MAIL_DRIVER', 'smtp'),
-	'driver' => env('MAIL_DRIVER') != "" ? base64_decode(env('MAIL_DRIVER')) : 'smtp',
+    'driver' => 'smtp',
 
     /*
     |--------------------------------------------------------------------------
@@ -29,8 +29,8 @@ return [
     |
     */
 
-    //'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
-	'host' => env('MAIL_HOST') != "" ? base64_decode(env('MAIL_HOST')) : 'smtp.mailgun.org',
+    // 'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
+    'host' => 'smtp.gmail.com',
 
     /*
     |--------------------------------------------------------------------------
@@ -44,8 +44,8 @@ return [
     */
 
     //'port' => env('MAIL_PORT', 587),
-    'port' => env('MAIL_PORT') != "" ? base64_decode(env('MAIL_PORT')) : 587,
-	
+    'port' => 587,
+
 
     /*
     |--------------------------------------------------------------------------
@@ -62,7 +62,7 @@ return [
         'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
         //'address' => env('MAIL_FROM_ADDRESS') != "" ? base64_decode(env('MAIL_FROM_ADDRESS')) : 'hello@example.com', 
         //'name' => env('MAIL_FROM_NAME', 'Ebelong'),
-		'name' => env('MAIL_FROM_NAME') != "" ? base64_decode(env('MAIL_FROM_NAME')) : 'Ebelong', 
+        'name' => env('MAIL_FROM_NAME') != "" ? base64_decode(env('MAIL_FROM_NAME')) : 'Ebelong',
     ],
 
     /*
@@ -91,17 +91,18 @@ return [
     */
 
     'ses' => [
-                'key' => env('SES_KEY'),
-                'secret' => env('SES_KEY_SECRET'),
-                'region' => env('SES_REGION'),  // e.g. us-east-1
-        ],
+        'key' => env('SES_KEY'),
+        'secret' => env('SES_KEY_SECRET'),
+        'region' => env('SES_REGION'),  // e.g. us-east-1
+    ],
 
 
     //'username' => env('MAIL_USERNAME'),
-    'username' => env('MAIL_USERNAME') != "" ? base64_decode(env('MAIL_USERNAME')) : '',
-	
-    'password' => env('MAIL_PASSWORD'),
-    // 'password' =>  env('MAIL_PASSWORD') != "" ? base64_decode(env('MAIL_PASSWORD')) : '',
+    'username' => 'ebelong.help@gmail.com',
+
+    'password' => 'domdrmurianbfbno',
+    //    'password' =>  env('MAIL_PASSWORD') != "" ? base64_decode(env('MAIL_PASSWORD')) : '',
+
 
     /*
     |--------------------------------------------------------------------------
