@@ -112,6 +112,8 @@
                                                     <label for="wt-skills"></label>
                                                 </span>
                                             </th>
+                                            
+                                            <th>Logo</th>
                                             <th>{{{ trans('lang.name') }}}</th>
                                             <th>{{{ trans('lang.slug') }}}</th>
                                             <th>Category</th>
@@ -128,6 +130,8 @@
                                                         <label for="wt-check-{{{ $counter }}}"></label>
                                                     </span>
                                                 </td>
+                                                
+                                                <td style="width:12%">@if($skill->logo)<img src="{{ asset('/uploads/logos/'.$skill->logo)}}" style="max-width: 60%">@endif</td>
                                                 <td>{{{ $skill->title }}}</td>
                                                 <td>{{{ $skill->slug }}}</td>
                                                 <td>{{ $skill->category->title ?? 'No Category' }}</td> 
