@@ -406,6 +406,7 @@ Route::group(
         Route::post('/admin/update-user-is-disabled-status', 'UserController@updateIsDisabledStatus');
         Route::post('/admin/update-user-badge', 'UserController@updateUserBadge');
         Route::post('admin/submit-rating', 'FreelancerController@adminRating');
+        Route::post('admin/submit-course-rating', 'FreelancerController@adminCourseRating');
         // Skill Routes
         Route::get('admin/skills', 'SkillController@index')->name('skills');
         Route::get('admin/skills/edit-skills/{id}', 'SkillController@edit')->name('editSkill');

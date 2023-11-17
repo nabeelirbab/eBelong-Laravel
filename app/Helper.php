@@ -3048,7 +3048,7 @@ class Helper extends Model
     {
         return DB::table('reviews')
             ->select('reviews.*')
-            ->where('reviews.receiver_id', $receiver_id)
+            // ->where('reviews.receiver_id', $receiver_id)
             ->where('reviews.cource_id', $cource_id)->get();
     }
 

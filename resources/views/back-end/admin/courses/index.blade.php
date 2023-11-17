@@ -1,5 +1,9 @@
 @extends(file_exists(resource_path('views/extend/back-end/master.blade.php')) ? 'extend.back-end.master' : 'back-end.master')
 @section('content')
+<link rel="stylesheet" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
+
+<script src="//code.jquery.com/jquery.js"></script>
+<script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js" defer></script>
 	<div class="wt-haslayout wt-dbsectionspace la-manage-jobs-holder">
 		<div class="row">
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 float-right" id="cources">
@@ -31,6 +35,7 @@
 										<th>{{ trans('lang.course_title') }}</th>
 										<th>{{ trans('lang.course_status') }}</th>
 										<th>{{ trans('lang.in_queue') }}</th>
+                                        <th>{{{ trans('lang.is_rating') }}}</th>
 										<th>{{ trans('lang.action') }}</th>
 									</tr>
 								</thead>
@@ -39,6 +44,7 @@
 										@php 
 											$attachment = Helper::getUnserializeData($course['attachments']); 
 											$total_orders = Helper::getCourceCount($course['id'], 'bought');
+											$feedback = \App\Review::select('avg_rating')->where('cource_id', $course->id)->where('user_id',1)->first();
 										@endphp
 										<tr class="del-{{{ $course['status'] }}}">
 											<td data-th="Service Title">
@@ -84,6 +90,16 @@
 														{{{$total_orders}}} {{ trans('lang.in_queue') }}
 													</span>
 												</span>
+											</td>
+											<td>
+												<select id="{{ $course->id }}-assign_course_rating" v-on:change.prevent='givecourseRating({{ $course->id }})'>
+													<option value="0"{{ $feedback['avg_rating'] == "0" ? 'selected' : '' }}>0</option>
+													<option value="1"{{ $feedback['avg_rating'] == "1" ? 'selected' : '' }}>1</option>
+													<option value="2"{{ $feedback['avg_rating'] == "2" ? 'selected' : '' }}>2</option>
+													<option value="3"{{ $feedback['avg_rating'] == "3" ? 'selected' : '' }}>3</option>
+													<option value="4"{{ $feedback['avg_rating'] == "4" ? 'selected' : '' }}>4</option>
+													<option value="5"{{ $feedback['avg_rating'] == "5" ? 'selected' : '' }}>5</option>
+												</select>
 											</td>
 											<td data-th="Action">
 												<span class="bt-content">

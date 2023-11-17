@@ -10,7 +10,9 @@
  * @license http://www.amentotech.com Amentotech
  * @link    http://www.amentotech.com
  */
+
 namespace App\Http\Controllers;
+
 use Illuminate\Support\Facades\Schema;
 use App\Freelancer;
 use App\Cource;
@@ -77,8 +79,7 @@ class FreelancerController extends Controller
      */
     public function index()
     {
-        if(Helper::getAuthRoleName()=='Freelancer')
-        {
+        if (Helper::getAuthRoleName() == 'Freelancer') {
             $locations = Location::pluck('title', 'id');
             $skills = Skill::pluck('title', 'id');
             $profile = $this->freelancer::where('user_id', Auth::user()->id)
@@ -144,9 +145,7 @@ class FreelancerController extends Controller
                     )
                 );
             }
-
-        }
-        elseif(Helper::getAuthRoleName()=="Editor"){
+        } elseif (Helper::getAuthRoleName() == "Editor") {
             $locations = Location::pluck('title', 'id');
             $skills = Skill::pluck('title', 'id');
             $profile = $this->freelancer::where('user_id', Auth::user()->id)
@@ -212,8 +211,7 @@ class FreelancerController extends Controller
                     )
                 );
             }
-        }
-        else{
+        } else {
             return abort(404);
         }
     }
@@ -271,7 +269,7 @@ class FreelancerController extends Controller
      */
     public function storeProfileSettings(Request $request)
     {
-     //  return $request->all();
+        //  return $request->all();
         $server = Helper::worketicIsDemoSiteAjax();
         if (!empty($server)) {
             $response['type'] = 'error';
@@ -294,19 +292,19 @@ class FreelancerController extends Controller
                     'latitude' => ['regex:/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/'],
                     'longitude' => ['regex:/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/'],
                 ]
-            ); 
+            );
         }
         if (!empty($request['change_password'])) {
-                 $this->validate(
-                    $request,
-                    [
-                        'old_password'    => 'required',
-                        'change_password'    => 'required|min:6',
-                        'password_confirmation'    => 'required|min:6',
-                    ]
-                );
+            $this->validate(
+                $request,
+                [
+                    'old_password'    => 'required',
+                    'change_password'    => 'required|min:6',
+                    'password_confirmation'    => 'required|min:6',
+                ]
+            );
         }
-        
+
         if (Auth::user()) {
             $role_id = Helper::getRoleByUserID(Auth::user()->id);
             $packages = DB::table('items')->where('subscriber', Auth::user()->id)->count();
@@ -318,7 +316,7 @@ class FreelancerController extends Controller
             if (empty($payment_settings)) {
                 $package_status = 'true';
             } else {
-                $package_status =!empty($payment_settings[0]['enable_packages']) ? $payment_settings[0]['enable_packages'] : 'true';
+                $package_status = !empty($payment_settings[0]['enable_packages']) ? $payment_settings[0]['enable_packages'] : 'true';
             }
             if ($package_status === 'true') {
                 if ($packages > 0) {
@@ -385,10 +383,10 @@ class FreelancerController extends Controller
         $json = array();
         if (!empty($request['id'])) {
             // $course = $this->cource::where('slug', $request['slug'])->select('id')->first();
-            
-                // $agency = $this->cource::find($request['id']);
-                $user= User::find($request['id']);
-                if (!empty($user)) {
+
+            // $agency = $this->cource::find($request['id']);
+            $user = User::find($request['id']);
+            if (!empty($user)) {
                 $skills = $user->skills->toArray();
                 if (!empty($skills)) {
                     $json['type'] = 'success';
@@ -402,7 +400,7 @@ class FreelancerController extends Controller
                 $json['error'] = 'error';
                 return $json;
             }
-      }
+        }
     }
     /**
      * Get top freelancer
@@ -421,14 +419,14 @@ class FreelancerController extends Controller
                 $top_freelancers[$key]['name'] = Helper::getUserName($freelancer->id);
                 $top_freelancers[$key]['slug'] = $user->slug;
                 $top_freelancers[$key]['image'] = asset(Helper::getProfileImage($freelancer->id));
-                $top_freelancers[$key]['flag'] = !empty($user->location->flag) ? Helper::getLocationFlag($user->location->flag) :'';
-                $top_freelancers[$key]['location'] = !empty($user->location->title) ? $user->location->title :'';
-                $top_freelancers[$key]['tagline'] = !empty($user->profile->tagline) ? $user->profile->tagline :'';
-                $top_freelancers[$key]['hourly_rate'] = !empty($user->profile->hourly_rate) ? $user->profile->hourly_rate :'';
+                $top_freelancers[$key]['flag'] = !empty($user->location->flag) ? Helper::getLocationFlag($user->location->flag) : '';
+                $top_freelancers[$key]['location'] = !empty($user->location->title) ? $user->location->title : '';
+                $top_freelancers[$key]['tagline'] = !empty($user->profile->tagline) ? $user->profile->tagline : '';
+                $top_freelancers[$key]['hourly_rate'] = !empty($user->profile->hourly_rate) ? $user->profile->hourly_rate : '';
                 $currency   = SiteManagement::getMetaValue('commision');
                 $symbol = !empty($currency) && !empty($currency[0]['currency']) ? Helper::currencyList($currency[0]['currency']) : array();
                 $top_freelancers[$key]['symbol'] = !empty($symbol['symbol']) ? $symbol['symbol'] : '$';
-                $top_freelancers[$key]['average_rating_count'] = !empty($freelancer->total_reviews) ? $freelancer->rating/$freelancer->total_reviews : 0;
+                $top_freelancers[$key]['average_rating_count'] = !empty($freelancer->total_reviews) ? $freelancer->rating / $freelancer->total_reviews : 0;
                 $top_freelancers[$key]['total_reviews'] = !empty($freelancer->total_reviews) ? $freelancer->total_reviews : 0;
                 $top_freelancers[$key]['save_freelancers'] = !empty(auth()->user()->profile->saved_freelancer) ? unserialize(auth()->user()->profile->saved_freelancer) : array();
             }
@@ -630,7 +628,7 @@ class FreelancerController extends Controller
                     foreach ($projects as $key => $project) {
                         $profile_projects[$key]['project_title'] = !empty($project['project_title']) ? $project['project_title'] : '';
                         $profile_projects[$key]['project_url'] = !empty($project['project_url']) ? $project['project_url'] : '';
-                        $profile_projects[$key]['project_hidden_image'] = !empty($project['project_hidden_image']) ? url('/uploads/users/'.$user_id.'/projects/'.$project['project_hidden_image']) : '';
+                        $profile_projects[$key]['project_hidden_image'] = !empty($project['project_hidden_image']) ? url('/uploads/users/' . $user_id . '/projects/' . $project['project_hidden_image']) : '';
                         $profile_projects[$key]['project_image'] = !empty($project['project_hidden_image']) ? $project['project_hidden_image'] : '';
                     }
                 }
@@ -666,7 +664,7 @@ class FreelancerController extends Controller
                     foreach ($awards as $key => $award) {
                         $profile_awards[$key]['award_title'] = $award['award_title'];
                         $profile_awards[$key]['award_date'] = $award['award_date'];
-                        $profile_awards[$key]['award_hidden_image'] = url('/uploads/users/'.$user_id.'/awards/'.$award['award_hidden_image']);
+                        $profile_awards[$key]['award_hidden_image'] = url('/uploads/users/' . $user_id . '/awards/' . $award['award_hidden_image']);
                         $profile_awards[$key]['award_image'] = !empty($award['award_hidden_image']) ? $award['award_hidden_image'] : '';
                     }
                 }
@@ -964,53 +962,53 @@ class FreelancerController extends Controller
     }
 
 
-public function getProfileCompletionPercentage($profile)
-{
-    $totalFields = 9; // Total number of fields required for profile completion
-    
-    $completedFields = 0; // Counter for completed fields
-    
-    // Check if each required field is filled or not
-    if (!empty($profile->english_level)) {
-        $completedFields++;
-    }
-    
-    if (!empty($profile->hourly_rate)) {
-        $completedFields++;
-    }
-    
-    if (!empty($profile->experience)) {
-        $completedFields++;
-    }
-    
-    if (!empty($profile->education)) {
-        $completedFields++;
-    }
-    
-    if (!empty($profile->projects)) {
-        $completedFields++;
-    }
+    public function getProfileCompletionPercentage($profile)
+    {
+        $totalFields = 9; // Total number of fields required for profile completion
 
-    if (!empty($profile->avater)) {
-        $completedFields++;
-    }
+        $completedFields = 0; // Counter for completed fields
 
-    if (!empty($profile->banner)) {
-        $completedFields++;
-    }
+        // Check if each required field is filled or not
+        if (!empty($profile->english_level)) {
+            $completedFields++;
+        }
 
-    if (!empty($profile->description)) {
-        $completedFields++;
+        if (!empty($profile->hourly_rate)) {
+            $completedFields++;
+        }
+
+        if (!empty($profile->experience)) {
+            $completedFields++;
+        }
+
+        if (!empty($profile->education)) {
+            $completedFields++;
+        }
+
+        if (!empty($profile->projects)) {
+            $completedFields++;
+        }
+
+        if (!empty($profile->avater)) {
+            $completedFields++;
+        }
+
+        if (!empty($profile->banner)) {
+            $completedFields++;
+        }
+
+        if (!empty($profile->description)) {
+            $completedFields++;
+        }
+
+        if (!empty($profile->tagline)) {
+            $completedFields++;
+        }
+
+        // Calculate profile completion percentage
+        $percentage = ($completedFields / $totalFields) * 100;
+        return intval(round($percentage));
     }
-    
-    if (!empty($profile->tagline)) {
-        $completedFields++;
-    }
-    
-    // Calculate profile completion percentage
-    $percentage = ($completedFields / $totalFields) * 100;
-    return intval(round($percentage));
-}
     /**
      * Show services.
      *
@@ -1028,14 +1026,14 @@ public function getProfileCompletionPercentage($profile)
             $status_list = array_pluck(Helper::getFreelancerServiceStatus(), 'title', 'value');
             if (!empty($_GET['keyword']) && !empty($status) && $status === 'posted') {
                 $keyword = $_GET['keyword'];
-                $services = $freelancer->services()->where('title', 'like', '%' . $keyword . '%')->orderBy('id' , 'DESC')->paginate(6)->setPath('');
+                $services = $freelancer->services()->where('title', 'like', '%' . $keyword . '%')->orderBy('id', 'DESC')->paginate(6)->setPath('');
                 // dd($services);
                 $pagination = $services->appends(
                     array(
                         'keyword' => Input::get('keyword')
                     )
                 );
-            
+
                 if (file_exists(resource_path('views/extend/back-end/freelancer/services/index.blade.php'))) {
                     return view(
                         'extend.back-end.freelancer.services.index',
@@ -1055,8 +1053,7 @@ public function getProfileCompletionPercentage($profile)
                         )
                     );
                 }
-            }
-            else if (empty($_GET['keyword']) && !empty($status) && $status === 'posted') {
+            } else if (empty($_GET['keyword']) && !empty($status) && $status === 'posted') {
                 $services = $freelancer->services->sortByDesc('id');
                 if (file_exists(resource_path('views/extend/back-end/freelancer/services/index.blade.php'))) {
                     return view(
@@ -1068,7 +1065,7 @@ public function getProfileCompletionPercentage($profile)
                         )
                     );
                 } else {
-                    
+
                     return view(
                         'back-end.freelancer.services.index',
                         compact(
@@ -1078,8 +1075,7 @@ public function getProfileCompletionPercentage($profile)
                         )
                     );
                 }
-            }
-             else if (!empty($status) && $status === 'hired') {
+            } else if (!empty($status) && $status === 'hired') {
                 $services = Helper::getFreelancerServices('hired', Auth::user()->id);
                 if (file_exists(resource_path('views/extend/back-end/freelancer/services/ongoing.blade.php'))) {
                     return view(
@@ -1156,7 +1152,7 @@ public function getProfileCompletionPercentage($profile)
             $service = Service::find($pivot_service->service_id);
             $seller = Helper::getServiceSeller($service->id);
             $purchaser = $service->purchaser->first();
-            $freelancer = !empty($seller) ? User::find($seller->user_id) : ''; 
+            $freelancer = !empty($seller) ? User::find($seller->user_id) : '';
             $service_status = Helper::getProjectStatus();
             $review_options = DB::table('review_options')->get()->all();
             $avg_rating = !empty($freelancer) ? Review::where('receiver_id', $freelancer->id)->sum('avg_rating') : '';
@@ -1228,80 +1224,78 @@ public function getProfileCompletionPercentage($profile)
     {
         if (Auth::user()) {
             if (Schema::hasTable('cources') && Schema::hasTable('cource_user')) {
-            if (Schema::hasColumn('cource_user','cource_id') && Schema::hasColumn('cource_user','paid') && Schema::hasColumn('cource_user','paid_progress') && Schema::hasColumn('cource_user','status') && Schema::hasColumn('cource_user','type') && Schema::hasColumn('cource_user','seller_id') && Schema::hasColumn('cource_user','user_id')) {
-            $pivot_course = Helper::getPivotCourse($id);
-            $pivot_id = $pivot_course->id;
-            $course = Cource::find($pivot_course->cource_id);
-            $seller = Helper::getCourceSeller($course->id);
-            $purchaser = $course->purchaser->first();
-            $freelancer = !empty($seller) ? User::find($seller->user_id) : ''; 
-            $course_status = Helper::getProjectStatus();
-            $review_options = DB::table('review_options')->get()->all();
-            $avg_rating = !empty($freelancer) ? Review::where('receiver_id', $freelancer->id)->sum('avg_rating') : '';
-            $freelancer_rating  = !empty($freelancer) && !empty($freelancer->profile->ratings) ? Helper::getUnserializeData($freelancer->profile->ratings) : 0;
-            $rating = !empty($freelancer_rating) ? $freelancer_rating[0] : 0;
-            $stars  =  !empty($freelancer_rating) ? $freelancer_rating[0] / 5 * 100 : 0;
-            $reviews = !empty($freelancer) ? Review::where('receiver_id', $freelancer->id)->where('cource_id', $id)->where('project_type', 'cource')->get() : '';
-            $feedbacks = !empty($freelancer) ? Review::select('feedback')->where('receiver_id', $freelancer->id)->count() : '';
-            $cancel_proposal_text = trans('lang.cancel_proposal_text');
-            $cancel_proposal_button = trans('lang.send_request');
-            $validation_error_text = trans('lang.field_required');
-            $cancel_popup_title = trans('lang.reason');
-            $attachment = Helper::getUnserializeData($course->attachments);
-            $currency   = SiteManagement::getMetaValue('commision');
-            $symbol = !empty($currency) && !empty($currency[0]['currency']) ? Helper::currencyList($currency[0]['currency']) : array();
-            if (file_exists(resource_path('views/extend/back-end/employer/courses/show.blade.php'))) {
-                return view(
-                    'extend.back-end.employer.courses.show',
-                    compact(
-                        'pivot_course',
-                        'id',
-                        'course',
-                        'freelancer',
-                        'course_status',
-                        'attachment',
-                        'review_options',
-                        'stars',
-                        'rating',
-                        'feedbacks',
-                        'cancel_proposal_text',
-                        'cancel_proposal_button',
-                        'validation_error_text',
-                        'cancel_popup_title',
-                        'pivot_id',
-                        'purchaser',
-                        'symbol'
-                    )
-                );
-            } else {
-                return view(
-                    'back-end.employer.courses.show',
-                    compact(
-                        'pivot_course',
-                        'id',
-                        'course',
-                        'freelancer',
-                        'course_status',
-                        'attachment',
-                        'review_options',
-                        'stars',
-                        'rating',
-                        'feedbacks',
-                        'cancel_proposal_text',
-                        'cancel_proposal_button',
-                        'validation_error_text',
-                        'cancel_popup_title',
-                        'pivot_id',
-                        'purchaser',
-                        'symbol'
-                    )
-                );
+                if (Schema::hasColumn('cource_user', 'cource_id') && Schema::hasColumn('cource_user', 'paid') && Schema::hasColumn('cource_user', 'paid_progress') && Schema::hasColumn('cource_user', 'status') && Schema::hasColumn('cource_user', 'type') && Schema::hasColumn('cource_user', 'seller_id') && Schema::hasColumn('cource_user', 'user_id')) {
+                    $pivot_course = Helper::getPivotCourse($id);
+                    $pivot_id = $pivot_course->id;
+                    $course = Cource::find($pivot_course->cource_id);
+                    $seller = Helper::getCourceSeller($course->id);
+                    $purchaser = $course->purchaser->first();
+                    $freelancer = !empty($seller) ? User::find($seller->user_id) : '';
+                    $course_status = Helper::getProjectStatus();
+                    $review_options = DB::table('review_options')->get()->all();
+                    $avg_rating = !empty($freelancer) ? Review::where('receiver_id', $freelancer->id)->sum('avg_rating') : '';
+                    $freelancer_rating  = !empty($freelancer) && !empty($freelancer->profile->ratings) ? Helper::getUnserializeData($freelancer->profile->ratings) : 0;
+                    $rating = !empty($freelancer_rating) ? $freelancer_rating[0] : 0;
+                    $stars  =  !empty($freelancer_rating) ? $freelancer_rating[0] / 5 * 100 : 0;
+                    $reviews = !empty($freelancer) ? Review::where('receiver_id', $freelancer->id)->where('cource_id', $id)->where('project_type', 'cource')->get() : '';
+                    $feedbacks = !empty($freelancer) ? Review::select('feedback')->where('receiver_id', $freelancer->id)->count() : '';
+                    $cancel_proposal_text = trans('lang.cancel_proposal_text');
+                    $cancel_proposal_button = trans('lang.send_request');
+                    $validation_error_text = trans('lang.field_required');
+                    $cancel_popup_title = trans('lang.reason');
+                    $attachment = Helper::getUnserializeData($course->attachments);
+                    $currency   = SiteManagement::getMetaValue('commision');
+                    $symbol = !empty($currency) && !empty($currency[0]['currency']) ? Helper::currencyList($currency[0]['currency']) : array();
+                    if (file_exists(resource_path('views/extend/back-end/employer/courses/show.blade.php'))) {
+                        return view(
+                            'extend.back-end.employer.courses.show',
+                            compact(
+                                'pivot_course',
+                                'id',
+                                'course',
+                                'freelancer',
+                                'course_status',
+                                'attachment',
+                                'review_options',
+                                'stars',
+                                'rating',
+                                'feedbacks',
+                                'cancel_proposal_text',
+                                'cancel_proposal_button',
+                                'validation_error_text',
+                                'cancel_popup_title',
+                                'pivot_id',
+                                'purchaser',
+                                'symbol'
+                            )
+                        );
+                    } else {
+                        return view(
+                            'back-end.employer.courses.show',
+                            compact(
+                                'pivot_course',
+                                'id',
+                                'course',
+                                'freelancer',
+                                'course_status',
+                                'attachment',
+                                'review_options',
+                                'stars',
+                                'rating',
+                                'feedbacks',
+                                'cancel_proposal_text',
+                                'cancel_proposal_button',
+                                'validation_error_text',
+                                'cancel_popup_title',
+                                'pivot_id',
+                                'purchaser',
+                                'symbol'
+                            )
+                        );
+                    }
+                }
             }
-        } 
-    }
-}
-
-else {
+        } else {
             abort(404);
         }
     }
@@ -1311,118 +1305,142 @@ else {
         $freelancer_id = Auth::user()->id;
         if (Auth::user()) {
             if (Schema::hasTable('cources') && Schema::hasTable('cource_user')) {
-                if (Schema::hasColumn('cource_user','cource_id') && Schema::hasColumn('cource_user','paid') && Schema::hasColumn('cource_user','paid_progress') && Schema::hasColumn('cource_user','status') && Schema::hasColumn('cource_user','type') && Schema::hasColumn('cource_user','seller_id') && Schema::hasColumn('cource_user','user_id')) {    
-            $freelancer = User::find($freelancer_id);
+                if (Schema::hasColumn('cource_user', 'cource_id') && Schema::hasColumn('cource_user', 'paid') && Schema::hasColumn('cource_user', 'paid_progress') && Schema::hasColumn('cource_user', 'status') && Schema::hasColumn('cource_user', 'type') && Schema::hasColumn('cource_user', 'seller_id') && Schema::hasColumn('cource_user', 'user_id')) {
+                    $freelancer = User::find($freelancer_id);
 
-            $currency   = SiteManagement::getMetaValue('commision');
-            $symbol = !empty($currency) && !empty($currency[0]['currency']) ? Helper::currencyList($currency[0]['currency']) : array();
-            $status_list = array_pluck(Helper::getFreelancerServiceStatus(), 'title', 'value');
-            
-            if (empty($_GET['keyword']) && !empty($status) && $status === 'posted') {
-                $cources = $freelancer->cources()->where('type','seller')->orderBy('id','DESC')->get();
-                if (file_exists(resource_path('views/extend/back-end/freelancer/courses/index.blade.php'))) {
-                    return view(
-                        'extend.back-end.freelancer.courses.index',
-                        compact(
-                            'cources',
-                            'symbol',
-                            'status_list'
-                        )
-                    );
-                } else {
-                    
-                    return view(
-                        'back-end.freelancer.courses.index',
-                        compact(
-                            'cources',
-                            'symbol',
-                            'status_list'
-                        )
-                    );
-                }
-            }
-            else if (!empty($status) && $status === 'waiting') {
-                $courses = Helper::getFreelancerCourses('waiting', $freelancer_id);
-                if (file_exists(resource_path('views/extend/back-end/freelancer/courses/bought.blade.php'))) {
-                    return view(
-                        'extend.back-end.freelancer.courses.pending',
-                        compact(
-                            'courses',
-                            'symbol'
-                        )
-                    );
-                } else {
-                    return view(
-                        'back-end.freelancer.courses.pending',
-                        compact(
-                            'courses',
-                            'symbol'
-                        )
-                    );
-                }
-            }
-            else if (!empty($status) && $status === 'bought') {
-                $courses = Helper::getFreelancerCourses('bought', $freelancer_id);
-                if (file_exists(resource_path('views/extend/back-end/freelancer/courses/bought.blade.php'))) {
-                    return view(
-                        'extend.back-end.freelancer.courses.bought',
-                        compact(
-                            'courses',
-                            'symbol'
-                        )
-                    );
-                } else {
-                    return view(
-                        'back-end.freelancer.courses.bought',
-                        compact(
-                            'courses',
-                            'symbol'
-                        )
-                    );
-                }
-            }
-        }   
-    }
-  }
-}
+                    $currency   = SiteManagement::getMetaValue('commision');
+                    $symbol = !empty($currency) && !empty($currency[0]['currency']) ? Helper::currencyList($currency[0]['currency']) : array();
+                    $status_list = array_pluck(Helper::getFreelancerServiceStatus(), 'title', 'value');
 
-public function adminRating(Request $request){
-    
-    $json = array();
-    $reviewid = DB::table('reviews')->insertGetId(
-    [
-        'user_id'=>1, 'receiver_id'=>$request['id'], 
-        'feedback'=>'admin Feedback', 
-        'avg_rating'=>$request['rating'],
-        'project_type'=>NULL,
-        "created_at" => \Carbon\Carbon::now(),
-        'updated_at' => \Carbon\Carbon::now()
-    ]); 
-    if($reviewid){
-        $json['message']= "Rating Submitted Successfully";
-        $json['type']="success";
-        return $json;
+                    if (empty($_GET['keyword']) && !empty($status) && $status === 'posted') {
+                        $cources = $freelancer->cources()->where('type', 'seller')->orderBy('id', 'DESC')->get();
+                        if (file_exists(resource_path('views/extend/back-end/freelancer/courses/index.blade.php'))) {
+                            return view(
+                                'extend.back-end.freelancer.courses.index',
+                                compact(
+                                    'cources',
+                                    'symbol',
+                                    'status_list'
+                                )
+                            );
+                        } else {
+
+                            return view(
+                                'back-end.freelancer.courses.index',
+                                compact(
+                                    'cources',
+                                    'symbol',
+                                    'status_list'
+                                )
+                            );
+                        }
+                    } else if (!empty($status) && $status === 'waiting') {
+                        $courses = Helper::getFreelancerCourses('waiting', $freelancer_id);
+                        if (file_exists(resource_path('views/extend/back-end/freelancer/courses/bought.blade.php'))) {
+                            return view(
+                                'extend.back-end.freelancer.courses.pending',
+                                compact(
+                                    'courses',
+                                    'symbol'
+                                )
+                            );
+                        } else {
+                            return view(
+                                'back-end.freelancer.courses.pending',
+                                compact(
+                                    'courses',
+                                    'symbol'
+                                )
+                            );
+                        }
+                    } else if (!empty($status) && $status === 'bought') {
+                        $courses = Helper::getFreelancerCourses('bought', $freelancer_id);
+                        if (file_exists(resource_path('views/extend/back-end/freelancer/courses/bought.blade.php'))) {
+                            return view(
+                                'extend.back-end.freelancer.courses.bought',
+                                compact(
+                                    'courses',
+                                    'symbol'
+                                )
+                            );
+                        } else {
+                            return view(
+                                'back-end.freelancer.courses.bought',
+                                compact(
+                                    'courses',
+                                    'symbol'
+                                )
+                            );
+                        }
+                    }
+                }
+            }
+        }
     }
-    else{
-        $json['type']="error";
-        return $json;
-    
+
+    public function adminRating(Request $request)
+    {
+
+        $json = array();
+        $reviewid = DB::table('reviews')->insertGetId(
+            [
+                'user_id' => 1, 'receiver_id' => $request['id'],
+                'feedback' => 'admin Feedback',
+                'avg_rating' => $request['rating'],
+                'project_type' => NULL,
+                "created_at" => \Carbon\Carbon::now(),
+                'updated_at' => \Carbon\Carbon::now()
+            ]
+        );
+        if ($reviewid) {
+            $json['message'] = "Rating Submitted Successfully";
+            $json['type'] = "success";
+            return $json;
+        } else {
+            $json['type'] = "error";
+            return $json;
+        }
     }
-}
+
+    public function adminCourseRating(Request $request)
+    {
+
+        $json = array();
+        $reviewid = DB::table('reviews')->insertGetId(
+            [
+                'user_id' => 1, 'cource_id' => $request['id'],
+                'receiver_id' => $request['id'],
+                'feedback' => 'admin Feedback',
+                'avg_rating' => $request['rating'],
+                'project_type' => NULL,
+                "created_at" => \Carbon\Carbon::now(),
+                'updated_at' => \Carbon\Carbon::now()
+            ]
+        );
+        if ($reviewid) {
+            $json['message'] = "Rating Submitted Successfully";
+            $json['type'] = "success";
+            return $json;
+        } else {
+            $json['type'] = "error";
+            return $json;
+        }
+    }
     /**
      * Get freelancer payouts.
      *
      * @return \Illuminate\Http\Response
      */
-    public function getPayouts(){
+    public function getPayouts()
+    {
         $payouts = DB::table('payouts')->where('user_id', Auth::user()->id)->paginate(10);
-         foreach($payouts as $py){
-            $py->projects_ids = Helper::getProjectAndServiceTitle($py->projects_ids,$py->type);
-			if($py->status != "pending"){
-				$py->refrence_no = Helper::getRefrenceNo($py->id,$py->payment_method);
-			}else{
-				$py->refrence_no = "-";
-			}
+        foreach ($payouts as $py) {
+            $py->projects_ids = Helper::getProjectAndServiceTitle($py->projects_ids, $py->type);
+            if ($py->status != "pending") {
+                $py->refrence_no = Helper::getRefrenceNo($py->id, $py->payment_method);
+            } else {
+                $py->refrence_no = "-";
+            }
         }
         if (file_exists(resource_path('views/extend/back-end/freelancer/payouts.blade.php'))) {
             return view(
@@ -1452,11 +1470,13 @@ public function adminRating(Request $request){
             $payout_settings = $user->profile->count() > 0 ? Helper::getUnserializeData($user->profile->payout_settings) : '';
             if (file_exists(resource_path('views/extend/back-end/freelancer/payouts/payout_settings.blade.php'))) {
                 return view(
-                    'extend.back-end.freelancer.payouts.payout_settings', compact('payrols', 'payout_settings','user')
+                    'extend.back-end.freelancer.payouts.payout_settings',
+                    compact('payrols', 'payout_settings', 'user')
                 );
             } else {
                 return view(
-                    'back-end.freelancer.payouts.payout_settings', compact('payrols', 'payout_settings','user')
+                    'back-end.freelancer.payouts.payout_settings',
+                    compact('payrols', 'payout_settings', 'user')
                 );
             }
         } else {
@@ -1464,55 +1484,56 @@ public function adminRating(Request $request){
         }
     }
 
-    public function freelancerList($slug){
-        $type='category';
+    public function freelancerList($slug)
+    {
+        $type = 'category';
         $heading = "";
-        $dynamic_content="";
+        $dynamic_content = "";
         $locations  = Location::all();
         $languages  = Language::all();
         $categories = Category::orderBy('title')->get();
         $skills     = Skill::orderBy('title')->get();
         $user_by_role =  User::role('freelancer')->pluck('id')->toArray();
-       
+
         foreach ($skills as $key => $skill) {
-            if($skill->slug==$slug){
-                $type='skill';
+            if ($skill->slug == $slug) {
+                $type = 'skill';
             }
         }
         foreach ($categories as $key => $cat) {
-            if($cat->slug==$slug){
-                $type='category';
+            if ($cat->slug == $slug) {
+                $type = 'category';
             }
         }
         foreach ($locations as $key => $loc) {
-            if($loc->slug==$slug){
-                $type='location';
+            if ($loc->slug == $slug) {
+                $type = 'location';
             }
         }
-        
-        foreach (Helper::getHourlyRate() as $key => $hourly_rate){
-            if($key==$slug){
-                $type='hourly-rate';
+
+        foreach (Helper::getHourlyRate() as $key => $hourly_rate) {
+            if ($key == $slug) {
+                $type = 'hourly-rate';
             }
         }
-        foreach (Helper::getEnglishLevelList() as $freelancer_level => $f){
-            if($freelancer_level==$slug){
-                $type='english-level';
+        foreach (Helper::getEnglishLevelList() as $freelancer_level => $f) {
+            if ($freelancer_level == $slug) {
+                $type = 'english-level';
             }
         }
-        foreach (Helper::getFreelancerLevelList() as $freelancer_level => $freelancer){
-            if($freelancer==$slug){
-                $type='type';
+        foreach (Helper::getFreelancerLevelList() as $freelancer_level => $freelancer) {
+            if ($freelancer == $slug) {
+                $type = 'type';
             }
         }
         // $users = !empty($user_by_role) ? User::whereIn('id', $user_by_role)->where('is_disabled', 'false')->where('status',1) : array();
-        $users = !empty($user_by_role) ? User::whereIn('id', $user_by_role)->where('is_disabled', 'false')->where('status',1) : array();
-        
+        $users = !empty($user_by_role) ? User::whereIn('id', $user_by_role)->where('is_disabled', 'false')->where('status', 1) : array();
+
         $inner_page  = SiteManagement::getMetaValue('inner_page_data');
         $project_length = Helper::getJobDurationList();
         $symbol   = !empty($currency) && !empty($currency[0]['currency']) ? Helper::currencyList($currency[0]['currency']) : array();
         $save_freelancer = !empty(auth()->user()->profile->saved_freelancer) ?
-                    unserialize(auth()->user()->profile->saved_freelancer) : array();
+            unserialize(auth()->user()->profile->saved_freelancer) : array();
         $f_list_meta_title = !empty($inner_page) && !empty($inner_page[0]['f_list_meta_title']) ? $inner_page[0]['f_list_meta_title'] : trans('lang.freelancer_listing');
         $f_list_meta_desc = !empty($inner_page) && !empty($inner_page[0]['f_list_meta_desc']) ? $inner_page[0]['f_list_meta_desc'] : trans('lang.freelancer_meta_desc');
         $show_f_banner = !empty($inner_page) && !empty($inner_page[0]['show_f_banner']) ? $inner_page[0]['show_f_banner'] : 'true';
@@ -1523,94 +1544,93 @@ public function adminRating(Request $request){
         $enable_package = !empty($payment_settings) && !empty($payment_settings[0]['enable_packages']) ? $payment_settings[0]['enable_packages'] : 'true';
         $breadcrumbs_settings = SiteManagement::getMetaValue('show_breadcrumb');
         $show_breadcrumbs = !empty($breadcrumbs_settings) ? $breadcrumbs_settings : 'true';
-      
+
         $user_id = array();
-        if ($type=='category') {
+        if ($type == 'category') {
             $user_id = array();
-            $category_obj = Category::where('slug',$slug)->first();
-            if(!empty($category_obj->id)){
-            $freelancers = Profile::where('category_id', $category_obj->id)->get();
-            foreach ($freelancers as $key => $freelancer) {
-                if (!empty($freelancer->user_id)) {
-                    $user_id[] = $freelancer->user_id;
-                }
-            }
-            if($category_obj->title=='E-commerce'||$category_obj->title=='Cloud Computing'||$category_obj->title=='Data Science'||
-            $category_obj->title=='Graphic Designing'||$category_obj->title=='Artificial Intelligence'||$category_obj->title=='Growth Hacking'){
-                $skill_obj = Skill::where('title', $category_obj->title)->get();
-                foreach ($skill_obj as $key => $skill) {
-                    $userid = DB::table('skill_user')->select('user_id')->where('skill_id',$skill->id)->get();
-                    foreach($userid as $ui){
-                        $user_id[] = $ui->user_id;
-                    }
-                }
-            }
-        }
-        
-        if(!empty($category_obj->heading)){
-            $heading = $category_obj->heading;
-        }
-        if(!empty($category_obj->abstract)){
-            $dynamic_content = $category_obj->abstract;
-        }
-        $users->whereIn('id', $user_id)->orderBy('is_certified', 'DESC'); 
-        }
-        if ($type=='location') {
-            $location_obj = Location::select('id')->where('slug', $slug)
-                ->get()->pluck('id')->toArray();
-            $users->whereIn('location_id', $location_obj)->orderBy('is_certified', 'DESC');
-            
-        }
-        if($type=='skill'){
-            $user_id = array();
-                $skill_obj = Skill::where('slug', $slug)->get();
-                foreach ($skill_obj as $key => $skill) {
-                    $userid = DB::table('skill_user')->select('user_id')->where('skill_id',$skill->id)->get();
-                    if(!empty($skill->heading)){
-                        $heading = $skill->heading;
-                    }
-                    if(!empty($skill->description)){
-                        $dynamic_content = $skill->description;
-                    }
-                    foreach($userid as $ui){
-                        $user_id[] = $ui->user_id;
-                    }
-
-                }
-               
-                $users->whereIn('id', $user_id)->orderBy('is_certified', 'DESC'); 
-
-        }
-        if ($type=='english-level') {
-            $freelancers = Profile::where('english_level', $slug)->get();
+            $category_obj = Category::where('slug', $slug)->first();
+            if (!empty($category_obj->id)) {
+                $freelancers = Profile::where('category_id', $category_obj->id)->get();
                 foreach ($freelancers as $key => $freelancer) {
                     if (!empty($freelancer->user_id)) {
                         $user_id[] = $freelancer->user_id;
                     }
                 }
+                if (
+                    $category_obj->title == 'E-commerce' || $category_obj->title == 'Cloud Computing' || $category_obj->title == 'Data Science' ||
+                    $category_obj->title == 'Graphic Designing' || $category_obj->title == 'Artificial Intelligence' || $category_obj->title == 'Growth Hacking'
+                ) {
+                    $skill_obj = Skill::where('title', $category_obj->title)->get();
+                    foreach ($skill_obj as $key => $skill) {
+                        $userid = DB::table('skill_user')->select('user_id')->where('skill_id', $skill->id)->get();
+                        foreach ($userid as $ui) {
+                            $user_id[] = $ui->user_id;
+                        }
+                    }
+                }
+            }
+
+            if (!empty($category_obj->heading)) {
+                $heading = $category_obj->heading;
+            }
+            if (!empty($category_obj->abstract)) {
+                $dynamic_content = $category_obj->abstract;
+            }
             $users->whereIn('id', $user_id)->orderBy('is_certified', 'DESC');
         }
-       
-        if ($type=='hourly-rate') {
-           
+        if ($type == 'location') {
+            $location_obj = Location::select('id')->where('slug', $slug)
+                ->get()->pluck('id')->toArray();
+            $users->whereIn('location_id', $location_obj)->orderBy('is_certified', 'DESC');
+        }
+        if ($type == 'skill') {
+            $user_id = array();
+            $skill_obj = Skill::where('slug', $slug)->get();
+            foreach ($skill_obj as $key => $skill) {
+                $userid = DB::table('skill_user')->select('user_id')->where('skill_id', $skill->id)->get();
+                if (!empty($skill->heading)) {
+                    $heading = $skill->heading;
+                }
+                if (!empty($skill->description)) {
+                    $dynamic_content = $skill->description;
+                }
+                foreach ($userid as $ui) {
+                    $user_id[] = $ui->user_id;
+                }
+            }
+
+            $users->whereIn('id', $user_id)->orderBy('is_certified', 'DESC');
+        }
+        if ($type == 'english-level') {
+            $freelancers = Profile::where('english_level', $slug)->get();
+            foreach ($freelancers as $key => $freelancer) {
+                if (!empty($freelancer->user_id)) {
+                    $user_id[] = $freelancer->user_id;
+                }
+            }
+            $users->whereIn('id', $user_id)->orderBy('is_certified', 'DESC');
+        }
+
+        if ($type == 'hourly-rate') {
+
             $min = '';
             $max = '';
-           
-                $hourly_rates = explode("-", $slug);
-                $min = $hourly_rates[0];
-                if (!empty($hourly_rates[1])) {
-                    $max = $hourly_rates[1];
-                }
-                $userid = Profile::select('user_id')->whereIn('user_id', $user_by_role)
-                    ->whereBetween('hourly_rate', [$min, $max])->get()->pluck('user_id')->toArray();
-                foreach($userid as $ui){
-                    $user_id[] = $ui;
-                }
-            
+
+            $hourly_rates = explode("-", $slug);
+            $min = $hourly_rates[0];
+            if (!empty($hourly_rates[1])) {
+                $max = $hourly_rates[1];
+            }
+            $userid = Profile::select('user_id')->whereIn('user_id', $user_by_role)
+                ->whereBetween('hourly_rate', [$min, $max])->get()->pluck('user_id')->toArray();
+            foreach ($userid as $ui) {
+                $user_id[] = $ui;
+            }
+
             $users->whereIn('id', $user_id)->orderBy('is_certified', 'DESC');;
         }
-        
-        if($type=='type'){
+
+        if ($type == 'type') {
             $freelancers = Profile::where('freelancer_type', $slug)->get();
             foreach ($freelancers as $key => $freelancer) {
                 if (!empty($freelancer->user_id)) {
@@ -1619,38 +1639,38 @@ public function adminRating(Request $request){
             }
             $users->whereIn('id', $user_id);
         }
-        if(empty($heading)){
+        if (empty($heading)) {
             $heading = "Find Talented Freelancers";
         }
-       
+
         // $dynamic_content = DB::table('hybrid_pages')->where('title','hire')->where('skill_slug',$slug)->get();
         $users = $users->paginate(7)->setPath('');
 
-        $type="freelancer";
+        $type = "freelancer";
         if (file_exists(resource_path('views/extend/front-end/freelancers/freelancersList.blade.php'))) {
             return view(
                 'extend.front-end.freelancers.freelancersList',
                 compact(
-                                'type',
-                                'users',
-                                'categories',
-                                'locations',
-                                'languages',
-                                'skills',
-                                'project_length',
-                                'users_total_records',
-                                'save_freelancer',
-                                'symbol',
-                                'current_date',
-                                'f_list_meta_title',
-                                'f_list_meta_desc',
-                                'show_f_banner',
-                                'f_inner_banner',
-                                'enable_package',
-                                'show_breadcrumbs',
-                                'dynamic_content',
-                                'heading'
-                                
+                    'type',
+                    'users',
+                    'categories',
+                    'locations',
+                    'languages',
+                    'skills',
+                    'project_length',
+                    'users_total_records',
+                    'save_freelancer',
+                    'symbol',
+                    'current_date',
+                    'f_list_meta_title',
+                    'f_list_meta_desc',
+                    'show_f_banner',
+                    'f_inner_banner',
+                    'enable_package',
+                    'show_breadcrumbs',
+                    'dynamic_content',
+                    'heading'
+
                 )
             );
         } else {
@@ -1679,9 +1699,9 @@ public function adminRating(Request $request){
                 )
             );
         }
-        
     }
-    public function freelancersListing(){
+    public function freelancersListing()
+    {
         $heading = "";
         $locations  = Location::all();
         $languages  = Language::all();
@@ -1690,15 +1710,15 @@ public function adminRating(Request $request){
         $user_by_role =  User::role('freelancer')->pluck('id')->toArray();
         // $users = !empty($user_by_role) ? User::whereIn('id', $user_by_role)->where('is_disabled', 'false')->where('status',1) : array();
         $users = User::join('profiles', 'users.id', '=', 'profiles.user_id')
-        ->select('users.*')
-         ->whereIn('users.id', $user_by_role)->where('users.is_disabled', 'false')->where('users.status',1)
-         ->orderBy('users.is_certified','DESC')
-         ->orderBy('profiles.avater', 'DESC')->paginate(7)->setPath('');
+            ->select('users.*')
+            ->whereIn('users.id', $user_by_role)->where('users.is_disabled', 'false')->where('users.status', 1)
+            ->orderBy('users.is_certified', 'DESC')
+            ->orderBy('profiles.avater', 'DESC')->paginate(7)->setPath('');
         $type = "freelancer";
         $project_length = Helper::getJobDurationList();
         $symbol   = !empty($currency) && !empty($currency[0]['currency']) ? Helper::currencyList($currency[0]['currency']) : array();
         $save_freelancer = !empty(auth()->user()->profile->saved_freelancer) ?
-                    unserialize(auth()->user()->profile->saved_freelancer) : array();
+            unserialize(auth()->user()->profile->saved_freelancer) : array();
         $f_list_meta_title = !empty($inner_page) && !empty($inner_page[0]['f_list_meta_title']) ? $inner_page[0]['f_list_meta_title'] : trans('lang.freelancer_listing');
         $f_list_meta_desc = !empty($inner_page) && !empty($inner_page[0]['f_list_meta_desc']) ? $inner_page[0]['f_list_meta_desc'] : trans('lang.freelancer_meta_desc');
         $show_f_banner = !empty($inner_page) && !empty($inner_page[0]['show_f_banner']) ? $inner_page[0]['show_f_banner'] : 'true';
@@ -1708,31 +1728,31 @@ public function adminRating(Request $request){
         $enable_package = !empty($payment_settings) && !empty($payment_settings[0]['enable_packages']) ? $payment_settings[0]['enable_packages'] : 'true';
         $breadcrumbs_settings = SiteManagement::getMetaValue('show_breadcrumb');
         $show_breadcrumbs = !empty($breadcrumbs_settings) ? $breadcrumbs_settings : 'true';
-        if(empty($heading)){
+        if (empty($heading)) {
             $heading = "Find Talented Freelancers";
         }
         if (file_exists(resource_path('views/extend/front-end/freelancers/freelancersList.blade.php'))) {
             return view(
                 'extend.front-end.freelancers.freelancersList',
                 compact(
-                                'type',
-                                'users',
-                                'categories',
-                                'locations',
-                                'languages',
-                                'skills',
-                                'project_length',
-                                'users_total_records',
-                                'save_freelancer',
-                                'symbol',
-                                'current_date',
-                                'f_list_meta_title',
-                                'f_list_meta_desc',
-                                'show_f_banner',
-                                'f_inner_banner',
-                                'enable_package',
-                                'show_breadcrumbs',
-                                'heading'
+                    'type',
+                    'users',
+                    'categories',
+                    'locations',
+                    'languages',
+                    'skills',
+                    'project_length',
+                    'users_total_records',
+                    'save_freelancer',
+                    'symbol',
+                    'current_date',
+                    'f_list_meta_title',
+                    'f_list_meta_desc',
+                    'show_f_banner',
+                    'f_inner_banner',
+                    'enable_package',
+                    'show_breadcrumbs',
+                    'heading'
                 )
             );
         } else {

@@ -3630,11 +3630,36 @@ if (document.getElementById("profile_settings")) {
           });
       },
       giveRating: function (id) {
+        alert('ddd');
         this.loading = true;
         var rating = document.getElementById(id + "-assign_rating").value;
         var self = this;
         axios
           .post(APP_URL + "/admin/submit-rating", {
+            rating: rating,
+            id: id,
+          })
+          .then(function (response) {
+            console.log(response);
+            if (response.data.type == "success") {
+              self.showMessage(response.data.message);
+              self.loading = false;
+            } else {
+              self.loading = false;
+              self.showError(response.data.message);
+            }
+          })
+          .catch(function (error) {
+            self.loading = false;
+          });
+      },
+      givecourseRating: function (id) {
+        alert('ff');
+        this.loading = true;
+        var rating = document.getElementById(id + "-assign_course_rating").value;
+        var self = this;
+        axios
+          .post(APP_URL + "/admin/submit-course-rating", {
             rating: rating,
             id: id,
           })
@@ -6850,6 +6875,27 @@ if (document.getElementById("cources")) {
           message,
           this.notificationSystem.options.completed
         );
+      },
+      givecourseRating: function givecourseRating(id) {
+        this.loading = true;
+        var rating = document.getElementById(id + "-assign_course_rating").value;
+        var self = this;
+        axios.post(APP_URL + "/admin/submit-course-rating", {
+          rating: rating,
+          id: id
+        }).then(function (response) {
+          console.log(response);
+
+          if (response.data.type == "success") {
+            self.showMessage(response.data.message);
+            self.loading = false;
+          } else {
+            self.loading = false;
+            self.showError(response.data.message);
+          }
+        })["catch"](function (error) {
+          self.loading = false;
+        });
       },
       showInfo(message) {
         return this.$toast.info(

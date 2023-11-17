@@ -164,9 +164,9 @@
                                                                 <li><span><i class="fa fa-star"></i>{{{ $service_rating }}}/<i>5</i> ({{{!empty($service_reviews) ? $service_reviews->count() : ''}}})</span></li>
                                                                 <li>
                                                                     @if ($total_orders > 0)
-                                                                        <i class="fa fa-spinner fa-spin"></i>
+                                                                        <i class="fa fa-user"></i>
                                                                     @endif
-                                                                    {{{$total_orders}}} {{ trans('lang.in_queue') }}
+                                                                    {{{$total_orders}}} Registered
                                                                 </li>
                                                             </ul>
                                                         </div>
