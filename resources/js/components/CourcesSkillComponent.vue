@@ -140,6 +140,7 @@
                 //     console.log("jjj self.freelancer_skills", self.freelancer_skills)
                 // });
             },
+        
             addSkill: function () {
                 var skillsSelect = document.getElementById("freelancer_skill");
                 var ratingSelect = document.getElementById("selected_rating_value");
