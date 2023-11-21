@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Class Category
  *
@@ -54,6 +55,10 @@ class Category extends Model
     public function freelancers()
     {
         return $this->morphedByMany('App\User', 'catable');
+    }
+    public function skills()
+    {
+        return $this->belongsToMany(Skill::class, 'category_skill');
     }
 
 
@@ -129,7 +134,7 @@ class Category extends Model
             if (!empty($request['uploaded_image'])) {
                 $filename = $request['uploaded_image'];
                 if (file_exists($old_path . '/' . $request['uploaded_image'])) {
-                    $new_path = Helper::PublicPath().'/uploads/categories/';
+                    $new_path = Helper::PublicPath() . '/uploads/categories/';
                     if (!file_exists($new_path)) {
                         File::makeDirectory($new_path, 0755, true, true);
                     }
@@ -171,7 +176,7 @@ class Category extends Model
             if (!empty($request['uploaded_image'])) {
                 $filename = $request['uploaded_image'];
                 if (file_exists($old_path . '/' . $request['uploaded_image'])) {
-                    $new_path = Helper::PublicPath().'/uploads/categories/';
+                    $new_path = Helper::PublicPath() . '/uploads/categories/';
                     if (!file_exists($new_path)) {
                         File::makeDirectory($new_path, 0755, true, true);
                     }

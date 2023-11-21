@@ -43,13 +43,17 @@
                                 </div>
                                 <div class="form-group">
                                     {!! Form::label('category_id', 'Category') !!}
-                                    {!! Form::select('category_id', $categories, $skills['category_id'], ['class' => 'form-control', 'required' => 'required']) !!}
-                                    @if ($errors->has('category_id'))
+                                    {!! Form::select('categories[]', $categories, $skills->categories, [
+                                        'class' => 'form-control select2-multiple',
+                                        'multiple' => 'multiple'
+                                    ]) !!}
+                                    @if ($errors->has('categories'))
                                         <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('category_id') }}</strong>
+                                            <strong>{{ $errors->first('categories') }}</strong>
                                         </span>
                                     @endif
                                 </div>
+                                
                                 <div class="form-group">
                                     {!! Form::text( 'skill_slug', e($skills['slug']), ['class' =>'form-control'.($errors->has('skill_slug') ? ' is-invalid' : '')] ) !!}
                                     <span class="form-group-description">{{{ trans('lang.desc') }}}</span>
@@ -106,3 +110,11 @@
         </section>
     </div>
 @endsection
+@push('stripe')
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.select2-multiple').select2();
+    });
+</script>
+@endpush

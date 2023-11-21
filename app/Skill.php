@@ -125,7 +125,8 @@ class Skill extends Model
             $this->logo = filter_var($request['logo'], FILTER_SANITIZE_STRING);
             $this->is_featured = filter_var($request['is_featured'], FILTER_SANITIZE_STRING);
             $this->description = $request['skill_desc'];
-            return $this->save();
+            $skill =  $this->save();
+            $this->categories()->sync($request['categories']);
         }
     }
 
@@ -151,6 +152,7 @@ class Skill extends Model
             $skills->is_featured = filter_var($request['is_featured'], FILTER_SANITIZE_STRING);
             $skills->description = $request['skill_desc'];
             $skills->save();
+            $skills->categories()->sync($request['categories']);
         }
     }
 
@@ -167,6 +169,12 @@ class Skill extends Model
             ->where('user_id', $user_id)
             ->get()->pluck('skill_id')->toArray();
     }
+
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class, 'category_skill');
+    }
+
 
     /**
      * For updating skills

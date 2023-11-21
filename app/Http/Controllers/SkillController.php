@@ -98,7 +98,7 @@ class SkillController extends Controller
         // $this->validate($request, [
         //     'skill_logo' => 'required|image|mimes:jpeg,png,jpg,bmp,gif,svg|max:2048',
         // ]);
-
+        $request['categories'] =  $request->input('categories', []);
         if ($request->hasFile('skill_logo')) {
             $skill_logo = $request->file('skill_logo');
             $name = time() . '.' . $skill_logo->getClientOriginalExtension();
@@ -147,7 +147,7 @@ class SkillController extends Controller
     public function edit($id)
     {
         if (!empty($id)) {
-            $skills = $this->skill::find($id);
+            $skills = $this->skill::with('categories')->find($id);
             $categories = Category::all()->pluck('title', 'id');
 
             if (!empty($skills)) {
@@ -178,6 +178,7 @@ class SkillController extends Controller
     public function update(Request $request, $id)
     {
         // dd($request->all());
+        $request['categories'] =  $request->input('categories', []);
 
         if ($request->hasFile('skill_logo')) {
 

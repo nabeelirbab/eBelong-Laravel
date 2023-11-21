@@ -4,7 +4,7 @@
         <div class="">        
             <div class="banner-content">
                 <div class="banner-content__title pb-3">
-                    Hire an eBelong AI Worker today to train the AI
+                    Hire an AI Team of experts to develop your next product
                 </div>
                 <div class="banner-content__subtitle pb-5">For most demanding and challenging jobs</div>
                 <div class="banner-content__search d-flex pb-3"  >

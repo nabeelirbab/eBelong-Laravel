@@ -49632,7 +49632,7 @@ var render = function () {
         _c("div", { staticClass: "banner-content" }, [
           _c("div", { staticClass: "banner-content__title pb-3" }, [
             _vm._v(
-              "\n                Hire an eBelong AI Worker today to train the AI\n            "
+              "\n                Hire an AI Team of experts to develop your next product\n            "
             ),
           ]),
           _vm._v(" "),

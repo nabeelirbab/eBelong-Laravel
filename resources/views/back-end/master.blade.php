@@ -7,6 +7,9 @@
     <link href="{{ asset('css/emojionearea.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/basictable.css') }}" rel="stylesheet"> 
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.6/cropper.css"/>
+	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+
 @endpush
 @section('header')
     @if (file_exists(resource_path('views/extend/includes/header.blade.php')))

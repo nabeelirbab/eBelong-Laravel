@@ -45,15 +45,20 @@
                                     @endif
                                 </div>
                                    <!-- Category Dropdown -->
-                                <div class="form-group">
+                                   <div class="form-group">
                                     {!! Form::label('category_id', 'Category') !!}
-                                    {!! Form::select('category_id', $categories, null, ['class' => 'form-control', 'placeholder' => 'Select Category', 'required' => 'required']) !!}
-                                    @if ($errors->has('category_id'))
+                                    {!! Form::select('categories[]', $categories, null, [
+                                        'class' => 'form-control select2-multiple',
+                                        'multiple' => 'multiple'
+                                    ]) !!}
+                                    @if ($errors->has('categories'))
                                         <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('category_id') }}</strong>
+                                            <strong>{{ $errors->first('categories') }}</strong>
                                         </span>
                                     @endif
                                 </div>
+                                
+                                
                                 <div class="form-group">
                                     <label for="imageInput">Skill Logo</label>
                                     <input name="skill_logo" type="file" id="imageInput" accept="image/*" >
@@ -134,7 +139,16 @@
                                                 <td style="width:12%">@if($skill->logo)<img src="{{ asset('/uploads/logos/'.$skill->logo)}}" style="max-width: 60%">@endif</td>
                                                 <td>{{{ $skill->title }}}</td>
                                                 <td>{{{ $skill->slug }}}</td>
-                                                <td>{{ $skill->category->title ?? 'No Category' }}</td> 
+                                                <td> 
+                                                    @if($skill->categories->count() > 0)
+                                                    @foreach($skill->categories as $category)
+                                                    {{ $category->title ?? 'No Category' }},
+                                                    @endforeach
+                                                    @else
+                                                    No Category
+                                                    @endif
+
+                                                </td> 
                                                 <td>
                                                     <div class="wt-actionbtn">
                                                         <a href="{{{ url('admin/skills/edit-skills') }}}/{{{ $skill->id }}}" class="wt-addinfo wt-skillsaddinfo">
@@ -165,3 +179,11 @@
         </section>
     </div>
 @endsection
+@push('stripe')
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.select2-multiple').select2();
+    });
+</script>
+@endpush
