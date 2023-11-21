@@ -484,22 +484,39 @@ $slider = Helper::getPageSlider($page_id);
 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
 <!-- Wrapper for slides -->
 <div class="carousel-inner">
-<div class="carousel-item active">
-<div class="container banner1">
-<div class="row">
-	<div class="col-lg-6 col-md-6 col-sm-6">
-		<div class="section-main-wrapper10">
-			<div class="wt-banner">
-				<div data-vue='<?php echo json_encode(array('categories'=> $categories,'skills'=>$all_skills)) ?>' data-component="BannerContent" id="e-banner-content"></div>
+	<div class="carousel-item active">
+		<div class="container banner1">
+		<div class="row">
+			<div class="col-lg-6 col-md-6 col-sm-6">
+				<div class="section-main-wrapper10">
+					<div class="wt-banner">
+						<div data-vue='<?php echo json_encode(array('categories'=> $categories,'skills'=>$ai_skills)) ?>' data-component="BannerContent2" id="e-banner-content"></div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-6 col-md-6 col-sm-6">
+				<img class="home-banner-img2" src="{{ asset('uploads/settings/general/FreelancerNew-1.png') }}" alt="banner here"> 
 			</div>
 		</div>
+		</div>
+		</div>
+	<div class="carousel-item ">
+	<div class="container banner1">
+	<div class="row">
+		<div class="col-lg-6 col-md-6 col-sm-6">
+			<div class="section-main-wrapper10">
+				<div class="wt-banner">
+					<div data-vue='<?php echo json_encode(array('categories'=> $categories,'skills'=>$all_skills)) ?>' data-component="BannerContent" id="e-banner-content"></div>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-6 col-md-6 col-sm-6">
+			<img class="home-banner-img2" src="{{ asset('uploads/settings/general/FreelancerNew-1.png') }}" alt="banner here"> 
+		</div>
 	</div>
-	<div class="col-lg-6 col-md-6 col-sm-6">
-		<img class="home-banner-img2" src="{{ asset('uploads/settings/general/FreelancerNew-1.png') }}" alt="banner here"> 
 	</div>
-</div>
-</div>
-</div>
+	</div>
+
 
 <div class="carousel-item">
 <div class="container banner2">
