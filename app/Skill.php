@@ -139,7 +139,6 @@ class Skill extends Model
      */
     public function updateSkills($request, $id)
     {
-
         if (!empty($request)) {
             $skills = self::find($id);
             if ($skills->slug != $request['skill_slug']) {

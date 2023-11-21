@@ -56,7 +56,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="imageInput">Skill Logo</label>
-                                    <input name="skill_logo" type="file" id="imageInput">
+                                    <input name="skill_logo" type="file" id="imageInput" accept="image/*" >
                                 </div>
                                 <div class="form-group">
                                     <label for="is_featured">Featured Skill</label>

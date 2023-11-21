@@ -69,7 +69,8 @@
                                         @endif
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <input name="skill_logo" type="file" id="imageInput" value="">
+                                                <input type="hidden" name="logo" value="{{ $skills['logo'] }}"> 
+                                                <input name="skill_logo" type="file" id="imageInput" value="" accept="image/*" >
                                             </div>
                                         </div>
                                     </div>

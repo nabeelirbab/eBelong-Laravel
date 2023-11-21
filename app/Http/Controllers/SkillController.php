@@ -95,9 +95,9 @@ class SkillController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'skill_logo' => 'required|image|mimes:jpeg,png,jpg,bmp,gif,svg|max:2048',
-        ]);
+        // $this->validate($request, [
+        //     'skill_logo' => 'required|image|mimes:jpeg,png,jpg,bmp,gif,svg|max:2048',
+        // ]);
 
         if ($request->hasFile('skill_logo')) {
             $skill_logo = $request->file('skill_logo');
@@ -177,12 +177,13 @@ class SkillController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // dd($request->all());
 
         if ($request->hasFile('skill_logo')) {
 
-            $this->validate($request, [
-                'skill_logo' => 'required|image|mimes:jpeg,png,jpg,bmp,gif,svg|max:2048',
-            ]);
+            // $this->validate($request, [
+            //     'skill_logo' => 'required|image|mimes:jpeg,png,jpg,bmp,gif,svg|max:2048',
+            // ]);
 
             $skill_logo = $request->file('skill_logo');
             $name = time() . '.' . $skill_logo->getClientOriginalExtension();
@@ -205,7 +206,7 @@ class SkillController extends Controller
             Session::flash('message', trans('lang.skill_updated'));
             return Redirect::to('admin/skills');
         } else {
-
+            $request['logo'] = $request->input('logo');
             $server_verification = Helper::worketicIsDemoSite();
             if (!empty($server_verification)) {
                 Session::flash('error', $server_verification);

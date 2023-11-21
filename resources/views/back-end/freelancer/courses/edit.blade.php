@@ -100,6 +100,42 @@
                                     {!! Form::textarea('description', e($cource->description), ['class' => 'wt-tinymceeditor', 'id' => 'wt-tinymceeditor', 'placeholder' => trans('lang.service_desc_note')]) !!}
                                 </div>
                             </div>
+                            <div class="wt-jobdetails wt-tabsinfo">
+                                <div class="wt-tabscontenttitle d-flex justify-content-between">
+                                    <h2>Only Visible To Logged In Users</h2>
+                                    
+                                </div>
+                                <div class="wt-formtheme wt-userform wt-userformvtwo">
+                                      <!-- File Input for Video Upload -->
+                               <div class="form-group mb-3">
+                                <input type="file" name="course_files" class="form-control" accept="video/*,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+
+                               </div>
+                                <!-- Text Input for Additional Details -->
+                                <div class="form-group">
+                                    {!! Form::textarea('additional_text', e($cource->additional_text), ['class' => 'wt-tinymceeditor', 'id' => 'wt-tinymceeditor1', 'placeholder' => trans('lang.service_desc_note')]) !!}
+
+                                </div>
+                                </div>
+                            </div>
+                            <div class="wt-jobdetails wt-tabsinfo">
+                                <div class="wt-tabscontenttitle d-flex justify-content-between">
+                                    <h2>Only Visible to Users Who Bought the Course</h2>
+                                    
+                                </div>
+                                <div class="wt-formtheme wt-userform wt-userformvtwo">
+                                      <!-- File Input for Video Upload -->
+                               <div class="form-group mb-3">
+                                <input type="file" name="course_files_bought" class="form-control" accept="video/*,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+
+                               </div>
+                                <!-- Text Input for Additional Details -->
+                                <div class="form-group">
+                                    {!! Form::textarea('additional_text_bought', e($cource->additional_text_bought), ['class' => 'wt-tinymceeditor', 'id' => 'wt-tinymceeditor2', 'placeholder' => trans('lang.service_desc_note')]) !!}
+
+                                </div>
+                                </div>
+                            </div>
                             <div class="wt-joblocation wt-tabsinfo">
                                 <div class="wt-tabscontenttitle">
                                     <h2>{{ trans('lang.your_loc') }}</h2>

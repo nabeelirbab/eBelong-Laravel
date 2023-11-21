@@ -238,6 +238,7 @@ class Cource extends Model
      */
     public function updateCourse($request, $id, $image_size = array())
     {
+
         $json = array();
         if (!empty($request)) {
             $course = self::find($id);
@@ -262,8 +263,26 @@ class Cource extends Model
             $course->course_time = filter_var($request['course_time'], FILTER_SANITIZE_STRING);
             $course->longitude = filter_var($request['longitude'], FILTER_SANITIZE_STRING);
             $course->latitude = filter_var($request['latitude'], FILTER_SANITIZE_STRING);
+            $course->additional_text = filter_var($request['additional_text'], FILTER_SANITIZE_STRING);
+            $course->additional_text_bought = filter_var($request['additional_text_bought'], FILTER_SANITIZE_STRING);
             $old_path = Helper::PublicPath() . '/uploads/courses/temp';
             $new_path = Helper::PublicPath() . '/uploads/courses/' . $user_id->user_id;
+            if ($request->hasFile('course_files')) {
+                $file = $request->file('course_files');
+                $filename = time() . '-' . $file->getClientOriginalName();
+                $destinationPath = 'uploads/courses/temp';
+                $path = $destinationPath . '/' . $filename;
+                $file = $file->move($destinationPath, $filename);
+                $course->course_files = $path;
+            }
+            if ($request->hasFile('course_files_bought')) {
+                $file = $request->file('course_files_bought');
+                $filename = time() . '-' . $file->getClientOriginalName();
+                $destinationPath = 'uploads/courses/temp';
+                $path = $destinationPath . '/' . $filename;
+                $file = $file->move($destinationPath, $filename);
+                $course->course_files_bought = $path;
+            }
             $course_attachments = array();
             if (!empty($request['attachments'])) {
                 $attachments = $request['attachments'];
