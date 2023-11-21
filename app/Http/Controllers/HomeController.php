@@ -26,6 +26,7 @@ class HomeController extends Controller
         $categories = Category::select('id', 'title', 'slug', 'image')->get();
         $all_skills = Skill::select('id', 'title', 'slug', 'logo', 'is_featured')->get();
         $ai_skills = Skill::where('category_id', 22)->select('id', 'title', 'slug', 'logo', 'is_featured')->get();
+        $ai2_skills = Skill::where('category_id', 9)->select('id', 'title', 'slug', 'logo', 'is_featured')->get();
         $services = DB::table('cources')
             ->join('cource_user', 'cources.id', '=', 'cource_user.cource_id')
             ->join('users', 'users.id', '=', 'cource_user.user_id')
@@ -196,7 +197,8 @@ class HomeController extends Controller
                 'freelancers',
                 'all_skills',
                 'services',
-                'ai_skills'
+                'ai_skills',
+                'ai2_skills'
             )
         );
     }
