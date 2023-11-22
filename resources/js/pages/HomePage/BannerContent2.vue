@@ -4,9 +4,9 @@
         <div class="">        
             <div class="banner-content">
                 <div class="banner-content__title pb-3">
-                    Hire an eBelong AI Worker today to train the AI
+                    Hire an AI Worker today
                 </div>
-                <div class="banner-content__subtitle pb-5">For most demanding and challenging jobs</div>
+                <div class="banner-content__subtitle pb-5">To Train your AI Models</div>
                 <div class="banner-content__search d-flex pb-3"  >
                     <vue-bootstrap-typeahead
                         :data="skills"

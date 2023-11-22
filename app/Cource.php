@@ -157,6 +157,7 @@ class Cource extends Model
             $this->is_featured = filter_var($request['is_featured'], FILTER_SANITIZE_STRING);
             $this->show_attachments = filter_var($request['show_attachments'], FILTER_SANITIZE_STRING);
             $this->address = filter_var($request['address'], FILTER_SANITIZE_STRING);
+            $this->status = filter_var($request['status'], FILTER_SANITIZE_STRING);
             $this->course_date = filter_var($request['course_date'], FILTER_SANITIZE_STRING);
             $this->course_time = filter_var($request['course_time'], FILTER_SANITIZE_STRING);
             $this->longitude = filter_var($request['longitude'], FILTER_SANITIZE_STRING);

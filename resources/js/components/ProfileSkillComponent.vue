@@ -4,7 +4,16 @@
             <transition name="fade">
                 <div v-if="isShow" class="sj-jump-messeges">{{ trans('lang.no_record') }}</div>
             </transition>
+            <div class="form-group">
+            <span class="wt-select">
+                    <select v-model="selectedCategoryId" class="form-control" placeholder="Select Category">
+                        <option value="0" selected>Select Category</option>
+                        <option v-for="(category, id) in categories" :value="category.id">{{ category.title }}</option>
+                    </select>
+                </span>
+            </div>
             <fieldset>
+           
                 <div class="form-group">
                     <div class="form-group-holder">
                         <span class="wt-select">
@@ -67,7 +76,7 @@
 </style>
 <script>
  export default{
-    props: ['widget_title', 'ph_rate_skills'],
+    props: ['widget_title', 'ph_rate_skills','categories'],
         data(){
             return {
                 isShow: false,
@@ -92,6 +101,7 @@
                         timeout: 4000
                     }
                 },
+                selectedCategoryId: 0,
             }
         },
         methods: {
@@ -232,7 +242,28 @@
             },
             editInput: function (index) {
                 this.edit_class = true;
-            }
+            },
+            fetchSkillsBasedOnCategory(categoryId) {
+            axios.get(APP_URL+'/get-skills/' + categoryId)
+                .then(response => {
+                    this.stored_skills = [];
+                    console.log(response.data);
+                    const combinedSkills = response.data.concat(this.skills);
+
+                    // Filter out duplicate values based on the title
+                    this.stored_skills = combinedSkills.filter((skill, index, self) => 
+                        index === self.findIndex((t) => (
+                            t.title === skill.title
+                        ))
+                    );
+                    console.log(this.stored_skills);
+
+                    // this.stored_skills = response.data;
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
         },
         mounted: function () {
             jQuery(document).on('click', '.wt-addinfo', function (e) {
@@ -253,6 +284,14 @@
         created: function() {
             this.getSkills();
             this.getUserSkills();
-        } 
+        },
+        watch: {
+            selectedCategoryId(newVal) {
+                if (newVal) {
+                    // Perform actions when the category changes, e.g., fetch skills for this category
+                    this.fetchSkillsBasedOnCategory(newVal);
+                }
+            }
+        },
     }
 </script>

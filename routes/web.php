@@ -587,6 +587,9 @@ Route::group(
         Route::post('course/send-message', 'CourseController@sendMessage');
         Route::post('course/send-message-to-instructor', 'CourseController@sendMessagetoInstructor');
         // // Route::get('/get-freelancer-skills', 'SkillController@getCourseSkills');
+        // routes/api.php or routes/web.php
+        Route::get('get-skills/{categoryId}', 'SkillController@getSkillsByCategory');
+
         Route::get('course/{id}/enrolled-students', 'CourseController@StudentsListing');
         Route::get('course/{id}/waiting-students', 'CourseController@waitingStudents');
         Route::get('/get-skills', 'SkillController@getSkills');

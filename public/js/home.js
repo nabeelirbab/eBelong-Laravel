@@ -49496,13 +49496,11 @@ var render = function () {
       _c("div", {}, [
         _c("div", { staticClass: "banner-content" }, [
           _c("div", { staticClass: "banner-content__title pb-3" }, [
-            _vm._v(
-              "\n                Hire an eBelong AI Worker today to train the AI\n            "
-            ),
+            _vm._v("\n                Hire an AI Worker today\n            "),
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "banner-content__subtitle pb-5" }, [
-            _vm._v("For most demanding and challenging jobs"),
+            _vm._v("To Train your AI Models"),
           ]),
           _vm._v(" "),
           _c(
@@ -49632,12 +49630,12 @@ var render = function () {
         _c("div", { staticClass: "banner-content" }, [
           _c("div", { staticClass: "banner-content__title pb-3" }, [
             _vm._v(
-              "\n                Hire an AI Team of experts to develop your next product\n            "
+              "\n                Hire an AI Team of experts\n            "
             ),
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "banner-content__subtitle pb-5" }, [
-            _vm._v("For most demanding and challenging jobs"),
+            _vm._v("to develop your next AI product"),
           ]),
           _vm._v(" "),
           _c(

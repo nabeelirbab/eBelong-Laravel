@@ -61,29 +61,30 @@ class SkillController extends Controller
      */
     public function index(Request $request)
     {
-        if (!empty($_GET['keyword'])) {
-            $keyword = $_GET['keyword'];
-            $skills = $this->skill::with('category')->where('title', 'like', '%' . $keyword . '%')->paginate(7)->setPath('');
-            $pagination = $skills->appends(
-                array(
-                    'keyword' => Input::get('keyword')
-                )
-            );
-        } else {
-            $skills = $this->skill->with('category')->paginate(7);
+        $query = $this->skill::with('category');
+
+        // Search by keyword
+        if ($request->filled('keyword')) {
+            $keyword = $request->keyword;
+            $query->where('title', 'like', '%' . $keyword . '%');
         }
+
+        // Filter by category if a category is selected
+        if ($request->filled('category_id')) {
+            $query->whereHas('categories', function ($q) use ($request) {
+                $q->where('id', $request->category_id);
+            });
+        }
+
+        $skills = $query->paginate(7)->appends($request->only(['keyword', 'category_id']));
+
         $categories = Category::all()->pluck('title', 'id');
-        if (file_exists(resource_path('views/extend/back-end/admin/skills/index.blade.php'))) {
-            return View::make(
-                'extend.back-end.admin.skills.index',
-                compact('skills', 'categories')
-            );
-        } else {
-            return View::make(
-                'back-end.admin.skills.index',
-                compact('skills', 'categories')
-            );
-        }
+
+        $viewPath = file_exists(resource_path('views/extend/back-end/admin/skills/index.blade.php'))
+            ? 'extend.back-end.admin.skills.index'
+            : 'back-end.admin.skills.index';
+
+        return View::make($viewPath, compact('skills', 'categories'));
     }
 
     /**
@@ -619,5 +620,17 @@ class SkillController extends Controller
             $json['message'] = trans('lang.something_wrong');
             return $json;
         }
+    }
+    public function getSkillsByCategory($categoryId)
+    {
+        if ($categoryId == 0) {
+            $skills = Skill::get();
+        } else {
+
+            $skills = Skill::whereHas('categories', function ($query) use ($categoryId) {
+                $query->where('id', $categoryId);
+            })->get();
+        }
+        return response()->json($skills);
     }
 }

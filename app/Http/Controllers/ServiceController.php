@@ -212,18 +212,21 @@ class ServiceController extends Controller
             $package_status = !empty($payment_settings[0]['enable_packages']) ? $payment_settings[0]['enable_packages'] : 'true';
         }
         if ($package_status === 'true') {
-            if (!empty($package->count()) && $current_date > $expiry_date) {
-                $json['type'] = 'error';
-                $json['message'] = trans('lang.need_to_purchase_pkg');
-                return $json;
-            }
+            // if (!empty($package->count()) && $current_date > $expiry_date) {
+            //     $json['type'] = 'error';
+            //     $json['message'] = trans('lang.need_to_purchase_pkg');
+            //     return $json;
+            // }
 
             if ($request['is_featured'] == 'true') {
+                $request['status'] = 'draft';
                 if (!empty($option['no_of_featured_services']) && $posted_featured_services >= intval($option['no_of_featured_services'])) {
                     $json['type'] = 'error';
                     $json['message'] = trans('lang.sorry_can_only_feature')  . ' ' . $option['no_of_featured_services'] . ' ' . trans('lang.services_acc_to_pkg');
                     return $json;
                 }
+            } else {
+                $request['status'] = 'published';
             }
             if (!empty($option['no_of_services']) && $posted_services >= intval($option['no_of_services'])) {
                 $json['type'] = 'error';

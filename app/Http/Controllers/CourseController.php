@@ -230,11 +230,14 @@ class CourseController extends Controller
             }
 
             if ($request['is_featured'] == 'true') {
+                $request['status'] = 'draft';
                 if (!empty($option['no_of_featured_cources']) && $posted_featured_cources >= intval($option['no_of_featured_cources'])) {
                     $json['type'] = 'error';
                     $json['message'] = trans('lang.sorry_can_only_feature')  . ' ' . $option['no_of_featured_cources'] . ' ' . trans('lang.services_acc_to_pkg');
                     return $json;
                 }
+            } else {
+                $request['status'] = 'published';
             }
             if (!empty($option['no_of_cources']) && $posted_cources >= intval($option['no_of_cources'])) {
                 $json['type'] = 'error';

@@ -152,6 +152,7 @@ class Service extends Model
             $this->english_level = filter_var($request['english_level'], FILTER_SANITIZE_STRING);
             $this->response_time_id = intval($request['response_time']);
             $this->is_featured = filter_var($request['is_featured'], FILTER_SANITIZE_STRING);
+            $this->status = filter_var($request['status'], FILTER_SANITIZE_STRING);
             $this->show_attachments = filter_var($request['show_attachments'], FILTER_SANITIZE_STRING);
             $this->address = filter_var($request['address'], FILTER_SANITIZE_STRING);
             $this->longitude = filter_var($request['longitude'], FILTER_SANITIZE_STRING);
@@ -192,7 +193,7 @@ class Service extends Model
             if ($request['skills']) {
                 $skills = $request['skills'];
                 foreach ($skills as $skill) {
-                    $service->skills()->attach($skill['id'],['skill_rating' => $skill['rating']]);
+                    $service->skills()->attach($skill['id'], ['skill_rating' => $skill['rating']]);
                 }
             }
             $this->users()->attach($user_id, ['type' => 'seller', 'status' => 'published', 'seller_id' => $user_id]);
@@ -274,7 +275,7 @@ class Service extends Model
                 $service->skills()->detach();
                 if (!empty($skills)) {
                     foreach ($skills as $skill) {
-                        $service->skills()->attach($skill['id'],['skill_rating' => $skill['rating']]);
+                        $service->skills()->attach($skill['id'], ['skill_rating' => $skill['rating']]);
                     }
                 }
             }
@@ -409,8 +410,8 @@ class Service extends Model
             $filters['skills'] = $search_skills;
             foreach ($search_skills as $key => $search_skill) {
                 $skill_obj = Skill::where('slug', $search_skill)->first();
-                $skill= Skill::find($skill_obj->id);
-                    //  dd($skill->courses);
+                $skill = Skill::find($skill_obj->id);
+                //  dd($skill->courses);
                 if (!empty($skill->services)) {
                     $skill_services = $skill->services->pluck('id')->toArray();
                     foreach ($skill_services as $id) {
@@ -418,7 +419,7 @@ class Service extends Model
                     }
                 }
             }
-            $services->where('status','published')->whereIn('id', $service_id);
+            $services->where('status', 'published')->whereIn('id', $service_id);
         }
         $services = $services->orderByRaw("is_featured DESC, updated_at DESC")->paginate(20)->setPath('');
         foreach ($filters as $key => $filter) {

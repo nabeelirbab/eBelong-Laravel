@@ -25,9 +25,14 @@ class HomeController extends Controller
     {
         $categories = Category::select('id', 'title', 'slug', 'image')->get();
         $all_skills = Skill::select('id', 'title', 'slug', 'logo', 'is_featured')->get();
-        $category = Category::find(22);
+        $category = Category::with(['skills' => function ($query) {
+            $query->select('id', 'title', 'slug', 'logo', 'is_featured'); // Replace with the columns you need
+        }])->find(10);
         $ai_skills = $category->skills;
-        $category2 = Category::find(9);
+
+        $category2 = Category::with(['skills' => function ($query) {
+            $query->select('id', 'title', 'slug', 'logo', 'is_featured'); // Replace with the columns you need
+        }])->find(9);
         $ai2_skills = $category2->skills;
         $services = DB::table('cources')
             ->join('cource_user', 'cources.id', '=', 'cource_user.cource_id')

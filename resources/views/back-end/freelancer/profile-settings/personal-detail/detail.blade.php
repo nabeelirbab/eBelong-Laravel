@@ -32,16 +32,6 @@
             {!! Form::textarea( 'description', e($description), ['class' =>'form-control', 'id' => 'description','placeholder' => trans('lang.ph_desc'),'maxlength' => 500] ) !!}
             <span>max character limit 500</span>
         </div>
-        <div class="form-group">
-            <span class="wt-select">
-                @php
-                    $categoryArr = array();
-                    foreach($categories as $cs){
-                        $categoryArr[$cs->id] = $cs->title;
-                    }
-                @endphp
-                {!! Form::select( 'category_id',$categoryArr,e($selectedcategories), ['class' =>'form-control', 'placeholder' => trans('lang.ph_cat_lbl'),'maxlength' => 50] ) !!}
-            </span>
-        </div>
+   
     </fieldset>
 </div>

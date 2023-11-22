@@ -4,9 +4,9 @@
         <div class="">        
             <div class="banner-content">
                 <div class="banner-content__title pb-3">
-                    Hire an AI Team of experts to develop your next product
+                    Hire an AI Team of experts
                 </div>
-                <div class="banner-content__subtitle pb-5">For most demanding and challenging jobs</div>
+                <div class="banner-content__subtitle pb-5">to develop your next AI product</div>
                 <div class="banner-content__search d-flex pb-3"  >
                     <vue-bootstrap-typeahead
                         :data="skills"
