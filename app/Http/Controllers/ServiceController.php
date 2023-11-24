@@ -219,14 +219,11 @@ class ServiceController extends Controller
             // }
 
             if ($request['is_featured'] == 'true') {
-                $request['status'] = 'draft';
                 if (!empty($option['no_of_featured_services']) && $posted_featured_services >= intval($option['no_of_featured_services'])) {
                     $json['type'] = 'error';
                     $json['message'] = trans('lang.sorry_can_only_feature')  . ' ' . $option['no_of_featured_services'] . ' ' . trans('lang.services_acc_to_pkg');
                     return $json;
                 }
-            } else {
-                $request['status'] = 'published';
             }
             if (!empty($option['no_of_services']) && $posted_services >= intval($option['no_of_services'])) {
                 $json['type'] = 'error';
@@ -316,6 +313,14 @@ class ServiceController extends Controller
         }
     }
 
+    public function updateStatus($id, Request $request)
+    {
+        $service = Service::findOrFail($id);
+        $service->is_feature_status = $request->has('is_feature_status');
+        $service->save();
+
+        return back()->with('success', 'Service status updated successfully.');
+    }
     /**
      * Display the specified resource.
      *

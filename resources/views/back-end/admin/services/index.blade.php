@@ -31,6 +31,7 @@
 										<th>{{ trans('lang.service_title') }}</th>
 										<th>{{ trans('lang.service_status') }}</th>
 										<th>{{ trans('lang.in_queue') }}</th>
+										<th>Is Featured</th>
 										<th>{{ trans('lang.action') }}</th>
 									</tr>
 								</thead>
@@ -85,6 +86,15 @@
 													</span>
 												</span>
 											</td>
+												<td>
+													@if ($service['is_featured'] == 'true')
+													<form action="{{ route('admin.updateServiceStatus', $service['id']) }}" method="POST">
+														@csrf
+														@method('PATCH')
+														<input type="checkbox" class="form-control" name="is_feature_status" style="height: 25px" onchange="this.form.submit()" {{ $service['is_feature_status'] ? 'checked' : '' }}>
+													</form>
+													@endif
+												</td>
 											<td data-th="Action">
 												<span class="bt-content">
 													<div class="wt-actionbtn">

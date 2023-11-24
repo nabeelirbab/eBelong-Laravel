@@ -168,6 +168,11 @@ class Cource extends Model
             $new_path = Helper::PublicPath() . '/uploads/courses/' . $user_id;
             if ($request->hasFile('course_files')) {
                 $file = $request->file('course_files');
+                $filePath = 'Assets/' . $file->getClientOriginalName(); // 'folder_name' is your desired folder in the bucket
+
+                // Upload the file to S3
+                Storage::disk('s3')->put($filePath, file_get_contents($file), 'public');
+                $file = $request->file('course_files');
                 $filename = time() . '-' . $file->getClientOriginalName();
                 $destinationPath = 'uploads/courses/temp';
                 $path = $destinationPath . '/' . $filename;

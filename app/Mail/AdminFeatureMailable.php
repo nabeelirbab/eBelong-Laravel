@@ -51,33 +51,7 @@ class AdminEmailMailable extends Mailable
         $from_email = EmailHelper::getEmailFrom();
         $from_email_id = EmailHelper::getEmailID();
         $subject = !empty($this->template->subject) ? $this->template->subject : '';
-        if ($this->type == 'admin_email_registration') {
-            $email_message = $this->prepareAdminEmailRegisteredUser($this->email_params);
-        } elseif ($this->type == 'admin_email_delete_account') {
-            $email_message = $this->prepareAdminEmailDeleteUser($this->email_params);
-        } elseif ($this->type == 'admin_email_cancel_job') {
-            $email_message = $this->prepareAdminEmailJobCancelled($this->email_params);
-        } elseif ($this->type == 'admin_email_report_employer') {
-            $email_message = $this->prepareAdminEmailReportEmployer($this->email_params);
-        } elseif ($this->type == 'admin_email_report_project') {
-            $email_message = $this->prepareAdminEmailReportProject($this->email_params);
-        } elseif ($this->type == 'admin_email_report_freelancer') {
-            $email_message = $this->prepareAdminEmailReportFreelancer($this->email_params);
-        } elseif ($this->type == 'admin_email_new_job_posted') {
-            $email_message = $this->prepareAdminEmailJobPosted($this->email_params);
-        } elseif ($this->type == 'admin_email_new_service_posted') {
-            $email_message = $this->prepareAdminEmailServicePosted($this->email_params);
-        } elseif ($this->type == 'admin_email_new_course_posted') {
-            $email_message = $this->prepareAdminEmailCoursePosted($this->email_params);
-        } elseif ($this->type == 'admin_email_job_completed') {
-            $email_message = $this->prepareAdminEmailJobCompleted($this->email_params);
-        } elseif ($this->type == 'admin_email_dispute_raised') {
-            $email_message = $this->prepareAdminEmailDisputeRaised($this->email_params);
-        } elseif ($this->type == 'admin_new_order_received') {
-            $email_message = $this->prepareAdminNewOrder($this->email_params);
-        } elseif ($this->type == 'admin_feature_request') {
-            $email_message = $this->prepareAdminEmailFeature($this->email_params);
-        }
+        $email_message = $this->prepareAdminFeatureRequest($this->email_params);
         $message = $this->from($from_email, $from_email_id)
             ->subject($subject)->view('emails.index')
             ->with(
@@ -97,39 +71,6 @@ class AdminEmailMailable extends Mailable
      *
      * @return string
      */
-
-    public function prepareAdminEmailFeature($email_params)
-    {
-        extract($email_params);
-        $title = $cource_title;
-        $cource_link = $posted_cource_link;
-        $cource_name = $name;
-        $freelancer_name = $name;
-        // $freelancer_link = $link;
-        $signature = EmailHelper::getSignature();
-        // $app_content = $this->template->content;
-        $email_content_default =    "Hi Admin,
-
-        %freelancer_name% has requested to feature %course_name% on Home Page. Please review and approve
-        
-                                            %signature%";
-        //set default contents
-        // if (empty($app_content)) {
-        $app_content = $email_content_default;
-        // }
-        // $app_content = str_replace("%freelancer_link%", $freelancer_link, $app_content);
-        $app_content = str_replace("%freelancer_name%", $freelancer_name, $app_content);
-        $app_content = str_replace("%cource_link%", $cource_link, $app_content);
-        $app_content = str_replace("%cource_title%", $title, $app_content);
-        $app_content = str_replace("%signature%", $signature, $app_content);
-
-        $body = "";
-        $body .= EmailHelper::getEmailHeader();
-        $body .= $app_content;
-        $body .= EmailHelper::getEmailFooter();
-        return $body;
-    }
-
     public function prepareAdminEmailRegisteredUser($email_params)
     {
         extract($email_params);

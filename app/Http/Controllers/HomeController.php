@@ -38,13 +38,13 @@ class HomeController extends Controller
             ->join('cource_user', 'cources.id', '=', 'cource_user.cource_id')
             ->join('users', 'users.id', '=', 'cource_user.user_id')
             ->where('cources.status', 'published')
+            ->where('cources.is_feature_status', 1)
             ->where('cources.is_featured', 'true')
             ->where('cource_user.type', 'seller')
             ->orderByRaw("cources.is_featured DESC, cources.updated_at DESC")
-            ->select('cources.id', 'cources.title', 'cources.slug', 'cources.attachments', 'cources.status', 'cources.is_featured', 'cources.price', 'cources.user_type', 'users.id as seller_id', 'users.is_certified', 'users.is_instructor')
+            ->select('cources.id', 'cources.is_feature_status', 'cources.title', 'cources.slug', 'cources.attachments', 'cources.status', 'cources.is_featured', 'cources.price', 'cources.user_type', 'users.id as seller_id', 'users.is_certified', 'users.is_instructor')
             ->get()
             ->toArray();
-
         if (!empty($services)) {
             foreach ($services as $key => $service) {
                 $instructor = DB::table('cource_user')->where('seller_id', $service->seller_id)->where('status', 'posted')->count();

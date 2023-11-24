@@ -223,21 +223,19 @@ class CourseController extends Controller
             $package_status = !empty($payment_settings[0]['enable_packages']) ? $payment_settings[0]['enable_packages'] : 'true';
         }
         if ($package_status === 'true') {
-            if (!empty($package->count()) && $current_date > $expiry_date) {
-                $json['type'] = 'error';
-                $json['message'] = trans('lang.need_to_purchase_pkg');
-                return $json;
-            }
+            // if (!empty($package->count()) && $current_date > $expiry_date) {
+            //     $json['type'] = 'error';
+            //     $json['message'] = trans('lang.need_to_purchase_pkg');
+            //     return $json;
+            // }
 
             if ($request['is_featured'] == 'true') {
-                $request['status'] = 'draft';
+
                 if (!empty($option['no_of_featured_cources']) && $posted_featured_cources >= intval($option['no_of_featured_cources'])) {
                     $json['type'] = 'error';
                     $json['message'] = trans('lang.sorry_can_only_feature')  . ' ' . $option['no_of_featured_cources'] . ' ' . trans('lang.services_acc_to_pkg');
                     return $json;
                 }
-            } else {
-                $request['status'] = 'published';
             }
             if (!empty($option['no_of_cources']) && $posted_cources >= intval($option['no_of_cources'])) {
                 $json['type'] = 'error';
@@ -256,8 +254,31 @@ class CourseController extends Controller
                     // Send Email
                     $user = User::find(Auth::user()->id);
                     //send email to admin
+
+                    if ($request['is_featured'] == 'true') {
+                        if (trim(config('mail.username')) != "" && trim(config('mail.password')) != "") {
+                            $cource = $this->cource::where('id', $cource_post['new_cource'])->first();
+                            $email_params = array();
+                            $email_params['cource_title'] = $cource->title;
+                            $email_params['posted_cource_link'] = url('/course/' . $cource->slug);
+                            $email_params['name'] = Helper::getUserName(Auth::user()->id);
+                            $template_data = (object)array();
+                            $template_data->content = Helper::getAdminCoursePostedEmailContent();
+                            $template_data->subject = "Feature Course Posted";
+                            // $template_data = Helper::getFreelancerCoursePostedEmailContent();
+                            Mail::to(env('MAIL_FROM_ADDRESS'))
+                                ->send(
+                                    new AdminEmailMailable(
+                                        'admin_feature_request',
+                                        $template_data,
+                                        $email_params
+                                    )
+                                );
+                        }
+                    }
+
                     if (trim(config('mail.username')) != "" && trim(config('mail.password')) != "") {
-                        $cource = $this->cource::where('id', $cource_post['new_course'])->first();
+                        $cource = $this->cource::where('id', $cource_post['new_cource'])->first();
                         $email_params = array();
                         $email_params['cource_title'] = $cource->title;
                         $email_params['posted_cource_link'] = url('/course/' . $cource->slug);
@@ -373,6 +394,14 @@ class CourseController extends Controller
         }
     }
 
+    public function updateStatus($id, Request $request)
+    {
+        $course = Cource::findOrFail($id);
+        $course->is_feature_status = $request->has('is_feature_status');
+        $course->save();
+
+        return back()->with('success', 'Course status updated successfully.');
+    }
     /**
      * Display the specified resource.
      *

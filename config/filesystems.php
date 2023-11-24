@@ -1,5 +1,4 @@
 <?php
-
 return [
 
     /*
@@ -59,29 +58,29 @@ return [
         'local_public' => [
             'driver' => 'local',
             'root'   => public_path() . '/uploads',
-            'url' => env('APP_URL').'/public',
+            'url' => env('APP_URL') . '/public',
             'visibility' => 'public',
         ],
         'local_public_tinyce' => [
             'driver' => 'local',
             'root'   => public_path() . '/uploads',
-            'url' => env('APP_URL').'/uploads',
+            'url' => env('APP_URL') . '/uploads',
             'visibility' => 'public',
         ],
 
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
-            'url' => env('APP_URL').'/storage',
+            'url' => env('APP_URL') . '/storage',
             'visibility' => 'public',
         ],
 
         's3' => [
             'driver' => 's3',
-            'key' => env('AWS_ACCESS_KEY_ID'),
-            'secret' => env('AWS_SECRET_ACCESS_KEY'),
-            'region' => env('AWS_DEFAULT_REGION'),
-            'bucket' => env('AWS_BUCKET'),
+            'key' => 'AKIA2Z56FJV424WUHJEZ',
+            'secret' => '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',
+            'region' => 'us-east-1',
+            'bucket' => 'ebelong-assets',
             'url' => env('AWS_URL'),
         ],
 

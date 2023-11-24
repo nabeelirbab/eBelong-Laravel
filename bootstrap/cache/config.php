@@ -370,10 +370,10 @@
       's3' => 
       array (
         'driver' => 's3',
-        'key' => NULL,
-        'secret' => NULL,
-        'region' => NULL,
-        'bucket' => NULL,
+        'key' => 'AKIA2Z56FJV424WUHJEZ',
+        'secret' => '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',
+        'region' => 'us-east-1',
+        'bucket' => 'ebelong-assets',
         'url' => NULL,
       ),
     ),

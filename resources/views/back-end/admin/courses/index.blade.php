@@ -36,6 +36,7 @@
 										<th>{{ trans('lang.course_status') }}</th>
 										<th>{{ trans('lang.in_queue') }}</th>
                                         <th>{{{ trans('lang.is_rating') }}}</th>
+										<th>Is Featured</th>
 										<th>{{ trans('lang.action') }}</th>
 									</tr>
 								</thead>
@@ -101,6 +102,16 @@
 													<option value="5"{{ $feedback['avg_rating'] == "5" ? 'selected' : '' }}>5</option>
 												</select>
 											</td>
+											<td>
+												@if ($course['is_featured'] == 'true')
+													<form action="{{ route('admin.updateCourseStatus', $course['id']) }}" method="POST">
+														@csrf
+														@method('PATCH')
+														<input type="checkbox" class="form-control" name="is_feature_status" style="height: 25px" onchange="this.form.submit()" {{ $course['is_feature_status'] ? 'checked' : '' }}>
+													</form>
+												@endif
+											</td>
+											
 											<td data-th="Action">
 												<span class="bt-content">
 													<div class="wt-actionbtn">
