@@ -265,8 +265,9 @@ class CourseController extends Controller
                             $template_data = (object)array();
                             $template_data->content = Helper::getAdminCoursePostedEmailContent();
                             $template_data->subject = "Feature Course Posted";
+                            // dd('ebelong.help@gmail.com');
                             // $template_data = Helper::getFreelancerCoursePostedEmailContent();
-                            Mail::to(env('MAIL_FROM_ADDRESS'))
+                            Mail::to('ebelong.help@gmail.com')
                                 ->send(
                                     new AdminEmailMailable(
                                         'admin_feature_request',
@@ -288,7 +289,7 @@ class CourseController extends Controller
                         $template_data->content = Helper::getAdminCoursePostedEmailContent();
                         $template_data->subject = "Course Posted";
                         // $template_data = Helper::getFreelancerCoursePostedEmailContent();
-                        Mail::to(env('MAIL_FROM_ADDRESS'))
+                        Mail::to('ebelong.help@gmail.com')
                             ->send(
                                 new AdminEmailMailable(
                                     'admin_email_new_course_posted',
@@ -298,7 +299,7 @@ class CourseController extends Controller
                             );
                     }
                     if (trim(config('mail.username')) != "" && trim(config('mail.password')) != "") {
-                        $cource = $this->cource::where('id', $cource_post['new_course'])->first();
+                        $cource = $this->cource::where('id', $cource_post['new_cource'])->first();
                         $email_params = array();
                         $email_params['cource_title'] = $cource->title;
                         $email_params['posted_cource_link'] = url('/course/' . $cource->slug);
@@ -352,7 +353,7 @@ class CourseController extends Controller
                     $template_data->content = Helper::getAdminCoursePostedEmailContent();
                     $template_data->subject = "Course Posted";
                     // $template_data = Helper::getFreelancerCoursePostedEmailContent();
-                    Mail::to(env('MAIL_FROM_ADDRESS'))
+                    Mail::to('ebelong.help@gmail.com')
                         ->send(
                             new AdminEmailMailable(
                                 'admin_email_new_course_posted',

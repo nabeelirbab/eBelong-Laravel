@@ -110,7 +110,7 @@ class AdminEmailMailable extends Mailable
         // $app_content = $this->template->content;
         $email_content_default =    "Hi Admin,
 
-        %freelancer_name% has requested to feature %course_name% on Home Page. Please review and approve
+        %freelancer_name% has requested to feature %cource_title% on Home Page. Please review and approve
         
                                             %signature%";
         //set default contents
