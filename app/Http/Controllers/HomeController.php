@@ -42,7 +42,7 @@ class HomeController extends Controller
             ->where('cources.is_featured', 'true')
             ->where('cource_user.type', 'seller')
             ->orderByRaw("cources.is_featured DESC, cources.updated_at DESC")
-            ->select('cources.id', 'cources.is_feature_status', 'cources.title', 'cources.slug', 'cources.attachments', 'cources.status', 'cources.is_featured', 'cources.price', 'cources.user_type', 'users.id as seller_id', 'users.is_certified', 'users.is_instructor')
+            ->select('cources.id', 'cources.is_feature_status', 'cources.title', 'cources.slug', 'cources.attachments', 'cources.status', 'cources.is_featured', 'cources.price', 'cources.promotion_price', 'cources.user_type', 'users.id as seller_id', 'users.is_certified', 'users.is_instructor')
             ->get()
             ->toArray();
         if (!empty($services)) {

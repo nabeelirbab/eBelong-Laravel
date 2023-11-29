@@ -33,7 +33,7 @@
                                         <span class="wt-featuredtagvtwo">{{ trans('lang.featured') }}</span>
                                     @endif
                                     <h3>{{{$course['title']}}}</h3>
-                                    <span><strong>{{ !empty($symbol) ? $symbol['symbol'] : '$' }}{{{$course['price']}}}</strong> {{ trans('lang.starting_from') }}</span>
+                                    <span><strong>{{ !empty($symbol) ? $symbol['symbol'] : '$' }}{{{$course['price']}}}</strong> </span>
                                 </div>
                             </div>
                         </div>

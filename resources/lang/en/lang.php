@@ -1253,7 +1253,7 @@ return [
     'service_response_time' => 'Service Response Time',
     'course_response_time' => 'Course Response Time',
     'select_response_time' => 'Select response time',
-    'starting_from' => 'Starting From',
+    'starting_from' => '',
     'published' => 'Published',
     'draft' => 'Draft',
     'status_update' => 'Status Updated',

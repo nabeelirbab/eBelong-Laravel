@@ -8711,6 +8711,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -50038,7 +50042,26 @@ var render = function () {
                             ]
                           ),
                           _vm._v(" "),
-                          item.is_featured == "true"
+                          item.is_featured == "true" &&
+                          item.promotion_price &&
+                          item.promotion_price > 0
+                            ? _c(
+                                "div",
+                                { staticClass: "e-freelancer__item-price" },
+                                [
+                                  _c("span", [
+                                    _c(
+                                      "del",
+                                      { staticStyle: { "font-size": "13px" } },
+                                      [_vm._v("$" + _vm._s(item.price) + " ")]
+                                    ),
+                                    _vm._v(
+                                      "  $" + _vm._s(item.promotion_price)
+                                    ),
+                                  ]),
+                                ]
+                              )
+                            : item.is_featured == "true"
                             ? _c(
                                 "div",
                                 { staticClass: "e-freelancer__item-price" },

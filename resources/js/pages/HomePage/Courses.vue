@@ -70,7 +70,11 @@
                   <span v-if="item.user_type == '' || item.user_type =='Remote'">Remote</span>
                   <span v-else>In-Person</span>              
                 </div> 
-                <div class="e-freelancer__item-price" v-if="item.is_featured == 'true'">
+             
+                <div class="e-freelancer__item-price" v-if="item.is_featured == 'true' && item.promotion_price && item.promotion_price > 0">
+                  <span> <del style="font-size: 13px">${{ item.price }} </del>  ${{ item.promotion_price }}</span>
+                </div>
+                <div class="e-freelancer__item-price" v-else-if="item.is_featured == 'true'">
                   <span> ${{ item.price }} </span>
                 </div>
                   <img

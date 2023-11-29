@@ -3082,10 +3082,21 @@ class UserController extends Controller
                 $keyword_tokens = explode(' ', $keyword);
                 $count = count($keyword_tokens);
                 if ($count > 1) {
-                    $users = $this->user::where('first_name', 'like', '%' . $keyword_tokens[0] . '%')->where('last_name', 'like', '%' . $keyword_tokens[$count - 1] . '%')->paginate(7)->setPath('');
+                    $users = $this->user::where(function ($query) use ($keyword_tokens) {
+                        $query->where('first_name', 'like', '%' . $keyword_tokens[0] . '%')
+                            ->where('last_name', 'like', '%' . $keyword_tokens[$count - 1] . '%');
+                    })
+                        ->orWhere('email', 'like', '%' . $keyword . '%')
+                        ->paginate(7)
+                        ->setPath('');
                 } else {
-                    $users = $this->user::where('first_name', 'like', '%' . $keyword . '%')->orWhere('last_name', 'like', '%' . $keyword . '%')->paginate(7)->setPath('');
+                    $users = $this->user::where('first_name', 'like', '%' . $keyword . '%')
+                        ->orWhere('last_name', 'like', '%' . $keyword . '%')
+                        ->orWhere('email', 'like', '%' . $keyword . '%')
+                        ->paginate(7)
+                        ->setPath('');
                 }
+
                 // dd($users);
                 $pagination = $users->appends(
                     array(
