@@ -528,14 +528,14 @@ $slider = Helper::getPageSlider($page_id);
 	<div class="carousel-item ">
 	<div class="container banner1">
 	<div class="row">
-		<div class="col-lg-6 col-md-6 col-sm-6">
+		<div class="col-lg-5 col-md-6 col-sm-6">
 			<div class="section-main-wrapper10">
 				<div class="wt-banner">
 					<div data-vue='<?php echo json_encode(array('categories'=> $categories,'skills'=>$all_skills)) ?>' data-component="BannerContent" id="e-banner-content"></div>
 				</div>
 			</div>
 		</div>
-		<div class="col-lg-6 col-md-6 col-sm-6">
+		<div class="col-lg-7 col-md-6 col-sm-6">
 			<img class="home-banner-img2" src="{{ asset('uploads/settings/general/FreelancerNew-1.png') }}" alt="banner here"> 
 		</div>
 	</div>
