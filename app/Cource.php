@@ -18,6 +18,7 @@ use DB;
 use File;
 use Illuminate\Database\Eloquent\Model;
 use Storage;
+// use Illuminate\Support\Facades\Storage;
 
 /**
  * Class Service
@@ -168,24 +169,17 @@ class Cource extends Model
             $new_path = Helper::PublicPath() . '/uploads/courses/' . $user_id;
             if ($request->hasFile('course_files')) {
                 $file = $request->file('course_files');
-                $filePath = 'Assets/' . $file->getClientOriginalName(); // 'folder_name' is your desired folder in the bucket
-
+                $filePath = 'Assets/uploads/courses/' . $user_id . '/' . $file->getClientOriginalName(); // 'folder_name' is your desired folder in the bucket
                 // Upload the file to S3
                 Storage::disk('s3')->put($filePath, file_get_contents($file), 'public');
-                $file = $request->file('course_files');
-                $filename = time() . '-' . $file->getClientOriginalName();
-                $destinationPath = 'uploads/courses/temp';
-                $path = $destinationPath . '/' . $filename;
-                $file = $file->move($destinationPath, $filename);
-                $this->course_files = $path;
+                $this->course_files = $filePath;
             }
             if ($request->hasFile('course_files_bought')) {
                 $file = $request->file('course_files_bought');
-                $filename = time() . '-' . $file->getClientOriginalName();
-                $destinationPath = 'uploads/courses/temp';
-                $path = $destinationPath . '/' . $filename;
-                $file = $file->move($destinationPath, $filename);
-                $this->course_files_bought = $path;
+                $filePath = 'Assets/uploads/courses/' . $user_id . '/' . $file->getClientOriginalName(); // 'folder_name' is your desired folder in the bucket
+                // Upload the file to S3
+                Storage::disk('s3')->put($filePath, file_get_contents($file), 'public');
+                $this->course_files_bought = $filePath;
             }
             $cource_attachments = array();
             if (!empty($request['attachments'])) {

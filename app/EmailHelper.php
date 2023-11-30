@@ -36,11 +36,11 @@ class EmailHelper extends Model
 ?>
         <div style="min-width:100%;background-color:#f6f7f9;margin:0;width:100%;color:#283951;font-family:'Helvetica','Arial',sans-serif;padding: 60px 0;">
             <div style="background: #FFF;max-width: 600px; width: 100%; margin: 0 auto; overflow: hidden; color: #919191; font:400 16px/26px 'Open Sans', Arial, Helvetica, sans-serif;">
-                <div style="width: 100%; float: left; padding: 30px 0; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;">
+                <!-- <div style="width: 100%; float: left; padding: 30px 0; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;">
                     <strong style="float: left; padding: 0 0 0 30px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;">
                         <a style="float: left; color: #55acee; text-decoration: none;" href="#"><?php echo Self::getSiteTitle(); ?></a>
                     </strong>
-                </div>
+                </div> -->
                 <div id="tg-banner" class="tg-banner" style="width: 100%; text-align: center; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;">
                     <img style="width: 225px%; height: auto; " src="<?php echo $email_banner; ?>" alt="<?php echo Self::getSiteTitle(); ?>">
                 </div>
@@ -67,10 +67,10 @@ class EmailHelper extends Model
                         </div>
                     </div>
                 </div>
-                <div style="width:100%;float:left;background: #002c49;padding: 30px 15px;text-align:center;box-sizing:border-box;border-radius: 0  0 5px 5px;">
+                <!-- <div style="width:100%;float:left;background: #002c49;padding: 30px 15px;text-align:center;box-sizing:border-box;border-radius: 0  0 5px 5px;">
                     <p style="font-size: 13px; line-height: 13px; color: #aaaaaa; margin: 0; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;">
                         <?php echo $copyright; ?> <a href="<?php url('/'); ?>" style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-size: 100%; line-height: 1.6em; color: #348eda; margin: 0; padding: 0;"><?php echo Self::getSiteTitle(); ?></a></p>
-                </div>
+                </div> -->
             </div>
         </div>
     <?php

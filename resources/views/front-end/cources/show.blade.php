@@ -180,7 +180,7 @@
                         </div>
                         @if(Auth::user())
                         @if($cource->course_files)
-                        <a href="{{{ url($cource->course_files) }}}" class="wt-btn">View File</a>
+                        <a href="{{{ s3_base_url(). $cource->course_files }}}" class="wt-btn" target="_blank">View File</a>
                         @endif
                         @if($cource->additional_text)
                         <div class="wt-description course-detail-description">
@@ -192,7 +192,7 @@
 
                         @if(Auth::user() && $boughtcourse == true || $waiting_status == true)
                         @if($cource->course_files_bought)
-                        <a href="{{{ url($cource->course_files_bought) }}}" class="wt-btn">View File</a>
+                        <a href="{{{ s3_base_url().$cource->course_files_bought }}}" class="wt-btn">View File</a>
                         @endif
                         @if($cource->additional_text_bought)
                         <div class="wt-description course-detail-description">
