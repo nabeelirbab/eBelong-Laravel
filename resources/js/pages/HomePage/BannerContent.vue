@@ -4,7 +4,7 @@
         <div class="">        
             <div class="banner-content">
                 <div class="banner-content__title pb-3">
-                    Hire Freelance Talent
+                    Hire an Ecommerce Developer
                 </div>
                 <div class="banner-content__subtitle pb-5">For most demanding and challenging jobs</div>
                 <div class="banner-content__search d-flex pb-3"  >
