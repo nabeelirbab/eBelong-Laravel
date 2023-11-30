@@ -81,7 +81,7 @@ export default {
       onlyKeys.map(key=>{
         new_data[key] = null;
       }) 
-      this.$emit("updateData","range_data",new_data)
+      this.$emit("updateData","range_data",new_data,3)
       
   },
   methods: {
@@ -100,7 +100,7 @@ export default {
       if (checkSelected) {
         new_data[checkSelected === "left" ? leftData : rightData] = true;
       }
-      this.$emit("updateData","range_data",new_data)
+      this.$emit("updateData","range_data",new_data,3)
     },
   },
 };

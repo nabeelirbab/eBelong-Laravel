@@ -22,7 +22,7 @@
           v-if="step == 1"
         ></step-1>
         <step-2
-          :skills="items.skills"
+          :skills="localItems.skills"
           :selectedSkills="selectedSkills"
           :wantedPositions="wantedPositions"
           :selectedCategories="selectedCategories"
@@ -47,6 +47,7 @@
           @updateData="updateData"
         ></step-4>
       </div>
+      {{ localItems.skills }}
     </div>
 
     <div class="e-postskill-modal" v-if="show_modal">
@@ -139,21 +140,41 @@ export default {
       baseUrl: window.APP_URL,
       ...initalData,
       show_modal: false,
-      // cookieValue:
+      localItems: this.items,
+      isFirstCall: true,
+
     };
   },
   mounted() {
     window.postskill = this.$refs.postskill;
   },
   methods: {
-    updateData(key, value) {
+    updateData(key, value, catstep) {
+     
       this[key] = value;
+      if (catstep === 1) {
+        this.fetchSkills(value);
+    }
     },
 
     onClickFunction: function (event) {
       this.show_modal = false;
       window.location.href = this.baseUrl;
     },
+    fetchSkills(categoryId) {
+    fetch('get-skills-homepage?category_id=' + categoryId)
+        .then(response => response.json())
+        .then(data => {
+          if (this.isFirstCall) {
+                // Empty the array only on the first API call
+                this.localItems.skills = [];
+                this.isFirstCall = false; // Reset the flag
+            }
+            this.localItems.skills = [...this.localItems.skills, ...data];
+        })
+        .catch(error => console.error('Error fetching skills:', error));
+},
+
   },
   watch: {
     step: function (value) {

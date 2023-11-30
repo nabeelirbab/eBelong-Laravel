@@ -98,7 +98,7 @@ export default {
       } else {
         selectedSkills.push(index);
       }
-      this.$emit("updateData", "selectedSkills", selectedSkills);
+      this.$emit("updateData", "selectedSkills", selectedSkills,2);
     },
   }
 };

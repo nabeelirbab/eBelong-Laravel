@@ -82,6 +82,7 @@ Route::get('/sitemap', 'SiteMapController@index');
 //         \UniSharp\LaravelFilemanager\Lfm::routes();
 //     });
 //whishlist
+Route::get('get-skills-homepage', 'SkillController@getcatskills');
 Route::post('/chatbot', 'UserController@chatbot');
 
 Route::get('/generate-completion', 'PublicController@generateCompletion');

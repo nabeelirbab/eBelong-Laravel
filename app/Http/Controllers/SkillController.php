@@ -87,6 +87,20 @@ class SkillController extends Controller
         return View::make($viewPath, compact('skills', 'categories'));
     }
 
+
+    public function getcatskills(Request $request)
+    {
+
+        $query = $this->skill::with('category');
+
+
+        $query->whereHas('categories', function ($q) use ($request) {
+            $q->where('title', $request->category_id);
+        });
+
+        $skills = $query->get();
+        return $skills;
+    }
     /**
      * Store a newly created resource in storage.
      *

@@ -8966,12 +8966,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_cookies__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(vue_cookies__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var vue_owl_carousel2__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vue-owl-carousel2 */ "./node_modules/vue-owl-carousel2/dist/vue-owl-carousel2.js");
 /* harmony import */ var vue_owl_carousel2__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(vue_owl_carousel2__WEBPACK_IMPORTED_MODULE_6__);
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
 //
 //
 //
@@ -9109,25 +9122,47 @@ var initalData = {
     return _objectSpread(_objectSpread({
       baseUrl: window.APP_URL
     }, initalData), {}, {
-      show_modal: false // cookieValue:
-
+      show_modal: false,
+      localItems: this.items,
+      isFirstCall: true
     });
   },
   mounted: function mounted() {
     window.postskill = this.$refs.postskill;
   },
   methods: {
-    updateData: function updateData(key, value) {
+    updateData: function updateData(key, value, catstep) {
       this[key] = value;
+
+      if (catstep === 1) {
+        this.fetchSkills(value);
+      }
     },
     onClickFunction: function onClickFunction(event) {
       this.show_modal = false;
       window.location.href = this.baseUrl;
+    },
+    fetchSkills: function fetchSkills(categoryId) {
+      var _this = this;
+
+      fetch('get-skills-homepage?category_id=' + categoryId).then(function (response) {
+        return response.json();
+      }).then(function (data) {
+        if (_this.isFirstCall) {
+          // Empty the array only on the first API call
+          _this.localItems.skills = [];
+          _this.isFirstCall = false; // Reset the flag
+        }
+
+        _this.localItems.skills = [].concat(_toConsumableArray(_this.localItems.skills), _toConsumableArray(data));
+      })["catch"](function (error) {
+        return console.error('Error fetching skills:', error);
+      });
     }
   },
   watch: {
     step: function step(value) {
-      var _this = this;
+      var _this2 = this;
 
       if (value == 5) {
         //     this.$notify({
@@ -9138,7 +9173,7 @@ var initalData = {
         // })
         this.show_modal = true;
         Object.keys(initalData).map(function (key) {
-          _this[key] = initalData[key];
+          _this2[key] = initalData[key];
         });
       }
     }
@@ -9279,7 +9314,7 @@ Vue.component("multiselect", vue_multiselect__WEBPACK_IMPORTED_MODULE_0___defaul
       }
 
       console.log(selectedCategories, "selectedCategories");
-      this.$emit("updateData", "selectedCategories", selectedCategories);
+      this.$emit("updateData", "selectedCategories", selectedCategories, 1);
     },
     addTag: function addTag(newTag) {
       var tag = {
@@ -9418,7 +9453,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         selectedSkills.push(index);
       }
 
-      this.$emit("updateData", "selectedSkills", selectedSkills);
+      this.$emit("updateData", "selectedSkills", selectedSkills, 2);
     }
   }
 });
@@ -9524,7 +9559,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     onlyKeys.map(function (key) {
       new_data[key] = null;
     });
-    this.$emit("updateData", "range_data", new_data);
+    this.$emit("updateData", "range_data", new_data, 3);
   },
   methods: {
     onchange: function onchange(value, key) {
@@ -9546,7 +9581,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         new_data[checkSelected === "left" ? leftData : rightData] = true;
       }
 
-      this.$emit("updateData", "range_data", new_data);
+      this.$emit("updateData", "range_data", new_data, 3);
     }
   }
 });
@@ -9703,7 +9738,7 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_cookies__WEBPACK_IMPORTED_MOD
 
       this.$cookies.set("storedUserName", this.full_name);
       console.log("get candidate index submitData", submitData);
-      this.$emit("updateData", "step", 5);
+      this.$emit("updateData", "step", 5, 4);
       this.$cookies.remove("candidateIds");
       axios.post(window.APP_URL + "/postskill", submitData).then(function (res) {
         console.log("get candidate index res", res);
@@ -9711,7 +9746,7 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_cookies__WEBPACK_IMPORTED_MOD
         if (res.data.status) {
           _this.$cookies.remove("candidateIds");
 
-          _this.$emit("updateData", "step", 5);
+          _this.$emit("updateData", "step", 5, 4);
         }
       });
     },
@@ -50373,7 +50408,7 @@ var render = function () {
             _vm.step == 1
               ? _c("step-2", {
                   attrs: {
-                    skills: _vm.items.skills,
+                    skills: _vm.localItems.skills,
                     selectedSkills: _vm.selectedSkills,
                     wantedPositions: _vm.wantedPositions,
                     selectedCategories: _vm.selectedCategories,
@@ -50406,6 +50441,7 @@ var render = function () {
           ],
           1
         ),
+        _vm._v("\n    " + _vm._s(_vm.localItems.skills) + "\n  "),
       ],
       1
     ),

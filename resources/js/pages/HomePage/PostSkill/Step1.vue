@@ -102,7 +102,7 @@ export default {
         selectedCategories.push(index);
       }
       console.log(selectedCategories, "selectedCategories");
-      this.$emit("updateData", "selectedCategories", selectedCategories);
+      this.$emit("updateData", "selectedCategories",selectedCategories, 1);
     },
     addTag(newTag) {
       const tag = {
