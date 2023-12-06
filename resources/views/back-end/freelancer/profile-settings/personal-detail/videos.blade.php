@@ -54,4 +54,11 @@
                 </div>
             </div>
     </fieldset>
+    <div class="wt-formtheme wt-userform wt-userformvtwo">
+        <!-- File Input for Video Upload -->
+ <div class="form-group mb-3">
+  <input type="file" name="video" class="form-control" accept="video/*">
+
+ </div>
+    </div>
 </div>

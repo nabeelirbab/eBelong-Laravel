@@ -33,30 +33,49 @@
                     </li>
                 @endif
                 @if (Helper::getAccessType() == 'both' || Helper::getAccessType() == 'services')
-                    <li>
-                        <a href="{{{ route('allServices') }}}">
-                            <i class="ti-briefcase"></i>
-                            <span>{{ trans('lang.services') }}</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{{ route('ServiceOrders') }}}">
-                            <i class="ti-briefcase"></i>
-                            <span>{{ trans('lang.service_orders') }}</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{{ route('allCourses') }}}">
-                            <i class="ti-briefcase"></i>
-                            <span>{{ trans('lang.courses') }}</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{{ route('adminCourseOrders') }}}">
-                            <i class="ti-briefcase"></i>
-                            <span>{{ trans('lang.course_orders') }}</span>
-                        </a>
-                    </li>
+                <li class="menu-item-has-children">
+                    <span class="wt-dropdowarrow"><i class="lnr lnr-chevron-right"></i></span>
+                    <a href="javascript:void(0)">
+                        <i class="ti-briefcase"></i>
+                        <span>{{ trans('lang.services') }}</span>
+                    </a>
+                    <ul class="sub-menu">
+                        <li>
+                            <a href="{{{ route('allServices') }}}">
+                                <i class="ti-briefcase"></i>
+                                <span>{{ trans('lang.services') }}</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{{ route('ServiceOrders') }}}">
+                                <i class="ti-briefcase"></i>
+                                <span>{{ trans('lang.service_orders') }}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="menu-item-has-children">
+                    <span class="wt-dropdowarrow"><i class="lnr lnr-chevron-right"></i></span>
+                    <a href="javascript:void(0)">
+                        <i class="ti-briefcase"></i>
+                        <span>{{ trans('lang.courses') }}</span>
+                    </a>
+                    <ul class="sub-menu">
+                        <li>
+                            <a href="{{{ route('allCourses') }}}">
+                                <i class="ti-briefcase"></i>
+                                <span>{{ trans('lang.courses') }}</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{{ route('adminCourseOrders') }}}">
+                                <i class="ti-briefcase"></i>
+                                <span>{{ trans('lang.course_orders') }}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                 
                 @endif
                 <li>
                     <a href="{{{ route('reviewOptions') }}}">
@@ -371,6 +390,16 @@
                         <ul class="sub-menu">
                             <li><a href="{{{ url(route('personalDetail')) }}}">{{ trans('lang.profile_settings') }}</a></li>
                             <li><a href="{{{ route('manageAccount') }}}">{{ trans('lang.acc_settings') }}</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item-has-children page_item_has_children">
+                        <a href="javascript:void(0)">
+                            <i class="ti-user"></i>
+                            <span>Connections</span>
+                        </a>
+                        <ul class="sub-menu">
+                            <li><a href="{{{ url('freelancer/my-connections') }}}">My Connections</a></li>
+                            <li><a href="{{{ url('freelancer/pending-connections') }}}">Connection Invitations</a></li>
                         </ul>
                     </li>
                     @if (Helper::getAccessType() == 'both' || Helper::getAccessType() == 'services')

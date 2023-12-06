@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Class EmailTemplateController.
  *
@@ -9,6 +10,7 @@
  * @license http://www.amentotech.com Amentotech
  * @link    http://www.amentotech.com
  */
+
 namespace App\Http\Controllers;
 
 use App\EmailTemplate;
@@ -87,7 +89,7 @@ class EmailTemplateController extends Controller
     public function edit($id)
     {
         $template = $this->email::getEmailTemplateByID($id);
-        $variables = unserialize($template->variables);
+        $variables = unserialize(trim($template->variables));
         $variables_array = Arr::pluck($variables, 'key', 'value');
         if (file_exists(resource_path('views/extend/back-end/admin/email-templates/edit.blade.php'))) {
             return View::make('extend.back-end.admin.email-templates.edit', compact('template', 'variables_array'));
@@ -112,7 +114,8 @@ class EmailTemplateController extends Controller
             return Redirect::to('admin/email-templates');
         }
         $this->validate(
-            $request, [
+            $request,
+            [
                 'title' => 'required',
                 'subject' => 'required',
                 'email_content' => 'required',

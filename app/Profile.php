@@ -26,6 +26,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Hash;
 use Helper;
+
 /**
  * Class Profile
  *
@@ -39,7 +40,7 @@ class Profile extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'department_id', 'category_id','no_of_employees', 'freelancer_type',
+        'user_id', 'department_id', 'category_id', 'no_of_employees', 'freelancer_type',
         'english_level', 'hourly_rate', 'experience', 'education', 'awards',
         'projects', 'saved_freelancer', 'saved_jobs', 'saved_employers',
         'rating', 'address', 'longitude', 'latitude', 'avater', 'banner',
@@ -88,24 +89,22 @@ class Profile extends Model
         if (!empty($request['email'])) {
             $user->email = filter_var($request['email'], FILTER_SANITIZE_STRING);
         }
-        
+
         if (!empty($request['change_password'])) {
-             if (Hash::check($request->old_password, $user->password)) {
-                 if($request['change_password']===$request['password_confirmation']){
-                        $user->password = Hash::make($request['change_password']);
-                 }else{
-                     Session::flash('error', trans('lang.confirmation'));
-                     return Redirect::back();
-                 }
-             }else{
-                 Session::flash('error', trans('lang.pass_not_match'));
-                 return Redirect::back();
-             }
-            
+            if (Hash::check($request->old_password, $user->password)) {
+                if ($request['change_password'] === $request['password_confirmation']) {
+                    $user->password = Hash::make($request['change_password']);
+                } else {
+                    Session::flash('error', trans('lang.confirmation'));
+                    return Redirect::back();
+                }
+            } else {
+                Session::flash('error', trans('lang.pass_not_match'));
+                return Redirect::back();
+            }
         }
-        if($request['status'])
-        {
-            $user->status= $request['status'];
+        if ($request['status']) {
+            $user->status = $request['status'];
         }
         $location = Location::find($request['location']);
         $user->location()->associate($location);
@@ -135,10 +134,18 @@ class Profile extends Model
         $profile->gender = filter_var($request['gender'], FILTER_SANITIZE_STRING);
         $profile->tagline = filter_var($request['tagline'], FILTER_SANITIZE_STRING);
         $profile->description = filter_var($request['description'], FILTER_SANITIZE_STRING);
-         $profile->location = filter_var($request['location'], FILTER_SANITIZE_STRING);
+        $profile->location = filter_var($request['location'], FILTER_SANITIZE_STRING);
         $profile->address = filter_var($request['address'], FILTER_SANITIZE_STRING);
         $profile->longitude = filter_var($request['longitude'], FILTER_SANITIZE_STRING);
         $profile->latitude = filter_var($request['latitude'], FILTER_SANITIZE_STRING);
+        if ($request->hasFile('video')) {
+
+            $filePath = 'Assets/uploads/video/' . $user_id . '/' . $file->getClientOriginalName(); // 'folder_name' is your desired folder in the bucket
+            // Upload the file to S3
+            Storage::disk('s3')->put($filePath, file_get_contents($file), 'public');
+            $file = $request->file('video');
+            $profile->video_uplaod = $filePath;
+        }
         if ($request['employees']) {
             $profile->no_of_employees = intval($request['employees']);
         }
@@ -194,7 +201,7 @@ class Profile extends Model
         }
 
         // For category type save if type freelancer
-        if(Helper::getRoleByUserID(Auth::user()->id) == 3){
+        if (Helper::getRoleByUserID(Auth::user()->id) == 3) {
             $profile->category_id = $request['category_id'];
         }
 
@@ -244,10 +251,11 @@ class Profile extends Model
         // $profile->profile_searchable = $request['profile_searchable'];
         //$profile->profile_blocked = $request['profile_blocked'];
         $profile->english_level = $request['english_level'];
-        if(Helper::getRoleByUserID(Auth::user()->id) == 3){ 
+        if (Helper::getRoleByUserID(Auth::user()->id) == 3) {
             $profile->freelancer_type = $request['freelancer_type'];
         }
-        $profile->save(); 
+
+        $profile->save();
         $user = User::find($user_id);
         $requested_languages = $request['languages'];
         $user->languages()->sync($requested_languages);
@@ -397,7 +405,7 @@ class Profile extends Model
         $wishlist = unserialize($profile[$column]);
         $wishlist = !empty($wishlist) && is_array($wishlist) ? $wishlist : array();
         $item[] = $id;
-        $wishlist = array_diff($wishlist,$item);
+        $wishlist = array_diff($wishlist, $item);
         $wishlist = array_unique($wishlist);
         $profile->$column = serialize($wishlist);
         $profile->save();
@@ -431,7 +439,8 @@ class Profile extends Model
         $request_education = array();
         if ($request['experience']) {
             foreach ($request['experience'] as $key => $experinence) {
-                if ($experinence['job_title'] == 'Job title' || $experinence['start_date'] == 'Start Date'
+                if (
+                    $experinence['job_title'] == 'Job title' || $experinence['start_date'] == 'Start Date'
                     || $experinence['end_date'] == 'End Date'
                 ) {
                     $json['type'] = 'error';
@@ -444,7 +453,8 @@ class Profile extends Model
         }
         if ($request['education']) {
             foreach ($request['education'] as $key => $education) {
-                if ($education['degree_title'] == 'Degree title' || $education['start_date'] == 'Start Date'
+                if (
+                    $education['degree_title'] == 'Degree title' || $education['start_date'] == 'Start Date'
                     || $education['end_date'] == 'End Date'
                 ) {
                     $json['type'] = 'error';
@@ -500,15 +510,13 @@ class Profile extends Model
                 $payouts['paypal_email'] = $payout_setting['paypal_email'];
                 $payout_id = $payout_setting['paypal_email'];
             } elseif ($payout_setting['type'] == 'bacs') {
-                 $payouts['bank_account_name'] = $payout_setting['bank_account_name'];
+                $payouts['bank_account_name'] = $payout_setting['bank_account_name'];
                 $payout_id = $payout_setting['bank_account_number'];
                 $payouts['bank_account_number'] = $payout_setting['bank_account_number'];
                 $payouts['bank_name'] = $payout_setting['bank_name'];
                 $payouts['bank_routing_number'] = $payout_setting['bank_routing_number'];
                 $payouts['bank_iban'] = $payout_setting['bank_iban'];
-                $payouts['bank_bic_swift'] = $payout_setting['bank_bic_swift'];  
-
-               
+                $payouts['bank_bic_swift'] = $payout_setting['bank_bic_swift'];
             }
         }
         $profile->payout_settings  = serialize($payouts);

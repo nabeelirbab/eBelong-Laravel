@@ -122,6 +122,14 @@ class User extends Authenticatable
         return $this->morphToMany('App\Language', 'langable');
     }
 
+    public function connections()
+    {
+        return $this->hasMany(Connection::class, 'user_id', 'id')
+            ->orWhere('connected_user_id', $this->id);
+    }
+
+
+
     /**
      * Get the location that owns the user.
      *

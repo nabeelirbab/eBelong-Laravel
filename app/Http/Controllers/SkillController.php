@@ -102,7 +102,7 @@ class SkillController extends Controller
         $query = $this->skill::with('category');
 
         $query->whereHas('categories', function ($q) use ($categoryIds) {
-            $q->whereIn('id', $categoryIds); // Filter by one or multiple category IDs
+            $q->whereIn('title', $categoryIds); // Filter by one or multiple category IDs
         });
 
         $skills = $query->get();

@@ -94,6 +94,11 @@
                     {{{ trans('lang.services') }}}
                 </a>
                 </li>
+                <li style="order: 2;">
+                    <a href="{{url('hire')}}">
+                        {{{ trans('lang.Talent') }}}
+                    </a>
+                    </li>
             <li style="order: 1;">
                 <a href="{{url('/courses')}}">
                     {{{ trans('lang.courses') }}}

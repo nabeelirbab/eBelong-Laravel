@@ -137,6 +137,11 @@ Route::get('/callback', 'SocialAuthLinkedinController@callback');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::post('/connect/{user}', 'ConnectionController@sendRequest')->name('connect.send');
+Route::get('/accept-request/{id}', 'ConnectionController@acceptRequest')->name('connect.accept');
+Route::get('/reject-request/{id}', 'ConnectionController@rejectRequest')->name('connect.reject');
+Route::get('/freelancer/pending-connections', 'ConnectionController@pendingRequest')->name('pending.connections');
+Route::get('/freelancer/my-connections', 'ConnectionController@myConnections')->name('my.connections');
 
 Route::get('articles/{category?}', 'ArticleController@articlesList')->name('articlesList');
 Route::get('article/{slug}', 'ArticleController@showArticle')->name('showArticle');

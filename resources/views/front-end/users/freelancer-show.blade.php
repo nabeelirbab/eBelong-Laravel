@@ -191,6 +191,22 @@
                                         <a href="javascript:void(0);" @click.prevent='addcandidate("{{$user->id}}")' class="wt-btn">{{{ trans('lang.btn_add_candidate') }}}</a>
                                     </div>
                                     <?php endif;  ?>
+                                    @php
+                                    if(Auth::user()){
+                                    $isConnected = false;
+                                    foreach (Auth::user()->connections as $connection) {
+                                        if ($connection->connected_user_id === $user->id || $connection->user_id === $user->id) {
+                                            $isConnected = true;
+                                            break;
+                                        }
+                                    }
+                                }
+                                @endphp
+                                    @if(Auth::user() && $isConnected == false)
+                                    <div class="wt-description">
+                                        <a href="javascript:void(0);" @click.prevent='addconnection("{{$user->id}}")' class="wt-btn">Add to network</a>
+                                    </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -596,6 +612,18 @@
                                     <p>{{ trans('lang.no_skills') }}</p>
                                 @endif
                             </div>
+                            @if($profile->video_uplaod)
+                            <div id="wt-ourskill" class="wt-widget">
+                                <div class="wt-widgettitle">
+                                    <h2>My Video</h2>
+                                </div>
+                                <video width="320" height="240" controls>
+                                    <source src="{{{ s3_base_url().$profile->video_uplaod }}}" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                              
+                            </div>
+                            @endif
                             @if (!empty($awards))
                                 <div class="wt-widget wt-widgetarticlesholder wt-articlesuser">
                                     <div class="wt-widgettitle">

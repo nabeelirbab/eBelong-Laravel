@@ -2226,7 +2226,26 @@ if (document.getElementById("user_profile")) {
         // this.$cookies.set("candidateIds",JSON.stringify(numArray));
         // console.log("candidateIds arr ", numArray);
       },
+      addconnection: function (id) {
+        this.loading = true;
+        var self = this;
+        axios
+          .post(APP_URL + "/connect/" + id)
+          .then(function (response) {
+            if (response.data.type == "success") {
+              self.loading = false;
+              self.success_message = response.data.message;
+              window.location.replace(APP_URL + "/freelancer/my-connections");
+            } else if (response.data.type == "error") {
+              self.loading = false;
+              self.showError(response.data.message);
+            }
+          })
+          .catch(function (error) {
+            self.loading = false;
 
+          });
+      },
       submitProjectOffer: function (id) {
         this.loading = true;
         let offer_form = document.getElementById("send-offer-form");

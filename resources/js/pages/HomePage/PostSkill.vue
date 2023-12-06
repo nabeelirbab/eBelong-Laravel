@@ -47,7 +47,6 @@
           @updateData="updateData"
         ></step-4>
       </div>
-      {{ localItems.skills }}
     </div>
 
     <div class="e-postskill-modal" v-if="show_modal">
@@ -170,7 +169,7 @@ export default {
                 this.localItems.skills = [];
                 this.isFirstCall = false; // Reset the flag
             }
-            this.localItems.skills = [...this.localItems.skills, ...data];
+            this.localItems.skills = data;
         })
         .catch(error => console.error('Error fetching skills:', error));
 },

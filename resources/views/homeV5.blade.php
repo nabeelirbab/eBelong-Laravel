@@ -504,7 +504,7 @@ $slider = Helper::getPageSlider($page_id);
 				</div>
 			</div>
 			<div class="col-lg-5 col-md-6 col-sm-6">
-				<img class="home-banner-img2" src="{{ asset('uploads/settings/general/FreelancerNew-1.png') }}" alt="banner here"> 
+				<img class="home-banner-img2" src="{{ asset('uploads/settings/general/Ai-1.png') }}" alt="banner here"> 
 			</div>
 		</div>
 		</div>
@@ -520,7 +520,7 @@ $slider = Helper::getPageSlider($page_id);
 					</div>
 				</div>
 				<div class="col-lg-5 col-md-6 col-sm-6">
-					<img class="home-banner-img2" src="{{ asset('uploads/settings/general/FreelancerNew-1.png') }}" alt="banner here"> 
+					<img class="home-banner-img2" src="{{ asset('uploads/settings/general/Ai-dev.png') }}" alt="banner here"> 
 				</div>
 			</div>
 			</div>
