@@ -36,7 +36,7 @@ class SendProfileReminders extends Command
                 $email_params['link'] = url('/');
                 $email_params['percentage'] = $percentage;
 
-                Mail::to('peeknabeel@gmail.com')->send(new ProfileCompletionMailable('profile_complete', $template_data, $email_params, 3));
+                Mail::to($freelancer->email)->send(new ProfileCompletionMailable('profile_complete', $template_data, $email_params, 3));
                 $this->info($percentage);
             }
 
