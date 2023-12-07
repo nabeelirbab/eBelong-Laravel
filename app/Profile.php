@@ -138,12 +138,12 @@ class Profile extends Model
         $profile->address = filter_var($request['address'], FILTER_SANITIZE_STRING);
         $profile->longitude = filter_var($request['longitude'], FILTER_SANITIZE_STRING);
         $profile->latitude = filter_var($request['latitude'], FILTER_SANITIZE_STRING);
-        if ($request->hasFile('video')) {
+        if ($request->hasFile('video_upload')) {
+            $file = $request->file('video_upload');
 
             $filePath = 'Assets/uploads/video/' . $user_id . '/' . $file->getClientOriginalName(); // 'folder_name' is your desired folder in the bucket
             // Upload the file to S3
             Storage::disk('s3')->put($filePath, file_get_contents($file), 'public');
-            $file = $request->file('video');
             $profile->video_uplaod = $filePath;
         }
         if ($request['employees']) {

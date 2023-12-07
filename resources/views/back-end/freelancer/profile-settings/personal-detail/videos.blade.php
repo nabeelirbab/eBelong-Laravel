@@ -45,7 +45,7 @@
                     <div class="form-group">
                         <div class="form-group-holder">
                             <input v-bind:name="'video['+[video.count]+'][url]'" type="text" class="form-control"
-                            v-model="video.url" placeholder="{{trans('lang.video_url')}}">
+                            v-model="video.url" placeholder="Enter video url">
                         </div>
                         <div class="form-group wt-rightarea">
                             <span class="wt-addinfobtn wt-deleteinfo" @click="removeVideo(index)"><i class="fa fa-trash"></i></span>
@@ -54,11 +54,21 @@
                 </div>
             </div>
     </fieldset>
+    OR
     <div class="wt-formtheme wt-userform wt-userformvtwo">
         <!-- File Input for Video Upload -->
- <div class="form-group mb-3">
-  <input type="file" name="video" class="form-control" accept="video/*">
-
- </div>
+        <div class="mb-2">
+            <button type="button" class="wt-btn" id="startRecord">Record your Video Introduction
+            </button>
+            <button type="button" class="wt-btn" id="stopRecord" style="display: none;">Stop Recording</button>
+        </div>
+        
+        <video id="recorder" width="640" height="480" controls></video>
+        <video id="playback" width="640" height="480" controls></video>
+        
+        <div style="display: none">
+            <button type="button" id="play" disabled>Play</button>
+            <button type="button" id="pause" disabled>Pause</button>
+        </div>
     </div>
 </div>

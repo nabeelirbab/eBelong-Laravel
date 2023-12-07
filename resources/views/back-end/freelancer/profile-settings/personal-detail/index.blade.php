@@ -92,6 +92,7 @@
 @endsection
 
 @push('scripts')
+<script src="{{ asset('js/video.js') }}" defer></script>
  <script type="text/javascript">
         function generateCompletion(){
             $('#mainButton').hide();
