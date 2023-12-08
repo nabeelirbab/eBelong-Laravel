@@ -93,6 +93,7 @@ class FreelancerController extends Controller
             $latitude = !empty($profile->latitude) ? $profile->latitude : '';
             $banner = !empty($profile->banner) ? $profile->banner : '';
             $avater = !empty($profile->avater) ? $profile->avater : '';
+            $video_uplaod = !empty($profile->video_uplaod) ? $profile->video_uplaod : '';
             $role_id =  Helper::getRoleByUserID(Auth::user()->id);
             $packages = DB::table('items')->where('subscriber', Auth::user()->id)->count();
             $package_options = Package::select('options')->where('role_id', $role_id)->first();
@@ -119,7 +120,8 @@ class FreelancerController extends Controller
                         'avater',
                         'options',
                         'categories',
-                        'selectedcategories'
+                        'selectedcategories',
+                        'video_uplaod'
                     )
                 );
             } else {
@@ -141,7 +143,8 @@ class FreelancerController extends Controller
                         'avater',
                         'options',
                         'categories',
-                        'selectedcategories'
+                        'selectedcategories',
+                        'video_uplaod'
                     )
                 );
             }

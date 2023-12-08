@@ -61,14 +61,20 @@
             <button type="button" class="wt-btn" id="startRecord">Record your Video Introduction
             </button>
             <button type="button" class="wt-btn" id="stopRecord" style="display: none;">Stop Recording</button>
+            @if($video_uplaod)
+            <button type="button" class="wt-btn" id="deleteVideo">Delete Video</button>
+            @endif
         </div>
         
-        <video id="recorder" width="640" height="480" controls></video>
+        <video id="recorder" width="640" height="480" controls autoplay></video>
         <video id="playback" width="640" height="480" controls></video>
-        
+        @if($video_uplaod)
+        <video id="playback2" src="{{{ s3_base_url().$video_uplaod }}}" width="640" height="480" controls></video>
+        @endif
         <div style="display: none">
             <button type="button" id="play" disabled>Play</button>
             <button type="button" id="pause" disabled>Pause</button>
         </div>
     </div>
+
 </div>

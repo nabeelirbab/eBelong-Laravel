@@ -90,6 +90,7 @@ Route::post('get-wishlist-freelancers', 'PublicController@getWishlistFreelancers
 Route::get('wishlist', 'PublicController@GuestWishlist');
 Route::get('get-skills-for-wishlist', 'SkillController@getWhishlistSkills');
 Route::get('get-categories-for-whishlist', 'CategoryController@getWishlistCategories');
+Route::get('/delete-video', 'UserController@deleteVideo')->name('delete.video');
 
 //seo-blogs
 Route::get('blogs/{slug}', 'BlogController@BlogList')->name('FilteredBlogs');

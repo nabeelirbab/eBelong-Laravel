@@ -120,4 +120,25 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(data => console.log('Form submitted:', data))
             .catch(error => console.error('Error submitting form:', error));
     });
+
+    const deleteButton = document.getElementById('deleteVideo');
+
+    deleteButton.onclick = () => {
+        // Use fetch to send a DELETE request to the server
+        fetch('/delete-video', {
+            method: 'GET',
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('playback2').style.display = 'none'
+                    document.getElementById('deleteVideo').style.display = 'none'
+                    console.log(data.message);
+                    // You can update the UI or perform any other action here
+                } else {
+                    console.error(data.message);
+                }
+            })
+            .catch(error => console.error('Error deleting video:', error));
+    };
 });

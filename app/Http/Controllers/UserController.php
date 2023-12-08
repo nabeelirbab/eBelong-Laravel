@@ -243,6 +243,20 @@ class UserController extends Controller
         return Redirect::back();
     }
 
+    public function deleteVideo()
+    {
+        try {
+            // Get the authenticated user's ID
+            $userId = Auth::user()->id;
+
+            // Update the profiles table to remove the video
+            Auth::user()->profile()->update(['video_uplaod' => null]);
+
+            return response()->json(['success' => true, 'message' => 'Video deleted successfully']);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Error deleting video']);
+        }
+    }
     function autoSuggestFetch(Request $request)
     {
         if ($request->get('query')) {
