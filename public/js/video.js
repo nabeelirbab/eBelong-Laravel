@@ -131,8 +131,10 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    document.getElementById('playback2').style.display = 'none'
-                    document.getElementById('deleteVideo').style.display = 'none'
+                    document.getElementById('playback2').style.display = 'none';
+                    document.getElementById('deleteVideo').style.display = 'none';
+                    document.getElementById('startRecord').style.display = 'inline-block';
+
                     console.log(data.message);
                     // You can update the UI or perform any other action here
                 } else {

@@ -15,12 +15,8 @@ class SendWeeklyJobs extends Command
 
     public function handle()
     {
-        // Get last week's jobs
-        $lastWeekJobs = Job::where('created_at', '>=', Carbon::now()->subWeek())
-            ->get();
-
         // Get freelancers with their category_id
-        $freelancers = Profile::where('freelancer_type', 'Independent Freelancers')
+        $freelancers = Profile::with('user')->where('freelancer_type', 'Independent Freelancers')
             ->get();
 
         // Initialize an array to store matching jobs
@@ -31,10 +27,13 @@ class SendWeeklyJobs extends Command
             // Get the freelancer's category ID
             $freelancerCategoryId = $freelancer->category_id;
 
-            // Filter jobs based on freelancer's category ID
-            $matchingJobsForFreelancer = $lastWeekJobs->filter(function ($job) use ($freelancerCategoryId) {
-                return $job->category_id == $freelancerCategoryId;
-            });
+            // Get last week's jobs for the freelancer's category
+            $matchingJobsForFreelancer = Job::with('categories')
+                ->whereHas('categories', function ($query) use ($freelancerCategoryId) {
+                    $query->where('categories.id', $freelancerCategoryId);
+                })
+                ->where('created_at', '>=', Carbon::now()->subWeek())
+                ->get();
 
             // Logic to send emails to the freelancer for the matching jobs
             if ($matchingJobsForFreelancer->count() > 0) {

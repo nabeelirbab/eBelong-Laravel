@@ -93,6 +93,24 @@
 
 @push('scripts')
 <script src="{{ asset('js/video.js') }}" defer></script>
+<script>
+
+document.addEventListener('DOMContentLoaded', function () {
+    let startRecordButton = document.getElementById('startRecord');
+    let deleteVideoButton = document.getElementById('deleteVideo');
+    let videoUploadExists = @json($video_uplaod); // Convert PHP variable to JavaScript variable
+
+    if (videoUploadExists) {
+        // If video_upload exists, hide startRecordButton and show stopRecordButton and deleteVideoButton
+        startRecordButton.style.display = 'none';
+        deleteVideoButton.style.display = 'inline-block';
+    } else {
+        // If video_upload doesn't exist, show startRecordButton and hide stopRecordButton and deleteVideoButton
+        startRecordButton.style.display = 'inline-block';
+        deleteVideoButton.style.display = 'none';
+    }
+});
+    </script>
  <script type="text/javascript">
         function generateCompletion(){
             $('#mainButton').hide();
