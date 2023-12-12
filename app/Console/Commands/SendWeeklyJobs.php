@@ -4,8 +4,10 @@ namespace App\Console\Commands; // Make sure to use the correct namespace
 
 use Illuminate\Console\Command;
 use App\Job;
+use App\Mail\JobsMailable;
 use App\Profile;
 use Carbon\Carbon;
+use Mail;
 
 
 class SendWeeklyJobs extends Command
@@ -28,20 +30,20 @@ class SendWeeklyJobs extends Command
             $freelancerCategoryId = $freelancer->category_id;
 
             // Get last week's jobs for the freelancer's category
-            $matchingJobsForFreelancer = Job::with('categories')
+            $matchingJobsForFreelancer = Job::with('categories', 'employer')
                 ->whereHas('categories', function ($query) use ($freelancerCategoryId) {
                     $query->where('categories.id', $freelancerCategoryId);
-                })
-                ->where('created_at', '>=', Carbon::now()->subWeek())
+                })->limit(10)
                 ->get();
 
             // Logic to send emails to the freelancer for the matching jobs
             if ($matchingJobsForFreelancer->count() > 0) {
                 // Send email to $freelancer->user with $matchingJobsForFreelancer
                 // ...
-
+                // dd($freelancer->user);
                 // Accumulate matching jobs
                 $matchingJobs = array_merge($matchingJobs, $matchingJobsForFreelancer->toArray());
+                Mail::to('peeknabeel@gmail.com')->send(new JobsMailable($matchingJobsForFreelancer->toArray(), $freelancer->user));
             }
         }
 

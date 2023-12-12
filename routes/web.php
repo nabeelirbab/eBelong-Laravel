@@ -18,6 +18,9 @@ Route::fallback(
         return View('errors.404 ');
     }
 );
+Route::get('emailtmp', function () {
+    return View('emails.jobs ');
+});
 // Authentication route
 Auth::routes();
 // Cache clear route
