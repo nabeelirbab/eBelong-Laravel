@@ -65,7 +65,7 @@ background: #fbde44;
 color: #ffffff
 }
    #chat-container {
-            width: 400px;
+            width: 470px;
             margin: auto;
             padding: 20px;
             border: 1px solid #ccc;
@@ -188,14 +188,23 @@ gtag('config', 'UA-47887669-1');
 </head>
 
 <body class="wt-login lang-en ltr ">
-<div id="chat-container">
-    <div id="messages-container"></div>
-    <div id="answer-buttons-container" class="d-flex" style="justify-content: space-evenly"></div>
-</div>
-
-<div class="chat-btn hidden-xs" id="floating-button">
-  <span class="lnr lnr-question-circle"></span>
-</div>
+	<div id="chat-container" style="max-height: 780px;
+    overflow: inherit;">
+		<div id="messages-container"></div>
+		<div id="answer-buttons-container" class="d-flex" style="justify-content: space-evenly"></div>
+	
+		<!-- Add an input box and a submit button for key skills -->
+		<div id="key-skills-input-container" style="display: none;">
+			<input type="text" id="key-skills-input" class="form-control" placeholder="Type key skills...">
+			<button id="submit-key-skills" style="padding: 10px;
+			border-radius: 0px 5px 5px 0;">Submit</button>
+		</div>
+	</div>
+	
+	<div class="chat-btn hidden-xs" id="floating-button">
+		<span class="lnr lnr-question-circle"></span>
+	</div>
+	
 <!--[if lt IE 8]>
 <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
@@ -973,6 +982,7 @@ theme_color="#7646FF">
 
 <script>
   var searchResultsUrl = '{{ URL::to("/search-results") }}';
+  var allskills = {!! json_encode($transformed_skills_array) !!};
 </script>
 <script src="{{ asset('js/chatbot.js') }}"></script>
 </body>

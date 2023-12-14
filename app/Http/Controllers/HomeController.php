@@ -25,6 +25,14 @@ class HomeController extends Controller
     {
         $categories = Category::select('id', 'title', 'slug', 'image')->get();
         $all_skills = Skill::select('id', 'title', 'slug', 'logo', 'is_featured')->get();
+        $transformed_skills_array = $all_skills->map(function ($skill) {
+            return [
+                'value' => $skill->slug,
+                'label' => $skill->title,
+            ];
+        })->toArray();
+
+
         $category = Category::with(['skills' => function ($query) {
             $query->select('id', 'title', 'slug', 'logo', 'is_featured'); // Replace with the columns you need
         }])->find(10);
@@ -205,7 +213,8 @@ class HomeController extends Controller
                 'all_skills',
                 'services',
                 'ai_skills',
-                'ai2_skills'
+                'ai2_skills',
+                'transformed_skills_array'
             )
         );
     }
