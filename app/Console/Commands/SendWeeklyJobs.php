@@ -38,10 +38,7 @@ class SendWeeklyJobs extends Command
 
             // Logic to send emails to the freelancer for the matching jobs
             if ($matchingJobsForFreelancer->count() > 0) {
-                // Send email to $freelancer->user with $matchingJobsForFreelancer
-                // ...
-                // dd($freelancer->user);
-                // Accumulate matching jobs
+
                 $matchingJobs = array_merge($matchingJobs, $matchingJobsForFreelancer->toArray());
                 Mail::to('peeknabeel@gmail.com')->send(new JobsMailable($matchingJobsForFreelancer->toArray(), $freelancer->user));
             }
