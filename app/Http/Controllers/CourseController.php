@@ -1571,7 +1571,9 @@ class CourseController extends Controller
                         $categor_obj->title == 'E-Commerce' || $categor_obj->title == 'Cloud Computing' || $categor_obj->title == 'Data Science' ||
                         $categor_obj->title == 'Graphic Designing' || $categor_obj->title == 'Artificial Intelligence' || $categor_obj->title == 'Growth Hacking'
                     ) {
-                        $skill_obj = Skill::where('title', $categor_obj->title)->get();
+                        $skill_obj = Skill::whereHas('categories', function ($q) use ($categor_obj) {
+                            $q->where('title', $categor_obj->title);
+                        })->get();
                         $skill = Skill::find($skill_obj[0]->id);
                         if (!empty($skill->courses)) {
                             $skill_courses = $skill->courses->pluck('id')->toArray();

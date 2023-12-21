@@ -86,6 +86,7 @@ Route::get('/sitemap', 'SiteMapController@index');
 //     });
 //whishlist
 Route::get('get-skills-homepage', 'SkillController@getcatskills');
+Route::get('get-skills-homepage-slug', 'SkillController@getcatskillsslug');
 Route::post('/chatbot', 'UserController@chatbot');
 
 Route::get('/generate-completion', 'PublicController@generateCompletion');

@@ -69,6 +69,7 @@
                                         <th>{{{ trans('lang.ph_email') }}}</th>
                                         <th>{{{ trans('lang.role') }}}</th>
                                         <th>{{{ "Agency Type" }}}</th>
+                                        <th>Profile Compilation</th>
                                         <th>{{{ trans('lang.joining_date') }}}</th>
                                         <th>{{{ trans('lang.invited_at') }}}</th>
                                         <th>{{{ trans('lang.invitation_status') }}}</th>
@@ -105,6 +106,7 @@
                                                 @else
                                                     {{ 'Not associated with agency' }}
                                                 @endif</td>
+                                                <td>{{$user_data->percentage }}%</td>
                                                 <?php $default = "0000-00-00 00:00:00"; ?>                                               
                                                 <td><?= date('d/m/Y', strtotime($user->created_at)) ?></td>
                                                 

@@ -177,6 +177,7 @@
     @endsection
 @push('scripts')
     <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
+  
     <script>
         var _wt_freelancerslider = jQuery('.wt-freelancerslider')
         _wt_freelancerslider.owlCarousel({

@@ -468,6 +468,43 @@
     </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js" integrity="sha512-Zq9o+E00xhhR/7vJ49mxFNJ0KQw1E1TMWkPTxrWcnpfEFDEXgUiwJHIKit93EW/XxE31HSI5GEOW06G6BF1AtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+          const categoryCheckboxes = document.querySelectorAll('input[name="category[]"]');
+          const skillCheckboxes = document.querySelectorAll('input[name="skill[]"]');
+  
+          categoryCheckboxes.forEach(function(checkbox) {
+              checkbox.addEventListener("change", function() {
+                  const selectedCategories = Array.from(categoryCheckboxes)
+                      .filter(cb => cb.checked)
+                      .map(cb => cb.value);
+  
+                  // Make an AJAX request to fetch skills based on selected categories
+                  fetch('get-skills-homepage-slug?category_id=' + selectedCategories.join(','))
+                  .then(response => response.json())
+                  .then(data => {
+                      // Hide all skills checkboxes
+                      skillCheckboxes.forEach(function(skillCheckbox) {
+                          skillCheckbox.parentNode.style.display = 'none';
+                      });
+  
+                      // Display skills based on the fetched data
+                      data.forEach(function(skill) {
+                          const skillCheckbox = document.getElementById('skill-' + skill.slug);
+                          if (skillCheckbox) {
+                              skillCheckbox.parentNode.style.display = 'block';
+                              // Check the skill checkbox if it was previously checked
+                              skillCheckbox.checked = selectedSkills.includes(skill.slug);
+                          }
+                      });
+                  })
+                  .catch(error => {
+                      console.error('Error:', error);
+                  });
+              });
+          });
+      });
+  </script>
     <script type="text/javascript">
       function add_to_wishlist( element_id, id, column, saved_text, hidable_element_id){
             $.ajax({

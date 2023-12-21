@@ -39,6 +39,26 @@
         </div>
         <div class="wt-widget wt-effectiveholder">
             <div class="wt-widgettitle">
+                <h2>{{ trans('lang.skills') }}</h2>
+            </div>
+            <div class="wt-widgetcontent">
+                <fieldset>
+                    @if (!empty($skills))
+                        <div class="wt-checkboxholder wt-verticalscrollbar">
+                            @foreach ($skills as $key => $skill)
+                                @php $checked = (!empty($_GET['skills']) && in_array($skill->slug, $_GET['skills'])) ? 'checked' : '' @endphp
+                                <span class="wt-checkbox">
+                                    <input id="skill-{{{ $skill->slug }}}" type="checkbox" name="skill[]" value="{{{ $skill->slug }}}" {{$checked}} data-category="{{{ $skill->category_slug }}}">
+                                    <label for="skill-{{{ $key }}}"><a href="{{ url('jobs/'.$skill->slug) }}"  >{{{ $skill->title }}}</a></label>
+                                </span>
+                            @endforeach
+                        </div>
+                    @endif
+                </fieldset>
+            </div>
+        </div>
+        <div class="wt-widget wt-effectiveholder">
+            <div class="wt-widgettitle">
                 <h2>{{ trans('lang.locations') }}</h2>
             </div>
             <div class="wt-widgetcontent">
@@ -68,26 +88,7 @@
                 </fieldset>
             </div>
         </div>
-        <div class="wt-widget wt-effectiveholder">
-            <div class="wt-widgettitle">
-                <h2>{{ trans('lang.skills') }}</h2>
-            </div>
-            <div class="wt-widgetcontent">
-                <fieldset>
-                    @if (!empty($skills))
-                        <div class="wt-checkboxholder wt-verticalscrollbar">
-                            @foreach ($skills as $key => $skill)
-                                @php $checked = (!empty($_GET['skills']) && in_array($skill->slug, $_GET['skills'])) ? 'checked' : '' @endphp
-                                <span class="wt-checkbox">
-                                    <input id="skill-{{{ $key }}}" type="checkbox" name="skills[]" value="{{{$skill->slug}}}" {{$checked}} >
-                                    <label for="skill-{{{ $key }}}"><a href="{{ url('jobs/'.$skill->slug) }}"  >{{{ $skill->title }}}</a></label>
-                                </span>
-                            @endforeach
-                        </div>
-                    @endif
-                </fieldset>
-            </div>
-        </div>
+        
         <div class="wt-widget wt-effectiveholder">
             <div class="wt-widgettitle">
                 <h2>{{ trans('lang.project_length') }}</h2>

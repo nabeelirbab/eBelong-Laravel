@@ -785,6 +785,43 @@ $show_f_banner = 'true'
 </div>
 @push('scripts')
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const categoryCheckboxes = document.querySelectorAll('input[name="category[]"]');
+      const skillCheckboxes = document.querySelectorAll('input[name="skill[]"]');
+
+      categoryCheckboxes.forEach(function(checkbox) {
+          checkbox.addEventListener("change", function() {
+              const selectedCategories = Array.from(categoryCheckboxes)
+                  .filter(cb => cb.checked)
+                  .map(cb => cb.value);
+
+              // Make an AJAX request to fetch skills based on selected categories
+              fetch('get-skills-homepage-slug?category_id=' + selectedCategories.join(','))
+              .then(response => response.json())
+              .then(data => {
+                  // Hide all skills checkboxes
+                  skillCheckboxes.forEach(function(skillCheckbox) {
+                      skillCheckbox.parentNode.style.display = 'none';
+                  });
+
+                  // Display skills based on the fetched data
+                  data.forEach(function(skill) {
+                      const skillCheckbox = document.getElementById('skill-' + skill.slug);
+                      if (skillCheckbox) {
+                          skillCheckbox.parentNode.style.display = 'block';
+                          // Check the skill checkbox if it was previously checked
+                          skillCheckbox.checked = selectedSkills.includes(skill.slug);
+                      }
+                  });
+              })
+              .catch(error => {
+                  console.error('Error:', error);
+              });
+          });
+      });
+  });
+</script>
 <script type="text/javascript">
 
     $(document).ready(function() {

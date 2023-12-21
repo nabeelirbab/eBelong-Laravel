@@ -1563,7 +1563,9 @@ class FreelancerController extends Controller
                     $category_obj->title == 'E-commerce' || $category_obj->title == 'Cloud Computing' || $category_obj->title == 'Data Science' ||
                     $category_obj->title == 'Graphic Designing' || $category_obj->title == 'Artificial Intelligence' || $category_obj->title == 'Growth Hacking'
                 ) {
-                    $skill_obj = Skill::where('title', $category_obj->title)->get();
+                    $skill_obj = Skill::whereHas('categories', function ($q) use ($category_obj) {
+                        $q->where('title', $category_obj->title);
+                    })->get();
                     foreach ($skill_obj as $key => $skill) {
                         $userid = DB::table('skill_user')->select('user_id')->where('skill_id', $skill->id)->get();
                         foreach ($userid as $ui) {

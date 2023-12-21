@@ -87,7 +87,26 @@ class SkillController extends Controller
         return View::make($viewPath, compact('skills', 'categories'));
     }
 
+    public function getcatskillsslug(Request $request)
+    {
+        // Check if category_id contains a comma
+        if (strpos($request->category_id, ',') !== false) {
+            // If comma is present, it's multiple IDs. Split them into an array.
+            $categoryIds = explode(',', $request->category_id);
+        } else {
+            // If no comma, it's a single ID. Make it an array with one element.
+            $categoryIds = [$request->category_id];
+        }
 
+        $query = Skill::with('category');
+
+        $query->whereHas('categories', function ($q) use ($categoryIds) {
+            $q->whereIn('slug', $categoryIds); // Filter by one or multiple category IDs
+        });
+
+        $skills = $query->get();
+        return $skills;
+    }
     public function getcatskills(Request $request)
     {
         // Check if category_id contains a comma

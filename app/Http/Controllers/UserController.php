@@ -3127,6 +3127,12 @@ class UserController extends Controller
             } else {
                 $users = User::select('*')->latest()->paginate(10);
             }
+
+            foreach ($users as $freelancer) {
+                $profile = Profile::all()->where('user_id', $freelancer->id)->first();
+                // Calculate the completion percentage based on their profile completeness
+                $freelancer->percentage = $this->getProfileCompletionPercentage($profile);
+            }
             /* if (file_exists(resource_path('views/extend/back-end/admin/users/index.blade.php'))) {
                 return view('extend.back-end.admin.users.index', compact('users'));
             } else { */
@@ -3137,6 +3143,54 @@ class UserController extends Controller
         }
     }
 
+
+    public function getProfileCompletionPercentage($profile)
+    {
+        $totalFields = 9; // Total number of fields required for profile completion
+
+        $completedFields = 0; // Counter for completed fields
+
+        // Check if each required field is filled or not
+        if (!empty($profile->english_level)) {
+            $completedFields++;
+        }
+
+        if (!empty($profile->hourly_rate)) {
+            $completedFields++;
+        }
+
+        if (!empty($profile->experience)) {
+            $completedFields++;
+        }
+
+        if (!empty($profile->education)) {
+            $completedFields++;
+        }
+
+        if (!empty($profile->projects)) {
+            $completedFields++;
+        }
+
+        if (!empty($profile->avater)) {
+            $completedFields++;
+        }
+
+        if (!empty($profile->banner)) {
+            $completedFields++;
+        }
+
+        if (!empty($profile->description)) {
+            $completedFields++;
+        }
+
+        if (!empty($profile->tagline)) {
+            $completedFields++;
+        }
+
+        // Calculate profile completion percentage
+        $percentage = ($completedFields / $totalFields) * 100;
+        return intval(round($percentage));
+    }
     /**
      * Get Freelancer Payouts.
      *

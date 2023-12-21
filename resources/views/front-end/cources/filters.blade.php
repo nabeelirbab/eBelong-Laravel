@@ -54,7 +54,7 @@
                             @foreach ($skills as $skill)
                                 @php $checked = ( !empty($_GET['skill']) && in_array($skill->slug, $_GET['skill'] )) ? 'checked' : ''; @endphp
                                 <span class="wt-checkbox">
-                                    <input id="skill-{{{ $skill->slug }}}" type="checkbox" name="skill[]" value="{{{ $skill->slug }}}" {{$checked}} >
+                                    <input id="skill-{{{ $skill->slug }}}" type="checkbox" name="skill[]" value="{{{ $skill->slug }}}" {{$checked}} data-category="{{{ $skill->category_slug }}}">
                                     <label for="skill-{{{ $skill->slug }}}"> <a href="{{ url('courses/'.$skill->slug) }}"  >{{{ $skill->title }}}</a></label>
                                 </span>
                             @endforeach
