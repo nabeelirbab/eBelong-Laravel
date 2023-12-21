@@ -786,6 +786,7 @@ $show_f_banner = 'true'
 @push('scripts')
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 <script>
+    var base_url = window.location.origin;
     document.addEventListener("DOMContentLoaded", function() {
       const categoryCheckboxes = document.querySelectorAll('input[name="category[]"]');
       const skillCheckboxes = document.querySelectorAll('input[name="skill[]"]');
@@ -797,7 +798,7 @@ $show_f_banner = 'true'
                   .map(cb => cb.value);
 
               // Make an AJAX request to fetch skills based on selected categories
-              fetch('get-skills-homepage-slug?category_id=' + selectedCategories.join(','))
+              fetch( base_url +'/get-skills-homepage-slug?category_id=' + selectedCategories.join(','))
               .then(response => response.json())
               .then(data => {
                   // Hide all skills checkboxes

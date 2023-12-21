@@ -210,25 +210,26 @@
 @push('scripts')
     <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
     <script>
+        var base_url = window.location.origin;
         document.addEventListener("DOMContentLoaded", function() {
           const categoryCheckboxes = document.querySelectorAll('input[name="category[]"]');
           const skillCheckboxes = document.querySelectorAll('input[name="skill[]"]');
-  
+    
           categoryCheckboxes.forEach(function(checkbox) {
               checkbox.addEventListener("change", function() {
                   const selectedCategories = Array.from(categoryCheckboxes)
                       .filter(cb => cb.checked)
                       .map(cb => cb.value);
-  
+    
                   // Make an AJAX request to fetch skills based on selected categories
-                  fetch('get-skills-homepage-slug?category_id=' + selectedCategories.join(','))
+                  fetch( base_url +'/get-skills-homepage-slug?category_id=' + selectedCategories.join(','))
                   .then(response => response.json())
                   .then(data => {
                       // Hide all skills checkboxes
                       skillCheckboxes.forEach(function(skillCheckbox) {
                           skillCheckbox.parentNode.style.display = 'none';
                       });
-  
+    
                       // Display skills based on the fetched data
                       data.forEach(function(skill) {
                           const skillCheckbox = document.getElementById('skill-' + skill.slug);
@@ -245,7 +246,7 @@
               });
           });
       });
-  </script>
+    </script>
     <script>
         var _wt_freelancerslider = jQuery('.wt-freelancerslider')
         _wt_freelancerslider.owlCarousel({
