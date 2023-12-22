@@ -30,6 +30,14 @@ Version: 1.0.0
 	padding: 0px;
 }
 
+@font-face {
+	font-family: 'Bernier';
+	src: url('../fonts/BERNIERRegular.ttf') format('truetype');
+	/* Add additional font formats (e.g., woff, woff2) for better browser support */
+	font-weight: normal;
+	font-style: normal;
+}
+
 body {
 	color: #767676;
 	background: #fff;
@@ -7200,7 +7208,7 @@ body.wt-login .wt-userlogedin {
 	padding-right: 0;
 	margin-bottom: 30px;
 	border-radius: 4px;
-	margin-top: -242px;
+	margin-top: -135px;
 }
 
 .wt-userprofile {

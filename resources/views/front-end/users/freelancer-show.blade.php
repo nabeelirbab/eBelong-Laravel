@@ -10,7 +10,15 @@
     <div class="wt-haslayout wt-innerbannerholder wt-innerbannerholdervtwo" style="background-image: url({{{ asset(Helper::getUserProfileBanner($user->id)) }}});">
         <div class="container">
             <div class="row justify-content-md-center">
-                <div class="col-xs-12 col-sm-12 col-md-8 push-md-2 col-lg-6 push-lg-3">
+                <div class="col-xs-12 col-sm-12 col-md-8 push-md-2 col-lg-6 push-lg-3 text-center mt-5">
+                    <span style="color: white;
+                    font-family: 'Bernier', sans-serif;
+                    font-size: 87px;
+                    letter-spacing: 8px;"> {{{ $user->first_name }}}</span> 
+                    <h3 class="mt-2" style="color: white;
+                    font-weight: 500;
+                    font-size: 29px;
+                    letter-spacing: 6px;">{{{ $profile->tagline }}}</h3>
                 </div>
             </div>
         </div>
@@ -112,7 +120,7 @@
                                     </div>
                                     @endif
                                     @if (!empty($profile->tagline))
-                                        <h2>{{{ $profile->tagline }}}</h2>
+                                        {{-- <h2>{{{ $profile->tagline }}}</h2> --}}
                                     @endif
                                     <ul class="wt-userlisting-breadcrumb wt-userlisting-breadcrumbvtwo">
                                         @if (!empty($profile->hourly_rate))
@@ -186,7 +194,7 @@
                                     <?php $user_role = Helper::getSessionUserRole(); ?>
                                     <?php if($user_role !== 'freelancer'): ?>
                                     <div class="wt-description">
-                                        <p>{{ trans('lang.send_offer_note') }}</p>
+                                        <p class="mt-2">{{ trans('lang.send_offer_note') }}</p>
                                         <!-- <a href="javascript:void(0);" @click.prevent='sendOffer("{{$auth_user}}")' class="wt-btn">{{{ trans('lang.btn_send_offer') }}}</a> -->
                                         <a href="javascript:void(0);" @click.prevent='addcandidate("{{$user->id}}")' class="wt-btn">{{{ trans('lang.btn_add_candidate') }}}</a>
                                     </div>

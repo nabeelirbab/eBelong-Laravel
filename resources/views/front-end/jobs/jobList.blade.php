@@ -471,7 +471,9 @@
           const skillCheckboxes = document.querySelectorAll('input[name="skill[]"]');
     
           categoryCheckboxes.forEach(function(checkbox) {
-              checkbox.addEventListener("change", function() {
+              checkbox.addEventListener("change", function(event) {
+                event.stopPropagation(); // Stop event propagation
+
                   const selectedCategories = Array.from(categoryCheckboxes)
                       .filter(cb => cb.checked)
                       .map(cb => cb.value);
@@ -491,7 +493,7 @@
                           if (skillCheckbox) {
                               skillCheckbox.parentNode.style.display = 'block';
                               // Check the skill checkbox if it was previously checked
-                              skillCheckbox.checked = selectedSkills.includes(skill.slug);
+                            //   skillCheckbox = selectedSkills.includes(skill.slug);
                           }
                       });
                   })
