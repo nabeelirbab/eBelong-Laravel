@@ -7,7 +7,7 @@
 @section('title'){{ $user_name }} | {{ $tagline }} @stop
 @section('description', "$desc")
 @section('content')
-    <div class="wt-haslayout wt-innerbannerholder wt-innerbannerholdervtwo" style="background-image: url({{{ asset(Helper::getUserProfileBanner($user->id)) }}});">
+    <div class="wt-haslayout wt-innerbannerholder wt-innerbannerholdervtwo" id="randomImageBanner" >
         <div class="container">
             <div class="row justify-content-md-center">
                 <div class="col-xs-12 col-sm-12 col-md-8 push-md-2 col-lg-6 push-lg-3 text-center mt-5">
@@ -756,6 +756,27 @@
     <script type="text/javascript" src="{{ asset('js/countTo.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/appear.js') }}"></script>
     <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+          // List of image URLs
+          const imageUrls = [
+            '{{ asset("/images/frbanner-1920x400.jpg") }}',
+            '{{ asset("/images/1.png") }}',
+            '{{ asset("/images/2.png") }}',
+            '{{ asset("/images/3.png") }}',
+            '{{ asset("/images/4.png") }}',
+            '{{ asset("/images/5.png") }}',
+            // Add URLs for your other images
+          ];
+      
+          // Get a random image URL from the list
+          const randomImageUrl = imageUrls[Math.floor(Math.random() * imageUrls.length)];
+      
+          // Set the background image dynamically
+          const randomImageBanner = document.getElementById('randomImageBanner');
+          randomImageBanner.style.backgroundImage = `url(${randomImageUrl})`;
+        });
+      </script>
     <script>
         /* FREELANCERS SLIDER */
         var _wt_freelancerslider = jQuery('.wt-freelancerslider')

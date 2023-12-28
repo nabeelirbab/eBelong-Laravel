@@ -3118,21 +3118,58 @@ class UserController extends Controller
                     )
                 );
             } elseif (!empty($_GET['role'])) {
-                $users = User::getFilterUsers($_GET['role']);
-                $pagination = $users->appends(
-                    array(
-                        'keyword' => Input::get('keyword')
-                    )
-                );
+                if ($_GET['role'] == 'desc' || $_GET['role'] == 'asc') {
+                    $users = User::select('*')
+                        ->leftJoin('profiles', 'users.id', '=', 'profiles.user_id') // Assuming there's a 'profiles' table
+                        ->get();
+
+                    // Calculate and assign the completeness percentage for each user
+                    $users->transform(function ($user) {
+                        $profile = Profile::where('user_id', $user->id)->first();
+                        $user->percentage = $this->getProfileCompletionPercentage($profile);
+                        return $user;
+                    });
+
+                    // Sort the users by completeness percentage
+                    $sortOrder = (!empty($_GET['role']) && in_array($_GET['role'], ['asc', 'desc'])) ? $_GET['role'] : 'desc';
+                    $users = $sortOrder === 'asc' ? $users->sortBy('percentage') : $users->sortByDesc('percentage');
+
+                    // Paginate the results (if needed)
+                    $perPage = 100;
+                    $currentPage = \Illuminate\Pagination\Paginator::resolveCurrentPage();
+                    $currentPageSearchResults = $users->slice(($currentPage - 1) * $perPage, $perPage)->all();
+                    $users = new \Illuminate\Pagination\LengthAwarePaginator($currentPageSearchResults, count($users), $perPage);
+                    $users->appends(
+                        array(
+                            'keyword' => Input::get('keyword'),
+                            'role' => Input::get('role')
+                        )
+                    );
+                } else {
+                    $users = User::getFilterUsers($_GET['role']);
+                    $pagination = $users->appends(
+                        array(
+                            'keyword' => Input::get('keyword'),
+                            'role' => Input::get('role')
+                        )
+                    );
+
+                    foreach ($users as $freelancer) {
+                        $profile = Profile::all()->where('user_id', $freelancer->id)->first();
+                        // Calculate the completion percentage based on their profile completeness
+                        $freelancer->percentage = $this->getProfileCompletionPercentage($profile);
+                    }
+                }
             } else {
                 $users = User::select('*')->latest()->paginate(10);
+
+                foreach ($users as $freelancer) {
+                    $profile = Profile::all()->where('user_id', $freelancer->id)->first();
+                    // Calculate the completion percentage based on their profile completeness
+                    $freelancer->percentage = $this->getProfileCompletionPercentage($profile);
+                }
             }
 
-            foreach ($users as $freelancer) {
-                $profile = Profile::all()->where('user_id', $freelancer->id)->first();
-                // Calculate the completion percentage based on their profile completeness
-                $freelancer->percentage = $this->getProfileCompletionPercentage($profile);
-            }
             /* if (file_exists(resource_path('views/extend/back-end/admin/users/index.blade.php'))) {
                 return view('extend.back-end.admin.users.index', compact('users'));
             } else { */

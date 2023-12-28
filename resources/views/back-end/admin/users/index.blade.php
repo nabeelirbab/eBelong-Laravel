@@ -46,6 +46,8 @@
                             "name_desc" => "Name (Z-A)",
                             "Email_asc"=> "Email (A-Z)",
                             "Email_desc" => "Email (Z-A)",
+                            "asc" => "Profile (0%-100%)",
+                            "desc" => "Profile (100%-0%)",
                             
 
                         )
