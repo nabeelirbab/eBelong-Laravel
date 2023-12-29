@@ -84,24 +84,25 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($users as $key => $user_data)
-                                        @php 
-                                        $user = \App\User::find($user_data['id']);
+                                        @php
+                                        echo $user_data->id; 
+                                        $user = \App\User::find($user_data->id);
                                         $badges = \App\Badge::all();
-                                        $is_agency_member = DB::table('agency_associated_users')->where('user_id', $user->id)->where('is_accepted',1)->where('is_pending',0)->first();
-                                        $is_instructor=DB::table('cource_user')->where('seller_id', $user->id)->first();
-                                        $feedback = \App\Review::select('avg_rating')->where('receiver_id', $user->id)->where('user_id',1)->first();
+                                        $is_agency_member = DB::table('agency_associated_users')->where('user_id', $user_data->id)->where('is_accepted',1)->where('is_pending',0)->first();
+                                        $is_instructor=DB::table('cource_user')->where('seller_id', $user_data->id)->first();
+                                        $feedback = \App\Review::select('avg_rating')->where('receiver_id', $user_data->id)->where('user_id',1)->first();
                                         @endphp
-                                        @if ($user->getRoleNames()->first() != 'admin')
-                                            <tr class="del-user-{{ $user->id }}">
-                                                <td>{{{ ucwords(\App\Helper::getUserName($user->id)) }}}</td>
-                                                <td>{{{ $user->email }}}</td>
+                                        @if ($user_data->getRoleNames()->first() != 'admin')
+                                            <tr class="del-user-{{ $user_data->id }}">
+                                                <td>{{{ ucwords(\App\Helper::getUserName($user_data->id)) }}}</td>
+                                                <td>{{{ $user_data->email }}}</td>
                                                 
                                                 <td>@if(empty($is_instructor))
-                                                    {{ ucfirst($user->getRoleNames()->first()) }}
+                                                    {{ ucfirst($user_data->getRoleNames()->first()) }}
                                                 @else
                                                     {{ "Instructor" }}</td>
                                                 @endif
-                                                <td>@if($user->is_agency==1)
+                                                <td>@if($user_data->is_agency==1)
                                                     {{ " Agency Creator" }}
                                                 @elseif(!empty($is_agency_member))
                                                      {{ 'Agency Member' }}
@@ -110,12 +111,12 @@
                                                 @endif</td>
                                                 <td>{{$user_data->percentage }}%</td>
                                                 <?php $default = "0000-00-00 00:00:00"; ?>                                               
-                                                <td><?= date('d/m/Y', strtotime($user->created_at)) ?></td>
+                                                <td><?= date('d/m/Y', strtotime($user_data->created_at)) ?></td>
                                                 
                                                 <td>
                                                 <?php
-                                                if($user->invited_at > $default)
-                                                    echo $user->invited_at;
+                                                if($user_data->invited_at > $default)
+                                                    echo $user_data->invited_at;
                                                 else
                                                     echo'-';
 
@@ -123,43 +124,43 @@
 
                                                 </td>
                                                 <td>
-                                                    @if($user->invitation_status==1)
+                                                    @if($user_data->invitation_status==1)
                                                         {{ 'Invited' }}
-                                                    @elseif($user->oauth_type=='linkedin')
+                                                    @elseif($user_data->oauth_type=='linkedin')
                                                          {{ 'Via LinkedIn' }}
                                                     @else
                                                         {{ 'Not Invited' }}
                                                     @endif
                                                 </td>
 												<td>
-													<select id="{{$user->id}}-is_featured" v-on:change.prevent='changeFeaturedStatus({{$user->id}})'>
-														<option value="0" {{ $user->is_featured == 0 ? "selected":"" }}>No</option>
-														<option value="1" {{ $user->is_featured == 1 ? "selected":"" }}>Yes</option>
+													<select id="{{$user_data->id}}-is_featured" v-on:change.prevent='changeFeaturedStatus({{$user_data->id}})'>
+														<option value="0" {{ $user_data->is_featured == 0 ? "selected":"" }}>No</option>
+														<option value="1" {{ $user_data->is_featured == 1 ? "selected":"" }}>Yes</option>
 													</select>
 												</td>
                                                 <td>
-													<select id="{{$user->id}}-is_certified" v-on:change.prevent='changeCertifiedStatus({{$user->id}})'>
-														<option value="0" {{ $user->is_certified == 0 ? "selected":"" }}>No</option>
-														<option value="1" {{ $user->is_certified == 1 ? "selected":"" }}>Yes</option>
+													<select id="{{$user_data->id}}-is_certified" v-on:change.prevent='changeCertifiedStatus({{$user_data->id}})'>
+														<option value="0" {{ $user_data->is_certified == 0 ? "selected":"" }}>No</option>
+														<option value="1" {{ $user_data->is_certified == 1 ? "selected":"" }}>Yes</option>
 													</select>
 												</td>
                                                 <td>
-													<select id="{{$user->id}}-is_disabled" v-on:change.prevent='changeDisabledStatus({{$user->id}})'>
-														<option value="false" {{ $user->is_disabled == 'false' ? "selected":"" }}>No</option>
-														<option value="true" {{ $user->is_disabled == 'true' ? "selected":"" }}>Yes</option>
+													<select id="{{$user_data->id}}-is_disabled" v-on:change.prevent='changeDisabledStatus({{$user_data->id}})'>
+														<option value="false" {{ $user_data->is_disabled == 'false' ? "selected":"" }}>No</option>
+														<option value="true" {{ $user_data->is_disabled == 'true' ? "selected":"" }}>Yes</option>
 													</select>
 												</td>
                                                 <td>
-													<select id="{{$user->id}}-assign_badge" v-on:change.prevent='changeBadge({{$user->id}})'>
-														<option value="null" {{ $user->badge_id == 'null' ? "selected":"" }}>No badge</option>
+													<select id="{{$user_data->id}}-assign_badge" v-on:change.prevent='changeBadge({{$user_data->id}})'>
+														<option value="null" {{ $user_data->badge_id == 'null' ? "selected":"" }}>No badge</option>
                                                         @foreach ($badges as $badge)
-                                                        <option value="{{$badge->id}}" {{ $user->badge_id == $badge->id ? "selected":"" }}>{{$badge->title}}</option>
+                                                        <option value="{{$badge->id}}" {{ $user_data->badge_id == $badge->id ? "selected":"" }}>{{$badge->title}}</option>
                                                         @endforeach
 														
 													</select>
 												</td>
                                                 <td>
-													<select id="{{ $user->id }}-assign_rating" v-on:change.prevent='giveRating({{ $user->id }})'>
+													<select id="{{ $user_data->id }}-assign_rating" v-on:change.prevent='giveRating({{ $user_data->id }})'>
 														<option value="0"{{ $feedback['avg_rating'] == "0" ? 'selected' : '' }}>0</option>
 														<option value="1"{{ $feedback['avg_rating'] == "1" ? 'selected' : '' }}>1</option>
                                                         <option value="2"{{ $feedback['avg_rating'] == "2" ? 'selected' : '' }}>2</option>
@@ -170,11 +171,11 @@
 												</td>
                                                 <td>
                                                     <div class="wt-actionbtn">
-														<a href="{{ url('profile/'.$user->slug) }}" class="wt-addinfo wt-skillsaddinfo"><i class="lnr lnr-eye"></i></a>
+														<a href="{{ url('profile/'.$user_data->slug) }}" class="wt-addinfo wt-skillsaddinfo"><i class="lnr lnr-eye"></i></a>
 													 
-														<a href="{{ url('users/profile-edit/'.$user->id) }}" class="wt-addinfo wt-skillsaddinfo"><i class="fa fa-edit"></i></a>
+														<a href="{{ url('users/profile-edit/'.$user_data->id) }}" class="wt-addinfo wt-skillsaddinfo"><i class="fa fa-edit"></i></a>
 														
-                                                        <a href="javascript:void()" v-on:click.prevent="deleteUser({{$user->id}})" class="wt-deleteinfo wt-skillsaddinfo"><i class="fa fa-trash"></i></a>
+                                                        <a href="javascript:void()" v-on:click.prevent="deleteUser({{$user_data->id}})" class="wt-deleteinfo wt-skillsaddinfo"><i class="fa fa-trash"></i></a>
                                                     </div>
                                                 </td>
                                             </tr>

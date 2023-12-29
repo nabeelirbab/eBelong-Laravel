@@ -10,7 +10,7 @@
     <div class="wt-haslayout wt-innerbannerholder wt-innerbannerholdervtwo" id="randomImageBanner" >
         <div class="container">
             <div class="row justify-content-md-center">
-                <div class="col-xs-12 col-sm-12 col-md-8 push-md-2 col-lg-6 push-lg-3 text-center mt-5">
+                <div class="col-xs-12 col-sm-12 col-md-8 push-md-2 col-lg-8 push-lg-3 text-center mt-5">
                     <span style="color: white;
                     font-family: 'Bernier', sans-serif;
                     font-size: 87px;
