@@ -25,6 +25,7 @@ use App\Mail\FreelancerEmailMailable;
 use App\Mail\GeneralEmailMailable;
 use App\Package;
 use App\Profile;
+use App\Cource;
 use App\Proposal;
 use App\Report;
 use App\Review;
@@ -129,6 +130,33 @@ class StatsController extends Controller
         //     [Carbon::now()->subMonth(6), Carbon::now()]
         // )->get();
         // dd(Carbon::now()->subMonth(6), Carbon::now()));
+        $startDate = Carbon::now()->startOfWeek();
+        $endDate = Carbon::now()->endOfWeek();
+
+        // Fetch users created within the current week
+        $thisweek = User::whereBetween('created_at', [$startDate, $endDate])->get()->count();
+        $users = User::get()->count();
+        $profile = Profile::where('user_id', 196)->first();
+        // dd($profile);
+
+        $active_users = User::where('status', 1)->get()->count();
+        $cources = Cource::get()->count();
+        $services = Service::get()->count();
+        $jobs = Job::get()->count();
+        $profileCount = 0;
+        User::whereHas('roles', function ($query) {
+            $query->where('role_id', 3);
+        })->chunk(200, function ($freelancers) use (&$profileCount) {
+            foreach ($freelancers as $freelancer) {
+                $profile = Profile::where('user_id', $freelancer->id)->first();
+                $percentage = $this->getProfileCompletionPercentage($profile);
+
+                if ($percentage > 59) {
+                    $profileCount++;
+                }
+            }
+        });
+
         $data = [];
 
         for ($i = 0; $i < 6; ++$i) {
@@ -188,6 +216,54 @@ class StatsController extends Controller
             ->color("rgb(255, 99, 132)")
             ->backgroundcolor("rgb(255, 99, 132)");
 
-        return view('back-end.admin.stats.index', compact('chart', 'pie'));
+        return view('back-end.admin.stats.index', compact('chart', 'pie', 'users', 'cources', 'services', 'jobs', 'active_users', 'profileCount', 'thisweek'));
+    }
+
+    public function getProfileCompletionPercentage($profile)
+    {
+        $totalFields = 9; // Total number of fields required for profile completion
+
+        $completedFields = 0; // Counter for completed fields
+
+        // Check if each required field is filled or not
+        if (!empty($profile->english_level)) {
+            $completedFields++;
+        }
+
+        if (!empty($profile->hourly_rate)) {
+            $completedFields++;
+        }
+
+        if (!empty($profile->experience)) {
+            $completedFields++;
+        }
+
+        if (!empty($profile->education)) {
+            $completedFields++;
+        }
+
+        if (!empty($profile->projects)) {
+            $completedFields++;
+        }
+
+        if (!empty($profile->avater)) {
+            $completedFields++;
+        }
+
+        if (!empty($profile->banner)) {
+            $completedFields++;
+        }
+
+        if (!empty($profile->description)) {
+            $completedFields++;
+        }
+
+        if (!empty($profile->tagline)) {
+            $completedFields++;
+        }
+
+        // Calculate profile completion percentage
+        $percentage = ($completedFields / $totalFields) * 100;
+        return intval(round($percentage));
     }
 }
