@@ -1,6 +1,7 @@
 
 <!DOCTYPE html>
 <html>
+        
  <head>
   <title>How Send an Email in Laravel</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
